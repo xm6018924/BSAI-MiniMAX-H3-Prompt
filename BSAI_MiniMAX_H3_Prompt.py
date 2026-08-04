@@ -573,6 +573,7 @@ class BSAI_MiniMAX_H3_Prompt:
                 f"top_k 必须是整数类型，但收到 {type(top_k).__name__} 类型。"
             )
 
+        normalized_seed = _bsai_normalize_seed(seed)
         params = {
             "max_tokens": max_tokens_val,
             "temperature": float(温度),
@@ -581,12 +582,15 @@ class BSAI_MiniMAX_H3_Prompt:
             "repeat_penalty": float(重复惩罚),
             "frequency_penalty": float(频率惩罚),
             "presence_penalty": float(存在惩罚),
-            "seed": _bsai_normalize_seed(seed),
             "stream": False,
-            "stop": ["</s>"],
         }
+        if normalized_seed is not None:
+            params["seed"] = normalized_seed
 
-        _bsai_reset_llm_state(llm)
+        # 不调用 _bsai_reset_llm_state(llm)：
+        # llm.reset() / ctx.memory_clear() 在部分 llama-cpp-python 版本
+        # 和 Qwen-VL 模型组合下会导致段错误（segfault），直接使 Python
+        # 进程崩溃。create_chat_completion 本身会处理上下文，无需手动重置。
 
         try:
             out = _bsai_call_chat_completion(llm, messages=messages, params=params)
