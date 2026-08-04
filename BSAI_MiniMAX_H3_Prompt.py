@@ -109,6 +109,72 @@ def _bsai_reset_llm_state(llm):
         pass
 
 
+def _bsai_get_free_vram_bytes():
+    """获取当前可用显存（字节）。返回 None 表示无法检测。"""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            free, _total = torch.cuda.mem_get_info()
+            return free
+    except Exception:
+        pass
+    return None
+
+
+def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
+    """根据可用显存自动调整 GPU 层数，防止 OOM 导致段错误。
+
+    返回调整后的 n_gpu_layers 值。
+    如果原值不是 -1（用户手动指定），则不调整。
+    """
+    if n_gpu_layers != -1:
+        return n_gpu_layers, None
+
+    free_vram = _bsai_get_free_vram_bytes()
+    if free_vram is None:
+        return n_gpu_layers, None
+
+    model_size = os.path.getsize(model_path) if os.path.exists(model_path) else 0
+    mmproj_size = os.path.getsize(mmproj_path) if mmproj_path and os.path.exists(mmproj_path) else 0
+    # KV 缓存估算：约 2 字节/参数/上下文 token（粗略估计）
+    kv_cache_estimate = n_ctx * 2 * 1024 * 1024  # ~2MB per 1024 tokens
+    # 安全余量：2GB（CUDA 运行时、ComfyUI 开销等）
+    safety_margin = 2 * 1024 ** 3
+    total_needed = model_size + mmproj_size + kv_cache_estimate + safety_margin
+
+    if total_needed <= free_vram:
+        return n_gpu_layers, None
+
+    # 显存不足，需要部分 offload 到 CPU
+    available_for_model = free_vram - safety_margin - mmproj_size - kv_cache_estimate
+    if available_for_model <= 0:
+        return 0, (
+            f"⚠️ 显存严重不足！可用 VRAM={free_vram / 1024**3:.1f}GB，"
+            f"模型需要约={total_needed / 1024**3:.1f}GB。\n"
+            f"已将 GPU 层数设为 0（纯 CPU 推理），速度会很慢。\n"
+            "建议：\n"
+            "  1. 使用更小的模型（如 Qwen3.5-9B 约5GB）\n"
+            "  2. 关闭其他占用显存的工作流节点\n"
+            "  3. 增大系统虚拟内存"
+        )
+
+    # 估算可加载到 GPU 的层数比例
+    ratio = available_for_model / model_size if model_size > 0 else 0
+    # 典型 35B 模型约 64 层，27B 约 48 层，9B 约 36 层
+    # 用文件大小估算层数：~350MB/层 (35B), ~320MB/层 (27B), ~150MB/层 (9B)
+    est_layers_per_gb = 64 / (21.8)  # 约 2.94 层/GB
+    est_total_layers = max(1, int(model_size / (1024**3) * est_layers_per_gb))
+    adjusted_layers = max(1, int(est_total_layers * ratio))
+
+    return adjusted_layers, (
+        f"⚠️ 显存不足，无法全部加载到 GPU！\n"
+        f"  可用 VRAM: {free_vram / 1024**3:.1f}GB\n"
+        f"  模型大小: {model_size / 1024**3:.1f}GB + mmproj: {mmproj_size / 1024**3:.2f}GB\n"
+        f"  GPU层数从 -1（全部）自动调整为 {adjusted_layers}（部分 offload 到 CPU）\n"
+        f"  推理速度会降低，但可避免崩溃。"
+    )
+
+
 # ============================================================
 # 模型存储与管理
 # ============================================================
@@ -155,6 +221,13 @@ class _BSAI_QwenStorage:
         n_ctx = int(config.get("n_ctx", 8192))
         n_gpu_layers = int(config.get("n_gpu_layers", -1))
 
+        # ── VRAM 预检测：防止 OOM 导致 C++ 层段错误 ──
+        n_gpu_layers, vram_warning = _bsai_auto_adjust_gpu_layers(
+            model_path, mmproj_path, n_ctx, n_gpu_layers
+        )
+        if vram_warning:
+            print(f"[BSAI H3 ModelLoader] {vram_warning}")
+
         chat_handler = None
         if mmproj_path:
             if family in ("Qwen3.5-VL", "Qwen3.6-VL"):
@@ -198,6 +271,14 @@ class _BSAI_QwenStorage:
             "n_gpu_layers": n_gpu_layers,
             "verbose": False,
         }
+
+        # 尝试启用 flash attention 以减少显存使用
+        try:
+            sig = inspect.signature(Llama.__init__)
+            if "flash_attn" in sig.parameters:
+                llama_kwargs["flash_attn"] = True
+        except Exception:
+            pass
 
         try:
             cls.model = Llama(**llama_kwargs)
@@ -266,7 +347,7 @@ class BSAI_H3_ModelLoader:
                     "INT",
                     {"default": 16384, "min": 1024, "max": 327680, "step": 256},
                 ),
-                "GPU层数": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1}),
+                "GPU层数": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=全部上GPU。显存不足时自动降低层数防止崩溃。大模型(35B)建议手动设20-25"}),
             }
         }
 
@@ -479,7 +560,7 @@ class BSAI_MiniMAX_H3_Prompt:
                         "tooltip": "可选：额外的优化要求或风格偏好（如特定运镜、色调、节奏等）",
                     },
                 ),
-                "最大生成token": ("INT", {"default": 16384, "min": 256, "max": 65536, "step": 1}),
+                "最大生成token": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "会自动限制为不超过上下文长度"}),
                 "温度": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "top_k": ("INT", {"default": 20, "min": 0, "max": 200, "step": 1}),
@@ -566,22 +647,38 @@ class BSAI_MiniMAX_H3_Prompt:
                 f"最大生成token 必须是整数类型，但收到 {type(最大生成token).__name__} 类型。"
             )
 
+        normalized_seed = _bsai_normalize_seed(seed)
+
+        # ── max_tokens 安全限制：防止超过上下文长度导致段错误 ──
+        # llama-cpp-python 中 n_ctx 是方法而非属性，需要调用获取值
         try:
-            top_k_val = int(top_k)
-        except (TypeError, ValueError):
-            raise TypeError(
-                f"top_k 必须是整数类型，但收到 {type(top_k).__name__} 类型。"
+            n_ctx_raw = getattr(llm, "n_ctx", 4096)
+            n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
+        except Exception:
+            n_ctx = 4096
+        prompt_text = _H3_SYSTEM_PROMPT + user_message
+        est_prompt_tokens = int(len(prompt_text) * 1.2)
+        safe_max_tokens = min(max_tokens_val, n_ctx - est_prompt_tokens - 256)
+        if safe_max_tokens < 512:
+            safe_max_tokens = min(max_tokens_val, max(256, n_ctx // 4))
+            print(
+                f"[BSAI H3] 警告：提示词较长（约{est_prompt_tokens} tokens），"
+                f"上下文长度仅{n_ctx}，max_tokens 已限制为 {safe_max_tokens}。"
+                f"建议在 ModelLoader 中增大「上下文长度」到 16384+。"
+            )
+        elif safe_max_tokens < max_tokens_val:
+            print(
+                f"[BSAI H3] max_tokens 从 {max_tokens_val} 限制为 {safe_max_tokens}"
+                f"（上下文长度 {n_ctx} - 提示词约 {est_prompt_tokens} tokens - 安全余量 256）"
             )
 
-        normalized_seed = _bsai_normalize_seed(seed)
+        # 只保留最核心的参数，避免可选参数在 C++ 层触发段错误。
+        # Qwen-VL 模型的 chat_handler 对部分参数（如 presence_penalty、
+        # frequency_penalty、top_k、repeat_penalty）的兼容性较差，可能导致 segfault。
         params = {
-            "max_tokens": max_tokens_val,
+            "max_tokens": safe_max_tokens,
             "temperature": float(温度),
             "top_p": float(top_p),
-            "top_k": top_k_val,
-            "repeat_penalty": float(重复惩罚),
-            "frequency_penalty": float(频率惩罚),
-            "presence_penalty": float(存在惩罚),
             "stream": False,
         }
         if normalized_seed is not None:
