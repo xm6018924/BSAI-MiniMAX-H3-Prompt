@@ -11,6 +11,7 @@ GitHub: https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt
 import os
 import io
 import gc
+import json
 import base64
 import inspect
 
@@ -26,6 +27,11 @@ try:
     from PIL import Image as PILImage
 except Exception:
     PILImage = None
+
+try:
+    import requests
+except Exception:
+    requests = None
 
 try:
     from llama_cpp import Llama
@@ -956,14 +962,273 @@ class BSAI_H3_UnloadModel:
         return (any_input,)
 
 
+# ============================================================
+# Remote API Node (OpenAI / DashScope compatible)
+# ============================================================
+
+class BSAI_H3_RemoteAPI:
+    """Call a remote LLM API (OpenAI/DashScope compatible) for H3 prompt optimization.
+
+    Supports any OpenAI-compatible endpoint:
+    - OpenAI: https://api.openai.com/v1 (gpt-4o, gpt-4o-mini, etc.)
+    - DashScope: https://dashscope.aliyuncs.com/compatible-mode/v1 (qwen-plus, qwen-max, etc.)
+    - Other compatible services (Ollama, LM Studio, vLLM, etc.)
+    """
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "user_prompt": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
+                    },
+                ),
+                "api_base_url": (
+                    "STRING",
+                    {
+                        "default": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                        "tooltip": "OpenAI-compatible API base URL / API地址",
+                    },
+                ),
+                "api_key": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "tooltip": "API key for authentication / API密钥",
+                    },
+                ),
+                "model_name": (
+                    "STRING",
+                    {
+                        "default": "qwen-plus",
+                        "tooltip": "Model name (e.g. gpt-4o, qwen-plus, qwen-max) / 模型名称",
+                    },
+                ),
+                "generation_mode": (
+                    ["Text to Video", "Image to Video", "Multimodal Fusion"],
+                    {"default": "Text to Video", "tooltip": "Video generation mode / 生成模式"},
+                ),
+                "video_duration": (
+                    "INT",
+                    {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
+                ),
+                "aspect_ratio": (
+                    ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"],
+                    {"default": "16:9", "tooltip": "Output video aspect ratio / 宽高比"},
+                ),
+                "no_bgm": (
+                    "BOOLEAN",
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
+                ),
+                "extra_requirements": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "Optional: extra style preferences / 补充要求",
+                    },
+                ),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
+                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
+            },
+            "optional": {
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("prompt_output",)
+    FUNCTION = "optimize_prompt_remote"
+    CATEGORY = "BSAI"
+    DESCRIPTION = """
+Call a remote LLM API (OpenAI/DashScope compatible) to optimize prompts into H3-compliant structured prompts.
+No local model loading required - saves VRAM for video generation.
+Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
+"""
+
+    def optimize_prompt_remote(
+        self,
+        user_prompt,
+        api_base_url,
+        api_key,
+        model_name,
+        generation_mode,
+        video_duration,
+        aspect_ratio,
+        no_bgm,
+        extra_requirements,
+        max_tokens,
+        temperature,
+        top_p,
+        seed,
+        image_1=None,
+        image_2=None,
+        image_3=None,
+        image_4=None,
+        image_5=None,
+    ):
+        if requests is None:
+            raise RuntimeError(
+                "The 'requests' library is not installed. Please install it: pip install requests"
+            )
+
+        prompt_text_input = (user_prompt or "").strip()
+        if not prompt_text_input:
+            raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
+
+        if not api_key.strip():
+            raise ValueError("api_key cannot be empty. Please enter your API key.")
+
+        mode_hints = {
+            "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, music, etc. Write clear labels and usage for each material (e.g., @image_1 -> character reference, @video_1 -> action reference, etc.).",
+        }
+
+        user_message_parts = [
+            f"[Generation Mode] {generation_mode}",
+            f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
+            f"[Aspect Ratio] {aspect_ratio}",
+            f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
+        ]
+
+        if extra_requirements and extra_requirements.strip():
+            user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
+
+        user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
+        user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
+
+        # ── Collect image inputs ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5]
+        collected_images = []
+        total_image_count = 0
+        for idx, img in enumerate(image_inputs):
+            if img is None:
+                continue
+            label = f"image_{idx + 1}"
+            data_uris = _bsai_image_tensor_to_data_uri(img)
+            if data_uris:
+                collected_images.append((label, data_uris))
+                total_image_count += len(data_uris)
+
+        if total_image_count > 0:
+            image_summary = ", ".join(
+                f"{label} ({len(uris)} img)" for label, uris in collected_images
+            )
+            user_message_parts.append(
+                f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
+                "Please write clear labels and usage for each image in the [Reference Description] section. "
+                "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
+            )
+            if generation_mode == "Text to Video":
+                user_message_parts.append(
+                    "[Note] Images detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
+                )
+
+        user_message_parts.append(
+            "\nBased on the above information, optimize the prompt according to H3 specification. "
+            "Output the optimized prompt directly without any explanation."
+        )
+
+        user_message = "\n".join(user_message_parts)
+
+        # ── Build messages ──
+        if total_image_count > 0:
+            user_content = [{"type": "text", "text": user_message}]
+            for label, uris in collected_images:
+                for uri in uris:
+                    user_content.append({"type": "image_url", "image_url": {"url": uri}})
+                    user_content.append({"type": "text", "text": f"(Above is {label})"})
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_content},
+            ]
+            print(f"[BSAI H3 RemoteAPI] Multimodal request: {total_image_count} image(s) attached")
+        else:
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ]
+
+        # ── Build request payload ──
+        payload = {
+            "model": model_name.strip(),
+            "messages": messages,
+            "max_tokens": int(max_tokens),
+            "temperature": float(temperature),
+            "top_p": float(top_p),
+            "stream": False,
+        }
+        if seed > 0:
+            payload["seed"] = int(seed)
+
+        # ── Build headers ──
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key.strip()}",
+        }
+
+        # ── Make API call ──
+        url = api_base_url.strip().rstrip("/") + "/chat/completions"
+        print(f"[BSAI H3 RemoteAPI] Calling: {url} | model: {model_name}")
+
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=120)
+        except requests.exceptions.Timeout:
+            raise RuntimeError(
+                f"API request timed out (120s). The service may be slow or unreachable.\n"
+                f"URL: {url}"
+            )
+        except requests.exceptions.ConnectionError as e:
+            raise RuntimeError(
+                f"Failed to connect to API: {e}\n"
+                f"URL: {url}\n"
+                "Please check the api_base_url and your network connection."
+            )
+
+        if response.status_code != 200:
+            error_detail = ""
+            try:
+                error_body = response.json()
+                error_detail = json.dumps(error_body, indent=2, ensure_ascii=False)
+            except Exception:
+                error_detail = response.text
+            raise RuntimeError(
+                f"API returned error {response.status_code}:\n{error_detail}"
+            )
+
+        try:
+            result = response.json()
+            text = result["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, json.JSONDecodeError) as e:
+            raise RuntimeError(
+                f"Failed to parse API response: {e}\n"
+                f"Response: {response.text[:500]}"
+            )
+
+        return (text.lstrip().removeprefix(": ").strip(),)
+
+
 NODE_CLASS_MAPPINGS = {
     "BSAI_MiniMAX H3 prompt": BSAI_MiniMAX_H3_Prompt,
     "BSAI_H3_ModelLoader": BSAI_H3_ModelLoader,
     "BSAI_H3_UnloadModel": BSAI_H3_UnloadModel,
+    "BSAI_H3_RemoteAPI": BSAI_H3_RemoteAPI,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BSAI_MiniMAX H3 prompt": "BSAI MiniMAX H3 Prompt",
     "BSAI_H3_ModelLoader": "BSAI H3 Model Loader",
     "BSAI_H3_UnloadModel": "BSAI H3 Unload Model",
+    "BSAI_H3_RemoteAPI": "BSAI H3 Remote API",
 }
