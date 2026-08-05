@@ -124,8 +124,9 @@ def _bsai_get_free_vram_bytes():
 def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
     """根据可用显存自动调整 GPU 层数，防止 OOM 导致段错误。
 
-    返回调整后的 n_gpu_layers 值。
+    返回 (adjusted_layers, warning_message) 元组。
     如果原值不是 -1（用户手动指定），则不调整。
+    仅当显存确实无法容纳模型时才降级，避免误判。
     """
     if n_gpu_layers != -1:
         return n_gpu_layers, None
@@ -136,11 +137,26 @@ def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
 
     model_size = os.path.getsize(model_path) if os.path.exists(model_path) else 0
     mmproj_size = os.path.getsize(mmproj_path) if mmproj_path and os.path.exists(mmproj_path) else 0
-    # KV 缓存估算：约 2 字节/参数/上下文 token（粗略估计）
-    kv_cache_estimate = n_ctx * 2 * 1024 * 1024  # ~2MB per 1024 tokens
-    # 安全余量：2GB（CUDA 运行时、ComfyUI 开销等）
-    safety_margin = 2 * 1024 ** 3
+
+    # KV 缓存估算：基于模型文件大小和上下文长度
+    # 经验公式：每 token KV cache ≈ 模型文件大小 * 1.3e-5（适用于 Q4 量化 GQA 模型）
+    # 例如 5.5GB 的 9B Q4_K_M 模型，8192 ctx → ~585MB KV cache
+    kv_cache_estimate = int(n_ctx * (model_size + mmproj_size) * 1.3e-5)
+
+    # 安全余量：1GB（CUDA 运行时、ComfyUI 开销等）
+    safety_margin = 1 * 1024 ** 3
     total_needed = model_size + mmproj_size + kv_cache_estimate + safety_margin
+
+    free_vram_gb = free_vram / 1024 ** 3
+    model_gb = model_size / 1024 ** 3
+    mmproj_gb = mmproj_size / 1024 ** 3
+    kv_gb = kv_cache_estimate / 1024 ** 3
+    print(
+        f"[BSAI H3 ModelLoader] VRAM 检测: "
+        f"可用={free_vram_gb:.1f}GB, "
+        f"模型={model_gb:.1f}GB, mmproj={mmproj_gb:.2f}GB, "
+        f"KV缓存≈{kv_gb:.2f}GB, 合计≈{total_needed / 1024**3:.1f}GB"
+    )
 
     if total_needed <= free_vram:
         return n_gpu_layers, None
@@ -149,27 +165,26 @@ def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
     available_for_model = free_vram - safety_margin - mmproj_size - kv_cache_estimate
     if available_for_model <= 0:
         return 0, (
-            f"⚠️ 显存严重不足！可用 VRAM={free_vram / 1024**3:.1f}GB，"
+            f"⚠️ 显存严重不足！可用 VRAM={free_vram_gb:.1f}GB，"
             f"模型需要约={total_needed / 1024**3:.1f}GB。\n"
             f"已将 GPU 层数设为 0（纯 CPU 推理），速度会很慢。\n"
             "建议：\n"
-            "  1. 使用更小的模型（如 Qwen3.5-9B 约5GB）\n"
+            "  1. 使用更小的模型\n"
             "  2. 关闭其他占用显存的工作流节点\n"
             "  3. 增大系统虚拟内存"
         )
 
     # 估算可加载到 GPU 的层数比例
     ratio = available_for_model / model_size if model_size > 0 else 0
-    # 典型 35B 模型约 64 层，27B 约 48 层，9B 约 36 层
-    # 用文件大小估算层数：~350MB/层 (35B), ~320MB/层 (27B), ~150MB/层 (9B)
+    # 用文件大小估算总层数
     est_layers_per_gb = 64 / (21.8)  # 约 2.94 层/GB
     est_total_layers = max(1, int(model_size / (1024**3) * est_layers_per_gb))
     adjusted_layers = max(1, int(est_total_layers * ratio))
 
     return adjusted_layers, (
         f"⚠️ 显存不足，无法全部加载到 GPU！\n"
-        f"  可用 VRAM: {free_vram / 1024**3:.1f}GB\n"
-        f"  模型大小: {model_size / 1024**3:.1f}GB + mmproj: {mmproj_size / 1024**3:.2f}GB\n"
+        f"  可用 VRAM: {free_vram_gb:.1f}GB\n"
+        f"  模型大小: {model_gb:.1f}GB + mmproj: {mmproj_gb:.2f}GB\n"
         f"  GPU层数从 -1（全部）自动调整为 {adjusted_layers}（部分 offload 到 CPU）\n"
         f"  推理速度会降低，但可避免崩溃。"
     )
