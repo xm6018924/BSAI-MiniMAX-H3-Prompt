@@ -272,12 +272,19 @@ def _bsai_is_model_valid(llm):
     if llm is None:
         return False
     try:
+        # Check _ctx attribute directly (set to None after close())
+        ctx = getattr(llm, "_ctx", None)
+        if ctx is None:
+            return False
+
         # n_ctx() will fail if the model has been closed
         n_ctx_raw = getattr(llm, "n_ctx", None)
         if n_ctx_raw is None:
             return False
         if callable(n_ctx_raw):
-            _ = n_ctx_raw()
+            n_ctx_val = n_ctx_raw()
+            if n_ctx_val is None or n_ctx_val == 0:
+                return False
         return True
     except Exception:
         return False
@@ -875,21 +882,49 @@ Requires BSAI H3 Model Loader node.
         # llama-cpp-python + Qwen-VL combinations, crashing the Python process.
         # create_chat_completion handles context internally; no manual reset needed.
 
+        # ── Inference with auto-recovery: if the model was closed (e.g. by
+        # BSAI_H3_UnloadModel in a previous run), ComfyUI may still pass the
+        # stale model object. Retry once after reloading. ──
         try:
             out = _bsai_call_chat_completion(llm, messages=messages, params=params)
-        except RuntimeError as e:
-            if "Context Shift is explicitly disabled" in str(e):
-                current_n_ctx = getattr(llm, "n_ctx", "unknown")
+        except (RuntimeError, KeyError, ValueError, Exception) as e:
+            # Check if the error is due to an invalid/closed model
+            if _bsai_is_model_valid(llm) and "Context Shift is explicitly disabled" not in str(e):
+                # Model seems valid but inference failed for another reason
+                if "Context Shift" in str(e):
+                    current_n_ctx = getattr(llm, "n_ctx", "unknown")
+                    raise RuntimeError(
+                        "Context Shift is disabled by the C++ backend "
+                        "(M-RoPE models do not support context sliding window).\n"
+                        f"Current n_ctx = {current_n_ctx}, cannot fit the full conversation.\n"
+                        "Please increase 'context_length' in BSAI_H3_ModelLoader:\n"
+                        "  - Text only: recommend 16384\n"
+                        "  - With images/video: recommend 32768 or higher\n"
+                        f"Original error: {e}"
+                    ) from e
+                raise
+
+            # Model is invalid → try auto-reload and retry once
+            print(f"[BSAI H3] Inference failed ({type(e).__name__}: {e}), attempting auto-reload...")
+            if _BSAI_QwenStorage.settings is not None:
+                llm = _BSAI_QwenStorage.load(_BSAI_QwenStorage.settings)
+                # Re-read n_ctx after reload
+                try:
+                    n_ctx_raw = getattr(llm, "n_ctx", 4096)
+                    n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
+                except Exception:
+                    n_ctx = 4096
+                safe_max_tokens = min(max_tokens_val, n_ctx - est_prompt_tokens - 256)
+                if safe_max_tokens < 512:
+                    safe_max_tokens = min(max_tokens_val, max(256, n_ctx // 4))
+                params["max_tokens"] = safe_max_tokens
+                print("[BSAI H3] Model reloaded, retrying inference...")
+                out = _bsai_call_chat_completion(llm, messages=messages, params=params)
+            else:
                 raise RuntimeError(
-                    "Context Shift is disabled by the C++ backend "
-                    "(M-RoPE models do not support context sliding window).\n"
-                    f"Current n_ctx = {current_n_ctx}, cannot fit the full conversation.\n"
-                    "Please increase 'context_length' in BSAI_H3_ModelLoader:\n"
-                    "  - Text only: recommend 16384\n"
-                    "  - With images/video: recommend 32768 or higher\n"
-                    f"Original error: {e}"
+                    "Model became invalid during inference and no cached settings "
+                    "available for auto-reload. Please re-run BSAI_H3_ModelLoader."
                 ) from e
-            raise
 
         try:
             text = out["choices"][0]["message"]["content"]
