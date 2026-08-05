@@ -263,13 +263,33 @@ def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
     )
 
 
+def _bsai_is_model_valid(llm):
+    """Check if a Llama model object is still valid (not closed/unloaded).
+
+    After unload(), the model's internal _ctx is set to None, causing
+    KeyError: None or segfault when accessed. This function detects that.
+    """
+    if llm is None:
+        return False
+    try:
+        # n_ctx() will fail if the model has been closed
+        n_ctx_raw = getattr(llm, "n_ctx", None)
+        if n_ctx_raw is None:
+            return False
+        if callable(n_ctx_raw):
+            _ = n_ctx_raw()
+        return True
+    except Exception:
+        return False
+
+
 # ============================================================
-# 模型存储与管理
+# Model Storage & Management
 # ============================================================
 
 class _BSAI_QwenStorage:
     model = None
-    settings = None
+    settings = None  # Retained after unload() for auto-reload
 
     @classmethod
     def unload(cls):
@@ -279,30 +299,36 @@ class _BSAI_QwenStorage:
         except Exception:
             pass
         cls.model = None
-        cls.settings = None
+        # Keep settings for auto-reload on next load() call
         gc.collect()
         mm.soft_empty_cache()
 
     @classmethod
     def load(cls, config):
         if Llama is None:
-            raise RuntimeError("未检测到 llama-cpp-python（llama_cpp）。请先安装该依赖。")
+            raise RuntimeError("llama-cpp-python (llama_cpp) not detected. Please install this dependency.")
 
-        if cls.model and cls.settings == config:
-            return cls.model
+        # Check if cached model is still valid and matches config
+        if cls.model is not None and cls.settings == config:
+            if _bsai_is_model_valid(cls.model):
+                return cls.model
+            # Model was closed externally (e.g. by UnloadModel), reload
+            cls.model = None
 
-        cls.unload()
+        # If settings differ, do a full unload first
+        if cls.model is not None:
+            cls.unload()
 
         model_path = os.path.join(folder_paths.models_dir, "LLM", config["model"])
         if not os.path.exists(model_path):
-            raise FileNotFoundError(f"找不到模型文件：{model_path}")
+            raise FileNotFoundError(f"Model file not found: {model_path}")
 
-        mmproj = config.get("mmproj", "无")
+        mmproj = config.get("mmproj", "None")
         mmproj_path = None
-        if mmproj and mmproj != "无":
+        if mmproj and mmproj not in ("None", "无", ""):
             mmproj_path = os.path.join(folder_paths.models_dir, "LLM", mmproj)
             if not os.path.exists(mmproj_path):
-                raise FileNotFoundError(f"找不到 mmproj 文件：{mmproj_path}")
+                raise FileNotFoundError(f"mmproj file not found: {mmproj_path}")
 
         family = config["family"]
         think = config.get("think", False)
@@ -700,6 +726,19 @@ Requires BSAI H3 Model Loader node.
         image_5=None,
     ):
         llm = qwen_model
+
+        # ── Auto-recovery: if model was unloaded (e.g. by BSAI_H3_UnloadModel
+        # in a previous run), ComfyUI's cache may still hold the closed model
+        # object. Detect this and reload automatically. ──
+        if not _bsai_is_model_valid(llm):
+            if _BSAI_QwenStorage.settings is not None:
+                print("[BSAI H3] Model was unloaded, auto-reloading from cached settings...")
+                llm = _BSAI_QwenStorage.load(_BSAI_QwenStorage.settings)
+            else:
+                raise RuntimeError(
+                    "Model is invalid (closed/unloaded) and no cached settings "
+                    "available for auto-reload. Please re-run BSAI_H3_ModelLoader."
+                )
 
         if not hasattr(llm, "create_chat_completion"):
             raise TypeError(
