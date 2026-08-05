@@ -14,9 +14,17 @@
 
 | 节点名称 | 功能 |
 |-|-|
-| **BSAI MiniMAX H3 Prompt** | 核心节点：接收用户提示词，输出优化后的 H3 提示词 |
+| **BSAI MiniMAX H3 Prompt** | 核心节点：使用本地模型，接收用户提示词，输出优化后的 H3 提示词 |
 | **BSAI H3 Model Loader** | 加载本地 GGUF 大语言模型（基于 llama-cpp-python） |
 | **BSAI H3 Unload Model** | 卸载模型释放显存 |
+| **BSAI H3 Remote API** | 远程 API 调用：通过 OpenAI/DashScope 兼容接口优化提示词，无需本地模型 |
+
+### 两种使用模式
+
+| 模式 | 节点组合 | 显存占用 | 适用场景 |
+|-|-|-|-|
+| **本地模型模式** | Model Loader + H3 Prompt + Unload Model | 高（需加载 GGUF 模型） | 离线环境、隐私敏感、无 API 额度 |
+| **远程 API 模式** | H3 Remote API（独立使用） | 零（不加载本地模型） | 节省显存给视频生成、使用更强云端模型 |
 
 ### 提示词优化覆盖的维度
 
@@ -42,7 +50,11 @@ git clone https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt.git
 2. 安装依赖：
 
 ```bash
+# 本地模型模式（必需）
 pip install llama-cpp-python
+
+# 远程 API 模式（必需）
+pip install requests
 ```
 
 > 如需 GPU 加速，请参考 [llama-cpp-python 安装指南](https://github.com/abetlen/llama-cpp-python#installation-with-hardware-acceleration)
@@ -55,7 +67,9 @@ pip install llama-cpp-python
 
 ## 使用方法
 
-### 1. 准备模型
+### 模式一：本地模型
+
+#### 1. 准备模型
 
 下载 GGUF 格式的大语言模型文件（推荐 Qwen3 系列），放到：
 
@@ -65,15 +79,71 @@ ComfyUI/models/LLM/
 
 如需多模态（视觉理解），还需下载对应的 mmproj 文件放到同一目录。
 
-### 2. 工作流连接
+#### 2. 工作流连接
 
 ```
-BSAI H3 Model Loader ──qwen模型──> BSAI MiniMAX H3 Prompt ──提示词输出──> 视频生成节点
+BSAI H3 Model Loader ──qwen_model──> BSAI MiniMAX H3 Prompt ──prompt_output──> 视频生成节点
+                                         |
+                                    (可选) image_1~5
 ```
 
-### 3. Parameter Reference
+### 模式二：远程 API
 
-#### BSAI MiniMAX H3 Prompt Node
+无需加载本地模型，直接调用云端 LLM API 进行提示词优化，将显存全部留给视频生成。
+
+#### 1. 工作流连接
+
+```
+BSAI H3 Remote API ──prompt_output──> 视频生成节点
+      |
+ (可选) image_1~5
+```
+
+> 该节点为独立节点，不需要连接 Model Loader，不占用任何显存。
+
+#### 2. 配置 API
+
+在节点参数中填写：
+
+| 参数 | 说明 |
+|-|-|
+| **api_base_url** | API 基础地址（不含 `/chat/completions` 后缀） |
+| **api_key** | 你的 API 密钥 |
+| **model_name** | 调用的模型名称 |
+
+#### 3. 支持的 API 服务商
+
+| 服务商 | api_base_url | 推荐模型 | 多模态 |
+|-|-|-|-|
+| **DashScope（阿里云）** | `https://dashscope.aliyuncs.com/compatible-mode/v1` | qwen-plus, qwen-max, qwen-vl-plus | qwen-vl-plus |
+| **OpenAI** | `https://api.openai.com/v1` | gpt-4o, gpt-4o-mini, gpt-4-turbo | gpt-4o, gpt-4o-mini |
+| **Ollama（本地）** | `http://localhost:11434/v1` | qwen2.5:14b, llama3:8b 等 | 视模型而定 |
+| **LM Studio** | `http://localhost:1234/v1` | 已加载的模型 | 视模型而定 |
+| **vLLM** | `http://localhost:8000/v1` | 部署的模型 | 视模型而定 |
+| **SiliconFlow** | `https://api.siliconflow.cn/v1` | Qwen/Qwen2.5-72B 等 | 视模型而定 |
+
+> 任何兼容 OpenAI Chat Completions API 格式的服务均可使用。
+
+#### 4. 远程 API 使用示例
+
+以 DashScope qwen-plus 为例：
+
+1. 在 [阿里云 DashScope](https://dashscope.console.aliyun.com/) 获取 API Key
+2. 节点参数设置：
+   - `api_base_url`: `https://dashscope.aliyuncs.com/compatible-mode/v1`
+   - `api_key`: `sk-xxxxxxxxxxxx`
+   - `model_name`: `qwen-plus`
+3. 在 `user_prompt` 输入提示词，点击生成
+
+使用多模态模型分析图片：
+
+1. 选择支持视觉的模型（如 `qwen-vl-plus` 或 `gpt-4o`）
+2. 将 LoadImage 节点输出连接到 `image_1`~`image_5` 端口
+3. 输入提示词，模型会同时分析图片和文本
+
+## 参数参考
+
+### BSAI MiniMAX H3 Prompt Node（本地模型）
 
 | Parameter | Type | Description |
 |-|-|-|
@@ -87,31 +157,66 @@ BSAI H3 Model Loader ──qwen模型──> BSAI MiniMAX H3 Prompt ──提示
 | max_tokens | Int | Default 4096, auto-limited to context length |
 | temperature | Float | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | Nucleus sampling probability (0.0-1.0) |
-| seed | Int | Random seed |
+| top_k | Int | Top-K sampling (0=disabled) |
+| repeat_penalty | Float | Repetition penalty (0.5-2.0) |
+| frequency_penalty | Float | Frequency penalty (0.0-2.0) |
+| presence_penalty | Float | Presence penalty (0.0-2.0) |
+| seed | Int | Random seed (0=random) |
 | image_1~5 | Optional | Up to 5 reference images sent to vision model for analysis |
 
-#### BSAI H3 Model Loader Node
+> **注意**：`top_k`、`repeat_penalty`、`frequency_penalty`、`presence_penalty` 参数仅在 UI 中显示，实际推理时仅传递 `max_tokens`、`temperature`、`top_p`、`seed` 核心参数，以避免 Qwen-VL 模型的 C++ 层段错误。
+
+### BSAI H3 Remote API Node（远程 API）
+
+| Parameter | Type | Default | Description |
+|-|-|-|-|
+| user_prompt | Text | "" | User's original creative prompt description |
+| api_base_url | Text | `https://dashscope.aliyuncs.com/compatible-mode/v1` | OpenAI-compatible API base URL |
+| api_key | Text | "" | API key for authentication |
+| model_name | Text | `qwen-plus` | Model name (e.g. gpt-4o, qwen-plus, qwen-max, qwen-vl-plus) |
+| generation_mode | Dropdown | Text to Video | Text to Video / Image to Video / Multimodal Fusion |
+| video_duration | Int | 10 | H3 supports 4-15 seconds |
+| aspect_ratio | Dropdown | 16:9 | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
+| no_bgm | Bool | False | If checked, adds 'non_diegetic_music: N/A' |
+| extra_requirements | Text | "" | Optional extra style preferences |
+| max_tokens | Int | 4096 | Max generation tokens |
+| temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
+| top_p | Float | 0.9 | Nucleus sampling probability (0.0-1.0) |
+| seed | Int | 0 | Random seed (0=random, >0=fixed) |
+| image_1~5 | Optional | - | Up to 5 reference images (requires multimodal model) |
+
+### BSAI H3 Model Loader Node
 
 | Parameter | Type | Description |
 |-|-|-|
 | model_family | Dropdown | Qwen3-VL / Qwen3.5-VL / Qwen3.6-VL / Gemma4 |
 | model_file | Dropdown | Model file from models/LLM/ directory |
 | mmproj | Dropdown | Multimodal mmproj file; 'None' for text-only |
+| enable_thinking | Bool | Enable thinking/reasoning mode |
 | context_length | Int | Recommend 16384+ |
 | gpu_layers | Int | -1=all on GPU; auto-reduces if VRAM insufficient |
 
-### Stability Mechanisms
+## 稳定性机制
 
-Built-in safeguards for stable operation across VRAM conditions:
+本地模型模式内置多重保护机制，确保在不同显存条件下稳定运行：
 
-- **VRAM Auto-Detection**: Checks available VRAM before loading; auto-reduces GPU layers if insufficient
-- **Flash Attention**: Auto-detected and enabled to reduce VRAM usage
-- **max_tokens Safety Limit**: Auto-limits generation tokens based on context length and prompt size
-- **Minimal Parameters**: Only passes core params (max_tokens/temperature/top_p/seed) to avoid C++ segfaults
+- **VRAM 自动检测**：加载前检测可用显存，不足时自动降低 GPU 层数
+- **Flash Attention**：自动检测并启用，减少显存占用
+- **max_tokens 安全限制**：根据上下文长度和提示词大小自动限制生成 token 数
+- **最小参数传递**：仅传递核心参数（max_tokens/temperature/top_p/seed），避免 C++ 层段错误
+- **模型有效性检测**：推理前检测模型是否已卸载，自动从缓存设置重载
+- **推理失败自动恢复**：推理出错时自动重载模型并重试一次
 
-### 4. Usage Example
+远程 API 模式无需上述机制，由云端服务保障稳定性，内置：
+- **超时保护**：120 秒请求超时，避免工作流卡死
+- **错误处理**：连接错误、HTTP 错误、JSON 解析错误均有清晰提示
+- **多模态支持**：自动检测图片输入，使用 OpenAI 多模态 content 格式
 
-Enter a simple description in `user_prompt`:
+## 使用示例
+
+### 示例 1：纯文字生成视频
+
+在 `user_prompt` 输入：
 
 ```
 一个穿汉服的女子在樱花庭院里舞剑
@@ -129,7 +234,29 @@ Enter a simple description in `user_prompt`:
 8-10 秒：切镜到特写，剑光一闪，慢动作，樱花被剑气激得四散。
 ```
 
+### 示例 2：图片生成视频（多模态）
+
+1. 将 LoadImage 节点输出连接到 `image_1`
+2. `generation_mode` 选择 `Image to Video`
+3. 输入提示词：
+
+```
+让这个角色从持剑起势到舞剑完毕，自然衔接
+```
+
+模型会自动分析图片中的人物外观、服装、场景，并生成符合 H3 规范的提示词。
+
+### 示例 3：远程 API + 多模态
+
+1. 使用 `BSAI H3 Remote API` 节点
+2. `model_name` 设为 `gpt-4o` 或 `qwen-vl-plus`（多模态模型）
+3. 连接图片到 `image_1`~`image_5`
+4. `generation_mode` 选择 `Multimodal Fusion`
+5. 输入提示词，云端模型会同时分析图片和文本
+
 ## 支持的模型
+
+### 本地模型（GGUF 格式）
 
 推荐使用以下 GGUF 模型（需放到 `ComfyUI/models/LLM/`）：
 
@@ -137,6 +264,14 @@ Enter a simple description in `user_prompt`:
 - **Qwen3.5-VL** — 多模态，需配 mmproj
 - **Qwen3-VL** — 多模态，需配 mmproj
 - **Gemma4** — 多模态，需配 mmproj，需 llama-cpp-python 0.3.36+
+
+### 远程 API 模型
+
+| 服务商 | 文本模型 | 多模态模型 |
+|-|-|-|
+| DashScope | qwen-plus, qwen-max, qwen-turbo | qwen-vl-plus, qwen-vl-max |
+| OpenAI | gpt-4o, gpt-4o-mini, gpt-4-turbo | gpt-4o, gpt-4o-mini |
+| SiliconFlow | Qwen/Qwen2.5-72B 等 | 视模型而定 |
 
 ## 技术细节
 
@@ -150,6 +285,13 @@ Enter a simple description in `user_prompt`:
 4. **三类生成模式**：纯文字、图生视频、多模态融合
 5. **常见坑位避免**：6 条易错点
 6. **输出要求**：8 条格式约束
+
+### 图片处理
+
+- 支持 ComfyUI IMAGE 张量输入（自动转换为 base64 JPEG）
+- 自动缩放至最大 1024px，压缩为 JPEG quality 85
+- 多模态模型使用 OpenAI 兼容的 `image_url` content 格式
+- 最多支持 5 张图片同时分析
 
 ### H3 模型参数参考
 
@@ -170,5 +312,6 @@ MIT License
 ## 致谢
 
 - 提示词规范来源：[MiniMax H3 模型使用手册](https://vrfi1sk8a0.feishu.cn/wiki/FIWjwgL33ipnkekzk30crmKUnIh)
-- 模型推理：[llama-cpp-python](https://github.com/abetlen/llama-cpp-python)
+- 本地模型推理：[llama-cpp-python](https://github.com/abetlen/llama-cpp-python)
+- 远程 API 协议：[OpenAI API](https://platform.openai.com/docs/api-reference)
 - 平台：[ComfyUI](https://github.com/comfyanonymous/ComfyUI)
