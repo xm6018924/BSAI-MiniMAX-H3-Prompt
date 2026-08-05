@@ -212,9 +212,46 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 - **错误处理**：连接错误、HTTP 错误、JSON 解析错误均有清晰提示
 - **多模态支持**：自动检测图片输入，使用 OpenAI 多模态 content 格式
 
+## 提示词输出格式
+
+系统提示词已对齐 [H3 官方 Prompt Writing Guide](https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills/h3-prompt-writing)，输出严格遵循官方三字段结构：
+
+| 字段 | 说明 |
+|-|-|
+| `integrated_multimodal_description` | 画面描述：视觉风格、镜头、主体、动作、台词、叙事性声音 |
+| `overall_soundscape` | 环境音：氛围声、动作声、非语言人声（1-4句） |
+| `non_diegetic_music` | 背景音乐：仅观众可听的音乐描述，无则填 N/A |
+
+### 官方格式特性
+
+- **镜头标记**：`[Shot 1]` 开头无时间戳，后续 `[Shot 2] At 00:03.500, ...`
+- **运镜规范**：Motion Type + Amplitude + Speed（如 `Push In with small amplitude at slow speed`）
+- **台词格式**：`(S1) says: <d>[Chinese] 你来了，剑等你好久了。</d>` — 台词保留原始语言
+- **画面文字**：可见文字用英文双引号包裹，如 `"营业中"`
+- **图片对齐指令**：I2VA/FL2VA/L2VA 模式在首行输出帧对齐指令
+- **跨镜头台词**：使用 `<scenetrans>` 标记连接点
+
+### 双语输出
+
+每次优化输出包含中英文两个版本，用分隔线区分：
+
+```
+---中文版本---
+
+integrated_multimodal_description: [Shot 1] 实拍，电影感，中景镜头...
+overall_soundscape: 樱花庭院中微风轻拂...
+non_diegetic_music: 古风配乐...
+
+---English Version---
+
+integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium shot...
+overall_soundscape: A gentle breeze rustles through the cherry blossom courtyard...
+non_diegetic_music: Traditional Chinese instrumental music...
+```
+
 ## 使用示例
 
-### 示例 1：纯文字生成视频
+### 示例 1：纯文字生成视频（T2VA）
 
 在 `user_prompt` 输入：
 
@@ -222,19 +259,17 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 一个穿汉服的女子在樱花庭院里舞剑
 ```
 
-优化后输出：
+优化后输出（节选英文版本）：
 
 ```
-【核心创意】
-一位穿汉服的年轻女子在樱花纷飞的庭院里舞剑，古典国风，电影质感，10秒，16:9横版。
+---English Version---
 
-【画面过程描述】
-0-3 秒：全景，女子从画面左侧缓步走入樱花庭院，背景虚化，没有对白，只有脚步声。
-3-8 秒：切镜到女子的中景，她拔出长剑，缓缓起势，樱花瓣从树上飘落。镜头推进。
-8-10 秒：切镜到特写，剑光一闪，慢动作，樱花被剑气激得四散。
+integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a young woman in a flowing Hanfu dress standing amid blooming cherry blossoms. The camera pushes in with small amplitude at slow speed as she draws a slender sword. The woman with a calm, clear voice (S1) says: <d>[Chinese] 你来了，剑等你好久了。</d> [Shot 2] At 00:04.000, the camera cuts to a close-up as she begins her sword dance. Petals scatter with each movement, backlit by warm afternoon light.
+overall_soundscape: A gentle breeze rustles the cherry blossom branches while petals drift to the ground. The sword swishes through the air with each stroke, and soft footsteps tap against the stone path.
+non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo, building slightly in intensity during the sword dance before fading.
 ```
 
-### 示例 2：图片生成视频（多模态）
+### 示例 2：图片生成视频（I2VA）
 
 1. 将 LoadImage 节点输出连接到 `image_1`
 2. `generation_mode` 选择 `Image to Video`
@@ -244,7 +279,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 让这个角色从持剑起势到舞剑完毕，自然衔接
 ```
 
-模型会自动分析图片中的人物外观、服装、场景，并生成符合 H3 规范的提示词。
+模型会自动分析图片并生成首帧对齐指令和完整提示词。
 
 ### 示例 3：远程 API + 多模态
 
