@@ -88,6 +88,7 @@ BSAI H3 Model Loader ──qwen模型──> BSAI MiniMAX H3 Prompt ──提示
 | 温度 | 浮点 | LLM 采样温度（0.0-2.0） |
 | top_p | 浮点 | 核采样概率（0.0-1.0） |
 | seed | 整数 | 随机种子 |
+| 图片1~5 | 可选输入 | 最多支持5张参考图片，发送给视觉模型分析后融入提示词 |
 
 #### BSAI H3 Model Loader 节点
 

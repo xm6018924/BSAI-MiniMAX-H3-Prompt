@@ -9,11 +9,23 @@ GitHub: https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt
 """
 
 import os
+import io
 import gc
+import base64
 import inspect
 
 import folder_paths
 import comfy.model_management as mm
+
+try:
+    import torch
+except Exception:
+    torch = None
+
+try:
+    from PIL import Image as PILImage
+except Exception:
+    PILImage = None
 
 try:
     from llama_cpp import Llama
@@ -107,6 +119,67 @@ def _bsai_reset_llm_state(llm):
             llm.n_tokens = 0
     except Exception:
         pass
+
+
+def _bsai_image_tensor_to_data_uri(image_input):
+    """将 ComfyUI IMAGE 张量转换为 base64 JPEG data URI。
+
+    ComfyUI IMAGE 格式: torch.Tensor, shape=[B, H, W, C], dtype=float32, 值域[0,1]
+    返回 list[str]，每个元素是一张图的 data URI。
+    """
+    if image_input is None or PILImage is None or torch is None:
+        return []
+
+    images = image_input
+    # 单张图可能无 batch 维度，统一添加
+    if images.ndim == 3:
+        images = images.unsqueeze(0)
+
+    data_uris = []
+    for i in range(images.shape[0]):
+        img_tensor = images[i]
+        # [H, W, C] float32 [0,1] → numpy uint8 [0,255]
+        img_np = (img_tensor.cpu().numpy() * 255.0).clip(0, 255).astype("uint8")
+        pil_img = PILImage.fromarray(img_np)
+        buf = io.BytesIO()
+        # 限制最大边长，减少 token 消耗
+        max_side = 1024
+        if max(pil_img.size) > max_side:
+            ratio = max_side / max(pil_img.size)
+            pil_img = pil_img.resize(
+                (int(pil_img.size[0] * ratio), int(pil_img.size[1] * ratio)),
+                PILImage.LANCZOS,
+            )
+        pil_img.save(buf, format="JPEG", quality=85)
+        b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+        data_uris.append(f"data:image/jpeg;base64,{b64}")
+    return data_uris
+
+
+def _bsai_build_multimodal_content(text, image_data_uris, image_label):
+    """构建多模态 user message content（OpenAI 兼容格式）。
+
+    text: 纯文本部分
+    image_data_uris: list[str] data URI
+    image_label: 每张图的标注前缀，如 "图片1"
+    返回 list[dict]，每个 dict 是 {"type": "text"/"image_url", ...}
+    """
+    content = []
+    if text:
+        content.append({"type": "text", "text": text})
+    for idx, uri in enumerate(image_data_uris):
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": uri},
+            }
+        )
+        # 在图片后追加标注文本，帮助模型理解图片编号
+        label = f"{image_label}{idx + 1}" if image_label else f"图片{idx + 1}"
+        content.append(
+            {"type": "text", "text": f"（以上是 {label}）"}
+        )
+    return content
 
 
 def _bsai_get_free_vram_bytes():
@@ -583,6 +656,13 @@ class BSAI_MiniMAX_H3_Prompt:
                 "频率惩罚": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "存在惩罚": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
+            },
+            "optional": {
+                "图片1": ("IMAGE", {"tooltip": "可选：参考图片1，将发送给视觉模型分析"}),
+                "图片2": ("IMAGE", {"tooltip": "可选：参考图片2"}),
+                "图片3": ("IMAGE", {"tooltip": "可选：参考图片3"}),
+                "图片4": ("IMAGE", {"tooltip": "可选：参考图片4"}),
+                "图片5": ("IMAGE", {"tooltip": "可选：参考图片5"}),
             }
         }
 
@@ -613,6 +693,11 @@ class BSAI_MiniMAX_H3_Prompt:
         频率惩罚,
         存在惩罚,
         seed,
+        图片1=None,
+        图片2=None,
+        图片3=None,
+        图片4=None,
+        图片5=None,
     ):
         llm = qwen模型
 
@@ -644,16 +729,64 @@ class BSAI_MiniMAX_H3_Prompt:
 
         user_message_parts.append(f"【模式提示】{mode_hints.get(生成模式, '')}")
         user_message_parts.append(f"【用户原始提示词】\n{user_prompt}")
+
+        # ── 收集图片输入 ──
+        image_inputs = [图片1, 图片2, 图片3, 图片4, 图片5]
+        collected_images = []  # list of (label, data_uri_list)
+        total_image_count = 0
+        for idx, img in enumerate(image_inputs):
+            if img is None:
+                continue
+            label = f"图片{idx + 1}"
+            data_uris = _bsai_image_tensor_to_data_uri(img)
+            if data_uris:
+                collected_images.append((label, data_uris))
+                total_image_count += len(data_uris)
+
+        if total_image_count > 0:
+            image_summary = "、".join(
+                f"{label}（{len(uris)}张）" for label, uris in collected_images
+            )
+            user_message_parts.append(
+                f"【参考图片】已上传 {total_image_count} 张图片：{image_summary}。\n"
+                "请在【参考素材说明】中为每张图片写明编号和用途。"
+                "结合图片内容分析主体外观、场景风格、构图等，融入提示词优化。"
+            )
+            # 切换为多模态生成模式提示
+            if 生成模式 == "纯文字生成视频":
+                user_message_parts.append(
+                    "【注意】检测到上传了图片，请按「上传图片生成视频」或「上传多模态素材融合」模式优化提示词。"
+                )
+
         user_message_parts.append(
             "\n请根据以上信息，按照 H3 提示词规范优化为完整的结构化提示词。直接输出优化后的提示词，不要添加任何解释。"
         )
 
         user_message = "\n".join(user_message_parts)
 
-        messages = [
-            {"role": "system", "content": _H3_SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ]
+        # ── 构建 messages：有图片时使用多模态 content 格式 ──
+        if total_image_count > 0:
+            # 多模态格式：文本 + 图片交替
+            user_content = []
+            user_content.append({"type": "text", "text": user_message})
+            for label, uris in collected_images:
+                for uri in uris:
+                    user_content.append(
+                        {"type": "image_url", "image_url": {"url": uri}}
+                    )
+                    user_content.append(
+                        {"type": "text", "text": f"（以上是 {label}）"}
+                    )
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_content},
+            ]
+            print(f"[BSAI H3] 多模态推理：已附带 {total_image_count} 张图片")
+        else:
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ]
 
         try:
             max_tokens_val = int(最大生成token)
