@@ -395,7 +395,7 @@ class _BSAI_QwenStorage:
 # ============================================================
 
 class BSAI_H3_ModelLoader:
-    """加载本地 GGUF 大语言模型，供 H3 提示词优化节点使用。"""
+    """Load a local GGUF LLM model for H3 prompt optimization."""
 
     @classmethod
     def INPUT_TYPES(s):
@@ -406,7 +406,7 @@ class BSAI_H3_ModelLoader:
             if "mmproj" not in f.lower()
             and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
         ]
-        mmproj_list = ["无"] + [
+        mmproj_list = ["None"] + [
             f
             for f in all_files
             if "mmproj" in f.lower()
@@ -414,55 +414,55 @@ class BSAI_H3_ModelLoader:
         ]
 
         if not model_list:
-            model_list = ["（请把模型放到 models/LLM）"]
+            model_list = ["(Place models in models/LLM)"]
 
         return {
             "required": {
-                "模型系列": (
+                "model_family": (
                     ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Gemma4"],
-                    {"default": "Qwen3.6-VL"},
+                    {"default": "Qwen3.6-VL", "tooltip": "Model family / 模型系列"},
                 ),
-                "主模型": (
+                "model_file": (
                     model_list,
-                    {"tooltip": "主模型文件（建议 .gguf）放到 ComfyUI/models/LLM/"},
+                    {"tooltip": "Main model file (.gguf recommended) in ComfyUI/models/LLM/ / 主模型文件"},
                 ),
-                "视觉投影mmproj": (
+                "mmproj": (
                     mmproj_list,
-                    {"default": "无", "tooltip": "多模态需要 mmproj；纯文本可选「无」。"},
+                    {"default": "None", "tooltip": "Multimodal mmproj file; 'None' for text-only / 视觉投影文件"},
                 ),
-                "启用思考": ("BOOLEAN", {"default": False}),
-                "上下文长度": (
+                "enable_thinking": ("BOOLEAN", {"default": False, "tooltip": "Enable thinking/reasoning mode / 启用思考模式"}),
+                "context_length": (
                     "INT",
-                    {"default": 16384, "min": 1024, "max": 327680, "step": 256},
+                    {"default": 16384, "min": 1024, "max": 327680, "step": 256, "tooltip": "Context length, recommend 16384+ / 上下文长度，建议16384以上"},
                 ),
-                "GPU层数": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=全部上GPU。显存不足时自动降低层数防止崩溃。大模型(35B)建议手动设20-25"}),
+                "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=all on GPU. Auto-reduces if VRAM insufficient / GPU层数，-1为全部上GPU"}),
             }
         }
 
     RETURN_TYPES = ("BSAI_QWEN_MODEL",)
-    RETURN_NAMES = ("qwen模型",)
+    RETURN_NAMES = ("qwen_model",)
     FUNCTION = "load"
     CATEGORY = "BSAI"
-    DESCRIPTION = "加载本地 GGUF 大语言模型，供 H3 提示词优化节点使用。"
+    DESCRIPTION = "Load a local GGUF LLM model for H3 prompt optimization."
 
-    def load(self, 模型系列, 主模型, 视觉投影mmproj, 启用思考, 上下文长度, GPU层数):
-        if 主模型.startswith("（请把模型放到"):
-            raise RuntimeError("未找到可用模型文件。请把模型放到 ComfyUI/models/LLM/ 后重启。")
+    def load(self, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers):
+        if model_file.startswith("(Place models"):
+            raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
 
-        if 模型系列 in ("Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Gemma4"):
-            if 视觉投影mmproj == "无":
+        if model_family in ("Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Gemma4"):
+            if mmproj == "None":
                 raise RuntimeError(
-                    f"{模型系列} 是多模态模型，需要选择视觉投影mmproj文件。\n"
-                    "请在 '视觉投影mmproj' 选项中选择对应的 mmproj 文件。"
+                    f"{model_family} is a multimodal model that requires an mmproj file.\n"
+                    "Please select the corresponding mmproj file in the 'mmproj' option."
                 )
 
         config = {
-            "family": 模型系列,
-            "model": 主模型,
-            "mmproj": 视觉投影mmproj,
-            "think": bool(启用思考),
-            "n_ctx": int(上下文长度),
-            "n_gpu_layers": int(GPU层数),
+            "family": model_family,
+            "model": model_file,
+            "mmproj": mmproj,
+            "think": bool(enable_thinking),
+            "n_ctx": int(context_length),
+            "n_gpu_layers": int(gpu_layers),
         }
         model = _BSAI_QwenStorage.load(config)
         return (model,)
@@ -605,168 +605,167 @@ _H3_SYSTEM_PROMPT = """你是 MiniMax H3 视频模型的提示词优化专家。
 # ============================================================
 
 class BSAI_MiniMAX_H3_Prompt:
-    """MiniMax H3 提示词优化节点
+    """MiniMax H3 Prompt Optimizer Node
 
-    根据飞书文档《MiniMax H3 模型使用手册》的规范，
-    将用户手动输入的提示词优化为符合 H3 三段公式（参考素材说明 + 核心创意 + 画面过程说明）的完整提示词。
+    Optimizes user prompts into H3-compliant structured prompts following
+    the H3 formula: Reference Description + Core Creative + Scene Process.
     """
 
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
-                "qwen模型": ("BSAI_QWEN_MODEL",),
-                "用户提示词": (
+                "qwen_model": ("BSAI_QWEN_MODEL",),
+                "user_prompt": (
                     "STRING",
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "用户手动输入的原始提示词，节点会根据 H3 规范自动优化",
+                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
                     },
                 ),
-                "生成模式": (
-                    ["纯文字生成视频", "上传图片生成视频", "上传多模态素材融合"],
-                    {"default": "纯文字生成视频", "tooltip": "选择视频生成模式，影响提示词优化方向"},
+                "generation_mode": (
+                    ["Text to Video", "Image to Video", "Multimodal Fusion"],
+                    {"default": "Text to Video", "tooltip": "Video generation mode / 生成模式"},
                 ),
-                "视频时长": (
+                "video_duration": (
                     "INT",
-                    {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 支持 4-15 秒输出"},
+                    {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
                 ),
-                "宽高比": (
+                "aspect_ratio": (
                     ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"],
-                    {"default": "16:9", "tooltip": "输出视频宽高比"},
+                    {"default": "16:9", "tooltip": "Output video aspect ratio / 宽高比"},
                 ),
-                "不需要背景音乐": (
+                "no_bgm": (
                     "BOOLEAN",
-                    {"default": False, "tooltip": "勾选后会在提示词末尾添加「非叙事性音乐：N/A」"},
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
                 ),
-                "补充要求": (
+                "extra_requirements": (
                     "STRING",
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "可选：额外的优化要求或风格偏好（如特定运镜、色调、节奏等）",
+                        "tooltip": "Optional: extra style preferences / 补充要求",
                     },
                 ),
-                "最大生成token": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "会自动限制为不超过上下文长度"}),
-                "温度": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
+                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "top_k": ("INT", {"default": 20, "min": 0, "max": 200, "step": 1}),
-                "重复惩罚": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "step": 0.01}),
-                "频率惩罚": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
-                "存在惩罚": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "repeat_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "step": 0.01}),
+                "frequency_penalty": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "presence_penalty": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
             },
             "optional": {
-                "图片1": ("IMAGE", {"tooltip": "可选：参考图片1，将发送给视觉模型分析"}),
-                "图片2": ("IMAGE", {"tooltip": "可选：参考图片2"}),
-                "图片3": ("IMAGE", {"tooltip": "可选：参考图片3"}),
-                "图片4": ("IMAGE", {"tooltip": "可选：参考图片4"}),
-                "图片5": ("IMAGE", {"tooltip": "可选：参考图片5"}),
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
             }
         }
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("提示词输出",)
+    RETURN_NAMES = ("prompt_output",)
     FUNCTION = "optimize_prompt"
     CATEGORY = "BSAI"
     DESCRIPTION = """
-根据 MiniMax H3 模型使用手册，将用户手动输入的提示词优化为符合 H3 规范的完整提示词。
-提示词公式：完整提示词 = 参考素材说明 + 核心创意 + 画面过程说明。
-需要配合 BSAI H3 Model Loader 节点使用。
+Optimize user prompts into H3-compliant structured prompts.
+H3 formula: Reference Description + Core Creative + Scene Process.
+Requires BSAI H3 Model Loader node.
 """
 
     def optimize_prompt(
         self,
-        qwen模型,
-        用户提示词,
-        生成模式,
-        视频时长,
-        宽高比,
-        不需要背景音乐,
-        补充要求,
-        最大生成token,
-        温度,
+        qwen_model,
+        user_prompt,
+        generation_mode,
+        video_duration,
+        aspect_ratio,
+        no_bgm,
+        extra_requirements,
+        max_tokens,
+        temperature,
         top_p,
         top_k,
-        重复惩罚,
-        频率惩罚,
-        存在惩罚,
+        repeat_penalty,
+        frequency_penalty,
+        presence_penalty,
         seed,
-        图片1=None,
-        图片2=None,
-        图片3=None,
-        图片4=None,
-        图片5=None,
+        image_1=None,
+        image_2=None,
+        image_3=None,
+        image_4=None,
+        image_5=None,
     ):
-        llm = qwen模型
+        llm = qwen_model
 
         if not hasattr(llm, "create_chat_completion"):
             raise TypeError(
-                f"无效的模型输入：期望 Llama 模型对象，但收到 {type(llm).__name__} 类型。"
-                "请检查工作流连接，确保 'qwen模型' 输入连接到 BSAI_H3_ModelLoader 的输出。"
+                f"Invalid model input: expected Llama model object, got {type(llm).__name__}."
+                "Check workflow connections: 'qwen_model' input should connect to BSAI_H3_ModelLoader output."
             )
 
-        user_prompt = (用户提示词 or "").strip()
-        if not user_prompt:
-            raise ValueError("用户提示词不能为空。请输入需要优化的提示词。")
+        prompt_text_input = (user_prompt or "").strip()
+        if not prompt_text_input:
+            raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
 
         mode_hints = {
-            "纯文字生成视频": "当前为纯文字生成视频模式（无参考素材），请确保提示词中包含详细的主体外观、场景细节、动作描述和风格说明。不需要写【参考素材说明】部分。",
-            "上传图片生成视频": "当前为图生视频模式，用户会上传图片。请在提示词中注明 @图片1 是首帧还是尾帧参考。如果用户提到两张图，请说明是首帧+尾帧。",
-            "上传多模态素材融合": "当前为多模态参考模式，用户可能上传人物图、动作视频、场景图、音乐等多种素材。请为每个素材写清编号和用途（如 @图片1 → 人物参考、@视频1 → 动作参考等）。",
+            "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, music, etc. Write clear labels and usage for each material (e.g., @image_1 → character reference, @video_1 → action reference, etc.).",
         }
 
         user_message_parts = [
-            f"【生成模式】{生成模式}",
-            f"【视频时长】{视频时长}秒（H3 支持 4-15 秒）",
-            f"【宽高比】{宽高比}",
-            f"【背景音乐】{'不需要背景音乐，请在提示词末尾添加 非叙事性音乐：N/A' if 不需要背景音乐 else '无特殊要求（可包含背景音乐）'}",
+            f"[Generation Mode] {generation_mode}",
+            f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
+            f"[Aspect Ratio] {aspect_ratio}",
+            f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
         ]
 
-        if 补充要求 and 补充要求.strip():
-            user_message_parts.append(f"【补充要求】{补充要求.strip()}")
+        if extra_requirements and extra_requirements.strip():
+            user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
 
-        user_message_parts.append(f"【模式提示】{mode_hints.get(生成模式, '')}")
-        user_message_parts.append(f"【用户原始提示词】\n{user_prompt}")
+        user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
+        user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
 
-        # ── 收集图片输入 ──
-        image_inputs = [图片1, 图片2, 图片3, 图片4, 图片5]
+        # ── Collect image inputs ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5]
         collected_images = []  # list of (label, data_uri_list)
         total_image_count = 0
         for idx, img in enumerate(image_inputs):
             if img is None:
                 continue
-            label = f"图片{idx + 1}"
+            label = f"image_{idx + 1}"
             data_uris = _bsai_image_tensor_to_data_uri(img)
             if data_uris:
                 collected_images.append((label, data_uris))
                 total_image_count += len(data_uris)
 
         if total_image_count > 0:
-            image_summary = "、".join(
-                f"{label}（{len(uris)}张）" for label, uris in collected_images
+            image_summary = ", ".join(
+                f"{label} ({len(uris)} img)" for label, uris in collected_images
             )
             user_message_parts.append(
-                f"【参考图片】已上传 {total_image_count} 张图片：{image_summary}。\n"
-                "请在【参考素材说明】中为每张图片写明编号和用途。"
-                "结合图片内容分析主体外观、场景风格、构图等，融入提示词优化。"
+                f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
+                "Please write clear labels and usage for each image in the [Reference Description] section. "
+                "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
             )
-            # 切换为多模态生成模式提示
-            if 生成模式 == "纯文字生成视频":
+            # Switch to multimodal mode hint
+            if generation_mode == "Text to Video":
                 user_message_parts.append(
-                    "【注意】检测到上传了图片，请按「上传图片生成视频」或「上传多模态素材融合」模式优化提示词。"
+                    "[Note] Images detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
 
         user_message_parts.append(
-            "\n请根据以上信息，按照 H3 提示词规范优化为完整的结构化提示词。直接输出优化后的提示词，不要添加任何解释。"
+            "\nBased on the above information, optimize the prompt according to H3 specification. Output the optimized prompt directly without any explanation."
         )
 
         user_message = "\n".join(user_message_parts)
 
-        # ── 构建 messages：有图片时使用多模态 content 格式 ──
+        # ── Build messages: use multimodal content format when images are present ──
         if total_image_count > 0:
-            # 多模态格式：文本 + 图片交替
             user_content = []
             user_content.append({"type": "text", "text": user_message})
             for label, uris in collected_images:
@@ -775,13 +774,13 @@ class BSAI_MiniMAX_H3_Prompt:
                         {"type": "image_url", "image_url": {"url": uri}}
                     )
                     user_content.append(
-                        {"type": "text", "text": f"（以上是 {label}）"}
+                        {"type": "text", "text": f"(Above is {label})"}
                     )
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
             ]
-            print(f"[BSAI H3] 多模态推理：已附带 {total_image_count} 张图片")
+            print(f"[BSAI H3] Multimodal inference: {total_image_count} image(s) attached")
         else:
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
@@ -789,16 +788,16 @@ class BSAI_MiniMAX_H3_Prompt:
             ]
 
         try:
-            max_tokens_val = int(最大生成token)
+            max_tokens_val = int(max_tokens)
         except (TypeError, ValueError):
             raise TypeError(
-                f"最大生成token 必须是整数类型，但收到 {type(最大生成token).__name__} 类型。"
+                f"max_tokens must be an integer, got {type(max_tokens).__name__}."
             )
 
         normalized_seed = _bsai_normalize_seed(seed)
 
-        # ── max_tokens 安全限制：防止超过上下文长度导致段错误 ──
-        # llama-cpp-python 中 n_ctx 是方法而非属性，需要调用获取值
+        # ── max_tokens safety limit: prevent exceeding context length ──
+        # In llama-cpp-python, n_ctx is a method, not a property; call it to get the int value
         try:
             n_ctx_raw = getattr(llm, "n_ctx", 4096)
             n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
@@ -810,45 +809,46 @@ class BSAI_MiniMAX_H3_Prompt:
         if safe_max_tokens < 512:
             safe_max_tokens = min(max_tokens_val, max(256, n_ctx // 4))
             print(
-                f"[BSAI H3] 警告：提示词较长（约{est_prompt_tokens} tokens），"
-                f"上下文长度仅{n_ctx}，max_tokens 已限制为 {safe_max_tokens}。"
-                f"建议在 ModelLoader 中增大「上下文长度」到 16384+。"
+                f"[BSAI H3] Warning: prompt is long (~{est_prompt_tokens} tokens), "
+                f"context length is only {n_ctx}, max_tokens limited to {safe_max_tokens}. "
+                f"Consider increasing 'context_length' to 16384+ in ModelLoader."
             )
         elif safe_max_tokens < max_tokens_val:
             print(
-                f"[BSAI H3] max_tokens 从 {max_tokens_val} 限制为 {safe_max_tokens}"
-                f"（上下文长度 {n_ctx} - 提示词约 {est_prompt_tokens} tokens - 安全余量 256）"
+                f"[BSAI H3] max_tokens reduced from {max_tokens_val} to {safe_max_tokens} "
+                f"(context {n_ctx} - prompt ~{est_prompt_tokens} tokens - safety margin 256)"
             )
 
-        # 只保留最核心的参数，避免可选参数在 C++ 层触发段错误。
-        # Qwen-VL 模型的 chat_handler 对部分参数（如 presence_penalty、
-        # frequency_penalty、top_k、repeat_penalty）的兼容性较差，可能导致 segfault。
+        # Only pass core parameters to avoid segfaults in the C++ layer.
+        # Qwen-VL model chat_handler has poor compatibility with some params
+        # (presence_penalty, frequency_penalty, top_k, repeat_penalty) → segfault.
         params = {
             "max_tokens": safe_max_tokens,
-            "temperature": float(温度),
+            "temperature": float(temperature),
             "top_p": float(top_p),
             "stream": False,
         }
         if normalized_seed is not None:
             params["seed"] = normalized_seed
 
-        # 不调用 _bsai_reset_llm_state(llm)：
-        # llm.reset() / ctx.memory_clear() 在部分 llama-cpp-python 版本
-        # 和 Qwen-VL 模型组合下会导致段错误（segfault），直接使 Python
-        # 进程崩溃。create_chat_completion 本身会处理上下文，无需手动重置。
+        # Do NOT call _bsai_reset_llm_state(llm):
+        # llm.reset() / ctx.memory_clear() causes segfault in some
+        # llama-cpp-python + Qwen-VL combinations, crashing the Python process.
+        # create_chat_completion handles context internally; no manual reset needed.
 
         try:
             out = _bsai_call_chat_completion(llm, messages=messages, params=params)
         except RuntimeError as e:
             if "Context Shift is explicitly disabled" in str(e):
-                current_n_ctx = getattr(llm, "n_ctx", "未知")
+                current_n_ctx = getattr(llm, "n_ctx", "unknown")
                 raise RuntimeError(
-                    "Context Shift 被 C++ 后端禁用（M-RoPE 模型不支持上下文滑动窗口）。\n"
-                    f"当前 n_ctx = {current_n_ctx}，无法容纳完整对话。\n"
-                    "请在 BSAI_H3_ModelLoader 节点中增大「上下文长度」：\n"
-                    "  - 纯文本建议 16384\n"
-                    "  - 含图片/视频建议 32768 或更高\n"
-                    f"原始错误：{e}"
+                    "Context Shift is disabled by the C++ backend "
+                    "(M-RoPE models do not support context sliding window).\n"
+                    f"Current n_ctx = {current_n_ctx}, cannot fit the full conversation.\n"
+                    "Please increase 'context_length' in BSAI_H3_ModelLoader:\n"
+                    "  - Text only: recommend 16384\n"
+                    "  - With images/video: recommend 32768 or higher\n"
+                    f"Original error: {e}"
                 ) from e
             raise
 
@@ -861,25 +861,25 @@ class BSAI_MiniMAX_H3_Prompt:
 
 
 # ============================================================
-# 模型卸载节点
+# Model Unload Node
 # ============================================================
 
 class BSAI_H3_UnloadModel:
-    """卸载已加载的 LLM 模型，释放显存。"""
+    """Unload the loaded LLM model to free VRAM."""
 
     @classmethod
     def INPUT_TYPES(s):
-        return {"required": {"任意输入": ("*",)}}
+        return {"required": {"any_input": ("*",)}}
 
     RETURN_TYPES = ("*",)
-    RETURN_NAMES = ("任意输出",)
+    RETURN_NAMES = ("any_output",)
     FUNCTION = "run"
     CATEGORY = "BSAI"
-    DESCRIPTION = "卸载已加载的 LLM 模型，释放显存。"
+    DESCRIPTION = "Unload the loaded LLM model to free VRAM."
 
-    def run(self, 任意输入):
+    def run(self, any_input):
         _BSAI_QwenStorage.unload()
-        return (任意输入,)
+        return (any_input,)
 
 
 NODE_CLASS_MAPPINGS = {

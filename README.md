@@ -71,47 +71,47 @@ ComfyUI/models/LLM/
 BSAI H3 Model Loader ──qwen模型──> BSAI MiniMAX H3 Prompt ──提示词输出──> 视频生成节点
 ```
 
-### 3. 参数说明
+### 3. Parameter Reference
 
-#### BSAI MiniMAX H3 Prompt 节点
+#### BSAI MiniMAX H3 Prompt Node
 
-| 参数 | 类型 | 说明 |
+| Parameter | Type | Description |
 |-|-|-|
-| qwen模型 | 输入 | 连接 BSAI H3 Model Loader 的输出 |
-| 用户提示词 | 文本 | 用户手动输入的原始创意描述 |
-| 生成模式 | 下拉 | 纯文字生成视频 / 上传图片生成视频 / 上传多模态素材融合 |
-| 视频时长 | 整数 | 4-15 秒（H3 支持） |
-| 宽高比 | 下拉 | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
-| 不需要背景音乐 | 布尔 | 勾选后自动添加「非叙事性音乐：N/A」 |
-| 补充要求 | 文本 | 可选的额外风格偏好 |
-| 最大生成token | 整数 | 默认 4096，自动限制不超过上下文长度 |
-| 温度 | 浮点 | LLM 采样温度（0.0-2.0） |
-| top_p | 浮点 | 核采样概率（0.0-1.0） |
-| seed | 整数 | 随机种子 |
-| 图片1~5 | 可选输入 | 最多支持5张参考图片，发送给视觉模型分析后融入提示词 |
+| qwen_model | Input | Connect to BSAI H3 Model Loader output |
+| user_prompt | Text | User's original creative prompt description |
+| generation_mode | Dropdown | Text to Video / Image to Video / Multimodal Fusion |
+| video_duration | Int | 4-15 seconds (H3 supported) |
+| aspect_ratio | Dropdown | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
+| no_bgm | Bool | If checked, adds 'non_diegetic_music: N/A' |
+| extra_requirements | Text | Optional extra style preferences |
+| max_tokens | Int | Default 4096, auto-limited to context length |
+| temperature | Float | LLM sampling temperature (0.0-2.0) |
+| top_p | Float | Nucleus sampling probability (0.0-1.0) |
+| seed | Int | Random seed |
+| image_1~5 | Optional | Up to 5 reference images sent to vision model for analysis |
 
-#### BSAI H3 Model Loader 节点
+#### BSAI H3 Model Loader Node
 
-| 参数 | 类型 | 说明 |
+| Parameter | Type | Description |
 |-|-|-|
-| 模型系列 | 下拉 | Qwen3-VL / Qwen3.5-VL / Qwen3.6-VL / Gemma4 |
-| 主模型 | 下拉 | 从 models/LLM/ 目录中选择的模型文件 |
-| 视觉投影mmproj | 下拉 | 多模态需要；纯文本可选「无」 |
-| 上下文长度 | 整数 | 建议 16384 以上 |
-| GPU层数 | 整数 | -1=全部上GPU；显存不足时自动降低层数防止崩溃 |
+| model_family | Dropdown | Qwen3-VL / Qwen3.5-VL / Qwen3.6-VL / Gemma4 |
+| model_file | Dropdown | Model file from models/LLM/ directory |
+| mmproj | Dropdown | Multimodal mmproj file; 'None' for text-only |
+| context_length | Int | Recommend 16384+ |
+| gpu_layers | Int | -1=all on GPU; auto-reduces if VRAM insufficient |
 
-### 稳定性机制
+### Stability Mechanisms
 
-本节点内置多重防护，确保在各种显存条件下稳定运行：
+Built-in safeguards for stable operation across VRAM conditions:
 
-- **VRAM 自动检测**：加载模型前检测可用显存，不足时自动降低 GPU 层数并提示
-- **Flash Attention**：自动检测并启用，减少显存占用
-- **max_tokens 安全限制**：根据上下文长度和提示词长度自动限制生成 token 数，防止溢出
-- **参数精简**：仅传递核心参数（max_tokens/temperature/top_p/seed），避免 C++ 层段错误
+- **VRAM Auto-Detection**: Checks available VRAM before loading; auto-reduces GPU layers if insufficient
+- **Flash Attention**: Auto-detected and enabled to reduce VRAM usage
+- **max_tokens Safety Limit**: Auto-limits generation tokens based on context length and prompt size
+- **Minimal Parameters**: Only passes core params (max_tokens/temperature/top_p/seed) to avoid C++ segfaults
 
-### 4. 使用示例
+### 4. Usage Example
 
-在「用户提示词」中输入简单描述：
+Enter a simple description in `user_prompt`:
 
 ```
 一个穿汉服的女子在樱花庭院里舞剑
