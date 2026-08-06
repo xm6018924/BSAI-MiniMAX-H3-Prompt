@@ -236,12 +236,12 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 
 ### 官方格式特性
 
-- **镜头标记**：`[Shot 1]` 开头无时间戳，后续 `[Shot 2] At 00:03.500, ...`
+- **时间段分段**：`integrated_multimodal_description` 必须按时间段分段。英文用 `[0-3s]`、`[3-8s]`，中文用 `【0-3秒】`、`【3-8秒】`
 - **运镜规范**：Motion Type + Amplitude + Speed（如 `Push In with small amplitude at slow speed`）
 - **台词格式**：`(S1) says: <d>[Chinese] 你来了，剑等你好久了。</d>` — 台词保留原始语言
 - **画面文字**：可见文字用英文双引号包裹，如 `"营业中"`
 - **图片对齐指令**：I2VA/FL2VA/L2VA 模式在首行输出帧对齐指令
-- **跨镜头台词**：使用 `<scenetrans>` 标记连接点
+- **跨分段台词**：使用 `<scenetrans>` 标记连接点
 - **强制音效**：`overall_soundscape` 必须覆盖四类音效（场景氛围声、背景音效、人物动作声、物体运动声），任何场景都不允许静音。即使用户勾选 no_bgm 仅关闭背景音乐，环境音效仍必须输出
 
 ### 双语输出
@@ -251,13 +251,13 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 ```
 ---中文版本---
 
-integrated_multimodal_description: [Shot 1] 实拍，电影感，中景镜头...
+integrated_multimodal_description: 【0-3秒】实拍，电影感，全景镜头... 【3-8秒】切镜到中景... 【8-12秒】切镜到特写...
 overall_soundscape: 樱花庭院中微风轻拂...
 non_diegetic_music: 古风配乐...
 
 ---English Version---
 
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium shot...
+integrated_multimodal_description: [0-3s] Live-action, cinematic, a wide shot... [3-8s] The camera cuts to a medium shot... [8-12s] Cut to a close-up...
 overall_soundscape: A gentle breeze rustles through the cherry blossom courtyard...
 non_diegetic_music: Traditional Chinese instrumental music...
 ```
@@ -277,7 +277,7 @@ non_diegetic_music: Traditional Chinese instrumental music...
 ```
 ---English Version---
 
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a young woman in a flowing Hanfu dress standing amid blooming cherry blossoms. The camera pushes in with small amplitude at slow speed as she draws a slender sword. The woman with a calm, clear voice (S1) says: <d>[Chinese] 你来了，剑等你好久了。</d> [Shot 2] At 00:04.000, the camera cuts to a close-up as she begins her sword dance. Petals scatter with each movement, backlit by warm afternoon light.
+integrated_multimodal_description: [0-5s] Live-action, cinematic, a medium-wide shot frames a young woman in a flowing Hanfu dress standing amid blooming cherry blossoms. The camera pushes in with small amplitude at slow speed as she draws a slender sword. The woman with a calm, clear voice (S1) says: <d>[Chinese] 你来了，剑等你好久了。</d> [5-10s] The camera cuts to a close-up as she begins her sword dance. Petals scatter with each movement, backlit by warm afternoon light.
 overall_soundscape: A gentle breeze rustles the cherry blossom branches while petals drift to the ground. The sword swishes through the air with each stroke, and soft footsteps tap against the stone path.
 non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo, building slightly in intensity during the sword dance before fading.
 ```
