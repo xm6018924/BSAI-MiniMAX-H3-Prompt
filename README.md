@@ -160,7 +160,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | generation_mode | Dropdown | Text to Video / Image to Video / Multimodal Fusion |
 | video_duration | Int | 4-15 seconds (H3 supported) |
 | aspect_ratio | Dropdown | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
-| no_bgm | Bool | If checked, adds 'non_diegetic_music: N/A' |
+| no_bgm | Bool | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | Optional extra style preferences |
 | max_tokens | Int | Default 4096, auto-limited to context length |
 | temperature | Float | LLM sampling temperature (0.0-2.0) |
@@ -187,7 +187,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | generation_mode | Dropdown | Text to Video | Text to Video / Image to Video / Multimodal Fusion |
 | video_duration | Int | 10 | H3 supports 4-15 seconds |
 | aspect_ratio | Dropdown | 16:9 | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
-| no_bgm | Bool | False | If checked, adds 'non_diegetic_music: N/A' |
+| no_bgm | Bool | False | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | "" | Optional extra style preferences |
 | max_tokens | Int | 4096 | Max generation tokens |
 | temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
@@ -231,8 +231,8 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | 字段 | 说明 |
 |-|-|
 | `integrated_multimodal_description` | 画面描述：视觉风格、镜头、主体、动作、台词、叙事性声音 |
-| `overall_soundscape` | 环境音：氛围声、动作声、非语言人声（1-4句） |
-| `non_diegetic_music` | 背景音乐：仅观众可听的音乐描述，无则填 N/A |
+| `overall_soundscape` | 环境音效（必填）：场景氛围声、人物动作声、物体运动声、背景音效（1-4句）。**禁止静音**，即使安静场景也需包含细微环境声 |
+| `non_diegetic_music` | 背景音乐：仅观众可听的音乐描述。仅在用户明确勾选 no_bgm 时填 N/A，否则根据场景氛围生成合适的背景音乐 |
 
 ### 官方格式特性
 
@@ -242,6 +242,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 - **画面文字**：可见文字用英文双引号包裹，如 `"营业中"`
 - **图片对齐指令**：I2VA/FL2VA/L2VA 模式在首行输出帧对齐指令
 - **跨镜头台词**：使用 `<scenetrans>` 标记连接点
+- **强制音效**：`overall_soundscape` 必须覆盖四类音效（场景氛围声、背景音效、人物动作声、物体运动声），任何场景都不允许静音。即使用户勾选 no_bgm 仅关闭背景音乐，环境音效仍必须输出
 
 ### 双语输出
 

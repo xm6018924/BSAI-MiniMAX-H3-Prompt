@@ -717,9 +717,24 @@ Place visible text (banners, signs, labels, subtitles, neon text) in English dou
 
 Example: `A red neon sign reading "营业中" glows above the doorway.`
 
-### 3.6 Sound
+### 3.6 Sound (MANDATORY — No Silence Allowed)
 - **overall_soundscape**: Ambient sounds, physical action sounds, non-verbal human sounds (wind, rain, traffic, footsteps, breathing, laughter). NOT dialogue or singing.
-- **non_diegetic_music**: Background music (instruments, tempo, rhythm, dynamics). NOT diegetic music (radio, live performance). Use `N/A` when there is no background music.
+- **non_diegetic_music**: Background music (instruments, tempo, rhythm, dynamics). NOT diegetic music (radio, live performance). Use `N/A` ONLY when the user explicitly requests no background music.
+
+#### Mandatory Sound Coverage
+Unless the user has explicitly provided custom sound/music descriptions or explicitly requested no sound effects, the `overall_soundscape` field MUST ALWAYS include ALL of the following categories appropriate to the scene:
+
+1. **Scene ambient sounds** — Environmental atmosphere: wind, rain, waves, traffic, crowd murmur, birdsong, city noise, etc.
+2. **Background sound effects** — Continuous or semi-continuous sounds that define the setting: machinery hum, clock ticking, distant thunder, room tone, etc.
+3. **Character action sounds** — Sounds produced by people on screen: footsteps, clothing rustle, breathing, sighing, coughing, tapping, grabbing objects, door opening, etc.
+4. **Object movement sounds** — Sounds from physical objects and their interactions: glass clinking, paper rustling, sword swoosh, ball bouncing, chair scraping, water splashing, etc.
+
+**CRITICAL**: The video must NEVER have moments of complete silence. Every moment must have at least one audible sound source. If a scene is inherently quiet (e.g., a still room at night), still include subtle ambient sounds (distant crickets, clock ticking, wind against windows, breathing).
+
+#### Exceptions
+- If the user has provided custom sound/music descriptions in `[Extra Requirements]` or the original prompt, respect those descriptions and fill in any gaps with appropriate ambient/action sounds.
+- If the user has explicitly checked "no_bgm" (no background music), still include all sound effects in `overall_soundscape` — only `non_diegetic_music` is set to N/A.
+- If the user explicitly states no sound effects at all (rare), only then may `overall_soundscape` be minimal.
 
 ## 4. Reference Labels (for I2VA / FL2VA / L2VA modes)
 
@@ -740,7 +755,9 @@ For multimodal fusion mode, reference labels can also include:
 4. Keep dialogue length proportional to shot length (avoid long dialogue in a 3s shot).
 5. The speaker's identifying phrase, ID, and delivery go outside `<d>`; inside `<d>` only the language tag and actual spoken content.
 6. If no reference images: skip the alignment instruction, begin with `integrated_multimodal_description`.
-7. Non-diegetic music: do not add N/A unless the user explicitly requests no background music.
+7. **MANDATORY SOUND**: The `overall_soundscape` field must ALWAYS contain sound effects — never leave it empty or write "none/silence". Cover scene ambience, character actions, and object interactions. Even in quiet scenes, include subtle ambient sounds. The only exception is when the user explicitly requests no sound.
+8. **Non-diegetic music**: Do not add N/A unless the user explicitly requests no background music. If the user has not specified, describe appropriate background music that matches the scene's mood and tone.
+9. When the user provides custom sound/music descriptions, integrate them naturally and supplement with additional ambient/action sounds to ensure full coverage.
 
 ## 6. Output Format
 
@@ -925,10 +942,17 @@ Requires BSAI H3 Model Loader node.
             "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
+        bgm_instruction = (
+            "No background music needed. Set non_diegetic_music: N/A. "
+            "BUT overall_soundscape MUST still include all scene ambient sounds, character action sounds, and object movement sounds — never silent."
+            if no_bgm
+            else "No special requirement (may include appropriate background music). "
+            "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
+        )
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
-            f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
+            f"[Sound & Music] {bgm_instruction}",
         ]
 
         if extra_requirements and extra_requirements.strip():
@@ -1331,10 +1355,17 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
+        bgm_instruction = (
+            "No background music needed. Set non_diegetic_music: N/A. "
+            "BUT overall_soundscape MUST still include all scene ambient sounds, character action sounds, and object movement sounds — never silent."
+            if no_bgm
+            else "No special requirement (may include appropriate background music). "
+            "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
+        )
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
-            f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
+            f"[Sound & Music] {bgm_instruction}",
         ]
 
         if extra_requirements and extra_requirements.strip():
