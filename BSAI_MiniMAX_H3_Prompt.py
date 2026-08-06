@@ -14,6 +14,7 @@ import gc
 import json
 import base64
 import inspect
+import re
 
 import folder_paths
 import comfy.model_management as mm
@@ -1567,11 +1568,50 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         return (text.lstrip().removeprefix(": ").strip(),)
 
 
+# ============================================================
+# BSAI LineCount - 行数统计节点
+# 功能与 WWAA_LineCount 完全一致，用于替换缺失的 WWAA 节点
+# ============================================================
+
+class BSAI_LineCount:
+    DESCRIPTION = "Reads a multi-line string and counts how many lines exist while ignoring blank lines. Useful for determining the number of prompts or entries in text data."
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "string_text": ("STRING", {
+                    "multiline": True,
+                    "default": "String goes here\nSecond line."
+                }),
+            },
+        }
+
+    RETURN_TYPES = ("INT",)
+    RETURN_NAMES = ("Line Count",)
+
+    FUNCTION = "executeLineCount"
+    CATEGORY = "BSAI/String"
+
+    def executeLineCount(self, string_text):
+        # Count lines - same logic as WWAA_LineCount
+        string_text = string_text.strip()  # strip extra line feeds
+        string_text = string_text.strip()
+        string_text = re.sub(r'((\n){2,})', '\n', string_text)
+        lines = string_text.split('\n')
+        num_lines = len(lines)
+        return (num_lines,)
+
+
 NODE_CLASS_MAPPINGS = {
     "BSAI_MiniMAX H3 prompt": BSAI_MiniMAX_H3_Prompt,
     "BSAI_H3_ModelLoader": BSAI_H3_ModelLoader,
     "BSAI_H3_UnloadModel": BSAI_H3_UnloadModel,
     "BSAI_H3_RemoteAPI": BSAI_H3_RemoteAPI,
+    "BSAI_LineCount": BSAI_LineCount,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -1579,4 +1619,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "BSAI_H3_ModelLoader": "BSAI H3 Model Loader",
     "BSAI_H3_UnloadModel": "BSAI H3 Unload Model",
     "BSAI_H3_RemoteAPI": "BSAI H3 Remote API",
+    "BSAI_LineCount": "BSAI LineCount",
 }
