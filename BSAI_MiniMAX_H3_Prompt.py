@@ -682,10 +682,6 @@ class BSAI_MiniMAX_H3_Prompt:
                     "INT",
                     {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
                 ),
-                "aspect_ratio": (
-                    ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"],
-                    {"default": "16:9", "tooltip": "Output video aspect ratio / 宽高比"},
-                ),
                 "no_bgm": (
                     "BOOLEAN",
                     {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
@@ -732,7 +728,6 @@ Requires BSAI H3 Model Loader node.
         user_prompt,
         generation_mode,
         video_duration,
-        aspect_ratio,
         no_bgm,
         extra_requirements,
         max_tokens,
@@ -783,7 +778,6 @@ Requires BSAI H3 Model Loader node.
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
-            f"[Aspect Ratio] {aspect_ratio}",
             f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
         ]
 
@@ -1027,10 +1021,6 @@ class BSAI_H3_RemoteAPI:
                     "INT",
                     {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
                 ),
-                "aspect_ratio": (
-                    ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"],
-                    {"default": "16:9", "tooltip": "Output video aspect ratio / 宽高比"},
-                ),
                 "no_bgm": (
                     "BOOLEAN",
                     {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
@@ -1075,7 +1065,6 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         model_name,
         generation_mode,
         video_duration,
-        aspect_ratio,
         no_bgm,
         extra_requirements,
         max_tokens,
@@ -1109,7 +1098,6 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
-            f"[Aspect Ratio] {aspect_ratio}",
             f"[Background Music] {'No background music needed. Add non_diegetic_music: N/A at the end' if no_bgm else 'No special requirement (may include background music)'}",
         ]
 
