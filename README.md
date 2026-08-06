@@ -84,7 +84,11 @@ ComfyUI/models/LLM/
 ```
 BSAI H3 Model Loader ──qwen_model──> BSAI MiniMAX H3 Prompt ──prompt_output──> 视频生成节点
                                          |
-                                    (可选) image_1~5
+                                   (可选) image_1~10
+                                         |
+                                   (可选) video_1~4
+                                         |
+                                   (可选) audio_1~3
 ```
 
 ### 模式二：远程 API
@@ -96,7 +100,11 @@ BSAI H3 Model Loader ──qwen_model──> BSAI MiniMAX H3 Prompt ──prompt
 ```
 BSAI H3 Remote API ──prompt_output──> 视频生成节点
       |
- (可选) image_1~5
+ (可选) image_1~10
+      |
+ (可选) video_1~4
+      |
+ (可选) audio_1~3
 ```
 
 > 该节点为独立节点，不需要连接 Model Loader，不占用任何显存。
@@ -138,7 +146,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 使用多模态模型分析图片：
 
 1. 选择支持视觉的模型（如 `qwen-vl-plus` 或 `gpt-4o`）
-2. 将 LoadImage 节点输出连接到 `image_1`~`image_5` 端口
+2. 将 LoadImage 节点输出连接到 `image_1`~`image_10` 端口
 3. 输入提示词，模型会同时分析图片和文本
 
 ## 参数参考
@@ -162,7 +170,9 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | frequency_penalty | Float | Frequency penalty (0.0-2.0) |
 | presence_penalty | Float | Presence penalty (0.0-2.0) |
 | seed | Int | Random seed (0=random) |
-| image_1~5 | Optional | Up to 5 reference images sent to vision model for analysis |
+| image_1~10 | Optional | Up to 10 reference images sent to vision model for analysis |
+| video_1~4 | Optional | Up to 4 reference videos (key frames automatically extracted) |
+| audio_1~3 | Optional | Up to 3 reference audio clips (metadata extracted as text reference) |
 
 > **注意**：`top_k`、`repeat_penalty`、`frequency_penalty`、`presence_penalty` 参数仅在 UI 中显示，实际推理时仅传递 `max_tokens`、`temperature`、`top_p`、`seed` 核心参数，以避免 Qwen-VL 模型的 C++ 层段错误。
 
@@ -183,7 +193,9 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | 0.9 | Nucleus sampling probability (0.0-1.0) |
 | seed | Int | 0 | Random seed (0=random, >0=fixed) |
-| image_1~5 | Optional | - | Up to 5 reference images (requires multimodal model) |
+| image_1~10 | Optional | - | Up to 10 reference images (requires multimodal model) |
+| video_1~4 | Optional | - | Up to 4 reference videos (key frames automatically extracted) |
+| audio_1~3 | Optional | - | Up to 3 reference audio clips (metadata extracted as text reference) |
 
 ### BSAI H3 Model Loader Node
 
@@ -285,7 +297,7 @@ non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo
 
 1. 使用 `BSAI H3 Remote API` 节点
 2. `model_name` 设为 `gpt-4o` 或 `qwen-vl-plus`（多模态模型）
-3. 连接图片到 `image_1`~`image_5`
+3. 连接图片到 `image_1`~`image_10`
 4. `generation_mode` 选择 `Multimodal Fusion`
 5. 输入提示词，云端模型会同时分析图片和文本
 
@@ -326,7 +338,22 @@ non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo
 - 支持 ComfyUI IMAGE 张量输入（自动转换为 base64 JPEG）
 - 自动缩放至最大 1024px，压缩为 JPEG quality 85
 - 多模态模型使用 OpenAI 兼容的 `image_url` content 格式
-- 最多支持 5 张图片同时分析
+- 最多支持 10 张图片同时分析
+
+### 视频处理
+
+- 视频输入作为 IMAGE 张量批次接收（ComfyUI 视频格式）
+- 自动提取关键帧（均匀采样，每个视频最多 4 帧）
+- 关键帧转换为 base64 JPEG 并标注序号
+- 最多支持 4 个视频同时分析
+
+### 音频处理
+
+- 音频输入为 ComfyUI AUDIO 类型（含 waveform 和 sample_rate）
+- 自动提取声道数、时长、采样率等元数据
+- 生成文本描述供 LLM 参考（语音/音乐/音效参考）
+- 同时生成 base64 WAV 编码供远程 API 使用
+- 最多支持 3 个音频同时分析
 
 ### H3 模型参数参考
 

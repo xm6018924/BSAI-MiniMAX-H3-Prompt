@@ -162,6 +162,132 @@ def _bsai_image_tensor_to_data_uri(image_input):
     return data_uris
 
 
+def _bsai_video_to_data_uris(video_input, max_frames=4):
+    """Extract key frames from a video (IMAGE tensor batch) and convert to data URIs.
+
+    Takes evenly spaced frames (first, middle, last, etc.) to represent the video.
+    Limits to max_frames to control token usage.
+    """
+    if video_input is None or PILImage is None or torch is None:
+        return []
+
+    images = video_input
+    if images.ndim == 3:
+        images = images.unsqueeze(0)
+
+    total_frames = images.shape[0]
+    if total_frames == 0:
+        return []
+
+    # Select key frames: evenly spaced across the video
+    if total_frames <= max_frames:
+        frame_indices = list(range(total_frames))
+    else:
+        frame_indices = [
+            int(i * (total_frames - 1) / (max_frames - 1)) for i in range(max_frames)
+        ]
+
+    data_uris = []
+    for idx in frame_indices:
+        img_tensor = images[idx]
+        img_np = (img_tensor.cpu().numpy() * 255.0).clip(0, 255).astype("uint8")
+        pil_img = PILImage.fromarray(img_np)
+        buf = io.BytesIO()
+        max_side = 1024
+        if max(pil_img.size) > max_side:
+            ratio = max_side / max(pil_img.size)
+            pil_img = pil_img.resize(
+                (int(pil_img.size[0] * ratio), int(pil_img.size[1] * ratio)),
+                PILImage.LANCZOS,
+            )
+        pil_img.save(buf, format="JPEG", quality=85)
+        b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+        data_uris.append(f"data:image/jpeg;base64,{b64}")
+    return data_uris
+
+
+def _bsai_audio_to_description(audio_input, label="audio"):
+    """Extract metadata from ComfyUI AUDIO input for text-based reference.
+
+    ComfyUI AUDIO format: dict with "waveform" (torch.Tensor) and "sample_rate" (int).
+    Since most LLM backends cannot directly process audio, we generate a text description
+    noting the audio reference so the model can reference it in the prompt.
+
+    Returns (description_str, base64_str_or_None) tuple.
+    base64_str is available for remote APIs that support audio input.
+    """
+    if audio_input is None:
+        return None, None
+
+    try:
+        if isinstance(audio_input, dict):
+            waveform = audio_input.get("waveform")
+            sample_rate = audio_input.get("sample_rate", 0)
+        else:
+            waveform = audio_input
+            sample_rate = 0
+
+        if waveform is None:
+            return None, None
+
+        # Get tensor info
+        if torch is not None and hasattr(waveform, "shape"):
+            shape = waveform.shape
+            # ComfyUI AUDIO waveform shape: [batch, channels, samples] or [channels, samples]
+            if len(shape) == 3:
+                samples = shape[-1]
+                channels = shape[-2]
+            elif len(shape) == 2:
+                samples = shape[-1]
+                channels = shape[-2]
+            elif len(shape) == 1:
+                samples = shape[0]
+                channels = 1
+            else:
+                samples = 0
+                channels = 0
+        else:
+            samples = 0
+            channels = 0
+
+        sr = int(sample_rate) if sample_rate else 0
+        duration = (samples / sr) if sr > 0 else 0
+
+        desc = f"{label}: {channels}ch, {duration:.1f}s, {sr}Hz"
+
+        # Generate base64 for remote API support
+        b64 = None
+        try:
+            if torch is not None and hasattr(waveform, "cpu"):
+                import wave
+
+                wav_tensor = waveform
+                if wav_tensor.ndim == 3:
+                    wav_tensor = wav_tensor[0]  # remove batch dim
+                if wav_tensor.ndim == 2:
+                    # Transpose to [samples, channels]
+                    wav_tensor = wav_tensor.T
+
+                wav_np = wav_tensor.cpu().numpy()
+                # Normalize to int16
+                wav_np = (wav_np * 32767).clip(-32768, 32767).astype("int16")
+
+                buf = io.BytesIO()
+                with wave.open(buf, "wb") as wf:
+                    wf.setnchannels(int(channels) if channels else 1)
+                    wf.setsampwidth(2)
+                    wf.setframerate(sr if sr else 44100)
+                    wf.writeframes(wav_np.tobytes())
+                b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+                b64 = f"data:audio/wav;base64,{b64}"
+        except Exception:
+            pass
+
+        return desc, b64
+    except Exception:
+        return None, None
+
+
 def _bsai_build_multimodal_content(text, image_data_uris, image_label):
     """构建多模态 user message content（OpenAI 兼容格式）。
 
@@ -709,6 +835,18 @@ class BSAI_MiniMAX_H3_Prompt:
                 "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
                 "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
                 "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
             }
         }
 
@@ -743,6 +881,18 @@ Requires BSAI H3 Model Loader node.
         image_3=None,
         image_4=None,
         image_5=None,
+        image_6=None,
+        image_7=None,
+        image_8=None,
+        image_9=None,
+        image_10=None,
+        video_1=None,
+        video_2=None,
+        video_3=None,
+        video_4=None,
+        audio_1=None,
+        audio_2=None,
+        audio_3=None,
     ):
         llm = qwen_model
 
@@ -772,7 +922,7 @@ Requires BSAI H3 Model Loader node.
         mode_hints = {
             "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
             "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, music, etc. Write clear labels and usage for each material (e.g., @image_1 → character reference, @video_1 → action reference, etc.).",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
         user_message_parts = [
@@ -787,8 +937,9 @@ Requires BSAI H3 Model Loader node.
         user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
         user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
 
-        # ── Collect image inputs ──
-        image_inputs = [image_1, image_2, image_3, image_4, image_5]
+        # ── Collect image inputs (up to 10) ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5,
+                        image_6, image_7, image_8, image_9, image_10]
         collected_images = []  # list of (label, data_uri_list)
         total_image_count = 0
         for idx, img in enumerate(image_inputs):
@@ -800,19 +951,64 @@ Requires BSAI H3 Model Loader node.
                 collected_images.append((label, data_uris))
                 total_image_count += len(data_uris)
 
+        # ── Collect video inputs (up to 4, extract key frames) ──
+        video_inputs = [video_1, video_2, video_3, video_4]
+        collected_videos = []  # list of (label, data_uri_list)
+        total_video_frame_count = 0
+        for idx, vid in enumerate(video_inputs):
+            if vid is None:
+                continue
+            label = f"video_{idx + 1}"
+            data_uris = _bsai_video_to_data_uris(vid)
+            if data_uris:
+                collected_videos.append((label, data_uris))
+                total_video_frame_count += len(data_uris)
+
+        # ── Collect audio inputs (up to 3) ──
+        audio_inputs_list = [audio_1, audio_2, audio_3]
+        collected_audios = []  # list of (label, description)
+        for idx, aud in enumerate(audio_inputs_list):
+            if aud is None:
+                continue
+            label = f"audio_{idx + 1}"
+            desc, _b64 = _bsai_audio_to_description(aud, label)
+            if desc:
+                collected_audios.append((label, desc))
+
+        has_media = total_image_count > 0 or total_video_frame_count > 0 or len(collected_audios) > 0
+
+        # ── Build reference summary text ──
+        ref_parts = []
         if total_image_count > 0:
             image_summary = ", ".join(
                 f"{label} ({len(uris)} img)" for label, uris in collected_images
             )
-            user_message_parts.append(
+            ref_parts.append(
                 f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
-                "Please write clear labels and usage for each image in the [Reference Description] section. "
                 "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
             )
+        if total_video_frame_count > 0:
+            video_summary = ", ".join(
+                f"{label} ({len(uris)} keyframes)" for label, uris in collected_videos
+            )
+            ref_parts.append(
+                f"[Reference Videos] {len(collected_videos)} video(s) uploaded: {video_summary}.\n"
+                "Key frames have been extracted from each video. Analyze action, motion, temporal progression, and scene continuity from the video frames."
+            )
+        if collected_audios:
+            audio_summary = ", ".join(desc for _, desc in collected_audios)
+            ref_parts.append(
+                f"[Reference Audio] {len(collected_audios)} audio clip(s) uploaded: {audio_summary}.\n"
+                "Use these audio clips as voice/music/sound references in the prompt. "
+                "Note: Audio content cannot be directly analyzed by the vision model; describe its intended use based on the user's prompt context."
+            )
+
+        if ref_parts:
+            user_message_parts.extend(ref_parts)
             # Switch to multimodal mode hint
             if generation_mode == "Text to Video":
                 user_message_parts.append(
-                    "[Note] Images detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
+                    "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
 
         user_message_parts.append(
@@ -821,10 +1017,11 @@ Requires BSAI H3 Model Loader node.
 
         user_message = "\n".join(user_message_parts)
 
-        # ── Build messages: use multimodal content format when images are present ──
-        if total_image_count > 0:
+        # ── Build messages: use multimodal content format when media is present ──
+        if has_media:
             user_content = []
             user_content.append({"type": "text", "text": user_message})
+            # Add images
             for label, uris in collected_images:
                 for uri in uris:
                     user_content.append(
@@ -833,11 +1030,26 @@ Requires BSAI H3 Model Loader node.
                     user_content.append(
                         {"type": "text", "text": f"(Above is {label})"}
                     )
+            # Add video keyframes
+            for label, uris in collected_videos:
+                for i, uri in enumerate(uris):
+                    user_content.append(
+                        {"type": "image_url", "image_url": {"url": uri}}
+                    )
+                    frame_desc = f"(Above is {label} keyframe {i + 1}/{len(uris)})"
+                    user_content.append(
+                        {"type": "text", "text": frame_desc}
+                    )
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
             ]
-            print(f"[BSAI H3] Multimodal inference: {total_image_count} image(s) attached")
+            media_info = f"{total_image_count} image(s)"
+            if total_video_frame_count > 0:
+                media_info += f", {total_video_frame_count} video keyframe(s)"
+            if collected_audios:
+                media_info += f", {len(collected_audios)} audio clip(s)"
+            print(f"[BSAI H3] Multimodal inference: {media_info}")
         else:
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
@@ -1044,6 +1256,18 @@ class BSAI_H3_RemoteAPI:
                 "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
                 "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
                 "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
             }
         }
 
@@ -1076,6 +1300,18 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         image_3=None,
         image_4=None,
         image_5=None,
+        image_6=None,
+        image_7=None,
+        image_8=None,
+        image_9=None,
+        image_10=None,
+        video_1=None,
+        video_2=None,
+        video_3=None,
+        video_4=None,
+        audio_1=None,
+        audio_2=None,
+        audio_3=None,
     ):
         if requests is None:
             raise RuntimeError(
@@ -1092,7 +1328,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         mode_hints = {
             "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
             "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, music, etc. Write clear labels and usage for each material (e.g., @image_1 -> character reference, @video_1 -> action reference, etc.).",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
         user_message_parts = [
@@ -1107,8 +1343,9 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
         user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
 
-        # ── Collect image inputs ──
-        image_inputs = [image_1, image_2, image_3, image_4, image_5]
+        # ── Collect image inputs (up to 10) ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5,
+                        image_6, image_7, image_8, image_9, image_10]
         collected_images = []
         total_image_count = 0
         for idx, img in enumerate(image_inputs):
@@ -1120,18 +1357,63 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
                 collected_images.append((label, data_uris))
                 total_image_count += len(data_uris)
 
+        # ── Collect video inputs (up to 4, extract key frames) ──
+        video_inputs = [video_1, video_2, video_3, video_4]
+        collected_videos = []
+        total_video_frame_count = 0
+        for idx, vid in enumerate(video_inputs):
+            if vid is None:
+                continue
+            label = f"video_{idx + 1}"
+            data_uris = _bsai_video_to_data_uris(vid)
+            if data_uris:
+                collected_videos.append((label, data_uris))
+                total_video_frame_count += len(data_uris)
+
+        # ── Collect audio inputs (up to 3) ──
+        audio_inputs_list = [audio_1, audio_2, audio_3]
+        collected_audios = []
+        for idx, aud in enumerate(audio_inputs_list):
+            if aud is None:
+                continue
+            label = f"audio_{idx + 1}"
+            desc, _b64 = _bsai_audio_to_description(aud, label)
+            if desc:
+                collected_audios.append((label, desc))
+
+        has_media = total_image_count > 0 or total_video_frame_count > 0 or len(collected_audios) > 0
+
+        # ── Build reference summary text ──
+        ref_parts = []
         if total_image_count > 0:
             image_summary = ", ".join(
                 f"{label} ({len(uris)} img)" for label, uris in collected_images
             )
-            user_message_parts.append(
+            ref_parts.append(
                 f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
-                "Please write clear labels and usage for each image in the [Reference Description] section. "
                 "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
             )
+        if total_video_frame_count > 0:
+            video_summary = ", ".join(
+                f"{label} ({len(uris)} keyframes)" for label, uris in collected_videos
+            )
+            ref_parts.append(
+                f"[Reference Videos] {len(collected_videos)} video(s) uploaded: {video_summary}.\n"
+                "Key frames have been extracted from each video. Analyze action, motion, temporal progression, and scene continuity from the video frames."
+            )
+        if collected_audios:
+            audio_summary = ", ".join(desc for _, desc in collected_audios)
+            ref_parts.append(
+                f"[Reference Audio] {len(collected_audios)} audio clip(s) uploaded: {audio_summary}.\n"
+                "Use these audio clips as voice/music/sound references in the prompt. "
+                "Note: Audio content cannot be directly analyzed by the vision model; describe its intended use based on the user's prompt context."
+            )
+
+        if ref_parts:
+            user_message_parts.extend(ref_parts)
             if generation_mode == "Text to Video":
                 user_message_parts.append(
-                    "[Note] Images detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
+                    "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
 
         user_message_parts.append(
@@ -1142,17 +1424,29 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         user_message = "\n".join(user_message_parts)
 
         # ── Build messages ──
-        if total_image_count > 0:
+        if has_media:
             user_content = [{"type": "text", "text": user_message}]
+            # Add images
             for label, uris in collected_images:
                 for uri in uris:
                     user_content.append({"type": "image_url", "image_url": {"url": uri}})
                     user_content.append({"type": "text", "text": f"(Above is {label})"})
+            # Add video keyframes
+            for label, uris in collected_videos:
+                for i, uri in enumerate(uris):
+                    user_content.append({"type": "image_url", "image_url": {"url": uri}})
+                    frame_desc = f"(Above is {label} keyframe {i + 1}/{len(uris)})"
+                    user_content.append({"type": "text", "text": frame_desc})
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
             ]
-            print(f"[BSAI H3 RemoteAPI] Multimodal request: {total_image_count} image(s) attached")
+            media_info = f"{total_image_count} image(s)"
+            if total_video_frame_count > 0:
+                media_info += f", {total_video_frame_count} video keyframe(s)"
+            if collected_audios:
+                media_info += f", {len(collected_audios)} audio clip(s)"
+            print(f"[BSAI H3 RemoteAPI] Multimodal request: {media_info}")
         else:
             messages = [
                 {"role": "system", "content": _H3_SYSTEM_PROMPT},
