@@ -887,6 +887,17 @@ class _BSAI_QwenStorage:
             print(f"[BSAI H3 ModelLoader] {vram_warning}")
 
         chat_handler = None
+        # Qwen-VL backends in recent llama.cpp require at least 1024 image
+        # tokens when an mmproj/MTMD context is initialized. Even when this
+        # node runs in safe local text mode (media summarized as text, no
+        # image_url sent to llama.cpp), the VL chat handler may still initialize
+        # MTMD internally and crash the host process if the default
+        # image_min_tokens remains unset. Keep min/max equal for predictable
+        # VRAM use and to satisfy the backend requirement.
+        qwen_vl_image_token_kwargs = {
+            "image_min_tokens": 1024,
+            "image_max_tokens": 1024,
+        }
         if mmproj_path:
             if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)"):
                 if Qwen35ChatHandler is None:
@@ -895,10 +906,17 @@ class _BSAI_QwenStorage:
                     )
                 try:
                     chat_handler = Qwen35ChatHandler(
-                        clip_model_path=mmproj_path, enable_thinking=think, verbose=False
+                        clip_model_path=mmproj_path,
+                        enable_thinking=think,
+                        verbose=False,
+                        **qwen_vl_image_token_kwargs,
                     )
                 except Exception:
-                    chat_handler = Qwen35ChatHandler(clip_model_path=mmproj_path, verbose=False)
+                    chat_handler = Qwen35ChatHandler(
+                        clip_model_path=mmproj_path,
+                        verbose=False,
+                        **qwen_vl_image_token_kwargs,
+                    )
             elif family == "Qwen3-VL (通义千问3-VL)":
                 if Qwen3VLChatHandler is None:
                     raise RuntimeError(
@@ -906,10 +924,17 @@ class _BSAI_QwenStorage:
                     )
                 try:
                     chat_handler = Qwen3VLChatHandler(
-                        clip_model_path=mmproj_path, force_reasoning=think, verbose=False
+                        clip_model_path=mmproj_path,
+                        force_reasoning=think,
+                        verbose=False,
+                        **qwen_vl_image_token_kwargs,
                     )
                 except Exception:
-                    chat_handler = Qwen3VLChatHandler(clip_model_path=mmproj_path, verbose=False)
+                    chat_handler = Qwen3VLChatHandler(
+                        clip_model_path=mmproj_path,
+                        verbose=False,
+                        **qwen_vl_image_token_kwargs,
+                    )
             elif family == "Gemma4 (谷歌宝石4)":
                 if Gemma4ChatHandler is None:
                     raise RuntimeError(
@@ -1021,9 +1046,11 @@ class BSAI_H3_ModelLoader:
 
         if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Gemma4 (谷歌宝石4)"):
             if mmproj == "None (无)":
-                raise RuntimeError(
-                    f"{model_family} is a multimodal model that requires an mmproj file.\n"
-                    "Please select the corresponding mmproj file in the 'mmproj' option."
+                print(
+                    f"[BSAI H3 ModelLoader] {model_family} loaded without mmproj. "
+                    "Local node will run in text-only safe mode; media ports are "
+                    "summarized as text by the prompt node instead of being sent "
+                    "to llama.cpp as image/audio/video tensors."
                 )
 
         config = {
