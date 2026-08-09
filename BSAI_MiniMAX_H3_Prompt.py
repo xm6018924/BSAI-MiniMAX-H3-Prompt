@@ -1,4 +1,4 @@
-"""
+﻿"""
 BSAI MiniMax H3 Prompt Optimizer Node
 
 根据 MiniMax H3 模型使用手册，将用户手动输入的提示词优化为符合 H3 规范的完整提示词。
@@ -463,9 +463,9 @@ class _BSAI_QwenStorage:
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found: {model_path}")
 
-        mmproj = config.get("mmproj", "None")
+        mmproj = config.get("mmproj", "None (无)")
         mmproj_path = None
-        if mmproj and mmproj not in ("None", "无", ""):
+        if mmproj and mmproj not in ("None (无)", "None", "无", ""):
             mmproj_path = os.path.join(folder_paths.models_dir, "LLM", mmproj)
             if not os.path.exists(mmproj_path):
                 raise FileNotFoundError(f"mmproj file not found: {mmproj_path}")
@@ -484,7 +484,7 @@ class _BSAI_QwenStorage:
 
         chat_handler = None
         if mmproj_path:
-            if family in ("Qwen3.5-VL", "Qwen3.6-VL"):
+            if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)"):
                 if Qwen35ChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Qwen35ChatHandler，请更新 llama-cpp-python。"
@@ -495,7 +495,7 @@ class _BSAI_QwenStorage:
                     )
                 except Exception:
                     chat_handler = Qwen35ChatHandler(clip_model_path=mmproj_path, verbose=False)
-            elif family == "Qwen3-VL":
+            elif family == "Qwen3-VL (通义千问3-VL)":
                 if Qwen3VLChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Qwen3VLChatHandler，请更新 llama-cpp-python。"
@@ -506,7 +506,7 @@ class _BSAI_QwenStorage:
                     )
                 except Exception:
                     chat_handler = Qwen3VLChatHandler(clip_model_path=mmproj_path, verbose=False)
-            elif family == "Gemma4":
+            elif family == "Gemma4 (谷歌宝石4)":
                 if Gemma4ChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Gemma4ChatHandler，请更新 llama-cpp-python到0.3.36+。"
@@ -572,7 +572,7 @@ class BSAI_H3_ModelLoader:
             if "mmproj" not in f.lower()
             and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
         ]
-        mmproj_list = ["None"] + [
+        mmproj_list = ["None (无)"] + [
             f
             for f in all_files
             if "mmproj" in f.lower()
@@ -585,8 +585,8 @@ class BSAI_H3_ModelLoader:
         return {
             "required": {
                 "model_family": (
-                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Gemma4"],
-                    {"default": "Qwen3.6-VL", "tooltip": "Model family / 模型系列"},
+                    ["Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Gemma4 (谷歌宝石4)"],
+                    {"default": "Qwen3.6-VL (通义千问3.6-VL)", "tooltip": "Model family / 模型系列"},
                 ),
                 "model_file": (
                     model_list,
@@ -594,7 +594,7 @@ class BSAI_H3_ModelLoader:
                 ),
                 "mmproj": (
                     mmproj_list,
-                    {"default": "None", "tooltip": "Multimodal mmproj file; 'None' for text-only / 视觉投影文件"},
+                    {"default": "None (无)", "tooltip": "Multimodal mmproj file; 'None' for text-only / 视觉投影文件"},
                 ),
                 "enable_thinking": ("BOOLEAN", {"default": False, "tooltip": "Enable thinking/reasoning mode / 启用思考模式"}),
                 "context_length": (
@@ -615,8 +615,8 @@ class BSAI_H3_ModelLoader:
         if model_file.startswith("(Place models"):
             raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
 
-        if model_family in ("Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Gemma4"):
-            if mmproj == "None":
+        if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Gemma4 (谷歌宝石4)"):
+            if mmproj == "None (无)":
                 raise RuntimeError(
                     f"{model_family} is a multimodal model that requires an mmproj file.\n"
                     "Please select the corresponding mmproj file in the 'mmproj' option."
@@ -639,39 +639,39 @@ class BSAI_H3_ModelLoader:
 # ============================================================
 
 _BSAI_DIRECTOR_STYLES = [
-    "System Recommended",
-    "Alfred Hitchcock (Suspense Master)",
+    "System Recommended (系统推荐)",
+    "Alfred Hitchcock (希区柯克 | 悬念大师)",
     "Wong Kar-wai (王家卫)",
-    "Orson Welles",
-    "Ingmar Bergman (Philosophical)",
-    "Federico Fellini (Magical Realism)",
-    "Akira Kurosawa (黑泽明)",
-    "Sergei Eisenstein (Montage)",
-    "Steven Spielberg",
-    "Francis Ford Coppola",
-    "Martin Scorsese",
-    "Stanley Kubrick",
-    "Billy Wilder",
+    "Orson Welles (奥逊·威尔斯)",
+    "Ingmar Bergman (英格玛·伯格曼 | 哲学电影大师)",
+    "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
+    "Akira Kurosawa (黑泽明 | 东方电影标杆)",
+    "Sergei Eisenstein (谢尔盖·爱森斯坦 | 蒙太奇)",
+    "Steven Spielberg (史蒂文·斯皮尔伯格)",
+    "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
+    "Martin Scorsese (马丁·斯科塞斯)",
+    "Stanley Kubrick (斯坦利·库布里克)",
+    "Billy Wilder (比利·怀尔德)",
     "Ang Lee (李安)",
     "Zhang Yimou (张艺谋)",
-    "Satoshi Kon (今敏)",
+    "Satoshi Kon (今敏 | 动画电影大师)",
     "Takeshi Kitano (北野武)",
-    "Christopher Nolan",
-    "Quentin Tarantino",
-    "James Cameron",
-    "Alfonso Cuaron",
-    "David Lynch",
-    "Wes Anderson",
-    "Denis Villeneuve",
+    "Christopher Nolan (克里斯托弗·诺兰)",
+    "Quentin Tarantino (昆汀·塔伦蒂诺)",
+    "James Cameron (詹姆斯·卡梅隆)",
+    "Alfonso Cuaron (阿方索·卡隆)",
+    "David Lynch (大卫·林奇)",
+    "Wes Anderson (韦斯·安德森)",
+    "Denis Villeneuve (丹尼斯·维伦纽瓦)",
     "Bong Joon-ho (奉俊昊)",
     "Hayao Miyazaki (宫崎骏)",
     "Makoto Shinkai (新海诚)",
     "Park Chan-wook (朴赞郁)",
-    "Fritz Lang",
-    "Jean-Luc Godard",
-    "Andrei Tarkovsky",
-    "Michelangelo Antonioni",
-    "Robert Bresson",
+    "Fritz Lang (弗里茨·朗)",
+    "Jean-Luc Godard (让-吕克·戈达尔)",
+    "Andrei Tarkovsky (安德烈·塔可夫斯基)",
+    "Michelangelo Antonioni (米开朗基罗·安东尼奥尼)",
+    "Robert Bresson (罗伯特·布列松)",
     "Yasujirō Ozu (小津安二郎)",
     "John Woo (吴宇森)",
     "Ann Hui (许鞍华)",
@@ -680,46 +680,46 @@ _BSAI_DIRECTOR_STYLES = [
 ]
 
 _BSAI_CINEMATOGRAPHY_STYLES = [
-    "System Recommended",
-    "Gregg Toland (Deep Focus)",
-    "Gordon Willis (Prince of Darkness, Low-key)",
-    "Freddie Young (70mm Epic Widescreen)",
-    "Roger Deakins (Restrained Realism)",
-    "Emmanuel Lubezki (Natural Light Long Takes)",
-    "Greig Fraser (Rugged Physical Texture)",
-    "Janusz Kaminski (Strong Backlight, Lens Flare)",
-    "Hoyte van Hoytema (IMAX Film, Solid Lighting)",
-    "Vittorio Storaro (Color Psychology, Writing with Light)",
-    "Sven Nykvist (Minimalist Natural Light)",
-    "Christopher Doyle (都市情绪光影, Neon Moody)",
-    "Mark Lee Ping-Bin (李屏宾, Eastern Poetic Natural Light)",
-    "Peter Pau (鲍德熹, Romantic Backlight Silhouette)",
-    "Robby Müller (Neon Gritty)",
-    "Conrad Hall (Textured Shadow)",
-    "Robert Richardson (High Contrast, Overhead Hard Light)",
-    "Dariusz Wolski (Dark Gothic Gloss)",
-    "Matthew Libatique (High Contrast Grain)",
-    "Claudio Miranda (Cool Digital Clean)",
-    "Lin Liang-Zhong (林良忠, Rural Realism Soft Light)",
+    "System Recommended (系统推荐)",
+    "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
+    "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+    "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
+    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+    "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+    "Greig Fraser (格雷格·弗莱瑟 | 粗粝物理质感)",
+    "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+    "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+    "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
+    "Sven Nykvist (斯文·尼奎斯特 | 极简自然光)",
+    "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+    "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+    "Peter Pau (鲍德熹 | 唯美写意逆光)",
+    "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
+    "Conrad Hall (康拉德·霍尔 | 纹理阴影)",
+    "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+    "Dariusz Wolski (达里乌什·沃尔斯基 | 暗黑哥特光泽)",
+    "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
+    "Claudio Miranda (克劳迪奥·米兰达 | 冷调数字洁净)",
+    "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
 ]
 
 _BSAI_FILM_GENRES = [
-    "System Recommended",
+    "System Recommended (系统推荐)",
     "Realism (写实主义)",
     "Neo-Realism (新现实主义)",
     "Poetic Realism (诗意写实)",
     "Expressionism (表现主义)",
     "Magical Realism (魔幻现实主义)",
     "Surrealism (超现实主义)",
-    "French New Wave (新浪潮)",
+    "French New Wave (法国新浪潮)",
     "Classical Hollywood (古典好莱坞)",
     "Film Noir (黑色电影)",
     "Vintage Film (胶片复古风)",
     "Theatrical Drama (舞台化戏剧)",
     "2D Hand-drawn Animation (二维手绘动画)",
-    "Ghibli/Miyazaki Animation (吉卜力风格)",
-    "Shinkai Animation (新海诚动画)",
-    "Satoshi Kon Animation (今敏动画)",
+    "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)",
+    "Shinkai Animation (新海诚风格)",
+    "Satoshi Kon Animation (今敏风格)",
     "3D CG Animation (三维CG动画)",
     "Stop Motion (定格动画)",
     "Ink Wash Animation (水墨国风动画)",
@@ -776,48 +776,48 @@ _BSAI_CUT_STYLES = [
 ]
 
 _BSAI_SCORE_STYLES = [
-    "System Recommended",
-    "John Williams (Epic Orchestral Leitmotif)",
-    "Hans Zimmer (Electronic-Orchestral Hybrid)",
-    "Ennio Morricone (Spaghetti Western Haunting Melody)",
-    "Bernard Herrmann (Strings-only Suspense)",
-    "Danny Elfman (Gothic Quirky)",
-    "Howard Shore (Sweeping Fantasy Themes)",
-    "Thomas Newman (Ambient Minimalist)",
-    "Nino Rota (Melodic Italian Classical)",
-    "Vangelis (Synthesizer Electronic)",
-    "Ryuichi Sakamoto (East-West Fusion)",
-    "Joe Hisaishi (Melodic Piano & Strings)",
-    "Tan Dun (Cross-cultural Percussion)",
-    "Shigeru Umebayashi (Moody Melancholic)",
-    "Clint Mansell (Minimalist Repetition)",
-    "Trent Reznor & Atticus Ross (Industrial Electronic)",
-    "Alexandre Desplat (Elegant Orchestral)",
-    "Michael Giacchino (Emotional Melodic)",
-    "Ludwig Goransson (Afro-futurist Percussion)",
-    "Mica Levi (Unsettling Dissonance)",
-    "Johann Johannsson (Drone Minimalist)",
-    "Carter Burwell (Folk-tinged Simplicity)",
-    "Gustavo Santaolalla (Nimble Guitar)",
-    "A.R. Rahman (Bollywood Fusion)",
-    "Hildur Gudnadottir (Cello Drone Dark)",
-    "Philip Glass (Minimalist Repetition Patterns)",
-    "Angelo Badalamenti (Surreal Dreamlike Jazz)",
-    "James Horner (Celtic Emotional)",
-    "Alan Silvestri (Adventure Heroic)",
-    "Bear McCreary (Taiko Percussion Ethnic)",
-    "Max Steiner (Classical Hollywood Symphonic)",
-    "Jerry Goldsmith (Versatile Avant-garde)",
-    "Dimitri Tiomkin (American Frontier)",
-    "Elmer Bernstein (Jazz-inflected Big Band)",
-    "Maurice Jarre (Epic Choral Exotic)",
-    "Kitaro (New Age Synthesizer)",
-    "Shirō Sagisu (Anime Orchestral Rock Fusion)",
-    "Yuki Kajiura (Gothic Choral Ethereal)",
-    "Taku Iwasaki (Hip-hop Orchestral Hybrid)",
-    "Hiroyuki Sawano (Epic Anime Rock)",
-    "Cho Young-wuk (Korean Tragic Melodic)",
-    "Zhao Jiping (Chinese Traditional Cinematic)",
+    "System Recommended (系统推荐)",
+    "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+    "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+    "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+    "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+    "Danny Elfman (丹尼·艾夫曼 | 哥特怪诞)",
+    "Howard Shore (霍华德·肖 | 奇幻史诗主题)",
+    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+    "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+    "Vangelis (范吉利斯 | 合成器电子)",
+    "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+    "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+    "Tan Dun (谭盾 | 跨文化打击乐)",
+    "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+    "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+    "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+    "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+    "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+    "Ludwig Goransson (路德维希·戈兰松 | 非洲未来主义打击乐)",
+    "Mica Levi (米卡·利维 | 不安不协和)",
+    "Johann Johannsson (约翰·约翰松 | 持续音极简)",
+    "Carter Burwell (卡特·伯威尔 | 民谣简约)",
+    "Gustavo Santaolalla (古斯塔沃·桑塔欧拉拉 | 独奏吉他)",
+    "A.R. Rahman (A.R.拉赫曼 | 宝莱坞融合)",
+    "Hildur Gudnadottir (希尔杜·古德纳多蒂尔 | 大提琴持续音暗黑)",
+    "Philip Glass (菲利普·格拉斯 | 极简重复模式)",
+    "Angelo Badalamenti (安吉洛·巴达拉门蒂 | 超现实梦幻爵士)",
+    "James Horner (詹姆斯·霍纳 | 凯尔特情感)",
+    "Alan Silvestri (艾伦·西尔维斯特里 | 冒险英雄)",
+    "Bear McCreary (贝尔·麦克里 | 太鼓打击民族风)",
+    "Max Steiner (马克斯·斯坦纳 | 古典好莱坞交响)",
+    "Jerry Goldsmith (杰瑞·戈德史密斯 | 多变前卫)",
+    "Dimitri Tiomkin (迪米特里·蒂奥姆金 | 美国边疆)",
+    "Elmer Bernstein (埃尔默·伯恩斯坦 | 爵士大乐队)",
+    "Maurice Jarre (莫里斯·贾尔 | 史诗合唱异域)",
+    "Kitaro (喜多郎 | 新世纪合成器)",
+    "Shirō Sagisu (鹭巢诗郎 | 动漫管弦摇滚融合)",
+    "Yuki Kajiura (梶浦由记 | 哥特合唱空灵)",
+    "Taku Iwasaki (岩崎琢 | 嘻哈管弦混合)",
+    "Hiroyuki Sawano (泽野弘之 | 史诗动漫摇滚)",
+    "Cho Young-wuk (赵英旭 | 韩国悲剧旋律)",
+    "Zhao Jiping (赵季平 | 中国传统电影配乐)",
 ]
 
 
@@ -1042,8 +1042,8 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["Text to Video", "Image to Video", "Multimodal Fusion"],
-                    {"default": "Text to Video", "tooltip": "Video generation mode / 生成模式"},
+                    ["Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "Text to Video (文生视频)", "tooltip": "Video generation mode / 生成模式"},
                 ),
                 "video_duration": (
                     "INT",
@@ -1063,15 +1063,15 @@ class BSAI_MiniMAX_H3_Prompt:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended", "tooltip": "Director style for the video / 导演风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Director style for the video / 导演风格"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Cinematography/lighting style / 摄影风格"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended", "tooltip": "Film genre/type / 电影类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Film genre/type / 电影类型"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
@@ -1079,7 +1079,7 @@ class BSAI_MiniMAX_H3_Prompt:
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Film score/music composer style / 电影配乐风格"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
@@ -1186,9 +1186,9 @@ Requires BSAI H3 Model Loader node.
             raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
 
         mode_hints = {
-            "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
+            "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
         bgm_instruction = (
@@ -1205,17 +1205,17 @@ Requires BSAI H3 Model Loader node.
         ]
 
         # ── Creative style parameters ──
-        if director_style != "System Recommended":
+        if director_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
-        if cinematography_style != "System Recommended":
+        if cinematography_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
-        if film_genre != "System Recommended":
+        if film_genre != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
         if cut_style != "One Shot (一镜到底)":
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
-        if score_style != "System Recommended":
+        if score_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
 
         if extra_requirements and extra_requirements.strip():
@@ -1293,7 +1293,7 @@ Requires BSAI H3 Model Loader node.
         if ref_parts:
             user_message_parts.extend(ref_parts)
             # Switch to multimodal mode hint
-            if generation_mode == "Text to Video":
+            if generation_mode == "Text to Video (文生视频)":
                 user_message_parts.append(
                     "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
@@ -1513,8 +1513,8 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["Text to Video", "Image to Video", "Multimodal Fusion"],
-                    {"default": "Text to Video", "tooltip": "Video generation mode / 生成模式"},
+                    ["Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "Text to Video (文生视频)", "tooltip": "Video generation mode / 生成模式"},
                 ),
                 "video_duration": (
                     "INT",
@@ -1534,15 +1534,15 @@ class BSAI_H3_RemoteAPI:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended", "tooltip": "Director style for the video / 导演风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Director style for the video / 导演风格"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Cinematography/lighting style / 摄影风格"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended", "tooltip": "Film genre/type / 电影类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Film genre/type / 电影类型"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
@@ -1550,7 +1550,7 @@ class BSAI_H3_RemoteAPI:
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "Film score/music composer style / 电影配乐风格"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
@@ -1638,9 +1638,9 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             raise ValueError("api_key cannot be empty. Please enter your API key.")
 
         mode_hints = {
-            "Text to Video": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
+            "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
         }
 
         bgm_instruction = (
@@ -1657,17 +1657,17 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         ]
 
         # ── Creative style parameters ──
-        if director_style != "System Recommended":
+        if director_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
-        if cinematography_style != "System Recommended":
+        if cinematography_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
-        if film_genre != "System Recommended":
+        if film_genre != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
         if cut_style != "One Shot (一镜到底)":
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
-        if score_style != "System Recommended":
+        if score_style != "System Recommended (系统推荐)":
             user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
 
         if extra_requirements and extra_requirements.strip():
@@ -1744,7 +1744,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         if ref_parts:
             user_message_parts.extend(ref_parts)
-            if generation_mode == "Text to Video":
+            if generation_mode == "Text to Video (文生视频)":
                 user_message_parts.append(
                     "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
