@@ -424,6 +424,247 @@ def _bsai_is_model_valid(llm):
 
 
 # ============================================================
+# Creative Style Post-Processing
+# ============================================================
+
+def _bsai_parse_style_option(style_str):
+    """Parse a bilingual style option string.
+
+    Format: "English Name (中文名 | description)" or "English Name (中文名)"
+    Returns: (english_name, chinese_name, description)
+    """
+    m = re.match(r'(.+?)\s*\(([^|)]+)(?:\s*\|\s*([^)]+))?\)', style_str)
+    if m:
+        return m.group(1).strip(), m.group(2).strip(), (m.group(3) or "").strip()
+    return style_str.strip(), "", ""
+
+
+def _bsai_style_in_text(text, style_str):
+    """Check if a style name (English or Chinese) appears in the text."""
+    en, cn, _ = _bsai_parse_style_option(style_str)
+    if en and en.lower() in text.lower():
+        return True
+    if cn and cn in text:
+        return True
+    return False
+
+
+def _bsai_enforce_style_output(text, director_style, cinematography_style,
+                               film_genre, score_style):
+    """Post-process LLM output: inject missing creative styles into H3 fields.
+
+    If the LLM failed to mention selected styles, this function injects them
+    directly into the appropriate H3 fields:
+    - Director / Cinematography / Genre  → integrated_multimodal_description
+    - Score Style                        → non_diegetic_music
+
+    Handles both the Chinese and English sections of the bilingual output.
+    """
+    if not text or not text.strip():
+        return text
+
+    # ── Determine which styles are selected and missing ──
+    checks = [
+        ("director",        director_style),
+        ("cinematography",  cinematography_style),
+        ("genre",           film_genre),
+        ("score",           score_style),
+    ]
+    missing = {}
+    for key, val in checks:
+        if val and "System Recommended" not in val:
+            if not _bsai_style_in_text(text, val):
+                missing[key] = val
+
+    if not missing:
+        return text  # All styles already present
+
+    print(f"[BSAI H3] Style enforcement: injecting missing styles: {list(missing.keys())}")
+
+    # ── Build injection strings ──
+    vis_en_parts = []
+    vis_cn_parts = []
+    score_en = ""
+    score_cn = ""
+
+    if "director" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["director"])
+        part_en = f"In the style of {en}"
+        part_cn = f"导演风格参考{cn}"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "cinematography" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["cinematography"])
+        part_en = f"cinematography by {en}"
+        part_cn = f"摄影风格{cn}"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "genre" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["genre"])
+        part_en = f"{en} genre aesthetic"
+        part_cn = f"{cn}类型美学"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "score" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["score"])
+        score_en = f"In the style of {en}"
+        score_cn = f"配乐风格参考{cn}"
+        if cn:
+            score_en += f" ({cn})"
+        if en:
+            score_cn += f"（{en}）"
+        if desc:
+            score_en += f", {desc}"
+            score_cn += f"，{desc}"
+
+    vis_en_str = ". ".join(vis_en_parts) + ". " if vis_en_parts else ""
+    vis_cn_str = "。".join(vis_cn_parts) + "。" if vis_cn_parts else ""
+
+    # ── Helper: inject after a field name within a text region ──
+    def _inject_after_field(segment, field_name, injection):
+        """Insert *injection* right after 'field_name:' in *segment*."""
+        pattern = re.compile(
+            r'(' + re.escape(field_name) + r'\s*:\s*)',
+            re.IGNORECASE,
+        )
+        m = pattern.search(segment)
+        if m:
+            return segment[:m.end()] + injection + segment[m.end():]
+        return None  # field not found
+
+    # ── Split output into Chinese / English sections ──
+    cn_marker = "---中文版本---"
+    en_marker = "---English Version---"
+
+    has_cn = cn_marker in text
+    has_en = en_marker in text
+
+    if has_cn and has_en:
+        cn_start = text.index(cn_marker) + len(cn_marker)
+        en_start = text.index(en_marker) + len(en_marker)
+
+        cn_section = text[cn_start:en_start]
+        en_section = text[en_start:]
+        prefix = text[:cn_start]
+
+        # Inject into Chinese section
+        if vis_cn_str:
+            result = _inject_after_field(cn_section, "integrated_multimodal_description", vis_cn_str)
+            if result is not None:
+                cn_section = result
+            else:
+                cn_section = vis_cn_str + "\n" + cn_section
+        if score_cn:
+            result = _inject_after_field(cn_section, "non_diegetic_music", score_cn + "。")
+            if result is not None:
+                cn_section = result
+
+        # Inject into English section
+        if vis_en_str:
+            result = _inject_after_field(en_section, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                en_section = result
+            else:
+                en_section = vis_en_str + "\n" + en_section
+        if score_en:
+            result = _inject_after_field(en_section, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                en_section = result
+
+        text = prefix + cn_section + en_marker + en_section
+
+    elif has_cn:
+        # Only Chinese section
+        cn_start = text.index(cn_marker) + len(cn_marker)
+        prefix = text[:cn_start]
+        cn_section = text[cn_start:]
+
+        if vis_cn_str:
+            result = _inject_after_field(cn_section, "integrated_multimodal_description", vis_cn_str)
+            if result is not None:
+                cn_section = result
+            else:
+                cn_section = vis_cn_str + "\n" + cn_section
+        if score_cn:
+            result = _inject_after_field(cn_section, "non_diegetic_music", score_cn + "。")
+            if result is not None:
+                cn_section = result
+
+        text = prefix + cn_section
+
+    elif has_en:
+        # Only English section
+        en_start = text.index(en_marker) + len(en_marker)
+        prefix = text[:en_start]
+        en_section = text[en_start:]
+
+        if vis_en_str:
+            result = _inject_after_field(en_section, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                en_section = result
+            else:
+                en_section = vis_en_str + "\n" + en_section
+        if score_en:
+            result = _inject_after_field(en_section, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                en_section = result
+
+        text = prefix + en_section
+
+    else:
+        # No language markers — inject into the whole text
+        # Try English field names first (H3 fields are always in English)
+        if vis_en_str:
+            result = _inject_after_field(text, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                text = result
+            else:
+                # No field found — prepend a style annotation header
+                header_parts = []
+                if vis_en_parts:
+                    header_parts.append("[Creative Styles] " + ". ".join(vis_en_parts) + ".")
+                if vis_cn_parts:
+                    header_parts.append("【创意风格】" + "。".join(vis_cn_parts) + "。")
+                if score_en:
+                    header_parts.append("[Score] " + score_en + ".")
+                if score_cn:
+                    header_parts.append("【配乐】" + score_cn + "。")
+                header = "\n".join(header_parts) + "\n\n"
+                text = header + text
+
+        if score_en:
+            result = _inject_after_field(text, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                text = result
+
+    return text
+
+
+# ============================================================
 # Model Storage & Management
 # ============================================================
 
@@ -1490,7 +1731,12 @@ Requires BSAI H3 Model Loader node.
         except Exception:
             text = str(out)
 
-        return (text.lstrip().removeprefix(": ").strip(),)
+        text = text.lstrip().removeprefix(": ").strip()
+        text = _bsai_enforce_style_output(
+            text, director_style, cinematography_style,
+            film_genre, score_style,
+        )
+        return (text,)
 
 
 # ============================================================
@@ -1901,7 +2147,12 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
                 f"Response: {response.text[:500]}"
             )
 
-        return (text.lstrip().removeprefix(": ").strip(),)
+        text = text.lstrip().removeprefix(": ").strip()
+        text = _bsai_enforce_style_output(
+            text, director_style, cinematography_style,
+            film_genre, score_style,
+        )
+        return (text,)
 
 
 # ============================================================
