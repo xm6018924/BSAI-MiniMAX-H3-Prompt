@@ -207,6 +207,149 @@ def _bsai_video_to_data_uris(video_input, max_frames=4):
     return data_uris
 
 
+def _bsai_tensor_image_stats(img_tensor):
+    """读取 ComfyUI IMAGE tensor 并提取稳定的本地视觉统计信息。"""
+    if torch is None or img_tensor is None:
+        return None
+    try:
+        img = img_tensor.detach().float().cpu().clamp(0, 1)
+        if img.ndim != 3:
+            return None
+        h, w = int(img.shape[0]), int(img.shape[1])
+        c = int(img.shape[2]) if img.ndim == 3 else 1
+        rgb = img[..., :3] if c >= 3 else img.repeat(1, 1, 3)
+        mean = rgb.reshape(-1, 3).mean(dim=0)
+        std = rgb.reshape(-1, 3).std(dim=0)
+        brightness = float(rgb.mean().item())
+        contrast = float(rgb.std().item())
+        saturation = float((rgb.max(dim=2).values - rgb.min(dim=2).values).mean().item())
+        r, g, b = [float(x) for x in mean.tolist()]
+
+        if brightness < 0.25:
+            exposure = "dark / low-key"
+        elif brightness > 0.72:
+            exposure = "bright / high-key"
+        else:
+            exposure = "balanced exposure"
+
+        if saturation < 0.12:
+            colorfulness = "low saturation / muted colors"
+        elif saturation > 0.35:
+            colorfulness = "high saturation / vivid colors"
+        else:
+            colorfulness = "moderate saturation"
+
+        if r > b + 0.06:
+            temperature = "warm color temperature"
+        elif b > r + 0.06:
+            temperature = "cool color temperature"
+        else:
+            temperature = "neutral color temperature"
+
+        dominant_idx = int(mean.argmax().item())
+        dominant = ["red/warm channel", "green channel", "blue/cool channel"][dominant_idx]
+
+        if w > h * 1.2:
+            framing = "landscape/wide frame"
+        elif h > w * 1.2:
+            framing = "portrait/vertical frame"
+        else:
+            framing = "near-square frame"
+
+        return {
+            "size": f"{w}x{h}",
+            "channels": c,
+            "framing": framing,
+            "exposure": exposure,
+            "colorfulness": colorfulness,
+            "temperature": temperature,
+            "dominant": dominant,
+            "brightness": brightness,
+            "contrast": contrast,
+            "saturation": saturation,
+            "mean_rgb": (r, g, b),
+            "std_rgb": tuple(float(x) for x in std.tolist()),
+        }
+    except Exception:
+        return None
+
+
+def _bsai_format_image_stats(label, stats):
+    if not stats:
+        return f"{label}: image connected, but local visual statistics could not be extracted."
+    r, g, b = stats["mean_rgb"]
+    return (
+        f"{label}: {stats['size']}, {stats['framing']}, {stats['exposure']}, "
+        f"{stats['colorfulness']}, {stats['temperature']}, dominant {stats['dominant']}; "
+        f"brightness={stats['brightness']:.2f}, contrast={stats['contrast']:.2f}, "
+        f"saturation={stats['saturation']:.2f}, mean RGB=({r:.2f},{g:.2f},{b:.2f})."
+    )
+
+
+def _bsai_image_tensor_to_descriptions(image_input, label="image"):
+    """读取图片输入端口，并为每张图片生成本地资料说明。"""
+    if image_input is None or torch is None:
+        return []
+    try:
+        images = image_input
+        if images.ndim == 3:
+            images = images.unsqueeze(0)
+        descriptions = []
+        total = int(images.shape[0])
+        for i in range(total):
+            image_label = f"<Picture {i + 1} from {label}>" if total > 1 else f"<Picture from {label}>"
+            stats = _bsai_tensor_image_stats(images[i])
+            descriptions.append(_bsai_format_image_stats(image_label, stats))
+        return descriptions
+    except Exception as e:
+        return [f"{label}: image input connected, but local analysis failed: {type(e).__name__}: {e}"]
+
+
+def _bsai_video_to_descriptions(video_input, label="video", max_frames=4):
+    """读取视频 IMAGE batch 输入端口，提取帧数、尺寸、关键帧统计和粗略变化强度。"""
+    if video_input is None or torch is None:
+        return []
+    try:
+        frames = video_input
+        if frames.ndim == 3:
+            frames = frames.unsqueeze(0)
+        total_frames = int(frames.shape[0])
+        if total_frames == 0:
+            return [f"{label}: video input connected but contains 0 frames."]
+        h, w = int(frames.shape[1]), int(frames.shape[2])
+        if total_frames <= max_frames:
+            frame_indices = list(range(total_frames))
+        else:
+            frame_indices = [int(i * (total_frames - 1) / (max_frames - 1)) for i in range(max_frames)]
+
+        change_desc = "unknown visual change"
+        if total_frames > 1:
+            try:
+                sample = frames[frame_indices].detach().float().cpu().clamp(0, 1)
+                if sample.shape[0] > 1:
+                    diffs = (sample[1:] - sample[:-1]).abs().mean(dim=(1, 2, 3))
+                    avg_diff = float(diffs.mean().item())
+                    if avg_diff < 0.035:
+                        change_desc = "low frame-to-frame visual change"
+                    elif avg_diff > 0.12:
+                        change_desc = "high frame-to-frame visual change"
+                    else:
+                        change_desc = "moderate frame-to-frame visual change"
+            except Exception:
+                pass
+
+        descriptions = [
+            f"<Video from {label}>: {total_frames} frame(s) received as IMAGE batch, resolution {w}x{h}, {change_desc}. "
+            f"Selected keyframe indices for local analysis: {frame_indices}."
+        ]
+        for key_i, frame_idx in enumerate(frame_indices):
+            stats = _bsai_tensor_image_stats(frames[frame_idx])
+            descriptions.append(_bsai_format_image_stats(f"<Video {label} keyframe {key_i + 1} / frame {frame_idx}>", stats))
+        return descriptions
+    except Exception as e:
+        return [f"{label}: video input connected, but local analysis failed: {type(e).__name__}: {e}"]
+
+
 def _bsai_audio_to_description(audio_input, label="audio"):
     """Extract metadata from ComfyUI AUDIO input for text-based reference.
 
@@ -254,7 +397,27 @@ def _bsai_audio_to_description(audio_input, label="audio"):
         sr = int(sample_rate) if sample_rate else 0
         duration = (samples / sr) if sr > 0 else 0
 
-        desc = f"{label}: {channels}ch, {duration:.1f}s, {sr}Hz"
+        audio_features = []
+        try:
+            if torch is not None and hasattr(waveform, "detach"):
+                wav = waveform.detach().float().cpu()
+                peak = float(wav.abs().max().item()) if wav.numel() else 0.0
+                rms = float((wav ** 2).mean().sqrt().item()) if wav.numel() else 0.0
+                silent_ratio = float((wav.abs() < 0.01).float().mean().item()) if wav.numel() else 0.0
+                if rms < 0.015:
+                    loudness_desc = "very quiet / near silence"
+                elif rms < 0.06:
+                    loudness_desc = "quiet"
+                elif rms > 0.25:
+                    loudness_desc = "loud / high energy"
+                else:
+                    loudness_desc = "moderate loudness"
+                audio_features.append(f"{loudness_desc}, rms={rms:.3f}, peak={peak:.3f}, silence_ratio={silent_ratio:.2f}")
+        except Exception:
+            pass
+
+        feature_text = "; " + "; ".join(audio_features) if audio_features else ""
+        desc = f"{label}: {channels}ch, {duration:.1f}s, {sr}Hz{feature_text}"
 
         # Generate base64 for remote API support
         b64 = None
@@ -1329,6 +1492,13 @@ Mode rules:
 - L2VA: first line must align <Picture 1> (from [Shot N]) to the final S.SS-second mark.
 - For images/video/audio references, keep labels consistent: <Picture N>, <Subject N>, <Video N>, <Audio N>.
 
+Local media analysis rules:
+- If the user message contains [Reference Images - Local Analysis], [Reference Videos - Local Analysis], or [Reference Audio - Local Analysis], you MUST use those connected-port summaries as source material.
+- Treat local image statistics as visual evidence for aspect ratio, framing, exposure, brightness, contrast, saturation, color temperature, and color palette.
+- Treat local video/keyframe statistics as evidence for frame count, resolution, continuity, visual-change intensity, pacing, and transition design.
+- Treat local audio statistics as evidence for duration, sample rate, channels, loudness, peak level, and silence ratio.
+- Do not claim exact object identity, face identity, spoken words, lyrics, or plot details unless the user explicitly provided them. Instead, write visually safe descriptions based on the local statistics and user prompt.
+
 Writing rules:
 - Write visual and sound descriptions in English for English Version and Chinese for 中文版本.
 - Preserve dialogue, lyrics, and visible scene text in their original language inside <d>[Language] ...</d>.
@@ -1560,29 +1730,30 @@ Requires BSAI H3 Model Loader node.
         # ── Collect image inputs (up to 10) ──
         image_inputs = [image_1, image_2, image_3, image_4, image_5,
                         image_6, image_7, image_8, image_9, image_10]
-        collected_images = []  # list of (label, data_uri_list)
+        collected_images = []  # list of (label, local_descriptions)
         total_image_count = 0
         for idx, img in enumerate(image_inputs):
             if img is None:
                 continue
             label = f"image_{idx + 1}"
-            data_uris = _bsai_image_tensor_to_data_uri(img)
-            if data_uris:
-                collected_images.append((label, data_uris))
-                total_image_count += len(data_uris)
+            descriptions = _bsai_image_tensor_to_descriptions(img, label)
+            if descriptions:
+                collected_images.append((label, descriptions))
+                total_image_count += len(descriptions)
 
         # ── Collect video inputs (up to 4, extract key frames) ──
         video_inputs = [video_1, video_2, video_3, video_4]
-        collected_videos = []  # list of (label, data_uri_list)
+        collected_videos = []  # list of (label, local_descriptions)
         total_video_frame_count = 0
         for idx, vid in enumerate(video_inputs):
             if vid is None:
                 continue
             label = f"video_{idx + 1}"
-            data_uris = _bsai_video_to_data_uris(vid)
-            if data_uris:
-                collected_videos.append((label, data_uris))
-                total_video_frame_count += len(data_uris)
+            descriptions = _bsai_video_to_descriptions(vid, label)
+            if descriptions:
+                collected_videos.append((label, descriptions))
+                # 第一条是视频整体摘要，其余是关键帧摘要
+                total_video_frame_count += max(0, len(descriptions) - 1)
 
         # ── Collect audio inputs (up to 3) ──
         audio_inputs_list = [audio_1, audio_2, audio_3]
@@ -1600,27 +1771,32 @@ Requires BSAI H3 Model Loader node.
         # ── Build reference summary text ──
         ref_parts = []
         if total_image_count > 0:
-            image_summary = ", ".join(
-                f"{label} ({len(uris)} img)" for label, uris in collected_images
+            image_summary = "\n".join(
+                f"- {label}: {len(descs)} image(s)\n  " + "\n  ".join(descs)
+                for label, descs in collected_images
             )
             ref_parts.append(
-                f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
-                "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
+                f"[Reference Images - Local Analysis] {total_image_count} image(s) read from connected image ports.\n"
+                f"{image_summary}\n"
+                "Use these local visual statistics to infer framing, lighting, color palette, visual mood, and reference labels. "
+                "Do not claim exact object identity unless the user described it in text."
             )
         if total_video_frame_count > 0:
-            video_summary = ", ".join(
-                f"{label} ({len(uris)} keyframes)" for label, uris in collected_videos
+            video_summary = "\n".join(
+                f"- {label}: local video/keyframe analysis\n  " + "\n  ".join(descs)
+                for label, descs in collected_videos
             )
             ref_parts.append(
-                f"[Reference Videos] {len(collected_videos)} video(s) uploaded: {video_summary}.\n"
-                "Key frames have been extracted from each video. Analyze action, motion, temporal progression, and scene continuity from the video frames."
+                f"[Reference Videos - Local Analysis] {len(collected_videos)} video input(s) read from connected video ports.\n"
+                f"{video_summary}\n"
+                "Use frame count, resolution, keyframe color/lighting, and visual-change intensity to infer continuity, camera pacing, and transition design."
             )
         if collected_audios:
             audio_summary = ", ".join(desc for _, desc in collected_audios)
             ref_parts.append(
-                f"[Reference Audio] {len(collected_audios)} audio clip(s) uploaded: {audio_summary}.\n"
-                "Use these audio clips as voice/music/sound references in the prompt. "
-                "Note: Audio content cannot be directly analyzed by the vision model; describe its intended use based on the user's prompt context."
+                f"[Reference Audio - Local Analysis] {len(collected_audios)} audio clip(s) read from connected audio ports: {audio_summary}.\n"
+                "Use duration, channels, sampling rate, loudness, peak, and silence ratio as sound-design references. "
+                "Do not invent exact speech words or lyrics unless the user provided them."
             )
 
         if ref_parts:
@@ -1650,8 +1826,8 @@ Requires BSAI H3 Model Loader node.
             if collected_audios:
                 media_info += f", {len(collected_audios)} audio clip(s)"
             print(
-                "[BSAI H3] Local safe text mode enabled; media inputs are referenced "
-                f"as labels only, not sent to llama.cpp: {media_info}"
+                "[BSAI H3] Local media analysis mode enabled; image/video/audio ports "
+                f"were read and summarized as text, not sent as image_url to llama.cpp: {media_info}"
             )
 
         messages = [
