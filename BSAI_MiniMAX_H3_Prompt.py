@@ -828,6 +828,8 @@ _BSAI_SCORE_STYLES = [
 
 _H3_SYSTEM_PROMPT = """You are a MiniMax H3 video model prompt optimization expert. Your task is to rewrite user input into H3-compliant structured video generation prompts following the official H3 Prompt Writing Guide.
 
+**⚠ TOP PRIORITY — Creative Style Output**: If the user message contains any of these tags — [Director Style], [Cinematography Style], [Film Genre], [Score Style] — you MUST explicitly write the selected style name AND its characteristic techniques directly in the output text. The director's name goes in the opening of integrated_multimodal_description. The cinematographer's lighting/camera style goes in the visual description. The genre's aesthetic goes in the scene description. The composer's name and musical style goes in non_diegetic_music. Applying styles silently without naming them in the output is a CRITICAL ERROR.
+
 ## 1. Official Prompt Structure
 
 The final prompt uses three core fields in this exact order:
@@ -887,6 +889,14 @@ integrated_multimodal_description: 【0-3秒】实拍，电影感，全景镜头
 
 ### 3.2 Opening Style
 At the beginning of the first time segment, state the overall style: Cinematic, Live-action, 2D-animated, 3D CG, Claymation, Watercolor, Vintage film, etc.
+
+**CRITICAL — Creative Style Integration**: When the user message includes [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, you MUST explicitly incorporate these styles into the output:
+1. In the opening of `integrated_multimodal_description`, state the director's name and their signature visual techniques (e.g., "in the style of Wong Kar-wai (王家卫), with step-printing, saturated colors, and melancholic urban atmosphere").
+2. Describe the cinematographer's lighting and camera approach explicitly (e.g., "cinematography inspired by Christopher Doyle (杜可风), handheld camera with neon-drenched high-contrast lighting and soft focus").
+3. Reference the film genre's visual conventions in the description (e.g., "art-house drama aesthetic with contemplative pacing").
+4. In `non_diegetic_music`, explicitly describe the music using the selected composer's signature style (e.g., "in the style of Joe Hisaishi (久石让), with tender piano melodies and lush string arrangements").
+
+Do NOT silently apply styles — the style names and their characteristic techniques MUST be explicitly visible in the output text.
 
 ### 3.3 Camera Motion (Motion Type + Amplitude + Speed)
 Write camera motion as natural English action within the shot:
@@ -980,7 +990,14 @@ When the user message includes any of the following style tags, apply them to th
 - **[Segmentation]**: The user has specified the exact number of time-range segments. Divide the video into exactly that many segments, each representing a distinct camera cut with its own shot type, content, and camera movement. Ensure all segments are continuous and cover the full video duration.
 - **[Score Style]**: Apply the named composer's signature musical style to the `non_diegetic_music` field. Match their instrumentation preferences, harmonic language, rhythmic patterns, and emotional texture. For example, John Williams = sweeping brass-led leitmotifs, full romantic orchestra; Hans Zimmer = electronic-orchestral hybrid, driving ostinatos, deep braams; Ennio Morricone = whistled melodies, harmonica, solitary trumpet, sparse eerie arrangements; Bernard Herrmann = strings-only tension, shrieking glissandi; Danny Elfman = gothic choral, quirky orchestral, Burton-esque dark whimsy; Joe Hisaishi = tender piano melodies, lush string arrangements, Ghibli warmth; Vangelis = analog synthesizer pads, retro-futuristic electronic; Ryuichi Sakamoto = melancholic piano, East-West harmonic fusion; Tan Dun = Chinese percussion, cello solos, cross-cultural timbres; Clint Mansell = obsessive minimalist repetition, building intensity; Trent Reznor & Atticus Ross = industrial textures, dark ambient electronics; Hildur Gudnadottir = cello drone, dissonant dark textures; Philip Glass = arpeggiated minimalist patterns, gradual harmonic shifts; Angelo Badalamenti = dreamlike jazz-noir, slow saxophone, ambient synth pads; Gustavo Santaolalla = lonely detuned guitar, ronroco, sparse emotional melodies.
 
-When a style parameter is set to "System Recommended", use your own best judgment to select appropriate styles based on the user's prompt content.
+When a style parameter is set to "System Recommended (系统推荐)", use your own best judgment to select appropriate styles based on the user's prompt content.
+
+**MANDATORY OUTPUT REQUIREMENT**: When any creative style tag is present in the user message, the selected style MUST be explicitly reflected in the output prompt:
+- The director's name and signature techniques MUST appear in the opening of `integrated_multimodal_description`
+- The cinematographer's lighting/camera style MUST be described in the visual description
+- The film genre's aesthetic conventions MUST be referenced in the scene description
+- The composer's name and musical characteristics MUST appear in `non_diegetic_music`
+- Failure to explicitly mention the selected styles in the output is a critical error
 
 ## 6. Output Format
 
@@ -1004,6 +1021,26 @@ overall_soundscape: ...
 non_diegetic_music: ...
 ```
 
+### Example WITH Creative Styles Applied
+
+When the user message contains [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, the output MUST explicitly name and describe the selected styles. Compare the difference:
+
+**WITHOUT styles (System Recommended):**
+```
+integrated_multimodal_description: [0-3s] Live-action, cinematic, a wide shot frames a young woman walking into a cherry blossom courtyard. The camera pushes in with small amplitude. [3-8s] The camera cuts to a medium shot as she draws her sword and begins her stance. [8-12s] Cut to a close-up, the sword flashes in slow motion.
+overall_soundscape: ...
+non_diegetic_music: Soft orchestral strings with gentle woodwind accents, building tension during the sword draw.
+```
+
+**WITH [Director Style] Wong Kar-wai, [Cinematography Style] Christopher Doyle, [Film Genre] Wuxia, [Score Style] Tan Dun:**
+```
+integrated_multimodal_description: [0-3s] In the style of Wong Kar-wai (王家卫), with step-printing and saturated colors, a wide shot frames a young woman walking into a cherry blossom courtyard. Cinematography by Christopher Doyle (杜可风): handheld camera with neon-drenched high-contrast lighting and soft focus. Wuxia (武侠) genre aesthetic with silk costumes and sweeping landscapes. The camera pushes in with small amplitude. [3-8s] The camera cuts to a medium shot as she draws her sword and begins her stance, Doyle's signature humid atmosphere and朦胧 light. [8-12s] Cut to a close-up, the sword flashes in slow motion, Wong Kar-wai's melancholic urban longing permeating the frame.
+overall_soundscape: ...
+non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, cello solos, and cross-cultural timbres building tension during the sword draw.
+```
+
+**CRITICAL**: The style names (director, cinematographer, genre, composer) and their signature techniques MUST appear explicitly in the output text. Do NOT apply styles silently — the user must be able to see which styles were used by reading the output.
+
 ### Rules for bilingual output:
 1. **English Version**: Descriptions in English, dialogue/lyrics/visible text in original language with `<d>[Language] ...</d>` tags. Use `[0-3s]` time-range segments.
 2. **Chinese Version**: Same content as the English version but with the description parts in Chinese. Dialogue, lyrics, and visible text remain in their original language. Use `【0-3秒】` time-range segments.
@@ -1014,7 +1051,8 @@ non_diegetic_music: ...
 7. Total output should not exceed 7000 characters per version.
 8. Output directly without any explanation, preamble, or postscript.
 9. Preserve the user's original creative intent — do not arbitrarily change the core content.
-10. Time-range segments must be continuous and cover the full video duration (e.g., for a 10s video: [0-3s] + [3-7s] + [7-10s])."""
+10. Time-range segments must be continuous and cover the full video duration (e.g., for a 10s video: [0-3s] + [3-7s] + [7-10s]).
+11. **CREATIVE STYLE VISIBILITY**: When [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags are present in the user message, the selected style names and their characteristic techniques MUST be explicitly written in the output. This is a non-negotiable requirement — failure to include them is a critical error."""
 
 
 # ============================================================
@@ -1205,18 +1243,29 @@ Requires BSAI H3 Model Loader node.
         ]
 
         # ── Creative style parameters ──
+        selected_styles = []
         if director_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
+            user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
+            selected_styles.append(f"Director: {director_style}")
         if cinematography_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
+            selected_styles.append(f"Cinematography: {cinematography_style}")
         if film_genre != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
+            user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
+            selected_styles.append(f"Genre: {film_genre}")
         if cut_style != "One Shot (一镜到底)":
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
         if score_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
+            user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
+            selected_styles.append(f"Score: {score_style}")
+        if selected_styles:
+            user_message_parts.append(
+                f"[⚠ STYLE OUTPUT CHECKLIST] The following creative styles were selected and MUST appear explicitly in the output:\n"
+                + "\n".join(f"  - {s}" for s in selected_styles)
+                + "\nBefore outputting, verify that each style name and its characteristic techniques are visible in the text. If any style is missing, add it."
+            )
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
@@ -1299,7 +1348,7 @@ Requires BSAI H3 Model Loader node.
                 )
 
         user_message_parts.append(
-            "\nBased on the above information, optimize the prompt according to H3 specification. Output the optimized prompt directly without any explanation."
+            "\nBased on the above information, optimize the prompt according to H3 specification. Any selected creative styles (director, cinematography, genre, score) MUST be explicitly mentioned in the output. Output the optimized prompt directly without any explanation."
         )
 
         user_message = "\n".join(user_message_parts)
@@ -1657,18 +1706,29 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         ]
 
         # ── Creative style parameters ──
+        selected_styles = []
         if director_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
+            user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
+            selected_styles.append(f"Director: {director_style}")
         if cinematography_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
+            selected_styles.append(f"Cinematography: {cinematography_style}")
         if film_genre != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
+            user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
+            selected_styles.append(f"Genre: {film_genre}")
         if cut_style != "One Shot (一镜到底)":
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
         if score_style != "System Recommended (系统推荐)":
-            user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
+            user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
+            selected_styles.append(f"Score: {score_style}")
+        if selected_styles:
+            user_message_parts.append(
+                f"[⚠ STYLE OUTPUT CHECKLIST] The following creative styles were selected and MUST appear explicitly in the output:\n"
+                + "\n".join(f"  - {s}" for s in selected_styles)
+                + "\nBefore outputting, verify that each style name and its characteristic techniques are visible in the text. If any style is missing, add it."
+            )
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
@@ -1750,8 +1810,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
                 )
 
         user_message_parts.append(
-            "\nBased on the above information, optimize the prompt according to H3 specification. "
-            "Output the optimized prompt directly without any explanation."
+            "\nBased on the above information, optimize the prompt according to H3 specification. Any selected creative styles (director, cinematography, genre, score) MUST be explicitly mentioned in the output. Output the optimized prompt directly without any explanation."
         )
 
         user_message = "\n".join(user_message_parts)
