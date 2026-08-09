@@ -1637,46 +1637,27 @@ Requires BSAI H3 Model Loader node.
 
         user_message = "\n".join(user_message_parts)
 
-        # ── Build messages: use multimodal content format when media is present ──
+        # ── Build messages ──
         # 本地 llama.cpp/VL 模型对上下文长度更敏感，使用精简系统提示词以避免底层进程闪退。
+        # 注意：当前 llama.cpp + Qwen-VL + image_url 在部分 Windows/CUDA 环境会在 C++ 层直接崩溃，
+        # 不会抛出 Python 异常。因此本地节点强制使用安全文本模式：保留 <Picture N>/<Video N>
+        # 标签和引用说明，但不把图片 data-uri 传入 llama.cpp。需要真实视觉理解时请使用 RemoteAPI。
         system_prompt = _H3_SYSTEM_PROMPT_LOCAL
         if has_media:
-            user_content = []
-            user_content.append({"type": "text", "text": user_message})
-            # Add images
-            for label, uris in collected_images:
-                for uri in uris:
-                    user_content.append(
-                        {"type": "image_url", "image_url": {"url": uri}}
-                    )
-                    user_content.append(
-                        {"type": "text", "text": f"(Above is {label})"}
-                    )
-            # Add video keyframes
-            for label, uris in collected_videos:
-                for i, uri in enumerate(uris):
-                    user_content.append(
-                        {"type": "image_url", "image_url": {"url": uri}}
-                    )
-                    frame_desc = f"(Above is {label} keyframe {i + 1}/{len(uris)})"
-                    user_content.append(
-                        {"type": "text", "text": frame_desc}
-                    )
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_content},
-            ]
             media_info = f"{total_image_count} image(s)"
             if total_video_frame_count > 0:
                 media_info += f", {total_video_frame_count} video keyframe(s)"
             if collected_audios:
                 media_info += f", {len(collected_audios)} audio clip(s)"
-            print(f"[BSAI H3] Multimodal inference: {media_info}")
-        else:
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message},
-            ]
+            print(
+                "[BSAI H3] Local safe text mode enabled; media inputs are referenced "
+                f"as labels only, not sent to llama.cpp: {media_info}"
+            )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message},
+        ]
 
         try:
             max_tokens_val = int(max_tokens)
@@ -1697,8 +1678,6 @@ Requires BSAI H3 Model Loader node.
         prompt_text = system_prompt + user_message
         # 粗略估算 token 数，并为 chat 模板、图片 token、M-RoPE 元数据保留余量。
         est_prompt_tokens = max(int(len(prompt_text) / 3), int(len(prompt_text) * 0.35)) + 768
-        if has_media:
-            est_prompt_tokens += (total_image_count + total_video_frame_count) * 768
         remaining_ctx = n_ctx - est_prompt_tokens - 256
         if remaining_ctx < 256:
             raise RuntimeError(
