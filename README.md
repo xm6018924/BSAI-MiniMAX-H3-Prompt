@@ -29,7 +29,7 @@
 ### 提示词优化覆盖的维度
 
 - **参考素材说明**：13 种素材用途（人物参考、物体参考、场景参考、关键帧、音色参考、故事版、风格参考、构图参考、音频复用、音频部分复用、动作参考、运镜参考、视频编辑）
-- **核心创意**：主体、地点、事件、题材/风格、特殊运镜、时长、宽高比
+- **核心创意**：主体、地点、事件、题材/风格、特殊运镜、时长、导演风格、摄影风格、电影类型、切镜类型
 - **画面过程说明**：按时间轴/shot 分段，景别+内容+运镜+动作+台词+音效，想要/不想要
 - **三类生成模式**：纯文字生成视频、上传图片生成视频、上传多模态素材融合
 - **常见坑位避免**：6 条易错点自动检测与修正
@@ -159,9 +159,12 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | user_prompt | Text | User's original creative prompt description |
 | generation_mode | Dropdown | Text to Video / Image to Video / Multimodal Fusion |
 | video_duration | Int | 4-15 seconds (H3 supported) |
-| aspect_ratio | Dropdown | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
 | no_bgm | Bool | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | Optional extra style preferences |
+| director_style | Dropdown | Director style (default: System Recommended). 37+ directors: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, Tarantino, Spielberg, etc. |
+| cinematography_style | Dropdown | Cinematography/lighting style (default: System Recommended). 20+ cinematographers: Deakins, Lubezki, Storaro, Doyle, Hoyte van Hoytema, etc. |
+| film_genre | Dropdown | Film genre/type (default: System Recommended). 50+ genres: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli Animation, etc. |
+| cut_style | Dropdown | Number of segments/cuts (default: One Shot). 1-15 segments for 15s max video. |
 | max_tokens | Int | Default 4096, auto-limited to context length |
 | temperature | Float | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | Nucleus sampling probability (0.0-1.0) |
@@ -186,9 +189,12 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | model_name | Text | `qwen-plus` | Model name (e.g. gpt-4o, qwen-plus, qwen-max, qwen-vl-plus) |
 | generation_mode | Dropdown | Text to Video | Text to Video / Image to Video / Multimodal Fusion |
 | video_duration | Int | 10 | H3 supports 4-15 seconds |
-| aspect_ratio | Dropdown | 16:9 | 21:9 / 16:9 / 4:3 / 1:1 / 3:4 / 9:16 |
 | no_bgm | Bool | False | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | "" | Optional extra style preferences |
+| director_style | Dropdown | System Recommended | Director style: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, etc. |
+| cinematography_style | Dropdown | System Recommended | Cinematography style: Deakins, Lubezki, Storaro, Doyle, etc. |
+| film_genre | Dropdown | System Recommended | Film genre: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli, etc. |
+| cut_style | Dropdown | One Shot (一镜到底) | Number of segments: 1 (one shot) to 15 segments |
 | max_tokens | Int | 4096 | Max generation tokens |
 | temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | 0.9 | Nucleus sampling probability (0.0-1.0) |

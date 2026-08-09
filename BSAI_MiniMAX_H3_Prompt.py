@@ -635,6 +635,148 @@ class BSAI_H3_ModelLoader:
 
 
 # ============================================================
+# Creative Style Options
+# ============================================================
+
+_BSAI_DIRECTOR_STYLES = [
+    "System Recommended",
+    "Alfred Hitchcock (Suspense Master)",
+    "Wong Kar-wai (王家卫)",
+    "Orson Welles",
+    "Ingmar Bergman (Philosophical)",
+    "Federico Fellini (Magical Realism)",
+    "Akira Kurosawa (黑泽明)",
+    "Sergei Eisenstein (Montage)",
+    "Steven Spielberg",
+    "Francis Ford Coppola",
+    "Martin Scorsese",
+    "Stanley Kubrick",
+    "Billy Wilder",
+    "Ang Lee (李安)",
+    "Zhang Yimou (张艺谋)",
+    "Satoshi Kon (今敏)",
+    "Takeshi Kitano (北野武)",
+    "Christopher Nolan",
+    "Quentin Tarantino",
+    "James Cameron",
+    "Alfonso Cuaron",
+    "David Lynch",
+    "Wes Anderson",
+    "Denis Villeneuve",
+    "Bong Joon-ho (奉俊昊)",
+    "Hayao Miyazaki (宫崎骏)",
+    "Makoto Shinkai (新海诚)",
+    "Park Chan-wook (朴赞郁)",
+    "Fritz Lang",
+    "Jean-Luc Godard",
+    "Andrei Tarkovsky",
+    "Michelangelo Antonioni",
+    "Robert Bresson",
+    "Yasujirō Ozu (小津安二郎)",
+    "John Woo (吴宇森)",
+    "Ann Hui (许鞍华)",
+    "Jia Zhangke (贾樟柯)",
+    "Bi Gan (毕赣)",
+]
+
+_BSAI_CINEMATOGRAPHY_STYLES = [
+    "System Recommended",
+    "Gregg Toland (Deep Focus)",
+    "Gordon Willis (Prince of Darkness, Low-key)",
+    "Freddie Young (70mm Epic Widescreen)",
+    "Roger Deakins (Restrained Realism)",
+    "Emmanuel Lubezki (Natural Light Long Takes)",
+    "Greig Fraser (Rugged Physical Texture)",
+    "Janusz Kaminski (Strong Backlight, Lens Flare)",
+    "Hoyte van Hoytema (IMAX Film, Solid Lighting)",
+    "Vittorio Storaro (Color Psychology, Writing with Light)",
+    "Sven Nykvist (Minimalist Natural Light)",
+    "Christopher Doyle (都市情绪光影, Neon Moody)",
+    "Mark Lee Ping-Bin (李屏宾, Eastern Poetic Natural Light)",
+    "Peter Pau (鲍德熹, Romantic Backlight Silhouette)",
+    "Robby Müller (Neon Gritty)",
+    "Conrad Hall (Textured Shadow)",
+    "Robert Richardson (High Contrast, Overhead Hard Light)",
+    "Dariusz Wolski (Dark Gothic Gloss)",
+    "Matthew Libatique (High Contrast Grain)",
+    "Claudio Miranda (Cool Digital Clean)",
+    "Lin Liang-Zhong (林良忠, Rural Realism Soft Light)",
+]
+
+_BSAI_FILM_GENRES = [
+    "System Recommended",
+    "Realism (写实主义)",
+    "Neo-Realism (新现实主义)",
+    "Poetic Realism (诗意写实)",
+    "Expressionism (表现主义)",
+    "Magical Realism (魔幻现实主义)",
+    "Surrealism (超现实主义)",
+    "French New Wave (新浪潮)",
+    "Classical Hollywood (古典好莱坞)",
+    "Film Noir (黑色电影)",
+    "Vintage Film (胶片复古风)",
+    "Theatrical Drama (舞台化戏剧)",
+    "2D Hand-drawn Animation (二维手绘动画)",
+    "Ghibli/Miyazaki Animation (吉卜力风格)",
+    "Shinkai Animation (新海诚动画)",
+    "Satoshi Kon Animation (今敏动画)",
+    "3D CG Animation (三维CG动画)",
+    "Stop Motion (定格动画)",
+    "Ink Wash Animation (水墨国风动画)",
+    "Live Action (真人实拍)",
+    "Live Action + CG (真人CG混合)",
+    "Drama (剧情片)",
+    "Art-house Drama (文艺剧情片)",
+    "Mystery (悬疑片)",
+    "Crime (犯罪片)",
+    "Gangster (黑帮片)",
+    "Psychological Thriller (心理惊悚)",
+    "Horror (恐怖片)",
+    "Action (动作片)",
+    "Wuxia (武侠片)",
+    "Kung Fu (功夫片)",
+    "Adventure (冒险片)",
+    "Epic (史诗片)",
+    "Sci-Fi (科幻片)",
+    "Fantasy (奇幻片)",
+    "Superhero (超级英雄)",
+    "Romantic Comedy (浪漫喜剧)",
+    "Dark Comedy (黑色喜剧)",
+    "Slapstick Comedy (无厘头喜剧)",
+    "Absurdist Comedy (荒诞喜剧)",
+    "Romance (爱情片)",
+    "Urban Romance (都市爱情)",
+    "Road Movie (公路电影)",
+    "Western (西部片)",
+    "Musical (歌舞片)",
+    "War Film (战争片)",
+    "Historical Biopic (历史传记片)",
+    "Period Epic (古装史诗片)",
+    "Documentary (纪录片)",
+    "Mockumentary (伪纪录片)",
+    "Experimental (先锋实验)",
+]
+
+_BSAI_CUT_STYLES = [
+    "One Shot (一镜到底)",
+    "2 Segments (2段)",
+    "3 Segments (3段)",
+    "4 Segments (4段)",
+    "5 Segments (5段)",
+    "6 Segments (6段)",
+    "7 Segments (7段)",
+    "8 Segments (8段)",
+    "9 Segments (9段)",
+    "10 Segments (10段)",
+    "11 Segments (11段)",
+    "12 Segments (12段)",
+    "13 Segments (13段)",
+    "14 Segments (14段)",
+    "15 Segments (15段)",
+]
+
+
+# ============================================================
 # H3 提示词优化系统提示词（根据 H3 官方 Prompt Writing Guide 整理）
 # 官方文档：https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills/h3-prompt-writing
 # ============================================================
@@ -783,6 +925,17 @@ For multimodal fusion mode, reference labels can also include:
 9. When the user provides custom sound/music descriptions, integrate them naturally and supplement with additional ambient/action sounds to ensure full coverage.
 10. **Segmentation**: The `integrated_multimodal_description` must be divided into continuous time-range segments covering the full video duration. Use `[0-3s]` format for English and `【0-3秒】` format for Chinese. Never write the entire description as a single unsegmented block.
 
+## 5.5 Creative Style Parameters
+
+When the user message includes any of the following style tags, apply them to the prompt:
+
+- **[Director Style]**: Apply the named director's signature techniques — pacing, visual language, thematic motifs, editing rhythm, and directorial sensibilities. For example, Hitchcock = suspense building, slow reveals, subjective camera; Wong Kar-wai = step-printing, saturated colors, voiceover, urban longing; Kubrick = symmetry, one-point perspective, cold precision; Kurosawa = dynamic movement, weather as emotion, multi-camera action; Nolan = non-linear narrative, practical effects, IMAX scale; Tarantino = non-linear editing, pop culture dialogue, stylized violence; Spielberg = emotional close-ups, sweeping camera, golden-hour warmth; Scorsese = tracking shots, voiceover, kinetic editing; Fellini = surreal spectacle, circus-like pageantry; Bergman = intimate close-ups, philosophical silence, stark lighting.
+- **[Cinematography Style]**: Apply the named cinematographer's signature lighting, lens characteristics, color palette, and camera movement. For example, Deakins = restrained realism, soft naturalistic light, muted palette; Lubezki = available light, long takes, golden-hour warmth; Storaro = bold color symbolism, psychological color coding, smoke-and-light beams; Doyle = handheld, neon-drenched, high-contrast, soft focus; Hoyte van Hoytema = IMAX film, solid physical lighting, warm-cool contrast; Willis = low-key chiaroscuro, deliberate underexposure, shadow-heavy; Toland = deep focus, wide-angle depth, sharp foreground-to-background; Kaminski = strong backlight, lens flare, high-key overflow; Fraser = rugged physical texture, grain-forward, muted earth tones; Nykvist = minimalist natural light, soft side light, breathable shadows; Mark Lee Ping-Bin = Eastern poetic natural light, slow long takes, warm retro tones.
+- **[Film Genre]**: Match the visual conventions, narrative tone, pacing, and aesthetic of the specified genre. For example, Film Noir = high-contrast shadows, venetian-blind light, urban night; Sci-Fi = sleek or gritty futurism, technological environments; Wuxia = wire-fu choreography, sweeping landscapes, silk costumes; Stop Motion = tactile textures, handcrafted look, slight jitter; Ghibli/Miyazaki = hand-drawn warmth, lush nature, gentle pacing; Shinkai = hyper-detailed skies, saturated colors, emotional lens flares; New Wave = jump cuts, handheld, breaking conventions; Magical Realism = grounded reality with dreamlike intrusions; Expressionism = distorted sets, extreme light/shadow, psychological unease.
+- **[Segmentation]**: The user has specified the exact number of time-range segments. Divide the video into exactly that many segments, each representing a distinct camera cut with its own shot type, content, and camera movement. Ensure all segments are continuous and cover the full video duration.
+
+When a style parameter is set to "System Recommended", use your own best judgment to select appropriate styles based on the user's prompt content.
+
 ## 6. Output Format
 
 Output the prompt in BOTH Chinese and English versions, separated by a divider line:
@@ -862,6 +1015,22 @@ class BSAI_MiniMAX_H3_Prompt:
                         "tooltip": "Optional: extra style preferences / 补充要求",
                     },
                 ),
+                "director_style": (
+                    _BSAI_DIRECTOR_STYLES,
+                    {"default": "System Recommended", "tooltip": "Director style for the video / 导演风格"},
+                ),
+                "cinematography_style": (
+                    _BSAI_CINEMATOGRAPHY_STYLES,
+                    {"default": "System Recommended", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                ),
+                "film_genre": (
+                    _BSAI_FILM_GENRES,
+                    {"default": "System Recommended", "tooltip": "Film genre/type / 电影类型"},
+                ),
+                "cut_style": (
+                    _BSAI_CUT_STYLES,
+                    {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
+                ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -910,6 +1079,10 @@ Requires BSAI H3 Model Loader node.
         video_duration,
         no_bgm,
         extra_requirements,
+        director_style,
+        cinematography_style,
+        film_genre,
+        cut_style,
         max_tokens,
         temperature,
         top_p,
@@ -979,6 +1152,18 @@ Requires BSAI H3 Model Loader node.
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
             f"[Sound & Music] {bgm_instruction}",
         ]
+
+        # ── Creative style parameters ──
+        if director_style != "System Recommended":
+            user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
+        if cinematography_style != "System Recommended":
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
+        if film_genre != "System Recommended":
+            user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
+        if cut_style != "One Shot (一镜到底)":
+            num_match = re.search(r'(\d+)', cut_style)
+            num_segments = int(num_match.group(1)) if num_match else 2
+            user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
@@ -1294,6 +1479,22 @@ class BSAI_H3_RemoteAPI:
                         "tooltip": "Optional: extra style preferences / 补充要求",
                     },
                 ),
+                "director_style": (
+                    _BSAI_DIRECTOR_STYLES,
+                    {"default": "System Recommended", "tooltip": "Director style for the video / 导演风格"},
+                ),
+                "cinematography_style": (
+                    _BSAI_CINEMATOGRAPHY_STYLES,
+                    {"default": "System Recommended", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                ),
+                "film_genre": (
+                    _BSAI_FILM_GENRES,
+                    {"default": "System Recommended", "tooltip": "Film genre/type / 电影类型"},
+                ),
+                "cut_style": (
+                    _BSAI_CUT_STYLES,
+                    {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
+                ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -1340,6 +1541,10 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         video_duration,
         no_bgm,
         extra_requirements,
+        director_style,
+        cinematography_style,
+        film_genre,
+        cut_style,
         max_tokens,
         temperature,
         top_p,
@@ -1392,6 +1597,18 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
             f"[Sound & Music] {bgm_instruction}",
         ]
+
+        # ── Creative style parameters ──
+        if director_style != "System Recommended":
+            user_message_parts.append(f"[Director Style] {director_style} — Apply this director's signature techniques, visual language, pacing, and thematic sensibilities to the prompt.")
+        if cinematography_style != "System Recommended":
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — Apply this cinematographer's signature lighting, lens choice, color palette, and camera work to the prompt.")
+        if film_genre != "System Recommended":
+            user_message_parts.append(f"[Film Genre] {film_genre} — The video should reflect the visual conventions, tone, and aesthetic of this genre.")
+        if cut_style != "One Shot (一镜到底)":
+            num_match = re.search(r'(\d+)', cut_style)
+            num_segments = int(num_match.group(1)) if num_match else 2
+            user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
