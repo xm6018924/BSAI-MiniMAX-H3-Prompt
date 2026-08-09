@@ -775,6 +775,51 @@ _BSAI_CUT_STYLES = [
     "15 Segments (15段)",
 ]
 
+_BSAI_SCORE_STYLES = [
+    "System Recommended",
+    "John Williams (Epic Orchestral Leitmotif)",
+    "Hans Zimmer (Electronic-Orchestral Hybrid)",
+    "Ennio Morricone (Spaghetti Western Haunting Melody)",
+    "Bernard Herrmann (Strings-only Suspense)",
+    "Danny Elfman (Gothic Quirky)",
+    "Howard Shore (Sweeping Fantasy Themes)",
+    "Thomas Newman (Ambient Minimalist)",
+    "Nino Rota (Melodic Italian Classical)",
+    "Vangelis (Synthesizer Electronic)",
+    "Ryuichi Sakamoto (East-West Fusion)",
+    "Joe Hisaishi (Melodic Piano & Strings)",
+    "Tan Dun (Cross-cultural Percussion)",
+    "Shigeru Umebayashi (Moody Melancholic)",
+    "Clint Mansell (Minimalist Repetition)",
+    "Trent Reznor & Atticus Ross (Industrial Electronic)",
+    "Alexandre Desplat (Elegant Orchestral)",
+    "Michael Giacchino (Emotional Melodic)",
+    "Ludwig Goransson (Afro-futurist Percussion)",
+    "Mica Levi (Unsettling Dissonance)",
+    "Johann Johannsson (Drone Minimalist)",
+    "Carter Burwell (Folk-tinged Simplicity)",
+    "Gustavo Santaolalla (Nimble Guitar)",
+    "A.R. Rahman (Bollywood Fusion)",
+    "Hildur Gudnadottir (Cello Drone Dark)",
+    "Philip Glass (Minimalist Repetition Patterns)",
+    "Angelo Badalamenti (Surreal Dreamlike Jazz)",
+    "James Horner (Celtic Emotional)",
+    "Alan Silvestri (Adventure Heroic)",
+    "Bear McCreary (Taiko Percussion Ethnic)",
+    "Max Steiner (Classical Hollywood Symphonic)",
+    "Jerry Goldsmith (Versatile Avant-garde)",
+    "Dimitri Tiomkin (American Frontier)",
+    "Elmer Bernstein (Jazz-inflected Big Band)",
+    "Maurice Jarre (Epic Choral Exotic)",
+    "Kitaro (New Age Synthesizer)",
+    "Shirō Sagisu (Anime Orchestral Rock Fusion)",
+    "Yuki Kajiura (Gothic Choral Ethereal)",
+    "Taku Iwasaki (Hip-hop Orchestral Hybrid)",
+    "Hiroyuki Sawano (Epic Anime Rock)",
+    "Cho Young-wuk (Korean Tragic Melodic)",
+    "Zhao Jiping (Chinese Traditional Cinematic)",
+]
+
 
 # ============================================================
 # H3 提示词优化系统提示词（根据 H3 官方 Prompt Writing Guide 整理）
@@ -933,6 +978,7 @@ When the user message includes any of the following style tags, apply them to th
 - **[Cinematography Style]**: Apply the named cinematographer's signature lighting, lens characteristics, color palette, and camera movement. For example, Deakins = restrained realism, soft naturalistic light, muted palette; Lubezki = available light, long takes, golden-hour warmth; Storaro = bold color symbolism, psychological color coding, smoke-and-light beams; Doyle = handheld, neon-drenched, high-contrast, soft focus; Hoyte van Hoytema = IMAX film, solid physical lighting, warm-cool contrast; Willis = low-key chiaroscuro, deliberate underexposure, shadow-heavy; Toland = deep focus, wide-angle depth, sharp foreground-to-background; Kaminski = strong backlight, lens flare, high-key overflow; Fraser = rugged physical texture, grain-forward, muted earth tones; Nykvist = minimalist natural light, soft side light, breathable shadows; Mark Lee Ping-Bin = Eastern poetic natural light, slow long takes, warm retro tones.
 - **[Film Genre]**: Match the visual conventions, narrative tone, pacing, and aesthetic of the specified genre. For example, Film Noir = high-contrast shadows, venetian-blind light, urban night; Sci-Fi = sleek or gritty futurism, technological environments; Wuxia = wire-fu choreography, sweeping landscapes, silk costumes; Stop Motion = tactile textures, handcrafted look, slight jitter; Ghibli/Miyazaki = hand-drawn warmth, lush nature, gentle pacing; Shinkai = hyper-detailed skies, saturated colors, emotional lens flares; New Wave = jump cuts, handheld, breaking conventions; Magical Realism = grounded reality with dreamlike intrusions; Expressionism = distorted sets, extreme light/shadow, psychological unease.
 - **[Segmentation]**: The user has specified the exact number of time-range segments. Divide the video into exactly that many segments, each representing a distinct camera cut with its own shot type, content, and camera movement. Ensure all segments are continuous and cover the full video duration.
+- **[Score Style]**: Apply the named composer's signature musical style to the `non_diegetic_music` field. Match their instrumentation preferences, harmonic language, rhythmic patterns, and emotional texture. For example, John Williams = sweeping brass-led leitmotifs, full romantic orchestra; Hans Zimmer = electronic-orchestral hybrid, driving ostinatos, deep braams; Ennio Morricone = whistled melodies, harmonica, solitary trumpet, sparse eerie arrangements; Bernard Herrmann = strings-only tension, shrieking glissandi; Danny Elfman = gothic choral, quirky orchestral, Burton-esque dark whimsy; Joe Hisaishi = tender piano melodies, lush string arrangements, Ghibli warmth; Vangelis = analog synthesizer pads, retro-futuristic electronic; Ryuichi Sakamoto = melancholic piano, East-West harmonic fusion; Tan Dun = Chinese percussion, cello solos, cross-cultural timbres; Clint Mansell = obsessive minimalist repetition, building intensity; Trent Reznor & Atticus Ross = industrial textures, dark ambient electronics; Hildur Gudnadottir = cello drone, dissonant dark textures; Philip Glass = arpeggiated minimalist patterns, gradual harmonic shifts; Angelo Badalamenti = dreamlike jazz-noir, slow saxophone, ambient synth pads; Gustavo Santaolalla = lonely detuned guitar, ronroco, sparse emotional melodies.
 
 When a style parameter is set to "System Recommended", use your own best judgment to select appropriate styles based on the user's prompt content.
 
@@ -1031,6 +1077,10 @@ class BSAI_MiniMAX_H3_Prompt:
                     _BSAI_CUT_STYLES,
                     {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
                 ),
+                "score_style": (
+                    _BSAI_SCORE_STYLES,
+                    {"default": "System Recommended", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -1083,6 +1133,7 @@ Requires BSAI H3 Model Loader node.
         cinematography_style,
         film_genre,
         cut_style,
+        score_style,
         max_tokens,
         temperature,
         top_p,
@@ -1164,6 +1215,8 @@ Requires BSAI H3 Model Loader node.
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
+        if score_style != "System Recommended":
+            user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
@@ -1495,6 +1548,10 @@ class BSAI_H3_RemoteAPI:
                     _BSAI_CUT_STYLES,
                     {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
                 ),
+                "score_style": (
+                    _BSAI_SCORE_STYLES,
+                    {"default": "System Recommended", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -1545,6 +1602,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         cinematography_style,
         film_genre,
         cut_style,
+        score_style,
         max_tokens,
         temperature,
         top_p,
@@ -1609,6 +1667,8 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} time-range segments. Each segment should represent a distinct camera cut with its own shot type, content, and camera movement. Use 'the camera cuts to' between segments.")
+        if score_style != "System Recommended":
+            user_message_parts.append(f"[Score Style] {score_style} — Apply this composer's signature musical style to the non_diegetic_music field. Match their instrumentation, harmonic language, rhythmic patterns, and emotional texture.")
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")

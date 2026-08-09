@@ -29,7 +29,7 @@
 ### 提示词优化覆盖的维度
 
 - **参考素材说明**：13 种素材用途（人物参考、物体参考、场景参考、关键帧、音色参考、故事版、风格参考、构图参考、音频复用、音频部分复用、动作参考、运镜参考、视频编辑）
-- **核心创意**：主体、地点、事件、题材/风格、特殊运镜、时长、导演风格、摄影风格、电影类型、切镜类型
+- **核心创意**：主体、地点、事件、题材/风格、特殊运镜、时长、导演风格、摄影风格、电影类型、切镜类型、配乐风格
 - **画面过程说明**：按时间轴/shot 分段，景别+内容+运镜+动作+台词+音效，想要/不想要
 - **三类生成模式**：纯文字生成视频、上传图片生成视频、上传多模态素材融合
 - **常见坑位避免**：6 条易错点自动检测与修正
@@ -165,6 +165,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | cinematography_style | Dropdown | Cinematography/lighting style (default: System Recommended). 20+ cinematographers: Deakins, Lubezki, Storaro, Doyle, Hoyte van Hoytema, etc. |
 | film_genre | Dropdown | Film genre/type (default: System Recommended). 50+ genres: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli Animation, etc. |
 | cut_style | Dropdown | Number of segments/cuts (default: One Shot). 1-15 segments for 15s max video. |
+| score_style | Dropdown | Film score/composer style (default: System Recommended). 40+ composers: John Williams, Hans Zimmer, Morricone, Hisaishi, Sakamoto, etc. |
 | max_tokens | Int | Default 4096, auto-limited to context length |
 | temperature | Float | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | Nucleus sampling probability (0.0-1.0) |
@@ -195,6 +196,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | cinematography_style | Dropdown | System Recommended | Cinematography style: Deakins, Lubezki, Storaro, Doyle, etc. |
 | film_genre | Dropdown | System Recommended | Film genre: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli, etc. |
 | cut_style | Dropdown | One Shot (一镜到底) | Number of segments: 1 (one shot) to 15 segments |
+| score_style | Dropdown | System Recommended | Film score style: John Williams, Hans Zimmer, Morricone, Hisaishi, etc. |
 | max_tokens | Int | 4096 | Max generation tokens |
 | temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | 0.9 | Nucleus sampling probability (0.0-1.0) |
