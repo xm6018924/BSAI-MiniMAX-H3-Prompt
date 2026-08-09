@@ -1301,6 +1301,44 @@ non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, c
 11. **CREATIVE STYLE VISIBILITY**: When [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags are present in the user message, the selected style names and their characteristic techniques MUST be explicitly written in the output. This is a non-negotiable requirement — failure to include them is a critical error."""
 
 
+_H3_SYSTEM_PROMPT_LOCAL = """You are a MiniMax H3 prompt optimizer. Rewrite the user request into an H3-ready audiovisual video prompt.
+
+Output exactly two versions separated by markers:
+---中文版本---
+integrated_multimodal_description: ...
+overall_soundscape: ...
+non_diegetic_music: ...
+
+---English Version---
+integrated_multimodal_description: ...
+overall_soundscape: ...
+non_diegetic_music: ...
+
+Core format:
+- Use the three fields in this exact order: integrated_multimodal_description, overall_soundscape, non_diegetic_music.
+- In integrated_multimodal_description, use BOTH the official H3 shot format and the original time-range format.
+- English format: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+- Chinese format: [镜头1]【0-3秒】... [镜头2] 在00:03.500【3-8秒】，镜头切到 ...
+- Do not add an At MM:SS.mmm cut timestamp to Shot 1. Every shot must include a continuous time range.
+- Later shots must use strictly increasing cut times in MM:SS.mmm format. Time ranges must cover the full duration with no gaps.
+
+Mode rules:
+- T2VA: no image alignment instruction; begin with the three core fields.
+- I2VA: first line must be: For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+- FL2VA: first line must align Picture 1 to 0.00 seconds and Picture 2 to the final S.SS-second mark.
+- L2VA: first line must align <Picture 1> (from [Shot N]) to the final S.SS-second mark.
+- For images/video/audio references, keep labels consistent: <Picture N>, <Subject N>, <Video N>, <Audio N>.
+
+Writing rules:
+- Write visual and sound descriptions in English for English Version and Chinese for 中文版本.
+- Preserve dialogue, lyrics, and visible scene text in their original language inside <d>[Language] ...</d>.
+- Each shot must describe composition, subject appearance and position, environment, lighting, action, camera movement, and audible diegetic sounds.
+- overall_soundscape must be 1-4 sentences covering ambient sounds, action sounds, object sounds, and non-verbal human sounds. Do not leave it silent unless the user explicitly asks for no sound.
+- non_diegetic_music must describe background music only the audience hears. Use N/A only when the user explicitly asks for no background music.
+- If the user selects Director Style, Cinematography Style, Film Genre, or Score Style, explicitly write the selected names and signature techniques in the output. Director, cinematography, and genre go in integrated_multimodal_description; score style goes in non_diegetic_music.
+- Output only the final prompt, with no explanation."""
+
+
 # ============================================================
 # H3 提示词优化节点
 # ============================================================
@@ -1600,6 +1638,8 @@ Requires BSAI H3 Model Loader node.
         user_message = "\n".join(user_message_parts)
 
         # ── Build messages: use multimodal content format when media is present ──
+        # 本地 llama.cpp/VL 模型对上下文长度更敏感，使用精简系统提示词以避免底层进程闪退。
+        system_prompt = _H3_SYSTEM_PROMPT_LOCAL
         if has_media:
             user_content = []
             user_content.append({"type": "text", "text": user_message})
@@ -1623,7 +1663,7 @@ Requires BSAI H3 Model Loader node.
                         {"type": "text", "text": frame_desc}
                     )
             messages = [
-                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_content},
             ]
             media_info = f"{total_image_count} image(s)"
@@ -1634,7 +1674,7 @@ Requires BSAI H3 Model Loader node.
             print(f"[BSAI H3] Multimodal inference: {media_info}")
         else:
             messages = [
-                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
             ]
 
@@ -1654,11 +1694,21 @@ Requires BSAI H3 Model Loader node.
             n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
         except Exception:
             n_ctx = 4096
-        prompt_text = _H3_SYSTEM_PROMPT + user_message
-        est_prompt_tokens = int(len(prompt_text) * 1.2)
-        safe_max_tokens = min(max_tokens_val, n_ctx - est_prompt_tokens - 256)
+        prompt_text = system_prompt + user_message
+        # 粗略估算 token 数，并为 chat 模板、图片 token、M-RoPE 元数据保留余量。
+        est_prompt_tokens = max(int(len(prompt_text) / 3), int(len(prompt_text) * 0.35)) + 768
+        if has_media:
+            est_prompt_tokens += (total_image_count + total_video_frame_count) * 768
+        remaining_ctx = n_ctx - est_prompt_tokens - 256
+        if remaining_ctx < 256:
+            raise RuntimeError(
+                "BSAI H3 本地模型上下文不足，已停止调用以避免后台闪退。\n"
+                f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
+                "请在 BSAI_H3_ModelLoader 中把 context_length 提高到 32768 或更高，"
+                "或减少参考图片/视频帧数量，或改用 BSAI_H3_RemoteAPI。"
+            )
+        safe_max_tokens = min(max_tokens_val, remaining_ctx)
         if safe_max_tokens < 512:
-            safe_max_tokens = min(max_tokens_val, max(256, n_ctx // 4))
             print(
                 f"[BSAI H3] Warning: prompt is long (~{est_prompt_tokens} tokens), "
                 f"context length is only {n_ctx}, max_tokens limited to {safe_max_tokens}. "
@@ -1719,9 +1769,14 @@ Requires BSAI H3 Model Loader node.
                     n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
                 except Exception:
                     n_ctx = 4096
-                safe_max_tokens = min(max_tokens_val, n_ctx - est_prompt_tokens - 256)
-                if safe_max_tokens < 512:
-                    safe_max_tokens = min(max_tokens_val, max(256, n_ctx // 4))
+                remaining_ctx = n_ctx - est_prompt_tokens - 256
+                if remaining_ctx < 256:
+                    raise RuntimeError(
+                        "BSAI H3 本地模型重载后上下文仍不足，已停止调用以避免后台闪退。\n"
+                        f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
+                        "请提高 context_length，减少媒体输入，或改用 BSAI_H3_RemoteAPI。"
+                    )
+                safe_max_tokens = min(max_tokens_val, remaining_ctx)
                 params["max_tokens"] = safe_max_tokens
                 print("[BSAI H3] Model reloaded, retrying inference...")
                 out = _bsai_call_chat_completion(llm, messages=messages, params=params)
