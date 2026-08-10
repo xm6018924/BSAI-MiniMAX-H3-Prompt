@@ -2020,6 +2020,7 @@ Requires BSAI H3 Model Loader node.
             raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
 
         # ── Auto-resolve System Recommended options ──
+        video_duration = int(video_duration)
         if generation_mode == "System Recommended (系统推荐)":
             _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
                                                           image_6, image_7, image_8, image_9, image_10])
@@ -2524,6 +2525,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             raise ValueError("api_key cannot be empty. Please enter your API key.")
 
         # ── Auto-resolve System Recommended options ──
+        video_duration = int(video_duration)
         if generation_mode == "System Recommended (系统推荐)":
             _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
                                                           image_6, image_7, image_8, image_9, image_10])
