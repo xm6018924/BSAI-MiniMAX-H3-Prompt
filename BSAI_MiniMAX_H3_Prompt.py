@@ -1189,6 +1189,7 @@ _BSAI_FILM_GENRES = [
 ]
 
 _BSAI_CUT_STYLES = [
+    "System Recommended (系统推荐)",
     "One Shot (一镜到底)",
     "2 Segments (2段)",
     "3 Segments (3段)",
@@ -1250,6 +1251,320 @@ _BSAI_SCORE_STYLES = [
     "Cho Young-wuk (赵英旭 | 韩国悲剧旋律)",
     "Zhao Jiping (赵季平 | 中国传统电影配乐)",
 ]
+
+
+# ============================================================
+# 风格自动推断：基于提示词关键词匹配，为"系统推荐"选项自动选择最合适的风格
+# ============================================================
+
+_BSAI_STYLE_AUTO_MAP = [
+    # (genre, director, cinematographer, composer, keywords)
+    # Higher priority entries first — first match wins.
+
+    # ── 武侠 / 功夫 ──
+    (
+        "Wuxia (武侠片)", "Zhang Yimou (张艺谋)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["武侠", "江湖", "侠客", "剑客", "剑术", "wuxia", "swordsman", "刀光剑影", "古代武林", "侠义"],
+    ),
+    (
+        "Kung Fu (功夫片)", "Akira Kurosawa (黑泽明 | 东方电影标杆)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["功夫", "kung fu", "武术", "武打", "少林", "拳法", "martial art"],
+    ),
+
+    # ── 科幻 ──
+    (
+        "Sci-Fi (科幻片)", "Christopher Nolan (克里斯托弗·诺兰)",
+        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["科幻", "未来", "机器人", "宇宙", "星际", "太空", "飞船", "外星", "sci-fi", "futuristic",
+         "cyberpunk", "赛博朋克", "人工智能", "时间旅行", "time travel", "火星", "银河"],
+    ),
+
+    # ── 奇幻 ──
+    (
+        "Fantasy (奇幻片)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["奇幻", "魔法", "精灵", "龙", "神话", "fantasy", "magic", "dragon", "elf", "mythical",
+         "仙界", "魔王", "魔法师"],
+    ),
+
+    # ── 恐怖 ──
+    (
+        "Horror (恐怖片)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["恐怖", "惊悚", "鬼", "恶灵", "丧尸", "吸血鬼", "horror", "scary", "ghost", "haunted",
+         "zombie", "vampire", "creepy", "灵异", "恶鬼"],
+    ),
+
+    # ── 悬疑 / 心理惊悚 ──
+    (
+        "Psychological Thriller (心理惊悚)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["悬疑", "推理", "侦探", "破案", "mystery", "thriller", "detective", "suspense",
+         "investigation", "murder mystery", "心理惊悚"],
+    ),
+
+    # ── 犯罪 / 黑帮 / 黑色电影 ──
+    (
+        "Crime (犯罪片)", "Martin Scorsese (马丁·斯科塞斯)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        ["犯罪", "罪犯", "抢劫", "crime", "criminal", "heist", "robbery", "thief", "盗窃"],
+    ),
+    (
+        "Gangster (黑帮片)", "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["黑帮", "黑社会", "帮派", "gangster", "mafia", "mob", "黑手党", "帮会"],
+    ),
+    (
+        "Film Noir (黑色电影)", "Orson Welles (奥逊·威尔斯)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["黑色电影", "noir", "neo-noir", "暗黑侦探", "hard-boiled"],
+    ),
+
+    # ── 动画 ──
+    (
+        "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["吉卜力", "宫崎骏", "ghibli", "miyazaki", "龙猫", "千与千寻", "哈尔的移动城堡"],
+    ),
+    (
+        "Shinkai Animation (新海诚风格)", "Makoto Shinkai (新海诚)",
+        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["新海诚", "shinkai", "你的名字", "天气之子", "秒速五厘米"],
+    ),
+    (
+        "Satoshi Kon Animation (今敏风格)", "Satoshi Kon (今敏 | 动画电影大师)",
+        "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
+        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        ["今敏", "satoshi kon", "红辣椒", "未麻的部屋", "千年女优"],
+    ),
+    (
+        "Ink Wash Animation (水墨国风动画)", "Hayao Miyazaki (宫崎骏)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["水墨", "国画", "ink wash", "chinese painting", "写意", "国风动画"],
+    ),
+    (
+        "2D Hand-drawn Animation (二维手绘动画)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["动画", "手绘", "二维动画", "animation", "anime", "cartoon", "2d animation"],
+    ),
+    (
+        "3D CG Animation (三维CG动画)", "Hayao Miyazaki (宫崎骏)",
+        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
+        "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+        ["3d动画", "CG动画", "三维动画", "3d animation", "cgi", "pixar", "皮克斯"],
+    ),
+    (
+        "Stop Motion (定格动画)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+        ["定格动画", "stop motion", "粘土动画", "claymation"],
+    ),
+
+    # ── 爱情 ──
+    (
+        "Romance (爱情片)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["爱情", "浪漫", "恋爱", "约会", "romance", "love story", "couple", "情侣", "暗恋", "告白"],
+    ),
+    (
+        "Urban Romance (都市爱情)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["都市爱情", "城市恋爱", "urban romance", "city love", "office romance", "职场恋爱"],
+    ),
+    (
+        "Romantic Comedy (浪漫喜剧)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["浪漫喜剧", "romantic comedy", "rom-com"],
+    ),
+
+    # ── 喜剧 ──
+    (
+        "Slapstick Comedy (无厘头喜剧)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["喜剧", "搞笑", "幽默", "comedy", "funny", "humor", "滑稽"],
+    ),
+
+    # ── 动作 ──
+    (
+        "Action (动作片)", "James Cameron (詹姆斯·卡梅隆)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["动作", "战斗", "爆炸", "追逐", "action", "fight", "explosion", "chase", "battle", "动作片"],
+    ),
+
+    # ── 战争 ──
+    (
+        "War Film (战争片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["战争", "战场", "士兵", "war", "battle", "soldier", "military", "军队", "前线"],
+    ),
+
+    # ── 历史 / 古装 ──
+    (
+        "Historical Biopic (历史传记片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["传记", "历史人物", "biopic", "biography", "historical figure"],
+    ),
+    (
+        "Period Epic (古装史诗片)", "Zhang Yimou (张艺谋)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["古装", "史诗", "朝代", "古代", "period epic", "dynasty", "empire", "宫廷", "皇帝", "王朝"],
+    ),
+
+    # ── 冒险 ──
+    (
+        "Adventure (冒险片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["冒险", "探险", "adventure", "expedition", "quest", "treasure", "宝藏"],
+    ),
+
+    # ── 超级英雄 ──
+    (
+        "Superhero (超级英雄)", "Christopher Nolan (克里斯托弗·诺兰)",
+        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["超级英雄", "superhero", "marvel", "dc", "超能力"],
+    ),
+
+    # ── 纪录片 ──
+    (
+        "Documentary (纪录片)", "Jia Zhangke (贾樟柯)",
+        "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["纪录", "真实", "documentary", "nature", "wildlife", "自然", "纪实"],
+    ),
+
+    # ── 文艺剧情 ──
+    (
+        "Art-house Drama (文艺剧情片)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["文艺", "艺术", "art-house", "art film", "诗意", "意识流", "散文电影"],
+    ),
+
+    # ── 超现实 / 魔幻现实 / 表现主义 ──
+    (
+        "Surrealism (超现实主义)", "David Lynch (大卫·林奇)",
+        "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
+        "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+        ["超现实", "surreal", "dream", "梦境", "潜意识", "超现实主义"],
+    ),
+    (
+        "Magical Realism (魔幻现实主义)", "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
+        "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["魔幻现实", "magical realism", "magic realism"],
+    ),
+    (
+        "Expressionism (表现主义)", "Fritz Lang (弗里茨·朗)",
+        "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["表现主义", "expressionism", "expressionist"],
+    ),
+
+    # ── 歌舞 / 公路 / 西部 / 史诗 ──
+    (
+        "Musical (歌舞片)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["歌舞", "音乐剧", "musical", "dance", "singing", "舞蹈", "演唱"],
+    ),
+    (
+        "Road Movie (公路电影)", "Ang Lee (李安)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["公路", "road movie", "road trip", "旅行", "journey"],
+    ),
+    (
+        "Western (西部片)", "Quentin Tarantino (昆汀·塔伦蒂诺)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+        ["西部", "牛仔", "western", "cowboy", "荒野"],
+    ),
+    (
+        "Epic (史诗片)", "James Cameron (詹姆斯·卡梅隆)",
+        "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["史诗", "epic", "宏大", "grand", "spectacle"],
+    ),
+
+    # ── 剧情（默认兜底） ──
+    (
+        "Drama (剧情片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+        "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+        ["剧情", "drama", "story", "storytelling"],
+    ),
+]
+
+_BSAI_DEFAULT_STYLE = (
+    "Drama (剧情片)",
+    "Steven Spielberg (史蒂文·斯皮尔伯格)",
+    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+)
+
+
+def _bsai_auto_detect_styles(prompt_text, director_style, cinematography_style,
+                             film_genre, score_style):
+    """Auto-detect creative styles based on prompt content keywords.
+
+    Replaces "System Recommended (系统推荐)" values with keyword-matched styles.
+    Manually selected styles are preserved unchanged.
+    Returns (director_style, cinematography_style, film_genre, score_style).
+    """
+    if "System Recommended" not in director_style and "System Recommended" not in cinematography_style \
+            and "System Recommended" not in film_genre and "System Recommended" not in score_style:
+        return director_style, cinematography_style, film_genre, score_style
+
+    text_lower = prompt_text.lower()
+    _detected_genre, _detected_dir, _detected_cin, _detected_score = _BSAI_DEFAULT_STYLE
+
+    for genre, director, cinematographer, composer, keywords in _BSAI_STYLE_AUTO_MAP:
+        if any(kw.lower() in text_lower for kw in keywords):
+            _detected_genre = genre
+            _detected_dir = director
+            _detected_cin = cinematographer
+            _detected_score = composer
+            break
+
+    if director_style == "System Recommended (系统推荐)":
+        director_style = _detected_dir
+        print(f"[BSAI H3] Auto-detected director_style: {director_style}")
+    if cinematography_style == "System Recommended (系统推荐)":
+        cinematography_style = _detected_cin
+        print(f"[BSAI H3] Auto-detected cinematography_style: {cinematography_style}")
+    if film_genre == "System Recommended (系统推荐)":
+        film_genre = _detected_genre
+        print(f"[BSAI H3] Auto-detected film_genre: {film_genre}")
+    if score_style == "System Recommended (系统推荐)":
+        score_style = _detected_score
+        print(f"[BSAI H3] Auto-detected score_style: {score_style}")
+
+    return director_style, cinematography_style, film_genre, score_style
 
 
 # ============================================================
@@ -1426,7 +1741,7 @@ When the user message includes any of the following style tags, apply them to th
 - **[Segmentation]**: The user has specified the exact number of shots. Divide the video into exactly that many shots, each representing a distinct camera cut with its own shot type, content, and camera movement. Use `[Shot N]` numbering with cut times in `MM:SS.mmm` format, and preserve the original time-range labels such as `[0-3s]` / `【0-3秒】` for every shot. Ensure all shots are sequential and cover the full video duration.
 - **[Score Style]**: Apply the named composer's signature musical style to the `non_diegetic_music` field. Match their instrumentation preferences, harmonic language, rhythmic patterns, and emotional texture. For example, John Williams = sweeping brass-led leitmotifs, full romantic orchestra; Hans Zimmer = electronic-orchestral hybrid, driving ostinatos, deep braams; Ennio Morricone = whistled melodies, harmonica, solitary trumpet, sparse eerie arrangements; Bernard Herrmann = strings-only tension, shrieking glissandi; Danny Elfman = gothic choral, quirky orchestral, Burton-esque dark whimsy; Joe Hisaishi = tender piano melodies, lush string arrangements, Ghibli warmth; Vangelis = analog synthesizer pads, retro-futuristic electronic; Ryuichi Sakamoto = melancholic piano, East-West harmonic fusion; Tan Dun = Chinese percussion, cello solos, cross-cultural timbres; Clint Mansell = obsessive minimalist repetition, building intensity; Trent Reznor & Atticus Ross = industrial textures, dark ambient electronics; Hildur Gudnadottir = cello drone, dissonant dark textures; Philip Glass = arpeggiated minimalist patterns, gradual harmonic shifts; Angelo Badalamenti = dreamlike jazz-noir, slow saxophone, ambient synth pads; Gustavo Santaolalla = lonely detuned guitar, ronroco, sparse emotional melodies.
 
-When a style parameter is set to "System Recommended (系统推荐)", use your own best judgment to select appropriate styles based on the user's prompt content.
+All creative style parameters (director, cinematography, genre, score) have been pre-resolved by the system based on keyword analysis of the user's prompt content. The selected styles appear as explicit tags in the user message below — apply them faithfully.
 
 **MANDATORY OUTPUT REQUIREMENT**: When any creative style tag is present in the user message, the selected style MUST be explicitly reflected in the output prompt:
 - The director's name and signature techniques MUST appear in the opening of `integrated_multimodal_description`
@@ -1461,7 +1776,7 @@ non_diegetic_music: ...
 
 When the user message contains [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, the output MUST explicitly name and describe the selected styles. Compare the difference:
 
-**WITHOUT styles (System Recommended):**
+**WITHOUT explicit style tags (reference only — all styles are now auto-resolved):**
 ```
 integrated_multimodal_description: [Shot 1] [0-3.5s] Live-action, cinematic, a wide shot frames a young woman walking into a cherry blossom courtyard. The camera pushes in with small amplitude. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion.
 overall_soundscape: ...
@@ -1561,8 +1876,8 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "Text to Video (文生视频)", "tooltip": "Video generation mode / 生成模式"},
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
                 ),
                 "video_duration": (
                     "INT",
@@ -1582,23 +1897,23 @@ class BSAI_MiniMAX_H3_Prompt:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Director style for the video / 导演风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 导演风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 摄影风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Film genre/type / 电影类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影类型，系统推荐根据提示词内容自动判断"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-determines based on prompt and duration / 切镜类型，系统推荐根据提示词和时长自动判断"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影配乐风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
@@ -1703,6 +2018,40 @@ Requires BSAI H3 Model Loader node.
         prompt_text_input = (user_prompt or "").strip()
         if not prompt_text_input:
             raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
+
+        # ── Auto-resolve System Recommended options ──
+        if generation_mode == "System Recommended (系统推荐)":
+            _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
+                                                          image_6, image_7, image_8, image_9, image_10])
+            _has_videos = any(vid is not None for vid in [video_1, video_2, video_3, video_4])
+            _has_audios = any(aud is not None for aud in [audio_1, audio_2, audio_3])
+            if not _has_images and not _has_videos and not _has_audios:
+                generation_mode = "Text to Video (文生视频)"
+            elif _has_videos or _has_audios:
+                generation_mode = "Multimodal Fusion (多模态融合)"
+            else:
+                generation_mode = "Image to Video (图生视频)"
+            print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        if cut_style == "System Recommended (系统推荐)":
+            if video_duration <= 5:
+                _num_seg = 1
+            elif video_duration <= 8:
+                _num_seg = max(1, video_duration // 3)
+            else:
+                _num_seg = max(2, video_duration // 3)
+            if len(prompt_text_input) > 500:
+                _num_seg = min(6, _num_seg + 1)
+            if _num_seg <= 1:
+                cut_style = "One Shot (一镜到底)"
+            else:
+                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+            print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
+
+        # ── Auto-resolve System Recommended creative styles ──
+        director_style, cinematography_style, film_genre, score_style = \
+            _bsai_auto_detect_styles(prompt_text_input, director_style, cinematography_style,
+                                     film_genre, score_style)
 
         mode_hints = {
             "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
@@ -2050,8 +2399,8 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "Text to Video (文生视频)", "tooltip": "Video generation mode / 生成模式"},
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
                 ),
                 "video_duration": (
                     "INT",
@@ -2071,23 +2420,23 @@ class BSAI_H3_RemoteAPI:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Director style for the video / 导演风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 导演风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Cinematography/lighting style / 摄影风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 摄影风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Film genre/type / 电影类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影类型，系统推荐根据提示词内容自动判断"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "One Shot (一镜到底)", "tooltip": "Number of segments/cuts / 切镜类型"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-determines based on prompt and duration / 切镜类型，系统推荐根据提示词和时长自动判断"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "Film score/music composer style / 电影配乐风格"},
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影配乐风格，系统推荐根据提示词内容自动判断"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
@@ -2173,6 +2522,40 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         if not api_key.strip():
             raise ValueError("api_key cannot be empty. Please enter your API key.")
+
+        # ── Auto-resolve System Recommended options ──
+        if generation_mode == "System Recommended (系统推荐)":
+            _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
+                                                          image_6, image_7, image_8, image_9, image_10])
+            _has_videos = any(vid is not None for vid in [video_1, video_2, video_3, video_4])
+            _has_audios = any(aud is not None for aud in [audio_1, audio_2, audio_3])
+            if not _has_images and not _has_videos and not _has_audios:
+                generation_mode = "Text to Video (文生视频)"
+            elif _has_videos or _has_audios:
+                generation_mode = "Multimodal Fusion (多模态融合)"
+            else:
+                generation_mode = "Image to Video (图生视频)"
+            print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        if cut_style == "System Recommended (系统推荐)":
+            if video_duration <= 5:
+                _num_seg = 1
+            elif video_duration <= 8:
+                _num_seg = max(1, video_duration // 3)
+            else:
+                _num_seg = max(2, video_duration // 3)
+            if len(prompt_text_input) > 500:
+                _num_seg = min(6, _num_seg + 1)
+            if _num_seg <= 1:
+                cut_style = "One Shot (一镜到底)"
+            else:
+                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+            print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
+
+        # ── Auto-resolve System Recommended creative styles ──
+        director_style, cinematography_style, film_genre, score_style = \
+            _bsai_auto_detect_styles(prompt_text_input, director_style, cinematography_style,
+                                     film_genre, score_style)
 
         mode_hints = {
             "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
