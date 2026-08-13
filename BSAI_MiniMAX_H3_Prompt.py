@@ -1252,6 +1252,18 @@ _BSAI_SCORE_STYLES = [
     "Zhao Jiping (赵季平 | 中国传统电影配乐)",
 ]
 
+_BSAI_OUTPUT_LANGUAGES = [
+    "Chinese (中文)",
+    "English",
+    "Japanese (日本語)",
+    "Korean (한국어)",
+    "French (Français)",
+    "German (Deutsch)",
+    "Spanish (Español)",
+    "Russian (Русский)",
+    "Bilingual CN+EN (中英双语)",
+]
+
 
 # ============================================================
 # 风格自动推断：基于提示词关键词匹配，为"系统推荐"选项自动选择最合适的风格
@@ -1567,6 +1579,159 @@ def _bsai_auto_detect_styles(prompt_text, director_style, cinematography_style,
     return director_style, cinematography_style, film_genre, score_style
 
 
+def _bsai_auto_detect_generation_mode(prompt_text, image_count, video_count, audio_count):
+    """Auto-detect the H3 generation mode based on connected inputs and prompt content.
+
+    Returns one of:
+      "Text to Video (文生视频)"       — T2VA: no media
+      "Image to Video (图生视频)"       — I2VA: 1 image as first frame
+      "First+Last Frame (首尾帧)"      — FL2VA: 2 images as first + last frame
+      "Last Frame (尾帧)"              — L2VA: 1 image as last frame (when prompt says so)
+      "Multimodal Fusion (多模态融合)"  — Ref2VA: images + video/audio, or 3+ images
+    """
+    text_lower = prompt_text.lower()
+
+    # ── Keywords suggesting L2VA (last frame) ──
+    _l2va_kw = ["last frame", "尾帧", "末帧", "结尾帧", "end frame", "final frame",
+                "结束画面", "结尾画面", "定格在", "lands on", "converge to"]
+    # ── Keywords suggesting FL2VA (first + last frame) ──
+    _fl2va_kw = ["first and last", "首尾帧", "首尾", "start and end", "开头和结尾",
+                 "opening and ending", "from start to end", "two keyframe"]
+
+    if image_count == 0 and video_count == 0 and audio_count == 0:
+        return "Text to Video (文生视频)"
+
+    if video_count > 0 or audio_count > 0:
+        # Video/audio present → Ref2VA (multimodal fusion)
+        return "Multimodal Fusion (多模态融合)"
+
+    # ── Only images ──
+    if image_count >= 3:
+        return "Multimodal Fusion (多模态融合)"
+
+    if image_count == 2:
+        if any(kw in text_lower for kw in _l2va_kw) and not any(kw in text_lower for kw in _fl2va_kw):
+            # User mentions last frame with 2 images but not "first+last"
+            # Could be first frame + last frame reference → still FL2VA
+            pass
+        return "First+Last Frame (首尾帧)"
+
+    if image_count == 1:
+        if any(kw in text_lower for kw in _l2va_kw):
+            return "Last Frame (尾帧)"
+        return "Image to Video (图生视频)"
+
+    return "Text to Video (文生视频)"
+
+
+def _bsai_auto_detect_duration(prompt_text, generation_mode):
+    """Auto-detect optimal video duration based on prompt content and generation mode.
+
+    Returns an int between 4 and 15 (H3 supported range).
+    """
+    prompt_len = len(prompt_text)
+
+    # ── FL2VA / L2VA: usually single shot, shorter duration ──
+    if "First+Last Frame" in generation_mode or "Last Frame" in generation_mode:
+        return 6
+
+    # ── I2VA: single image, typically 6-8s ──
+    if "Image to Video" in generation_mode:
+        if prompt_len > 500:
+            return 8
+        return 6
+
+    # ── Ref2VA / Multimodal Fusion: more complex, 10-12s ──
+    if "Multimodal Fusion" in generation_mode:
+        if prompt_len > 800:
+            return 12
+        return 10
+
+    # ── T2VA: base on prompt complexity ──
+    if prompt_len < 150:
+        return 6
+    elif prompt_len < 400:
+        return 8
+    elif prompt_len < 800:
+        return 10
+    else:
+        return 12
+
+
+def _bsai_get_language_instruction(output_language):
+    """Build the language instruction string for the user message.
+
+    Controls which language the LLM uses for description text.
+    Dialogue, lyrics, and visible text always stay in their original language per H3 spec.
+    """
+    _lang_map = {
+        "Chinese (中文)": (
+            "CHINESE",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Chinese. Use Chinese shot labels: [镜头1]【0-3秒】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Chinese version — do NOT output an English version."
+        ),
+        "English": (
+            "ENGLISH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in English. Use English shot labels: [Shot 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the English version — do NOT output a Chinese version."
+        ),
+        "Japanese (日本語)": (
+            "JAPANESE",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Japanese. Use Japanese shot labels: [ショット1]【0-3秒】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Japanese version."
+        ),
+        "Korean (한국어)": (
+            "KOREAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Korean. Use Korean shot labels: [샷 1]【0-3초】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Korean version."
+        ),
+        "French (Français)": (
+            "FRENCH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in French. Use French shot labels: [Plan 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the French version."
+        ),
+        "German (Deutsch)": (
+            "GERMAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in German. Use German shot labels: [Einstellung 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the German version."
+        ),
+        "Spanish (Español)": (
+            "SPANISH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Spanish. Use Spanish shot labels: [Plano 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Spanish version."
+        ),
+        "Russian (Русский)": (
+            "RUSSIAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Russian. Use Russian shot labels: [Кадр 1] [0-3с]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Russian version."
+        ),
+        "Bilingual CN+EN (中英双语)": (
+            "BILINGUAL",
+            "Output BOTH a Chinese version and an English version, separated by a divider line (---中文版本--- / ---English Version---). "
+            "Chinese version uses [镜头1]【0-3秒】labels; English version uses [Shot 1] [0-3s] labels. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language in both versions. "
+            "Field names stay in English in both versions."
+        ),
+    }
+    return _lang_map.get(output_language, _lang_map["Chinese (中文)"])
+
+
 # ============================================================
 # H3 提示词优化系统提示词（根据 H3 官方 Prompt Writing Guide 整理）
 # 官方文档：https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills/h3-prompt-writing
@@ -1707,20 +1872,26 @@ Unless the user has explicitly provided custom sound/music descriptions or expli
 - If the user has explicitly checked "no_bgm" (no background music), still include all sound effects in `overall_soundscape` — only `non_diegetic_music` is set to N/A.
 - If the user explicitly states no sound effects at all (rare), only then may `overall_soundscape` be minimal.
 
-## 4. Reference Labels (for I2VA / FL2VA / L2VA modes)
+## 4. Reference Labels (for I2VA / FL2VA / L2VA / Ref2VA modes)
 
 When images are uploaded, use these labels:
 - `<Picture N>`: Reference image as a concrete frame anchor (first frame, last frame, keyframe).
 - When an image defines a character/scene/style only (not a frame anchor), describe it in the text without a standalone label.
 
-For multimodal fusion mode, reference labels can also include:
-- `<Subject N>`: Reusable visible content (person, scene, clothing, style) from reference assets.
-- `<Video N>`: Reference video for editing, continuation, or temporal structure.
-- `<Audio N>`: Audio asset for copying or referencing.
+For multimodal fusion / Ref2VA mode, reference labels can also include:
+- `<Subject N>`: Reusable visible content (person, scene, clothing, style) from reference assets. One subject may be defined by multiple assets, and one asset may provide multiple subjects. Example: `<Subject 1> is the young woman in <Picture 1>, with long dark hair and a blue cardigan.`
+- `<Video N>`: Reference video for editing, continuation, or temporal structure. Example: `<Video 1> is the source video for the target video edit.`
+- `<Audio N>`: Audio asset for copying or referencing. Example: `<Audio 1> is the voice-timbre reference for <Subject 1> (S1).`
+
+### Reference Label Consistency Rules
+- Once a label is assigned, it keeps the same meaning across all sections of the output.
+- `<Picture N>` and `<Video N>` are numbered independently; the same source video may correspond to both `<Video 1>` and `<Audio 2>`.
+- An ordinary reference video does not create `<Audio N>` merely because it contains sound — only create `<Audio N>` when audio is explicitly used as a reference.
+- Use `<Subject N> (Sx)` when a referenced subject physically speaks, retaining both the visual reference label and the speaker ID.
 
 ## 5. Writing Rules
 
-1. Write descriptions in English; preserve dialogue, lyrics, and visible scene text in their ORIGINAL language (Chinese stays Chinese, English stays English).
+1. Write descriptions in the language specified by the [Output Language] tag; preserve dialogue, lyrics, and visible scene text in their ORIGINAL language (Chinese stays Chinese, English stays English). For BILINGUAL output, write both Chinese and English versions.
 2. Each shot must include: shot type/framing, subjects, environment, actions, camera movement, sound, and dialogue where applicable.
 3. Avoid plot summaries — write what is visible and audible at each moment.
 4. Keep dialogue length proportional to shot length (avoid long dialogue in a short shot).
@@ -1752,8 +1923,21 @@ All creative style parameters (director, cinematography, genre, score) have been
 
 ## 6. Output Format
 
-Output the prompt in BOTH Chinese and English versions, separated by a divider line:
+The output language is controlled by the `[Output Language]` tag in the user message. Follow it exactly:
 
+- If the tag specifies a single language (Chinese, English, Japanese, Korean, French, German, Spanish, Russian), output ONLY that language version.
+- If the tag says BILINGUAL, output both Chinese and English versions separated by divider lines.
+
+### Single-language output (when [Output Language] specifies one language):
+```
+[alignment instruction if applicable]
+
+integrated_multimodal_description: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+overall_soundscape: ...
+non_diegetic_music: ...
+```
+
+### Bilingual output (when [Output Language] = BILINGUAL):
 ```
 ---中文版本---
 
@@ -1792,13 +1976,13 @@ non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, c
 
 **CRITICAL**: The style names (director, cinematographer, genre, composer) and their signature techniques MUST appear explicitly in the output text. Do NOT apply styles silently — the user must be able to see which styles were used by reading the output.
 
-### Rules for bilingual output:
-1. **English Version**: Descriptions in English, dialogue/lyrics/visible text in original language with `<d>[Language] ...</d>` tags. Use `[Shot 1] [0-3s]` format with cut times in `MM:SS.mmm` for later shots.
-2. **Chinese Version**: Same content as the English version but with the description parts in Chinese. Dialogue, lyrics, and visible text remain in their original language. Use `[镜头1]【0-3秒】` format with cut times in `MM:SS.mmm` for later shots.
-3. Both versions must have identical shot segmentation, cut times, time ranges, camera movements, and content.
-4. Field names (integrated_multimodal_description, overall_soundscape, non_diegetic_music) remain in English in both versions.
-5. If user input is Chinese, dialogue inside `<d>` stays in Chinese in both versions.
-6. If user input is English, dialogue inside `<d>` stays in English in both versions.
+### Rules for output:
+1. **Follow [Output Language] tag exactly** — output in the specified language only, or both Chinese and English if BILINGUAL.
+2. **Description language**: Write visual/sound/music descriptions in the specified output language. For BILINGUAL, Chinese version uses Chinese descriptions, English version uses English descriptions.
+3. **Dialogue/lyrics/visible text**: ALWAYS preserve in their ORIGINAL language inside `<d>[Language] ...</d>` tags and in double quotes, regardless of the output language setting.
+4. **Shot labels**: English uses `[Shot 1] [0-3s]`; Chinese uses `[镜头1]【0-3秒】`; other languages use the format specified in the `[Output Language]` tag.
+5. Field names (integrated_multimodal_description, overall_soundscape, non_diegetic_music) remain in English in all versions.
+6. If outputting multiple versions (BILINGUAL), both versions must have identical shot segmentation, cut times, time ranges, camera movements, and content.
 7. Total output should not exceed 7000 characters per version.
 8. Output directly without any explanation, preamble, or postscript.
 9. Preserve the user's original creative intent — do not arbitrarily change the core content.
@@ -1808,7 +1992,9 @@ non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, c
 
 _H3_SYSTEM_PROMPT_LOCAL = """You are a MiniMax H3 prompt optimizer. Rewrite the user request into an H3-ready audiovisual video prompt.
 
-Output exactly two versions separated by markers:
+Output language is controlled by the [Output Language] tag in the user message. Follow it exactly:
+- If a single language is specified, output ONLY that language version.
+- If BILINGUAL is specified, output both Chinese and English versions separated by markers:
 ---中文版本---
 integrated_multimodal_description: ...
 overall_soundscape: ...
@@ -1842,8 +2028,8 @@ Local media analysis rules:
 - Do not claim exact object identity, face identity, spoken words, lyrics, or plot details unless the user explicitly provided them. Instead, write visually safe descriptions based on the local statistics and user prompt.
 
 Writing rules:
-- Write visual and sound descriptions in English for English Version and Chinese for 中文版本.
-- Preserve dialogue, lyrics, and visible scene text in their original language inside <d>[Language] ...</d>.
+- Write visual and sound descriptions in the language specified by [Output Language] tag. For BILINGUAL, Chinese version uses Chinese, English version uses English.
+- Preserve dialogue, lyrics, and visible scene text in their original language inside <d>[Language] ...</d>, regardless of the output language.
 - Each shot must describe composition, subject appearance and position, environment, lighting, action, camera movement, and audible diegetic sounds.
 - overall_soundscape must be 1-4 sentences covering ambient sounds, action sounds, object sounds, and non-verbal human sounds. Do not leave it silent unless the user explicitly asks for no sound.
 - non_diegetic_music must describe background music only the audience hears. Use N/A only when the user explicitly asks for no background music.
@@ -1876,12 +2062,16 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
                 ),
                 "video_duration": (
                     "INT",
-                    {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                ),
+                "output_language": (
+                    _BSAI_OUTPUT_LANGUAGES,
+                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
                 ),
                 "no_bgm": (
                     "BOOLEAN",
@@ -1961,6 +2151,7 @@ Requires BSAI H3 Model Loader node.
         user_prompt,
         generation_mode,
         video_duration,
+        output_language,
         no_bgm,
         extra_requirements,
         director_style,
@@ -2021,18 +2212,20 @@ Requires BSAI H3 Model Loader node.
 
         # ── Auto-resolve System Recommended options ──
         video_duration = int(video_duration)
+        _img_count = sum(1 for img in [image_1, image_2, image_3, image_4, image_5,
+                                        image_6, image_7, image_8, image_9, image_10] if img is not None)
+        _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
+        _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
+
         if generation_mode == "System Recommended (系统推荐)":
-            _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
-                                                          image_6, image_7, image_8, image_9, image_10])
-            _has_videos = any(vid is not None for vid in [video_1, video_2, video_3, video_4])
-            _has_audios = any(aud is not None for aud in [audio_1, audio_2, audio_3])
-            if not _has_images and not _has_videos and not _has_audios:
-                generation_mode = "Text to Video (文生视频)"
-            elif _has_videos or _has_audios:
-                generation_mode = "Multimodal Fusion (多模态融合)"
-            else:
-                generation_mode = "Image to Video (图生视频)"
+            generation_mode = _bsai_auto_detect_generation_mode(
+                prompt_text_input, _img_count, _vid_count, _aud_count)
             print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        # ── Auto-detect video duration when 0 (System Recommended) ──
+        if video_duration == 0:
+            video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
+            print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
 
         if cut_style == "System Recommended (系统推荐)":
             if video_duration <= 5:
@@ -2055,9 +2248,11 @@ Requires BSAI H3 Model Loader node.
                                      film_genre, score_style)
 
         mode_hints = {
-            "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video (图生视频)": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
+            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
         }
 
         bgm_instruction = (
@@ -2067,10 +2262,15 @@ Requires BSAI H3 Model Loader node.
             else "No special requirement (may include appropriate background music). "
             "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
         )
+
+        # ── Language instruction ──
+        _lang_label, _lang_instruction = _bsai_get_language_instruction(output_language)
+
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
             f"[Sound & Music] {bgm_instruction}",
+            f"[Output Language] {_lang_instruction}",
         ]
 
         # ── Creative style parameters ──
@@ -2400,12 +2600,16 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
                 ),
                 "video_duration": (
                     "INT",
-                    {"default": 10, "min": 4, "max": 15, "step": 1, "tooltip": "H3 supports 4-15 seconds / 视频时长"},
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                ),
+                "output_language": (
+                    _BSAI_OUTPUT_LANGUAGES,
+                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
                 ),
                 "no_bgm": (
                     "BOOLEAN",
@@ -2483,6 +2687,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         model_name,
         generation_mode,
         video_duration,
+        output_language,
         no_bgm,
         extra_requirements,
         director_style,
@@ -2526,18 +2731,20 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         # ── Auto-resolve System Recommended options ──
         video_duration = int(video_duration)
+        _img_count = sum(1 for img in [image_1, image_2, image_3, image_4, image_5,
+                                        image_6, image_7, image_8, image_9, image_10] if img is not None)
+        _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
+        _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
+
         if generation_mode == "System Recommended (系统推荐)":
-            _has_images = any(img is not None for img in [image_1, image_2, image_3, image_4, image_5,
-                                                          image_6, image_7, image_8, image_9, image_10])
-            _has_videos = any(vid is not None for vid in [video_1, video_2, video_3, video_4])
-            _has_audios = any(aud is not None for aud in [audio_1, audio_2, audio_3])
-            if not _has_images and not _has_videos and not _has_audios:
-                generation_mode = "Text to Video (文生视频)"
-            elif _has_videos or _has_audios:
-                generation_mode = "Multimodal Fusion (多模态融合)"
-            else:
-                generation_mode = "Image to Video (图生视频)"
+            generation_mode = _bsai_auto_detect_generation_mode(
+                prompt_text_input, _img_count, _vid_count, _aud_count)
             print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        # ── Auto-detect video duration when 0 (System Recommended) ──
+        if video_duration == 0:
+            video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
+            print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
 
         if cut_style == "System Recommended (系统推荐)":
             if video_duration <= 5:
@@ -2560,9 +2767,11 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
                                      film_genre, score_style)
 
         mode_hints = {
-            "Text to Video (文生视频)": "Current mode: Text to Video (no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video (图生视频)": "Current mode: Image to Video. The user will upload images. Please indicate in the prompt whether @image_1 is a first frame or last frame reference. If two images are provided, specify first frame + last frame.",
-            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.).",
+            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
         }
 
         bgm_instruction = (
@@ -2572,10 +2781,15 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             else "No special requirement (may include appropriate background music). "
             "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
         )
+
+        # ── Language instruction ──
+        _lang_label, _lang_instruction = _bsai_get_language_instruction(output_language)
+
         user_message_parts = [
             f"[Generation Mode] {generation_mode}",
             f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
             f"[Sound & Music] {bgm_instruction}",
+            f"[Output Language] {_lang_instruction}",
         ]
 
         # ── Creative style parameters ──

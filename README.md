@@ -31,7 +31,7 @@
 - **参考素材说明**：13 种素材用途（人物参考、物体参考、场景参考、关键帧、音色参考、故事版、风格参考、构图参考、音频复用、音频部分复用、动作参考、运镜参考、视频编辑）
 - **核心创意**：主体、地点、事件、题材/风格、特殊运镜、时长、导演风格、摄影风格、电影类型、切镜类型、配乐风格
 - **画面过程说明**：按时间轴/shot 分段，景别+内容+运镜+动作+台词+音效，想要/不想要
-- **三类生成模式**：纯文字生成视频、上传图片生成视频、上传多模态素材融合
+- **五类生成模式**：纯文字生成视频(T2VA)、图片生成视频(I2VA)、首尾帧生成(FL2VA)、尾帧生成(L2VA)、多模态素材融合(Ref2VA)，系统推荐根据输入自动判断
 - **常见坑位避免**：6 条易错点自动检测与修正
 
 ## 安装
@@ -157,8 +157,9 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 |-|-|-|
 | qwen_model | Input | Connect to BSAI H3 Model Loader output |
 | user_prompt | Text | User's original creative prompt description |
-| generation_mode | Dropdown | Text to Video / Image to Video / Multimodal Fusion |
-| video_duration | Int | 4-15 seconds (H3 supported) |
+| generation_mode | Dropdown | System Recommended: auto-detects T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式 |
+| video_duration | Int | 0=System Recommended auto-detect; H3 supports 4-15 seconds / 视频时长 |
+| output_language | Dropdown | Output description language (default: Chinese). Options: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN / 输出语言 |
 | no_bgm | Bool | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | Optional extra style preferences |
 | director_style | Dropdown | Director style (default: System Recommended). 37+ directors: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, Tarantino, Spielberg, etc. |
@@ -188,8 +189,9 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | api_base_url | Text | `https://dashscope.aliyuncs.com/compatible-mode/v1` | OpenAI-compatible API base URL |
 | api_key | Text | "" | API key for authentication |
 | model_name | Text | `qwen-plus` | Model name (e.g. gpt-4o, qwen-plus, qwen-max, qwen-vl-plus) |
-| generation_mode | Dropdown | Text to Video | Text to Video / Image to Video / Multimodal Fusion |
-| video_duration | Int | 10 | H3 supports 4-15 seconds |
+| generation_mode | Dropdown | System Recommended | System Recommended: auto-detects T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs |
+| video_duration | Int | 0 | 0=System Recommended auto-detect; H3 supports 4-15 seconds |
+| output_language | Dropdown | Chinese (中文) | Output language: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN |
 | no_bgm | Bool | False | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | "" | Optional extra style preferences |
 | director_style | Dropdown | System Recommended | Director style: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, etc. |
@@ -252,9 +254,19 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 - **跨分段台词**：使用 `<scenetrans>` 标记连接点
 - **强制音效**：`overall_soundscape` 必须覆盖四类音效（场景氛围声、背景音效、人物动作声、物体运动声），任何场景都不允许静音。即使用户勾选 no_bgm 仅关闭背景音乐，环境音效仍必须输出
 
-### 双语输出
+### 多语言输出
 
-每次优化输出包含中英文两个版本，用分隔线区分：
+通过 `output_language` 参数控制输出描述语言（默认中文），可选英文、日文、韩文、法语、德语、西班牙语、俄语，或中英双语输出。台词、歌词和画面文字始终保留原始语言，符合 H3 官方规范。
+
+默认中文输出示例：
+
+```
+integrated_multimodal_description: 【0-3秒】实拍，电影感，全景镜头... 【3-8秒】切镜到中景... 【8-12秒】切镜到特写...
+overall_soundscape: 樱花庭院中微风轻拂...
+non_diegetic_music: 古风配乐...
+```
+
+中英双语输出示例（选择 Bilingual CN+EN 时）：
 
 ```
 ---中文版本---
@@ -338,7 +350,7 @@ non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo
 1. **提示词整体公式**：三段结构定义
 2. **四要素详解**：参考素材说明（13 种用途）、核心创意（6 要素）、画面过程说明（想要/不想要/写作原则）
 3. **镜头拆分建议**：shot 对齐、跨 shot 台词、画内外说话人
-4. **三类生成模式**：纯文字、图生视频、多模态融合
+4. **五类生成模式**：纯文字(T2VA)、图生视频(I2VA)、首尾帧(FL2VA)、尾帧(L2VA)、多模态融合(Ref2VA)，系统推荐自动判断
 5. **常见坑位避免**：6 条易错点
 6. **输出要求**：8 条格式约束
 
