@@ -162,11 +162,11 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | output_language | Dropdown | Output description language (default: Chinese). Options: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN / 输出语言 |
 | no_bgm | Bool | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | Optional extra style preferences |
-| director_style | Dropdown | Director style (default: System Recommended). 37+ directors: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, Tarantino, Spielberg, etc. |
-| cinematography_style | Dropdown | Cinematography/lighting style (default: System Recommended). 20+ cinematographers: Deakins, Lubezki, Storaro, Doyle, Hoyte van Hoytema, etc. |
-| film_genre | Dropdown | Film genre/type (default: System Recommended). 50+ genres: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli Animation, etc. |
-| cut_style | Dropdown | Number of segments/cuts (default: One Shot). 1-15 segments for 15s max video. |
-| score_style | Dropdown | Film score/composer style (default: System Recommended). 40+ composers: John Williams, Hans Zimmer, Morricone, Hisaishi, Sakamoto, etc. |
+| director_style | Dropdown | Director style (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 37+ directors: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, Tarantino, Spielberg, etc. |
+| cinematography_style | Dropdown | Cinematography/lighting style (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 20+ cinematographers: Deakins, Lubezki, Storaro, Doyle, Hoyte van Hoytema, etc. |
+| film_genre | Dropdown | Film genre/type (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 50+ genres: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli Animation, etc. |
+| cut_style | Dropdown | Number of segments/cuts (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; 1-15 segments for 15s max video. |
+| score_style | Dropdown | Film score/composer style (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 40+ composers: John Williams, Hans Zimmer, Morricone, Hisaishi, Sakamoto, etc. |
 | max_tokens | Int | Default 4096, auto-limited to context length |
 | temperature | Float | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | Nucleus sampling probability (0.0-1.0) |
@@ -194,11 +194,11 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | output_language | Dropdown | Chinese (中文) | Output language: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN |
 | no_bgm | Bool | False | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | "" | Optional extra style preferences |
-| director_style | Dropdown | System Recommended | Director style: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, etc. |
-| cinematography_style | Dropdown | System Recommended | Cinematography style: Deakins, Lubezki, Storaro, Doyle, etc. |
-| film_genre | Dropdown | System Recommended | Film genre: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli, etc. |
-| cut_style | Dropdown | One Shot (一镜到底) | Number of segments: 1 (one shot) to 15 segments |
-| score_style | Dropdown | System Recommended | Film score style: John Williams, Hans Zimmer, Morricone, Hisaishi, etc. |
+| director_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, etc. |
+| cinematography_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Deakins, Lubezki, Storaro, Doyle, etc. |
+| film_genre | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Realism, Film Noir, Sci-Fi, Wuxia, Ghibli, etc. |
+| cut_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; 1 (one shot) to 15 segments |
+| score_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; John Williams, Hans Zimmer, Morricone, Hisaishi, etc. |
 | max_tokens | Int | 4096 | Max generation tokens |
 | temperature | Float | 0.7 | LLM sampling temperature (0.0-2.0) |
 | top_p | Float | 0.9 | Nucleus sampling probability (0.0-1.0) |

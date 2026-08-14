@@ -635,7 +635,7 @@ def _bsai_enforce_style_output(text, director_style, cinematography_style,
     ]
     missing = {}
     for key, val in checks:
-        if val and "System Recommended" not in val:
+        if val and "System Recommended" not in val and "Official SKILL" not in val:
             if not _bsai_style_in_text(text, val):
                 missing[key] = val
 
@@ -1070,6 +1070,7 @@ class BSAI_H3_ModelLoader:
 # ============================================================
 
 _BSAI_DIRECTOR_STYLES = [
+    "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Alfred Hitchcock (希区柯克 | 悬念大师)",
     "Wong Kar-wai (王家卫)",
@@ -1111,6 +1112,7 @@ _BSAI_DIRECTOR_STYLES = [
 ]
 
 _BSAI_CINEMATOGRAPHY_STYLES = [
+    "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
     "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
@@ -1135,6 +1137,7 @@ _BSAI_CINEMATOGRAPHY_STYLES = [
 ]
 
 _BSAI_FILM_GENRES = [
+    "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Realism (写实主义)",
     "Neo-Realism (新现实主义)",
@@ -1189,6 +1192,7 @@ _BSAI_FILM_GENRES = [
 ]
 
 _BSAI_CUT_STYLES = [
+    "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "One Shot (一镜到底)",
     "2 Segments (2段)",
@@ -1208,6 +1212,7 @@ _BSAI_CUT_STYLES = [
 ]
 
 _BSAI_SCORE_STYLES = [
+    "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
     "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
@@ -2087,23 +2092,23 @@ class BSAI_MiniMAX_H3_Prompt:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 导演风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 摄影风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影类型，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-determines based on prompt and duration / 切镜类型，系统推荐根据提示词和时长自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影配乐风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
@@ -2275,20 +2280,20 @@ Requires BSAI H3 Model Loader node.
 
         # ── Creative style parameters ──
         selected_styles = []
-        if director_style != "System Recommended (系统推荐)":
+        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
             selected_styles.append(f"Director: {director_style}")
-        if cinematography_style != "System Recommended (系统推荐)":
+        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
             selected_styles.append(f"Cinematography: {cinematography_style}")
-        if film_genre != "System Recommended (系统推荐)":
+        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
             selected_styles.append(f"Genre: {film_genre}")
-        if cut_style != "One Shot (一镜到底)":
+        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
-        if score_style != "System Recommended (系统推荐)":
+        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
             selected_styles.append(f"Score: {score_style}")
         if selected_styles:
@@ -2625,23 +2630,23 @@ class BSAI_H3_RemoteAPI:
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 导演风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 摄影风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影类型，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-determines based on prompt and duration / 切镜类型，系统推荐根据提示词和时长自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects based on prompt content / 电影配乐风格，系统推荐根据提示词内容自动判断"},
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
                 ),
                 "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
@@ -2794,20 +2799,20 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         # ── Creative style parameters ──
         selected_styles = []
-        if director_style != "System Recommended (系统推荐)":
+        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
             selected_styles.append(f"Director: {director_style}")
-        if cinematography_style != "System Recommended (系统推荐)":
+        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
             selected_styles.append(f"Cinematography: {cinematography_style}")
-        if film_genre != "System Recommended (系统推荐)":
+        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
             selected_styles.append(f"Genre: {film_genre}")
-        if cut_style != "One Shot (一镜到底)":
+        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
-        if score_style != "System Recommended (系统推荐)":
+        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
             user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
             selected_styles.append(f"Score: {score_style}")
         if selected_styles:
