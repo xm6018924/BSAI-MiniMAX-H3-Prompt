@@ -162,6 +162,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | output_language | Dropdown | Output description language (default: Chinese). Options: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN / 输出语言 |
 | no_bgm | Bool | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | Optional extra style preferences |
+| weighted_keywords | Text | H3 weighted prompt embeddings (PR #15697). Format: `keyword:weight` (e.g. `美女:1.5, 小提琴:1.2`). Use `((keyword))` for layered weights. Empty = no weights / H3加权提示词嵌入 |
 | director_style | Dropdown | Director style (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 37+ directors: Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, Tarantino, Spielberg, etc. |
 | cinematography_style | Dropdown | Cinematography/lighting style (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 20+ cinematographers: Deakins, Lubezki, Storaro, Doyle, Hoyte van Hoytema, etc. |
 | film_genre | Dropdown | Film genre/type (default: Official SKILL). Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; 50+ genres: Realism, Film Noir, Sci-Fi, Wuxia, Ghibli Animation, etc. |
@@ -194,6 +195,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 | output_language | Dropdown | Chinese (中文) | Output language: Chinese, English, Japanese, Korean, French, German, Spanish, Russian, Bilingual CN+EN |
 | no_bgm | Bool | False | If checked, sets non_diegetic_music to N/A (sound effects still generated) |
 | extra_requirements | Text | "" | Optional extra style preferences |
+| weighted_keywords | Text | "" | H3 weighted prompt embeddings (PR #15697). Format: `keyword:weight` (e.g. `美女:1.5, 小提琴:1.2`). Use `((keyword))` for layered weights. Empty = no weights |
 | director_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Hitchcock, Wong Kar-wai, Kubrick, Kurosawa, Nolan, etc. |
 | cinematography_style | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Deakins, Lubezki, Storaro, Doyle, etc. |
 | film_genre | Dropdown | Official SKILL (官方SKILL模式) | Official SKILL: pure H3 SKILL output, no presets; System Recommended: auto-detect; Realism, Film Noir, Sci-Fi, Wuxia, Ghibli, etc. |
@@ -321,6 +323,34 @@ non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo
 3. 连接图片到 `image_1`~`image_10`
 4. `generation_mode` 选择 `Multimodal Fusion`
 5. 输入提示词，云端模型会同时分析图片和文本
+
+### 示例 4：加权提示词嵌入（H3 PR #15697）
+
+H3 分词器现已支持 prompt embeddings（加权提示词嵌入），可在 `integrated_multimodal_description` 中对关键词施加权重控制。
+
+**使用方法：**
+
+在 `weighted_keywords` 参数中输入关键词和权重，格式为 `关键词:权重值`，多个用逗号分隔：
+
+```
+美女:1.5, 拉着小提琴:1.2, 唱着歌:0.8
+```
+
+LLM 会在输出提示词中对这些关键词自动添加 H3 加权语法：
+
+```
+integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇的街道上，(拉着小提琴:1.2)，(唱着歌:0.8)...
+```
+
+**支持的权重语法：**
+
+| 语法 | 效果 | 示例 |
+|-|-|-|
+| `(关键词:1.5)` | 增强权重1.5倍 | `(美女:1.5)` |
+| `(关键词:0.5)` | 降低权重至0.5倍 | `(背景:0.5)` |
+| `((关键词))` | 逐层增加权重（每层≈1.1倍） | `((美女))` |
+
+> 留空 `weighted_keywords` 参数则不添加任何权重语法，输出与之前版本完全一致。
 
 ## 支持的模型
 

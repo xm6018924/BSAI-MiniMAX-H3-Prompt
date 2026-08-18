@@ -2006,7 +2006,29 @@ non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, c
 8. Output directly without any explanation, preamble, or postscript.
 9. Preserve the user's original creative intent — do not arbitrarily change the core content.
 10. Shots and time ranges must be sequential and cover the full video duration (e.g., for a 10s video: `[Shot 1] [0-3.5s]` + `[Shot 2] At 00:03.500 [3.5-7s]` + `[Shot 3] At 00:07.000 [7-10s]`).
-11. **CREATIVE STYLE VISIBILITY**: When [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags are present in the user message, the selected style names and their characteristic techniques MUST be explicitly written in the output. This is a non-negotiable requirement — failure to include them is a critical error."""
+11. **CREATIVE STYLE VISIBILITY**: When [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags are present in the user message, the selected style names and their characteristic techniques MUST be explicitly written in the output. This is a non-negotiable requirement — failure to include them is a critical error.
+
+## 7. Weighted Prompt Embeddings (H3 PR #15697)
+
+H3 now supports weighted prompt embeddings in the `integrated_multimodal_description` field. When the user message contains a `[Weighted Keywords]` tag, apply the specified weights to those keywords in the output using the H3 weighted syntax.
+
+**Weight syntax formats:**
+- `(keyword:1.5)` — enhance weight 1.5x
+- `(keyword:0.5)` — reduce weight to 0.5x
+- `((keyword))` — layer-by-layer weight increase (each layer ≈ 1.1x)
+
+**Rules:**
+1. Only apply weights to keywords listed in the `[Weighted Keywords]` tag. Use the exact weight value specified.
+2. Apply weight syntax to the keyword's FIRST occurrence in each shot where it appears in `integrated_multimodal_description`. Do not repeat weights on every mention — once per shot is sufficient.
+3. Place the weight syntax around the descriptive keyword, not around entire sentences. For example: `(美丽的女子:1.2)在街道上` or `(a beautiful woman:1.2) walking on the street`.
+4. If the user's original prompt already contains weight syntax like `(keyword:1.5)`, preserve it as-is.
+5. Do NOT apply weight syntax to dialogue (`<d>` tags), visible text (double quotes), or field names.
+6. Weight syntax works in both Chinese and English versions. For Chinese keywords use Chinese: `(美女:1.5)`; for English use English: `(beautiful woman:1.5)`.
+7. If no `[Weighted Keywords]` tag is present, do not add any weight syntax — output normally.
+
+**Example with weights:**
+Input: `[Weighted Keywords] 美女:1.2, 拉着小提琴:1.5`
+Output: `integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.2)在欧洲小镇的街道上，(拉着小提琴:1.5)，唱着歌...`"""
 
 
 _H3_SYSTEM_PROMPT_LOCAL = """You are a MiniMax H3 prompt optimizer. Rewrite the user request into an H3-ready audiovisual video prompt.
@@ -2053,6 +2075,7 @@ Writing rules:
 - overall_soundscape must be 1-4 sentences covering ambient sounds, action sounds, object sounds, and non-verbal human sounds. Do not leave it silent unless the user explicitly asks for no sound.
 - non_diegetic_music must describe background music only the audience hears. Use N/A only when the user explicitly asks for no background music.
 - If the user selects Director Style, Cinematography Style, Film Genre, or Score Style, explicitly write the selected names and signature techniques in the output. Director, cinematography, and genre go in integrated_multimodal_description; score style goes in non_diegetic_music.
+- Weighted keywords: If the user message contains a [Weighted Keywords] tag, apply H3 weight syntax (keyword:1.5) to those keywords in integrated_multimodal_description. Format: (keyword:1.5) enhances, (keyword:0.5) reduces, ((keyword)) layers. Apply to first occurrence per shot only. Preserve existing weight syntax in the user's input. Do not weight dialogue or visible text.
 - Output only the final prompt, with no explanation."""
 
 
@@ -2102,6 +2125,14 @@ class BSAI_MiniMAX_H3_Prompt:
                         "default": "",
                         "multiline": True,
                         "tooltip": "Optional: extra style preferences / 补充要求",
+                    },
+                ),
+                "weighted_keywords": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
                     },
                 ),
                 "director_style": (
@@ -2173,6 +2204,7 @@ Requires BSAI H3 Model Loader node.
         output_language,
         no_bgm,
         extra_requirements,
+        weighted_keywords,
         director_style,
         cinematography_style,
         film_genre,
@@ -2319,6 +2351,14 @@ Requires BSAI H3 Model Loader node.
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
+
+        if weighted_keywords and weighted_keywords.strip():
+            user_message_parts.append(
+                f"[Weighted Keywords] {weighted_keywords.strip()}\n"
+                "Apply H3 weighted prompt embedding syntax to these keywords in integrated_multimodal_description. "
+                "Format: (keyword:weight) for explicit weight, ((keyword)) for layered increase. "
+                "Apply to the first occurrence per shot only."
+            )
 
         user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
         user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
@@ -2642,6 +2682,14 @@ class BSAI_H3_RemoteAPI:
                         "tooltip": "Optional: extra style preferences / 补充要求",
                     },
                 ),
+                "weighted_keywords": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
+                    },
+                ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
                     {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
@@ -2709,6 +2757,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         output_language,
         no_bgm,
         extra_requirements,
+        weighted_keywords,
         director_style,
         cinematography_style,
         film_genre,
@@ -2838,6 +2887,14 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         if extra_requirements and extra_requirements.strip():
             user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
+
+        if weighted_keywords and weighted_keywords.strip():
+            user_message_parts.append(
+                f"[Weighted Keywords] {weighted_keywords.strip()}\n"
+                "Apply H3 weighted prompt embedding syntax to these keywords in integrated_multimodal_description. "
+                "Format: (keyword:weight) for explicit weight, ((keyword)) for layered increase. "
+                "Apply to the first occurrence per shot only."
+            )
 
         user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
         user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
