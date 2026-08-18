@@ -419,6 +419,70 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 提示词字数上限 | 7000 字符 |
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
+## 更新日志 / Changelog
+
+### v1.3.0 — MTP/NextN 层自动剥离 / Auto MTP Layer Stripping
+
+**中文说明：**
+
+修复 Qwen3.5/3.6/3.8 GGUF 模型加载失败的问题。部分 GGUF 文件包含 MTP（多令牌预测）层元数据（`nextn_predict_layers`），但实际张量缺失（trunk-only GGUF）。由于 llama-cpp-python 0.3.36 未包含 llama.cpp [PR #25024](https://github.com/ggml-org/llama.cpp/pull/25024) 的修复，导致加载时报错 `missing tensor 'blk.64.ssm_conv1d.weight'`。
+
+新增功能：
+- **MTP 自动检测**：加载前检测 GGUF 元数据中的 `nextn_predict_layers` 字段
+- **MTP 自动剥离**：生成去 MTP 版本的 `-noMTP.gguf` 文件，重计算张量偏移并调整 `block_count`
+- **动态块索引计算**：从 `block_count` 元数据动态计算 MTP 块索引，而非硬编码 `blk.64`
+- **异常回退**：加载失败时自动尝试 MTP 剥离并重试
+
+首次加载时会自动生成 `-noMTP.gguf` 文件（约 3 分钟），之后直接使用缓存文件。该功能从 [BSAI_ComfyUI_Nodes](https://github.com/xm6018924/BSAI_ComfyUI_Nodes) 移植并改进。
+
+**English:**
+
+Fixed Qwen3.5/3.6/3.8 GGUF model loading failure. Some GGUF files contain MTP (Multi-Token Prediction) layer metadata (`nextn_predict_layers`) but the actual tensors are absent (trunk-only GGUF). Since llama-cpp-python 0.3.36 does not include the fix from llama.cpp [PR #25024](https://github.com/ggml-org/llama.cpp/pull/25024), loading fails with `missing tensor 'blk.64.ssm_conv1d.weight'`.
+
+New features:
+- **MTP auto-detection**: Checks GGUF metadata for `nextn_predict_layers` field before loading
+- **MTP auto-stripping**: Generates a de-MTP'd `-noMTP.gguf` file with recalculated tensor offsets and adjusted `block_count`
+- **Dynamic block index**: Computes MTP block index from `block_count` metadata instead of hardcoding `blk.64`
+- **Exception fallback**: Automatically attempts MTP stripping and retry on load failure
+
+The first load auto-generates the `-noMTP.gguf` file (~3 minutes); subsequent loads use the cached file. Ported and improved from [BSAI_ComfyUI_Nodes](https://github.com/xm6018924/BSAI_ComfyUI_Nodes).
+
+---
+
+### v1.2.0 — H3 加权提示词嵌入 / Weighted Prompt Embeddings (PR #15697)
+
+**中文说明：**
+
+新增 H3 加权提示词嵌入支持。通过 `weighted_keywords` 参数对提示词中的关键词施加权重控制，支持三种语法格式：`(关键词:1.5)` 增强权重、`(关键词:0.5)` 降低权重、`((关键词))` 逐层增加权重。
+
+**English:**
+
+Added H3 weighted prompt embeddings support. The `weighted_keywords` parameter applies weight control to keywords in the prompt, supporting three syntax formats: `(keyword:1.5)` to enhance, `(keyword:0.5)` to reduce, `((keyword))` for layered weight increase.
+
+---
+
+### v1.1.0 — Qwen3.8-VL 支持 / Qwen3.8-VL Support
+
+**中文说明：**
+
+新增 Qwen3.8-VL 模型系列支持并设为默认。Qwen3.8-VL 是阿里通义千问 2026 年 8 月发布的 27B 稠密视觉语言模型，基于 Qwen3.5 架构，使用相同的 ChatML 格式和 `enable_thinking` API。
+
+**English:**
+
+Added Qwen3.8-VL model family support and set as default. Qwen3.8-VL is a 27B dense vision-language model released by Alibaba in August 2026, based on the Qwen3.5 architecture with the same ChatML format and `enable_thinking` API.
+
+---
+
+### v1.0.0 — 初始版本 / Initial Release
+
+**中文说明：**
+
+根据 MiniMax H3 模型使用手册，实现提示词自动优化节点。支持本地模型和远程 API 两种模式，覆盖 13 种参考素材、五类生成模式、37+ 导演风格、20+ 摄影风格、50+ 电影类型、40+ 配乐风格。
+
+**English:**
+
+Initial release implementing automatic prompt optimization based on the MiniMax H3 model manual. Supports both local model and remote API modes, covering 13 reference material types, 5 generation modes, 37+ director styles, 20+ cinematography styles, 50+ film genres, and 40+ score styles.
+
 ## 许可证
 
 MIT License
