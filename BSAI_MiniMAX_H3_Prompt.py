@@ -898,8 +898,14 @@ class _BSAI_QwenStorage:
             "image_min_tokens": 1024,
             "image_max_tokens": 1024,
         }
+        # VRAM 不足时，mmproj/CLIP 模型强制在 CPU 上加载，避免 GPU buffer
+        # 分配失败导致 GGML_ASSERT(buffer) 进程崩溃（C++ abort 不可被
+        # Python try/except 捕获）。
+        mmproj_use_gpu = (vram_warning is None)
+        if not mmproj_use_gpu:
+            print("[BSAI H3 ModelLoader] mmproj/CLIP 模型将在 CPU 上加载（显存不足）")
         if mmproj_path:
-            if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)"):
+            if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)"):
                 if Qwen35ChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Qwen35ChatHandler，请更新 llama-cpp-python。"
@@ -909,12 +915,14 @@ class _BSAI_QwenStorage:
                         clip_model_path=mmproj_path,
                         enable_thinking=think,
                         verbose=False,
+                        use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
                 except Exception:
                     chat_handler = Qwen35ChatHandler(
                         clip_model_path=mmproj_path,
                         verbose=False,
+                        use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
             elif family == "Qwen3-VL (通义千问3-VL)":
@@ -927,12 +935,14 @@ class _BSAI_QwenStorage:
                         clip_model_path=mmproj_path,
                         force_reasoning=think,
                         verbose=False,
+                        use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
                 except Exception:
                     chat_handler = Qwen3VLChatHandler(
                         clip_model_path=mmproj_path,
                         verbose=False,
+                        use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
             elif family == "Gemma4 (谷歌宝石4)":
@@ -942,10 +952,14 @@ class _BSAI_QwenStorage:
                     )
                 try:
                     chat_handler = Gemma4ChatHandler(
-                        clip_model_path=mmproj_path, enable_thinking=think, verbose=False
+                        clip_model_path=mmproj_path, enable_thinking=think,
+                        verbose=False, use_gpu=mmproj_use_gpu,
                     )
                 except Exception:
-                    chat_handler = Gemma4ChatHandler(clip_model_path=mmproj_path, verbose=False)
+                    chat_handler = Gemma4ChatHandler(
+                        clip_model_path=mmproj_path, verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                    )
 
         llama_kwargs = {
             "model_path": model_path,
@@ -1014,8 +1028,8 @@ class BSAI_H3_ModelLoader:
         return {
             "required": {
                 "model_family": (
-                    ["Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Gemma4 (谷歌宝石4)"],
-                    {"default": "Qwen3.6-VL (通义千问3.6-VL)", "tooltip": "Model family / 模型系列"},
+                    ["Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"],
+                    {"default": "Qwen3.8-VL (通义千问3.8-VL)", "tooltip": "Model family / 模型系列"},
                 ),
                 "model_file": (
                     model_list,
@@ -1044,7 +1058,7 @@ class BSAI_H3_ModelLoader:
         if model_file.startswith("(Place models"):
             raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
 
-        if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Gemma4 (谷歌宝石4)"):
+        if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"):
             if mmproj == "None (无)":
                 print(
                     f"[BSAI H3 ModelLoader] {model_family} loaded without mmproj. "

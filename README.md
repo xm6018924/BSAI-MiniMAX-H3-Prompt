@@ -211,7 +211,7 @@ BSAI H3 Remote API ──prompt_output──> 视频生成节点
 
 | Parameter | Type | Description |
 |-|-|-|
-| model_family | Dropdown | Qwen3-VL / Qwen3.5-VL / Qwen3.6-VL / Gemma4 |
+| model_family | Dropdown | Qwen3-VL / Qwen3.5-VL / Qwen3.6-VL / Qwen3.8-VL / Gemma4 |
 | model_file | Dropdown | Model file from models/LLM/ directory |
 | mmproj | Dropdown | Multimodal mmproj file; 'None' for text-only |
 | enable_thinking | Bool | Enable thinking/reasoning mode |
@@ -328,7 +328,8 @@ non_diegetic_music: Traditional Chinese guzheng and bamboo flute at a slow tempo
 
 推荐使用以下 GGUF 模型（需放到 `ComfyUI/models/LLM/`）：
 
-- **Qwen3.6-VL**（推荐）— 多模态，需配 mmproj
+- **Qwen3.8-VL**（推荐）— 多模态，需配 mmproj
+- **Qwen3.6-VL** — 多模态，需配 mmproj
 - **Qwen3.5-VL** — 多模态，需配 mmproj
 - **Qwen3-VL** — 多模态，需配 mmproj
 - **Gemma4** — 多模态，需配 mmproj，需 llama-cpp-python 0.3.36+
