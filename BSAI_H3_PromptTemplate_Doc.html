@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSAI H3 Prompt Template - Node Documentation / 节点使用说明</title>
+<style>
+:root {
+    --bg: #1a1a1a; --card: #222; --border: #333; --text: #ddd;
+    --accent: #3f789e; --accent2: #5a8; --code-bg: #1a1a2a;
+    --red: #c66; --green: #6c6; --yellow: #cc6; --blue: #6af;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.7; padding: 20px; max-width: 1000px; margin: 0 auto;
+}
+h1 { font-size: 26px; color: var(--blue); margin-bottom: 8px; }
+h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-top: 32px; margin-bottom: 14px; }
+h3 { font-size: 16px; color: var(--accent2); margin-top: 20px; margin-bottom: 8px; }
+p { margin-bottom: 10px; }
+code { background: var(--code-bg); padding: 2px 6px; border-radius: 3px; font-size: 13px; color: var(--yellow); }
+pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px; overflow-x: auto; margin: 10px 0; }
+pre code { background: none; padding: 0; color: var(--green); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+th { background: var(--card); color: var(--blue); font-weight: 600; }
+td:first-child { color: var(--yellow); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 12px 0; }
+.card-title { font-weight: 600; color: var(--blue); margin-bottom: 8px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.badge-in { background: #2a4a2a; color: var(--green); border: 1px solid #3a5a3a; }
+.badge-out { background: #4a3a2a; color: var(--yellow); border: 1px solid #5a4a3a; }
+.badge-opt { background: #2a2a4a; color: var(--blue); border: 1px solid #3a3a5a; }
+ul, ol { margin-left: 20px; margin-bottom: 10px; }
+li { margin-bottom: 4px; }
+.tip { background: #1a2a1a; border-left: 3px solid var(--green); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+.warn { background: #2a1a1a; border-left: 3px solid var(--red); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+.info { background: #1a1a2a; border-left: 3px solid var(--blue); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+b { color: var(--text); }
+b.en { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<h1>BSAI H3 Prompt Template (提示词模板节点)</h1>
+<p style="color:#888; font-size:13px;">One-click ready-to-use MiniMax H3 video prompt templates / 一键式 MiniMax H3 视频提示词模板</p>
+
+<div class="info">
+<b>Node Name / 节点名称:</b> <code>BSAI_H3_PromptTemplate</code><br>
+<b>Category / 分类:</b> <code>BSAI</code><br>
+<b>Display Name / 显示名称:</b> <code>BSAI H3 Prompt Template (提示词模板)</code><br>
+<b>Version / 版本:</b> 1.0.0 &nbsp;|&nbsp; <b>Templates / 模板数:</b> 144 &nbsp;|&nbsp; <b>Expression Templates / 表情模板:</b> 46 &nbsp;|&nbsp; <b>Preview GIFs / 预览动画:</b> 25
+</div>
+
+<!-- ===================== Overview ===================== -->
+<h2>1. Overview / 概述</h2>
+<div class="card">
+<div class="card-title">📌 What it does / 功能简介</div>
+<p><b>EN:</b> This node provides a visual template browser for MiniMax H3 video generation prompts. Instead of writing complex prompts manually, users can select from pre-built, categorized templates with one click. The node includes a search function, cascading category selection, GIF preview, and optional customization textarea.</p>
+<p><b>中文:</b> 本节点为 MiniMax H3 视频生成模型提供可视化提示词模板浏览器。用户无需手动编写复杂的提示词，只需从预设的分类模板中一键选择即可。节点包含搜索功能、级联分类选择、GIF 预览动画、以及可选的补充修改文本框。</p>
+</div>
+
+<!-- ===================== Installation ===================== -->
+<h2>2. Installation / 安装说明</h2>
+<p><b>EN:</b> Place the entire <code>BSAI-MiniMAX-H3-Prompt</code> folder into your ComfyUI <code>custom_nodes</code> directory. Restart ComfyUI. The node will appear under the <code>BSAI</code> category in the node search.</p>
+<p><b>中文:</b> 将整个 <code>BSAI-MiniMAX-H3-Prompt</code> 文件夹放入 ComfyUI 的 <code>custom_nodes</code> 目录中。重启 ComfyUI。节点将出现在节点搜索的 <code>BSAI</code> 分类下。</p>
+<pre><code>ComfyUI/
+├── custom_nodes/
+│   └── BSAI-MiniMAX-H3-Prompt/
+│       ├── __init__.py
+│       ├── BSAI_H3_PromptTemplate.py      <span style="color:#555"># Node logic / 节点逻辑</span>
+│       ├── templates/
+│       │   └── prompt_templates.json      <span style="color:#555"># Template data / 模板数据</span>
+│       └── web/
+│           ├── templates_data.json         <span style="color:#555"># Web copy / 前端副本</span>
+│           └── js/
+│               └── prompt_template.js      <span style="color:#555"># Frontend UI / 前端界面</span>
+</code></pre>
+
+<!-- ===================== Inputs ===================== -->
+<h2>3. Input Parameters / 输入参数</h2>
+<table>
+<tr>
+<th>Parameter / 参数</th><th>Type / 类型</th><th>Description (EN) / 描述 (EN)</th><th>描述 (中文)</th>
+</tr>
+<tr>
+<td><code>template_select</code></td>
+<td>STRING</td>
+<td>Selected template label (auto-filled by UI). Format: "Category > Subcategory > Template"</td>
+<td>选中的模板标签（由界面自动填充）。格式："分类 > 子类 > 模板"</td>
+</tr>
+<tr>
+<td><code>user_customization</code></td>
+<td>STRING (Multiline)</td>
+<td>Optional text appended to the selected template's prompt output</td>
+<td>可选文本，追加到选中模板的提示词输出末尾</td>
+</tr>
+<tr>
+<td><code>external_prompt</code> <span class="badge badge-opt">OPT</span></td>
+<td>STRING (Multiline, forceInput)</td>
+<td>External prompt text input port. Connect from another node to modify or supplement the template prompt. This text is appended to the prompt output after the template.</td>
+<td>外部提示词文本输入端口（强制连线）。可连接其他节点输出，用于修改或补充模板提示词。此文本将追加到模板提示词之后。</td>
+</tr>
+</table>
+<div class="tip">
+<b>Tip / 提示:</b> The two required inputs are hidden in the visual UI and managed by the template browser. The <code>external_prompt</code> optional port lets you chain another prompt source (e.g., LLM output) to modify or supplement the selected template. / 两个必填输入在可视化界面中已隐藏，由模板浏览器管理。<code>external_prompt</code> 可选端口可连接其他提示词来源（如 LLM 输出），用于修改或补充所选模板。
+</div>
+
+<!-- ===================== Outputs ===================== -->
+<h2>4. Output Ports / 输出端口</h2>
+<table>
+<tr>
+<th>Port / 端口</th><th>Type / 类型</th><th>Description (EN) / 描述 (EN)</th><th>描述 (中文)</th>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>prompt_output</code></td>
+<td>STRING</td>
+<td>The full prompt text ready for H3 video generation</td>
+<td>完整的 H3 视频生成提示词文本</td>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>template_name</code></td>
+<td>STRING</td>
+<td>Name of the selected template</td>
+<td>选中模板的名称</td>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>generation_mode</code></td>
+<td>STRING</td>
+<td>Generation mode (e.g., Image to Video, Text to Video)</td>
+<td>生成模式（如：图生视频、文生视频）</td>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>description</code></td>
+<td>STRING</td>
+<td>Template description text</td>
+<td>模板描述文本</td>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>video_duration</code></td>
+<td>INT</td>
+<td>Recommended video duration in seconds</td>
+<td>推荐视频时长（秒）</td>
+</tr>
+<tr>
+<td><span class="badge badge-out">OUT</span> <code>preview_file</code></td>
+<td>STRING</td>
+<td>Preview GIF filename (empty if no preview available)</td>
+<td>预览 GIF 文件名（无预览则为空）</td>
+</tr>
+</table>
+
+<!-- ===================== UI Guide ===================== -->
+<h2>5. UI Interface Guide / 界面使用指南</h2>
+<div class="card">
+<div class="card-title">🔍 Search Box / 搜索框</div>
+<p><b>EN:</b> Type any keyword (Chinese or English) to search across all template names, descriptions, and tags. Search results show the category path. Click a result to select it; the dropdowns will auto-sync.</p>
+<p><b>中文:</b> 输入任意关键词（中文或英文）搜索所有模板的名称、描述和标签。搜索结果显示分类路径。点击结果即可选中，下拉框会自动同步。</p>
+</div>
+<div class="card">
+<div class="card-title">📂 Cascading Selection / 级联选择</div>
+<ol>
+<li><b>分类 / Category</b> — Select a top-level category (e.g., Image to Video, Expression Templates) / 选择一级分类（如图生视频、人物表情模板）</li>
+<li><b>子类 / Subcategory</b> — Select a subcategory (enabled after category selection) / 选择二级子类（选择分类后启用）</li>
+<li><b>模板列表 / Template List</b> — Click any template in the list to select it / 点击列表中的任意模板即可选中</li>
+</ol>
+</div>
+<div class="card">
+<div class="card-title">🎬 Preview Area / 预览区域</div>
+<p><b>EN:</b> The right panel shows a GIF preview animation (if available), template name, generation mode, and duration info. If no GIF is available, a placeholder is shown.</p>
+<p><b>中文:</b> 右侧面板显示 GIF 预览动画（如有）、模板名称、生成模式和时长信息。若无 GIF 则显示占位提示。</p>
+</div>
+<div class="card">
+<div class="card-title">✏️ Customization / 补充修改</div>
+<p><b>EN:</b> The textarea at the bottom allows you to append custom modifications to the selected template. Your text will be added after the template prompt with a separator. This is optional — leave empty to use the template as-is.</p>
+<p><b>中文:</b> 底部文本框允许你在选中模板后追加自定义修改。你的文本将在模板提示词后以分隔符添加。此为可选 — 留空则直接使用模板原样。</p>
+</div>
+<div class="card">
+<div class="card-title">🔌 External Prompt Port / 外部提示词端口</div>
+<p><b>EN:</b> The <code>external_prompt</code> optional input port accepts a STRING from any other node (e.g., an LLM or a prompt rewriter). Its content is appended to the prompt output, letting you modify or supplement the selected template within a larger workflow.</p>
+<p><b>中文:</b> <code>external_prompt</code> 可选输入端口可接收任意其他节点（如 LLM 或提示词改写节点）输出的 STRING。其内容会追加到提示词输出中，方便在更大的工作流内修改或补充所选模板。</p>
+</div>
+
+<!-- ===================== Categories ===================== -->
+<h2>6. Template Categories / 模板分类</h2>
+<table>
+<tr>
+<th>Category / 分类</th><th>Subcategories / 子类</th><th>Templates / 模板数</th>
+</tr>
+<tr>
+<td>🎬 图生视频<br><span style="color:#888;font-size:12px">Image to Video (I2VA)</span></td>
+<td>线稿类 / 角色参考类 / 产品展示类 / 场景参考类 / 风格迁移类</td>
+<td>14</td>
+</tr>
+<tr>
+<td>🌱 生长类<br><span style="color:#888;font-size:12px">Growth &amp; Metamorphosis</span></td>
+<td>植物生长类 / 动物生长类 / 人物生长类 / 物体生长类</td>
+<td>14</td>
+</tr>
+<tr>
+<td>⏱ 延时摄影类<br><span style="color:#888;font-size:12px">Time-Lapse Photography</span></td>
+<td>建筑延时类 / 产品组装延时类 / 交通类延时 / 自然景观延时类</td>
+<td>16</td>
+</tr>
+<tr>
+<td>📝 文生视频<br><span style="color:#888;font-size:12px">Text to Video (T2VA)</span></td>
+<td>电影场景类 / 舞蹈编排类 / 自然风光类 / 奇幻创意类 / 城市生活类</td>
+<td>14</td>
+</tr>
+<tr>
+<td>🔀 首尾帧生成<br><span style="color:#888;font-size:12px">First-Last Frame (FL2VA)</span></td>
+<td>过渡变换类 / 变形效果类</td>
+<td>4</td>
+</tr>
+<tr>
+<td>🌐 多模态融合<br><span style="color:#888;font-size:12px">Multimodal Fusion (Ref2VA)</span></td>
+<td>品牌广告类 / 短剧叙事类 / 音乐节拍类 / 角色合成类</td>
+<td>6</td>
+</tr>
+<tr>
+<td>😀 人物表情模板<br><span style="color:#888;font-size:12px">Character Expression</span></td>
+<td>基础表情类 / 微表情类 / 情绪过渡类 / 社交面具类 / 崩溃边缘类</td>
+<td>46</td>
+</tr>
+<tr>
+<td>⚔️ 武打打斗模板<br><span style="color:#888;font-size:12px">Combat &amp; Martial Arts</span></td>
+<td>拳脚对打类 / 冷兵器对战类 / 快慢镜头类 / 打斗运镜类 / 多人群战类 / 特殊招式类 / 触发词战斗类 / 多图成战类</td>
+<td>30</td>
+</tr>
+</table>
+
+<!-- ===================== Expression Templates ===================== -->
+<h2>7. Expression Templates Guide / 表情模板指南</h2>
+<div class="card">
+<div class="card-title">😀 Basic Expressions / 基础表情类 (16 templates)</div>
+<p><b>EN:</b> Universal human emotions based on Paul Ekman's 7 universal emotion families, expanded with intensity variations.</p>
+<p><b>中文:</b> 基于 Paul Ekman 七大基本情绪理论，扩展了不同强度级别的表情。</p>
+<ul>
+<li>微笑 / Smile, 大笑 / Laugh, 狂笑 / Maniacal Laugh</li>
+<li>哭泣 / Cry, 大哭 / Wailing</li>
+<li>愤怒 / Anger, 暴怒 / Rage</li>
+<li>惊讶 / Surprise, 恐惧 / Fear</li>
+<li>欣喜 / Joy, 厌恶 / Disgust, 轻蔑 / Contempt</li>
+<li>困惑 / Confusion, 害羞 / Shy, 失望 / Disappointment, 得意 / Smug</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">🔬 Micro-Expressions / 微表情类 (13 templates)</div>
+<p><b>EN:</b> Complex expressions where surface emotion contradicts true feeling, following the "mask vs leak" structure.</p>
+<p><b>中文:</b> 表面情绪与真实情感矛盾的复杂表情，遵循"面具 vs 泄露"结构。</p>
+<ul>
+<li>忍住不哭 / Holding back tears</li>
+<li>笑着说没事 / Smiling through pain</li>
+<li>礼貌忍怒 / Polite suppressed anger</li>
+<li>装作镇定 / Feigning composure</li>
+<li>嫉妒藏笑 / Jealousy behind smile</li>
+<li>被关心后破防 / Breakdown when comforted</li>
+<li>欲言又止 / Hesitation to speak</li>
+<li>疲惫微笑 / Exhausted smile</li>
+<li>突然明白 / Sudden realization</li>
+<li>尴尬微笑 / Awkward smile</li>
+<li>被原谅时崩溃 / Breakdown when forgiven</li>
+<li>不敢相信的笑 / Disbelieving joy</li>
+<li>笑容消失 / Smile vanishing</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">🔄 Emotional Transitions / 情绪过渡类 (7 templates)</div>
+<p><b>EN:</b> Gradual transitions from one emotion to another within a single continuous shot.</p>
+<p><b>中文:</b> 在单个连续镜头内从一种情绪逐渐过渡到另一种情绪。</p>
+<ul>
+<li>笑转哭 / Smile to cry</li>
+<li>怒转沉默 / Anger to silence</li>
+<li>麻木回温 / Numbness to warmth</li>
+<li>惊转哀 / Shock to grief</li>
+<li>羞耻转怒 / Shame to anger</li>
+<li>想哭的开心 / Happy tears</li>
+<li>厌恶转冷笑 / Disgust to sneer</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">🎭 Social Mask / 社交面具类 (5 templates)</div>
+<p><b>EN:</b> Expressions where social context forces emotional suppression in public settings.</p>
+<p><b>中文:</b> 社交场合中被迫压抑真实情绪的表演。</p>
+<ul>
+<li>礼貌微笑过久 / Polite smile held too long</li>
+<li>表面祝贺 / Surface congratulation</li>
+<li>公开场合忍哭 / Holding tears in public</li>
+<li>被揭穿后微笑 / Smile when exposed</li>
+<li>假装轻松 / Pretending to be relaxed</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">💥 Breaking Point / 崩溃边缘类 (5 templates)</div>
+<p><b>EN:</b> High-tension micro-expression performances at the edge of emotional breakdown.</p>
+<p><b>中文:</b> 情绪在失控边缘的高张力微表情表演。</p>
+<ul>
+<li>微笑维持失败 / Smile maintenance failure</li>
+<li>呼吸断裂 / Breath fracture</li>
+<li>眼泪延迟 / Delayed tears</li>
+<li>笑声变空 / Hollow laughter</li>
+<li>沉默太久 / Silence too long</li>
+</ul>
+</div>
+
+<!-- ===================== Workflow ===================== -->
+<h2>8. Typical Workflow / 典型工作流</h2>
+<div class="card">
+<div class="card-title">🖼️ Image to Video / 图生视频</div>
+<pre><code>[Load Image] ──► [BSAI H3 Prompt Template] ──► [H3 Video Generator]
+                     prompt_output ──────────►  positive prompt
+                     template_name ──────────►  (optional) filename</code></pre>
+<p><b>EN:</b> Load a reference image, select an I2VA template, connect prompt_output to the video generator's positive prompt input.</p>
+<p><b>中文:</b> 加载参考图片，选择图生视频模板，将 prompt_output 连接到视频生成器的正向提示词输入。</p>
+</div>
+<div class="card">
+<div class="card-title">📝 Text to Video / 文生视频</div>
+<pre><code>[BSAI H3 Prompt Template] ──► [H3 Video Generator]
+   prompt_output ────────────────►  positive prompt</code></pre>
+<p><b>EN:</b> Select a T2VA template (no image needed), connect prompt_output to the video generator.</p>
+<p><b>中文:</b> 选择文生视频模板（无需图片），将 prompt_output 连接到视频生成器。</p>
+</div>
+<div class="card">
+<div class="card-title">😀 Expression Template / 表情模板</div>
+<pre><code>[Load Portrait Image] ──► [BSAI H3 Prompt Template] ──► [H3 Video Generator]
+                           prompt_output ──────────────►  positive prompt</code></pre>
+<p><b>EN:</b> Load a portrait/close-up image, select an expression template, connect to video generator. The template preserves facial identity from the reference image.</p>
+<p><b>中文:</b> 加载人物特写照片，选择表情模板，连接到视频生成器。模板会保留参考图片中的面部身份。</p>
+</div>
+
+<!-- ===================== Latest Upgrade ===================== -->
+<h2>9. Latest Upgrade / 最新升级说明</h2>
+<div class="card">
+<div class="card-title">🧩 All 144 Templates General-Purpose / 全 144 模板通用化</div>
+<p><b>EN:</b> All templates have been audited and rewritten to be generic and reusable. They no longer contain specific scene descriptions or character-appearance details (hairstyle, clothing, shoes, hats, gender). This is especially important for image-to-video (I2VA) and first-last-frame (FL2VA) templates: they only reference the input images (<code>&lt;Picture 1&gt;</code> / <code>&lt;Picture 2&gt;</code>) and describe action, camera movement, transitions, and atmosphere — so the template never overwrites the input image's character or scene features.</p>
+<p><b>中文:</b> 全部 144 个模板已经审计并重写为通用、可复用。模板不再包含具体场景描述或人物形象细节（发型、服装、鞋帽、性别等）。这一点对图生视频（I2VA）和首尾帧（FL2VA）模板尤为重要：它们只引用输入图像（<code>&lt;Picture 1&gt;</code> / <code>&lt;Picture 2&gt;</code>），只描述动作、运镜、转场和氛围——模板不会覆盖输入图像的人物或场景特征。</p>
+</div>
+<div class="card">
+<div class="card-title">🖼 Preview GIFs / 预览动画</div>
+<p><b>EN:</b> 25 templates now ship with preview GIF animations, stored in <code>previews/</code> and <code>web/previews/</code>. The <code>preview</code> field in the JSON points to each GIF. Templates without a GIF show a placeholder.</p>
+<p><b>中文:</b> 25 个模板现已附带 GIF 预览动画，存放于 <code>previews/</code> 与 <code>web/previews/</code> 目录。JSON 中的 <code>preview</code> 字段指向对应 GIF。无 GIF 的模板显示占位符。</p>
+</div>
+<div class="card">
+<div class="card-title">🌐 Bilingual Template Names / 模板名称中英双语对照</div>
+<p><b>EN:</b> Every template has both a Chinese name and an English name (<code>name</code> + <code>name_en</code>). The node UI and <code>template_name</code> output show both, e.g. "黑白线稿转彩色真人跳舞 | Black-and-white line art to colored real-human dancing".</p>
+<p><b>中文:</b> 每个模板都同时具备中文名称与英文名称（<code>name</code> + <code>name_en</code>）。节点界面与 <code>template_name</code> 输出均显示双语，如"黑白线稿转彩色真人跳舞 | Black-and-white line art to colored real-human dancing"。</p>
+</div>
+<div class="card">
+<div class="card-title">🔌 External Prompt Port / 外部提示词输入端口</div>
+<p><b>EN:</b> A new optional <code>external_prompt</code> STRING port accepts an external prompt to modify or supplement the selected template within a workflow. The order is: template prompt → external_prompt → user_customization.</p>
+<p><b>中文:</b> 新增可选 <code>external_prompt</code> STRING 端口，可在工作流内接收外部提示词以修改或补充所选模板。拼接顺序：模板提示词 → external_prompt → user_customization。</p>
+</div>
+
+<!-- ===================== Tips ===================== -->
+<h2>10. Tips & Notes / 使用技巧与注意事项</h2>
+<div class="tip">
+<b>✅ Expression Templates / 表情模板:</b>
+<ul>
+<li><b>EN:</b> Expression templates use single-shot, no-cut continuity. The prompt explicitly locks the camera to a close-up framing.</li>
+<li><b>中文:</b> 表情模板使用单镜头一镜到底的连续性。提示词中明确锁定为特写构图。</li>
+<li><b>EN:</b> For grief/restraint templates, mouth-corner safety rules are applied: "嘴角全程不上扬" prevents the model from generating unintended smiles.</li>
+<li><b>中文:</b> 悲伤/克制类模板应用了嘴角安全规则："嘴角全程不上扬"可防止模型生成意外的微笑。</li>
+<li><b>EN:</b> Micro-expression templates use 4-beat structure: Baseline → Leakage → Recovery → After-state, with normal-speed timing density.</li>
+<li><b>中文:</b> 微表情模板使用四拍结构：基线 → 泄露 → 压回 → 收束，时间节拍密度为正常速度。</li>
+</ul>
+</div>
+<div class="tip">
+<b>✅ Search / 搜索功能:</b>
+<ul>
+<li><b>EN:</b> Search matches template names (CN+EN), descriptions, tags, category and subcategory names.</li>
+<li><b>中文:</b> 搜索匹配模板名称（中英文）、描述、标签、分类和子类名称。</li>
+<li><b>EN:</b> Search has a 200ms debounce delay for performance.</li>
+<li><b>中文:</b> 搜索有 200ms 防抖延迟以提升性能。</li>
+</ul>
+</div>
+<div class="warn">
+<b>⚠️ Important / 重要事项:</b>
+<ul>
+<li><b>EN:</b> If no template is selected, the node outputs the customization text (or empty string) as the prompt.</li>
+<li><b>中文:</b> 若未选择模板，节点将输出补充修改文本（或空字符串）作为提示词。</li>
+<li><b>EN:</b> The user_customization text is appended AFTER the template prompt, separated by a marker line.</li>
+<li><b>中文:</b> 补充修改文本追加在模板提示词之后，以分隔标记行隔开。</li>
+<li><b>EN:</b> Expression templates with needs_image=true require a portrait image input for best results.</li>
+<li><b>中文:</b> needs_image=true 的表情模板需要人物图片输入才能获得最佳效果。</li>
+</ul>
+</div>
+
+<!-- ===================== FAQ ===================== -->
+<h2>11. FAQ / 常见问题</h2>
+<div class="card">
+<div class="card-title">Q: The node shows empty / blank / 节点显示空白</div>
+<p><b>EN:</b> Make sure the <code>web/templates_data.json</code> file exists and is valid JSON. Try refreshing the browser page (Ctrl+F5).</p>
+<p><b>中文:</b> 确保 <code>web/templates_data.json</code> 文件存在且为有效 JSON。尝试刷新浏览器页面（Ctrl+F5）。</p>
+</div>
+<div class="card">
+<div class="card-title">Q: Preview GIF not showing / 预览动画不显示</div>
+<p><b>EN:</b> 25 templates currently ship with preview GIFs; the rest show a 🎬 placeholder. You can still use any template — the preview is only a visual aid. If a GIF fails to load, hard-refresh the browser (Ctrl+F5) or check that the GIF exists in <code>web/previews/</code>.</p>
+<p><b>中文:</b> 当前有 25 个模板附带 GIF 预览；其余显示 🎬 占位符。你仍然可以使用任何模板 — 预览只是视觉辅助。若 GIF 无法加载，请强制刷新浏览器（Ctrl+F5）或检查 GIF 是否存在于 <code>web/previews/</code>。</p>
+</div>
+<div class="card">
+<div class="card-title">Q: How to add my own templates / 如何添加自定义模板</div>
+<p><b>EN:</b> Edit <code>templates/prompt_templates.json</code> and add your template under the appropriate subcategory. Then copy the file to <code>web/templates_data.json</code> and refresh the page.</p>
+<p><b>中文:</b> 编辑 <code>templates/prompt_templates.json</code>，在相应子类下添加你的模板。然后将文件复制到 <code>web/templates_data.json</code> 并刷新页面。</p>
+</div>
+<div class="card">
+<div class="card-title">Q: Dropdowns don't sync after search / 搜索后下拉框不同步</div>
+<p><b>EN:</b> Clicking a search result should automatically sync the category and subcategory dropdowns. If it doesn't, try clearing the search box first.</p>
+<p><b>中文:</b> 点击搜索结果应自动同步分类和子类下拉框。如未同步，尝试先清空搜索框。</p>
+</div>
+
+<!-- ===================== Prompt Structure ===================== -->
+<h2>12. H3 Prompt Structure / H3 提示词结构</h2>
+<div class="info">
+<p><b>EN:</b> All templates follow the MiniMax H3 three-field structure:</p>
+<p><b>中文:</b> 所有模板遵循 MiniMax H3 三字段结构：</p>
+<pre><code>integrated_multimodal_description: [视觉描述 + 时间节拍 + 动作序列]
+overall_soundscape: [环境声效设计]
+non_diegetic_music: [背景音乐 / N/A 表示无]</code></pre>
+<p><b>EN:</b> Expression and multimodal templates may also use the six-field structure with subject_definitions, summary, retention_analysis, and detailed_description.</p>
+<p><b>中文:</b> 表情和多模态模板也可能使用六字段结构，包含 subject_definitions、summary、retention_analysis 和 detailed_description。</p>
+</div>
+
+<hr style="border:none; border-top:1px solid var(--border); margin: 30px 0 15px;">
+<p style="color:#666; font-size:12px; text-align:center;">
+BSAI H3 Prompt Template Node Documentation / 节点使用说明<br>
+Version 1.0.0 | 144 templates | 46 expression templates | 25 preview GIFs<br>
+Based on MiniMax H3 official docs & micro-expression skill pack
+</p>
+
+</body>
+</html>

@@ -18,6 +18,7 @@
 | **BSAI H3 Model Loader** | 加载本地 GGUF 大语言模型（基于 llama-cpp-python） |
 | **BSAI H3 Unload Model** | 卸载模型释放显存 |
 | **BSAI H3 Remote API** | 远程 API 调用：通过 OpenAI/DashScope 兼容接口优化提示词，无需本地模型 |
+| **BSAI H3 Prompt Template** | 提示词模板：分类选择一键使用 H3 提示词模板，含 GIF 预览 |
 
 ### 两种使用模式
 
@@ -352,6 +353,77 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 > 留空 `weighted_keywords` 参数则不添加任何权重语法，输出与之前版本完全一致。
 
+### 示例 5：BSAI 提示词模板（一键选择） / Example 5: BSAI Prompt Template (One-Click Selection)
+
+**BSAI H3 Prompt Template** 节点提供分类化的 H3 提示词模板，一键选择即可输出完整的三字段结构化提示词，无需 LLM 优化。
+
+**EN:** The **BSAI H3 Prompt Template** node provides categorized H3 prompt templates. One click outputs a complete three-field structured prompt without needing LLM optimization.
+
+#### 三级分类体系 / Three-Level Category System (144 templates / 8 categories)
+
+| 一级分类 / Category | 二级分类 / Subcategories | 模板示例 / Examples |
+|-|-|-|
+| **图生视频 (I2VA)** | 线稿类 / 角色参考类 / 产品展示类 / 场景参考类 / 风格迁移类 | 黑白线稿转彩色真人跳舞、肖像照转说话视频、产品360度旋转展示 |
+| **文生视频 (T2VA)** | 电影场景类 / 舞蹈编排类 / 自然风光类 / 奇幻创意类 / 城市生活类 | 赛博朋克雨夜街道、芭蕾独舞舞台、太空行走 |
+| **首尾帧 (FL2VA)** | 过渡变换类 / 变形效果类 | 日转夜延时过渡、面孔渐变变形 |
+| **多模态融合 (Ref2VA)** | 品牌广告类 / 短剧叙事类 / 音乐节拍类 / 角色合成类 | 时尚品牌广告片、竖屏短剧对话、动漫OP节拍同步 |
+| **生长类 (Growth)** | 植物生长类 / 动物生长类 / 人物生长类 / 物体生长类 | 种子破土开花、破茧成蝶、婴儿到成人、城市扩张生长 |
+| **延时摄影类 (Time-Lapse)** | 建筑延时类 / 产品组装延时类 / 交通类延时 / 自然景观延时类 | 摩天楼拔地而起、智能手表组装、高速车流光轨、星轨流转 |
+| **人物表情模板 (Expression)** | 基础表情类 / 微表情类 / 情绪过渡类 / 社交面具类 / 崩溃边缘类 | 微笑、忍住不哭、笑转哭、被揭穿后微笑、沉默太久 |
+| **武打打斗模板 (Combat)** | 拳脚对打类 / 冷兵器对战类 / 快慢镜头类 / 打斗运镜类 / 多人群战类 / 特殊招式类 / 触发词战斗类 / 多图成战类 | 散打对咏春、双刀对长枪、子弹时间闪避、双雄决战 |
+
+#### 使用方法 / Usage
+
+1. 在 ComfyUI 中添加 `BSAI H3 Prompt Template` 节点
+2. 节点上方显示可视化模板浏览器：
+   - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打）
+   - **二级分类**下拉框：选择模板子类（线稿类 / 角色参考类 / 产品展示类 等）
+   - **模板列表**：点击任意模板即可选择
+3. 右侧显示 **GIF 预览动画**（2-3秒循环）和模板信息（生成模式 / 时长 / 是否需要图片）
+4. `prompt_output` 输出端口直接输出完整的 H3 三字段提示词
+5. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
+6. `external_prompt` 可选输入端口可连接其他节点文本，用于修改或补充模板提示词
+
+**EN:**
+1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
+2. A visual template browser appears above the node:
+   - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat)
+   - **Subcategory** dropdown: choose a template subclass
+   - **Template list**: click any template to select it
+3. The right panel shows a **GIF preview animation** and template info (generation mode / duration / needs-image).
+4. The `prompt_output` port directly outputs the full H3 three-field prompt.
+5. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
+6. The optional `external_prompt` input port accepts text from other nodes to modify or supplement the template prompt.
+
+> **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
+
+#### GIF 预览 / GIF Previews
+
+25 个模板配有 GIF 预览动画，展示模板效果示意。GIF 文件位于 `web/previews/` 目录，可自行添加更多预览动画。25 templates ship with GIF preview animations in `web/previews/`; add more by copying GIFs there and setting the `preview` field in the JSON.
+
+#### 自定义模板
+
+在 `templates/prompt_templates.json` 中可添加自定义模板，格式如下：
+
+```json
+{
+  "id": "my_template",
+  "name": "模板名称",
+  "name_en": "Template Name (EN)",
+  "description": "模板描述",
+  "preview": "my_preview.gif",
+  "generation_mode": "Image to Video (图生视频)",
+  "duration": 6,
+  "needs_image": true,
+  "needs_video": false,
+  "needs_audio": false,
+  "tags": ["标签1", "标签2"],
+  "prompt": "integrated_multimodal_description: ...\n\noverall_soundscape: ...\n\nnon_diegetic_music: ..."
+}
+```
+
+> 修改后需同步复制到 `web/templates_data.json`，或在 `web/` 目录放置同名文件。
+
 ## 支持的模型
 
 ### 本地模型（GGUF 格式）
@@ -420,6 +492,58 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.5.0 — 模板通用化 + 预览GIF + 双语使用说明 / Generic Templates + Preview GIFs + Bilingual Docs
+
+**中文说明：**
+
+- **全 144 模板通用化审计**：逐条检查全部模板，删除所有具体场景描述与人物形象细节（发型、服装、鞋帽、性别等）。图生视频（I2VA）/ 首尾帧（FL2VA）模板改为只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、转场与氛围，不再覆盖输入图像的人物或场景特征；文生视频（T2VA）模板保留主题场景、去除人物形象细节与内置具体台词。
+- **预览 GIF 上传**：将 `H3 Prompt/提示词模板预览/预览GIF` 目录内 25 个 GIF 一一对应上传至节点 `previews/` 与 `web/previews/`，并同步设置 JSON 的 `preview` 字段。
+- **外部提示词端口**：新增可选 `external_prompt` STRING 输入端口（forceInput），可连接其他节点文本修改或补充模板提示词。
+- **中英双语使用说明**：更新 `BSAI_H3_PromptTemplate_Doc.html`（新增"最新升级说明"章节、external_prompt 参数说明）与 `README.md`（示例5 改为中英双语、完整 8 大分类 144 模板）。
+- **8 大分类 144 模板**：图生视频 / 文生视频 / 首尾帧 / 多模态融合 / 生长类 / 延时摄影 / 人物表情（46）/ 武打打斗（30），模板名称全部中英双语对照。
+
+**English:**
+
+- **All 144 templates genericized**: Every template audited; all specific scene descriptions and character-appearance details (hairstyle, clothing, shoes/hats, gender) removed. I2VA/FL2VA templates now only reference the input images (`<Picture 1>` / `<Picture 2>`) and describe action, camera, transitions, and atmosphere — never overwriting the input image's character or scene features. T2VA templates keep the theme scene but drop character-appearance details and built-in dialogue.
+- **Preview GIFs uploaded**: 25 GIFs from the preview folder copied one-to-one into the node's `previews/` and `web/previews/`, with the JSON `preview` field set accordingly.
+- **External prompt port**: New optional `external_prompt` STRING input (forceInput) to modify or supplement the template prompt from other nodes.
+- **Bilingual docs**: Updated `BSAI_H3_PromptTemplate_Doc.html` (new "Latest Upgrade" section, external_prompt parameter) and `README.md` (bilingual Example 5, full 8-category / 144-template overview).
+- **8 categories / 144 templates**: I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression (46) / Combat (30), all with bilingual CN/EN names.
+
+---
+
+### v1.4.0 — BSAI 提示词模板 / Prompt Template Browser
+
+**中文说明：**
+
+新增 **BSAI H3 Prompt Template** 节点，提供分类化的 H3 提示词模板一键选择功能。根据 MiniMax H3 官方提示词 SKILL 及模型使用说明，全网收集整理各类 H3 提示词，分门别类做成可一键直接使用的模板。
+
+新增功能：
+- **三级分类体系**：一级分类（图生视频/文生视频/首尾帧/多模态融合/生长类/延时摄影/人物表情/武打打斗）→ 二级分类（线稿类/角色参考类/产品展示类/场景参考类/风格迁移类/电影场景类/舞蹈编排类/自然风光类/奇幻创意类/城市生活类/过渡变换类/变形效果类/品牌广告类/短剧叙事类/音乐节拍类/角色合成类/植物/动物/人物/物体生长类/建筑/产品组装/交通/自然景观延时类/基础/微表情/情绪过渡/社交面具/崩溃边缘类/拳脚/冷兵器/快慢镜头/打斗运镜/多人群战/特殊招式/触发词/多图成战类）→ 具体模板（**144 个**精选模板，名称中英双语对照）
+- **GIF 预览**：25 个模板配有预览动画，选择模板后右侧显示循环缩略动画示意
+- **可视化模板浏览器**：前端扩展提供级联下拉选择和模板列表，直观易用
+- **三字段结构化输出**：所有模板均遵循 H3 官方三字段格式（integrated_multimodal_description / overall_soundscape / non_diegetic_music）
+- **外部提示词端口**：`external_prompt` 可选输入端口，可连接其他节点文本修改或补充模板提示词
+- **模板通用化**：所有模板不含具体场景/人物形象细节，I2VA/FL2VA 仅引用输入图像，避免覆盖输入特征
+- **自定义模板**：支持在 `templates/prompt_templates.json` 中添加自定义模板
+- **六个输出端口**：prompt_output（提示词）、template_name（模板名）、generation_mode（生成模式）、description（描述）、video_duration（时长）、preview_file（预览文件）
+
+**English:**
+
+Added **BSAI H3 Prompt Template** node for one-click categorized H3 prompt template selection. Based on MiniMax H3 official SKILL and model documentation, with prompts collected and categorized from various sources.
+
+New features:
+- **Three-level category system**: Category (I2VA/T2VA/FL2VA/Ref2VA/Growth/Time-Lapse/Expression/Combat) → Subcategory → Template (**144** curated templates with bilingual CN/EN names)
+- **GIF preview**: 25 templates ship with preview animations shown in a loop when selected
+- **Visual template browser**: Frontend extension with cascading dropdowns and template list
+- **Three-field structured output**: All templates follow H3 official format (integrated_multimodal_description / overall_soundscape / non_diegetic_music)
+- **External prompt port**: optional `external_prompt` input for modifying or supplementing the template prompt from other nodes
+- **Generic templates**: no specific scene/character-appearance details; I2VA/FL2VA reference input images only, avoiding feature override
+- **Custom templates**: Add custom templates in `templates/prompt_templates.json`
+- **Six output ports**: prompt_output, template_name, generation_mode, description, video_duration, preview_file
+
+---
 
 ### v1.3.0 — MTP/NextN 层自动剥离 / Auto MTP Layer Stripping
 

@@ -49,6 +49,6 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "PT_H3ConcatAVLatent": "PT_H3 Concat AV Latent",
-    "PT_H3SeparateAVLatent": "PT_H3 Separate AV Latent",
+    "PT_H3ConcatAVLatent": "BSAI PT_H3 Concat AV Latent",
+    "PT_H3SeparateAVLatent": "BSAI PT_H3 Separate AV Latent",
 }

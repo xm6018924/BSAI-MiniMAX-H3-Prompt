@@ -1,0 +1,770 @@
+/**
+ * BSAI H3 Prompt Template - Visual Template Browser Extension
+ *
+ * Features:
+ * - Search by keyword across all templates
+ * - Three-level cascading selection: Category > Subcategory > Template
+ * - GIF preview area on the right side
+ * - Solid background (no transparency / no canvas bleed-through)
+ * - Custom user_customization textarea integrated into the DOM widget
+ */
+
+import { app } from "../../../scripts/app.js";
+
+const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
+const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
+
+// ── CSS ──
+const STYLE_ID = "bsai-h3-tpl-css";
+if (!document.getElementById(STYLE_ID)) {
+    const st = document.createElement("style");
+    st.id = STYLE_ID;
+    st.textContent = `
+.bsai-tpl-wrap {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 8px; background: #1a1a1a !important;
+    width: 100%; box-sizing: border-box; font-family: sans-serif;
+}
+.bsai-tpl-top {
+    display: flex; gap: 8px; align-items: flex-start;
+}
+.bsai-tpl-left {
+    flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+}
+.bsai-tpl-right {
+    width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;
+}
+/* Search box */
+.bsai-tpl-search-row {
+    display: flex; gap: 5px; align-items: center;
+    background: #222; border: 1px solid #444; border-radius: 4px; padding: 2px 6px;
+}
+.bsai-tpl-search-icon {
+    font-size: 12px; color: #668; flex-shrink: 0;
+}
+.bsai-tpl-search-input {
+    flex: 1; background: transparent; border: none; color: #ddd;
+    font-size: 12px; outline: none; min-width: 0; padding: 4px 0;
+}
+.bsai-tpl-search-input::placeholder { color: #444; }
+.bsai-tpl-search-clr {
+    font-size: 14px; color: #666; cursor: pointer; flex-shrink: 0;
+    display: none; line-height: 1;
+}
+.bsai-tpl-search-clr:hover { color: #a66; }
+.bsai-tpl-search-result-path {
+    font-size: 9px; color: #5688aa; margin-top: 2px;
+}
+/* Dropdowns */
+.bsai-tpl-dd-row {
+    display: flex; gap: 5px; align-items: center;
+}
+.bsai-tpl-dd-lbl {
+    font-size: 11px; color: #88a; min-width: 80px; text-align: right;
+    white-space: nowrap;
+}
+.bsai-tpl-dd {
+    flex: 1; background: #2a2a2a; color: #ddd; border: 1px solid #444;
+    border-radius: 4px; padding: 4px 6px; font-size: 12px;
+    cursor: pointer; outline: none; min-width: 0; max-width: 100%;
+}
+.bsai-tpl-dd:hover { border-color: #5a8; }
+.bsai-tpl-dd:focus { border-color: #3f789e; box-shadow: 0 0 4px rgba(63,120,158,0.3); }
+.bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
+/* Template list */
+.bsai-tpl-list {
+    border: 1px solid #333; border-radius: 4px; max-height: 200px;
+    overflow-y: auto; background: #111; min-height: 40px;
+}
+.bsai-tpl-list::-webkit-scrollbar { width: 5px; }
+.bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
+.bsai-tpl-list::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+.bsai-tpl-item {
+    padding: 6px 10px; border-bottom: 1px solid #222; cursor: pointer;
+    transition: background 0.12s; user-select: none;
+}
+.bsai-tpl-item:last-child { border-bottom: none; }
+.bsai-tpl-item:hover { background: #2a3a4a; }
+.bsai-tpl-item.active {
+    background: #2a4a6a; border-left: 3px solid #3f789e;
+}
+.bsai-tpl-item-nm { font-size: 12px; color: #cde; font-weight: 600; }
+.bsai-tpl-item-ds { font-size: 10px; color: #777; margin-top: 2px; line-height: 1.3; }
+.bsai-tpl-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+.bsai-tpl-tag {
+    font-size: 9px; background: #2a2a2a; color: #668;
+    padding: 1px 5px; border-radius: 8px; border: 1px solid #333;
+}
+/* Preview */
+.bsai-tpl-prev-box {
+    width: 180px; height: 180px; border: 1px solid #333;
+    border-radius: 4px; background: #0a0a0a; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+.bsai-tpl-prev-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.bsai-tpl-prev-ph { color: #444; font-size: 11px; text-align: center; padding: 16px; }
+.bsai-tpl-prev-nm { font-size: 11px; color: #8cf; font-weight: 600; text-align: center; line-height: 1.3; }
+.bsai-tpl-prev-md { font-size: 10px; color: #668; text-align: center; }
+.bsai-tpl-prev-dur { font-size: 10px; color: #686; text-align: center; }
+/* Info bar */
+.bsai-tpl-bar {
+    display: flex; gap: 8px; justify-content: space-between;
+    align-items: center; padding: 2px 0;
+}
+.bsai-tpl-cnt { font-size: 10px; color: #556; }
+.bsai-tpl-clr {
+    font-size: 10px; color: #a66; cursor: pointer;
+    padding: 2px 8px; border: 1px solid #433; border-radius: 3px; background: #2a1a1a;
+}
+.bsai-tpl-clr:hover { background: #3a2a2a; color: #c88; }
+.bsai-tpl-empty { padding: 16px; text-align: center; color: #444; font-size: 11px; }
+/* Customization textarea */
+.bsai-tpl-cust { margin-top: 6px; }
+.bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
+.bsai-tpl-cust-ta {
+    width: 100%; min-height: 40px; max-height: 100px; resize: vertical;
+    background: #222; color: #ddd; border: 1px solid #444;
+    border-radius: 4px; padding: 4px 6px; font-size: 11px;
+    font-family: monospace; box-sizing: border-box; outline: none;
+}
+.bsai-tpl-cust-ta:focus { border-color: #3f789e; }
+.bsai-tpl-cust-ta::placeholder { color: #444; }
+`;
+    document.head.appendChild(st);
+}
+
+// ── Template data cache ──
+let _tplData = null;
+
+async function loadTemplateData() {
+    if (_tplData) return _tplData;
+    try {
+        const resp = await fetch(DATA_URL);
+        if (resp.ok) {
+            _tplData = await resp.json();
+            return _tplData;
+        }
+    } catch (e) {
+        console.warn("[BSAI H3 Template] Failed to load template data:", e);
+    }
+    return null;
+}
+
+function findWidget(node, name) {
+    if (!node.widgets) return null;
+    for (let i = 0; i < node.widgets.length; i++) {
+        if (node.widgets[i].name === name) return node.widgets[i];
+    }
+    return null;
+}
+
+function hideWidget(node, name) {
+    const w = findWidget(node, name);
+    if (!w) return;
+    w.type = "hidden";
+    w._bsaiHidden = true;
+    w.computeSize = function() { return [0, 0]; };
+    if (w.draw) w.draw = function() {};
+    if (w.drawWidget) w.drawWidget = function() {};
+    if (w.mouse) w.mouse = null;
+    const els = [w.element, w.inputEl, w.labelEl, w.wrapper, w.container, w.domNode];
+    els.forEach(function(el) {
+        if (el && el.style) {
+            el.style.display = "none";
+            el.style.height = "0";
+            el.style.overflow = "hidden";
+        }
+    });
+    if (w.element && w.element.parentElement) {
+        const parent = w.element.parentElement;
+        if (parent && (parent.classList.contains("widget") || parent.classList.contains("widget-wrapper"))) {
+            parent.style.display = "none";
+            parent.style.height = "0";
+            parent.style.overflow = "hidden";
+        }
+    }
+}
+
+// ── Search across all templates ──
+function searchTemplates(keyword) {
+    if (!_tplData) return [];
+    const kw = keyword.toLowerCase().trim();
+    if (!kw) return [];
+    const results = [];
+    (_tplData.categories || []).forEach(function(cat) {
+        (cat.subcategories || []).forEach(function(sub) {
+            (sub.templates || []).forEach(function(tpl) {
+                const haystack = [
+                    tpl.name, tpl.name_en, tpl.description,
+                    cat.name, cat.name_en, sub.name, sub.name_en,
+                    (tpl.tags || []).join(" "),
+                ].join(" ").toLowerCase();
+                if (haystack.indexOf(kw) >= 0) {
+                    results.push({ cat: cat, sub: sub, tpl: tpl });
+                }
+            });
+        });
+    });
+    return results;
+}
+
+// ── Build UI ──
+
+function buildTemplateUI(node) {
+    if (node._bsaiTplReady) return;
+    node._bsaiTplReady = true;
+
+    hideWidget(node, "template_select");
+    hideWidget(node, "user_customization");
+
+    const container = document.createElement("div");
+    container.className = "bsai-tpl-wrap";
+
+    // ── Search row ──
+    const searchRow = document.createElement("div");
+    searchRow.className = "bsai-tpl-search-row";
+    const searchIcon = document.createElement("span");
+    searchIcon.className = "bsai-tpl-search-icon";
+    searchIcon.textContent = "🔍";
+    const searchInput = document.createElement("input");
+    searchInput.className = "bsai-tpl-search-input";
+    searchInput.type = "text";
+    searchInput.placeholder = "搜索模板 / Search templates...";
+    const searchClr = document.createElement("span");
+    searchClr.className = "bsai-tpl-search-clr";
+    searchClr.textContent = "✕";
+    searchRow.appendChild(searchIcon);
+    searchRow.appendChild(searchInput);
+    searchRow.appendChild(searchClr);
+    container.appendChild(searchRow);
+
+    // ── Top section: dropdowns + list (left) | preview (right) ──
+    const topDiv = document.createElement("div");
+    topDiv.className = "bsai-tpl-top";
+
+    const left = document.createElement("div");
+    left.className = "bsai-tpl-left";
+
+    // Category dropdown
+    const catRow = document.createElement("div");
+    catRow.className = "bsai-tpl-dd-row";
+    const catLbl = document.createElement("span");
+    catLbl.className = "bsai-tpl-dd-lbl";
+    catLbl.textContent = "分类 / Category";
+    const catSel = document.createElement("select");
+    catSel.className = "bsai-tpl-dd";
+    catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+    catRow.appendChild(catLbl);
+    catRow.appendChild(catSel);
+    left.appendChild(catRow);
+
+    // Subcategory dropdown
+    const subRow = document.createElement("div");
+    subRow.className = "bsai-tpl-dd-row";
+    const subLbl = document.createElement("span");
+    subLbl.className = "bsai-tpl-dd-lbl";
+    subLbl.textContent = "子类 / Subcategory";
+    const subSel = document.createElement("select");
+    subSel.className = "bsai-tpl-dd";
+    subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+    subSel.disabled = true;
+    subRow.appendChild(subLbl);
+    subRow.appendChild(subSel);
+    left.appendChild(subRow);
+
+    // Info bar
+    const bar = document.createElement("div");
+    bar.className = "bsai-tpl-bar";
+    const cntSpan = document.createElement("span");
+    cntSpan.className = "bsai-tpl-cnt";
+    cntSpan.textContent = "";
+    const clrBtn = document.createElement("span");
+    clrBtn.className = "bsai-tpl-clr";
+    clrBtn.textContent = "✕ 清除 / Clear";
+    clrBtn.style.display = "none";
+    bar.appendChild(cntSpan);
+    bar.appendChild(clrBtn);
+    left.appendChild(bar);
+
+    // Template list
+    const listDiv = document.createElement("div");
+    listDiv.className = "bsai-tpl-list";
+    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+    left.appendChild(listDiv);
+
+    // Right panel - preview
+    const right = document.createElement("div");
+    right.className = "bsai-tpl-right";
+    const prevBox = document.createElement("div");
+    prevBox.className = "bsai-tpl-prev-box";
+    prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+    right.appendChild(prevBox);
+    const prevNm = document.createElement("div");
+    prevNm.className = "bsai-tpl-prev-nm";
+    right.appendChild(prevNm);
+    const prevMd = document.createElement("div");
+    prevMd.className = "bsai-tpl-prev-md";
+    right.appendChild(prevMd);
+    const prevDur = document.createElement("div");
+    prevDur.className = "bsai-tpl-prev-dur";
+    right.appendChild(prevDur);
+
+    topDiv.appendChild(left);
+    topDiv.appendChild(right);
+    container.appendChild(topDiv);
+
+    // Customization textarea
+    const custDiv = document.createElement("div");
+    custDiv.className = "bsai-tpl-cust";
+    const custLbl = document.createElement("div");
+    custLbl.className = "bsai-tpl-cust-lbl";
+    custLbl.textContent = "补充修改 / Customization (Optional):";
+    const custTa = document.createElement("textarea");
+    custTa.className = "bsai-tpl-cust-ta";
+    custTa.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    custDiv.appendChild(custLbl);
+    custDiv.appendChild(custTa);
+    container.appendChild(custDiv);
+
+    // Store refs
+    node._bsaiCat = catSel;
+    node._bsaiSub = subSel;
+    node._bsaiList = listDiv;
+    node._bsaiPrevBox = prevBox;
+    node._bsaiPrevNm = prevNm;
+    node._bsaiPrevMd = prevMd;
+    node._bsaiPrevDur = prevDur;
+    node._bsaiClr = clrBtn;
+    node._bsaiCnt = cntSpan;
+    node._bsaiCustTa = custTa;
+    node._bsaiSearchInput = searchInput;
+    node._bsaiSearchClr = searchClr;
+    node._bsaiTopDiv = topDiv;
+
+    // Register as DOM widget
+    if (typeof node.addDOMWidget === "function") {
+        const dw = node.addDOMWidget("bsai_tpl_ui", "html", container, {
+            getValue: function() { return ""; },
+            setValue: function() {},
+        });
+        if (dw) {
+            dw.options = dw.options || {};
+            dw.options.minHeight = 300;
+            // Report the real content size so LiteGraph grows the node to fit the whole UI
+            dw.computeSize = function() {
+                const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
+                return [w, Math.max(container.scrollHeight || 360, 300)];
+            };
+        }
+
+        // Force the node to resize so the solid background fully covers the UI
+        function refreshNodeSize() {
+            if (!node) return;
+            const h = Math.max(300, (container.scrollHeight || 360));
+            if (node.size) {
+                node.setSize([node.size[0], h]);
+                if (node.graph) node.setDirtyCanvas(true, true);
+            }
+        }
+        node._bsaiRefreshSize = refreshNodeSize;
+
+        // Re-measure after layout settles
+        setTimeout(refreshNodeSize, 80);
+        // Re-measure when the user resizes the customization textarea
+        custTa.addEventListener("resize", refreshNodeSize);
+    } else {
+        console.warn("[BSAI H3 Template] addDOMWidget not available");
+    }
+
+    // ── Sync customization textarea ──
+    const custWidget = findWidget(node, "user_customization");
+    custTa.addEventListener("input", function() {
+        if (custWidget) {
+            custWidget.value = custTa.value;
+            if (node.graph) node.setDirtyCanvas(true, true);
+        }
+    });
+    if (custWidget && custWidget.value) {
+        custTa.value = custWidget.value;
+    }
+
+    // ── Search handler ──
+    let searchTimer = null;
+    searchInput.addEventListener("input", function() {
+        const kw = searchInput.value.trim();
+        searchClr.style.display = kw ? "block" : "none";
+
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            if (!kw) {
+                // Exit search mode — restore normal category view
+                node._bsaiSearchMode = false;
+                // If a category was selected, restore its template list
+                if (catSel.value && subSel.value) {
+                    catSel.onchange();
+                    subSel.onchange();
+                } else {
+                    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+                    cntSpan.textContent = "";
+                    clrBtn.style.display = "none";
+                }
+                return;
+            }
+            // Enter search mode
+            node._bsaiSearchMode = true;
+            const results = searchTemplates(kw);
+            renderSearchResults(node, results, listDiv, cntSpan, clrBtn);
+        }, 200);
+    });
+
+    searchClr.onclick = function() {
+        searchInput.value = "";
+        searchClr.style.display = "none";
+        searchInput.dispatchEvent(new Event("input"));
+    };
+
+    // ── Dropdown handlers ──
+    catSel.onchange = function() {
+        // If in search mode, exit it
+        if (node._bsaiSearchMode) {
+            searchInput.value = "";
+            searchClr.style.display = "none";
+            node._bsaiSearchMode = false;
+        }
+        const catId = catSel.value;
+        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.disabled = true;
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择子类 / Select a subcategory</div>';
+        cntSpan.textContent = "";
+        clrBtn.style.display = "none";
+        updatePreview(null, prevBox, prevNm, prevMd, prevDur);
+        if (!catId || !_tplData) return;
+        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        (cat.subcategories || []).forEach(function(sub) {
+            const opt = document.createElement("option");
+            opt.value = sub.id;
+            opt.textContent = sub.name + " (" + sub.name_en + ")";
+            subSel.appendChild(opt);
+        });
+        subSel.disabled = false;
+    };
+
+    subSel.onchange = function() {
+        if (node._bsaiSearchMode) {
+            searchInput.value = "";
+            searchClr.style.display = "none";
+            node._bsaiSearchMode = false;
+        }
+        const catId = catSel.value;
+        const subId = subSel.value;
+        if (!catId || !subId || !_tplData) {
+            listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择分类和子类 / Select category & subcategory</div>';
+            cntSpan.textContent = "";
+            clrBtn.style.display = "none";
+            return;
+        }
+        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        const sub = cat.subcategories.find(function(s) { return s.id === subId; });
+        if (!sub) return;
+        renderTemplateList(node, sub, cat, listDiv);
+    };
+
+    clrBtn.onclick = function() {
+        catSel.value = "";
+        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.disabled = true;
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+        cntSpan.textContent = "";
+        clrBtn.style.display = "none";
+        updatePreview(null, prevBox, prevNm, prevMd, prevDur);
+        const tplW = findWidget(node, "template_select");
+        if (tplW) {
+            tplW.value = "(None / 自定义 / Custom)";
+            if (node.graph) node.setDirtyCanvas(true, true);
+        }
+    };
+
+    // ── Load data ──
+    loadTemplateData().then(function(data) {
+        if (!data) return;
+        catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+        (data.categories || []).forEach(function(cat) {
+            const opt = document.createElement("option");
+            opt.value = cat.id;
+            opt.textContent = (cat.icon || "📁") + " " + cat.name + " (" + cat.name_en + ")";
+            catSel.appendChild(opt);
+        });
+        const tplW = findWidget(node, "template_select");
+        if (tplW && tplW.value && !tplW.value.startsWith("(")) {
+            restoreSelection(node, tplW.value);
+        }
+        if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 120);
+    });
+}
+
+// ── Render search results ──
+function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
+    listDiv.innerHTML = "";
+    cntSpan.textContent = "搜索到 " + results.length + " 个模板 / " + results.length + " results";
+    clrBtn.style.display = "";
+
+    if (results.length === 0) {
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">未找到匹配的模板 / No matching templates found</div>';
+        return;
+    }
+
+    const tplW = findWidget(node, "template_select");
+
+    results.forEach(function(item) {
+        const cat = item.cat, sub = item.sub, tpl = item.tpl;
+        const fullLabel = cat.name + " > " + sub.name + " > " + tpl.name;
+
+        const el = document.createElement("div");
+        el.className = "bsai-tpl-item";
+        el.setAttribute("data-name", tpl.name);
+        if (tplW && tplW.value === fullLabel) {
+            el.classList.add("active");
+        }
+
+        const nmDiv = document.createElement("div");
+        nmDiv.className = "bsai-tpl-item-nm";
+        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        el.appendChild(nmDiv);
+
+        // Show category path in search results
+        const pathDiv = document.createElement("div");
+        pathDiv.className = "bsai-tpl-search-result-path";
+        pathDiv.textContent = cat.name + " > " + sub.name + " | " + cat.name_en + " > " + sub.name_en;
+        el.appendChild(pathDiv);
+
+        const dsDiv = document.createElement("div");
+        dsDiv.className = "bsai-tpl-item-ds";
+        dsDiv.textContent = tpl.description || "";
+        el.appendChild(dsDiv);
+
+        if (tpl.tags && tpl.tags.length) {
+            const tagsDiv = document.createElement("div");
+            tagsDiv.className = "bsai-tpl-tags";
+            tpl.tags.slice(0, 6).forEach(function(tag) {
+                const tagSpan = document.createElement("span");
+                tagSpan.className = "bsai-tpl-tag";
+                tagSpan.textContent = tag;
+                tagsDiv.appendChild(tagSpan);
+            });
+            el.appendChild(tagsDiv);
+        }
+
+        el.onclick = function() {
+            listDiv.querySelectorAll(".bsai-tpl-item").forEach(function(e) {
+                e.classList.remove("active");
+            });
+            el.classList.add("active");
+            if (tplW) {
+                tplW.value = fullLabel;
+                if (node.graph) node.setDirtyCanvas(true, true);
+            }
+            updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+            // Sync dropdowns to reflect the selected template's category/subcategory
+            node._bsaiCat.value = cat.id;
+            // Populate subcategories for this category
+            node._bsaiSub.innerHTML = '<option value="">— 选择子类 —</option>';
+            (cat.subcategories || []).forEach(function(s) {
+                const opt = document.createElement("option");
+                opt.value = s.id;
+                opt.textContent = s.name + " (" + s.name_en + ")";
+                if (s.id === sub.id) opt.selected = true;
+                node._bsaiSub.appendChild(opt);
+            });
+            node._bsaiSub.disabled = false;
+        };
+
+        listDiv.appendChild(el);
+    });
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+}
+
+// ── Render template list (normal mode) ──
+function renderTemplateList(node, sub, cat, listDiv) {
+    const templates = sub.templates || [];
+    listDiv.innerHTML = "";
+    node._bsaiCnt.textContent = "共 " + templates.length + " 个模板 / " + templates.length + " templates";
+    node._bsaiClr.style.display = "";
+
+    if (templates.length === 0) {
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">该子类暂无模板 / No templates in this subcategory</div>';
+        return;
+    }
+
+    const tplW = findWidget(node, "template_select");
+
+    templates.forEach(function(tpl) {
+        const item = document.createElement("div");
+        item.className = "bsai-tpl-item";
+        item.setAttribute("data-name", tpl.name);
+        const fullLabel = cat.name + " > " + sub.name + " > " + tpl.name;
+
+        if (tplW && tplW.value === fullLabel) {
+            item.classList.add("active");
+        }
+
+        const nmDiv = document.createElement("div");
+        nmDiv.className = "bsai-tpl-item-nm";
+        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        item.appendChild(nmDiv);
+
+        const dsDiv = document.createElement("div");
+        dsDiv.className = "bsai-tpl-item-ds";
+        dsDiv.textContent = tpl.description || "";
+        item.appendChild(dsDiv);
+
+        if (tpl.tags && tpl.tags.length) {
+            const tagsDiv = document.createElement("div");
+            tagsDiv.className = "bsai-tpl-tags";
+            tpl.tags.slice(0, 6).forEach(function(tag) {
+                const tagSpan = document.createElement("span");
+                tagSpan.className = "bsai-tpl-tag";
+                tagSpan.textContent = tag;
+                tagsDiv.appendChild(tagSpan);
+            });
+            item.appendChild(tagsDiv);
+        }
+
+        item.onclick = function() {
+            listDiv.querySelectorAll(".bsai-tpl-item").forEach(function(el) {
+                el.classList.remove("active");
+            });
+            item.classList.add("active");
+            if (tplW) {
+                tplW.value = fullLabel;
+                if (node.graph) node.setDirtyCanvas(true, true);
+            }
+            updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+        };
+
+        listDiv.appendChild(item);
+    });
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+}
+
+function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
+    if (!tpl) {
+        if (prevBox) prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+        if (prevNm) prevNm.textContent = "";
+        if (prevMd) prevMd.textContent = "";
+        if (prevDur) prevDur.textContent = "";
+        return;
+    }
+    if (prevNm) prevNm.textContent = tpl.name + " | " + (tpl.name_en || "");
+    if (prevMd) prevMd.textContent = tpl.generation_mode || "";
+    if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | 时长 | 需图片/Image: " + (tpl.needs_image ? "是/Yes" : "否/No");
+    if (prevBox) {
+        if (tpl.preview) {
+            prevBox.innerHTML = '<img class="bsai-tpl-prev-img" src="' + PREVIEW_BASE + tpl.preview + '" alt="preview">';
+        } else {
+            prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">' +
+                '<div style="font-size:22px;margin-bottom:6px;">🎬</div>' +
+                '暂无预览动画<br>No preview available<br>' +
+                '<span style="font-size:9px;color:#555;">点击选择此模板 / Click to select</span></div>';
+        }
+    }
+}
+
+function restoreSelection(node, savedValue) {
+    if (!_tplData) return;
+    const parts = savedValue.split(" > ");
+    if (parts.length !== 3) return;
+    const catName = parts[0], subName = parts[1], tplName = parts[2];
+    const cat = _tplData.categories.find(function(c) { return c.name === catName; });
+    if (!cat) return;
+    node._bsaiCat.value = cat.id;
+    node._bsaiCat.onchange();
+    const sub = cat.subcategories.find(function(s) { return s.name === subName; });
+    if (!sub) return;
+    node._bsaiSub.value = sub.id;
+    node._bsaiSub.onchange();
+    const tpl = sub.templates.find(function(t) { return t.name === tplName; });
+    if (tpl) {
+        updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+        setTimeout(function() {
+            const items = node._bsaiList.querySelectorAll(".bsai-tpl-item");
+            items.forEach(function(el) {
+                if (el.getAttribute("data-name") === tplName) {
+                    el.classList.add("active");
+                }
+            });
+        }, 50);
+    }
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60);
+}
+
+// ── ComfyUI Extension Registration ──
+
+app.registerExtension({
+    name: "BSAI.H3.PromptTemplate",
+
+    async beforeRegisterNodeDef(nodeType, nodeData) {
+        if (nodeData.name !== "BSAI_H3_PromptTemplate") return;
+
+        const origCreated = nodeType.prototype.onNodeCreated;
+        nodeType.prototype.onNodeCreated = function() {
+            if (origCreated) origCreated.apply(this, arguments);
+            const node = this;
+            setTimeout(function() { buildTemplateUI(node); }, 50);
+        };
+
+        const origConfigure = nodeType.prototype.onConfigure;
+        nodeType.prototype.onConfigure = function(data) {
+            if (origConfigure) origConfigure.apply(this, arguments);
+            const node = this;
+            if (node._bsaiTplReady) {
+                setTimeout(function() {
+                    const tplW = findWidget(node, "template_select");
+                    if (tplW && tplW.value && !tplW.value.startsWith("(")) {
+                        loadTemplateData().then(function() {
+                            restoreSelection(node, tplW.value);
+                        });
+                    }
+                    const custW = findWidget(node, "user_customization");
+                    if (custW && node._bsaiCustTa) {
+                        node._bsaiCustTa.value = custW.value || "";
+                    }
+                }, 100);
+            }
+        };
+
+        // ── Fix: Draw solid background to prevent canvas bleed-through ──
+        const origDrawBG = nodeType.prototype.onDrawBackground;
+        nodeType.prototype.onDrawBackground = function(ctx) {
+            if (origDrawBG) origDrawBG.apply(this, arguments);
+            // Draw solid background filling the entire node body
+            ctx.fillStyle = "#1a1a1a";
+            ctx.fillRect(0, 0, this.size[0], this.size[1]);
+        };
+
+        // Ensure minimum node width
+        const origComputeSize = nodeType.prototype.computeSize;
+        nodeType.prototype.computeSize = function() {
+            const orig = origComputeSize ? origComputeSize.apply(this, arguments) : [200, 100];
+            if (orig[0] < 430) orig[0] = 430;
+            return orig;
+        };
+
+        // Set initial size when added to graph (grow to content height)
+        const origAddedToGraph = nodeType.prototype.onAdded;
+        nodeType.prototype.onAdded = function() {
+            if (origAddedToGraph) origAddedToGraph.apply(this, arguments);
+            const node = this;
+            setTimeout(function() {
+                if (node.setSize) {
+                    if (node._bsaiRefreshSize) {
+                        node._bsaiRefreshSize();
+                    } else {
+                        node.setSize([440, 360]);
+                    }
+                }
+            }, 120);
+        };
+    },
+});
