@@ -48,6 +48,14 @@ git clone https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt.git
 
 或手动下载 ZIP 解压到 `ComfyUI/custom_nodes/BSAI-MiniMAX-H3-Prompt/`
 
+**语音输入（可选）/ Voice input (optional):**
+
+```bash
+# 本地离线中文语音识别（用于 🎤 语音按钮）
+pip install vosk
+python scripts/download_vosk_model.py    # 下载 vosk-model-small-cn-0.22（约 43MB）
+```
+
 2. 安装依赖：
 
 ```bash
@@ -385,6 +393,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 5. `prompt_output` 输出端口直接输出**合并后的单一 H3 三字段提示词**（基础场景/动作 + 叠加运镜指令，音效合并，音乐优先级补全）
 6. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
 7. `external_prompt` 可选输入端口可连接其他节点文本，输入后将**覆盖模板中的动作**（如"抬腿"替换行走动作，而非追加到末尾）
+8. **🎤 语音输入**：点击搜索框旁的"🎤 语音 / Voice"按钮，允许麦克风权限后点击"开始录音"说话，再点"停止并转写"。录音由本地离线 Vosk 中文模型识别，可填入 `external_prompt`（覆盖动作）或 `user_customization`（补充修改）。安装：`pip install vosk` + `python scripts/download_vosk_model.py`
 
 **EN:**
 1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
@@ -397,6 +406,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 5. The `prompt_output` port outputs the **merged single H3 three-field prompt** (base scene/action + overlay camera directives, soundscape merged, music priority-filled).
 6. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
 7. The optional `external_prompt` input port accepts text from other nodes; when provided it **OVERRIDES the template's action** (e.g. "抬腿" replaces the walking motion) instead of merely appending.
+8. **🎤 语音输入 / Voice input**: click the **🎤 语音 / Voice** button next to the search box, allow the mic, speak, then "Stop & Transcribe". The recording is transcribed locally (offline Vosk) and can be filled into `external_prompt` (action override) or `user_customization`. Install: `pip install vosk` + `python scripts/download_vosk_model.py`.
 
 > **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
@@ -495,6 +505,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.9.0 — 语音输入（本地离线 ASR）/ Voice Input (Local Offline ASR)
+
+**中文说明：**
+
+- **新增 🎤 语音输入**：模板浏览器搜索框旁新增"🎤 语音 / Voice"按钮。点击后弹出录音对话框，允许麦克风权限后"开始录音"，说完点"停止并转写"。
+- **本地离线识别**：录音在浏览器编码为 16kHz 单声道 WAV，经 `/bsai_h3/asr` 接口由 **Vosk 中文模型**（vosk-model-small-cn-0.22）本地转写——无需联网、无需 API Key，数据不出本地。
+- **结果回填**：可编辑的识别文本可一键填入 `external_prompt`（覆盖模板动作）或 `user_customization`（补充修改）。
+- **模型管理**：模型约 43MB，已加入 `.gitignore`；运行 `python scripts/download_vosk_model.py` 自动下载（含多镜像回退）。依赖：`pip install vosk`。
+
+**English:**
+
+- **New 🎤 voice input**: a "🎤 语音 / Voice" button next to the search box opens a recording dialog (allow mic → Start → speak → Stop & Transcribe).
+- **Local offline ASR**: the recording is encoded to 16kHz mono WAV in the browser and transcribed locally by a **Vosk Chinese model** (vosk-model-small-cn-0.22) via the `/bsai_h3/asr` endpoint — no cloud, no API key, data stays local.
+- **Result fill-back**: the editable text can be filled into `external_prompt` (action override) or `user_customization` with one click.
+- **Model management**: the ~43MB model is git-ignored; run `python scripts/download_vosk_model.py` to fetch it (multi-mirror fallback). Dependency: `pip install vosk`.
+
+---
 
 ### v1.8.0 — 外部提示词覆盖模板动作 / External Prompt Action Override
 

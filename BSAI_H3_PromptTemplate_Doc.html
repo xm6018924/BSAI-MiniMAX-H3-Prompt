@@ -187,6 +187,11 @@ b.en { color: var(--blue); }
 <p><b>EN:</b> The <code>external_prompt</code> optional input port accepts a STRING from any other node (e.g., an LLM or a prompt rewriter). When provided, it <b>OVERRIDES the template's action</b> instead of being appended: for templates with 【ACTION】...【/ACTION】 markers the action text is literally replaced (e.g. input "抬腿" removes the walking clause and performs leg-lifting); all other templates get a strong "Action Override" directive injected into <code>integrated_multimodal_description</code>. Framing, camera, environment, lighting, timing and subject identity are always preserved.</p>
 <p><b>中文:</b> <code>external_prompt</code> 可选输入端口可接收任意其他节点（如 LLM 或提示词改写节点）输出的 STRING。输入后将<b>覆盖模板中的动作</b>而非追加：含【ACTION】...【/ACTION】标记的模板动作文本会被直接替换（如输入"抬腿"即删除行走描述并执行抬腿）；其余模板则在 <code>integrated_multimodal_description</code> 中注入强"动作覆盖"指令。构图、运镜、环境、光照、时间与主体特征始终保持不变。</p>
 </div>
+<div class="card">
+<div class="card-title">🎤 Voice Input / 语音输入</div>
+<p><b>EN:</b> The <b>🎤 语音 / Voice</b> button next to the search box opens a voice dialog. Click <b>Start</b>, speak into the microphone, then <b>Stop & Transcribe</b>. The recording is transcribed by a <b>local offline Vosk Chinese model</b> (vosk-model-small-cn-0.22) via the <code>/bsai_h3/asr</code> endpoint — no cloud, no API key. The editable result can be filled into <code>external_prompt</code> (action override) or <code>user_customization</code>. Requires a microphone permission; works over localhost/HTTPS. Model setup: <code>python scripts/download_vosk_model.py</code> (already included on this machine).</p>
+<p><b>中文:</b> 搜索框旁的<b>"🎤 语音 / Voice"</b>按钮可打开语音对话框。点击"开始录音"，对着麦克风说话，再点击"停止并转写"。录音由<b>本地离线 Vosk 中文模型</b>（vosk-model-small-cn-0.22）经 <code>/bsai_h3/asr</code> 接口识别——无需联网、无需 API Key。可编辑的识别结果可填入 <code>external_prompt</code>（覆盖动作）或 <code>user_customization</code>（补充修改）。需要麦克风权限；localhost/HTTPS 下可用。模型安装：<code>python scripts/download_vosk_model.py</code>（本机已内置）。</p>
+</div>
 
 <!-- ===================== Categories ===================== -->
 <h2>6. Template Categories / 模板分类</h2>
@@ -377,6 +382,11 @@ b.en { color: var(--blue); }
 <p><b>EN:</b> The template browser supports multi-select stacking via the <b>Multi-Stack switch</b> (default: single-select for previewing). <code>template_select</code> carries multiple labels joined by <code>|||</code>; the node merges them into one coherent H3 prompt (base = first template, overlays appended as directive blocks, soundscape merged, music priority-filled).</p>
 <p><b>中文:</b> 模板浏览器通过<b>多选叠加开关</b>支持多选（默认单选，便于预览）。<code>template_select</code> 以 <code>|||</code> 携带多个模板标签；节点将其合并为一条完整的 H3 提示词（第 1 个为基础模板，叠加模板以指令块追加，音效合并，音乐优先级补全）。</p>
 </div>
+<div class="card">
+<div class="card-title">🎤 Voice Input (Local ASR) / 语音输入（本地离线识别）</div>
+<p><b>EN:</b> <b>v1.9.0</b> — added a 🎤 voice button: record with the mic and transcribe locally via Vosk (vosk-model-small-cn-0.22, offline) through the <code>/bsai_h3/asr</code> endpoint. The recognized text fills <code>external_prompt</code> (action override) or <code>user_customization</code>. Model is git-ignored; run <code>python scripts/download_vosk_model.py</code> to fetch it.</p>
+<p><b>中文:</b> <b>v1.9.0</b> — 新增 🎤 语音按钮：麦克风录音后由 Vosk 中文模型（vosk-model-small-cn-0.22，离线）经 <code>/bsai_h3/asr</code> 接口本地识别。识别文本可填入 <code>external_prompt</code>（覆盖动作）或 <code>user_customization</code>（补充修改）。模型已 git 忽略；运行 <code>python scripts/download_vosk_model.py</code> 即可下载。</p>
+</div>
 
 <!-- ===================== Tips ===================== -->
 <h2>10. Tips & Notes / 使用技巧与注意事项</h2>
@@ -433,6 +443,11 @@ b.en { color: var(--blue); }
 <div class="card-title">Q: Dropdowns don't sync after search / 搜索后下拉框不同步</div>
 <p><b>EN:</b> Clicking a search result should automatically sync the category and subcategory dropdowns. If it doesn't, try clearing the search box first.</p>
 <p><b>中文:</b> 点击搜索结果应自动同步分类和子类下拉框。如未同步，尝试先清空搜索框。</p>
+</div>
+<div class="card">
+<div class="card-title">Q: Voice button says transcription failed / 语音转写失败</div>
+<p><b>EN:</b> Make sure <code>vosk</code> is installed (<code>pip install vosk</code>) and the model exists (<code>python scripts/download_vosk_model.py</code>). The mic requires HTTPS or localhost. If the error mentions the model, run the download script and restart ComfyUI.</p>
+<p><b>中文:</b> 请确认已安装 <code>vosk</code>（<code>pip install vosk</code>）且模型已就位（<code>python scripts/download_vosk_model.py</code>）。麦克风需要 HTTPS 或 localhost 环境。若报错提示模型缺失，运行下载脚本并重启 ComfyUI。</p>
 </div>
 
 <!-- ===================== Prompt Structure ===================== -->

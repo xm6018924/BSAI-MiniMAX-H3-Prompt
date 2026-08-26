@@ -229,6 +229,7 @@ Features / 功能特点:
 - GIF/WebP preview on the right panel / 右侧预览动画
 - Optional user customization textarea / 可选的补充修改文本框
 - External prompt input port (external_prompt) OVERRIDES the template's action, e.g. "抬腿" replaces walking / 外部提示词输入端口（external_prompt）覆盖模板中的动作，如“抬腿”替换行走动作
+- 🎤 Voice input button: speak into the mic → offline local ASR (Vosk, vosk-model-small-cn-0.22) → fills external_prompt / 语音输入按钮：麦克风说话 → 本地离线识别（Vosk 中文模型）→ 填入外部提示词
 - Bilingual template names (中文 | English) / 模板名称中英双语对照
 - 46 expression & micro-expression templates / 46个表情与微表情模板
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
@@ -295,3 +296,118 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BSAI_H3_PromptTemplate": "BSAI H3 Prompt Template (提示词模板)",
 }
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  Voice input (ASR) — local offline transcription via Vosk (vosk-model-small-cn)
+#  The browser records audio → encodes 16kHz mono WAV → POST /bsai_h3/asr →
+#  transcribed text is filled back into external_prompt / user_customization.
+# ══════════════════════════════════════════════════════════════════════════════
+import io
+import struct
+import threading
+import wave
+
+_VOSK_MODEL_DIR = os.path.join(_THIS_DIR, "models", "vosk-model-small-cn-0.22")
+_vosk_model = None
+_vosk_lock = threading.Lock()
+_vosk_import_error = None
+
+
+def _get_vosk_model():
+    global _vosk_model, _vosk_import_error
+    if _vosk_model is not None:
+        return _vosk_model
+    with _vosk_lock:
+        if _vosk_model is not None:
+            return _vosk_model
+        try:
+            import vosk
+        except Exception as e:  # pragma: no cover
+            _vosk_import_error = f"vosk not installed: {e}"
+            raise RuntimeError(_vosk_import_error)
+        if not os.path.isdir(_VOSK_MODEL_DIR):
+            raise RuntimeError(
+                "Vosk Chinese model not found. Run: python scripts/download_vosk_model.py "
+                "(or place vosk-model-small-cn-0.22 under models/). / 未找到中文模型，请运行 "
+                "scripts/download_vosk_model.py 下载。"
+            )
+        _vosk_model = vosk.Model(_VOSK_MODEL_DIR)
+        return _vosk_model
+
+
+def _wav_to_16k_mono_int16(data_bytes):
+    """Decode a browser-recorded WAV (any rate/channels) → list[int] 16 kHz mono PCM16."""
+    import array
+    try:
+        w = wave.open(io.BytesIO(data_bytes), "rb")
+    except Exception as e:
+        raise ValueError(f"Not a valid WAV: {e}")
+    try:
+        n_ch = w.getnchannels()
+        rate = w.getframerate()
+        sw = w.getsampwidth()
+        raw = w.readframes(w.getnframes())
+    finally:
+        w.close()
+    if sw == 2:
+        samples = list(array.array("h", raw))
+    elif sw == 1:
+        samples = [((b - 128) << 8) for b in raw]
+    elif sw == 4:
+        samples = [x >> 16 for x in array.array("i", raw)]
+    else:
+        raise ValueError(f"Unsupported sample width {sw}")
+    if n_ch > 1:
+        samples = [sum(samples[i:i + n_ch]) // n_ch for i in range(0, len(samples), n_ch)]
+    if rate == 16000:
+        return samples
+    # linear resample to 16 kHz
+    n_out = int(len(samples) * 16000 / rate)
+    out = []
+    for i in range(n_out):
+        pos = i * rate / 16000.0
+        j = int(pos)
+        if j + 1 < len(samples):
+            frac = pos - j
+            out.append(int(samples[j] * (1 - frac) + samples[j + 1] * frac))
+        else:
+            out.append(samples[-1] if samples else 0)
+    return out
+
+
+def _register_asr_route():
+    """Register POST /bsai_h3/asr on the ComfyUI server (guarded import)."""
+    try:
+        from server import PromptServer
+        from aiohttp import web
+    except Exception:
+        return None
+    server = getattr(PromptServer, "instance", None)
+    if server is None:
+        return None
+
+    @server.routes.post("/bsai_h3/asr")
+    async def bsai_h3_asr(request):
+        try:
+            data = await request.read()
+            if not data:
+                return web.json_response({"ok": False, "error": "empty audio / 音频为空"})
+            samples = _wav_to_16k_mono_int16(data)
+            try:
+                model = _get_vosk_model()
+            except RuntimeError as e:
+                return web.json_response({"ok": False, "error": str(e)})
+            import vosk
+            rec = vosk.KaldiRecognizer(model, 16000)
+            pcm = struct.pack("<%dh" % len(samples), *samples)
+            rec.AcceptWaveform(pcm)
+            text = (json.loads(rec.FinalResult()).get("text") or "").strip()
+            return web.json_response({"ok": True, "text": text})
+        except Exception as e:
+            return web.json_response({"ok": False, "error": str(e)})
+
+    return server
+
+
+_register_asr_route()

@@ -5,3 +5,6 @@ __pycache__/
 dist/
 build/
 .eggs/
+# Vosk ASR model (~50 MB, downloaded by scripts/download_vosk_model.py)
+models/vosk-*/
+models/_vosk_model_small_cn.zip

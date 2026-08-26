@@ -148,6 +148,41 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-mode .mode-tag { font-size: 9px; padding: 1px 6px; border-radius: 8px; border: 1px solid #335; color: #678; }
 .bsai-tpl-mode .mode-tag.on { background: #2a4a3a; color: #9d9; border-color: #3a6a4a; }
 .bsai-tpl-mode .mode-tag.off { background: #2a2a2a; color: #889; border-color: #444; }
+/* Voice input button */
+.bsai-tpl-voice-btn {
+    margin-left: 6px; cursor: pointer; font-size: 13px; line-height: 1;
+    padding: 3px 8px; border-radius: 6px; border: 1px solid #335;
+    background: #222; color: #9bd; white-space: nowrap; user-select: none; flex: 0 0 auto;
+}
+.bsai-tpl-voice-btn:hover { background: #2a3a4a; border-color: #4a7a9a; }
+/* Voice modal */
+.bsai-voice-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+}
+.bsai-voice-card {
+    width: 460px; max-width: 92vw; background: #1b1b1b; color: #ddd;
+    border: 1px solid #334; border-radius: 12px; padding: 16px 18px;
+    font-size: 13px; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+.bsai-voice-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #9bd; }
+.bsai-voice-status { font-size: 12px; color: #889; margin: 6px 0; min-height: 16px; }
+.bsai-voice-status.rec { color: #e77; }
+.bsai-voice-status.ok { color: #7d7; }
+.bsai-voice-ta {
+    width: 100%; min-height: 60px; box-sizing: border-box; background: #111; color: #ddd;
+    border: 1px solid #334; border-radius: 8px; padding: 8px; font-size: 13px;
+    resize: vertical; margin: 8px 0;
+}
+.bsai-voice-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.bsai-voice-btn {
+    cursor: pointer; padding: 6px 12px; border-radius: 8px; border: 1px solid #446;
+    background: #223; color: #cde; font-size: 13px;
+}
+.bsai-voice-btn:hover { background: #2a3a4a; }
+.bsai-voice-btn.primary { background: #2a4a3a; border-color: #3a7a5a; color: #cfc; }
+.bsai-voice-btn.danger { background: #4a2a2a; border-color: #7a3a3a; color: #fbb; }
+.bsai-voice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 /* Customization textarea */
 .bsai-tpl-cust { margin-top: 6px; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
@@ -263,9 +298,15 @@ function buildTemplateUI(node) {
     const searchClr = document.createElement("span");
     searchClr.className = "bsai-tpl-search-clr";
     searchClr.textContent = "✕";
+    const voiceBtn = document.createElement("span");
+    voiceBtn.className = "bsai-tpl-voice-btn";
+    voiceBtn.textContent = "🎤 语音 / Voice";
+    voiceBtn.title = "语音输入指令（覆盖模板动作）/ Voice input command (overrides template action)";
+    voiceBtn.onclick = function() { openVoiceModal(node); };
     searchRow.appendChild(searchIcon);
     searchRow.appendChild(searchInput);
     searchRow.appendChild(searchClr);
+    searchRow.appendChild(voiceBtn);
     container.appendChild(searchRow);
 
     // ── Top section: dropdowns + list (left) | preview (right) ──
@@ -841,6 +882,177 @@ function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
                 '<span style="font-size:9px;color:#555;">点击选择此模板 / Click to select</span></div>';
         }
     }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+//  Voice input: record mic → encode 16k mono WAV → POST /bsai_h3/asr → fill widget
+// ════════════════════════════════════════════════════════════════════════════
+var _voice = { ctx: null, src: null, proc: null, stream: null, chunks: [], rec: false, rate: 16000 };
+
+function setWidgetText(node, name, text) {
+    var w = (node.widgets || []).find(function(x) { return x.name === name; });
+    if (!w) return false;
+    w.value = text;
+    if (typeof w.callback === "function") { try { w.callback(text); } catch (e) {} }
+    return true;
+}
+
+function openVoiceModal(node) {
+    if (!node) return;
+    var old = document.querySelector(".bsai-voice-overlay");
+    if (old) old.remove();
+    var ov = document.createElement("div");
+    ov.className = "bsai-voice-overlay";
+    ov.innerHTML =
+        '<div class="bsai-voice-card">' +
+        '<div class="bsai-voice-title">🎤 语音指令 / Voice Command</div>' +
+        '<div class="bsai-voice-status">点击"开始录音"，说完后点击"停止并转写" / Click Start, speak, then Stop & Transcribe</div>' +
+        '<textarea class="bsai-voice-ta" placeholder="转写结果 / Transcription…"></textarea>' +
+        '<div class="bsai-voice-btns">' +
+        '  <button class="bsai-voice-btn primary" data-act="rec">● 开始录音 / Start</button>' +
+        '  <button class="bsai-voice-btn" data-act="stop" disabled>■ 停止并转写 / Stop & Transcribe</button>' +
+        '  <button class="bsai-voice-btn" data-act="ext" disabled>➤ 填入外部提示词（覆盖动作）/ Set as external_prompt</button>' +
+        '  <button class="bsai-voice-btn" data-act="cust" disabled>✎ 填入补充修改 / Set as customization</button>' +
+        '  <button class="bsai-voice-btn danger" data-act="close">✕ 关闭 / Close</button>' +
+        '</div></div>';
+    document.body.appendChild(ov);
+    var status = ov.querySelector(".bsai-voice-status");
+    var ta = ov.querySelector(".bsai-voice-ta");
+    var btnRec = ov.querySelector('[data-act="rec"]');
+    var btnStop = ov.querySelector('[data-act="stop"]');
+    var btnExt = ov.querySelector('[data-act="ext"]');
+    var btnCust = ov.querySelector('[data-act="cust"]');
+
+    function setStatus(txt, cls) {
+        status.textContent = txt;
+        status.className = "bsai-voice-status" + (cls ? " " + cls : "");
+    }
+    function enableFill() {
+        btnExt.disabled = !(ta.value && ta.value.trim());
+        btnCust.disabled = !(ta.value && ta.value.trim());
+    }
+    ta.addEventListener("input", enableFill);
+
+    btnRec.onclick = function() {
+        if (_voice.rec) return;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            setStatus("此浏览器不支持麦克风录音 / Microphone not supported (needs HTTPS or localhost)", "");
+            return;
+        }
+        setStatus("请求麦克风权限… / Requesting mic…");
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+            var AC = window.AudioContext || window.webkitAudioContext;
+            _voice.ctx = new AC();
+            _voice.src = _voice.ctx.createMediaStreamSource(stream);
+            _voice.proc = _voice.ctx.createScriptProcessor(4096, 1, 1);
+            _voice.chunks = [];
+            _voice.stream = stream;
+            _voice.rate = _voice.ctx.sampleRate || 48000;
+            _voice.proc.onaudioprocess = function(e) {
+                if (!_voice.rec) return;
+                _voice.chunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+            };
+            _voice.src.connect(_voice.proc);
+            _voice.proc.connect(_voice.ctx.destination);
+            _voice.rec = true;
+            btnRec.disabled = true;
+            btnStop.disabled = false;
+            setStatus("● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now", "rec");
+        }).catch(function(err) {
+            setStatus("无法访问麦克风：" + (err && err.name ? err.name : err) + " / Mic access denied", "");
+        });
+    };
+
+    btnStop.onclick = function() {
+        if (!_voice.rec) return;
+        _voice.rec = false;
+        // collect samples
+        var total = 0;
+        _voice.chunks.forEach(function(a) { total += a.length; });
+        var all = new Float32Array(total), off = 0;
+        _voice.chunks.forEach(function(a) { all.set(a, off); off += a.length; });
+        // cleanup
+        try { _voice.proc.disconnect(); } catch (e) {}
+        try { _voice.src.disconnect(); } catch (e) {}
+        try { _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+        try { _voice.ctx.close(); } catch (e) {}
+        _voice.proc = _voice.src = _voice.stream = _voice.ctx = null;
+        btnRec.disabled = false;
+        btnStop.disabled = true;
+        if (all.length < 1600) {
+            setStatus("录音太短，请重试 / Recording too short", "");
+            return;
+        }
+        setStatus("正在转写… / Transcribing…");
+        // downsample to 16k
+        var s16 = downsampleTo16k(all, _voice.rate);
+        var wav = encodeWavPcm16(s16, 16000);
+        fetch("/bsai_h3/asr", { method: "POST", body: wav }).then(function(r) { return r.json(); }).then(function(j) {
+            if (j && j.ok) {
+                ta.value = j.text || "";
+                setStatus("转写完成 / Done", "ok");
+            } else {
+                setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
+            }
+            enableFill();
+        }).catch(function(e) {
+            setStatus("网络错误 / Network error: " + e, "");
+        });
+    };
+
+    btnExt.onclick = function() {
+        if (setWidgetText(node, "external_prompt", ta.value.trim())) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+        ov.remove();
+    };
+    btnCust.onclick = function() {
+        if (setWidgetText(node, "user_customization", ta.value.trim())) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+        ov.remove();
+    };
+    ov.querySelector('[data-act="close"]').onclick = function() {
+        if (_voice.rec) { try { _voice.proc && _voice.proc.disconnect(); } catch (e) {} try { _voice.src && _voice.src.disconnect(); } catch (e) {} try { _voice.stream && _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {} try { _voice.ctx && _voice.ctx.close(); } catch (e) {} _voice.rec = false; }
+        ov.remove();
+    };
+    ov.addEventListener("click", function(e) { if (e.target === ov) { ov.remove(); } });
+}
+
+function downsampleTo16k(samples, fromRate) {
+    var toRate = 16000;
+    if (fromRate === toRate) return samples;
+    var n = Math.max(1, Math.floor(samples.length * toRate / fromRate));
+    var out = new Float32Array(n);
+    for (var i = 0; i < n; i++) {
+        var pos = i * fromRate / toRate;
+        var j = Math.floor(pos);
+        if (j + 1 < samples.length) {
+            var f = pos - j;
+            out[i] = samples[j] * (1 - f) + samples[j + 1] * f;
+        } else {
+            out[i] = samples[samples.length - 1] || 0;
+        }
+    }
+    return out;
+}
+
+function encodeWavPcm16(samples, sampleRate) {
+    var buffer = new ArrayBuffer(44 + samples.length * 2);
+    var view = new DataView(buffer);
+    function wStr(off, s) { for (var i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); }
+    wStr(0, "RIFF"); view.setUint32(4, 36 + samples.length * 2, true); wStr(8, "WAVE");
+    wStr(12, "fmt "); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+    wStr(36, "data"); view.setUint32(40, samples.length * 2, true);
+    var off = 44;
+    for (var i = 0; i < samples.length; i++) {
+        var s = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        off += 2;
+    }
+    return new Blob([buffer], { type: "audio/wav" });
 }
 
 function restoreSelection(node, savedValue) {
