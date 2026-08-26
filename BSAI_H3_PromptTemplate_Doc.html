@@ -103,6 +103,12 @@ b.en { color: var(--blue); }
 <td>External prompt text input port. When provided, it <b>OVERRIDES the template's action</b> (e.g. input "抬腿" replaces the template's walking/motion with leg-lifting), instead of merely being appended.</td>
 <td>外部提示词文本输入端口（强制连线）。输入后将<b>覆盖模板中的动作描述</b>（如输入"抬腿"将模板中的行走动作替换为抬腿），而非仅追加到末尾。</td>
 </tr>
+<tr>
+<td><code>direct_prompt</code> <span class="badge badge-opt">OPT</span></td>
+<td>STRING (Multiline)</td>
+<td><b>Direct Mode / 直通模式.</b> When non-empty, this text is output as the complete prompt, <b>bypassing all templates</b>. Auto-filled by the 🎤 voice dialog's Direct Mode (voice/text → local LLM → full H3 prompt).</td>
+<td><b>直通模式。</b>非空时直接输出该文本作为完整提示词，<b>绕过所有模板</b>。由 🎤 语音对话框的直通模式自动生成（语音/文本 → 本地大模型 → 完整 H3 提示词）。</td>
+</tr>
 </table>
 <div class="tip">
 <b>Tip / 提示:</b> The two required inputs are hidden in the visual UI and managed by the template browser. The <code>external_prompt</code> optional port lets you chain another prompt source (e.g., LLM output) to <b>override the template's action</b>. Templates marked with 【ACTION】...【/ACTION】 get literal replacement; all others receive a strong Action Override directive inside the description. / 两个必填输入在可视化界面中已隐藏，由模板浏览器管理。<code>external_prompt</code> 可选端口可连接其他提示词来源（如 LLM 输出），用于<b>覆盖模板的动作</b>。含【ACTION】...【/ACTION】标记的模板将进行字面替换；其余模板会在描述中注入强动作覆盖指令。
@@ -191,6 +197,11 @@ b.en { color: var(--blue); }
 <div class="card-title">🎤 Voice Input / 语音输入</div>
 <p><b>EN:</b> The <b>🎤 语音 / Voice</b> button next to the search box opens a voice dialog. Click <b>Start</b>, speak into the microphone, then <b>Stop & Transcribe</b>. The recording is transcribed by a <b>local offline Vosk Chinese model</b> (vosk-model-small-cn-0.22) via the <code>/bsai_h3/asr</code> endpoint — no cloud, no API key. The editable result can be filled into <code>external_prompt</code> (action override) or <code>user_customization</code>. Requires a microphone permission; works over localhost/HTTPS. Model setup: <code>python scripts/download_vosk_model.py</code> (already included on this machine).</p>
 <p><b>中文:</b> 搜索框旁的<b>"🎤 语音 / Voice"</b>按钮可打开语音对话框。点击"开始录音"，对着麦克风说话，再点击"停止并转写"。录音由<b>本地离线 Vosk 中文模型</b>（vosk-model-small-cn-0.22）经 <code>/bsai_h3/asr</code> 接口识别——无需联网、无需 API Key。可编辑的识别结果可填入 <code>external_prompt</code>（覆盖动作）或 <code>user_customization</code>（补充修改）。需要麦克风权限；localhost/HTTPS 下可用。模型安装：<code>python scripts/download_vosk_model.py</code>（本机已内置）。</p>
+</div>
+<div class="card">
+<div class="card-title">⚡ Direct Mode / 直通模式</div>
+<p><b>EN:</b> Inside the voice dialog, tick <b>⚡ 直通模式 / Direct Mode</b> and click <b>⚡ 生成 H3 提示词 / Generate H3</b>: the text in the box (voice transcription or manually typed) is expanded by a <b>local llama.cpp GGUF LLM</b> into a <b>complete H3 three-field prompt</b> following the official H3 prompt SKILL (time-coded shot breakdown, camera moves, soundscape, music) — Chinese input is translated to English. Then click <b>➤ 填入直通输出 / Set as direct_prompt</b>; the node outputs it directly via <code>prompt_output</code>, <b>bypassing all templates</b> (name = "直通模式 | Direct Mode"). First generation loads the model (~1 min for gemma-4-26B Q4); later calls are fast. The model is auto-detected (prefers <code>ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf</code>). Override with env <code>BSAI_H3_LLM_MODEL</code> (path to any GGUF), <code>BSAI_H3_LLM_GPU_LAYERS</code> (default -1 = all GPU), or set <code>BSAI_H3_LLM_API_KEY</code> + <code>BSAI_H3_LLM_API_BASE</code> to use an OpenAI-compatible API instead. The model stays resident while used — restart ComfyUI to free VRAM.</p>
+<p><b>中文:</b> 在语音对话框中勾选<b>"⚡ 直通模式 / Direct Mode"</b>并点击<b>"⚡ 生成 H3 提示词"</b>：对话框中的文字（语音转写或手动输入）将由<b>本地 llama.cpp GGUF 大模型</b>扩写为<b>符合 H3 官方提示词 SKILL 的完整三字段提示词</b>（分镜时间轴、运镜、音效、音乐）——中文输入自动翻译为英文。再点击<b>"➤ 填入直通输出"</b>，节点将直接通过 <code>prompt_output</code> 输出该提示词，<b>绕过所有模板</b>（名称显示"直通模式 | Direct Mode"）。首次生成需加载模型（gemma-4-26B Q4 约 1 分钟），之后即时响应。模型自动检测（优先 <code>ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf</code>）。可通过环境变量覆盖：<code>BSAI_H3_LLM_MODEL</code>（任意 GGUF 路径）、<code>BSAI_H3_LLM_GPU_LAYERS</code>（默认 -1 = 全部 GPU）、或设置 <code>BSAI_H3_LLM_API_KEY</code> + <code>BSAI_H3_LLM_API_BASE</code> 改用 OpenAI 兼容 API。模型常驻显存，重启 ComfyUI 可释放。</p>
 </div>
 
 <!-- ===================== Categories ===================== -->
@@ -347,6 +358,11 @@ b.en { color: var(--blue); }
 
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
+<div class="card">
+<div class="card-title">⚡ Direct Mode (v1.10.0) / 直通模式</div>
+<p><b>EN:</b> New <b>Direct Mode / 直通模式</b> in the 🎤 voice dialog: tick "⚡ 直通模式 / Direct Mode", click "⚡ 生成 H3 提示词 / Generate H3" — the spoken/typed text is expanded by a <b>local llama.cpp GGUF LLM</b> into a full H3 three-field prompt per the official H3 SKILL (bypasses templates). Click "➤ 填入直通输出 / Set as direct_prompt" to make <code>prompt_output</code> emit it directly. Auto-detects <code>gemma-4-26B-A4B Q4_K_M</code>; overridable via <code>BSAI_H3_LLM_MODEL</code> / <code>BSAI_H3_LLM_GPU_LAYERS</code> / <code>BSAI_H3_LLM_API_KEY</code>.</p>
+<p><b>中文:</b> 语音对话框新增<b>直通模式</b>：勾选"⚡ 直通模式 / Direct Mode"，点击"⚡ 生成 H3 提示词 / Generate H3"——语音/文字由<b>本地 llama.cpp GGUF 大模型</b>按 H3 官方 SKILL 扩写为完整三字段提示词（绕过模板）。点击"➤ 填入直通输出 / Set as direct_prompt"即由 <code>prompt_output</code> 直接输出。自动检测 <code>gemma-4-26B-A4B Q4_K_M</code>；可通过 <code>BSAI_H3_LLM_MODEL</code> / <code>BSAI_H3_LLM_GPU_LAYERS</code> / <code>BSAI_H3_LLM_API_KEY</code> 覆盖。</p>
+</div>
 <div class="card">
 <div class="card-title">🧩 All 144 Templates General-Purpose / 全 144 模板通用化</div>
 <p><b>EN:</b> All templates have been audited and rewritten to be generic and reusable. They no longer contain specific scene descriptions or character-appearance details (hairstyle, clothing, shoes, hats, gender). This is especially important for image-to-video (I2VA) and first-last-frame (FL2VA) templates: they only reference the input images (<code>&lt;Picture 1&gt;</code> / <code>&lt;Picture 2&gt;</code>) and describe action, camera movement, transitions, and atmosphere — so the template never overwrites the input image's character or scene features.</p>

@@ -506,6 +506,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.10.0 — 直通模式（语音/文字 → 完整 H3 提示词）/ Direct Mode (Voice/Text → Full H3 Prompt)
+
+**中文说明：**
+
+- **新增 ⚡ 直通模式**：语音对话框中勾选"⚡ 直通模式 / Direct Mode"并点击"⚡ 生成 H3 提示词 / Generate H3"，框内文字（语音转写或手动输入）将由 **本地 llama.cpp GGUF 大模型** 按 **H3 官方提示词 SKILL** 扩写为完整的 `integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music` 三字段提示词（含分镜时间轴、运镜、音效、音乐；中文输入自动译为英文）。
+- **直接输出**：点击"➤ 填入直通输出 / Set as direct_prompt"后，节点新增的 `direct_prompt` 输入生效，`prompt_output` **直接输出该提示词，绕过所有模板**（名称显示"直通模式 | Direct Mode"）。
+- **本地模型自动检测**：默认加载 `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf`（输出干净、质量高）。可通过环境变量覆盖：`BSAI_H3_LLM_MODEL`（任意 GGUF 路径，如 9B 的 `Qwen3.5-9B-...-Q8_0.gguf`）、`BSAI_H3_LLM_GPU_LAYERS`（默认 -1=全部 GPU，可调小省显存）、`BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE`（改用 OpenAI 兼容远程 API）。
+- **懒加载**：首次调用才加载模型（约 1 分钟），之后常驻；重启 ComfyUI 释放显存。
+- 依赖：`pip install llama-cpp-python`（本机已装，GPU 加速）。
+
+**English:**
+
+- **New ⚡ Direct Mode**: in the voice dialog tick "⚡ 直通模式 / Direct Mode" and click "⚡ 生成 H3 提示词 / Generate H3" — the box text (voice transcription or manual input) is expanded by a **local llama.cpp GGUF LLM** per the **official H3 prompt SKILL** into a full three-field prompt (`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`), including time-coded shot breakdown, camera moves, soundscape and music; Chinese input is translated to English.
+- **Direct output**: after "➤ 填入直通输出 / Set as direct_prompt", the new `direct_prompt` input takes effect and `prompt_output` **emits the text directly, bypassing all templates** (name shows "直通模式 | Direct Mode").
+- **Auto-detected local model**: defaults to `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf` (clean, high-quality output). Overridable via env: `BSAI_H3_LLM_MODEL` (any GGUF path), `BSAI_H3_LLM_GPU_LAYERS` (default -1 = all GPU), `BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE` (OpenAI-compatible remote API).
+- **Lazy load**: the model loads on first use (~1 min), then stays resident; restart ComfyUI to free VRAM.
+- Deps: `pip install llama-cpp-python` (installed on this machine, GPU-accelerated).
+
 ### v1.9.0 — 语音输入（本地离线 ASR）/ Voice Input (Local Offline ASR)
 
 **中文说明：**

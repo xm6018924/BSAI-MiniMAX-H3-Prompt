@@ -183,6 +183,11 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-voice-btn.primary { background: #2a4a3a; border-color: #3a7a5a; color: #cfc; }
 .bsai-voice-btn.danger { background: #4a2a2a; border-color: #7a3a3a; color: #fbb; }
 .bsai-voice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.bsai-voice-direct { margin-top: 8px; border-top: 1px solid #334; padding-top: 8px; }
+.bsai-voice-chk { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #cde; cursor: pointer; flex-wrap: wrap; }
+.bsai-voice-chk input { cursor: pointer; }
+.bsai-voice-hint { font-size: 11px; color: #889; }
+.bsai-voice-drow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 /* Customization textarea */
 .bsai-tpl-cust { margin-top: 6px; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
@@ -281,6 +286,7 @@ function buildTemplateUI(node) {
 
     hideWidget(node, "template_select");
     hideWidget(node, "user_customization");
+    hideWidget(node, "direct_prompt");
 
     const container = document.createElement("div");
     container.className = "bsai-tpl-wrap";
@@ -908,6 +914,13 @@ function openVoiceModal(node) {
         '<div class="bsai-voice-title">🎤 语音指令 / Voice Command</div>' +
         '<div class="bsai-voice-status">点击"开始录音"，说完后点击"停止并转写" / Click Start, speak, then Stop & Transcribe</div>' +
         '<textarea class="bsai-voice-ta" placeholder="转写结果 / Transcription…"></textarea>' +
+        '<div class="bsai-voice-direct">' +
+        '  <label class="bsai-voice-chk"><input type="checkbox" data-act="drtgl" /> ⚡ 直通模式 / Direct Mode <span class="bsai-voice-hint">将文字直接扩写为完整 H3 提示词（绕过模板）/ expand into a full H3 prompt, bypassing templates</span></label>' +
+        '  <div class="bsai-voice-drow" data-act="drow" style="display:none">' +
+        '    <button class="bsai-voice-btn primary" data-act="gen" disabled>⚡ 生成 H3 提示词 / Generate H3</button>' +
+        '    <button class="bsai-voice-btn" data-act="direct" disabled>➤ 填入直通输出 / Set as direct_prompt</button>' +
+        '  </div>' +
+        '</div>' +
         '<div class="bsai-voice-btns">' +
         '  <button class="bsai-voice-btn primary" data-act="rec">● 开始录音 / Start</button>' +
         '  <button class="bsai-voice-btn" data-act="stop" disabled>■ 停止并转写 / Stop & Transcribe</button>' +
@@ -922,16 +935,60 @@ function openVoiceModal(node) {
     var btnStop = ov.querySelector('[data-act="stop"]');
     var btnExt = ov.querySelector('[data-act="ext"]');
     var btnCust = ov.querySelector('[data-act="cust"]');
+    var chkDirect = ov.querySelector('[data-act="drtgl"]');
+    var rowDirect = ov.querySelector('[data-act="drow"]');
+    var btnGen = ov.querySelector('[data-act="gen"]');
+    var btnDirect = ov.querySelector('[data-act="direct"]');
 
     function setStatus(txt, cls) {
         status.textContent = txt;
         status.className = "bsai-voice-status" + (cls ? " " + cls : "");
     }
     function enableFill() {
-        btnExt.disabled = !(ta.value && ta.value.trim());
-        btnCust.disabled = !(ta.value && ta.value.trim());
+        var has = !!(ta.value && ta.value.trim());
+        btnExt.disabled = !has;
+        btnCust.disabled = !has;
+        btnGen.disabled = !(chkDirect.checked && has);
+        btnDirect.disabled = !(chkDirect.checked && has);
     }
     ta.addEventListener("input", enableFill);
+    chkDirect.addEventListener("change", function() {
+        rowDirect.style.display = chkDirect.checked ? "flex" : "none";
+        enableFill();
+    });
+
+    // ── Direct mode: expand text into a full H3 prompt via local LLM ──
+    btnGen.onclick = function() {
+        var txt = (ta.value || "").trim();
+        if (!txt) return;
+        btnGen.disabled = true;
+        var old = ta.value;
+        setStatus("⚡ 正在生成 H3 提示词（本地模型，首次约 1 分钟）… / Generating H3 prompt (local LLM, ~1 min first time)…");
+        fetch("/bsai_h3/direct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: txt })
+        }).then(function(r) { return r.json(); }).then(function(j) {
+            if (j && j.ok && j.prompt) {
+                ta.value = j.prompt;
+                setStatus("✅ H3 直通提示词已生成，可编辑后填入 / H3 prompt generated — edit, then fill", "ok");
+            } else {
+                ta.value = old;
+                setStatus("生成失败：" + ((j && j.error) || "unknown") + " / Generate failed", "");
+            }
+            enableFill();
+        }).catch(function(e) {
+            ta.value = old;
+            setStatus("网络错误 / Network error: " + e, "");
+            enableFill();
+        });
+    };
+    btnDirect.onclick = function() {
+        if (setWidgetText(node, "direct_prompt", ta.value.trim())) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+        ov.remove();
+    };
 
     btnRec.onclick = function() {
         if (_voice.rec) return;
