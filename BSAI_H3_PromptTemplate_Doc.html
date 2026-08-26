@@ -51,7 +51,7 @@ b.en { color: var(--blue); }
 <b>Node Name / 节点名称:</b> <code>BSAI_H3_PromptTemplate</code><br>
 <b>Category / 分类:</b> <code>BSAI</code><br>
 <b>Display Name / 显示名称:</b> <code>BSAI H3 Prompt Template (提示词模板)</code><br>
-<b>Version / 版本:</b> 1.0.0 &nbsp;|&nbsp; <b>Templates / 模板数:</b> 144 &nbsp;|&nbsp; <b>Expression Templates / 表情模板:</b> 46 &nbsp;|&nbsp; <b>Preview GIFs / 预览动画:</b> 25
+<b>Version / 版本:</b> 1.0.0 &nbsp;|&nbsp; <b>Templates / 模板数:</b> 176 &nbsp;|&nbsp; <b>Expression Templates / 表情模板:</b> 46 &nbsp;|&nbsp; <b>Preview WebPs / 预览动画:</b> 25
 </div>
 
 <!-- ===================== Overview ===================== -->
@@ -229,6 +229,11 @@ b.en { color: var(--blue); }
 <td>拳脚对打类 / 冷兵器对战类 / 快慢镜头类 / 打斗运镜类 / 多人群战类 / 特殊招式类 / 触发词战斗类 / 多图成战类</td>
 <td>30</td>
 </tr>
+<tr>
+<td>🎥 电影运镜模板<br><span style="color:#888;font-size:12px">Cinematic Camera Movement</span></td>
+<td>基础运动类 / 跟随与环绕类 / 变焦与焦距类 / 角度与视角类 / 大范围与特殊运镜类</td>
+<td>32</td>
+</tr>
 </table>
 
 <!-- ===================== Expression Templates ===================== -->
@@ -338,9 +343,14 @@ b.en { color: var(--blue); }
 <p><b>中文:</b> 全部 144 个模板已经审计并重写为通用、可复用。模板不再包含具体场景描述或人物形象细节（发型、服装、鞋帽、性别等）。这一点对图生视频（I2VA）和首尾帧（FL2VA）模板尤为重要：它们只引用输入图像（<code>&lt;Picture 1&gt;</code> / <code>&lt;Picture 2&gt;</code>），只描述动作、运镜、转场和氛围——模板不会覆盖输入图像的人物或场景特征。</p>
 </div>
 <div class="card">
-<div class="card-title">🖼 Preview GIFs / 预览动画</div>
-<p><b>EN:</b> 25 templates now ship with preview GIF animations, stored in <code>previews/</code> and <code>web/previews/</code>. The <code>preview</code> field in the JSON points to each GIF. Templates without a GIF show a placeholder.</p>
-<p><b>中文:</b> 25 个模板现已附带 GIF 预览动画，存放于 <code>previews/</code> 与 <code>web/previews/</code> 目录。JSON 中的 <code>preview</code> 字段指向对应 GIF。无 GIF 的模板显示占位符。</p>
+<div class="card-title">🖼 Preview WebPs / 预览动画</div>
+<p><b>EN:</b> 25 templates ship with animated preview WebPs, stored in <code>previews/</code> and <code>web/previews/</code>. They follow the ComfyUI official workflow-templates spec: <b>animated WebP, 400×400</b>. The <code>preview</code> field in the JSON points to each file. Templates without a preview show a placeholder.</p>
+<p><b>中文:</b> 25 个模板现已附带动图预览 WebP，存放于 <code>previews/</code> 与 <code>web/previews/</code>。遵循 ComfyUI 官方 workflow templates 规格：<b>动图 WebP，400×400</b>。JSON 中的 <code>preview</code> 字段指向对应文件。无预览的模板显示占位符。</p>
+</div>
+<div class="card">
+<div class="card-title">🎥 Cinematic Camera Movement Templates / 电影运镜模板</div>
+<p><b>EN:</b> A new <b>Cinematic Camera Movement</b> category (32 templates / 5 subcategories) covers push in, pull out, pan, tilt, truck, pedestal, whip pan, tracking, orbit, 360° orbit, steadicam, handheld, dolly zoom, zoom in/out, rack focus, low/high/top-down angle, dutch angle, roll, POV, over-the-shoulder, aerial, drone fly-through, crane, dolly through, FPV, and bullet time. All names are bilingual (中文 | English). Templates are fully generic: they only describe the camera motion and never alter the input image's scene or character features (<code>&lt;Picture 1&gt;</code> is fully preserved).</p>
+<p><b>中文:</b> 新增<b>电影运镜模板</b>分类（32 个模板 / 5 个子类），涵盖推镜、拉镜、摇镜、移镜、升降、甩镜、跟随、环绕、360度环绕、斯坦尼康、手持、推拉变焦、变焦推近/拉远、跟焦、低角度仰拍、高角度俯拍、顶拍、荷兰角、旋转、主观视角、过肩、航拍、无人机穿越、摇臂、穿越、穿越机、子弹时间等。全部名称中英双语对照。模板完全通用化：只描述摄影机运动，绝不改变输入图片（<code>&lt;Picture 1&gt;</code>）的场景与人物特征。</p>
 </div>
 <div class="card">
 <div class="card-title">🌐 Bilingual Template Names / 模板名称中英双语对照</div>
@@ -395,9 +405,9 @@ b.en { color: var(--blue); }
 <p><b>中文:</b> 确保 <code>web/templates_data.json</code> 文件存在且为有效 JSON。尝试刷新浏览器页面（Ctrl+F5）。</p>
 </div>
 <div class="card">
-<div class="card-title">Q: Preview GIF not showing / 预览动画不显示</div>
-<p><b>EN:</b> 25 templates currently ship with preview GIFs; the rest show a 🎬 placeholder. You can still use any template — the preview is only a visual aid. If a GIF fails to load, hard-refresh the browser (Ctrl+F5) or check that the GIF exists in <code>web/previews/</code>.</p>
-<p><b>中文:</b> 当前有 25 个模板附带 GIF 预览；其余显示 🎬 占位符。你仍然可以使用任何模板 — 预览只是视觉辅助。若 GIF 无法加载，请强制刷新浏览器（Ctrl+F5）或检查 GIF 是否存在于 <code>web/previews/</code>。</p>
+<div class="card-title">Q: Preview WebP not showing / 预览动画不显示</div>
+<p><b>EN:</b> 25 templates currently ship with animated preview WebPs; the rest show a 🎬 placeholder. You can still use any template — the preview is only a visual aid. If a preview fails to load, hard-refresh the browser (Ctrl+F5) or check that the WebP exists in <code>web/previews/</code>.</p>
+<p><b>中文:</b> 当前有 25 个模板附带动图预览 WebP；其余显示 🎬 占位符。你仍然可以使用任何模板 — 预览只是视觉辅助。若预览无法加载，请强制刷新浏览器（Ctrl+F5）或检查 WebP 是否存在于 <code>web/previews/</code>。</p>
 </div>
 <div class="card">
 <div class="card-title">Q: How to add my own templates / 如何添加自定义模板</div>
@@ -425,7 +435,7 @@ non_diegetic_music: [背景音乐 / N/A 表示无]</code></pre>
 <hr style="border:none; border-top:1px solid var(--border); margin: 30px 0 15px;">
 <p style="color:#666; font-size:12px; text-align:center;">
 BSAI H3 Prompt Template Node Documentation / 节点使用说明<br>
-Version 1.0.0 | 144 templates | 46 expression templates | 25 preview GIFs<br>
+Version 1.0.0 | 176 templates | 46 expression templates | 25 preview WebPs<br>
 Based on MiniMax H3 official docs & micro-expression skill pack
 </p>
 

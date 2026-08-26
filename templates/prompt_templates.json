@@ -20,7 +20,7 @@
               "name": "黑白线稿转彩色真人跳舞",
               "name_en": "Black-and-white line art to colored real-human dancing",
               "description": "黑白人物线稿逐帧上色，线稿变为真实人物跳舞",
-              "preview": "lineart_to_dance.gif",
+              "preview": "lineart_to_dance.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 6,
               "needs_image": true,
@@ -335,7 +335,7 @@
               "name": "种子破土开花",
               "name_en": "Seed Sprouting to Full Bloom",
               "description": "一颗种子在土壤中破土、发芽、抽茎、含苞、绽放为花朵的完整生长",
-              "preview": "seed_to_bloom.gif",
+              "preview": "seed_to_bloom.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -355,7 +355,7 @@
               "name": "藤蔓缠绕生长",
               "name_en": "Vine Climbing Growth",
               "description": "藤蔓沿石墙或花架蜿蜒缠绕向上攀爬的延时生长",
-              "preview": "vine_climbing.gif",
+              "preview": "vine_climbing.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -395,7 +395,7 @@
               "name": "大树四季生长",
               "name_en": "Tree Growing Through the Seasons",
               "description": "一株树苗长成参天大树，并经历春夏秋冬四季轮回",
-              "preview": "tree_four_seasons.gif",
+              "preview": "tree_four_seasons.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 15,
               "needs_image": false,
@@ -511,7 +511,7 @@
               "name": "婴儿到成人",
               "name_en": "Baby to Adult One-Shot",
               "description": "同一个婴儿在连续镜头中成长为青年，五官特征全程保持",
-              "preview": "baby_to_adult.gif",
+              "preview": "baby_to_adult.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 15,
               "needs_image": false,
@@ -531,7 +531,7 @@
               "name": "容颜老去",
               "name_en": "Aging Portrait",
               "description": "同一张正面肖像从青春到暮年逐渐老去，皱纹白发浮现",
-              "preview": "aging_portrait.gif",
+              "preview": "aging_portrait.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -551,7 +551,7 @@
               "name": "一生旅程",
               "name_en": "Life Journey Timeline",
               "description": "一个人从婴儿到暮年的一生在连续横移镜头中展开",
-              "preview": "life_journey.gif",
+              "preview": "life_journey.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 15,
               "needs_image": false,
@@ -571,7 +571,7 @@
               "name": "形象蜕变",
               "name_en": "Character Metamorphosis",
               "description": "同一人物从青涩到成熟、从旧我到新我的蜕变",
-              "preview": "character_metamorphosis.gif",
+              "preview": "character_metamorphosis.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -619,7 +619,7 @@
               "name": "城市扩张生长",
               "name_en": "City Expansion from Empty Land",
               "description": "一片空地快速生长出完整现代城市的延时航拍",
-              "preview": "city_expansion.gif",
+              "preview": "city_expansion.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 15,
               "needs_image": false,
@@ -656,7 +656,7 @@
               "name": "摩天楼拔地而起",
               "name_en": "Skyscraper Construction",
               "description": "一座摩天大楼从基坑到封顶的完整施工延时",
-              "preview": "skyscraper_construction.gif",
+              "preview": "skyscraper_construction.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -676,7 +676,7 @@
               "name": "城市昼夜交替",
               "name_en": "City Day-Night Transition",
               "description": "同一城市天际线从清晨到夜晚的光影变换延时",
-              "preview": "city_day_night.gif",
+              "preview": "city_day_night.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -696,7 +696,7 @@
               "name": "室内装修延时",
               "name_en": "Interior Renovation Timelapse",
               "description": "一间毛坯房从空壳到精装完成的全过程延时",
-              "preview": "interior_renovation.gif",
+              "preview": "interior_renovation.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -744,7 +744,7 @@
               "name": "产品爆炸图组装",
               "name_en": "Exploded-View Product Assembly",
               "description": "一件产品从爆炸分解状态逐层合拢组装成完整成品",
-              "preview": "exploded_view_assembly.gif",
+              "preview": "exploded_view_assembly.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -784,7 +784,7 @@
               "name": "智能手表组装",
               "name_en": "Smartwatch Assembly Line",
               "description": "智能手表的精密零件逐一组装成整机的工业延时",
-              "preview": "smartwatch_assembly.gif",
+              "preview": "smartwatch_assembly.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -832,7 +832,7 @@
               "name": "高速车流光轨",
               "name_en": "Highway Light Trails",
               "description": "夜间高速公路上车流拉出红白光轨的延时",
-              "preview": "highway_light_trails.gif",
+              "preview": "highway_light_trails.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -1017,7 +1017,7 @@
               "name": "赛博朋克雨夜街道",
               "name_en": "Cyberpunk rainy street",
               "description": "霓虹灯雨夜城市街道，赛博朋克氛围",
-              "preview": "rain_cyberpunk.gif",
+              "preview": "rain_cyberpunk.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -1037,7 +1037,7 @@
               "name": "古战场史诗冲锋",
               "name_en": "Epic ancient battle charge",
               "description": "古代战场千军万马冲锋的史诗级场景",
-              "preview": "epic_battle.gif",
+              "preview": "epic_battle.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -1057,7 +1057,7 @@
               "name": "黑色悬疑审讯室",
               "name_en": "Film noir interrogation",
               "description": "黑色电影风格的审讯室悬疑场景",
-              "preview": "suspense_noir.gif",
+              "preview": "suspense_noir.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -1188,7 +1188,7 @@
               "name": "四季变换延时",
               "name_en": "Four seasons timelapse",
               "description": "同一场景经历春夏秋冬四季变换的延时效果",
-              "preview": "season_change.gif",
+              "preview": "season_change.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 12,
               "needs_image": false,
@@ -1215,7 +1215,7 @@
               "name": "太空行走",
               "name_en": "Space walk",
               "description": "宇航员在太空中行走的壮丽场景",
-              "preview": "space_walk.gif",
+              "preview": "space_walk.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
@@ -1626,7 +1626,7 @@
               "name": "哭泣",
               "name_en": "Cry",
               "description": "泪水涌出的哭泣，嘴唇颤抖",
-              "preview": "expr_cry.gif",
+              "preview": "expr_cry.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 6,
               "needs_image": true,
@@ -2607,7 +2607,7 @@
               "name": "腿法连击",
               "name_en": "Kick Chain Combo",
               "description": "以腿法为主的连续攻击，鞭腿回旋踢侧踢扫堂腿组合",
-              "preview": "combat_kick_chain.gif",
+              "preview": "combat_kick_chain.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 6,
               "needs_image": true,
@@ -2857,7 +2857,7 @@
               "name": "快速摇移切换",
               "name_en": "Whip Pan Switch",
               "description": "快速摇移在两个打斗者之间切换，制造高速紧张感",
-              "preview": "combat_whip_pan.gif",
+              "preview": "combat_whip_pan.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 6,
               "needs_image": true,
@@ -3035,7 +3035,7 @@
               "name": "武功绝学展现",
               "name_en": "Signature Technique Showcase",
               "description": "完整展现一套武功绝学的连续招式，多角度变化",
-              "preview": "combat_signature_move.gif",
+              "preview": "combat_signature_move.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 7,
               "needs_image": true,
@@ -3151,7 +3151,7 @@
               "name": "双雄决战",
               "name_en": "Two Champions Duel",
               "description": "多图参考：两位武者角色与战场分离，一镜四镜头高密度对决（15秒）",
-              "preview": "mi_two_champions.gif",
+              "preview": "mi_two_champions.webp",
               "generation_mode": "Image to Video (图生视频)",
               "duration": 15,
               "needs_image": true,
@@ -3205,6 +3205,634 @@
                 "高密度"
               ],
               "prompt": "subject_definitions:\n<Subject 1> is the main fighter from <Picture 1>, whose facial identity, hair, clothing, body proportions, weapon, and personal energy come from <Picture 1>.\n<Subject 2> is the opponent fighter from <Picture 2>, whose facial identity, hair, clothing, body proportions, weapon, and personal energy come from <Picture 2>.\n<Picture 3> is the only battlefield: the environment, weather, and lighting come entirely from <Picture 3>, and must be preserved exactly.\n\nsummary: [reference generation + combat showcase] Create a 15-second high-density duel between <Subject 1> and <Subject 2> inside the environment of <Picture 3>. <Picture 1> and <Picture 2> supply the two fighters' identities; <Picture 3> supplies the only environment, weather, and lighting. The two fighters engage in a continuous exchange of their weapons from the reference pictures with readable trajectories, immediate deflections, counter-strikes, and synchronized environmental feedback.\n\nretention_analysis:\n<Subject 1> (appears throughout): fully_preserved - identity, weapon, and energy stay locked to <Picture 1>.\n<Subject 2> (appears throughout): fully_preserved - identity, weapon, and energy stay locked to <Picture 2>.\n<Picture 3> (battlefield throughout): fully_preserved - the environment, weather, and lighting remain the sole environment; the display backgrounds of <Picture 1> and <Picture 2> never enter the scene.\n\ndetailed_description: The target video is a cinematic duel with a single continuous camera side and trajectory-first choreography, and clear causal chains between every strike.\n[Shot 1] 00:00.000-00:04.000, a low medium shot starts directly from the fused first frame with both fighters already inside the environment, mist/atmosphere curling around their feet. <Subject 1> first sweeps their weapon in a low arc that slices through two elements of the environment, which topple outward and shatter; <Subject 2> does not retreat, stepping through the falling debris and snapping their weapon at <Subject 1>'s chest, the tip deflected off the blade edge with a shower of sparks.\n声音: 武器切断环境的脆响、倒下碎裂声、武器破空声、刃与刃相击的火星爆鸣、脚步在湿/干地面的摩擦声，以及环境中的雨滴/风沙声。\n[Shot 2] At 00:04.000-00:09.000, a lateral tracking shot follows the exchange as they shift positions. <Subject 2> feints high and thrusts low, <Subject 1> parries and pivots the weapon to hook <Subject 2>'s shaft, yanking them off balance; <Subject 2> rolls with the pull, lands on one knee, and sweeps a kick at <Subject 1>'s ankle, forcing them to leap; droplets/particles scatter from the blade tips as they continue trading blows, each contact clear and immediate.\n声音: 连续多次刃器相交的金属鸣、武器钩住枪杆的绞动声、落地的闷响、扫堂腿带起的水/泥声、雨水/沙尘从刃尖甩落的细响，以及两人急促的呼吸。\n[Shot 3] At 00:09.000-00:13.000, the camera drops to a lower angle and pushes in as the duel escalates. <Subject 1> spins the weapon into a full-circle energy arc, forcing <Subject 2> back against a dense wall of the environment; <Subject 2> plants a foot on a fallen piece, reverses grip, and drives the weapon in a rising thrust that grazes past <Subject 1>'s shoulder guard, slicing a shallow line across the armor as both energies flare at the contact point; both fighters break apart, breathing hard, mist/atmosphere swirling between them.\n声音: 旋戟带起的风声、武器擦过肩甲的摩擦声、双方能量相撞的嗡鸣、环境被撞的摇晃声、急促的喘息，以及雨势/风势渐大的声音。\n[Shot 4] At 00:13.000-00:15.000, a grand wide shot reveals the clearing. <Subject 1> and <Subject 2> circle once, then charge and collide in a final crossing exchange: the weapons meet at the exact center of the frame, both locked, energy flaring, before they shove apart and hold ready stances among the mist and falling debris; the camera slowly pulls back, the light fading as the atmosphere deepens.\n声音: 终局冲刺的踏地声、武器咬合的金属鸣、双方推开时的发力闷哼、雾气翻涌的低频声、碎片飘落的细响，以及环境声在片尾逐渐减弱。\n\noverall_soundscape: No spoken dialogue. Continuous environmental ambience, weapon clashes, metal-on-wood impacts, wet footsteps, breathing, and the rustle of falling debris throughout.\n\nnon_diegetic_music: N/A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cinematic",
+      "name": "电影运镜模板",
+      "name_en": "Cinematic Camera Movement",
+      "description": "电影级摄影机运动模板：只改变运镜，不改变画面内容 / Cinematic camera movement templates: only the camera moves, scene content stays unchanged",
+      "icon": "🎥",
+      "subcategories": [
+        {
+          "id": "cam_basic",
+          "name": "基础运动类",
+          "name_en": "Basic Camera Moves",
+          "description": "推拉摇移升降甩等基础摄影机运动 / Push, pull, pan, tilt, truck, pedestal, whip pan",
+          "templates": [
+            {
+              "id": "cam_push_in",
+              "name": "推镜",
+              "name_en": "Push In (Dolly In)",
+              "description": "摄影机沿纵深轴线向前推进，画面逐渐收紧，增强代入感与情绪聚焦",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "推镜",
+                "Dolly In"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机沿纵深轴线匀速向前推进（Dolly In），景别由全景缓慢过渡至中近景，画面景深自然变化，产生强烈的代入感与情绪聚焦。推进过程平滑稳定，无抖动，速度先缓后稳，结尾定格于主体之上。\n\noverall_soundscape: \n环境声随镜头推进保持稳定，轻微的环境底噪，推进过程中若有若无的气流声，声音自然衔接。\n\nnon_diegetic_music: \n低沉而渐强的氛围音乐，音量随推进缓慢提升，营造聚焦与逼近的紧张感。"
+            },
+            {
+              "id": "cam_pull_out",
+              "name": "拉镜",
+              "name_en": "Pull Out (Dolly Out)",
+              "description": "摄影机沿纵深轴线向后拉远，视野逐渐展开，产生抽离与揭示感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "拉镜",
+                "Dolly Out"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机沿纵深轴线匀速向后拉远（Dolly Out），景别由中近景逐渐退至全景，视野不断展开，揭示更多环境空间，产生抽离与释然感。拉远过程平滑稳定，景别逐步放宽，结尾完整呈现主体与周围环境的空间关系。\n\noverall_soundscape: \n环境声随镜头拉远逐渐开阔，空间感增强，远处环境音渐入。\n\nnon_diegetic_music: \n舒缓渐弱的氛围音乐，随拉远逐渐放轻，营造释然与收束感。"
+            },
+            {
+              "id": "cam_pan_left",
+              "name": "左摇",
+              "name_en": "Pan Left",
+              "description": "摄影机固定机位水平自右向左旋转，横向扫视空间，产生空间揭示感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "摇镜",
+                "Pan"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，仅摄影机以镜头光轴为轴心自右向左水平匀速旋转（Pan Left），横向扫视画面空间，产生空间揭示感与视野延展。摇速平稳均匀，画面无跳动，结束时缓缓停稳。\n\noverall_soundscape: \n环境声随摇镜均匀铺开，空间方位感随画面轻微移动，无明显变化。\n\nnon_diegetic_music: \n平缓的氛围音乐，节奏与摇镜速度同步，稳定而克制。"
+            },
+            {
+              "id": "cam_pan_right",
+              "name": "右摇",
+              "name_en": "Pan Right",
+              "description": "摄影机固定机位水平自左向右旋转，横向扫视空间，产生空间揭示感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "摇镜",
+                "Pan"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，仅摄影机以镜头光轴为轴心自左向右水平匀速旋转（Pan Right），横向扫视画面空间，产生空间揭示感与视野延展。摇速平稳均匀，画面无跳动，结束时缓缓停稳。\n\noverall_soundscape: \n环境声随摇镜均匀铺开，空间方位感随画面轻微移动，无明显变化。\n\nnon_diegetic_music: \n平缓的氛围音乐，节奏与摇镜速度同步，稳定而克制。"
+            },
+            {
+              "id": "cam_tilt_up",
+              "name": "上摇",
+              "name_en": "Tilt Up",
+              "description": "摄影机固定机位垂直自下而上旋转，揭示上方空间与高度感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "摇镜",
+                "Tilt"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机在固定机位以镜头光轴为轴心自下而上垂直旋转（Tilt Up），画面由低处逐渐上移，揭示上方空间与高度感，营造仰望与期待感。摇速平稳均匀，画面无跳动，上摇角度适中，结束时缓缓停稳。\n\noverall_soundscape: \n环境声平稳，随画面上移空间高度感增强，轻微的风感渐入。\n\nnon_diegetic_music: \n缓缓上扬的氛围音乐，营造开阔与期待的上升感。"
+            },
+            {
+              "id": "cam_tilt_down",
+              "name": "下摇",
+              "name_en": "Tilt Down",
+              "description": "摄影机固定机位垂直自上而下旋转，揭示下方空间，产生俯瞰与收拢感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "摇镜",
+                "Tilt"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机在固定机位以镜头光轴为轴心自上而下垂直旋转（Tilt Down），画面由高处逐渐下移，揭示下方空间，产生俯瞰与收拢感。摇速平稳均匀，画面无跳动，下摇角度适中，结束时缓缓停稳。\n\noverall_soundscape: \n环境声平稳，随画面下移产生轻微的下沉与收拢感。\n\nnon_diegetic_music: \n平缓下沉的氛围音乐，营造安静收束的氛围。"
+            },
+            {
+              "id": "cam_truck",
+              "name": "横移",
+              "name_en": "Truck (Lateral Move)",
+              "description": "摄影机沿水平轨迹横向平移，前景与背景产生视差位移，增强空间纵深",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "移镜",
+                "Truck"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机沿与画面平行的水平轨迹匀速横移（Truck），横向平移穿越画面空间，前景与背景产生自然的视差位移（Parallax），增强空间纵深与层次感。平移平滑稳定，速度均匀，画面无抖动。\n\noverall_soundscape: \n环境声随横移自然流动，轻微的气流声与位移声，与镜头运动同步。\n\nnon_diegetic_music: \n流动感强的氛围音乐，与横移节奏一致，平稳推进。"
+            },
+            {
+              "id": "cam_pedestal",
+              "name": "升降",
+              "name_en": "Pedestal (Vertical Move)",
+              "description": "摄影机整体沿垂直方向升降，保持朝向不变，产生空间高度变化",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "升降",
+                "Pedestal"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机整体沿垂直方向匀速升降（Pedestal Up/Down），画面在保持朝向不变的情况下垂直位移，产生平缓的高度变化与空间升降感。升降平滑稳定，速度均匀，画面无倾斜。\n\noverall_soundscape: \n环境声随升降平稳，轻微的机械或气流声与升降同步。\n\nnon_diegetic_music: \n平稳舒展的氛围音乐，随升降缓慢起伏。"
+            },
+            {
+              "id": "cam_whip_pan",
+              "name": "甩镜",
+              "name_en": "Whip Pan (Swish Pan)",
+              "description": "摄影机快速水平甩动产生运动模糊，形成干净利落的视觉切换",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "甩镜",
+                "Whip Pan"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机做一次快速的水平甩动（Whip Pan），画面瞬间横向高速扫过并产生强烈的运动模糊，形成干净利落的视觉切换，随后在另一端缓缓停稳恢复清晰。甩动干脆有力，衔接流畅，模糊与清晰过渡自然。\n\noverall_soundscape: \n甩镜瞬间伴随一声清脆的气流破风声（whoosh），随后环境声自然恢复。\n\nnon_diegetic_music: \n节奏明快的配乐在甩镜瞬间同步加强，强化切换感。"
+            }
+          ]
+        },
+        {
+          "id": "cam_follow",
+          "name": "跟随与环绕类",
+          "name_en": "Follow & Orbit",
+          "description": "跟随、侧跟、环绕、斯坦尼康、手持等 / Tracking, side tracking, orbit, steadicam, handheld",
+          "templates": [
+            {
+              "id": "cam_tracking",
+              "name": "跟随镜头",
+              "name_en": "Tracking Shot",
+              "description": "摄影机与主体同步移动，主体保持稳定构图，产生同行沉浸感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "跟随",
+                "Tracking"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体外观不发生任何改变。摄影机与被摄主体保持相对位置同步移动（Tracking Shot），平滑跟随主体在画面中的运动路径，主体始终保持在画面内的稳定构图，产生与角色同行的沉浸感。跟随平滑稳定，无抖动，运动节奏自然。\n\noverall_soundscape: \n伴随主体移动的轻微环境声，脚步与空间回声自然衔接。\n\nnon_diegetic_music: \n持续推进的氛围音乐，与跟随节奏同步，营造沉浸感。"
+            },
+            {
+              "id": "cam_side_follow",
+              "name": "侧跟镜头",
+              "name_en": "Side Tracking Shot",
+              "description": "摄影机与主体行进方向平行侧移跟拍，前景背景掠过形成动感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "跟随",
+                "Side Tracking"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体外观不发生任何改变。摄影机与主体行进方向平行侧移跟拍（Side Tracking），主体在画面中横向穿行，摄影机保持与其同步的速度并排移动，前景背景快速掠过，形成强烈的动感与速度感。运动平滑，速度均匀。\n\noverall_soundscape: \n快速掠过的气流声与背景环境声交织，速度感强烈。\n\nnon_diegetic_music: \n节奏明快的音乐与侧移速度同步，动感十足。"
+            },
+            {
+              "id": "cam_orbit",
+              "name": "环绕镜头",
+              "name_en": "Orbit (Arc Shot)",
+              "description": "摄影机沿圆弧轨迹环绕主体，产生立体空间动感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "环绕",
+                "Orbit"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体外观不发生任何改变。摄影机以主体为圆心沿圆弧轨迹匀速环绕（Orbit），环绕半圈至一圈，产生强烈的空间纵深感与动态立体感。环绕平滑均匀，画面稳定，主体始终保持在画面中心附近，无跳切。\n\noverall_soundscape: \n环境声随环绕产生轻微的方位变化，气流声柔和包裹。\n\nnon_diegetic_music: \n环绕感强的氛围音乐，随旋转缓慢推进，营造空间张力。"
+            },
+            {
+              "id": "cam_360_orbit",
+              "name": "360度环绕",
+              "name_en": "360° Orbit Shot",
+              "description": "摄影机围绕主体完整环绕一圈，呈现全方位空间关系",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "环绕",
+                "360 Orbit"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体外观不发生任何改变。摄影机以主体为圆心沿圆周完整环绕一圈（360° Orbit），完整呈现主体各个角度的空间关系，产生强烈的动态环绕感与戏剧张力。环绕匀速平滑，画面稳定，无跳切，主体始终在画面中心。\n\noverall_soundscape: \n环境声随环绕完整过渡一圈，方位变化清晰可辨。\n\nnon_diegetic_music: \n富有张力的氛围音乐，随完整环绕逐步推进并收束。"
+            },
+            {
+              "id": "cam_steadicam",
+              "name": "斯坦尼康",
+              "name_en": "Steadicam Shot",
+              "description": "稳定器平滑穿梭场景，自由灵活位移，真实沉浸的空间穿越感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "斯坦尼康",
+                "Steadicam"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机采用斯坦尼康稳定器运动（Steadicam），平滑穿梭于场景空间，保持稳定的同时拥有自由灵活的位移轨迹，画面有轻微自然的呼吸感但整体平稳流畅，营造真实沉浸的空间穿越感。运动连贯，轨迹舒展。\n\noverall_soundscape: \n轻缓的环境底噪伴随流畅的位移声，空间感自然。\n\nnon_diegetic_music: \n平顺流动的氛围音乐，与斯坦尼康的流畅运动相契合。"
+            },
+            {
+              "id": "cam_handheld",
+              "name": "手持镜头",
+              "name_en": "Handheld Shot",
+              "description": "手持拍摄带轻微自然晃动，贴近纪实质感，真实临场感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "手持",
+                "Handheld"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机采用手持拍摄（Handheld），画面带有轻微、自然的晃动与呼吸感，贴近纪实质感，产生真实的临场感与紧张氛围。晃动幅度克制而自然，不破坏画面清晰度，运动节奏贴合情境。\n\noverall_soundscape: \n伴随轻微的环境底噪与拍摄者细微的移动声，纪实感强。\n\nnon_diegetic_music: \n克制的氛围音乐或现场环境声为主，突出临场纪实感。"
+            }
+          ]
+        },
+        {
+          "id": "cam_zoom",
+          "name": "变焦与焦距类",
+          "name_en": "Zoom & Focus",
+          "description": "推拉变焦、变焦推拉、跟焦等 / Dolly zoom, zoom in/out, rack focus",
+          "templates": [
+            {
+              "id": "cam_dolly_zoom",
+              "name": "推拉变焦",
+              "name_en": "Dolly Zoom (Vertigo Effect)",
+              "description": "推轨与变焦反向同步，背景空间扭曲，产生眩晕压迫感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "变焦",
+                "Dolly Zoom",
+                "希区柯克"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体大小与外观不发生任何改变。摄影机在向前推进的同时反向拉长焦距（Dolly Zoom / Vertigo Effect），主体大小几乎保持不变，而背景空间被强烈拉伸或压缩，产生经典的眩晕压迫感与心理冲击。变焦与推进严格同步，画面平稳，主体保持画面比例不变。\n\noverall_soundscape: \n背景环境声被空间扭曲感的声音处理包裹，低频渐强，产生压迫感。\n\nnon_diegetic_music: \n低频持续渐强的氛围音乐，与空间扭曲同步，制造眩晕张力。"
+            },
+            {
+              "id": "cam_zoom_in",
+              "name": "变焦推近",
+              "name_en": "Zoom In",
+              "description": "机位不动仅拉长焦距，画面逐步放大，视觉焦点向中心收拢",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "变焦",
+                "Zoom In"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机机位不动，仅通过连续拉长焦距（Zoom In）使画面逐步推近放大，视觉焦点向画面中心收拢，产生聚焦与逼近感。变焦平滑均匀，画面无抖动，放大过程稳定。\n\noverall_soundscape: \n环境声平稳，随画面放大轻微聚焦感增强。\n\nnon_diegetic_music: \n逐步聚焦的氛围音乐，音量随推近缓慢提升。"
+            },
+            {
+              "id": "cam_zoom_out",
+              "name": "变焦拉远",
+              "name_en": "Zoom Out",
+              "description": "机位不动仅缩短焦距，画面逐步缩小，视野展开产生抽离感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "变焦",
+                "Zoom Out"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机机位不动，仅通过连续缩短焦距（Zoom Out）使画面逐步拉远缩小，视野逐渐展开，产生抽离与揭示感。变焦平滑均匀，画面无抖动，缩小过程稳定。\n\noverall_soundscape: \n环境声平稳，随画面缩小空间感逐渐开阔。\n\nnon_diegetic_music: \n缓缓舒展的氛围音乐，随拉远逐渐放轻。"
+            },
+            {
+              "id": "cam_rack_focus",
+              "name": "跟焦",
+              "name_en": "Rack Focus (Focus Pull)",
+              "description": "机位构图不动，焦点由前景平滑转移到背景，引导空间层次",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "跟焦",
+                "Rack Focus"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机机位与构图保持不动，仅连续转移焦点（Rack Focus），画面清晰区域由前景平滑过渡到背景或反之，产生空间层次的引导与情绪暗示。焦点转移平稳流畅，虚化自然柔和。\n\noverall_soundscape: \n环境声平稳，随焦点转移有轻微的呼吸感。\n\nnon_diegetic_music: \n安静克制的氛围音乐，突出焦点转移的细腻情绪。"
+            }
+          ]
+        },
+        {
+          "id": "cam_angle",
+          "name": "角度与视角类",
+          "name_en": "Angle & POV",
+          "description": "仰拍、俯拍、顶拍、荷兰角、旋转、主观视角、过肩等 / Low/high/top-down angle, dutch, roll, POV, OTS",
+          "templates": [
+            {
+              "id": "cam_low_angle",
+              "name": "低角度仰拍",
+              "name_en": "Low Angle Shot",
+              "description": "低机位自下而上仰拍，主体呈现高大权威或压迫感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "仰拍",
+                "Low Angle"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机置于低机位自下而上仰拍（Low Angle），主体呈现高大、权威或压迫的视觉感受，构图向上延伸。仰拍角度稳定或伴随轻微缓慢的推进，画面平稳，无抖动。\n\noverall_soundscape: \n环境声沉稳，轻微的低频底噪强化压迫感。\n\nnon_diegetic_music: \n沉稳有力的氛围音乐，衬托主体气势。"
+            },
+            {
+              "id": "cam_high_angle",
+              "name": "高角度俯拍",
+              "name_en": "High Angle Shot",
+              "description": "高机位自上而下俯拍，主体显得渺小脆弱，产生审视感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "俯拍",
+                "High Angle"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机置于高机位自上而下俯拍（High Angle），画面带有俯瞰与审视感，主体显得渺小或脆弱，构图向下收拢。俯拍角度稳定或伴随轻微缓慢的拉远，画面平稳，无抖动。\n\noverall_soundscape: \n环境声空旷，空间感与距离感增强。\n\nnon_diegetic_music: \n克制低沉的氛围音乐，营造审视与疏离感。"
+            },
+            {
+              "id": "cam_top_down",
+              "name": "顶拍俯冲",
+              "name_en": "Top-Down Shot",
+              "description": "正上方垂直构图或俯冲下压，产生空间压迫与对称美感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "顶拍",
+                "Top-Down"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机垂直于画面正上方（Top-Down Shot），或从俯瞰全景迅速下压至近景，产生强烈的空间压迫与对称美感。下压平滑迅捷，画面稳定，构图工整对称。\n\noverall_soundscape: \n环境声随下压轻微增强，压迫感同步上升。\n\nnon_diegetic_music: \n紧张渐强的氛围音乐，与俯冲下压同步收束。"
+            },
+            {
+              "id": "cam_dutch_angle",
+              "name": "荷兰角",
+              "name_en": "Dutch Angle (Tilted Frame)",
+              "description": "画面水平轴倾斜构图，产生失衡紧张诡异的心理暗示",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "荷兰角",
+                "Dutch Angle"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机保持画面水平轴倾斜（Dutch Angle / Tilted Frame），构图呈倾斜对角线，产生失衡、紧张、诡异的心理暗示。倾斜角度稳定或伴有轻微缓慢的调整，画面平稳，无抖动。\n\noverall_soundscape: \n环境声轻微失衡感处理，微弱的低频不和谐音。\n\nnon_diegetic_music: \n不安感的氛围音乐，强化失衡与紧张情绪。"
+            },
+            {
+              "id": "cam_roll",
+              "name": "旋转",
+              "name_en": "Roll Shot",
+              "description": "摄影机绕镜头光轴旋转，画面水平转动产生眩晕迷幻感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "旋转",
+                "Roll"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机绕镜头光轴做旋转运动（Roll），画面围绕画面中心水平旋转，产生眩晕、梦境或迷幻的视觉效果。旋转角度平滑，速度均匀，可局部旋转或完整旋转一圈，画面无跳切。\n\noverall_soundscape: \n环境声随旋转轻微飘移，产生迷幻感。\n\nnon_diegetic_music: \n迷幻空灵的氛围音乐，与旋转同步的悬浮感。"
+            },
+            {
+              "id": "cam_pov",
+              "name": "主观视角",
+              "name_en": "POV Shot (First-Person)",
+              "description": "第一人称主观视角，镜头即视线，产生强烈代入感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "主观视角",
+                "POV"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用主观第一人称视角（POV），画面模拟主体双眼的视线与运动节奏，镜头即视线，移动即主体的行动，产生强烈的代入感与沉浸感。视线移动自然，带有真实的观察与转向节奏，画面平稳。\n\noverall_soundscape: \n以主观听觉为主的环境声，远近层次分明，贴近真实感知。\n\nnon_diegetic_music: \n克制的环境氛围音乐，突出主观沉浸。"
+            },
+            {
+              "id": "cam_ots",
+              "name": "过肩镜头",
+              "name_en": "Over-the-Shoulder Shot",
+              "description": "过肩构图以前景肩部为框架，产生对话交流临场感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "过肩",
+                "Over-the-Shoulder"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用过肩构图（Over-the-Shoulder），前景边缘保留参考画面中一侧的肩部轮廓作为框架，摄影机越过肩部聚焦于画面主体，产生对话交流的临场感与空间层次。构图稳定，焦点清晰，可伴随轻微缓慢的推进。\n\noverall_soundscape: \n贴近的对话空间环境声，方位感清晰。\n\nnon_diegetic_music: \n安静克制的氛围音乐，突出交流的亲密感。"
+            }
+          ]
+        },
+        {
+          "id": "cam_aerial",
+          "name": "大范围与特殊运镜类",
+          "name_en": "Aerial & Special",
+          "description": "航拍、无人机穿越、摇臂、穿越、穿越机、子弹时间等 / Aerial, drone fly-through, crane, dolly through, FPV, bullet time",
+          "templates": [
+            {
+              "id": "cam_aerial",
+              "name": "航拍镜头",
+              "name_en": "Aerial Drone Shot",
+              "description": "高空航拍俯瞰空间，展现宏大布局与动态气势",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "航拍",
+                "Aerial"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用高空航拍视角（Aerial Shot），摄影机在高空俯瞰画面空间，自由飞行与转向，展现宏大的空间布局与动态气势。航拍高度平滑变化，可平移、拉升或环绕，画面平稳无抖动，运动轨迹流畅。\n\noverall_soundscape: \n高空环境风噪声为主，空间开阔，距离感强。\n\nnon_diegetic_music: \n宏阔舒展的氛围音乐，衬托大场景气势。"
+            },
+            {
+              "id": "cam_drone_fly",
+              "name": "无人机穿越",
+              "name_en": "Drone Fly-Through",
+              "description": "无人机高速低空穿越画面空间，前景掠过产生强烈速度感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "航拍",
+                "穿越",
+                "Drone"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用无人机穿越式运镜（Drone Fly-Through），摄影机高速低空穿越画面空间，在场景中快速穿梭，前景物体高速掠过，产生强烈的速度感与临场冲击。穿越流畅，运动轨迹连贯，画面平稳。\n\noverall_soundscape: \n快速掠过的风声与空气撕裂声，速度感强烈。\n\nnon_diegetic_music: \n节奏紧凑的配乐，与穿越速度同步推进。"
+            },
+            {
+              "id": "cam_crane",
+              "name": "摇臂镜头",
+              "name_en": "Crane Shot (Jib)",
+              "description": "摇臂大范围升降与平移，产生宏大舒展的视觉气势",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "摇臂",
+                "Crane",
+                "Jib"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用摇臂/升降车运镜（Crane / Jib Shot），摄影机沿弧线大范围升降与平移，从低到高或从高到低地横扫画面空间，产生宏大舒展的视觉气势。运动平滑流畅，轨迹优美，画面稳定。\n\noverall_soundscape: \n环境声随摇臂升降产生开阔的空间变化，风感自然。\n\nnon_diegetic_music: \n大气舒展的氛围音乐，与摇臂运动的气势相得益彰。"
+            },
+            {
+              "id": "cam_dolly_through",
+              "name": "穿越镜头",
+              "name_en": "Dolly Through",
+              "description": "摄影机沿纵深轨迹穿过画面空间，两侧前景掠过形成穿梭感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "穿越",
+                "Dolly Through"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，摄影机沿纵深轨迹穿过画面空间（Dolly Through），画面两侧前景快速掠过，产生穿梭与穿越的强烈空间动感。穿越平滑，焦点随空间深度自然变化，运动轨迹连贯，画面稳定。\n\noverall_soundscape: \n穿梭的气流声与前景掠过声，空间穿越感强。\n\nnon_diegetic_music: \n流动推进的氛围音乐，与穿越动感同步。"
+            },
+            {
+              "id": "cam_fpv",
+              "name": "穿越机视角",
+              "name_en": "FPV Shot (First-Person View Drone)",
+              "description": "穿越机极速贴地飞行，画面高速晃动连续翻转，极限速度感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "穿越机",
+                "FPV"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用穿越机第一视角（FPV / First-Person View），摄影机以极快的速度贴地或贴面飞行穿越，画面高速晃动且视角连续翻转，充满极限速度感与沉浸冲击。运动迅猛连贯，速度感强烈，画面保持可辨识清晰度。\n\noverall_soundscape: \n剧烈的空气撕裂声与引擎嗡鸣交织，极限速度氛围。\n\nnon_diegetic_music: \n高能电子配乐，节奏与穿越机运动同步爆发。"
+            },
+            {
+              "id": "cam_bullet_time",
+              "name": "子弹时间",
+              "name_en": "Bullet Time",
+              "description": "时间近乎冻结瞬间摄影机高速环绕定格，超现实时空凝滞感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "子弹时间",
+                "Bullet Time"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用子弹时间运镜（Bullet Time），摄影机在时间近乎冻结的瞬间围绕主体做高速环绕定格，主体动作凝固于空中，摄影机环绕展现空间细节，产生超现实的时空凝滞感。环绕匀速，画面清晰锐利，无跳切。\n\noverall_soundscape: \n凝固时空感的声音处理，环绕气流声清晰可辨。\n\nnon_diegetic_music: \n空灵延展的配乐，突出时间凝滞的超现实感。"
             }
           ]
         }

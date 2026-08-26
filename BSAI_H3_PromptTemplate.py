@@ -97,8 +97,8 @@ class BSAI_H3_PromptTemplate:
     DESCRIPTION = """
 One-click H3 prompt template selector / 一键式 H3 提示词模板选择器
 
-Categorized templates: I2VA / T2VA / FL2VA / Ref2VA + Expression + Growth + Timelapse + Combat
-分类模板：图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 + 人物表情 + 生长类 + 延时摄影 + 武打对打
+Categorized templates: I2VA / T2VA / FL2VA / Ref2VA + Expression + Growth + Timelapse + Combat + Cinematic
+分类模板：图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 + 人物表情 + 生长类 + 延时摄影 + 武打对打 + 电影运镜
 
 Features / 功能特点:
 - Visual template browser with search / 可视化模板浏览器，支持搜索

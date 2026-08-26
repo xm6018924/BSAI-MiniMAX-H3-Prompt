@@ -359,7 +359,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 **EN:** The **BSAI H3 Prompt Template** node provides categorized H3 prompt templates. One click outputs a complete three-field structured prompt without needing LLM optimization.
 
-#### 三级分类体系 / Three-Level Category System (144 templates / 8 categories)
+#### 三级分类体系 / Three-Level Category System (176 templates / 9 categories)
 
 | 一级分类 / Category | 二级分类 / Subcategories | 模板示例 / Examples |
 |-|-|-|
@@ -371,15 +371,16 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | **延时摄影类 (Time-Lapse)** | 建筑延时类 / 产品组装延时类 / 交通类延时 / 自然景观延时类 | 摩天楼拔地而起、智能手表组装、高速车流光轨、星轨流转 |
 | **人物表情模板 (Expression)** | 基础表情类 / 微表情类 / 情绪过渡类 / 社交面具类 / 崩溃边缘类 | 微笑、忍住不哭、笑转哭、被揭穿后微笑、沉默太久 |
 | **武打打斗模板 (Combat)** | 拳脚对打类 / 冷兵器对战类 / 快慢镜头类 / 打斗运镜类 / 多人群战类 / 特殊招式类 / 触发词战斗类 / 多图成战类 | 散打对咏春、双刀对长枪、子弹时间闪避、双雄决战 |
+| **电影运镜模板 (Cinematic)** | 基础运动类 / 跟随与环绕类 / 变焦与焦距类 / 角度与视角类 / 大范围与特殊运镜类 | 推镜、甩镜、360度环绕、推拉变焦、子弹时间、无人机穿越 |
 
 #### 使用方法 / Usage
 
 1. 在 ComfyUI 中添加 `BSAI H3 Prompt Template` 节点
 2. 节点上方显示可视化模板浏览器：
-   - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打）
+   - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打 / 电影运镜）
    - **二级分类**下拉框：选择模板子类（线稿类 / 角色参考类 / 产品展示类 等）
    - **模板列表**：点击任意模板即可选择
-3. 右侧显示 **GIF 预览动画**（2-3秒循环）和模板信息（生成模式 / 时长 / 是否需要图片）
+3. 右侧显示 **WebP 预览动画**（400×400 动图，遵循 ComfyUI 官方 workflow templates 规格）和模板信息（生成模式 / 时长 / 是否需要图片）
 4. `prompt_output` 输出端口直接输出完整的 H3 三字段提示词
 5. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
 6. `external_prompt` 可选输入端口可连接其他节点文本，用于修改或补充模板提示词
@@ -387,19 +388,19 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 **EN:**
 1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
 2. A visual template browser appears above the node:
-   - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat)
+   - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat / Cinematic)
    - **Subcategory** dropdown: choose a template subclass
    - **Template list**: click any template to select it
-3. The right panel shows a **GIF preview animation** and template info (generation mode / duration / needs-image).
+3. The right panel shows a **WebP preview animation** (400×400, per ComfyUI official workflow-templates spec) and template info (generation mode / duration / needs-image).
 4. The `prompt_output` port directly outputs the full H3 three-field prompt.
 5. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
 6. The optional `external_prompt` input port accepts text from other nodes to modify or supplement the template prompt.
 
 > **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
-#### GIF 预览 / GIF Previews
+#### 预览动画 / Previews
 
-25 个模板配有 GIF 预览动画，展示模板效果示意。GIF 文件位于 `web/previews/` 目录，可自行添加更多预览动画。25 templates ship with GIF preview animations in `web/previews/`; add more by copying GIFs there and setting the `preview` field in the JSON.
+25 个模板配有预览动画（动图 WebP，400×400，遵循 ComfyUI 官方 workflow templates 预览规格）。文件位于 `web/previews/` 目录，可自行添加更多预览。25 templates ship with animated WebP previews (400×400, matching the ComfyUI official workflow-templates preview spec) in `web/previews/`; add more by copying files there and setting the `preview` field in the JSON.
 
 #### 自定义模板
 
@@ -411,7 +412,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
   "name": "模板名称",
   "name_en": "Template Name (EN)",
   "description": "模板描述",
-  "preview": "my_preview.gif",
+  "preview": "my_preview.webp",
   "generation_mode": "Image to Video (图生视频)",
   "duration": 6,
   "needs_image": true,
@@ -492,6 +493,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.6.0 — 电影运镜模板 + 预览统一为 WebP / Cinematic Camera Movement + WebP Previews
+
+**中文说明：**
+
+- **新增电影运镜模板分类**：全网搜索整理 32 个电影运镜模板（5 个子类：基础运动 / 跟随环绕 / 变焦焦距 / 角度视角 / 大范围特殊），涵盖推拉摇移升降甩、跟随、侧跟、环绕、360度环绕、斯坦尼康、手持、推拉变焦（希区柯克）、变焦推近/拉远、跟焦、低/高角度、顶拍、荷兰角、旋转、主观视角、过肩、航拍、无人机穿越、摇臂、穿越、穿越机、子弹时间等。全部遵循 MiniMax H3 提示词 SKILL 三字段格式，全部名称与参数设置中英双语对照。
+- **运镜模板通用化**：所有运镜模板只描述摄影机运动（方向 / 速度 / 时间节拍 / 构图景别），严格引用输入图片 `<Picture 1>` 且保持其场景与人物特征完全不变，绝不覆盖输入画面内容。
+- **预览文件统一为 WebP**：将全部 25 个模板预览从 GIF 转换为动图 WebP，尺寸统一为 **400×400**，与 ComfyUI 官方 workflow templates 的模板预览格式与大小保持一致；JSON `preview` 字段同步更新为 `.webp`。
+- **模板总数**：144 → **176**（9 大分类）。
+
+**English:**
+
+- **New Cinematic Camera Movement category**: 32 camera-movement templates researched and organized into 5 subcategories (Basic / Follow & Orbit / Zoom & Focus / Angle & POV / Aerial & Special) covering push in, pull out, pan, tilt, truck, pedestal, whip pan, tracking, side tracking, orbit, 360° orbit, steadicam, handheld, dolly zoom (Vertigo), zoom in/out, rack focus, low/high angle, top-down, dutch angle, roll, POV, over-the-shoulder, aerial, drone fly-through, crane, dolly through, FPV, and bullet time. All follow the MiniMax H3 prompt SKILL three-field structure, all names and parameters are bilingual (中文 | English).
+- **Generic camera templates**: each template describes only the camera motion (direction / speed / time beats / framing) and strictly references `<Picture 1>` while keeping its scene and character features completely unchanged — never overriding the input image.
+- **Previews unified to WebP**: all 25 template previews converted from GIF to animated WebP at **400×400**, matching the ComfyUI official workflow-templates preview format and size; JSON `preview` fields updated to `.webp`.
+- **Total templates**: 144 → **176** (9 categories).
+
+---
 
 ### v1.5.0 — 模板通用化 + 预览GIF + 双语使用说明 / Generic Templates + Preview GIFs + Bilingual Docs
 
