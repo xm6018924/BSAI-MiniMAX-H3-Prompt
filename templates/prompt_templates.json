@@ -764,7 +764,7 @@
               "name": "3D打印成形",
               "name_en": "3D Printing Process",
               "description": "3D打印机逐层打印出一件立体物品的全过程延时",
-              "preview": "",
+              "preview": "printer_3d_printing.webp",
               "generation_mode": "Text to Video (文生视频)",
               "duration": 10,
               "needs_image": false,
