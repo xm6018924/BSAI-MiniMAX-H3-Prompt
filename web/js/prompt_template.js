@@ -139,6 +139,15 @@ if (!document.getElementById(STYLE_ID)) {
     border-radius: 8px; padding: 0 3px; margin-right: 4px; line-height: 1.4;
 }
 .bsai-tpl-sel-hint { font-size: 9px; color: #446; padding: 0 2px; }
+/* Multi-select mode switch */
+.bsai-tpl-mode {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #88a; padding: 2px 2px; user-select: none; cursor: pointer;
+}
+.bsai-tpl-mode input { cursor: pointer; accent-color: #3f789e; margin: 0; }
+.bsai-tpl-mode .mode-tag { font-size: 9px; padding: 1px 6px; border-radius: 8px; border: 1px solid #335; color: #678; }
+.bsai-tpl-mode .mode-tag.on { background: #2a4a3a; color: #9d9; border-color: #3a6a4a; }
+.bsai-tpl-mode .mode-tag.off { background: #2a2a2a; color: #889; border-color: #444; }
 /* Customization textarea */
 .bsai-tpl-cust { margin-top: 6px; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
@@ -310,8 +319,24 @@ function buildTemplateUI(node) {
     // Selection stack bar (multi-select)
     const selBar = document.createElement("div");
     selBar.className = "bsai-tpl-sel";
-    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">点击模板叠加选择（可多选，第1个为主体）/ Click templates to stack (multi-select, 1st = base)</div>';
+    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">点击模板单选 / Click a template to select (single-select)</div>';
     left.appendChild(selBar);
+
+    // Mode switch: Single (default) / Multi-Stack
+    const modeRow = document.createElement("label");
+    modeRow.className = "bsai-tpl-mode";
+    modeRow.title = "默认单选：点击模板即选中并预览。开启后为多选叠加：点击多个模板合并为一个提示词 / Default single-select. Enable to stack multiple templates into one prompt.";
+    const modeCb = document.createElement("input");
+    modeCb.type = "checkbox";
+    const modeTxt = document.createElement("span");
+    modeTxt.textContent = "多选叠加 / Multi-Stack";
+    const modeTag = document.createElement("span");
+    modeTag.className = "mode-tag off";
+    modeTag.textContent = "OFF · 单选";
+    modeRow.appendChild(modeCb);
+    modeRow.appendChild(modeTxt);
+    modeRow.appendChild(modeTag);
+    left.appendChild(modeRow);
 
     // Template list
     const listDiv = document.createElement("div");
@@ -369,6 +394,20 @@ function buildTemplateUI(node) {
     node._bsaiTopDiv = topDiv;
     node._bsaiSelBar = selBar;
     node._bsaiSelection = [];
+    node._bsaiMultiMode = false;  // default: single-select
+    node._bsaiModeCb = modeCb;
+    node._bsaiModeTag = modeTag;
+
+    // Mode switch handler: single (default) <-> multi-stack
+    modeCb.addEventListener("change", function() {
+        node._bsaiMultiMode = modeCb.checked;
+        if (!node._bsaiMultiMode && node._bsaiSelection.length > 1) {
+            // back to single: keep only the base (first) template
+            node._bsaiSelection = node._bsaiSelection.slice(0, 1);
+        }
+        syncModeUI(node);
+        syncSelectionUI(node);
+    });
 
     // Register as DOM widget
     if (typeof node.addDOMWidget === "function") {
@@ -655,12 +694,28 @@ function renderTemplateList(node, sub, cat, listDiv) {
 // ── Multi-select: selection stack ──
 const MAX_SELECT = 5;
 
+function syncModeUI(node) {
+    const multi = !!node._bsaiMultiMode;
+    if (node._bsaiModeCb) node._bsaiModeCb.checked = multi;
+    if (node._bsaiModeTag) {
+        node._bsaiModeTag.className = "mode-tag " + (multi ? "on" : "off");
+        node._bsaiModeTag.textContent = multi ? "ON · 多选叠加" : "OFF · 单选";
+    }
+}
+
 function isSelected(node, tpl) {
     return (node._bsaiSelection || []).some(function(it) { return it.tpl.id === tpl.id; });
 }
 
 function toggleSelection(node, cat, sub, tpl) {
     if (!node._bsaiSelection) node._bsaiSelection = [];
+    if (!node._bsaiMultiMode) {
+        // Single-select (default): replace the selection with this template and preview it
+        node._bsaiSelection = [{ cat: cat, sub: sub, tpl: tpl }];
+        syncSelectionUI(node);
+        return;
+    }
+    // Multi-select: toggle add / remove
     const idx = node._bsaiSelection.findIndex(function(it) { return it.tpl.id === tpl.id; });
     if (idx >= 0) {
         node._bsaiSelection.splice(idx, 1);  // remove
@@ -672,7 +727,12 @@ function toggleSelection(node, cat, sub, tpl) {
 }
 
 function syncSelectionUI(node) {
-    const sel = node._bsaiSelection || [];
+    let sel = node._bsaiSelection || [];
+    // Single-select (default) never keeps more than one template
+    if (!node._bsaiMultiMode && sel.length > 1) {
+        sel = sel.slice(0, 1);
+        node._bsaiSelection = sel;
+    }
     const selBar = node._bsaiSelBar;
     const tplW = findWidget(node, "template_select");
 
@@ -693,7 +753,9 @@ function syncSelectionUI(node) {
         if (sel.length === 0) {
             const h = document.createElement("div");
             h.className = "bsai-tpl-sel-empty";
-            h.textContent = "点击模板叠加选择（可多选，第1个为主体）/ Click templates to stack (multi-select, 1st = base)";
+            h.textContent = node._bsaiMultiMode
+                ? "多选模式：点击模板叠加（第1个为主体）/ Multi: click to stack (1st = base)"
+                : "点击模板单选并预览 / Click a template to select & preview";
             selBar.appendChild(h);
         } else {
             sel.forEach(function(it, i) {
@@ -785,6 +847,10 @@ function restoreSelection(node, savedValue) {
     if (!_tplData) return;
     node._bsaiSelection = [];
     const labels = (savedValue || "").split("|||").map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+    // Multi-mode is auto-enabled when the saved value contains stacked labels
+    const multi = labels.length > 1;
+    node._bsaiMultiMode = multi;
+    syncModeUI(node);
     let first = null;
     labels.forEach(function(label) {
         const parts = label.split(" > ");

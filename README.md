@@ -380,7 +380,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
    - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打 / 电影运镜）
    - **二级分类**下拉框：选择模板子类（线稿类 / 角色参考类 / 产品展示类 等）
    - **模板列表**：点击任意模板即可加入已选叠加栈
-3. **多选叠加（Multi-Stack）**：可叠加选择多个模板（最多 5 个），如先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，画面效果更丰富；第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜）。已选条支持单个移除与一键清除。
+3. **多选叠加（Multi-Stack）**：默认<b>单选</b>（点击模板即选中并立即预览）。开启列表上方的"多选叠加 / Multi-Stack"开关后可叠加选择多个模板（最多 5 个），如先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，画面效果更丰富；第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜）。已选条支持单个移除与一键清除，关闭开关后仅保留基础模板。
 4. 右侧显示 **WebP 预览动画**（400×400 动图，遵循 ComfyUI 官方 workflow templates 规格）和模板信息（生成模式 / 时长 / 是否需要图片）
 5. `prompt_output` 输出端口直接输出**合并后的单一 H3 三字段提示词**（基础场景/动作 + 叠加运镜指令，音效合并，音乐优先级补全）
 6. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
@@ -500,14 +500,14 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 **中文说明：**
 
-- **模板浏览器支持多选叠加（最多 5 个）**：点击模板加入已选叠加栈，第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜、表情）。顶部已选条支持单个移除与一键清除，列表项高亮显示已选状态。
+- **模板浏览器支持多选叠加（最多 5 个）**：新增"多选叠加 / Multi-Stack"开关，**默认单选**（点击模板即选中并立即预览）。开启开关后点击模板加入已选叠加栈，第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜、表情）。顶部已选条支持单个移除与一键清除，列表项高亮显示已选状态；关闭开关后仅保留基础模板。
 - **合并输出单一 H3 提示词**：`template_select` 以 `|||` 携带多个模板标签；节点按 H3 SKILL 三字段结构智能合并——基础场景/动作 + 叠加模板指令块追加（`# Overlay 叠加模板: XXX`），音效合并，音乐优先级补全（基础无音乐则取叠加模板音乐）。
 - **示例**：先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，输出为"近身缠斗动作 + 环绕运镜"的单一规范 H3 提示词。
 - **输出端口同步**：`template_name` 返回合并名称（A + B），`generation_mode` 标记"多模板叠加 Multi-Stack"，`description` 附叠加列表，`preview_file`/`duration` 取基础模板。
 
 **English:**
 
-- **Multi-select stacking in the template browser (up to 5)**: click templates to add them to the selection stack; the 1st is the base (scene/action), the rest are overlays (e.g. camera moves, expressions). The chips bar supports per-item removal and one-click clear; list items are highlighted when selected.
+- **Multi-select stacking in the template browser (up to 5)**: a **Multi-Stack switch** controls the mode. It is **OFF (single-select) by default** — clicking a template selects it and previews it immediately. Turn the switch ON to stack templates; the 1st is the base (scene/action), the rest are overlays (e.g. camera moves, expressions). The chips bar supports per-item removal and one-click clear; list items are highlighted when selected. Turning the switch OFF keeps only the base template.
 - **Merged single H3 prompt**: `template_select` carries multiple labels joined by `|||`; the node merges them per the H3 SKILL three-field structure — base scene/action + overlay directive blocks appended (`# Overlay: XXX`), soundscape merged, music priority-filled (base's N/A music falls back to overlay's).
 - **Example**: pick "Close Grappling" first, then "Orbit (Arc Shot)" → one coherent H3 prompt of close-combat action + orbit camera move.
 - **Output ports updated**: `template_name` returns the merged name (A + B), `generation_mode` flags "Multi-Stack", `description` lists the overlays, `preview_file`/`duration` come from the base template.
