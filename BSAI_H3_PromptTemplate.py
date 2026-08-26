@@ -437,6 +437,10 @@ def _register_asr_route():
             return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
 
         def _run():
+            import sys
+            # ensure this node's directory is importable at runtime
+            if _THIS_DIR not in sys.path:
+                sys.path.insert(0, _THIS_DIR)
             from h3_direct_llm import generate_h3_prompt
             return generate_h3_prompt(text)
 
