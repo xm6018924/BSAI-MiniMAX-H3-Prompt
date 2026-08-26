@@ -46,6 +46,71 @@ def _find_template(label):
     return None
 
 
+# ── Multi-select merging (H3 SKILL three-field composition) ──
+_LABEL_SEP = "|||"
+
+
+def _split_prompt(prompt):
+    """Split a template prompt into H3 sections: header, desc, sound, music."""
+    p = prompt or ""
+    out = {"header": "", "desc": "", "sound": "", "music": ""}
+    idx = p.find("integrated_multimodal_description:")
+    if idx < 0:
+        out["header"] = p.strip()
+        return out
+    out["header"] = p[:idx].strip()
+    body = p[idx:]
+    nxt = body.find("overall_soundscape:")
+    if nxt < 0:
+        nxt = len(body)
+    out["desc"] = body[len("integrated_multimodal_description:"):nxt].strip()
+    if nxt < len(body):
+        tail = body[nxt:]
+        m2 = tail.find("non_diegetic_music:")
+        if m2 < 0:
+            out["sound"] = tail[len("overall_soundscape:"):].strip()
+        else:
+            out["sound"] = tail[len("overall_soundscape:"):m2].strip()
+            out["music"] = tail[m2 + len("non_diegetic_music:"):].strip()
+    return out
+
+
+def _is_na(s):
+    return not s or s.strip().upper() in ("", "N/A", "NA", "无")
+
+
+def _merge_template_prompts(tpls):
+    """Merge multiple template prompts into ONE coherent H3 prompt.
+    Base = first template (scene/action), overlays = extra camera/directive templates."""
+    if not tpls:
+        return ""
+    if len(tpls) == 1:
+        return tpls[0].get("prompt", "")
+    base = _split_prompt(tpls[0].get("prompt", ""))
+    desc = base["desc"]
+    sound = base["sound"]
+    music = base["music"]
+    for t in tpls[1:]:
+        sec = _split_prompt(t.get("prompt", ""))
+        label = f"{t.get('name','')} | {t.get('name_en','')}"
+        if sec["desc"]:
+            desc += f"\n\n# Overlay 叠加模板: {label}\n{sec['desc']}"
+        if not _is_na(sec["sound"]):
+            if _is_na(sound):
+                sound = sec["sound"]
+            else:
+                sound += "\n" + sec["sound"]
+        if _is_na(music) and not _is_na(sec["music"]):
+            music = sec["music"]
+    parts = []
+    if base["header"]:
+        parts.append(base["header"])
+    parts.append("integrated_multimodal_description: \n" + (desc or "N/A"))
+    parts.append("overall_soundscape: \n" + (sound or "N/A"))
+    parts.append("non_diegetic_music: \n" + (music or "N/A"))
+    return "\n\n".join(parts)
+
+
 class BSAI_H3_PromptTemplate:
     """One-click H3 prompt template selector with categorized templates and GIF preview."""
 
@@ -57,7 +122,7 @@ class BSAI_H3_PromptTemplate:
                     "STRING",
                     {
                         "default": "(None / 自定义 / Custom)",
-                        "tooltip": "Selected via visual template browser below / 通过下方可视化模板浏览器选择\nClick a template to auto-fill this field / 点击模板自动填充此字段",
+                        "tooltip": "Selected via visual template browser below / 通过下方可视化模板浏览器选择\nClick templates to stack (multi-select), separated by ||| / 点击模板叠加多选，以 ||| 分隔\nCombined into one H3 prompt / 合并输出为一个 H3 提示词",
                     },
                 ),
                 "user_customization": (
@@ -103,7 +168,8 @@ Categorized templates: I2VA / T2VA / FL2VA / Ref2VA + Expression + Growth + Time
 Features / 功能特点:
 - Visual template browser with search / 可视化模板浏览器，支持搜索
 - Cascading selection: Category > Subcategory > Template / 级联选择：分类 > 子类 > 模板
-- GIF preview on the right panel / 右侧 GIF 预览
+- Multi-select stacking: combine 2+ templates (e.g. combat + camera move) into one H3 prompt / 多选叠加：组合 2+ 个模板（如武打+运镜）合并为一个 H3 提示词
+- GIF/WebP preview on the right panel / 右侧预览动画
 - Optional user customization textarea / 可选的补充修改文本框
 - External prompt text input port (external_prompt) for modify/supplement / 外部提示词文本输入端口（external_prompt），用于修改或补充
 - Bilingual template names (中文 | English) / 模板名称中英双语对照
@@ -112,7 +178,13 @@ Features / 功能特点:
 """
 
     def get_template(self, template_select, user_customization="", external_prompt=""):
-        tpl = _find_template(template_select)
+        # Support multi-select: labels joined by "|||", e.g. "武打打斗模板 > 多图成战类 > 贴身缠斗 ||| 电影运镜模板 > 跟随与环绕类 > 环绕镜头"
+        labels = [x.strip() for x in (template_select or "").split(_LABEL_SEP) if x.strip()]
+        tpls = []
+        for lbl in labels:
+            t = _find_template(lbl)
+            if t is not None:
+                tpls.append(t)
 
         # Collect extra instruction sections (external port first, then textarea)
         extra_sections = []
@@ -124,7 +196,7 @@ Features / 功能特点:
             extra_sections.append("--- User Customization / 用户自定义 ---\n" + cust)
         extra_text = "\n\n".join(extra_sections)
 
-        if tpl is None:
+        if not tpls:
             custom_text = (template_select or "").strip()
             if custom_text and not custom_text.startswith("("):
                 prompt = custom_text
@@ -134,19 +206,26 @@ Features / 功能特点:
                 prompt = (prompt + "\n\n" if prompt.strip() else "") + extra_text
             return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
 
-        prompt = tpl.get("prompt", "")
+        # Merge all selected templates into one coherent H3 prompt
+        prompt = _merge_template_prompts(tpls)
 
         if extra_text:
             prompt = prompt + "\n\n" + extra_text
 
-        name = tpl.get("name", "")
-        name_en = tpl.get("name_en", "")
-        # Bilingual template name (Chinese | English)
-        name_label = f"{name} | {name_en}" if name_en else name
-        mode = tpl.get("generation_mode", "System Recommended / 系统推荐")
-        desc = tpl.get("description", "")
-        duration = int(tpl.get("duration", 0))
-        preview = tpl.get("preview", "")
+        primary = tpls[0]
+        # Bilingual merged name list: "贴身缠斗 | Close Grappling + 环绕镜头 | Orbit (Arc Shot)"
+        name_label = " + ".join(
+            f"{t.get('name','')} | {t.get('name_en','')}" if t.get("name_en") else t.get("name", "")
+            for t in tpls
+        )
+        mode = primary.get("generation_mode", "System Recommended / 系统推荐")
+        if len(tpls) > 1:
+            mode = f"{mode} | 多模板叠加 Multi-Stack"
+        desc = primary.get("description", "")
+        if len(tpls) > 1:
+            desc += " | 叠加 Overlay: " + " + ".join(t.get("name", "") for t in tpls[1:])
+        duration = int(primary.get("duration", 0))
+        preview = primary.get("preview", "")
 
         return (prompt, name_label, mode, desc, duration, preview)
 

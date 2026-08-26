@@ -88,8 +88,8 @@ b.en { color: var(--blue); }
 <tr>
 <td><code>template_select</code></td>
 <td>STRING</td>
-<td>Selected template label (auto-filled by UI). Format: "Category > Subcategory > Template"</td>
-<td>选中的模板标签（由界面自动填充）。格式："分类 > 子类 > 模板"</td>
+<td>Selected template label(s), auto-filled by UI. Multi-select stacked labels are joined by <code> ||| </code>. Format: "Category > Subcategory > Template" (or multiple joined by "|||")</td>
+<td>选中的模板标签（由界面自动填充）。多选叠加时多个标签以 <code> ||| </code> 连接。格式："分类 > 子类 > 模板"（或多个以 "|||" 连接）</td>
 </tr>
 <tr>
 <td><code>user_customization</code></td>
@@ -162,10 +162,15 @@ b.en { color: var(--blue); }
 <div class="card">
 <div class="card-title">📂 Cascading Selection / 级联选择</div>
 <ol>
-<li><b>分类 / Category</b> — Select a top-level category (e.g., Image to Video, Expression Templates) / 选择一级分类（如图生视频、人物表情模板）</li>
+<li><b>分类 / Category</b> — Select a top-level category (e.g., Image to Video, Expression Templates, Combat, Cinematic) / 选择一级分类（如图生视频、人物表情模板、武打打斗、电影运镜）</li>
 <li><b>子类 / Subcategory</b> — Select a subcategory (enabled after category selection) / 选择二级子类（选择分类后启用）</li>
-<li><b>模板列表 / Template List</b> — Click any template in the list to select it / 点击列表中的任意模板即可选中</li>
+<li><b>模板列表 / Template List</b> — Click any template to add it to the selection stack / 点击列表中的任意模板即可加入已选叠加栈</li>
 </ol>
+</div>
+<div class="card">
+<div class="card-title">🧩 Multi-Select Stacking / 多选叠加</div>
+<p><b>EN:</b> Templates are now <b>multi-select</b> (up to 5). Click the base template first (e.g. <i>贴身缠斗 | Close Grappling</i>), then click overlay templates (e.g. <i>环绕镜头 | Orbit (Arc Shot)</i>) to enrich the result. The chips bar shows the stack in order; the <b>1st template is the base</b> (scene/action), the rest are <b>overlays</b> (e.g. camera moves). Click × on a chip to remove it, or Clear to reset. The node merges all selected templates into <b>one</b> H3 prompt following the SKILL three-field structure: base scene/action + overlay camera directives appended, soundscape merged, music priority-filled.</p>
+<p><b>中文:</b> 模板现支持<b>多选叠加</b>（最多 5 个）。先点击基础模板（如"贴身缠斗 | Close Grappling"），再点击叠加模板（如"环绕镜头 | Orbit (Arc Shot)"）即可丰富画面效果。顶部已选条按顺序展示叠加栈；<b>第 1 个为基础模板</b>（场景/动作），其余为<b>叠加模板</b>（如运镜）。点击 chip 上的 × 可移除，或点击"清除"重置。节点会将所有选中模板合并为<b>一个</b>符合 H3 SKILL 三字段结构的提示词：基础场景/动作 + 叠加运镜指令追加，音效合并，音乐优先级补全。</p>
 </div>
 <div class="card">
 <div class="card-title">🎬 Preview Area / 预览区域</div>
@@ -361,6 +366,11 @@ b.en { color: var(--blue); }
 <div class="card-title">🔌 External Prompt Port / 外部提示词输入端口</div>
 <p><b>EN:</b> A new optional <code>external_prompt</code> STRING port accepts an external prompt to modify or supplement the selected template within a workflow. The order is: template prompt → external_prompt → user_customization.</p>
 <p><b>中文:</b> 新增可选 <code>external_prompt</code> STRING 端口，可在工作流内接收外部提示词以修改或补充所选模板。拼接顺序：模板提示词 → external_prompt → user_customization。</p>
+</div>
+<div class="card">
+<div class="card-title">🧩 Multi-Select Merge / 多选叠加合并</div>
+<p><b>EN:</b> The template browser now supports multi-select stacking. <code>template_select</code> carries multiple labels joined by <code>|||</code>; the node merges them into one coherent H3 prompt (base = first template, overlays appended as directive blocks, soundscape merged, music priority-filled).</p>
+<p><b>中文:</b> 模板浏览器现支持多选叠加。<code>template_select</code> 以 <code>|||</code> 携带多个模板标签；节点将其合并为一条完整的 H3 提示词（第 1 个为基础模板，叠加模板以指令块追加，音效合并，音乐优先级补全）。</p>
 </div>
 
 <!-- ===================== Tips ===================== -->

@@ -379,22 +379,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 2. 节点上方显示可视化模板浏览器：
    - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打 / 电影运镜）
    - **二级分类**下拉框：选择模板子类（线稿类 / 角色参考类 / 产品展示类 等）
-   - **模板列表**：点击任意模板即可选择
-3. 右侧显示 **WebP 预览动画**（400×400 动图，遵循 ComfyUI 官方 workflow templates 规格）和模板信息（生成模式 / 时长 / 是否需要图片）
-4. `prompt_output` 输出端口直接输出完整的 H3 三字段提示词
-5. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
-6. `external_prompt` 可选输入端口可连接其他节点文本，用于修改或补充模板提示词
+   - **模板列表**：点击任意模板即可加入已选叠加栈
+3. **多选叠加（Multi-Stack）**：可叠加选择多个模板（最多 5 个），如先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，画面效果更丰富；第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜）。已选条支持单个移除与一键清除。
+4. 右侧显示 **WebP 预览动画**（400×400 动图，遵循 ComfyUI 官方 workflow templates 规格）和模板信息（生成模式 / 时长 / 是否需要图片）
+5. `prompt_output` 输出端口直接输出**合并后的单一 H3 三字段提示词**（基础场景/动作 + 叠加运镜指令，音效合并，音乐优先级补全）
+6. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
+7. `external_prompt` 可选输入端口可连接其他节点文本，用于修改或补充模板提示词
 
 **EN:**
 1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
 2. A visual template browser appears above the node:
    - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat / Cinematic)
    - **Subcategory** dropdown: choose a template subclass
-   - **Template list**: click any template to select it
-3. The right panel shows a **WebP preview animation** (400×400, per ComfyUI official workflow-templates spec) and template info (generation mode / duration / needs-image).
-4. The `prompt_output` port directly outputs the full H3 three-field prompt.
-5. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
-6. The optional `external_prompt` input port accepts text from other nodes to modify or supplement the template prompt.
+   - **Template list**: click any template to add it to the selection stack
+3. **Multi-select stacking**: stack up to 5 templates, e.g. pick "Close Grappling" first, then "Orbit (Arc Shot)" for a richer result. The 1st template is the base (scene/action); the rest are overlays (e.g. camera moves). The chips bar supports per-item removal and one-click clear.
+4. The right panel shows a **WebP preview animation** (400×400, per ComfyUI official workflow-templates spec) and template info (generation mode / duration / needs-image).
+5. The `prompt_output` port outputs the **merged single H3 three-field prompt** (base scene/action + overlay camera directives, soundscape merged, music priority-filled).
+6. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
+7. The optional `external_prompt` input port accepts text from other nodes to modify or supplement the template prompt.
 
 > **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
@@ -493,6 +495,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.7.0 — 模板多选叠加 / Template Multi-Select Stacking
+
+**中文说明：**
+
+- **模板浏览器支持多选叠加（最多 5 个）**：点击模板加入已选叠加栈，第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜、表情）。顶部已选条支持单个移除与一键清除，列表项高亮显示已选状态。
+- **合并输出单一 H3 提示词**：`template_select` 以 `|||` 携带多个模板标签；节点按 H3 SKILL 三字段结构智能合并——基础场景/动作 + 叠加模板指令块追加（`# Overlay 叠加模板: XXX`），音效合并，音乐优先级补全（基础无音乐则取叠加模板音乐）。
+- **示例**：先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，输出为"近身缠斗动作 + 环绕运镜"的单一规范 H3 提示词。
+- **输出端口同步**：`template_name` 返回合并名称（A + B），`generation_mode` 标记"多模板叠加 Multi-Stack"，`description` 附叠加列表，`preview_file`/`duration` 取基础模板。
+
+**English:**
+
+- **Multi-select stacking in the template browser (up to 5)**: click templates to add them to the selection stack; the 1st is the base (scene/action), the rest are overlays (e.g. camera moves, expressions). The chips bar supports per-item removal and one-click clear; list items are highlighted when selected.
+- **Merged single H3 prompt**: `template_select` carries multiple labels joined by `|||`; the node merges them per the H3 SKILL three-field structure — base scene/action + overlay directive blocks appended (`# Overlay: XXX`), soundscape merged, music priority-filled (base's N/A music falls back to overlay's).
+- **Example**: pick "Close Grappling" first, then "Orbit (Arc Shot)" → one coherent H3 prompt of close-combat action + orbit camera move.
+- **Output ports updated**: `template_name` returns the merged name (A + B), `generation_mode` flags "Multi-Stack", `description` lists the overlays, `preview_file`/`duration` come from the base template.
+
+---
 
 ### v1.6.0 — 电影运镜模板 + 预览统一为 WebP / Cinematic Camera Movement + WebP Previews
 

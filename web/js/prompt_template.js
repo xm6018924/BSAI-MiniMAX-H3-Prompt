@@ -118,6 +118,27 @@ if (!document.getElementById(STYLE_ID)) {
 }
 .bsai-tpl-clr:hover { background: #3a2a2a; color: #c88; }
 .bsai-tpl-empty { padding: 16px; text-align: center; color: #444; font-size: 11px; }
+/* Multi-select: selection stack */
+.bsai-tpl-sel { display: flex; flex-wrap: wrap; gap: 4px; min-height: 0; padding: 2px 0; }
+.bsai-tpl-sel-empty { font-size: 10px; color: #556; padding: 2px 0; line-height: 1.3; }
+.bsai-tpl-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #2a4a3a; border: 1px solid #3a6a4a; color: #9d9;
+    font-size: 10px; padding: 2px 7px; border-radius: 10px; line-height: 1.2;
+}
+.bsai-tpl-chip.primary { background: #2a4a6a; border-color: #3f789e; color: #9cf; }
+.bsai-tpl-chip .ord { color: #8d8; font-weight: 700; }
+.bsai-tpl-chip .x { cursor: pointer; color: #a88; font-weight: 700; padding: 0 2px; }
+.bsai-tpl-chip .x:hover { color: #f88; }
+.bsai-tpl-item.sel { background: #2a4a3a; border-left: 3px solid #5a8; }
+.bsai-tpl-item.sel:hover { background: #2a5a4a; }
+.bsai-tpl-item.sel.primary { background: #2a4a6a; border-left: 3px solid #3f789e; }
+.bsai-tpl-ord-badge {
+    display: inline-block; min-width: 15px; text-align: center;
+    background: #5a8; color: #000; font-size: 9px; font-weight: 700;
+    border-radius: 8px; padding: 0 3px; margin-right: 4px; line-height: 1.4;
+}
+.bsai-tpl-sel-hint { font-size: 9px; color: #446; padding: 0 2px; }
 /* Customization textarea */
 .bsai-tpl-cust { margin-top: 6px; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
@@ -286,6 +307,12 @@ function buildTemplateUI(node) {
     bar.appendChild(clrBtn);
     left.appendChild(bar);
 
+    // Selection stack bar (multi-select)
+    const selBar = document.createElement("div");
+    selBar.className = "bsai-tpl-sel";
+    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">点击模板叠加选择（可多选，第1个为主体）/ Click templates to stack (multi-select, 1st = base)</div>';
+    left.appendChild(selBar);
+
     // Template list
     const listDiv = document.createElement("div");
     listDiv.className = "bsai-tpl-list";
@@ -340,6 +367,8 @@ function buildTemplateUI(node) {
     node._bsaiSearchInput = searchInput;
     node._bsaiSearchClr = searchClr;
     node._bsaiTopDiv = topDiv;
+    node._bsaiSelBar = selBar;
+    node._bsaiSelection = [];
 
     // Register as DOM widget
     if (typeof node.addDOMWidget === "function") {
@@ -478,12 +507,8 @@ function buildTemplateUI(node) {
         listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
         cntSpan.textContent = "";
         clrBtn.style.display = "none";
-        updatePreview(null, prevBox, prevNm, prevMd, prevDur);
-        const tplW = findWidget(node, "template_select");
-        if (tplW) {
-            tplW.value = "(None / 自定义 / Custom)";
-            if (node.graph) node.setDirtyCanvas(true, true);
-        }
+        clearSelection(node);
+        syncSelectionUI(node);
     };
 
     // ── Load data ──
@@ -515,17 +540,15 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
         return;
     }
 
-    const tplW = findWidget(node, "template_select");
-
     results.forEach(function(item) {
         const cat = item.cat, sub = item.sub, tpl = item.tpl;
-        const fullLabel = cat.name + " > " + sub.name + " > " + tpl.name;
 
         const el = document.createElement("div");
         el.className = "bsai-tpl-item";
+        el.setAttribute("data-id", tpl.id);
         el.setAttribute("data-name", tpl.name);
-        if (tplW && tplW.value === fullLabel) {
-            el.classList.add("active");
+        if (isSelected(node, tpl)) {
+            el.classList.add("sel");
         }
 
         const nmDiv = document.createElement("div");
@@ -557,16 +580,8 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
         }
 
         el.onclick = function() {
-            listDiv.querySelectorAll(".bsai-tpl-item").forEach(function(e) {
-                e.classList.remove("active");
-            });
-            el.classList.add("active");
-            if (tplW) {
-                tplW.value = fullLabel;
-                if (node.graph) node.setDirtyCanvas(true, true);
-            }
-            updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
-            // Sync dropdowns to reflect the selected template's category/subcategory
+            toggleSelection(node, cat, sub, tpl);
+            // Sync dropdowns to reflect the clicked template's category/subcategory
             node._bsaiCat.value = cat.id;
             // Populate subcategories for this category
             node._bsaiSub.innerHTML = '<option value="">— 选择子类 —</option>';
@@ -597,16 +612,13 @@ function renderTemplateList(node, sub, cat, listDiv) {
         return;
     }
 
-    const tplW = findWidget(node, "template_select");
-
     templates.forEach(function(tpl) {
         const item = document.createElement("div");
         item.className = "bsai-tpl-item";
+        item.setAttribute("data-id", tpl.id);
         item.setAttribute("data-name", tpl.name);
-        const fullLabel = cat.name + " > " + sub.name + " > " + tpl.name;
-
-        if (tplW && tplW.value === fullLabel) {
-            item.classList.add("active");
+        if (isSelected(node, tpl)) {
+            item.classList.add("sel");
         }
 
         const nmDiv = document.createElement("div");
@@ -632,20 +644,118 @@ function renderTemplateList(node, sub, cat, listDiv) {
         }
 
         item.onclick = function() {
-            listDiv.querySelectorAll(".bsai-tpl-item").forEach(function(el) {
-                el.classList.remove("active");
-            });
-            item.classList.add("active");
-            if (tplW) {
-                tplW.value = fullLabel;
-                if (node.graph) node.setDirtyCanvas(true, true);
-            }
-            updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+            toggleSelection(node, cat, sub, tpl);
         };
 
         listDiv.appendChild(item);
     });
     if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+}
+
+// ── Multi-select: selection stack ──
+const MAX_SELECT = 5;
+
+function isSelected(node, tpl) {
+    return (node._bsaiSelection || []).some(function(it) { return it.tpl.id === tpl.id; });
+}
+
+function toggleSelection(node, cat, sub, tpl) {
+    if (!node._bsaiSelection) node._bsaiSelection = [];
+    const idx = node._bsaiSelection.findIndex(function(it) { return it.tpl.id === tpl.id; });
+    if (idx >= 0) {
+        node._bsaiSelection.splice(idx, 1);  // remove
+    } else {
+        if (node._bsaiSelection.length >= MAX_SELECT) return;  // cap
+        node._bsaiSelection.push({ cat: cat, sub: sub, tpl: tpl });  // append -> insertion order
+    }
+    syncSelectionUI(node);
+}
+
+function syncSelectionUI(node) {
+    const sel = node._bsaiSelection || [];
+    const selBar = node._bsaiSelBar;
+    const tplW = findWidget(node, "template_select");
+
+    // Hidden widget value: labels joined by "|||"
+    if (tplW) {
+        if (sel.length === 0) {
+            tplW.value = "(None / 自定义 / Custom)";
+        } else {
+            tplW.value = sel.map(function(it) {
+                return it.cat.name + " > " + it.sub.name + " > " + it.tpl.name;
+            }).join(" ||| ");
+        }
+    }
+
+    // Selection bar (chips)
+    if (selBar) {
+        selBar.innerHTML = "";
+        if (sel.length === 0) {
+            const h = document.createElement("div");
+            h.className = "bsai-tpl-sel-empty";
+            h.textContent = "点击模板叠加选择（可多选，第1个为主体）/ Click templates to stack (multi-select, 1st = base)";
+            selBar.appendChild(h);
+        } else {
+            sel.forEach(function(it, i) {
+                const chip = document.createElement("span");
+                chip.className = "bsai-tpl-chip" + (i === 0 ? " primary" : "");
+                const ord = document.createElement("span");
+                ord.className = "ord";
+                ord.textContent = (i + 1);
+                const nm = document.createElement("span");
+                nm.textContent = it.tpl.name + " | " + (it.tpl.name_en || "");
+                const x = document.createElement("span");
+                x.className = "x";
+                x.textContent = "×";
+                x.title = "移除 / Remove";
+                x.onclick = function(e) {
+                    e.stopPropagation();
+                    node._bsaiSelection.splice(i, 1);
+                    syncSelectionUI(node);
+                };
+                chip.appendChild(ord);
+                chip.appendChild(nm);
+                chip.appendChild(x);
+                selBar.appendChild(chip);
+            });
+        }
+    }
+
+    // Mark list items
+    (node._bsaiList || []).querySelectorAll ? node._bsaiList.querySelectorAll(".bsai-tpl-item").forEach(function(el) {
+        const id = el.getAttribute("data-id");
+        el.classList.remove("sel", "primary");
+        sel.forEach(function(it, i) {
+            if (it.tpl.id === id) {
+                el.classList.add("sel");
+                if (i === 0) el.classList.add("primary");
+            }
+        });
+    }) : null;
+
+    // Preview: show primary (first selected); name shows combined list
+    if (sel.length === 0) {
+        updatePreview(null, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+    } else {
+        const primary = sel[0].tpl;
+        updatePreview(primary, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+        if (node._bsaiPrevNm) {
+            node._bsaiPrevNm.textContent = sel.map(function(it) {
+                return it.tpl.name + " | " + (it.tpl.name_en || "");
+            }).join("  +  ");
+        }
+        if (node._bsaiPrevMd && sel.length > 1) {
+            node._bsaiPrevMd.textContent = "多模板叠加 Multi-Stack (" + sel.length + ")";
+        }
+    }
+
+    if (node.graph) node.setDirtyCanvas(true, true);
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 20);
+}
+
+function clearSelection(node) {
+    node._bsaiSelection = [];
+    syncSelectionUI(node);
 }
 
 function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
@@ -673,29 +783,30 @@ function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
 
 function restoreSelection(node, savedValue) {
     if (!_tplData) return;
-    const parts = savedValue.split(" > ");
-    if (parts.length !== 3) return;
-    const catName = parts[0], subName = parts[1], tplName = parts[2];
-    const cat = _tplData.categories.find(function(c) { return c.name === catName; });
-    if (!cat) return;
-    node._bsaiCat.value = cat.id;
-    node._bsaiCat.onchange();
-    const sub = cat.subcategories.find(function(s) { return s.name === subName; });
-    if (!sub) return;
-    node._bsaiSub.value = sub.id;
-    node._bsaiSub.onchange();
-    const tpl = sub.templates.find(function(t) { return t.name === tplName; });
-    if (tpl) {
-        updatePreview(tpl, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
-        setTimeout(function() {
-            const items = node._bsaiList.querySelectorAll(".bsai-tpl-item");
-            items.forEach(function(el) {
-                if (el.getAttribute("data-name") === tplName) {
-                    el.classList.add("active");
-                }
-            });
-        }, 50);
+    node._bsaiSelection = [];
+    const labels = (savedValue || "").split("|||").map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+    let first = null;
+    labels.forEach(function(label) {
+        const parts = label.split(" > ");
+        if (parts.length !== 3) return;
+        const catName = parts[0], subName = parts[1], tplName = parts[2];
+        const cat = _tplData.categories.find(function(c) { return c.name === catName; });
+        if (!cat) return;
+        const sub = cat.subcategories.find(function(s) { return s.name === subName; });
+        if (!sub) return;
+        const tpl = sub.templates.find(function(t) { return t.name === tplName; });
+        if (!tpl) return;
+        node._bsaiSelection.push({ cat: cat, sub: sub, tpl: tpl });
+        if (!first) first = { cat: cat, sub: sub, tpl: tpl };
+    });
+    // Point the dropdowns at the primary (first) selected template
+    if (first) {
+        node._bsaiCat.value = first.cat.id;
+        node._bsaiCat.onchange();
+        node._bsaiSub.value = first.sub.id;
+        node._bsaiSub.onchange();
     }
+    syncSelectionUI(node);
     if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60);
 }
 
