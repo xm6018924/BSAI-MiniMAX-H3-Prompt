@@ -100,12 +100,12 @@ b.en { color: var(--blue); }
 <tr>
 <td><code>external_prompt</code> <span class="badge badge-opt">OPT</span></td>
 <td>STRING (Multiline, forceInput)</td>
-<td>External prompt text input port. Connect from another node to modify or supplement the template prompt. This text is appended to the prompt output after the template.</td>
-<td>外部提示词文本输入端口（强制连线）。可连接其他节点输出，用于修改或补充模板提示词。此文本将追加到模板提示词之后。</td>
+<td>External prompt text input port. When provided, it <b>OVERRIDES the template's action</b> (e.g. input "抬腿" replaces the template's walking/motion with leg-lifting), instead of merely being appended.</td>
+<td>外部提示词文本输入端口（强制连线）。输入后将<b>覆盖模板中的动作描述</b>（如输入"抬腿"将模板中的行走动作替换为抬腿），而非仅追加到末尾。</td>
 </tr>
 </table>
 <div class="tip">
-<b>Tip / 提示:</b> The two required inputs are hidden in the visual UI and managed by the template browser. The <code>external_prompt</code> optional port lets you chain another prompt source (e.g., LLM output) to modify or supplement the selected template. / 两个必填输入在可视化界面中已隐藏，由模板浏览器管理。<code>external_prompt</code> 可选端口可连接其他提示词来源（如 LLM 输出），用于修改或补充所选模板。
+<b>Tip / 提示:</b> The two required inputs are hidden in the visual UI and managed by the template browser. The <code>external_prompt</code> optional port lets you chain another prompt source (e.g., LLM output) to <b>override the template's action</b>. Templates marked with 【ACTION】...【/ACTION】 get literal replacement; all others receive a strong Action Override directive inside the description. / 两个必填输入在可视化界面中已隐藏，由模板浏览器管理。<code>external_prompt</code> 可选端口可连接其他提示词来源（如 LLM 输出），用于<b>覆盖模板的动作</b>。含【ACTION】...【/ACTION】标记的模板将进行字面替换；其余模板会在描述中注入强动作覆盖指令。
 </div>
 
 <!-- ===================== Outputs ===================== -->
@@ -184,8 +184,8 @@ b.en { color: var(--blue); }
 </div>
 <div class="card">
 <div class="card-title">🔌 External Prompt Port / 外部提示词端口</div>
-<p><b>EN:</b> The <code>external_prompt</code> optional input port accepts a STRING from any other node (e.g., an LLM or a prompt rewriter). Its content is appended to the prompt output, letting you modify or supplement the selected template within a larger workflow.</p>
-<p><b>中文:</b> <code>external_prompt</code> 可选输入端口可接收任意其他节点（如 LLM 或提示词改写节点）输出的 STRING。其内容会追加到提示词输出中，方便在更大的工作流内修改或补充所选模板。</p>
+<p><b>EN:</b> The <code>external_prompt</code> optional input port accepts a STRING from any other node (e.g., an LLM or a prompt rewriter). When provided, it <b>OVERRIDES the template's action</b> instead of being appended: for templates with 【ACTION】...【/ACTION】 markers the action text is literally replaced (e.g. input "抬腿" removes the walking clause and performs leg-lifting); all other templates get a strong "Action Override" directive injected into <code>integrated_multimodal_description</code>. Framing, camera, environment, lighting, timing and subject identity are always preserved.</p>
+<p><b>中文:</b> <code>external_prompt</code> 可选输入端口可接收任意其他节点（如 LLM 或提示词改写节点）输出的 STRING。输入后将<b>覆盖模板中的动作</b>而非追加：含【ACTION】...【/ACTION】标记的模板动作文本会被直接替换（如输入"抬腿"即删除行走描述并执行抬腿）；其余模板则在 <code>integrated_multimodal_description</code> 中注入强"动作覆盖"指令。构图、运镜、环境、光照、时间与主体特征始终保持不变。</p>
 </div>
 
 <!-- ===================== Categories ===================== -->
@@ -364,8 +364,13 @@ b.en { color: var(--blue); }
 </div>
 <div class="card">
 <div class="card-title">🔌 External Prompt Port / 外部提示词输入端口</div>
-<p><b>EN:</b> A new optional <code>external_prompt</code> STRING port accepts an external prompt to modify or supplement the selected template within a workflow. The order is: template prompt → external_prompt → user_customization.</p>
-<p><b>中文:</b> 新增可选 <code>external_prompt</code> STRING 端口，可在工作流内接收外部提示词以修改或补充所选模板。拼接顺序：模板提示词 → external_prompt → user_customization。</p>
+<p><b>EN:</b> An optional <code>external_prompt</code> STRING port accepts an external prompt. When provided it <b>OVERRIDES the template's action</b> (templates with 【ACTION】...【/ACTION】 markers get literal replacement; others get a strong Action Override directive in the description) — e.g. "抬腿" replaces the walking motion. <code>user_customization</code> still appends freely at the end.</p>
+<p><b>中文:</b> 可选 <code>external_prompt</code> STRING 端口可接收外部提示词。输入后将<b>覆盖模板中的动作</b>（含【ACTION】...【/ACTION】标记的模板进行字面替换；其余模板在描述中注入强动作覆盖指令）——如"抬腿"替换行走动作。<code>user_customization</code> 仍在末尾自由追加。</p>
+</div>
+<div class="card">
+<div class="card-title">🎬 External Prompt Action Override / 外部提示词覆盖动作</div>
+<p><b>EN:</b> <b>v1.8.0</b> — external_prompt no longer appends at the tail; it now overrides the template's action. Templates with 【ACTION】...【/ACTION】 markers (currently the I2VA action templates, e.g. 全身照转动作视频 | Full-body photo to action video) replace the action text literally; every other template receives an "Action Override / 动作覆盖" directive injected into <code>integrated_multimodal_description</code>. Framing / camera / environment / lighting / timing / identity are always preserved, and a soundscape note adapts the ambience to the new action.</p>
+<p><b>中文:</b> <b>v1.8.0</b> — external_prompt 不再追加到末尾，而是覆盖模板中的动作。含【ACTION】...【/ACTION】标记的模板（当前为图生视频动作类，如"全身照转动作视频 | Full-body photo to action video"）会对动作文本进行字面替换；其余模板均在 <code>integrated_multimodal_description</code> 中注入"动作覆盖"指令。构图 / 运镜 / 环境 / 光照 / 时间 / 主体特征始终保持不变，并在音效中附加适配新动作的提示。</p>
 </div>
 <div class="card">
 <div class="card-title">🧩 Multi-Select Merge / 多选叠加合并</div>

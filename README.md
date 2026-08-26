@@ -384,7 +384,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 4. 右侧显示 **WebP 预览动画**（400×400 动图，遵循 ComfyUI 官方 workflow templates 规格）和模板信息（生成模式 / 时长 / 是否需要图片）
 5. `prompt_output` 输出端口直接输出**合并后的单一 H3 三字段提示词**（基础场景/动作 + 叠加运镜指令，音效合并，音乐优先级补全）
 6. 可将输出连接到视频生成节点，或先连接到 `BSAI MiniMAX H3 Prompt` 节点进一步优化
-7. `external_prompt` 可选输入端口可连接其他节点文本，用于修改或补充模板提示词
+7. `external_prompt` 可选输入端口可连接其他节点文本，输入后将**覆盖模板中的动作**（如"抬腿"替换行走动作，而非追加到末尾）
 
 **EN:**
 1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
@@ -396,7 +396,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 4. The right panel shows a **WebP preview animation** (400×400, per ComfyUI official workflow-templates spec) and template info (generation mode / duration / needs-image).
 5. The `prompt_output` port outputs the **merged single H3 three-field prompt** (base scene/action + overlay camera directives, soundscape merged, music priority-filled).
 6. Connect the output to a video generator, or chain it into the `BSAI MiniMAX H3 Prompt` node for further optimization.
-7. The optional `external_prompt` input port accepts text from other nodes to modify or supplement the template prompt.
+7. The optional `external_prompt` input port accepts text from other nodes; when provided it **OVERRIDES the template's action** (e.g. "抬腿" replaces the walking motion) instead of merely appending.
 
 > **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
@@ -495,6 +495,26 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.8.0 — 外部提示词覆盖模板动作 / External Prompt Action Override
+
+**中文说明：**
+
+- **外部提示词改为"动作覆盖"**：`external_prompt` 输入后不再简单追加到末尾，而是**覆盖模板中的动作描述**。例如"全身照转动作视频 | Full-body photo to action video"输入"抬腿"后，模板内的自然行走/运动描述被直接替换为抬腿动作。
+- **字面替换（标记模板）**：含 `【ACTION】...【/ACTION】` 标记的模板（当前为图生视频动作类 6 个：线稿跳舞/线稿行走/线稿动画/肖像说话/全身照转动作/角色定转）会对动作文本进行字面替换。
+- **通用指令覆盖（其余所有模板）**：无标记的模板会在 `integrated_multimodal_description` 内注入强"Action Override / 动作覆盖"指令，同样让外部提示词生效。
+- **保持 H3 规范**：替换/覆盖时始终保留构图、运镜、环境、光照、时间与主体特征；并在 `overall_soundscape` 中附加"音效适配新动作"提示。`user_customization` 仍在末尾自由追加。
+- **示例**：`external_prompt = 抬腿` + 全身照转动作 → 输出中行走描述消失，替换为"The subject performs the action "抬腿"..."。
+
+**English:**
+
+- **External prompt is now an action override**: `external_prompt` no longer just appends — it **overrides the template's action**. E.g. for "Full-body photo to action video", inputting "抬腿" directly replaces the built-in walking/motion description with leg-lifting.
+- **Literal replacement (marked templates)**: templates containing `【ACTION】...【/ACTION】` markers (currently 6 I2VA action templates: line-art dance / line-art walking / line-art anime / portrait speaking / full-body action / character turnaround) get their action text literally replaced.
+- **Generic directive override (all other templates)**: templates without markers receive a strong "Action Override / 动作覆盖" directive injected into `integrated_multimodal_description`.
+- **H3 compliance kept**: framing, camera, environment, lighting, timing and subject identity are always preserved; `overall_soundscape` gains an "adapt to the new action" note. `user_customization` still appends freely at the end.
+- **Example**: `external_prompt = 抬腿` + Full-body action template → the walking clause disappears, replaced by "The subject performs the action "抬腿" exactly as instructed."
+
+---
 
 ### v1.7.0 — 模板多选叠加 / Template Multi-Select Stacking
 

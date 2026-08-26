@@ -79,17 +79,74 @@ def _is_na(s):
     return not s or s.strip().upper() in ("", "N/A", "NA", "无")
 
 
-def _merge_template_prompts(tpls):
+# ── External action override ──
+_ACTION_OPEN = "【ACTION】"
+_ACTION_CLOSE = "【/ACTION】"
+
+
+def _apply_action_override(desc, ext):
+    """Make the external prompt OVERRIDE the template's action instead of being appended.
+
+    - Literal replacement for EVERY 【ACTION】...【/ACTION】 marker in the description.
+    - Otherwise a strong directive is appended to the description so the external
+      action replaces the built-in motion for every template.
+    Returns (new_desc, overridden).
+    """
+    if not ext:
+        return desc, False
+    if _ACTION_OPEN in desc and _ACTION_CLOSE in desc:
+        block = (
+            f'The subject performs the action “{ext}” exactly as instructed. '
+            f'All shot framing, camera movement, environment, lighting, timing '
+            f'and subject identity remain unchanged; only the action/behavior is replaced.'
+        )
+        while True:
+            open_i = desc.find(_ACTION_OPEN)
+            close_i = desc.find(_ACTION_CLOSE, open_i + len(_ACTION_OPEN)) if open_i >= 0 else -1
+            if open_i < 0 or close_i < 0:
+                break
+            desc = desc[:open_i] + block + desc[close_i + len(_ACTION_CLOSE):]
+        return desc, True
+    directive = (
+        f'[Action Override / 动作覆盖] IMPORTANT: The subject performs “{ext}” '
+        f'INSTEAD OF the motion/behavior described in the shots above. Keep all shot '
+        f'framing, camera movement, environment, lighting, timing and subject identity '
+        f'unchanged; only the action/behavior is replaced with: {ext}'
+    )
+    return desc + "\n\n" + directive, True
+
+
+def _merge_template_prompts(tpls, ext=""):
     """Merge multiple template prompts into ONE coherent H3 prompt.
-    Base = first template (scene/action), overlays = extra camera/directive templates."""
+    Base = first template (scene/action), overlays = extra camera/directive templates.
+    ext = external prompt: overrides the base template's action when provided."""
     if not tpls:
         return ""
     if len(tpls) == 1:
-        return tpls[0].get("prompt", "")
+        p = tpls[0].get("prompt", "")
+        if ext:
+            sec = _split_prompt(p)
+            nd, ov = _apply_action_override(sec["desc"], ext)
+            if ov:
+                sound = sec["sound"]
+                if not _is_na(sound):
+                    sound += f"\n(Adjust ambient sound and effects to match the overridden action “{ext}”)"
+                parts = []
+                if sec["header"]:
+                    parts.append(sec["header"])
+                parts.append("integrated_multimodal_description: \n" + (nd or "N/A"))
+                parts.append("overall_soundscape: \n" + (sound or "N/A"))
+                parts.append("non_diegetic_music: \n" + (sec["music"] or "N/A"))
+                return "\n\n".join(parts)
+        return p
     base = _split_prompt(tpls[0].get("prompt", ""))
     desc = base["desc"]
     sound = base["sound"]
     music = base["music"]
+    if ext:
+        desc, ov = _apply_action_override(desc, ext)
+        if ov and not _is_na(sound):
+            sound += f"\n(Adjust ambient sound and effects to match the overridden action “{ext}”)"
     for t in tpls[1:]:
         sec = _split_prompt(t.get("prompt", ""))
         label = f"{t.get('name','')} | {t.get('name_en','')}"
@@ -141,7 +198,7 @@ class BSAI_H3_PromptTemplate:
                         "default": "",
                         "multiline": True,
                         "forceInput": True,
-                        "tooltip": "External prompt text input port / 外部提示词文本输入端口\nConnect from another node to modify or supplement the template prompt / 可从其他节点连接外部文本，用于修改或补充模板提示词\nThis text is appended to the prompt output / 此文本将追加到提示词输出中",
+                        "tooltip": "External prompt text input port / 外部提示词文本输入端口\nConnect from another node to OVERRIDE the template's action / 可从其他节点连接外部文本，用于覆盖模板中的动作描述\nE.g. input \"抬腿\" to replace the template's walking/motion with leg-lifting / 例如输入“抬腿”可将模板中的行走动作替换为抬腿",
                     },
                 ),
             },
@@ -171,7 +228,7 @@ Features / 功能特点:
 - Multi-select stacking: combine 2+ templates (e.g. combat + camera move) into one H3 prompt / 多选叠加：组合 2+ 个模板（如武打+运镜）合并为一个 H3 提示词
 - GIF/WebP preview on the right panel / 右侧预览动画
 - Optional user customization textarea / 可选的补充修改文本框
-- External prompt text input port (external_prompt) for modify/supplement / 外部提示词文本输入端口（external_prompt），用于修改或补充
+- External prompt input port (external_prompt) OVERRIDES the template's action, e.g. "抬腿" replaces walking / 外部提示词输入端口（external_prompt）覆盖模板中的动作，如“抬腿”替换行走动作
 - Bilingual template names (中文 | English) / 模板名称中英双语对照
 - 46 expression & micro-expression templates / 46个表情与微表情模板
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
@@ -186,15 +243,12 @@ Features / 功能特点:
             if t is not None:
                 tpls.append(t)
 
-        # Collect extra instruction sections (external port first, then textarea)
-        extra_sections = []
         ext = (external_prompt or "").strip()
-        if ext:
-            extra_sections.append("--- External Prompt / 外部提示词 ---\n" + ext)
         cust = (user_customization or "").strip()
+        # User customization remains a plain append (change character/scene, etc.)
+        cust_text = ""
         if cust:
-            extra_sections.append("--- User Customization / 用户自定义 ---\n" + cust)
-        extra_text = "\n\n".join(extra_sections)
+            cust_text = "\n\n--- User Customization / 用户自定义 ---\n" + cust
 
         if not tpls:
             custom_text = (template_select or "").strip()
@@ -202,15 +256,15 @@ Features / 功能特点:
                 prompt = custom_text
             else:
                 prompt = ""
-            if extra_text:
-                prompt = (prompt + "\n\n" if prompt.strip() else "") + extra_text
+            if ext:
+                prompt = (prompt + "\n\n" if prompt.strip() else "") + "--- External Prompt / 外部提示词 ---\n" + ext
+            prompt = prompt + cust_text if cust_text else prompt
             return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
 
-        # Merge all selected templates into one coherent H3 prompt
-        prompt = _merge_template_prompts(tpls)
-
-        if extra_text:
-            prompt = prompt + "\n\n" + extra_text
+        # Merge all selected templates; external prompt OVERRIDES the base action
+        prompt = _merge_template_prompts(tpls, ext)
+        if cust_text:
+            prompt = prompt + cust_text
 
         primary = tpls[0]
         # Bilingual merged name list: "贴身缠斗 | Close Grappling + 环绕镜头 | Orbit (Arc Shot)"
