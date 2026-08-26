@@ -917,8 +917,8 @@ function openVoiceModal(node) {
         '<div class="bsai-voice-direct">' +
         '  <label class="bsai-voice-chk"><input type="checkbox" data-act="drtgl" /> ⚡ 直通模式 / Direct Mode <span class="bsai-voice-hint">将文字直接扩写为完整 H3 提示词（绕过模板）/ expand into a full H3 prompt, bypassing templates</span></label>' +
         '  <div class="bsai-voice-drow" data-act="drow" style="display:none">' +
-        '    <button class="bsai-voice-btn primary" data-act="gen" disabled>⚡ 生成 H3 提示词 / Generate H3</button>' +
-        '    <button class="bsai-voice-btn" data-act="direct" disabled>➤ 填入直通输出 / Set as direct_prompt</button>' +
+        '    <button class="bsai-voice-btn" data-act="gen" disabled>⚡ 生成 H3 提示词 / Generate H3</button>' +
+        '    <button class="bsai-voice-btn primary" data-act="confirm" disabled>✅ 确定并输出 / Confirm & Output</button>' +
         '  </div>' +
         '</div>' +
         '<div class="bsai-voice-btns">' +
@@ -938,7 +938,7 @@ function openVoiceModal(node) {
     var chkDirect = ov.querySelector('[data-act="drtgl"]');
     var rowDirect = ov.querySelector('[data-act="drow"]');
     var btnGen = ov.querySelector('[data-act="gen"]');
-    var btnDirect = ov.querySelector('[data-act="direct"]');
+    var btnConfirm = ov.querySelector('[data-act="confirm"]');
 
     function setStatus(txt, cls) {
         status.textContent = txt;
@@ -949,7 +949,7 @@ function openVoiceModal(node) {
         btnExt.disabled = !has;
         btnCust.disabled = !has;
         btnGen.disabled = !(chkDirect.checked && has);
-        btnDirect.disabled = !(chkDirect.checked && has);
+        btnConfirm.disabled = !(chkDirect.checked && has);
     }
     ta.addEventListener("input", enableFill);
     chkDirect.addEventListener("change", function() {
@@ -971,7 +971,7 @@ function openVoiceModal(node) {
         }).then(function(r) { return r.json(); }).then(function(j) {
             if (j && j.ok && j.prompt) {
                 ta.value = j.prompt;
-                setStatus("✅ H3 直通提示词已生成，可编辑后填入 / H3 prompt generated — edit, then fill", "ok");
+                setStatus("✅ H3 直通提示词已生成，点击「确定并输出」直接发给下游节点 / Generated — click Confirm & Output", "ok");
             } else {
                 ta.value = old;
                 setStatus("生成失败：" + ((j && j.error) || "unknown") + " / Generate failed", "");
@@ -983,7 +983,9 @@ function openVoiceModal(node) {
             enableFill();
         });
     };
-    btnDirect.onclick = function() {
+    btnConfirm.onclick = function() {
+        // Direct mode confirm: write the generated H3 prompt to direct_prompt and
+        // close — the node outputs it immediately to downstream nodes.
         if (setWidgetText(node, "direct_prompt", ta.value.trim())) {
             node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
         }
