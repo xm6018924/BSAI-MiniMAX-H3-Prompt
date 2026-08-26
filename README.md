@@ -512,6 +512,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 - **新增 ⚡ 直通模式**：语音对话框中勾选"⚡ 直通模式 / Direct Mode"并点击"⚡ 生成 H3 提示词 / Generate H3"，框内文字（语音转写或手动输入）将由 **本地 llama.cpp GGUF 大模型** 按 **H3 官方提示词 SKILL** 扩写为完整的 `integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music` 三字段提示词（含分镜时间轴、运镜、音效、音乐；中文输入自动译为英文）。
 - **直接输出**：点击"✅ 确定并输出 / Confirm &amp; Output"后，节点新增的 `direct_prompt` 输入生效，`prompt_output` **直接输出该提示词给下游节点，绕过所有模板**（名称显示"直通模式 | Direct Mode"）。
+- **全自动流程（直通模式）**：录音时 **3 秒无声音**自动停止并转写；转写完成后若**不修改**文字，**3 秒后自动生成 H3 提示词并输出给下游节点**，窗口自动关闭。任何时刻编辑文字即可取消自动流程，改为手动"确定并输出"。
 - **本地模型自动检测**：默认加载 `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf`（输出干净、质量高）。可通过环境变量覆盖：`BSAI_H3_LLM_MODEL`（任意 GGUF 路径，如 9B 的 `Qwen3.5-9B-...-Q8_0.gguf`）、`BSAI_H3_LLM_GPU_LAYERS`（默认 -1=全部 GPU，可调小省显存）、`BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE`（改用 OpenAI 兼容远程 API）。
 - **懒加载**：首次调用才加载模型（约 1 分钟），之后常驻；重启 ComfyUI 释放显存。
 - 依赖：`pip install llama-cpp-python`（本机已装，GPU 加速）。
@@ -520,6 +521,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 - **New ⚡ Direct Mode**: in the voice dialog tick "⚡ 直通模式 / Direct Mode" and click "⚡ 生成 H3 提示词 / Generate H3" — the box text (voice transcription or manual input) is expanded by a **local llama.cpp GGUF LLM** per the **official H3 prompt SKILL** into a full three-field prompt (`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`), including time-coded shot breakdown, camera moves, soundscape and music; Chinese input is translated to English.
 - **Direct output**: after "✅ 确定并输出 / Confirm &amp; Output", the new `direct_prompt` input takes effect and `prompt_output` **emits the text directly to downstream nodes, bypassing all templates** (name shows "直通模式 | Direct Mode").
+- **Fully automatic flow (Direct Mode)**: while recording, **3 seconds of mic silence** auto-stops and transcribes; after transcription, if you do **not edit** the text, it **auto-generates the H3 prompt and outputs to downstream in 3s**, then auto-closes the window. Edit the text anytime to cancel the auto flow and fall back to manual "Confirm &amp; Output".
 - **Auto-detected local model**: defaults to `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf` (clean, high-quality output). Overridable via env: `BSAI_H3_LLM_MODEL` (any GGUF path), `BSAI_H3_LLM_GPU_LAYERS` (default -1 = all GPU), `BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE` (OpenAI-compatible remote API).
 - **Lazy load**: the model loads on first use (~1 min), then stays resident; restart ComfyUI to free VRAM.
 - Deps: `pip install llama-cpp-python` (installed on this machine, GPU-accelerated).

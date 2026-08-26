@@ -951,16 +951,17 @@ function openVoiceModal(node) {
         btnGen.disabled = !(chkDirect.checked && has);
         btnConfirm.disabled = !(chkDirect.checked && has);
     }
-    ta.addEventListener("input", enableFill);
+    ta.addEventListener("input", function() { cancelAutoFlow(); enableFill(); });
     chkDirect.addEventListener("change", function() {
         rowDirect.style.display = chkDirect.checked ? "flex" : "none";
+        if (!chkDirect.checked) cancelAutoFlow();
         enableFill();
     });
 
     // ── Direct mode: expand text into a full H3 prompt via local LLM ──
     btnGen.onclick = function() {
         var txt = (ta.value || "").trim();
-        if (!txt) return;
+        if (!txt) { _autoGen = false; return; }
         btnGen.disabled = true;
         var old = ta.value;
         setStatus("⚡ 正在生成 H3 提示词（本地模型，首次约 1 分钟）… / Generating H3 prompt (local LLM, ~1 min first time)…");
@@ -972,13 +973,20 @@ function openVoiceModal(node) {
             if (j && j.ok && j.prompt) {
                 ta.value = j.prompt;
                 setStatus("✅ H3 直通提示词已生成，点击「确定并输出」直接发给下游节点 / Generated — click Confirm & Output", "ok");
+                if (_autoGen && !_flowCancelled) {
+                    _autoGen = false;
+                    btnConfirm.onclick();
+                    return;
+                }
             } else {
                 ta.value = old;
+                _autoGen = false;
                 setStatus("生成失败：" + ((j && j.error) || "unknown") + " / Generate failed", "");
             }
             enableFill();
         }).catch(function(e) {
             ta.value = old;
+            _autoGen = false;
             setStatus("网络错误 / Network error: " + e, "");
             enableFill();
         });
@@ -991,6 +999,37 @@ function openVoiceModal(node) {
         }
         ov.remove();
     };
+
+    // ── Direct-mode auto flow ──
+    // Direct mode: 3s of mic silence → auto stop & transcribe;
+    // after transcription, if the user does NOT edit the text → auto generate H3
+    // and output to downstream, then auto-close the dialog.
+    var _autoTimer = null;
+    var _flowCancelled = false;
+    var _autoGen = false;
+    function cancelAutoFlow() {
+        _flowCancelled = true;
+        _autoGen = false;
+        if (_autoTimer) { clearTimeout(_autoTimer); _autoTimer = null; }
+    }
+    function startAutoFlow() {
+        cancelAutoFlow();
+        _flowCancelled = false;
+        setStatus("⏳ 直通模式：3 秒后自动生成并输出，修改文字可取消 / Direct: auto-generate & output in 3s (edit to cancel)", "ok");
+        _autoTimer = setTimeout(function() {
+            _autoTimer = null;
+            _autoGen = true;
+            btnGen.onclick();
+        }, 3000);
+    }
+    function cleanupVoice() {
+        try { _voice.proc && _voice.proc.disconnect(); } catch (e) {}
+        try { _voice.src && _voice.src.disconnect(); } catch (e) {}
+        try { _voice.stream && _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+        try { _voice.ctx && _voice.ctx.close(); } catch (e) {}
+        _voice.rec = false;
+        if (_voice.autoStopInt) { clearInterval(_voice.autoStopInt); _voice.autoStopInt = null; }
+    }
 
     btnRec.onclick = function() {
         if (_voice.rec) return;
@@ -1009,14 +1048,30 @@ function openVoiceModal(node) {
             _voice.rate = _voice.ctx.sampleRate || 48000;
             _voice.proc.onaudioprocess = function(e) {
                 if (!_voice.rec) return;
-                _voice.chunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+                var d = e.inputBuffer.getChannelData(0);
+                _voice.chunks.push(new Float32Array(d));
+                // peak detection for silence auto-stop (direct mode)
+                var peak = 0;
+                for (var i = 0; i < d.length; i++) { var a = Math.abs(d[i]); if (a > peak) peak = a; }
+                if (peak > 0.02) _voice.lastSoundAt = Date.now();
             };
             _voice.src.connect(_voice.proc);
             _voice.proc.connect(_voice.ctx.destination);
             _voice.rec = true;
+            _voice.lastSoundAt = Date.now();
+            // direct mode: auto stop & transcribe after 3s of silence
+            _voice.autoStopInt = setInterval(function() {
+                if (!_voice.rec) return;
+                if (chkDirect.checked && (Date.now() - _voice.lastSoundAt) >= 3000) {
+                    try { btnStop.onclick(); } catch (e) {}
+                }
+            }, 400);
             btnRec.disabled = true;
             btnStop.disabled = false;
-            setStatus("● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now", "rec");
+            setStatus(chkDirect.checked
+                ? "● 正在录音… 3 秒无声音将自动停止并转写 / Recording… auto-stops after 3s of silence"
+                : "● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now",
+                "rec");
         }).catch(function(err) {
             setStatus("无法访问麦克风：" + (err && err.name ? err.name : err) + " / Mic access denied", "");
         });
@@ -1031,10 +1086,7 @@ function openVoiceModal(node) {
         var all = new Float32Array(total), off = 0;
         _voice.chunks.forEach(function(a) { all.set(a, off); off += a.length; });
         // cleanup
-        try { _voice.proc.disconnect(); } catch (e) {}
-        try { _voice.src.disconnect(); } catch (e) {}
-        try { _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
-        try { _voice.ctx.close(); } catch (e) {}
+        cleanupVoice();
         _voice.proc = _voice.src = _voice.stream = _voice.ctx = null;
         btnRec.disabled = false;
         btnStop.disabled = true;
@@ -1050,6 +1102,8 @@ function openVoiceModal(node) {
             if (j && j.ok) {
                 ta.value = j.text || "";
                 setStatus("转写完成 / Done", "ok");
+                // direct mode: auto-generate & output in 3s unless the user edits
+                if (chkDirect.checked && (ta.value || "").trim()) startAutoFlow();
             } else {
                 setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
             }
@@ -1072,10 +1126,11 @@ function openVoiceModal(node) {
         ov.remove();
     };
     ov.querySelector('[data-act="close"]').onclick = function() {
-        if (_voice.rec) { try { _voice.proc && _voice.proc.disconnect(); } catch (e) {} try { _voice.src && _voice.src.disconnect(); } catch (e) {} try { _voice.stream && _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {} try { _voice.ctx && _voice.ctx.close(); } catch (e) {} _voice.rec = false; }
+        cleanupVoice();
+        cancelAutoFlow();
         ov.remove();
     };
-    ov.addEventListener("click", function(e) { if (e.target === ov) { ov.remove(); } });
+    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); ov.remove(); } });
 }
 
 function downsampleTo16k(samples, fromRate) {
