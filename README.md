@@ -517,6 +517,20 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.6 — 新增「确认修改 / Apply」按钮（手动触发融合）/ "Apply Customization" button added
+
+**中文说明：**
+
+- 补充修改输入框后新增「**确认修改 / Apply**」按钮：点击后立即通过本地大模型把补充修改**真正融合进模板**，并在「输出提示词预览」中直接查看最终结果。
+- 输入时不再自动触发融合（避免打字过程反复启动 30s 大模型），改为即时「追加预览 + 提示点按钮」。按下按钮才融合；同一模板+同一修改缓存命中后**秒出**。
+- 仅需刷新浏览器（Ctrl+F5）即可生效，无需重启 ComfyUI。
+
+**English:**
+
+- Added an "**确认修改 / Apply**" button after the Customization field: click to LIVE-MERGE the customization into the template via the local LLM and see the final prompt in the Output Preview immediately.
+- Typing no longer auto-triggers the slow merge (prevents repeated LLM starts); an instant append preview with a hint is shown instead. Only the button triggers the merge; the same template+edit is instant once cached.
+- Refresh the browser (Ctrl+F5) only — no ComfyUI restart needed.
+
 ### v1.11.5 — 补充修改真实融入模板（修复推理模型吞掉输出）/ Customization merge fixed (reasoning-model output bug)
 
 **中文说明：**

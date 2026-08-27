@@ -199,6 +199,15 @@ if (!document.getElementById(STYLE_ID)) {
 }
 .bsai-tpl-cust-ta:focus { border-color: #3f789e; }
 .bsai-tpl-cust-ta::placeholder { color: #444; }
+.bsai-tpl-cust-btn {
+    display: block; margin: 4px 0 0 auto; padding: 4px 14px;
+    background: linear-gradient(135deg, #2a6f9e, #1e4f77); color: #fff;
+    border: none; border-radius: 6px; cursor: pointer; font-size: 11px;
+    font-weight: 600; transition: filter .15s, transform .05s;
+}
+.bsai-tpl-cust-btn:hover { filter: brightness(1.18); }
+.bsai-tpl-cust-btn:active { transform: translateY(1px); }
+.bsai-tpl-cust-btn:disabled { opacity: .5; cursor: not-allowed; }
 /* Output prompt preview */
 .bsai-tpl-out { margin-top: 6px; }
 .bsai-tpl-out-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
@@ -431,8 +440,14 @@ function buildTemplateUI(node) {
     const custTa = document.createElement("textarea");
     custTa.className = "bsai-tpl-cust-ta";
     custTa.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    const custBtn = document.createElement("button");
+    custBtn.type = "button";
+    custBtn.className = "bsai-tpl-cust-btn";
+    custBtn.textContent = "确认修改 / Apply";
+    custBtn.title = "将补充修改真正融合进模板，并在下方输出提示词预览中查看最终结果 / Merge the customization into the template and preview the final result below";
     custDiv.appendChild(custLbl);
     custDiv.appendChild(custTa);
+    custDiv.appendChild(custBtn);
     container.appendChild(custDiv);
 
     // Output prompt preview (shows the text actually sent to downstream nodes)
@@ -460,6 +475,7 @@ function buildTemplateUI(node) {
     node._bsaiClr = clrBtn;
     node._bsaiCnt = cntSpan;
     node._bsaiCustTa = custTa;
+    node._bsaiCustBtn = custBtn;
     node._bsaiOutTa = outTa;
     node._bsaiSearchInput = searchInput;
     node._bsaiSearchClr = searchClr;
@@ -526,6 +542,14 @@ function buildTemplateUI(node) {
             if (node.graph) node.setDirtyCanvas(true, true);
         }
         renderOutputPreview(node);
+    });
+    // "确认修改 / Apply": merge the customization into the template NOW and show
+    // the final prompt in the output preview (manual confirm, no auto-merge).
+    custBtn.addEventListener("click", function() {
+        if (node._bsaiCustBtn) node._bsaiCustBtn.disabled = true;
+        applyCustomization(node, function() {
+            if (node._bsaiCustBtn) node._bsaiCustBtn.disabled = false;
+        });
     });
     if (custWidget && custWidget.value) {
         custTa.value = custWidget.value;
@@ -945,10 +969,10 @@ function setCustomizationText(node, text) {
 
 // Render the ACTUAL prompt that will be sent downstream (selected templates
 // merged + customization applied) into the node's output preview box.
-// When a customization is present it is LIVE-MERGED into the template via the
-// local/API LLM (/bsai_h3/merge) so the user sees the real modified prompt —
-// not just an appended block — and can verify the change actually took effect.
-var _mergeTimer = null;
+// While typing, only an APPEND preview is shown (instant). Pressing the
+// "确认修改 / Apply" button calls applyCustomization() which LIVE-MERGES the
+// customization into the template via the local/API LLM (/bsai_h3/merge) so
+// the user sees the real modified prompt and can verify the change.
 var _mergeSeq = 0;
 function renderOutputPreview(node) {
     if (!node || !node._bsaiOutTa) return;
@@ -963,35 +987,53 @@ function renderOutputPreview(node) {
     });
     var base = parts.join("\n\n");
     if (!(cust && cust.trim())) {
-        if (_mergeTimer) { clearTimeout(_mergeTimer); _mergeTimer = null; }
         node._bsaiOutTa.value = base;
         return;
     }
-    var seq = ++_mergeSeq;
     var fallback = base + (base ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
     node._bsaiOutTa.value = fallback + (base
-        ? "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…"
+        ? "\n\n💡 追加预览（未融合）。点击「确认修改 / Apply」按钮可让大模型把补充修改真正融入模板。 / Append preview (not merged). Click Apply to merge the customization into the template."
         : "");
-    if (!base) return;
-    if (_mergeTimer) clearTimeout(_mergeTimer);
-    _mergeTimer = setTimeout(function() {
-        _mergeTimer = null;
-        fetch("/bsai_h3/merge", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt: base, customization: cust })
-        }).then(function(r) { return r.json(); }).then(function(j) {
-            if (seq !== _mergeSeq) return;
-            if (j && j.ok && j.prompt && j.prompt.trim()) {
-                node._bsaiOutTa.value = j.prompt;
-            } else {
-                node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
-            }
-        }).catch(function(e) {
-            if (seq !== _mergeSeq) return;
-            node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
-        });
-    }, 1200);
+}
+
+// Merge the customization into the selected template(s) immediately and show the
+// final prompt in the output preview. Called by the "确认修改 / Apply" button.
+// `done` (optional) is invoked when the merge completes/fails.
+function applyCustomization(node, done) {
+    if (!node) { if (done) done(); return; }
+    if (node._bsaiCustTa) setWidgetText(node, "user_customization", node._bsaiCustTa.value);
+    var sel = node._bsaiSelection || [];
+    var cust = "";
+    var w = findWidget(node, "user_customization");
+    if (w && w.value) cust = w.value;
+    else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
+    var parts = [];
+    sel.forEach(function(it) {
+        if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
+    });
+    var base = parts.join("\n\n");
+    if (!(cust && cust.trim())) { renderOutputPreview(node); if (done) done(); return; }
+    if (!base) { node._bsaiOutTa.value = cust.trim(); if (done) done(); return; }
+    var seq = ++_mergeSeq;
+    var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
+    node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
+    fetch("/bsai_h3/merge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: base, customization: cust })
+    }).then(function(r) { return r.json(); }).then(function(j) {
+        if (seq !== _mergeSeq) { if (done) done(); return; }
+        if (j && j.ok && j.prompt && j.prompt.trim()) {
+            node._bsaiOutTa.value = j.prompt;
+        } else {
+            node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
+        }
+        if (done) done();
+    }).catch(function(e) {
+        if (seq !== _mergeSeq) { if (done) done(); return; }
+        node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
+        if (done) done();
+    });
 }
 
 // Show the final prompt (sent to downstream nodes) in the node's output preview box
