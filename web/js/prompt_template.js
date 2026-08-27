@@ -1125,19 +1125,20 @@ function openVoiceModal(node) {
         clearDirectAsk();
         _flowCancelled = false;
         _directAskShown = false;
-        setStatus("⏳ 直通模式：3 秒后弹出输出选项；此时直接修改文字可立即弹出输出选项 / Direct: output options in 3s — edit now to choose output type immediately", "ok");
-        // If the user starts editing within the 3s window → show 2-choice dialog immediately
+        setStatus("⏳ 直通模式：3 秒后弹出输出选项；此时直接修改文字可直接用下方按钮输出 / Direct: output options in 3s — edit now to use the buttons below directly", "ok");
+        // If the user edits within the 3s window → do NOT show a dialog; they can
+        // directly use the always-present buttons (⚡ Generate H3 / ✅ Confirm & Output).
         _directEditGuard = function() {
             if (_directAskShown) return;
-            _directAskShown = true;
-            showDirectAsk(false);  // user is already editing → raw / H3 only
+            clearDirectAsk();  // stop the 3s timer & remove this guard — no dialog
+            setStatus("✅ 已修改文字：可直接点击下方「⚡ 生成 H3 提示词」或「✅ 确定并输出」/ Edited — use the buttons below (Generate H3 or Confirm & Output)", "ok");
         };
         ta.addEventListener("input", _directEditGuard);
         _directAskTimer = setTimeout(function() {
             _directAskTimer = null;
             if (_directAskShown) return;
             _directAskShown = true;
-            showDirectAsk(true);   // no edit within 3s → full dialog incl. edit
+            showDirectAsk(true);   // no edit within 3s → full dialog (edit / raw / H3 / cancel)
         }, 3000);
     }
     function cleanupVoice() {

@@ -513,17 +513,17 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 **中文说明：**
 
 - **转写后 3 秒等待 + 询问框**：直通模式下语音停止转写后，先停留 **3 秒**——
-  - 3 秒内**未手动修改**文字 → 3 秒后自动弹出「如何输出？」询问框（⚡ 直通输出原文 / ⚡ 生成 H3 提示词 / ✏️ 修改文字 / ✕ 取消）；
-  - 3 秒内**直接手动修改**了文字 → **立即**弹出 2 个选项（⚡ 直通输出原文 / ⚡ 生成 H3 提示词）。
-  - 「直通输出原文」**不经过 H3 生成**，直接把语音转文字原文输出给下游节点、窗口自动关闭；「生成 H3 提示词」由本地大模型按 **H3 SKILL 三段式标准**扩写后再输出给下游；
+  - 3 秒内**直接手动修改**了文字 → **不再弹出询问框**，直接使用录音界面本就存在的「⚡ 生成 H3 提示词」与「✅ 确定并输出」按钮（点「确定并输出」= 直通输出文字，点「生成 H3」再「确定并输出」= H3 三段式输出）；
+  - 3 秒内**未手动修改**文字 → 3 秒后弹出「如何输出？」询问框：✏️ 修改文字 ／ ⚡ 不修改直通输出文本（不生成 H3）／ ⚡ H3 生成提示词 ／ ✕ 取消。
+  - 「直通输出文本」**不经过 H3 生成**，直接把语音转文字原文输出给下游节点、窗口自动关闭；「H3 生成提示词」由本地大模型按 **H3 SKILL 三段式标准**扩写后再输出给下游；
 - **输出提示词预览**：节点「补充修改」下方新增只读「**输出提示词预览 / Output Preview**」窗口，直通/语音输出的完整提示词在语音窗口关闭后仍在此显示；工作流重载时自动恢复。
 
 **English:**
 
 - **3s grace period + confirm dialog**: in Direct Mode, once transcription finishes, there is a **3-second grace period** —
-  - if you do **not** edit the text within 3s, the full「如何输出？/ How to output?」dialog appears (⚡ Output raw text / ⚡ Generate H3 / ✏️ Edit text / ✕ Cancel);
-  - if you **edit the text** within 3s, a **2-choice** dialog appears immediately (⚡ Output raw text / ⚡ Generate H3).
-  -「⚡ 直通输出原文 / Output raw text」sends the raw transcribed text downstream **without H3 generation** and auto-closes;「⚡ 生成 H3 提示词 / Generate H3」expands it into a full H3 three-field prompt per the H3 SKILL, then outputs downstream.
+  - if you **edit the text** within 3s → **no dialog appears**; use the always-present buttons in the recording dialog —「✅ 确定并输出 / Confirm &amp; Output」outputs the text as-is (raw), and「⚡ 生成 H3 提示词 / Generate H3」first expands it into a full H3 prompt;
+  - if you do **not** edit the text within 3s → after 3s the「如何输出？/ How to output?」dialog appears: ✏️ Edit text ／ ⚡ Output raw text (no H3 generation) ／ ⚡ Generate H3 ／ ✕ Cancel.
+  -「⚡ Output raw text」sends the raw transcribed text downstream **without H3 generation** and auto-closes;「⚡ Generate H3」expands it into a full H3 three-field prompt per the H3 SKILL, then outputs downstream.
 - **Output Preview**: a new read-only「**输出提示词预览 / Output Preview**」box below the Customization area shows the full prompt sent to downstream; it persists after the voice dialog closes and is restored on workflow load.
 
 ### v1.11.0 — 新增电影调色 + 风格转绘模板 / Add Cinematic Color Grading + Style Transfer templates
@@ -550,7 +550,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 - **新增 ⚡ 直通模式**：语音对话框中勾选"⚡ 直通模式 / Direct Mode"并点击"⚡ 生成 H3 提示词 / Generate H3"，框内文字（语音转写或手动输入）将由 **本地 llama.cpp GGUF 大模型** 按 **H3 官方提示词 SKILL** 扩写为完整的 `integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music` 三字段提示词（含分镜时间轴、运镜、音效、音乐；中文输入自动译为英文）。
 - **直接输出**：点击"✅ 确定并输出 / Confirm &amp; Output"后，节点新增的 `direct_prompt` 输入生效，`prompt_output` **直接输出该提示词给下游节点，绕过所有模板**（名称显示"直通模式 | Direct Mode"）。
-- **全自动流程（直通模式）**：录音时 **3 秒无声音**自动停止并转写；转写完成后**停留 3 秒**——3 秒内未手动修改文字则 3 秒后弹出「如何输出？」询问框（直通原文 / 生成 H3 / 修改文字 / 取消）；3 秒内直接修改了文字则**立即**弹出 2 个选项（直通原文 / 生成 H3）。「直通输出原文」直接输出语音原文（不生成 H3）给下游并自动关闭；「生成 H3 提示词」由本地大模型按 H3 三段式标准扩写后输出。输出后可在节点下方「**输出提示词预览 / Output Preview**」只读窗口中查看发送给下游的完整提示词（窗口关闭后仍保留）。
+- **全自动流程（直通模式）**：录音时 **3 秒无声音**自动停止并转写；转写完成后**停留 3 秒**——3 秒内直接修改了文字则**不再弹询问框**，直接用录音界面原有的「⚡ 生成 H3 提示词」/「✅ 确定并输出」按钮输出；3 秒内未手动修改则 3 秒后弹出「如何输出？」询问框（✏️ 修改文字 / ⚡ 直通输出文本 / ⚡ H3 生成提示词 / ✕ 取消）。「直通输出文本」直接输出语音原文（不生成 H3）给下游并自动关闭；「H3 生成提示词」由本地大模型按 H3 三段式标准扩写后输出。输出后可在节点下方「**输出提示词预览 / Output Preview**」只读窗口中查看发送给下游的完整提示词（窗口关闭后仍保留）。
 - **本地模型自动检测**：默认加载 `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf`（输出干净、质量高）。可通过环境变量覆盖：`BSAI_H3_LLM_MODEL`（任意 GGUF 路径，如 9B 的 `Qwen3.5-9B-...-Q8_0.gguf`）、`BSAI_H3_LLM_GPU_LAYERS`（默认 -1=全部 GPU，可调小省显存）、`BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE`（改用 OpenAI 兼容远程 API）。
 - **懒加载**：首次调用才加载模型（约 1 分钟），之后常驻；重启 ComfyUI 释放显存。
 - 依赖：`pip install llama-cpp-python`（本机已装，GPU 加速）。
@@ -559,7 +559,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 - **New ⚡ Direct Mode**: in the voice dialog tick "⚡ 直通模式 / Direct Mode" and click "⚡ 生成 H3 提示词 / Generate H3" — the box text (voice transcription or manual input) is expanded by a **local llama.cpp GGUF LLM** per the **official H3 prompt SKILL** into a full three-field prompt (`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`), including time-coded shot breakdown, camera moves, soundscape and music; Chinese input is translated to English.
 - **Direct output**: after "✅ 确定并输出 / Confirm &amp; Output", the new `direct_prompt` input takes effect and `prompt_output` **emits the text directly to downstream nodes, bypassing all templates** (name shows "直通模式 | Direct Mode").
-- **Fully automatic flow (Direct Mode)**: while recording, **3 seconds of mic silence** auto-stops and transcribes; after transcription there is a **3-second grace period** — if you do not edit the text within 3s, the full「如何输出？/ How to output?」dialog appears (⚡ Output raw text / ⚡ Generate H3 / ✏️ Edit text / ✕ Cancel); if you edit the text within 3s, a **2-choice** dialog appears immediately (⚡ Output raw text / ⚡ Generate H3).「⚡ 直通输出原文 / Output raw text」sends the raw transcribed text downstream **without H3 generation** and auto-closes;「⚡ 生成 H3 提示词 / Generate H3」expands it into a full H3 three-field prompt first. The full prompt sent downstream stays visible in the node's read-only「**输出提示词预览 / Output Preview**」box even after the dialog closes.
+- **Fully automatic flow (Direct Mode)**: while recording, **3 seconds of mic silence** auto-stops and transcribes; after transcription there is a **3-second grace period** — if you **edit the text** within 3s, **no dialog appears**; use the always-present「⚡ 生成 H3 提示词 / Generate H3」and「✅ 确定并输出 / Confirm &amp; Output」buttons directly (Confirm = raw output, Generate H3 then Confirm = H3 output). If you do not edit within 3s, the full「如何输出？/ How to output?」dialog appears (✏️ Edit text / ⚡ Output raw text / ⚡ Generate H3 / ✕ Cancel).「⚡ Output raw text」sends the raw transcribed text downstream **without H3 generation** and auto-closes;「⚡ Generate H3」expands it into a full H3 three-field prompt first. The full prompt sent downstream stays visible in the node's read-only「**输出提示词预览 / Output Preview**」box even after the dialog closes.
 - **Auto-detected local model**: defaults to `ComfyUI/models/LLM/Gemma4-GGUF/gemma-4-26B-A4B-it-heretic-ara.Q4_K_M.gguf` (clean, high-quality output). Overridable via env: `BSAI_H3_LLM_MODEL` (any GGUF path), `BSAI_H3_LLM_GPU_LAYERS` (default -1 = all GPU), `BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE` (OpenAI-compatible remote API).
 - **Lazy load**: the model loads on first use (~1 min), then stays resident; restart ComfyUI to free VRAM.
 - Deps: `pip install llama-cpp-python` (installed on this machine, GPU-accelerated).
