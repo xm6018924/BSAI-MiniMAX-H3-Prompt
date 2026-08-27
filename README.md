@@ -517,6 +517,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.10 — 负向约束强注入（"严禁第三人"写满所有字段）/ Negative-constraint enforcement injection
+
+**中文说明：**
+
+- 针对「画面仍出现第3个人（复制角色）」：融合指令新增**负向/禁止类约束强注入**——检测到"严禁/不要/禁止/no third person/no extra/only two"等修改时，除 summary 外还会：
+  - `retention_analysis` 为**每个 Subject 增加 Constraint 行**："exactly one instance of <Subject N> on screen, no duplicate, no clone, no repeated character"；
+  - **每个 `[Shot N]`** 都重复禁令："Only <Subject 1>/<Subject 2> present; absolutely no third person, no background extras, no duplicate people"。
+- 实测（gemma）：「所有画面严禁出现第3个人」已写入 summary、两个 Subject 的 Constraint、以及全部 3 个分镜，措辞强硬，`copy-append=False`，对话标签保留。
+- **提醒**：提示词约束强化后，若生成仍出现第三人，请检查①参考图里是否本身含多人②工作流中"提示词增强"等下游节点是否改写/稀释了约束③必要时把约束同时放入负面提示词。
+- **务必重启 ComfyUI**（后端改动）。
+
+**English:**
+
+- For "still shows a third (cloned) person": the merge instruction now enforces NEGATIVE/forbidden constraints everywhere — besides summary it adds a `Constraint:` line to `retention_analysis` for EVERY subject ("exactly one instance of <Subject N> on screen, no duplicate, no clone, no repeated character") and repeats the ban inside EVERY `[Shot N]` ("Only <Subject 1>/<Subject 2> present; absolutely no third person, no background extras, no duplicate people").
+- Verified (gemma): "no third person in any frame" lands in summary + both subjects' Constraints + all 3 shots, emphatic wording, `copy-append=False`, dialogue tags intact.
+- **Note**: if a third person still appears, check ① the reference images themselves (no extra people inside) ② downstream "prompt enhancer"-style nodes that may rewrite/dilute the constraint ③ optionally add the ban to a negative prompt.
+- **Restart ComfyUI required** (backend change).
+
 ### v1.11.9 — 融合真正生效：识别"复制+追加"并自动回退强模型 / Copy-append detection + fallback to a stronger model
 
 **中文说明：**
