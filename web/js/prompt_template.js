@@ -1027,7 +1027,18 @@ function openVoiceModal(node) {
         btnGen.disabled = !(chkDirect.checked && has);
         btnConfirm.disabled = !(chkDirect.checked && has);
     }
-    ta.addEventListener("input", function() { cancelAutoFlow(); enableFill(); });
+    ta.addEventListener("input", function() {
+        cancelAutoFlow();
+        enableFill();
+        // The user manually edited the text → never show the "how to output?" dialog.
+        // Stop the 3s timer and close any already-open dialog; they can use the
+        // always-present buttons (⚡ Generate H3 / ✅ Confirm & Output) instead.
+        if (_directAskTimer || _directAskBox) {
+            clearDirectAsk();
+            closeDirectAskBox();
+            setStatus("✅ 已修改文字：可直接点击下方「⚡ 生成 H3 提示词」或「✅ 确定并输出」/ Edited — use the buttons below (Generate H3 or Confirm & Output)", "ok");
+        }
+    });
     chkDirect.addEventListener("change", function() {
         rowDirect.style.display = chkDirect.checked ? "flex" : "none";
         if (!chkDirect.checked) cancelAutoFlow();
@@ -1095,12 +1106,17 @@ function openVoiceModal(node) {
 
     // ── Direct-mode 3s grace period ──
     var _directAskTimer = null;
-    var _directEditGuard = null;
     var _directAskShown = false;
+    var _directAskBox = null;   // the "how to output?" dialog DOM (if open)
     function clearDirectAsk() {
         if (_directAskTimer) { clearTimeout(_directAskTimer); _directAskTimer = null; }
-        if (_directEditGuard) { ta.removeEventListener("input", _directEditGuard); _directEditGuard = null; }
         _directAskShown = false;
+    }
+    function closeDirectAskBox() {
+        if (_directAskBox) {
+            try { _directAskBox.remove(); } catch (e) {}
+            _directAskBox = null;
+        }
     }
     function doRawOutput() {
         // send the raw transcribed text downstream, bypassing H3 generation
@@ -1119,21 +1135,15 @@ function openVoiceModal(node) {
     }
     function showDirectAsk(showEdit) {
         clearDirectAsk();
-        askModifyBox(node, ov, ta, doRawOutput, doGenerateOutput, showEdit);
+        closeDirectAskBox();
+        _directAskBox = askModifyBox(node, ov, ta, doRawOutput, doGenerateOutput, showEdit);
     }
     function startDirectAsk() {
         clearDirectAsk();
+        closeDirectAskBox();
         _flowCancelled = false;
         _directAskShown = false;
         setStatus("⏳ 直通模式：3 秒后弹出输出选项；此时直接修改文字可直接用下方按钮输出 / Direct: output options in 3s — edit now to use the buttons below directly", "ok");
-        // If the user edits within the 3s window → do NOT show a dialog; they can
-        // directly use the always-present buttons (⚡ Generate H3 / ✅ Confirm & Output).
-        _directEditGuard = function() {
-            if (_directAskShown) return;
-            clearDirectAsk();  // stop the 3s timer & remove this guard — no dialog
-            setStatus("✅ 已修改文字：可直接点击下方「⚡ 生成 H3 提示词」或「✅ 确定并输出」/ Edited — use the buttons below (Generate H3 or Confirm & Output)", "ok");
-        };
-        ta.addEventListener("input", _directEditGuard);
         _directAskTimer = setTimeout(function() {
             _directAskTimer = null;
             if (_directAskShown) return;
@@ -1253,9 +1263,10 @@ function openVoiceModal(node) {
         cleanupVoice();
         cancelAutoFlow();
         clearDirectAsk();
+        closeDirectAskBox();
         ov.remove();
     };
-    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); clearDirectAsk(); ov.remove(); } });
+    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); clearDirectAsk(); closeDirectAskBox(); ov.remove(); } });
 }
 
 function downsampleTo16k(samples, fromRate) {

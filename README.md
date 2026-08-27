@@ -513,7 +513,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 **中文说明：**
 
 - **转写后 3 秒等待 + 询问框**：直通模式下语音停止转写后，先停留 **3 秒**——
-  - 3 秒内**直接手动修改**了文字 → **不再弹出询问框**，直接使用录音界面本就存在的「⚡ 生成 H3 提示词」与「✅ 确定并输出」按钮（点「确定并输出」= 直通输出文字，点「生成 H3」再「确定并输出」= H3 三段式输出）；
+  - **只要用户手动修改了文字（任何时候）→ 询问框都不会出现**；即使询问框已弹出也会被立即关闭，用户直接使用录音界面本就存在的「⚡ 生成 H3 提示词」与「✅ 确定并输出」按钮（点「确定并输出」= 直通输出文字，点「生成 H3」再「确定并输出」= H3 三段式输出）；
   - 3 秒内**未手动修改**文字 → 3 秒后弹出「如何输出？」询问框：✏️ 修改文字 ／ ⚡ 不修改直通输出文本（不生成 H3）／ ⚡ H3 生成提示词 ／ ✕ 取消。
   - 「直通输出文本」**不经过 H3 生成**，直接把语音转文字原文输出给下游节点、窗口自动关闭；「H3 生成提示词」由本地大模型按 **H3 SKILL 三段式标准**扩写后再输出给下游；
 - **输出提示词预览**：节点「补充修改」下方新增只读「**输出提示词预览 / Output Preview**」窗口，直通/语音输出的完整提示词在语音窗口关闭后仍在此显示；工作流重载时自动恢复。
@@ -521,7 +521,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 **English:**
 
 - **3s grace period + confirm dialog**: in Direct Mode, once transcription finishes, there is a **3-second grace period** —
-  - if you **edit the text** within 3s → **no dialog appears**; use the always-present buttons in the recording dialog —「✅ 确定并输出 / Confirm &amp; Output」outputs the text as-is (raw), and「⚡ 生成 H3 提示词 / Generate H3」first expands it into a full H3 prompt;
+  - **editing the text at any time suppresses the dialog** — even if the dialog is already open, it is closed immediately; use the always-present buttons in the recording dialog —「✅ 确定并输出 / Confirm &amp; Output」outputs the text as-is (raw), and「⚡ 生成 H3 提示词 / Generate H3」first expands it into a full H3 prompt;
   - if you do **not** edit the text within 3s → after 3s the「如何输出？/ How to output?」dialog appears: ✏️ Edit text ／ ⚡ Output raw text (no H3 generation) ／ ⚡ Generate H3 ／ ✕ Cancel.
   -「⚡ Output raw text」sends the raw transcribed text downstream **without H3 generation** and auto-closes;「⚡ Generate H3」expands it into a full H3 three-field prompt per the H3 SKILL, then outputs downstream.
 - **Output Preview**: a new read-only「**输出提示词预览 / Output Preview**」box below the Customization area shows the full prompt sent to downstream; it persists after the voice dialog closes and is restored on workflow load.
