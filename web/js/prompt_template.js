@@ -944,8 +944,12 @@ function setCustomizationText(node, text) {
 }
 
 // Render the ACTUAL prompt that will be sent downstream (selected templates
-// merged + customization appended) into the node's output preview box, so the
-// user always sees whether 补充修改 / customization took effect.
+// merged + customization applied) into the node's output preview box.
+// When a customization is present it is LIVE-MERGED into the template via the
+// local/API LLM (/bsai_h3/merge) so the user sees the real modified prompt —
+// not just an appended block — and can verify the change actually took effect.
+var _mergeTimer = null;
+var _mergeSeq = 0;
 function renderOutputPreview(node) {
     if (!node || !node._bsaiOutTa) return;
     var sel = node._bsaiSelection || [];
@@ -957,11 +961,37 @@ function renderOutputPreview(node) {
     sel.forEach(function(it) {
         if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
     });
-    var out = parts.join("\n\n");
-    if (cust && cust.trim()) {
-        out += (out ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
+    var base = parts.join("\n\n");
+    if (!(cust && cust.trim())) {
+        if (_mergeTimer) { clearTimeout(_mergeTimer); _mergeTimer = null; }
+        node._bsaiOutTa.value = base;
+        return;
     }
-    node._bsaiOutTa.value = out;
+    var seq = ++_mergeSeq;
+    var fallback = base + (base ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
+    node._bsaiOutTa.value = fallback + (base
+        ? "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…"
+        : "");
+    if (!base) return;
+    if (_mergeTimer) clearTimeout(_mergeTimer);
+    _mergeTimer = setTimeout(function() {
+        _mergeTimer = null;
+        fetch("/bsai_h3/merge", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: base, customization: cust })
+        }).then(function(r) { return r.json(); }).then(function(j) {
+            if (seq !== _mergeSeq) return;
+            if (j && j.ok && j.prompt && j.prompt.trim()) {
+                node._bsaiOutTa.value = j.prompt;
+            } else {
+                node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
+            }
+        }).catch(function(e) {
+            if (seq !== _mergeSeq) return;
+            node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
+        });
+    }, 1200);
 }
 
 // Show the final prompt (sent to downstream nodes) in the node's output preview box

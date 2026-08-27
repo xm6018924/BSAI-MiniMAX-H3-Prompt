@@ -517,6 +517,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.4 — 补充修改真实融入模板 / Customization truly merged into the template
+
+**中文说明：**
+
+- **补充修改从「末尾追加」升级为「真实融入」**：模板提示词 + 补充修改会交给本地大模型（与直通模式同引擎）**重写**，把修改要求**真正写进提示词内部**——例如「两个不同场景的转场不要硬切，让图1人物自然地从场景1走进场景2」会把模板里的 `Match-cut transition`（硬切）直接改成自然行走转场，而不是在末尾加一句话。
+- **前端实时预览**：在「补充修改」框输入文字后，输出提示词预览会实时调用本地大模型，展示融合后的完整三段式（含 subject_definitions 等块），当场可见修改效果。
+- **全覆盖**：对任意模板、多选叠加、直通模式、自定义文本都生效。
+- **降级兜底**：本地大模型不可用时（未装 llama-cpp-python / 未放置 GGUF / 未设置 API），自动退回末尾追加，不影响使用。
+- 引擎优先级：`BSAI_H3_LLM_API_KEY`（OpenAI 兼容 API）→ 本地 GGUF（`BSAI_H3_LLM_MODEL` 或自动检测）。
+
+**English:**
+
+- **Customization upgraded from "append at the end" to "truly merged"**: the template prompt + customization are REWRITTEN by the local LLM (same engine as Direct Mode), so the modification is written INSIDE the prompt — e.g. "no hard cut between the two scenes, let the subject walk naturally from scene 1 into scene 2" will replace the template's `Match-cut transition` with a natural walk-through, instead of appending a sentence.
+- **Live preview**: typing in the customization box live-merges via the local LLM and shows the rewritten full prompt (including subject_definitions etc.) in the output preview.
+- **Applies everywhere**: any template, multi-stack, Direct mode, custom text.
+- **Fallback**: when no LLM is available (llama-cpp-python missing / no GGUF / no API), it falls back to appending at the end.
+- Engine priority: `BSAI_H3_LLM_API_KEY` (OpenAI-compatible API) → local GGUF (`BSAI_H3_LLM_MODEL` or auto-detect).
+
 ### v1.11.3 — 修复补充修改不生效 + 输出预览 / Fix "Set as customization" + Output preview
 
 **中文说明：**

@@ -168,6 +168,22 @@ def _merge_template_prompts(tpls, ext=""):
     return "\n\n".join(parts)
 
 
+def _merge_custom(prompt, cust):
+    """Apply the user customization INSIDE the prompt via the local/API LLM
+    (rewrite transition/action/scene etc.), returning the rewritten prompt.
+    Falls back to the original prompt on any failure — the caller decides the
+    fallback display (append vs original)."""
+    import sys as _sys
+    if _THIS_DIR not in _sys.path:
+        _sys.path.insert(0, _THIS_DIR)
+    from h3_direct_llm import merge_customization
+    return merge_customization(prompt, cust)
+
+
+def _append_custom(prompt, cust):
+    return (prompt.rstrip() + "\n\n--- User Customization / 用户自定义 ---\n" + cust.strip())
+
+
 class BSAI_H3_PromptTemplate:
     """One-click H3 prompt template selector with categorized templates and GIF preview."""
 
@@ -249,8 +265,17 @@ Features / 功能特点:
         if direct:
             # ── Direct mode / 直通模式: bypass templates, output the prompt as-is ──
             prompt = direct
-            if (user_customization or "").strip():
-                prompt += "\n\n--- User Customization / 用户自定义 ---\n" + user_customization.strip()
+            cust = (user_customization or "").strip()
+            if cust:
+                # Try to apply the customization INSIDE the direct prompt (best effort)
+                try:
+                    merged = _merge_custom(prompt, cust)
+                    if merged and merged.strip():
+                        prompt = merged
+                    else:
+                        prompt = _append_custom(prompt, cust)
+                except Exception:
+                    prompt = _append_custom(prompt, cust)
             return (prompt, "直通模式 | Direct Mode", "Direct / 直通", "Direct H3 prompt / 直通 H3 提示词", 0, "")
 
         # Support multi-select: labels joined by "|||", e.g. "武打打斗模板 > 多图成战类 > 贴身缠斗 ||| 电影运镜模板 > 跟随与环绕类 > 环绕镜头"
@@ -263,10 +288,6 @@ Features / 功能特点:
 
         ext = (external_prompt or "").strip()
         cust = (user_customization or "").strip()
-        # User customization remains a plain append (change character/scene, etc.)
-        cust_text = ""
-        if cust:
-            cust_text = "\n\n--- User Customization / 用户自定义 ---\n" + cust
 
         if not tpls:
             custom_text = (template_select or "").strip()
@@ -276,13 +297,30 @@ Features / 功能特点:
                 prompt = ""
             if ext:
                 prompt = (prompt + "\n\n" if prompt.strip() else "") + "--- External Prompt / 外部提示词 ---\n" + ext
-            prompt = prompt + cust_text if cust_text else prompt
+            if cust:
+                try:
+                    merged = _merge_custom(prompt, cust) if prompt.strip() else ""
+                    if merged and merged.strip():
+                        prompt = merged
+                    else:
+                        prompt = _append_custom(prompt, cust)
+                except Exception:
+                    prompt = _append_custom(prompt, cust)
             return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
 
         # Merge all selected templates; external prompt OVERRIDES the base action
         prompt = _merge_template_prompts(tpls, ext)
-        if cust_text:
-            prompt = prompt + cust_text
+        if cust:
+            # Apply the customization INSIDE the merged prompt via the local LLM;
+            # fall back to a plain append when no LLM is available.
+            try:
+                merged = _merge_custom(prompt, cust)
+                if merged and merged.strip():
+                    prompt = merged
+                else:
+                    prompt = _append_custom(prompt, cust)
+            except Exception:
+                prompt = _append_custom(prompt, cust)
 
         primary = tpls[0]
         # Bilingual merged name list: "贴身缠斗 | Close Grappling + 环绕镜头 | Orbit (Arc Shot)"
@@ -487,6 +525,33 @@ def _register_asr_route():
         try:
             prompt = await asyncio.get_event_loop().run_in_executor(None, _run)
             return web.json_response({"ok": True, "prompt": prompt})
+        except Exception as e:
+            return web.json_response({"ok": False, "error": str(e)})
+
+    @server.routes.post("/bsai_h3/merge")
+    async def bsai_h3_merge(request):
+        """Apply a customization INSIDE an existing H3 prompt via the local/API LLM.
+        Used by the frontend to live-preview the merged result."""
+        import asyncio
+        try:
+            body = await request.json()
+            prompt = (body.get("prompt") or "").strip()
+            customization = (body.get("customization") or "").strip()
+            if not prompt or not customization:
+                return web.json_response({"ok": False, "error": "missing prompt/customization / 缺少提示词或修改"})
+        except Exception:
+            return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
+
+        def _run():
+            import sys
+            if _THIS_DIR not in sys.path:
+                sys.path.insert(0, _THIS_DIR)
+            from h3_direct_llm import merge_customization
+            return merge_customization(prompt, customization)
+
+        try:
+            merged = await asyncio.get_event_loop().run_in_executor(None, _run)
+            return web.json_response({"ok": True, "prompt": merged})
         except Exception as e:
             return web.json_response({"ok": False, "error": str(e)})
 

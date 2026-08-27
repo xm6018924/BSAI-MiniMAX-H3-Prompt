@@ -369,6 +369,11 @@ b.en { color: var(--blue); }
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
 <div class="card">
+<div class="card-title">🧬 Customization truly merged into the template (v1.11.4) / 补充修改真实融入模板</div>
+<p><b>EN:</b> Customization is no longer just appended at the end — the template prompt + customization are REWRITTEN by the local LLM (same engine as Direct Mode), so the change is written INSIDE the prompt (e.g. "no hard cut, walk naturally from scene 1 into scene 2" replaces the template's match-cut with a natural walk-through). The output preview live-merges via the local LLM so you can see the rewritten prompt immediately. Applies to any template, multi-stack, Direct mode and custom text. Falls back to appending when no LLM is available. Engine priority: <code>BSAI_H3_LLM_API_KEY</code> (OpenAI-compatible API) → local GGUF (<code>BSAI_H3_LLM_MODEL</code> or auto-detect).</p>
+<p><b>中文:</b> 补充修改不再只是末尾追加——模板提示词 + 补充修改会交由本地大模型（与直通模式同引擎）<b>重写</b>，把修改真正写进提示词内部（例如「转场不要硬切，让图1人物自然从场景1走进场景2」会直接把模板的硬切转场改为自然行走转场）。输出预览会实时调用本地大模型展示融合后的完整提示词，当场可见效果。对任意模板、多选叠加、直通模式、自定义文本均生效；本地大模型不可用时自动退回末尾追加。引擎优先级：<code>BSAI_H3_LLM_API_KEY</code>（OpenAI 兼容 API）→ 本地 GGUF（<code>BSAI_H3_LLM_MODEL</code> 或自动检测）。</p>
+</div>
+<div class="card">
 <div class="card-title">🔧 Fix "Set as customization" + Output Preview (v1.11.3) / 修复补充修改不生效与输出预览</div>
 <p><b>EN:</b> Fixed 🎤 voice "Set as customization" appearing to do nothing — the hidden widget was written but the on-node customization textarea was not updated and the merged final prompt was not displayed. Now clicking it instantly fills the customization box and renders the full merged prompt (selected templates + customization appended) in the "Output Preview" box; manual edits, template select/clear/multi-stack also refresh the preview. Customization applies to ALL templates: the backend appends a <code>--- User Customization / 用户自定义 ---</code> block to every output path (Direct, custom text, any template / multi-stack merge).</p>
 <p><b>中文:</b> 修复 🎤 语音「填入补充修改」看似不起作用的问题——原来只写入了隐藏 widget 值，未同步界面补充修改框，也未展示合并后的最终提示词。现在点击后文字立即显示在「补充修改 / Customization」框内，并在「输出提示词预览 / Output Preview」实时渲染「选中模板合并 + 补充修改追加」后的完整提示词；手动修改、模板选择/清除/多选叠加也会同步刷新。补充修改对所有模板生效：后端在直通、自定义、任意模板/多选叠加输出末尾统一追加 <code>--- User Customization / 用户自定义 ---</code> 块。</p>
