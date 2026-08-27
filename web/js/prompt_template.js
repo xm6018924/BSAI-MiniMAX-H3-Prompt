@@ -199,6 +199,16 @@ if (!document.getElementById(STYLE_ID)) {
 }
 .bsai-tpl-cust-ta:focus { border-color: #3f789e; }
 .bsai-tpl-cust-ta::placeholder { color: #444; }
+/* Output prompt preview */
+.bsai-tpl-out { margin-top: 6px; }
+.bsai-tpl-out-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
+.bsai-tpl-out-ta {
+    width: 100%; height: 72px; min-height: 40px; max-height: 140px; resize: vertical;
+    background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
+    padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
+}
+.bsai-tpl-out-ta:focus { border-color: #3f789e; }
+.bsai-tpl-out-ta::placeholder { color: #445; }
 `;
     document.head.appendChild(st);
 }
@@ -425,6 +435,20 @@ function buildTemplateUI(node) {
     custDiv.appendChild(custTa);
     container.appendChild(custDiv);
 
+    // Output prompt preview (shows the text actually sent to downstream nodes)
+    const outDiv = document.createElement("div");
+    outDiv.className = "bsai-tpl-out";
+    const outLbl = document.createElement("div");
+    outLbl.className = "bsai-tpl-out-lbl";
+    outLbl.textContent = "输出提示词预览 / Output Preview (text sent to downstream):";
+    const outTa = document.createElement("textarea");
+    outTa.className = "bsai-tpl-out-ta";
+    outTa.readOnly = true;
+    outTa.placeholder = "直通输出或语音生成的提示词将在此显示 / The H3 prompt output to downstream shows here";
+    outDiv.appendChild(outLbl);
+    outDiv.appendChild(outTa);
+    container.appendChild(outDiv);
+
     // Store refs
     node._bsaiCat = catSel;
     node._bsaiSub = subSel;
@@ -436,6 +460,7 @@ function buildTemplateUI(node) {
     node._bsaiClr = clrBtn;
     node._bsaiCnt = cntSpan;
     node._bsaiCustTa = custTa;
+    node._bsaiOutTa = outTa;
     node._bsaiSearchInput = searchInput;
     node._bsaiSearchClr = searchClr;
     node._bsaiTopDiv = topDiv;
@@ -903,6 +928,41 @@ function setWidgetText(node, name, text) {
     return true;
 }
 
+// Show the final prompt (sent to downstream nodes) in the node's output preview box
+function updateOutputPreview(node, text) {
+    if (node && node._bsaiOutTa) {
+        node._bsaiOutTa.value = text || "";
+    }
+}
+
+// Ask "edit the transcribed text or output as-is?" — used in Direct mode
+function askModifyBox(node, ov, ta, doOutput) {
+    var box = document.createElement("div");
+    box.className = "bsai-voice-overlay";
+    box.style.zIndex = 9999;
+    box.innerHTML =
+        '<div class="bsai-voice-card" style="max-width:460px">' +
+        '<div class="bsai-voice-title">❓ 是否修改文字？ / Edit text?</div>' +
+        '<div class="bsai-voice-status" style="white-space:normal">转写完成。直接输出到下游节点，还是先修改文字？<br>Transcription done. Output as-is, or edit the text first?</div>' +
+        '<div class="bsai-voice-btns">' +
+        '  <button class="bsai-voice-btn primary" data-b="out">⚡ 不修改，直接输出 / Output as-is</button>' +
+        '  <button class="bsai-voice-btn" data-b="edit">✏️ 修改文字 / Edit text</button>' +
+        '  <button class="bsai-voice-btn danger" data-b="no">✕ 取消 / Cancel</button>' +
+        '</div></div>';
+    document.body.appendChild(box);
+    function close() { try { box.remove(); } catch (e) {} }
+    box.querySelector('[data-b="out"]').onclick = function() {
+        close();
+        doOutput();
+    };
+    box.querySelector('[data-b="edit"]').onclick = function() {
+        close();
+        if (ta) { try { ta.focus(); } catch (e) {} }
+    };
+    box.querySelector('[data-b="no"]').onclick = close;
+    return box;
+}
+
 function openVoiceModal(node) {
     if (!node) return;
     var old = document.querySelector(".bsai-voice-overlay");
@@ -994,9 +1054,11 @@ function openVoiceModal(node) {
     btnConfirm.onclick = function() {
         // Direct mode confirm: write the generated H3 prompt to direct_prompt and
         // close — the node outputs it immediately to downstream nodes.
-        if (setWidgetText(node, "direct_prompt", ta.value.trim())) {
+        var out = ta.value.trim();
+        if (setWidgetText(node, "direct_prompt", out)) {
             node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
         }
+        updateOutputPreview(node, out);
         ov.remove();
     };
 
@@ -1012,16 +1074,8 @@ function openVoiceModal(node) {
         _autoGen = false;
         if (_autoTimer) { clearTimeout(_autoTimer); _autoTimer = null; }
     }
-    function startAutoFlow() {
-        cancelAutoFlow();
-        _flowCancelled = false;
-        setStatus("⏳ 直通模式：3 秒后自动生成并输出，修改文字可取消 / Direct: auto-generate & output in 3s (edit to cancel)", "ok");
-        _autoTimer = setTimeout(function() {
-            _autoTimer = null;
-            _autoGen = true;
-            btnGen.onclick();
-        }, 3000);
-    }
+    // (startAutoFlow removed: after transcription, Direct mode now shows the
+    //  "edit or output as-is?" dialog instead of auto-generating after 3s.)
     function cleanupVoice() {
         try { _voice.proc && _voice.proc.disconnect(); } catch (e) {}
         try { _voice.src && _voice.src.disconnect(); } catch (e) {}
@@ -1102,8 +1156,16 @@ function openVoiceModal(node) {
             if (j && j.ok) {
                 ta.value = j.text || "";
                 setStatus("转写完成 / Done", "ok");
-                // direct mode: auto-generate & output in 3s unless the user edits
-                if (chkDirect.checked && (ta.value || "").trim()) startAutoFlow();
+                // Direct mode: ask the user whether to edit the text or output as-is.
+                // "Output as-is" auto-generates the full H3 prompt and sends it downstream.
+                if (chkDirect.checked && (ta.value || "").trim()) {
+                    _flowCancelled = false;
+                    askModifyBox(node, ov, ta, function() {
+                        _autoGen = true;
+                        _flowCancelled = false;
+                        btnGen.onclick();
+                    });
+                }
             } else {
                 setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
             }
@@ -1232,6 +1294,10 @@ app.registerExtension({
                     const custW = findWidget(node, "user_customization");
                     if (custW && node._bsaiCustTa) {
                         node._bsaiCustTa.value = custW.value || "";
+                    }
+                    const dirW = findWidget(node, "direct_prompt");
+                    if (dirW && node._bsaiOutTa) {
+                        updateOutputPreview(node, dirW.value || "");
                     }
                 }, 100);
             }
