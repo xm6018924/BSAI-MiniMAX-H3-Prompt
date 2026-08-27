@@ -369,6 +369,11 @@ b.en { color: var(--blue); }
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
 <div class="card">
+<div class="card-title">🔄 Copy-append detection + fallback to stronger model (v1.11.9) / 识别"复制+追加"并回退强模型</div>
+<p><b>EN:</b> Fixed "Apply still just appends": the small model (sulphur) was lazy on complex templates (multi-Subject / <d>dialogue</d> tags) — it copied the whole template and appended one English sentence instead of rewriting fields. A copy-append detector now rejects such outputs; on detection the model is freed and gemma-4-26B (Direct default) retries. Verified: "no third person" lands inside summary + retention_analysis + every [Shot N]; copy-append=False. Restart ComfyUI required.</p>
+<p><b>中文:</b> 修复"确认修改后仍只是末尾追加"：小模型（sulphur）对复杂模板（多 Subject / <d>对话</d>标签）会偷懒——原样复制整个模板，只在末尾追加一句英文，并不真正改写字段。新增"复制+追加"检测：只要模型只是复制模板没把修改写进字段就判定融合失败；随后自动释放 sulphur 并回退 gemma-4-26B（直通默认模型，真正改写）。实测「严禁第3个人」已写入 summary、retention_analysis、每个 [Shot N]，copy-append=False。务必重启 ComfyUI 生效。</p>
+</div>
+<div class="card">
 <div class="card-title">⚠️ Merge failures surfaced explicitly (v1.11.8) / 融合失败不再伪装成功</div>
 <p><b>EN:</b> Fixed "Apply shows no change": a failed merge used to be silently reported as success (original prompt returned with ok:true). Now the backend strictly distinguishes success/failure — failures return ok:false + reason (VRAM OOM / model not loaded), and the frontend shows the error clearly; even if the backend reports ok, the frontend detects "merged == source" and warns "not changed" with suggestions (stop generation first / set BSAI_H3_LLM_API_KEY for zero-VRAM cloud merging). Restart ComfyUI is required.</p>
 <p><b>中文:</b> 修复「确认修改后对比无任何变化」：此前融合失败被静默当成成功（返回原模板却报 ok:true）。现后端严格区分成功/失败——失败返回 ok:false + 具体原因（显存不足/模型未加载），前端显示明确错误；即使后端误报成功，前端也会检测「融合结果==源模板」并提示"未检测到任何修改"及建议（先停止生成再试 / 设置 BSAI_H3_LLM_API_KEY 用云端模型零显存）。务必重启 ComfyUI 生效。</p>

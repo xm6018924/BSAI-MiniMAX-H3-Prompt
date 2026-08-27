@@ -517,6 +517,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.9 — 融合真正生效：识别"复制+追加"并自动回退强模型 / Copy-append detection + fallback to a stronger model
+
+**中文说明：**
+
+- **修复"确认修改后仍只是末尾追加"**：查明小模型（sulphur）对复杂模板（多 Subject / 含 `<d>对话</d>` 标签）会**偷懒**——原样复制整个模板，只在末尾追加一句英文翻译，并不真正改写字段。现新增**"复制+追加"检测**：只要模型只是复制模板没把修改写进字段（如 summary / retention_analysis / 每个 shot），就判定融合失败。
+- **失败自动回退更强模型**：检测到复制后，自动释放 sulphur 并回退到 **gemma-4-26B**（直通默认模型，真正改写）。实测「所有画面严禁出现第3个人」被写入 `summary`（"no third person…allowed in any shot"）、`retention_analysis`（新增 Constraint 行）和每个 `[Shot N]`（"Only <Subject 1> is visible"），对话标签完整保留，`copy-append=False`。
+- 强化 system prompt：明确禁止"原样复制+末尾追加"，要求把修改写进对应字段块。
+- 显存管理：回退前释放已加载的小模型，避免两个大模型同时驻留 OOM。
+- **务必重启 ComfyUI**（后端改动）。
+
+**English:**
+
+- **Fix "Apply still just appends"**: the small model (sulphur) was lazy on complex templates (multiple Subjects / `<d>dialogue</d>` tags) — it copied the whole template and appended one English sentence instead of rewriting the fields. A **copy-append detector** now rejects such outputs as failed merges.
+- **Automatic fallback to a stronger model**: on detection, sulphur is freed and **gemma-4-26B** (the Direct-mode default) retries the merge. Verified: "no third person in any frame" lands inside `summary` ("no third person…allowed in any shot"), `retention_analysis` (new Constraint line) and every `[Shot N]` ("Only <Subject 1> is visible"); dialogue tags kept intact; `copy-append=False`.
+- Strengthened system prompt: no verbatim copy + append; the edit must go inside the relevant fields.
+- VRAM management: the smaller model is freed before loading the bigger fallback to avoid OOM.
+- **Restart ComfyUI required** (backend change).
+
 ### v1.11.8 — 融合失败不再"伪装成功"（显式报错+未改动检测）/ Merge failures surfaced explicitly
 
 **中文说明：**

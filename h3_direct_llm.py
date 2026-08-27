@@ -44,16 +44,28 @@ _H3_MERGE_SYSTEM_PROMPT = (
     "You are given an EXISTING MiniMax H3 prompt and a user's modification request. "
     "REWRITE the H3 prompt so the modification is ACTUALLY IMPLEMENTED INSIDE the text "
     "(e.g. replace a hard match-cut transition with a natural walk-through, change an action, "
-    "adjust a shot's description) — never merely append the request at the end. "
+    "adjust a shot's description, add a negative constraint) — never merely append the request "
+    "at the end. "
     "Keep the exact same overall structure and field blocks of the original prompt "
     "(subject_definitions / summary / retention_analysis / detailed_description / "
     "integrated_multimodal_description with [Shot N] and [X-Xs] timeline / overall_soundscape / "
     "non_diegetic_music), cinematic and vivid. When the request is in Chinese, express it "
     "naturally in English inside the prompt. "
+    "FORMAT RULES (mandatory): write every field name exactly as in the original at the start "
+    "of its own line — e.g. 'subject_definitions:', 'summary:', 'retention_analysis:', "
+    "'detailed_description:', 'overall_soundscape:', 'non_diegetic_music:' — with NO markdown, "
+    "NO bold, NO bullet, NO numbering, NO code fences, NO indentation before the field name. "
+    "Keep <Subject N> / <Picture N> / <d>…</d> tags intact. "
+    "ABSOLUTELY FORBIDDEN: do NOT copy the original prompt verbatim and append the modification "
+    "at the end. You MUST REWRITE the ENTIRE prompt and place the modification INSIDE the "
+    "relevant field blocks — e.g. a 'no third person' constraint goes into summary, "
+    "retention_analysis, and every shot's detailed_description; a transition change rewrites "
+    "the affected [Shot N] lines and overall_soundscape. Every field must be re-emitted even if "
+    "unchanged. "
     "CRITICAL: Do NOT include any reasoning, analysis, planning, thinking or commentary. "
     "Output ONLY the final complete rewritten H3 prompt, starting directly with "
     "subject_definitions: (or integrated_multimodal_description: if the original has no "
-    "subject_definitions block), with no preamble, no markdown code fences and no extra text."
+    "subject_definitions block), with no preamble and no extra text."
 )
 
 _llms = {}            # model_path -> llama_cpp.Llama (per-model resident instances)
@@ -101,6 +113,27 @@ def _pick_merge_model_path():
     if os.path.isfile(sulphur):
         return sulphur
     return _pick_model_path()
+
+
+def _free_llm_except(keep_path):
+    """Release all resident LLM instances except `keep_path` to free VRAM/RAM
+    before loading a bigger model (e.g. when the fast merge model fails and we
+    fall back to the 15GB default)."""
+    global _llms
+    with _llms_lock:
+        for path in [p for p in _llms if p != keep_path]:
+            _llms.pop(path, None)
+    try:
+        import gc
+        gc.collect()
+    except Exception:
+        pass
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except Exception:
+        pass
 
 
 def _api_config():
@@ -211,24 +244,50 @@ def _generate_api(user_text, cfg, system_prompt):
     return data["choices"][0]["message"]["content"]  # cleaned by the caller
 
 
+# H3 field names (the canonical blocks of an H3 prompt). Used by the merge
+# output cleaner to locate the start of the real rewritten prompt even when the
+# model decorates field names with markdown (**bold**, `code`, "- ", "# ", …).
+_H3_FIELDS = (
+    "subject_definitions",
+    "integrated_multimodal_description",
+    "summary",
+    "retention_analysis",
+    "detailed_description",
+    "overall_soundscape",
+    "non_diegetic_music",
+)
+_FIELD_PREFIX = r"[ \t]*[`*#>_\-\.\s]*"
+
+
+def _field_pos(text, name):
+    """Position of the first real occurrence of H3 field `name` (no colon),
+    tolerating leading markdown decoration. Returns -1 if absent."""
+    m = re.search(r"(?m)^" + _FIELD_PREFIX + re.escape(name) + r"[ \t]*:", text)
+    return m.start() if m else -1
+
+
 def _strip_merge_output(raw):
     """Clean a rewritten-H3-prompt output that may keep leading blocks such as
     subject_definitions / summary / retention_analysis before the three fields.
-    Robust to models that emit a reasoning/thinking preamble first (field names
-    there may be wrapped in backticks)."""
+    Robust to models that emit a reasoning/thinking preamble first, and to field
+    names decorated with markdown (**, `, -, #) inside the output."""
     text = (raw or "").strip()
     text = re.sub(r"```[a-zA-Z]*", "", text).strip()
-    # Drop model reasoning / preamble: jump to the LAST real field occurrence.
-    # Field names inside a reasoning preamble are usually backtick-wrapped
-    # (`subject_definitions`), so finding the plain `subject_definitions:`
-    # reliably lands on the actual output block.
-    m = text.rfind("subject_definitions:")
+    # Jump to the first genuine H3 field. Prefer the two anchors that appear at
+    # the very start of real H3 outputs; fall back to summary: as a safe start.
+    m = _field_pos(text, "subject_definitions")
     if m < 0:
-        m = text.rfind("integrated_multimodal_description:")
+        m = _field_pos(text, "integrated_multimodal_description")
+    if m < 0:
+        m = _field_pos(text, "summary")
     if m >= 0:
         text = text[m:].lstrip()
-        # unwrap a backtick pair right at the leading field name, if any
-        text = re.sub(r"^`([^`]+)`\s*:", r"\1:", text)
+        # strip any leading markdown decoration from the first field name
+        text = re.sub(
+            r"^" + _FIELD_PREFIX + r"(subject_definitions|integrated_multimodal_description|summary)[ \t]*:",
+            r"\1:",
+            text,
+        )
     # Cut trailing out-of-band chatter after the last H3 field — but keep the
     # full value block of non_diegetic_music (it may wrap onto following lines).
     m = text.rfind("non_diegetic_music:")
@@ -241,6 +300,35 @@ def _strip_merge_output(raw):
         if s:
             text = text[: m + s.start()].rstrip()
     return text or (raw or "").strip()
+
+
+def _has_h3_field(text):
+    """True when the text begins with a canonical H3 field (i.e. it is a usable
+    rewritten prompt, not reasoning chatter)."""
+    t = (text or "").strip()
+    for f in _H3_FIELDS:
+        if _field_pos(t, f) == 0:
+            return True
+    return False
+
+
+def _is_copy_append(orig, result):
+    """True when `result` is the source with stuff only appended — i.e. the model
+    copied the template verbatim instead of merging the edit inside its fields.
+    Used to reject such outputs so a stronger model / fallback can be tried."""
+    if orig is None or result is None:
+        return False
+    if result == orig:
+        return True
+    o = [l for l in orig.split("\n") if l.strip()]
+    r = [l for l in result.split("\n") if l.strip()]
+    if not o:
+        return False
+    i = 0
+    for line in r:
+        if i < len(o) and line == o[i]:
+            i += 1
+    return i >= len(o)
 
 
 # Small LRU cache for merged results so re-running the same template+edit is instant
@@ -280,16 +368,16 @@ def merge_customization(prompt, customization):
         """Strip reasoning/preamble from the model output and validate that a real
         H3 field survives; returns None when the output is unusable."""
         out = _strip_merge_output(raw or "")
-        if out.strip() and not (out.startswith("subject_definitions:")
-                                or out.startswith("integrated_multimodal_description:")):
-            # retry: take from the last real field occurrence
-            m = out.rfind("subject_definitions:")
-            if m < 0:
-                m = out.rfind("integrated_multimodal_description:")
-            if m >= 0:
-                out = out[m:].lstrip()
-        if out.strip() and (out.startswith("subject_definitions:")
-                            or out.startswith("integrated_multimodal_description:")):
+        if out.strip() and not _has_h3_field(out):
+            # retry: take from the first canonical field occurrence anywhere
+            best = -1
+            for f in _H3_FIELDS:
+                p = _field_pos(out, f)
+                if p >= 0 and (best < 0 or p < best):
+                    best = p
+            if best >= 0:
+                out = out[best:].lstrip()
+        if out.strip() and _has_h3_field(out):
             return out
         return None
 
@@ -299,23 +387,33 @@ def merge_customization(prompt, customization):
     if cfg:
         try:
             r = _clean(_generate_api(user_msg, cfg, _H3_MERGE_SYSTEM_PROMPT))
-            if r:
+            if r and not _is_copy_append(p, r):
                 result = r
         except Exception as e:
             error = "API: %s" % e
-    if result == p:
-        try:
-            r = _clean(_generate_local(
-                user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=_pick_merge_model_path()))
-            if r:
-                result = r
-                error = None
-        except Exception as e:
-            error = "Local LLM: %s" % e
-    if result == p and error is None:
-        # no exception, but the model returned no usable rewrite
-        error = ("model returned no usable rewrite (no H3 field block found) / "
-                 "模型未返回可用改写")
+    if result == p or _is_copy_append(p, result):
+        # Local attempts: try the fast merge model (sulphur) first, then a
+        # stronger one (e.g. gemma). Reject outputs that merely copy the template.
+        tried = []
+        for mp in (_pick_merge_model_path(), _pick_model_path()):
+            if not mp or mp in tried:
+                continue
+            tried.append(mp)
+            # free any previously loaded smaller model so a bigger one fits in VRAM
+            _free_llm_except(mp)
+            try:
+                r = _clean(_generate_local(
+                    user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=mp))
+                if r and r != p and not _is_copy_append(p, r):
+                    result = r
+                    error = None
+                    break
+            except Exception as e:
+                error = "Local LLM (%s): %s" % (os.path.basename(mp), e)
+        if result == p or _is_copy_append(p, result):
+            if error is None:
+                error = ("models only copied the template without merging the edit "
+                         "(no rewrite produced) / 模型仅复制模板而未将修改融入字段")
     _last_merge_error = error
     # cache (LRU)
     if key not in _merge_cache:
