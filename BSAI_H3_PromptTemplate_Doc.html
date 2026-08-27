@@ -369,6 +369,11 @@ b.en { color: var(--blue); }
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
 <div class="card">
+<div class="card-title">📊 Source-vs-Merged diff view (v1.11.7) / 「源模板 vs 修改后」对比窗口</div>
+<p><b>EN:</b> The Output Preview now has a "📊 源/修改后 对比 Diff" button that expands a two-column comparison — Source Template (left) vs Merged Result (right) — with line-level diff highlighting (red = removed from source, green = added in merged). After clicking "确认修改 / Apply", the panel auto-expands so you can instantly see exactly which lines the customization changed. Browser refresh (Ctrl+F5) only.</p>
+<p><b>中文:</b> 输出提示词预览新增「📊 源/修改后 对比 Diff」按钮：展开左右分栏——左「源模板提示词」、右「修改后提示词」，行级差异高亮（🟥红=源中被删除，🟩绿=修改后新增）。点击「确认修改 / Apply」融合完成后对比窗口自动展开，一眼看出补充修改真正改动了哪些行。仅需刷新浏览器（Ctrl+F5）。</p>
+</div>
+<div class="card">
 <div class="card-title">🟦 "确认修改 / Apply" button — manual merge (v1.11.6) / 「确认修改」按钮</div>
 <p><b>EN:</b> A new "确认修改 / Apply" button sits after the Customization field. Click it to LIVE-MERGE the customization into the template via the local LLM and immediately view the final prompt in the Output Preview. Typing no longer auto-triggers the slow merge — an instant append preview with a hint is shown instead; only the button merges (instant once cached). Browser refresh (Ctrl+F5) only, no ComfyUI restart.</p>
 <p><b>中文:</b> 补充修改输入框后新增「确认修改 / Apply」按钮：点击后立即通过本地大模型把补充修改真正融合进模板，并在「输出提示词预览」中直接查看最终结果。输入时不再自动触发融合（避免反复启动大模型），改为即时追加预览 + 提示点按钮；按下按钮才融合，同一模板+同一修改缓存命中后秒出。仅需刷新浏览器（Ctrl+F5）即可生效。</p>

@@ -210,7 +210,38 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-cust-btn:disabled { opacity: .5; cursor: not-allowed; }
 /* Output prompt preview */
 .bsai-tpl-out { margin-top: 6px; }
-.bsai-tpl-out-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
+.bsai-tpl-out-lbl {
+    font-size: 11px; color: #88a; margin-bottom: 3px;
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+}
+.bsai-tpl-diff-toggle {
+    padding: 2px 8px; background: #23262c; color: #9ab; border: 1px solid #3a3f4a;
+    border-radius: 4px; cursor: pointer; font-size: 10px; white-space: nowrap;
+}
+.bsai-tpl-diff-toggle:hover { border-color: #3f789e; color: #cde; }
+.bsai-tpl-diff {
+    margin-top: 4px; border: 1px solid #334; border-radius: 4px;
+    background: #131519; overflow: hidden;
+}
+.bsai-tpl-diff-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 3px 6px; background: #1b1e24; font-size: 10px; color: #7a8; border-bottom: 1px solid #2a2e35;
+}
+.bsai-tpl-diff-cols { display: flex; align-items: stretch; }
+.bsai-tpl-diff-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bsai-tpl-diff-col + .bsai-tpl-diff-col { border-left: 1px solid #2a2e35; }
+.bsai-tpl-diff-hdr {
+    padding: 2px 6px; font-size: 10px; color: #8ad; background: #171a1f; border-bottom: 1px solid #2a2e35;
+}
+.bsai-tpl-diff-pre {
+    margin: 0; padding: 4px 6px; font-size: 10px; line-height: 1.5;
+    font-family: monospace; color: #bcd; white-space: pre-wrap; word-break: break-all;
+    max-height: 160px; overflow: auto; flex: 1;
+}
+.bsai-tpl-diff-pre .d-eq { color: #bcd; }
+.bsai-tpl-diff-pre .d-del { background: #4a1f22; color: #f4a7ab; }
+.bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
+.bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out-ta {
     width: 100%; height: 72px; min-height: 40px; max-height: 140px; resize: vertical;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
@@ -455,13 +486,64 @@ function buildTemplateUI(node) {
     outDiv.className = "bsai-tpl-out";
     const outLbl = document.createElement("div");
     outLbl.className = "bsai-tpl-out-lbl";
-    outLbl.textContent = "输出提示词预览 / Output Preview (text sent to downstream):";
+    const outLblTxt = document.createElement("span");
+    outLblTxt.textContent = "输出提示词预览 / Output Preview (text sent to downstream):";
+    const diffToggle = document.createElement("button");
+    diffToggle.type = "button";
+    diffToggle.className = "bsai-tpl-diff-toggle";
+    diffToggle.textContent = "📊 源/修改后 对比 Diff";
+    diffToggle.title = "展开/收起「源模板 vs 修改后」对比窗口 / Toggle Source vs Merged diff view";
+    outLbl.appendChild(outLblTxt);
+    outLbl.appendChild(diffToggle);
     const outTa = document.createElement("textarea");
     outTa.className = "bsai-tpl-out-ta";
     outTa.readOnly = true;
     outTa.placeholder = "直通输出或语音生成的提示词将在此显示 / The H3 prompt output to downstream shows here";
+    // Diff panel: source template (left) vs merged result (right), line-level highlight
+    const diffDiv = document.createElement("div");
+    diffDiv.className = "bsai-tpl-diff";
+    diffDiv.style.display = "none";
+    const diffHead = document.createElement("div");
+    diffHead.className = "bsai-tpl-diff-head";
+    const diffTitle = document.createElement("span");
+    diffTitle.textContent = "提示词对比 / Prompt Diff";
+    const diffClose = document.createElement("button");
+    diffClose.type = "button";
+    diffClose.className = "bsai-tpl-diff-toggle";
+    diffClose.textContent = "× 收起 Close";
+    diffHead.appendChild(diffTitle);
+    diffHead.appendChild(diffClose);
+    const diffCols = document.createElement("div");
+    diffCols.className = "bsai-tpl-diff-cols";
+    const colA = document.createElement("div");
+    colA.className = "bsai-tpl-diff-col";
+    const hdrA = document.createElement("div");
+    hdrA.className = "bsai-tpl-diff-hdr";
+    hdrA.textContent = "源模板提示词 / Source Template";
+    const preA = document.createElement("pre");
+    preA.className = "bsai-tpl-diff-pre";
+    const colB = document.createElement("div");
+    colB.className = "bsai-tpl-diff-col";
+    const hdrB = document.createElement("div");
+    hdrB.className = "bsai-tpl-diff-hdr";
+    hdrB.textContent = "修改后提示词 / Merged Result";
+    const preB = document.createElement("pre");
+    preB.className = "bsai-tpl-diff-pre";
+    colA.appendChild(hdrA);
+    colA.appendChild(preA);
+    colB.appendChild(hdrB);
+    colB.appendChild(preB);
+    diffCols.appendChild(colA);
+    diffCols.appendChild(colB);
+    const diffHint = document.createElement("div");
+    diffHint.className = "bsai-tpl-diff-hint";
+    diffHint.textContent = "🟥 红 = 源中被删除 · 🟩 绿 = 修改后新增 · 其余为相同行 / Red = removed from source, Green = added in merged.";
+    diffDiv.appendChild(diffHead);
+    diffDiv.appendChild(diffCols);
+    diffDiv.appendChild(diffHint);
     outDiv.appendChild(outLbl);
     outDiv.appendChild(outTa);
+    outDiv.appendChild(diffDiv);
     container.appendChild(outDiv);
 
     // Store refs
@@ -477,6 +559,11 @@ function buildTemplateUI(node) {
     node._bsaiCustTa = custTa;
     node._bsaiCustBtn = custBtn;
     node._bsaiOutTa = outTa;
+    node._bsaiDiffToggle = diffToggle;
+    node._bsaiDiffDiv = diffDiv;
+    node._bsaiDiffPreA = preA;
+    node._bsaiDiffPreB = preB;
+    node._bsaiDiffOpen = false;
     node._bsaiSearchInput = searchInput;
     node._bsaiSearchClr = searchClr;
     node._bsaiTopDiv = topDiv;
@@ -551,6 +638,8 @@ function buildTemplateUI(node) {
             if (node._bsaiCustBtn) node._bsaiCustBtn.disabled = false;
         });
     });
+    diffToggle.addEventListener("click", function() { toggleDiff(node); });
+    diffClose.addEventListener("click", function() { setDiffOpen(node, false); });
     if (custWidget && custWidget.value) {
         custTa.value = custWidget.value;
     }
@@ -996,6 +1085,67 @@ function renderOutputPreview(node) {
         : "");
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+//  Source vs Merged diff view — lets the user SEE whether the customization
+//  actually changed the template (line-level LCS diff, red/green highlight).
+// ════════════════════════════════════════════════════════════════════════════
+function toggleDiff(node) {
+    setDiffOpen(node, !(node && node._bsaiDiffOpen));
+}
+
+function setDiffOpen(node, open) {
+    if (!node || !node._bsaiDiffDiv) return;
+    node._bsaiDiffOpen = !!open;
+    node._bsaiDiffDiv.style.display = open ? "block" : "none";
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+    if (node.graph && node.graph.setDirtyCanvas) node.graph.setDirtyCanvas(true, true);
+}
+
+// Longest-common-subsequence diff on lines; returns aligned arrays with tags:
+// eq (same), del (only in A), add (only in B).
+function diffLines(a, b) {
+    var A = a.split("\n"), B = b.split("\n");
+    var n = A.length, m = B.length, i, j;
+    var dp = [];
+    for (i = 0; i <= n; i++) dp.push(new Array(m + 1).fill(0));
+    for (i = n - 1; i >= 0; i--) {
+        for (j = m - 1; j >= 0; j--) {
+            dp[i][j] = (A[i] === B[j]) ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+        }
+    }
+    var outA = [], outB = [];
+    i = 0; j = 0;
+    while (i < n && j < m) {
+        if (A[i] === B[j]) { outA.push({ t: A[i], k: "eq" }); outB.push({ t: B[j], k: "eq" }); i++; j++; }
+        else if (dp[i + 1][j] >= dp[i][j + 1]) { outA.push({ t: A[i], k: "del" }); i++; }
+        else { outB.push({ t: B[j], k: "add" }); j++; }
+    }
+    while (i < n) { outA.push({ t: A[i], k: "del" }); i++; }
+    while (j < m) { outB.push({ t: B[j], k: "add" }); j++; }
+    return { a: outA, b: outB };
+}
+
+// Render the source-vs-merged comparison and expand the panel.
+function showDiff(node, src, merged) {
+    if (!node || !node._bsaiDiffPreA) return;
+    var d = diffLines(src || "", merged || "");
+    node._bsaiDiffPreA.innerHTML = "";
+    node._bsaiDiffPreB.innerHTML = "";
+    d.a.forEach(function(it) {
+        var s = document.createElement("span");
+        s.className = it.k === "del" ? "d-del" : "d-eq";
+        s.textContent = it.t + "\n";
+        node._bsaiDiffPreA.appendChild(s);
+    });
+    d.b.forEach(function(it) {
+        var s = document.createElement("span");
+        s.className = it.k === "add" ? "d-add" : "d-eq";
+        s.textContent = it.t + "\n";
+        node._bsaiDiffPreB.appendChild(s);
+    });
+    setDiffOpen(node, true);
+}
+
 // Merge the customization into the selected template(s) immediately and show the
 // final prompt in the output preview. Called by the "确认修改 / Apply" button.
 // `done` (optional) is invoked when the merge completes/fails.
@@ -1025,13 +1175,18 @@ function applyCustomization(node, done) {
         if (seq !== _mergeSeq) { if (done) done(); return; }
         if (j && j.ok && j.prompt && j.prompt.trim()) {
             node._bsaiOutTa.value = j.prompt;
+            showDiff(node, base, j.prompt);
         } else {
-            node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
+            var fb = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
+            node._bsaiOutTa.value = fb;
+            showDiff(node, base, fb);
         }
         if (done) done();
     }).catch(function(e) {
         if (seq !== _mergeSeq) { if (done) done(); return; }
-        node._bsaiOutTa.value = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
+        var fb = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
+        node._bsaiOutTa.value = fb;
+        showDiff(node, base, fb);
         if (done) done();
     });
 }

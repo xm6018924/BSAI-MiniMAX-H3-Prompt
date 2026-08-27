@@ -517,6 +517,20 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.7 — 新增「源模板 vs 修改后」对比窗口 / Source-vs-Merged diff view added
+
+**中文说明：**
+
+- 输出提示词预览新增「**📊 源/修改后 对比 Diff**」按钮：展开左右分栏对比窗口——左「源模板提示词」、右「修改后提示词」，并做**行级差异高亮**（🟥红=源中被删除，🟩绿=修改后新增）。
+- 点击「确认修改 / Apply」融合完成后，对比窗口**自动展开**，一眼看出补充修改到底改动了哪些行（如转场描述、音效行是否真正被改写）。
+- 仅需刷新浏览器（Ctrl+F5），无需重启 ComfyUI。
+
+**English:**
+
+- The Output Preview now has a "**📊 源/修改后 对比 Diff**" button: it expands a two-column comparison — Source Template (left) vs Merged Result (right) — with **line-level diff highlighting** (red = removed from source, green = added in merged).
+- After clicking "确认修改 / Apply", the diff panel **auto-expands** so you can instantly see exactly which lines the customization changed.
+- Browser refresh (Ctrl+F5) only — no ComfyUI restart needed.
+
 ### v1.11.6 — 新增「确认修改 / Apply」按钮（手动触发融合）/ "Apply Customization" button added
 
 **中文说明：**
