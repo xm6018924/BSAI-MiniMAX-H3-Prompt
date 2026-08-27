@@ -369,6 +369,11 @@ b.en { color: var(--blue); }
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
 <div class="card">
+<div class="card-title">⚠️ Merge failures surfaced explicitly (v1.11.8) / 融合失败不再伪装成功</div>
+<p><b>EN:</b> Fixed "Apply shows no change": a failed merge used to be silently reported as success (original prompt returned with ok:true). Now the backend strictly distinguishes success/failure — failures return ok:false + reason (VRAM OOM / model not loaded), and the frontend shows the error clearly; even if the backend reports ok, the frontend detects "merged == source" and warns "not changed" with suggestions (stop generation first / set BSAI_H3_LLM_API_KEY for zero-VRAM cloud merging). Restart ComfyUI is required.</p>
+<p><b>中文:</b> 修复「确认修改后对比无任何变化」：此前融合失败被静默当成成功（返回原模板却报 ok:true）。现后端严格区分成功/失败——失败返回 ok:false + 具体原因（显存不足/模型未加载），前端显示明确错误；即使后端误报成功，前端也会检测「融合结果==源模板」并提示"未检测到任何修改"及建议（先停止生成再试 / 设置 BSAI_H3_LLM_API_KEY 用云端模型零显存）。务必重启 ComfyUI 生效。</p>
+</div>
+<div class="card">
 <div class="card-title">📊 Source-vs-Merged diff view (v1.11.7) / 「源模板 vs 修改后」对比窗口</div>
 <p><b>EN:</b> The Output Preview now has a "📊 源/修改后 对比 Diff" button that expands a two-column comparison — Source Template (left) vs Merged Result (right) — with line-level diff highlighting (red = removed from source, green = added in merged). After clicking "确认修改 / Apply", the panel auto-expands so you can instantly see exactly which lines the customization changed. Browser refresh (Ctrl+F5) only.</p>
 <p><b>中文:</b> 输出提示词预览新增「📊 源/修改后 对比 Diff」按钮：展开左右分栏——左「源模板提示词」、右「修改后提示词」，行级差异高亮（🟥红=源中被删除，🟩绿=修改后新增）。点击「确认修改 / Apply」融合完成后对比窗口自动展开，一眼看出补充修改真正改动了哪些行。仅需刷新浏览器（Ctrl+F5）。</p>

@@ -170,7 +170,7 @@ def _merge_template_prompts(tpls, ext=""):
 
 def _merge_custom(prompt, cust):
     """Apply the user customization INSIDE the prompt via the local/API LLM
-    (rewrite transition/action/scene etc.), returning the rewritten prompt.
+    (rewrite transition/action/scene etc.), returning a (prompt, error) tuple.
     Falls back to the original prompt on any failure — the caller decides the
     fallback display (append vs original)."""
     import sys as _sys
@@ -269,8 +269,8 @@ Features / 功能特点:
             if cust:
                 # Try to apply the customization INSIDE the direct prompt (best effort)
                 try:
-                    merged = _merge_custom(prompt, cust)
-                    if merged and merged.strip():
+                    merged, merr = _merge_custom(prompt, cust)
+                    if merged and merged.strip() and merged != prompt:
                         prompt = merged
                     else:
                         prompt = _append_custom(prompt, cust)
@@ -299,8 +299,8 @@ Features / 功能特点:
                 prompt = (prompt + "\n\n" if prompt.strip() else "") + "--- External Prompt / 外部提示词 ---\n" + ext
             if cust:
                 try:
-                    merged = _merge_custom(prompt, cust) if prompt.strip() else ""
-                    if merged and merged.strip():
+                    merged, merr = _merge_custom(prompt, cust) if prompt.strip() else ("", None)
+                    if merged and merged.strip() and merged != prompt:
                         prompt = merged
                     else:
                         prompt = _append_custom(prompt, cust)
@@ -314,8 +314,8 @@ Features / 功能特点:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
             try:
-                merged = _merge_custom(prompt, cust)
-                if merged and merged.strip():
+                merged, merr = _merge_custom(prompt, cust)
+                if merged and merged.strip() and merged != prompt:
                     prompt = merged
                 else:
                     prompt = _append_custom(prompt, cust)
@@ -550,10 +550,13 @@ def _register_asr_route():
             return merge_customization(prompt, customization)
 
         try:
-            merged = await asyncio.get_event_loop().run_in_executor(None, _run)
+            merged, merr = await asyncio.get_event_loop().run_in_executor(None, _run)
+            if merr:
+                # real failure — never report success with an unchanged prompt
+                return web.json_response({"ok": False, "prompt": merged, "error": merr})
             return web.json_response({"ok": True, "prompt": merged})
         except Exception as e:
-            return web.json_response({"ok": False, "error": str(e)})
+            return web.json_response({"ok": False, "prompt": prompt, "error": str(e)})
 
     return server
 

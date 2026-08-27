@@ -1174,17 +1174,24 @@ function applyCustomization(node, done) {
     }).then(function(r) { return r.json(); }).then(function(j) {
         if (seq !== _mergeSeq) { if (done) done(); return; }
         if (j && j.ok && j.prompt && j.prompt.trim()) {
-            node._bsaiOutTa.value = j.prompt;
-            showDiff(node, base, j.prompt);
+            if (j.prompt === base) {
+                // backend reported ok but nothing changed — surface it
+                var warn = fallback + "\n\n⚠️ 未检测到任何修改！融合结果与源模板完全一致。\n可能原因：① 显存不足（同时运行 H3 生成时本地大模型无法加载）② 未配置/未找到本地模型 ③ ComfyUI 未重启使新后端生效。\n建议：先停止生成再点确认修改；或设置环境变量 BSAI_H3_LLM_API_KEY 使用云端模型（零显存）。\n/ Not changed — merged equals source. " + ((j && j.error) || "");
+                node._bsaiOutTa.value = warn;
+                showDiff(node, base, warn);
+            } else {
+                node._bsaiOutTa.value = j.prompt;
+                showDiff(node, base, j.prompt);
+            }
         } else {
-            var fb = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed, appended instead: " + ((j && j.error) || "");
+            var fb = fallback + "\n\n⚠️ 融合失败：" + ((j && j.error) || "unknown") + "\n已退回追加 / Merge failed, appended instead.";
             node._bsaiOutTa.value = fb;
             showDiff(node, base, fb);
         }
         if (done) done();
     }).catch(function(e) {
         if (seq !== _mergeSeq) { if (done) done(); return; }
-        var fb = fallback + "\n\n⚠️ 融合失败，已退回追加 / Merge failed: " + e;
+        var fb = fallback + "\n\n⚠️ 融合失败：" + e + "\n已退回追加 / Merge failed, appended instead.";
         node._bsaiOutTa.value = fb;
         showDiff(node, base, fb);
         if (done) done();

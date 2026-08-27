@@ -517,6 +517,20 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.8 — 融合失败不再"伪装成功"（显式报错+未改动检测）/ Merge failures surfaced explicitly
+
+**中文说明：**
+
+- **修复「确认修改后对比无任何变化」**：此前融合失败会被静默当成成功（返回原模板却报 ok:true），前端无从得知。现后端**严格区分成功/失败**：失败时返回 `ok:false` + 具体原因（如显存不足/模型未加载），前端显示明确错误；即使后端误报成功，前端也会检测「融合结果==源模板」并提示"未检测到任何修改"及建议（停止生成后再试 / 配置 `BSAI_H3_LLM_API_KEY` 用云端模型零显存）。
+- **务必重启 ComfyUI** 使新后端生效（本版同时改了后端与前端）。
+- 实测（sulphur 模型）：「让图1人物自然走进场景2」成功返回 `changed=True`，`Match-cut transition` 被改写为 walk-through。
+
+**English:**
+
+- **Fix "Apply shows no change"**: a failed merge used to be silently reported as success (original prompt returned with `ok:true`), so the frontend had no way to know. Now the backend **strictly distinguishes success/failure** — failures return `ok:false` + reason (e.g. VRAM OOM / model not loaded), and the frontend shows the error clearly; even if the backend reports ok, the frontend detects "merged == source" and warns "not changed" with suggestions (stop generation first, or set `BSAI_H3_LLM_API_KEY` for zero-VRAM cloud merging).
+- **Restart ComfyUI** is required (backend + frontend changed in this release).
+- Verified (sulphur): "let the person naturally walk into Scene 2" returns `changed=True`, `Match-cut transition` → walk-through.
+
 ### v1.11.7 — 新增「源模板 vs 修改后」对比窗口 / Source-vs-Merged diff view added
 
 **中文说明：**

@@ -249,18 +249,30 @@ _merge_cache = {}
 _merge_cache_order = []
 _MERGE_CACHE_MAX = 64
 
+# Last merge failure reason, so callers/frontend can surface WHY a merge did not
+# take effect (e.g. VRAM OOM while an H3 job is running, model missing, etc.).
+_last_merge_error = None
+
 
 def merge_customization(prompt, customization):
     """Rewrite an existing H3 prompt so the user's customization is applied INSIDE
     the text (transition/action/scene changes etc.), not appended at the end.
-    Returns the rewritten prompt, or the original on any failure (caller decides)."""
+
+    Returns a tuple (result, error):
+      - (rewritten_prompt, None)      on success (result differs from source)
+      - (original_prompt, error_msg)  on failure, with the reason surfaced to the
+                                      caller so it is never mistaken for success.
+    """
+    global _last_merge_error
     p = (prompt or "").strip()
     c = (customization or "").strip()
     if not p or not c:
-        return p
+        _last_merge_error = None
+        return p, None
     key = (p, c)
     hit = _merge_cache.get(key)
     if hit is not None:
+        _last_merge_error = hit[1]
         return hit
     user_msg = "Existing MiniMax H3 prompt:\n" + p + "\n\nUser modification to apply:\n" + c
 
@@ -282,30 +294,37 @@ def merge_customization(prompt, customization):
         return None
 
     result = p
+    error = None
     cfg = _api_config()
     if cfg:
         try:
             r = _clean(_generate_api(user_msg, cfg, _H3_MERGE_SYSTEM_PROMPT))
             if r:
                 result = r
-        except Exception:
-            result = p
-    if result is p or result == p:
+        except Exception as e:
+            error = "API: %s" % e
+    if result == p:
         try:
             r = _clean(_generate_local(
                 user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=_pick_merge_model_path()))
             if r:
                 result = r
-        except Exception:
-            result = p
+                error = None
+        except Exception as e:
+            error = "Local LLM: %s" % e
+    if result == p and error is None:
+        # no exception, but the model returned no usable rewrite
+        error = ("model returned no usable rewrite (no H3 field block found) / "
+                 "模型未返回可用改写")
+    _last_merge_error = error
     # cache (LRU)
     if key not in _merge_cache:
         if len(_merge_cache) >= _MERGE_CACHE_MAX and _merge_cache_order:
             old = _merge_cache_order.pop(0)
             _merge_cache.pop(old, None)
-        _merge_cache[key] = result
+        _merge_cache[key] = (result, error)
         _merge_cache_order.append(key)
-    return result
+    return result, error
 
 
 def generate_h3_prompt(user_text):
