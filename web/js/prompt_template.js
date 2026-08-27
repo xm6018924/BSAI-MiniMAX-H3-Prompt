@@ -936,24 +936,31 @@ function updateOutputPreview(node, text) {
 }
 
 // Ask "edit the transcribed text or output as-is?" — used in Direct mode
-function askModifyBox(node, ov, ta, doOutput) {
+// doRaw:      output the raw transcribed text directly (bypass H3 generation)
+// doGenerate: expand the text into a full H3 prompt, then output
+function askModifyBox(node, ov, ta, doRaw, doGenerate) {
     var box = document.createElement("div");
     box.className = "bsai-voice-overlay";
     box.style.zIndex = 9999;
     box.innerHTML =
-        '<div class="bsai-voice-card" style="max-width:460px">' +
-        '<div class="bsai-voice-title">❓ 是否修改文字？ / Edit text?</div>' +
-        '<div class="bsai-voice-status" style="white-space:normal">转写完成。直接输出到下游节点，还是先修改文字？<br>Transcription done. Output as-is, or edit the text first?</div>' +
+        '<div class="bsai-voice-card" style="max-width:500px">' +
+        '<div class="bsai-voice-title">❓ 如何输出？ / How to output?</div>' +
+        '<div class="bsai-voice-status" style="white-space:normal">转写完成。可选择：直通输出原文、生成 H3 三段式提示词，或先修改文字。<br>Transcription done — output the raw text, generate a full H3 prompt, or edit first?</div>' +
         '<div class="bsai-voice-btns">' +
-        '  <button class="bsai-voice-btn primary" data-b="out">⚡ 不修改，直接输出 / Output as-is</button>' +
+        '  <button class="bsai-voice-btn primary" data-b="raw">⚡ 直通输出原文（不生成H3）/ Output raw text</button>' +
+        '  <button class="bsai-voice-btn" data-b="gen">⚡ 生成 H3 提示词 / Generate H3</button>' +
         '  <button class="bsai-voice-btn" data-b="edit">✏️ 修改文字 / Edit text</button>' +
         '  <button class="bsai-voice-btn danger" data-b="no">✕ 取消 / Cancel</button>' +
         '</div></div>';
     document.body.appendChild(box);
     function close() { try { box.remove(); } catch (e) {} }
-    box.querySelector('[data-b="out"]').onclick = function() {
+    box.querySelector('[data-b="raw"]').onclick = function() {
         close();
-        doOutput();
+        doRaw();
+    };
+    box.querySelector('[data-b="gen"]').onclick = function() {
+        close();
+        doGenerate();
     };
     box.querySelector('[data-b="edit"]').onclick = function() {
         close();
@@ -1156,15 +1163,26 @@ function openVoiceModal(node) {
             if (j && j.ok) {
                 ta.value = j.text || "";
                 setStatus("转写完成 / Done", "ok");
-                // Direct mode: ask the user whether to edit the text or output as-is.
-                // "Output as-is" auto-generates the full H3 prompt and sends it downstream.
+                // Direct mode: ask the user how to output.
+                //   raw  → send the raw transcribed text to downstream (bypass H3 generation)
+                //   gen  → expand into a full H3 prompt, then send downstream
                 if (chkDirect.checked && (ta.value || "").trim()) {
                     _flowCancelled = false;
-                    askModifyBox(node, ov, ta, function() {
-                        _autoGen = true;
-                        _flowCancelled = false;
-                        btnGen.onclick();
-                    });
+                    askModifyBox(node, ov, ta,
+                        function() {  // raw: output transcribed text as-is
+                            var raw = ta.value.trim();
+                            if (setWidgetText(node, "direct_prompt", raw)) {
+                                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+                            }
+                            updateOutputPreview(node, raw);
+                            ov.remove();
+                        },
+                        function() {  // gen: auto-generate full H3 prompt & output
+                            _autoGen = true;
+                            _flowCancelled = false;
+                            btnGen.onclick();
+                        }
+                    );
                 }
             } else {
                 setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
