@@ -50,12 +50,14 @@ _H3_MERGE_SYSTEM_PROMPT = (
     "integrated_multimodal_description with [Shot N] and [X-Xs] timeline / overall_soundscape / "
     "non_diegetic_music), cinematic and vivid. When the request is in Chinese, express it "
     "naturally in English inside the prompt. "
-    "Output ONLY the final complete rewritten H3 prompt, with no explanations, no preamble, "
-    "no markdown code fences and no extra text."
+    "CRITICAL: Do NOT include any reasoning, analysis, planning, thinking or commentary. "
+    "Output ONLY the final complete rewritten H3 prompt, starting directly with "
+    "subject_definitions: (or integrated_multimodal_description: if the original has no "
+    "subject_definitions block), with no preamble, no markdown code fences and no extra text."
 )
 
-_llm_lock = threading.Lock()
-_llm = None
+_llms = {}            # model_path -> llama_cpp.Llama (per-model resident instances)
+_llms_lock = threading.Lock()
 _llm_error = None
 
 
@@ -86,6 +88,19 @@ def _pick_model_path():
         if os.path.isfile(p):
             return p
     return None
+
+
+def _pick_merge_model_path():
+    """For MERGING, prefer a small prompt-enhancer model that outputs directly
+    (no long reasoning preamble), so the rewrite actually gets produced quickly
+    and with less VRAM than the 15GB default. Falls back to the normal pick."""
+    env = os.environ.get("BSAI_H3_LLM_MODEL", "").strip()
+    if env and os.path.isfile(env):
+        return env
+    sulphur = os.path.join(_COMFY_ROOT, "models", "prompt_enhancer", "sulphur_prompt_enhancer_model-q8_0.gguf")
+    if os.path.isfile(sulphur):
+        return sulphur
+    return _pick_model_path()
 
 
 def _api_config():
@@ -125,17 +140,20 @@ def _strip_to_h3(raw):
     return text or (raw or "").strip()
 
 
-def _generate_local(user_text, system_prompt):
-    global _llm, _llm_error
-    model_path = _pick_model_path()
+def _generate_local(user_text, system_prompt, model_path=None):
+    global _llm_error
+    if model_path is None:
+        model_path = _pick_model_path()
     if not model_path:
         raise RuntimeError(
             "No GGUF model found for direct mode. Set env BSAI_H3_LLM_MODEL or place a model "
             "under ComfyUI/models/LLM or prompt_generator. / 未找到本地模型，请设置 BSAI_H3_LLM_MODEL。"
         )
-    if _llm is None:
-        with _llm_lock:
-            if _llm is None:
+    llm = _llms.get(model_path)
+    if llm is None:
+        with _llms_lock:
+            llm = _llms.get(model_path)
+            if llm is None:
                 try:
                     from llama_cpp import Llama
                 except Exception as e:
@@ -147,18 +165,19 @@ def _generate_local(user_text, system_prompt):
                         "请稍候重试。也可手动执行：pip install llama-cpp-python"
                     )
                 gpu_layers = int(os.environ.get("BSAI_H3_LLM_GPU_LAYERS", "-1"))
-                _llm = Llama(
+                llm = Llama(
                     model_path=model_path,
                     n_ctx=8192,
                     n_gpu_layers=gpu_layers,
                     verbose=False,
                 )
-    out = _llm.create_chat_completion(
+                _llms[model_path] = llm
+    out = llm.create_chat_completion(
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_text},
         ],
-        max_tokens=2000,
+        max_tokens=4096,
         temperature=0.6,
         top_p=0.9,
     )
@@ -166,7 +185,7 @@ def _generate_local(user_text, system_prompt):
         raw = out["choices"][0]["message"]["content"]
     except Exception:
         raw = ""
-    return _strip_to_h3(raw)
+    return raw  # cleaned by the caller (H3-strip for generation, merge-strip for merging)
 
 
 def _generate_api(user_text, cfg, system_prompt):
@@ -179,7 +198,7 @@ def _generate_api(user_text, cfg, system_prompt):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_text},
         ],
-        "max_tokens": 2000,
+        "max_tokens": 4096,
         "temperature": 0.6,
     }).encode("utf-8")
     req = urllib.request.Request(
@@ -189,21 +208,27 @@ def _generate_api(user_text, cfg, system_prompt):
     )
     with urllib.request.urlopen(req, timeout=300) as r:
         data = json.loads(r.read().decode("utf-8"))
-    raw = data["choices"][0]["message"]["content"]
-    return _strip_to_h3(raw)
+    return data["choices"][0]["message"]["content"]  # cleaned by the caller
 
 
 def _strip_merge_output(raw):
     """Clean a rewritten-H3-prompt output that may keep leading blocks such as
-    subject_definitions / summary / retention_analysis before the three fields."""
+    subject_definitions / summary / retention_analysis before the three fields.
+    Robust to models that emit a reasoning/thinking preamble first (field names
+    there may be wrapped in backticks)."""
     text = (raw or "").strip()
     text = re.sub(r"```[a-zA-Z]*", "", text).strip()
-    # Drop any preamble before the first meaningful field
-    idx = text.find("subject_definitions:")
-    if idx < 0:
-        idx = text.find("integrated_multimodal_description:")
-    if idx >= 0:
-        text = text[idx:].strip()
+    # Drop model reasoning / preamble: jump to the LAST real field occurrence.
+    # Field names inside a reasoning preamble are usually backtick-wrapped
+    # (`subject_definitions`), so finding the plain `subject_definitions:`
+    # reliably lands on the actual output block.
+    m = text.rfind("subject_definitions:")
+    if m < 0:
+        m = text.rfind("integrated_multimodal_description:")
+    if m >= 0:
+        text = text[m:].lstrip()
+        # unwrap a backtick pair right at the leading field name, if any
+        text = re.sub(r"^`([^`]+)`\s*:", r"\1:", text)
     # Cut trailing out-of-band chatter after the last H3 field — but keep the
     # full value block of non_diegetic_music (it may wrap onto following lines).
     m = text.rfind("non_diegetic_music:")
@@ -218,6 +243,13 @@ def _strip_merge_output(raw):
     return text or (raw or "").strip()
 
 
+# Small LRU cache for merged results so re-running the same template+edit is instant
+# (the first call still loads the LLM; later identical requests hit the cache).
+_merge_cache = {}
+_merge_cache_order = []
+_MERGE_CACHE_MAX = 64
+
+
 def merge_customization(prompt, customization):
     """Rewrite an existing H3 prompt so the user's customization is applied INSIDE
     the text (transition/action/scene changes etc.), not appended at the end.
@@ -226,21 +258,54 @@ def merge_customization(prompt, customization):
     c = (customization or "").strip()
     if not p or not c:
         return p
+    key = (p, c)
+    hit = _merge_cache.get(key)
+    if hit is not None:
+        return hit
     user_msg = "Existing MiniMax H3 prompt:\n" + p + "\n\nUser modification to apply:\n" + c
 
     def _clean(raw):
-        return _strip_merge_output(raw)
+        """Strip reasoning/preamble from the model output and validate that a real
+        H3 field survives; returns None when the output is unusable."""
+        out = _strip_merge_output(raw or "")
+        if out.strip() and not (out.startswith("subject_definitions:")
+                                or out.startswith("integrated_multimodal_description:")):
+            # retry: take from the last real field occurrence
+            m = out.rfind("subject_definitions:")
+            if m < 0:
+                m = out.rfind("integrated_multimodal_description:")
+            if m >= 0:
+                out = out[m:].lstrip()
+        if out.strip() and (out.startswith("subject_definitions:")
+                            or out.startswith("integrated_multimodal_description:")):
+            return out
+        return None
 
+    result = p
     cfg = _api_config()
     if cfg:
         try:
-            return _clean(_generate_api(user_msg, cfg, _H3_MERGE_SYSTEM_PROMPT))
+            r = _clean(_generate_api(user_msg, cfg, _H3_MERGE_SYSTEM_PROMPT))
+            if r:
+                result = r
         except Exception:
-            pass
-    try:
-        return _clean(_generate_local(user_msg, _H3_MERGE_SYSTEM_PROMPT))
-    except Exception:
-        return p
+            result = p
+    if result is p or result == p:
+        try:
+            r = _clean(_generate_local(
+                user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=_pick_merge_model_path()))
+            if r:
+                result = r
+        except Exception:
+            result = p
+    # cache (LRU)
+    if key not in _merge_cache:
+        if len(_merge_cache) >= _MERGE_CACHE_MAX and _merge_cache_order:
+            old = _merge_cache_order.pop(0)
+            _merge_cache.pop(old, None)
+        _merge_cache[key] = result
+        _merge_cache_order.append(key)
+    return result
 
 
 def generate_h3_prompt(user_text):
@@ -251,11 +316,11 @@ def generate_h3_prompt(user_text):
     cfg = _api_config()
     if cfg:
         try:
-            return _generate_api(text, cfg, _H3_SYSTEM_PROMPT)
+            return _strip_to_h3(_generate_api(text, cfg, _H3_SYSTEM_PROMPT))
         except Exception as e:
             # fall back to local on API failure
             try:
-                return _generate_local(text, _H3_SYSTEM_PROMPT)
+                return _strip_to_h3(_generate_local(text, _H3_SYSTEM_PROMPT))
             except Exception:
                 raise RuntimeError(f"Direct mode API failed ({e}) and local model unavailable.")
-    return _generate_local(text, _H3_SYSTEM_PROMPT)
+    return _strip_to_h3(_generate_local(text, _H3_SYSTEM_PROMPT))

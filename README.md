@@ -517,6 +517,22 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.5 — 补充修改真实融入模板（修复推理模型吞掉输出）/ Customization merge fixed (reasoning-model output bug)
+
+**中文说明：**
+
+- **修复「补充修改没有真正融入」**：此前融合用的大模型（如 Qwen3.5-9B 推理模型）输出被「思考过程」占满，真正的改写提示词根本没生成，导致看起来只是末尾追加。现改用**提示词增强专用模型 `sulphur_prompt_enhancer`**（8GB，直接输出不思考），配合「禁止思考、直接输出最终提示词」的指令与更健壮的输出清理/校验，融合结果干净、字段完整。
+- **实测验证**：将「请让图1的人物自然地从场景1走进场景2，而不是从场景1硬切到场景2」融入「角色多场景演绎」模板后，`[Shot 2]` 的 `Match-cut transition` 被真正改写为 `Natural walk-through transition: ...walks ... into the setting from <Picture 3>`，`overall_soundscape` 同步更新为 walk-through——修改确实写进模板内部，不再追加。
+- **更快**：首次约 30-40 秒（含模型加载），之后同一模板+同一修改**秒出**（缓存 + 模型常驻）。
+- 引擎支持多模型常驻：直通生成仍用默认模型（gemma-4-26B），融合自动优先用 sulphur；也可设置 `BSAI_H3_LLM_MODEL` 或 `BSAI_H3_LLM_API_KEY` 指定。
+
+**English:**
+
+- **Fix "customization not truly merged"**: the previous merge LLM (e.g. the Qwen3.5-9B reasoning model) spent its whole output on "thinking", so the rewritten prompt was never produced — it looked like a plain append. Now the merge uses the **prompt-enhancer model `sulphur_prompt_enhancer`** (8GB, direct output, no reasoning), with a "no thinking, output the final prompt immediately" instruction plus robust output cleaning/validation, so the merged result is clean and complete.
+- **Verified**: merging "let the person in Picture 1 naturally walk from Scene 1 into Scene 2 instead of a hard cut" into the Character multi-scene template rewrites `[Shot 2]`'s `Match-cut transition` to `Natural walk-through transition: ...walks ... into the setting from <Picture 3>`, and `overall_soundscape` is updated to walk-through too — the change is written inside the prompt, not appended.
+- **Faster**: first run ~30-40s (incl. model load); afterwards the same template+edit returns **instantly** (cache + resident model).
+- Multiple models can stay resident: Direct Mode still uses the default model (gemma-4-26B), merging auto-prefers sulphur; set `BSAI_H3_LLM_MODEL` or `BSAI_H3_LLM_API_KEY` to override.
+
 ### v1.11.4 — 补充修改真实融入模板 / Customization truly merged into the template
 
 **中文说明：**
