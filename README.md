@@ -48,10 +48,19 @@ git clone https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt.git
 
 或手动下载 ZIP 解压到 `ComfyUI/custom_nodes/BSAI-MiniMAX-H3-Prompt/`
 
-**语音输入（可选）/ Voice input (optional):**
+**✅ 依赖与模型自动安装（无需手动操作）**
+
+本节点自带 `install.py`（ComfyUI 启动时自动执行）与 `requirements.txt`：
+- **自动安装** `vosk`（🎤 语音离线中文识别）与 `llama-cpp-python`（⚡ 直通模式本地大模型，后台安装不阻塞启动）；
+- **自动下载** Vosk 中文模型 `vosk-model-small-cn-0.22`（约 43MB，多镜像，存放在 `models/`）；
+- **运行时兜底**：即使 install.py 未被执行，首次点击 🎤 语音时也会自动补装 vosk 依赖并下载模型；⚡ 直通模式缺失 llama-cpp-python 时自动后台安装并提示稍后重试。
+
+> 直通模式的本地 GGUF 大模型（如 gemma-4-26B）体积大（15GB+），不自动下载。可在首次使用直通模式时按提示设置环境变量 `BSAI_H3_LLM_MODEL` 指向已有 GGUF，或设置 `BSAI_H3_LLM_API_KEY` + `BSAI_H3_LLM_API_BASE` 改用任意 OpenAI 兼容 API（推荐）。
+
+**语音输入（可选，已自动安装）/ Voice input (optional, auto-installed):**
 
 ```bash
-# 本地离线中文语音识别（用于 🎤 语音按钮）
+# 若自动安装失败，可手动执行：
 pip install vosk
 python scripts/download_vosk_model.py    # 下载 vosk-model-small-cn-0.22（约 43MB）
 ```
@@ -507,6 +516,22 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.11.2 — 依赖与模型自动安装 / Auto-install dependencies & models
+
+**中文说明：**
+
+- **新增 `install.py`**：ComfyUI 启动时自动执行——自动安装 `vosk`（语音离线识别）与 `llama-cpp-python`（直通模式本地大模型，后台安装不阻塞启动）；自动下载 Vosk 中文模型 `vosk-model-small-cn-0.22`（约 43MB，多镜像）。任何电脑下载本插件后开箱即用。
+- **requirements.txt 补充 `vosk`**：ComfyUI-Manager 等自动安装依赖时也会带上。
+- **运行时兜底**：即使 install.py 未执行，首次点击 🎤 语音按钮会自动补装 vosk 并下载模型；⚡ 直通模式缺失 llama-cpp-python 时自动后台安装并提示稍后重试。
+- 直通模式本地 GGUF 大模型（15GB+）不自动下载，建议设置 `BSAI_H3_LLM_API_KEY` 使用 OpenAI 兼容 API，或放置/指定 GGUF。
+
+**English:**
+
+- **New `install.py`**: auto-executed on ComfyUI startup — installs `vosk` (offline ASR) and `llama-cpp-python` (Direct-Mode local LLM, installed in background so startup is never blocked); auto-downloads the Vosk Chinese model `vosk-model-small-cn-0.22` (~43 MB, multi-mirror). Fresh installs on any machine now work out of the box.
+- **`requirements.txt` now includes `vosk`** so ComfyUI-Manager-style installers pick it up too.
+- **Runtime fallback**: even if `install.py` did not run, the first 🎤 voice click auto-installs vosk and downloads the model; Direct Mode auto-installs llama-cpp-python in the background and asks to retry.
+- The Direct-Mode local GGUF LLM (15GB+) is NOT auto-downloaded; prefer setting `BSAI_H3_LLM_API_KEY` for an OpenAI-compatible API, or place/point to a GGUF.
 
 ### v1.11.1 — 语音直通流程优化 + 输出提示词预览 / Direct-Mode confirm dialog + Output Preview
 

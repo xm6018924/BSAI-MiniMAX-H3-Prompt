@@ -44,6 +44,25 @@ _llm = None
 _llm_error = None
 
 
+def _auto_install_llama():
+    """Background, best-effort install of llama-cpp-python (heavy wheel)."""
+    def _do():
+        try:
+            import subprocess
+            import sys
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "--quiet",
+                 "--disable-pip-version-check", "llama-cpp-python>=0.3.0"],
+                timeout=1800,
+            )
+        except Exception:
+            pass
+    try:
+        threading.Thread(target=_do, daemon=True).start()
+    except Exception:
+        pass
+
+
 def _pick_model_path():
     env = os.environ.get("BSAI_H3_LLM_MODEL", "").strip()
     if env and os.path.isfile(env):
@@ -106,7 +125,12 @@ def _generate_local(user_text):
                     from llama_cpp import Llama
                 except Exception as e:
                     _llm_error = f"llama_cpp not installed: {e}"
-                    raise RuntimeError(_llm_error)
+                    _auto_install_llama()  # background install; tell the user to retry
+                    raise RuntimeError(
+                        "llama_cpp not installed — auto-install started in background, "
+                        "please retry in a moment. / llama_cpp 未安装，已自动开始后台安装，"
+                        "请稍候重试。也可手动执行：pip install llama-cpp-python"
+                    )
                 gpu_layers = int(os.environ.get("BSAI_H3_LLM_GPU_LAYERS", "-1"))
                 _llm = Llama(
                     model_path=model_path,

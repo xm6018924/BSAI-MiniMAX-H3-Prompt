@@ -1,1 +1,3 @@
+# Core deps (installed automatically by install.py on ComfyUI startup)
 llama-cpp-python>=0.3.0
+vosk

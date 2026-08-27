@@ -331,6 +331,34 @@ _vosk_lock = threading.Lock()
 _vosk_import_error = None
 
 
+def _ensure_vosk_deps():
+    """Best-effort auto-install: vosk module + the small CN model.
+
+    This is the runtime fallback for machines where install.py did not run
+    (no ComfyUI auto-exec, no network at startup, etc.). Never raises — the
+    caller re-checks and reports the real error if it still fails.
+    """
+    import importlib.util
+    import subprocess
+    import sys
+    try:
+        if importlib.util.find_spec("vosk") is None:
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "--quiet",
+                 "--disable-pip-version-check", "vosk"],
+                timeout=900,
+            )
+    except Exception:
+        pass
+    try:
+        if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
+            script = os.path.join(_THIS_DIR, "scripts", "download_vosk_model.py")
+            if os.path.isfile(script):
+                subprocess.check_call([sys.executable, script], timeout=1800)
+    except Exception:
+        pass
+
+
 def _get_vosk_model():
     global _vosk_model, _vosk_import_error
     if _vosk_model is not None:
@@ -340,14 +368,26 @@ def _get_vosk_model():
             return _vosk_model
         try:
             import vosk
-        except Exception as e:  # pragma: no cover
-            _vosk_import_error = f"vosk not installed: {e}"
-            raise RuntimeError(_vosk_import_error)
-        if not os.path.isdir(_VOSK_MODEL_DIR):
+        except Exception as e:
+            # Auto-install vosk (best effort) then retry once.
+            _ensure_vosk_deps()
+            try:
+                import vosk
+            except Exception as e2:
+                _vosk_import_error = (
+                    f"vosk not installed and auto-install failed: {e2}. "
+                    "Run: pip install vosk / 请运行 pip install vosk"
+                )
+                raise RuntimeError(_vosk_import_error)
+        if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
+            # Auto-download the CN model (best effort) then re-check.
+            _ensure_vosk_deps()
+        if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
             raise RuntimeError(
-                "Vosk Chinese model not found. Run: python scripts/download_vosk_model.py "
-                "(or place vosk-model-small-cn-0.22 under models/). / 未找到中文模型，请运行 "
-                "scripts/download_vosk_model.py 下载。"
+                "Vosk Chinese model not found and auto-download failed. Run: "
+                "python scripts/download_vosk_model.py (or place "
+                "vosk-model-small-cn-0.22 under models/). / 未找到中文模型且自动下载失败，"
+                "请运行 scripts/download_vosk_model.py 下载。"
             )
         _vosk_model = vosk.Model(_VOSK_MODEL_DIR)
         return _vosk_model
