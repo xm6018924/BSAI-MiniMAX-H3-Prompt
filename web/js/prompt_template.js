@@ -935,21 +935,29 @@ function updateOutputPreview(node, text) {
     }
 }
 
-// Ask "edit the transcribed text or output as-is?" — used in Direct mode
+// Ask "how to output?" — used in Direct mode after transcription.
 // doRaw:      output the raw transcribed text directly (bypass H3 generation)
 // doGenerate: expand the text into a full H3 prompt, then output
-function askModifyBox(node, ov, ta, doRaw, doGenerate) {
+// showEdit:   true → full 4-choice dialog (incl. "edit text");
+//             false → 2/3-choice dialog (raw / H3 / cancel) — user is already editing
+function askModifyBox(node, ov, ta, doRaw, doGenerate, showEdit) {
     var box = document.createElement("div");
     box.className = "bsai-voice-overlay";
     box.style.zIndex = 9999;
+    var editBtn = showEdit
+        ? '  <button class="bsai-voice-btn" data-b="edit">✏️ 修改文字 / Edit text</button>\n'
+        : '';
+    var promptLine = showEdit
+        ? '转写完成。可选择：直通输出原文、生成 H3 三段式提示词，或先修改文字。<br>Transcription done — output the raw text, generate a full H3 prompt, or edit first?'
+        : '文字已按你的修改更新。选择输出方式：直通原文，或生成 H3 三段式提示词。<br>Text updated. Choose how to output: raw text, or a full H3 prompt?';
     box.innerHTML =
         '<div class="bsai-voice-card" style="max-width:500px">' +
         '<div class="bsai-voice-title">❓ 如何输出？ / How to output?</div>' +
-        '<div class="bsai-voice-status" style="white-space:normal">转写完成。可选择：直通输出原文、生成 H3 三段式提示词，或先修改文字。<br>Transcription done — output the raw text, generate a full H3 prompt, or edit first?</div>' +
+        '<div class="bsai-voice-status" style="white-space:normal">' + promptLine + '</div>' +
         '<div class="bsai-voice-btns">' +
         '  <button class="bsai-voice-btn primary" data-b="raw">⚡ 直通输出原文（不生成H3）/ Output raw text</button>' +
-        '  <button class="bsai-voice-btn" data-b="gen">⚡ 生成 H3 提示词 / Generate H3</button>' +
-        '  <button class="bsai-voice-btn" data-b="edit">✏️ 修改文字 / Edit text</button>' +
+        '  <button class="bsai-voice-btn" data-b="gen">⚡ 生成 H3 提示词 / Generate H3</button>' + '\n' +
+        editBtn +
         '  <button class="bsai-voice-btn danger" data-b="no">✕ 取消 / Cancel</button>' +
         '</div></div>';
     document.body.appendChild(box);
@@ -962,7 +970,8 @@ function askModifyBox(node, ov, ta, doRaw, doGenerate) {
         close();
         doGenerate();
     };
-    box.querySelector('[data-b="edit"]').onclick = function() {
+    var bEdit = box.querySelector('[data-b="edit"]');
+    if (bEdit) bEdit.onclick = function() {
         close();
         if (ta) { try { ta.focus(); } catch (e) {} }
     };
@@ -1083,6 +1092,54 @@ function openVoiceModal(node) {
     }
     // (startAutoFlow removed: after transcription, Direct mode now shows the
     //  "edit or output as-is?" dialog instead of auto-generating after 3s.)
+
+    // ── Direct-mode 3s grace period ──
+    var _directAskTimer = null;
+    var _directEditGuard = null;
+    var _directAskShown = false;
+    function clearDirectAsk() {
+        if (_directAskTimer) { clearTimeout(_directAskTimer); _directAskTimer = null; }
+        if (_directEditGuard) { ta.removeEventListener("input", _directEditGuard); _directEditGuard = null; }
+        _directAskShown = false;
+    }
+    function doRawOutput() {
+        // send the raw transcribed text downstream, bypassing H3 generation
+        var raw = ta.value.trim();
+        if (setWidgetText(node, "direct_prompt", raw)) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+        updateOutputPreview(node, raw);
+        ov.remove();
+    }
+    function doGenerateOutput() {
+        // expand into a full H3 prompt, then output downstream
+        _autoGen = true;
+        _flowCancelled = false;
+        btnGen.onclick();
+    }
+    function showDirectAsk(showEdit) {
+        clearDirectAsk();
+        askModifyBox(node, ov, ta, doRawOutput, doGenerateOutput, showEdit);
+    }
+    function startDirectAsk() {
+        clearDirectAsk();
+        _flowCancelled = false;
+        _directAskShown = false;
+        setStatus("⏳ 直通模式：3 秒后弹出输出选项；此时直接修改文字可立即弹出输出选项 / Direct: output options in 3s — edit now to choose output type immediately", "ok");
+        // If the user starts editing within the 3s window → show 2-choice dialog immediately
+        _directEditGuard = function() {
+            if (_directAskShown) return;
+            _directAskShown = true;
+            showDirectAsk(false);  // user is already editing → raw / H3 only
+        };
+        ta.addEventListener("input", _directEditGuard);
+        _directAskTimer = setTimeout(function() {
+            _directAskTimer = null;
+            if (_directAskShown) return;
+            _directAskShown = true;
+            showDirectAsk(true);   // no edit within 3s → full dialog incl. edit
+        }, 3000);
+    }
     function cleanupVoice() {
         try { _voice.proc && _voice.proc.disconnect(); } catch (e) {}
         try { _voice.src && _voice.src.disconnect(); } catch (e) {}
@@ -1163,26 +1220,12 @@ function openVoiceModal(node) {
             if (j && j.ok) {
                 ta.value = j.text || "";
                 setStatus("转写完成 / Done", "ok");
-                // Direct mode: ask the user how to output.
-                //   raw  → send the raw transcribed text to downstream (bypass H3 generation)
-                //   gen  → expand into a full H3 prompt, then send downstream
+                // Direct mode: 3s grace period after transcription.
+                //  - If the user edits the text within 3s → immediately show the
+                //    2-choice dialog (raw output / H3 generate).
+                //  - Otherwise after 3s → show the full 4-choice dialog (incl. edit).
                 if (chkDirect.checked && (ta.value || "").trim()) {
-                    _flowCancelled = false;
-                    askModifyBox(node, ov, ta,
-                        function() {  // raw: output transcribed text as-is
-                            var raw = ta.value.trim();
-                            if (setWidgetText(node, "direct_prompt", raw)) {
-                                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-                            }
-                            updateOutputPreview(node, raw);
-                            ov.remove();
-                        },
-                        function() {  // gen: auto-generate full H3 prompt & output
-                            _autoGen = true;
-                            _flowCancelled = false;
-                            btnGen.onclick();
-                        }
-                    );
+                    startDirectAsk();
                 }
             } else {
                 setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
@@ -1208,9 +1251,10 @@ function openVoiceModal(node) {
     ov.querySelector('[data-act="close"]').onclick = function() {
         cleanupVoice();
         cancelAutoFlow();
+        clearDirectAsk();
         ov.remove();
     };
-    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); ov.remove(); } });
+    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); clearDirectAsk(); ov.remove(); } });
 }
 
 function downsampleTo16k(samples, fromRate) {
