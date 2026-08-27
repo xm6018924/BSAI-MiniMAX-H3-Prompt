@@ -517,6 +517,20 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 ## 更新日志 / Changelog
 
+### v1.11.3 — 修复补充修改不生效 + 输出预览 / Fix "Set as customization" + Output preview
+
+**中文说明：**
+
+- **修复 🎤 语音「填入补充修改 / Set as customization」不起作用**：原实现只写入了隐藏 widget 的值，未同步界面补充修改框的显示，且节点上没有展示合并后的最终提示词，导致看不到效果、误以为未生效。
+- **现在**：点击「填入补充修改」后，文字会立即显示在节点上的「补充修改 / Customization」框内，并在「输出提示词预览 / Output Preview」实时渲染「选中模板合并 + 补充修改追加」后的完整提示词，效果一目了然；手动修改补充修改框时预览同步刷新；模板选择/清除/多选叠加也会同步刷新预览。
+- **补充修改对所有模板生效（已验证）**：后端在直通模式、自定义模式、任意模板/多选叠加输出末尾统一追加 `--- User Customization / 用户自定义 ---` 块，覆盖全部模板。
+
+**English:**
+
+- **Fix 🎤 voice "Set as customization" not taking effect**: previously only the hidden widget value was written; the on-node customization textarea was not updated and the merged final prompt was not shown, so the change appeared to do nothing.
+- **Now**: clicking "Set as customization" instantly shows the text in the node's customization box and renders the full merged prompt (selected templates + customization appended) in the "Output Preview" box; manual edits to the box also refresh the preview; template select/clear/multi-stack refresh it too.
+- **Customization applies to ALL templates (verified)**: the backend appends a `--- User Customization / 用户自定义 ---` block to every output path — Direct mode, custom text, and any template / multi-stack merge.
+
 ### v1.11.2 — 依赖与模型自动安装 / Auto-install dependencies & models
 
 **中文说明：**

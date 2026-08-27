@@ -512,6 +512,8 @@ function buildTemplateUI(node) {
         setTimeout(refreshNodeSize, 80);
         // Re-measure when the user resizes the customization textarea
         custTa.addEventListener("resize", refreshNodeSize);
+        // Initial render of the output prompt preview (restored workflow state)
+        setTimeout(function() { renderOutputPreview(node); }, 60);
     } else {
         console.warn("[BSAI H3 Template] addDOMWidget not available");
     }
@@ -523,6 +525,7 @@ function buildTemplateUI(node) {
             custWidget.value = custTa.value;
             if (node.graph) node.setDirtyCanvas(true, true);
         }
+        renderOutputPreview(node);
     });
     if (custWidget && custWidget.value) {
         custTa.value = custWidget.value;
@@ -885,6 +888,7 @@ function syncSelectionUI(node) {
 
     if (node.graph) node.setDirtyCanvas(true, true);
     if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 20);
+    renderOutputPreview(node);
 }
 
 function clearSelection(node) {
@@ -926,6 +930,38 @@ function setWidgetText(node, name, text) {
     w.value = text;
     if (typeof w.callback === "function") { try { w.callback(text); } catch (e) {} }
     return true;
+}
+
+// Fill the "user_customization" (补充修改) from the voice dialog and make the
+// change VISIBLE: sync the on-node textarea, the hidden widget (backend input),
+// and re-render the output prompt preview so the user can see it take effect.
+function setCustomizationText(node, text) {
+    text = text || "";
+    if (node._bsaiCustTa) node._bsaiCustTa.value = text;          // on-node UI
+    setWidgetText(node, "user_customization", text);              // backend widget
+    renderOutputPreview(node);                                    // merged prompt preview
+    if (node.graph) node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+}
+
+// Render the ACTUAL prompt that will be sent downstream (selected templates
+// merged + customization appended) into the node's output preview box, so the
+// user always sees whether 补充修改 / customization took effect.
+function renderOutputPreview(node) {
+    if (!node || !node._bsaiOutTa) return;
+    var sel = node._bsaiSelection || [];
+    var cust = "";
+    var w = findWidget(node, "user_customization");
+    if (w && w.value) cust = w.value;
+    else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
+    var parts = [];
+    sel.forEach(function(it) {
+        if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
+    });
+    var out = parts.join("\n\n");
+    if (cust && cust.trim()) {
+        out += (out ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
+    }
+    node._bsaiOutTa.value = out;
 }
 
 // Show the final prompt (sent to downstream nodes) in the node's output preview box
@@ -1254,9 +1290,7 @@ function openVoiceModal(node) {
         ov.remove();
     };
     btnCust.onclick = function() {
-        if (setWidgetText(node, "user_customization", ta.value.trim())) {
-            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-        }
+        setCustomizationText(node, ta.value.trim());
         ov.remove();
     };
     ov.querySelector('[data-act="close"]').onclick = function() {
