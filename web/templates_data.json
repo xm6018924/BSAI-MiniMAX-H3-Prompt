@@ -3837,6 +3837,1503 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cinematic_color_grading",
+      "name": "电影调色",
+      "name_en": "Cinematic Color Grading",
+      "description": "各类电影色调与胶片模拟风格",
+      "icon": "🎨",
+      "subcategories": [
+        {
+          "id": "film_stock",
+          "name": "经典胶片模拟",
+          "name_en": "Film Stock Emulation",
+          "description": "经典电影胶片色调模拟",
+          "templates": [
+            {
+              "id": "grade_kodak2383",
+              "name": "柯达2383电影胶片",
+              "name_en": "Kodak 2383 Print Film",
+              "description": "好莱坞经典电影胶片色调，暖橙高对比",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "胶片",
+                "Kodak",
+                "电影感",
+                "暖调",
+                "高对比"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为经典的柯达2383电影胶片色调：暖橙色高光、青蓝色阴影、浓郁饱和的色彩，高对比度，暗部沉稳、亮部柔和。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围温暖浓郁、经典好莱坞质感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 保留输入画面原有的环境声与动作声，质感清晰自然，音色略带温暖\n\nnon_diegetic_music: 低沉厚重的电影管弦乐，情感饱满，节奏沉稳大气"
+            },
+            {
+              "id": "grade_kodak2393",
+              "name": "柯达2393胶片",
+              "name_en": "Kodak 2393 Print Film",
+              "description": "柔和低对比的电影胶片色调，通透细腻",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "胶片",
+                "Kodak",
+                "低对比",
+                "柔和",
+                "文艺"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为柯达2393电影胶片色调：低对比度、柔和通透的色彩，高光柔化、暗部轻盈，整体干净淡雅，带轻微胶质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围柔和通透、低对比文艺感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 轻柔的环境声，细节清晰而不张扬，空气感自然\n\nnon_diegetic_music: 轻柔的弦乐与钢琴，舒缓平静，略带文艺气息"
+            },
+            {
+              "id": "grade_fuji3513",
+              "name": "富士3513胶片",
+              "name_en": "Fuji 3513 Print Film",
+              "description": "富士电影胶片色调，清冷通透偏青绿",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "胶片",
+                "Fuji",
+                "青绿",
+                "清冷",
+                "通透"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为富士3513电影胶片色调：整体清冷通透，阴影偏青绿、高光偏冷白，色彩细腻克制，带轻微颗粒与胶质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围清冷通透、细腻胶片感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 清透的环境声，空气流动感清晰，细节自然\n\nnon_diegetic_music: 清冷的氛围音乐，空灵简约，层次细腻"
+            },
+            {
+              "id": "grade_vision3",
+              "name": "柯达Vision3胶片",
+              "name_en": "Kodak Vision3 Film",
+              "description": "自然纪实风格电影胶片色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "胶片",
+                "Kodak",
+                "纪实",
+                "自然",
+                "电影感"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为柯达Vision3电影胶片色调：自然真实的色彩还原，细腻的中间调与柔和的暗部，轻微胶片颗粒，质感通透而纪实。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围自然真实、纪实电影感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 真实自然的环境声，层次丰富，具有临场感\n\nnon_diegetic_music: 克制的氛围配乐，注重留白，纪实而富有感染力"
+            },
+            {
+              "id": "grade_log",
+              "name": "LOG电影色彩还原",
+              "name_en": "LOG to Rec709",
+              "description": "专业电影LOG色彩空间，标准电影质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "LOG",
+                "电影色彩",
+                "专业",
+                "还原"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为专业的电影LOG到Rec709色彩空间还原：色彩标准、灰度完整、高光暗部细节丰富，画面平实专业，符合电影工业色彩规范。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围标准电影色彩空间、专业级质感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 均衡自然的环境声，动态范围完整\n\nnon_diegetic_music: 中性克制的电影配乐，情绪留白，专业大气"
+            },
+            {
+              "id": "grade_grain",
+              "name": "35mm胶片颗粒",
+              "name_en": "35mm Film Grain",
+              "description": "复古35mm胶片颗粒质感与轻微褪色",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "胶片",
+                "颗粒",
+                "35mm",
+                "复古",
+                "怀旧"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为复古的35mm胶片质感：画面覆盖细腻的胶片颗粒，色彩轻微褪色偏暖，对比度适中，暗角自然，充满老电影质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围复古怀旧、胶片颗粒质感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 略带暖噪的环境声，胶片时代的氛围感\n\nnon_diegetic_music: 怀旧风格的柔和配乐，温暖舒缓，复古情怀"
+            }
+          ]
+        },
+        {
+          "id": "blockbuster",
+          "name": "大片商业风格",
+          "name_en": "Blockbuster Looks",
+          "description": "好莱坞大片与商业广告色调",
+          "templates": [
+            {
+              "id": "grade_teal",
+              "name": "青橙好莱坞大片",
+              "name_en": "Teal & Orange Blockbuster",
+              "description": "好莱坞青橙色调，肤色暖橙背景青蓝",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "青橙",
+                "大片",
+                "好莱坞",
+                "对比",
+                "商业"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为好莱坞经典青橙色调：高光与肤色偏暖橙色、阴影与背景偏青蓝色，强烈而和谐的冷暖对比，饱和鲜艳、对比分明，极具商业大片质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围沉稳而富有张力。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 宏大的环境声，低频厚实，具有影院感\n\nnon_diegetic_music: 气势磅礴的好莱坞配乐，节奏强劲，紧张刺激"
+            },
+            {
+              "id": "grade_blockbuster",
+              "name": "夏日大片明亮调",
+              "name_en": "Summer Blockbuster",
+              "description": "明亮高饱和的商业大片色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "明亮",
+                "高饱和",
+                "大片",
+                "阳光",
+                "商业"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为明亮的夏日大片色调：整体明亮通透、色彩高饱和而鲜艳，阳光感十足，暗部轻盈、对比明快，充满活力与商业大片气息。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围明亮高饱和、商业大片感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 明亮轻快的环境声，充满阳光与活力\n\nnon_diegetic_music: 明快积极的电影配乐，节奏明朗，鼓舞人心"
+            },
+            {
+              "id": "grade_commercial",
+              "name": "商业广告明亮调",
+              "name_en": "Bright Commercial",
+              "description": "干净鲜艳的现代商业广告色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "商业",
+                "广告",
+                "明亮",
+                "干净",
+                "鲜艳"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为现代商业广告色调：画面干净通透、色彩鲜活饱满，肤色自然健康，对比柔和适中，高光细腻，呈现精致高级的商业质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围干净明快、精致商业感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 干净利落的环境声，清晰精准，现代感强\n\nnon_diegetic_music: 时尚现代的商业配乐，轻快精致，简洁有力"
+            },
+            {
+              "id": "grade_bleach",
+              "name": "漂白跳过效果",
+              "name_en": "Bleach Bypass",
+              "description": "高对比低饱和的硬朗工业色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "漂白跳过",
+                "高对比",
+                "低饱和",
+                "硬朗",
+                "工业"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为漂白跳过效果：大幅降低饱和度、显著增强对比度，黑色深沉、高光刺眼，金属质感明显，整体冷硬凌厉，充满工业与动作片的粗粝力量感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围硬朗冷峻、高反差工业感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 冷硬的环境声，低频压迫感强，工业质感\n\nnon_diegetic_music: 强烈冲击的电影配乐，鼓点厚重，紧张有力"
+            },
+            {
+              "id": "grade_desat",
+              "name": "低饱和剧情调",
+              "name_en": "Moody Desaturated Drama",
+              "description": "阴沉低饱和的情感叙事色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "低饱和",
+                "阴沉",
+                "剧情",
+                "情感",
+                "文艺"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为低饱和的剧情片色调：整体饱和度显著降低、对比度柔和，高光暗淡、色彩克制灰蒙，突出情绪与叙事，呈现沉稳压抑的文艺电影质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围沉稳克制、情感叙事感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 低沉压抑的环境声，细节收敛，情绪内敛\n\nnon_diegetic_music: 克制深沉的配乐，旋律缓慢，情感张力十足"
+            },
+            {
+              "id": "grade_muted",
+              "name": "柔和低饱和调",
+              "name_en": "Soft Muted Tone",
+              "description": "温柔内敛的柔和低饱和色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "柔和",
+                "低饱和",
+                "温柔",
+                "舒适",
+                "清淡"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为柔和低饱和色调：色彩温和内敛、饱和度偏低，高光柔化、对比柔和，整体清淡舒适，呈现温柔细腻、不张扬的文艺质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围温柔内敛、柔和舒适。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 轻柔的环境声，温和细腻，舒适放松\n\nnon_diegetic_music: 温柔舒缓的配乐，旋律平和，治愈放松"
+            }
+          ]
+        },
+        {
+          "id": "mood_tone",
+          "name": "氛围色调",
+          "name_en": "Mood Tones",
+          "description": "氛围感电影色调",
+          "templates": [
+            {
+              "id": "grade_golden",
+              "name": "黄金时刻暖调",
+              "name_en": "Golden Hour Warm",
+              "description": "黄昏暖阳的唯美金色色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黄金时刻",
+                "暖调",
+                "金色",
+                "唯美",
+                "黄昏"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为黄金时刻暖色调：整体沐浴在温暖的金橙色阳光中，高光金黄灿烂、阴影暖褐柔和，画面温暖唯美、浪漫动人，充满黄昏时分的诗意。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围温暖明亮、唯美浪漫。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 温暖的环境声，空气柔和，夕阳氛围浓郁\n\nnon_diegetic_music: 温暖浪漫的配乐，旋律柔美，抒情动人"
+            },
+            {
+              "id": "grade_cool",
+              "name": "冷蓝夜景调",
+              "name_en": "Cool Blue Night",
+              "description": "清冷神秘的夜晚蓝调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "冷蓝",
+                "夜景",
+                "清冷",
+                "神秘",
+                "夜晚"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为清冷的冷蓝夜景色调：整体偏冷蓝色调，阴影深蓝、高光冷白，画面清冷神秘，透出夜晚的静谧与都市的冷光氛围。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围清冷神秘、夜晚氛围。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 清冷的环境声，夜晚氛围声细腻，静谧空灵\n\nnon_diegetic_music: 空灵冷寂的电子氛围音乐，舒缓神秘，夜色弥漫"
+            },
+            {
+              "id": "grade_dark",
+              "name": "暗黑惊悚调",
+              "name_en": "Dark Thriller",
+              "description": "深阴影低调光的悬疑惊悚色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "暗黑",
+                "惊悚",
+                "悬疑",
+                "深阴影",
+                "紧张"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为暗黑惊悚色调：曝光偏低、阴影深沉厚重，色彩克制偏冷，高光稀少而刺眼，整体笼罩在压抑紧张的暗黑氛围中，充满悬疑张力。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围压抑紧张、神秘悬疑。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 压抑紧张的环境声，低频嗡鸣，细节若隐若现\n\nnon_diegetic_music: 紧张悬疑的配乐，节奏不规律，压迫感强"
+            },
+            {
+              "id": "grade_dreamy",
+              "name": "梦幻柔和调",
+              "name_en": "Dreamy Soft Pastel",
+              "description": "柔和梦幻的粉彩甜美色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "梦幻",
+                "柔和",
+                "粉彩",
+                "甜美",
+                "浪漫"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为梦幻柔和的粉彩色调：整体轻盈通透，色彩粉嫩柔和，高光柔化发光、阴影淡雅，对比极低，画面如梦境般甜美浪漫、朦胧唯美。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围梦幻柔和、甜美浪漫。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 轻柔梦幻的环境声，空气感十足，缥缈轻盈\n\nnon_diegetic_music: 梦幻甜美的配乐，旋律轻盈，浪漫柔和"
+            },
+            {
+              "id": "grade_sepia",
+              "name": "深褐怀旧调",
+              "name_en": "Sepia Nostalgia",
+              "description": "深褐色的怀旧复古色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "深褐",
+                "怀旧",
+                "复古",
+                "岁月",
+                "老照片"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为深褐怀旧色调：整体笼罩在温暖的深褐色调中，色彩偏棕黄、对比柔和，暗部厚实、高光泛黄，充满老照片的岁月与怀旧感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围怀旧复古、岁月感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 怀旧的环境声，温暖而遥远，时光感浓\n\nnon_diegetic_music: 怀旧舒缓的配乐，旋律怀旧，岁月沉淀"
+            },
+            {
+              "id": "grade_horror",
+              "name": "恐怖绿调",
+              "name_en": "Horror Green",
+              "description": "阴森冷冽的恐怖绿色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "恐怖",
+                "绿色",
+                "阴森",
+                "冷冽",
+                "不安"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为阴森的恐怖绿色调：整体偏冷绿色调，阴影深绿、高光苍白，画面阴森冷冽、色彩病态压抑，营造出强烈的不安与恐怖氛围。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围阴森冷冽、不安氛围。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 阴森的环境声，低频不安，诡异细节浮现\n\nnon_diegetic_music: 恐怖悬疑的配乐，音色尖锐，紧张惊悚"
+            }
+          ]
+        },
+        {
+          "id": "mono",
+          "name": "黑白摄影",
+          "name_en": "Monochrome",
+          "description": "黑白单色影像风格",
+          "templates": [
+            {
+              "id": "grade_bwhigh",
+              "name": "高反差黑白",
+              "name_en": "High Contrast B&W",
+              "description": "硬朗经典的高反差黑白影像",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黑白",
+                "高反差",
+                "经典",
+                "硬朗",
+                "单色"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为经典的高反差黑白影像：去除全部色彩，纯黑白灰阶，对比强烈，黑色深邃、白色纯净、中间调分明，画面硬朗有力，充满经典摄影质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围硬朗对比、经典黑白。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 纯粹的环境声，动态清晰，层次分明\n\nnon_diegetic_music: 简洁有力的配乐，节奏坚定，经典大气"
+            },
+            {
+              "id": "grade_bwsoft",
+              "name": "柔和黑白",
+              "name_en": "Soft Gray B&W",
+              "description": "细腻柔和的优雅黑白影像",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黑白",
+                "柔和",
+                "优雅",
+                "细腻",
+                "灰度"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为细腻柔和的优雅黑白影像：去除全部色彩，灰阶过渡极为丰富细腻，对比柔和、高光朦胧、暗部轻盈，画面温柔淡雅，充满诗意的黑白质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围细腻柔和、优雅黑白。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 轻柔的环境声，细腻温和，静谧优雅\n\nnon_diegetic_music: 柔和舒缓的钢琴与弦乐，优雅静谧，诗意绵长"
+            },
+            {
+              "id": "grade_noir",
+              "name": "黑色电影调",
+              "name_en": "Film Noir",
+              "description": "深阴影低调光的黑色电影黑白",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黑色电影",
+                "黑白",
+                "深阴影",
+                "低调光",
+                "神秘"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为经典黑色电影黑白调：去除色彩，深沉的黑色阴影占据画面主体，高光锐利而稀少，光影切割分明，充满神秘、危险与宿命的黑色电影质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围深沉神秘、黑色电影感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 深沉的环境声，阴影感强，神秘紧张\n\nnon_diegetic_music: 低沉冷峻的爵士与弦乐，神秘忧郁，宿命感浓"
+            },
+            {
+              "id": "grade_infrared",
+              "name": "红外摄影调",
+              "name_en": "Infrared Photography",
+              "description": "梦幻奇异的红外摄影色调",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "红外",
+                "梦幻",
+                "奇异",
+                "超现实",
+                "发光"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为红外摄影色调：植物与高光呈现明亮的银白色发光效果，天空与阴影转为深灰近黑，画面梦幻奇异、脱离现实，充满超自然的静谧感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围梦幻奇异、超现实感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 空灵的环境声，静谧奇异，脱离现实\n\nnon_diegetic_music: 空灵神秘的氛围音乐，梦幻悠远，超现实感"
+            },
+            {
+              "id": "grade_silver",
+              "name": "银盐黑白胶片",
+              "name_en": "Silver Gelatin B&W",
+              "description": "典雅复古的银盐工艺黑白",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "银盐",
+                "黑白",
+                "胶片",
+                "典雅",
+                "复古"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为典雅的银盐黑白胶片调：去除色彩，细腻的银盐颗粒覆盖画面，灰阶柔和丰富，暗部厚重如墨、高光如雪，充满传统暗房工艺的典雅质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围典雅复古、银盐质感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 温暖的环境声，颗粒感氛围，复古典雅\n\nnon_diegetic_music: 典雅复古的配乐，旋律端庄，暗房时光感"
+            },
+            {
+              "id": "grade_bwfilm",
+              "name": "黑白胶片颗粒",
+              "name_en": "B&W Film Grain",
+              "description": "复古文艺的黑白胶片颗粒",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黑白",
+                "胶片",
+                "颗粒",
+                "复古",
+                "文艺"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为复古的黑白胶片调：去除色彩，画面覆盖明显胶片颗粒，对比度适中，灰阶微带银灰质感，呈现旧时代黑白纪录片的文艺怀旧感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围复古文艺、胶片黑白。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 怀旧的环境声，颗粒噪感，旧时光氛围\n\nnon_diegetic_music: 怀旧文艺的配乐，旋律朴素，旧时光沉淀"
+            }
+          ]
+        },
+        {
+          "id": "photo_craft",
+          "name": "摄影工艺",
+          "name_en": "Photo Craft",
+          "description": "特殊摄影工艺质感",
+          "templates": [
+            {
+              "id": "grade_polaroid",
+              "name": "拍立得色调",
+              "name_en": "Polaroid / Instant Film",
+              "description": "怀旧随性的拍立得即时成像",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "拍立得",
+                "即时成像",
+                "怀旧",
+                "随性",
+                "复古"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为拍立得即时成像色调：色彩微带褪色的复古感，对比柔和、高光泛白、暗部偏褐，四周有柔和的框边阴影，画面怀旧随性，充满即时成像的质感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围怀旧随性、拍立得感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 怀旧的环境声，温暖随性，生活感强\n\nnon_diegetic_music: 轻快怀旧的配乐，随性惬意，复古生活感"
+            },
+            {
+              "id": "grade_longexp",
+              "name": "长曝光流动调",
+              "name_en": "Long Exposure",
+              "description": "长曝光的时间流动质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "长曝光",
+                "流动",
+                "光轨",
+                "时间",
+                "诗意"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为长曝光色调：画面呈现时间流动的质感，运动元素化为柔滑的光轨与丝滑拖影，静止主体保持清晰，对比柔和、色彩清淡，充满诗意的时间感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围流动诗意、时间凝固感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 悠长的环境声，时间流动感，静谧深远\n\nnon_diegetic_music: 悠远绵长的氛围音乐，空灵诗意，时间感浓"
+            },
+            {
+              "id": "grade_doubleexp",
+              "name": "双重曝光叠影",
+              "name_en": "Double Exposure",
+              "description": "梦幻叠加的双重曝光影像",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "双重曝光",
+                "叠影",
+                "梦幻",
+                "超现实",
+                "叠加"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为双重曝光色调：主体与背景以半透明的方式叠加融合，画面层次丰富、影影绰绰，色彩交融柔和，充满梦幻与超现实的摄影艺术感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围梦幻叠影、超现实感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 虚幻的环境声，叠影氛围，缥缈梦幻\n\nnon_diegetic_music: 梦幻空灵的配乐，缥缈悠远，超现实感"
+            },
+            {
+              "id": "grade_tilt",
+              "name": "移轴微缩调",
+              "name_en": "Tilt-Shift Miniature",
+              "description": "移轴镜头下的微缩玩具世界",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "移轴",
+                "微缩",
+                "玩具",
+                "趣味",
+                "精致"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为移轴微缩色调：通过移轴效果将画面营造为微缩模型感，景深极浅、上下两端柔和虚化，色彩鲜明通透，画面精致有趣，如精致的玩具世界。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围微缩精致、玩具世界感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 轻微趣味的环境声，精致细节感，俏皮生动\n\nnon_diegetic_music: 轻快俏皮的配乐，节奏活泼，趣味盎然"
+            },
+            {
+              "id": "grade_daguerreo",
+              "name": "达盖尔银版调",
+              "name_en": "Daguerreotype",
+              "description": "古朴神秘的早期摄影工艺",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "达盖尔",
+                "银版",
+                "早期摄影",
+                "古朴",
+                "神秘"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为达盖尔银版色调：画面呈现早期银版摄影的古朴质感，色彩呈暖褐与银灰，表面有细腻的反光纹理，暗部厚重、细节如雕刻，充满历史的神秘感。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围古朴神秘、早期摄影感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 古老的环境声，历史感强，神秘古朴\n\nnon_diegetic_music: 古朴神秘的配乐，音色古老，历史回响"
+            },
+            {
+              "id": "grade_vintage",
+              "name": "复古摄影调",
+              "name_en": "Vintage Photography",
+              "description": "温暖褪色的复古胶片摄影",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "复古",
+                "摄影",
+                "褪色",
+                "胶片",
+                "怀旧"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject, composition, framing and motion of the reference image — only the color grading changes.\n\nintegrated_multimodal_description: [镜头1]【0-4秒】画面保持输入图像的主体、构图与动作完全不变，仅将整体色彩统一调整为复古摄影色调：色彩温暖而微带褪色，高光偏黄、暗部偏褐，对比柔和，带轻微胶片颗粒与漏光感，画面充满旧时代照片的怀旧温情。光影随之调整，整体呈现电影级质感，色彩统一、过渡平滑，画面氛围复古胶片、时光沉淀感。[镜头2]【4-8秒】持续保持该色调，主体动作自然延续：【ACTION】动作保持输入图像中主体的原有运动状态，自然流畅，不受色调改变影响【/ACTION】。整段画面色调统一、视觉焦点清晰。\n\noverall_soundscape: 温暖怀旧的环境声，旧照片氛围，温情绵长\n\nnon_diegetic_music: 怀旧舒缓的配乐，温暖怀旧，时光温情"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "style_transfer",
+      "name": "风格转绘",
+      "name_en": "Style Transfer",
+      "description": "各类绘画与艺术风格转换",
+      "icon": "🖌️",
+      "subcategories": [
+        {
+          "id": "painting",
+          "name": "手绘绘画",
+          "name_en": "Painting & Drawing",
+          "description": "水彩、油画、素描等手绘风格",
+          "templates": [
+            {
+              "id": "st_watercolor",
+              "name": "水彩画",
+              "name_en": "Watercolor",
+              "description": "透明水彩的柔和晕染与纸张肌理",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "水彩",
+                "绘画",
+                "晕染",
+                "柔和",
+                "透明"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为水彩风格：画面转为透明水彩画：色彩清透柔和、边缘自然晕染，笔触湿润、白色纸纹隐约可见，明暗以淡彩过渡，画面轻盈通透，充满水彩的灵动与诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为水彩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水彩风格下自然流畅地展现【/ACTION】。整段画面统一呈现水彩风格，艺术质感一致。\n\noverall_soundscape: 轻柔的环境声，纸张与水的细腻质感，安静清新\n\nnon_diegetic_music: 轻柔舒缓的钢琴曲，清新淡雅，水彩般的灵动"
+            },
+            {
+              "id": "st_oilclassic",
+              "name": "古典油画",
+              "name_en": "Renaissance Oil Painting",
+              "description": "文艺复兴古典油画的厚涂与光影",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "油画",
+                "古典",
+                "文艺复兴",
+                "厚涂",
+                "光影"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为古典油画风格：画面转为文艺复兴古典油画：浓郁的油彩厚涂质感、可见的笔触肌理，色彩浑厚饱和，明暗对比强烈而细腻，如古典大师之作。保留原图的主体结构、构图与比例，仅画面表现手法转为古典油画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在古典油画风格下自然流畅地展现【/ACTION】。整段画面统一呈现古典油画风格，艺术质感一致。\n\noverall_soundscape: 庄重典雅的环境声，油画展厅氛围，沉稳大气\n\nnon_diegetic_music: 庄重古典的管弦乐，典雅恢弘，古典油画气质"
+            },
+            {
+              "id": "st_impressionist",
+              "name": "印象派",
+              "name_en": "Impressionism",
+              "description": "印象派的松散笔触与光色流动",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "印象派",
+                "油画",
+                "光色",
+                "笔触",
+                "朦胧"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为印象派风格：画面转为印象派绘画：松散的短促笔触、色彩点染交织，强调光线与色彩的变化，边缘朦胧柔和，画面充满光影的流动感与鲜活的生命力。保留原图的主体结构、构图与比例，仅画面表现手法转为印象派风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在印象派风格下自然流畅地展现【/ACTION】。整段画面统一呈现印象派风格，艺术质感一致。\n\noverall_soundscape: 轻盈的环境声，光影流动感，活泼生动\n\nnon_diegetic_music: 轻快灵动的配乐，节奏明快，光色跃动"
+            },
+            {
+              "id": "st_inkwash",
+              "name": "水墨画",
+              "name_en": "Ink Wash Painting",
+              "description": "中国传统水墨的墨色浓淡与留白",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "水墨",
+                "国画",
+                "墨色",
+                "留白",
+                "意境"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为水墨风格：画面转为中国传统水墨画：墨色浓淡干湿变化丰富，线条流畅有力，大量留白营造意境，色彩以墨色与淡彩为主，画面清雅空灵，充满东方诗韵。保留原图的主体结构、构图与比例，仅画面表现手法转为水墨风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水墨风格下自然流畅地展现【/ACTION】。整段画面统一呈现水墨风格，艺术质感一致。\n\noverall_soundscape: 静谧的环境声，宣纸与水墨的意境，空灵悠远\n\nnon_diegetic_music: 悠扬的古筝与箫笛，清雅空灵，东方意境"
+            },
+            {
+              "id": "st_sketch",
+              "name": "铅笔素描",
+              "name_en": "Pencil Sketch",
+              "description": "细腻的铅笔素描线条与明暗",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "素描",
+                "铅笔",
+                "线条",
+                "明暗",
+                "黑白"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为铅笔素描风格：画面转为细腻的铅笔素描：以黑白灰明暗关系塑造体积，铅笔线条清晰可见，排线自然，边缘利落，呈现手绘素描的专注与质感。保留原图的主体结构、构图与比例，仅画面表现手法转为铅笔素描风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在铅笔素描风格下自然流畅地展现【/ACTION】。整段画面统一呈现铅笔素描风格，艺术质感一致。\n\noverall_soundscape: 轻微的环境声，铅笔划纸的质感，安静专注\n\nnon_diegetic_music: 简洁静谧的配乐，克制内敛，素描般的纯粹"
+            },
+            {
+              "id": "st_pointillism",
+              "name": "点彩画",
+              "name_en": "Pointillism",
+              "description": "点彩派的细密色点技法",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "点彩",
+                "色点",
+                "印象派",
+                "细密",
+                "光感"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为点彩风格：画面转为点彩派绘画：画面由无数细密的纯色小点构成，色彩在高频点阵中交融，远看自然成形、近看颗粒分明，充满光学的趣味与斑斓的光感。保留原图的主体结构、构图与比例，仅画面表现手法转为点彩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在点彩风格下自然流畅地展现【/ACTION】。整段画面统一呈现点彩风格，艺术质感一致。\n\noverall_soundscape: 细碎轻盈的环境声，点彩的颗粒感，明快生动\n\nnon_diegetic_music: 轻快跳跃的配乐，节奏细碎，斑斓明快"
+            },
+            {
+              "id": "st_gouache",
+              "name": "水粉画",
+              "name_en": "Gouache",
+              "description": "不透明水粉的厚实明快色彩",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "水粉",
+                "不透明",
+                "厚实",
+                "明快",
+                "绘画"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为水粉风格：画面转为不透明水粉画：色彩厚实明快、覆盖力强，笔触清晰可见，明暗关系明确，画面干净利落，充满水粉画的明朗与朝气。保留原图的主体结构、构图与比例，仅画面表现手法转为水粉风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水粉风格下自然流畅地展现【/ACTION】。整段画面统一呈现水粉风格，艺术质感一致。\n\noverall_soundscape: 明快利落的环境声，色彩感强烈，清爽生动\n\nnon_diegetic_music: 明快活泼的配乐，节奏清爽，明朗朝气"
+            },
+            {
+              "id": "st_impasto",
+              "name": "厚涂油画",
+              "name_en": "Impasto Oil",
+              "description": "厚重肌理堆叠的厚涂油画",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "厚涂",
+                "油画",
+                "肌理",
+                "堆叠",
+                "粗犷"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为厚涂油画风格：画面转为厚涂油画：颜料厚重堆叠、肌理粗犷立体，笔触明显有力，色彩浓郁饱满，光影在厚涂表面形成丰富层次，充满表现力与力量感。保留原图的主体结构、构图与比例，仅画面表现手法转为厚涂油画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在厚涂油画风格下自然流畅地展现【/ACTION】。整段画面统一呈现厚涂油画风格，艺术质感一致。\n\noverall_soundscape: 厚重饱满的环境声，油画颜料质感，粗犷有力\n\nnon_diegetic_music: 浑厚有力的配乐，节奏厚重，表现力强"
+            }
+          ]
+        },
+        {
+          "id": "traditional",
+          "name": "传统艺术",
+          "name_en": "Traditional Art",
+          "description": "浮世绘、工笔、版画等传统艺术",
+          "templates": [
+            {
+              "id": "st_ukiyoe",
+              "name": "浮世绘",
+              "name_en": "Ukiyo-e",
+              "description": "日本浮世绘的平涂线条与木版韵味",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "浮世绘",
+                "日本",
+                "木版",
+                "平涂",
+                "传统"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为浮世绘风格：画面转为日本浮世绘版画：清晰有力的墨线勾勒、大面积平涂的鲜亮色彩、图案化的装饰纹样，纸张颗粒与木版印刷质感，充满江户时代的风情。保留原图的主体结构、构图与比例，仅画面表现手法转为浮世绘风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在浮世绘风格下自然流畅地展现【/ACTION】。整段画面统一呈现浮世绘风格，艺术质感一致。\n\noverall_soundscape: 传统典雅的环境声，木版印刷韵味，古典风情\n\nnon_diegetic_music: 古朴传统的配乐，三味线与太鼓，江户风情"
+            },
+            {
+              "id": "st_gongbi",
+              "name": "中国工笔画",
+              "name_en": "Chinese Gongbi",
+              "description": "工笔细描与淡彩设色的东方雅致",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "工笔",
+                "国画",
+                "细描",
+                "淡彩",
+                "雅致"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为中国工笔风格：画面转为中国工笔画：线条精细工整、色彩淡雅设色，层层渲染、质感细腻，画面典雅精致，充满传统东方绘画的含蓄与考究。保留原图的主体结构、构图与比例，仅画面表现手法转为中国工笔风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在中国工笔风格下自然流畅地展现【/ACTION】。整段画面统一呈现中国工笔风格，艺术质感一致。\n\noverall_soundscape: 雅致静谧的环境声，绢本质感，含蓄清雅\n\nnon_diegetic_music: 雅致悠扬的古琴与琵琶，清雅含蓄，东方雅致"
+            },
+            {
+              "id": "st_woodcut",
+              "name": "木刻版画",
+              "name_en": "Woodcut Print",
+              "description": "木刻版画的粗犷刻痕与黑白",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "木刻",
+                "版画",
+                "刻痕",
+                "黑白",
+                "粗犷"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为木刻版画风格：画面转为木刻版画：粗犷有力的刻痕线条、鲜明的黑白对比、纸张的印刷纹理，造型概括而有张力，充满版画艺术的质朴与力量。保留原图的主体结构、构图与比例，仅画面表现手法转为木刻版画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在木刻版画风格下自然流畅地展现【/ACTION】。整段画面统一呈现木刻版画风格，艺术质感一致。\n\noverall_soundscape: 质朴的环境声，木刻刀痕质感，粗犷有力\n\nnon_diegetic_music: 质朴有力的配乐，节奏分明，版画张力"
+            },
+            {
+              "id": "st_papercut",
+              "name": "剪纸艺术",
+              "name_en": "Paper Cut Art",
+              "description": "民间剪纸的镂空与平面装饰",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "剪纸",
+                "镂空",
+                "民间",
+                "平面",
+                "装饰"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为剪纸风格：画面转为民间剪纸艺术：平面化的造型、镂空与实体的对比、鲜艳的大色块与装饰纹样，边缘如剪纸般利落，充满民间艺术的喜庆与巧思。保留原图的主体结构、构图与比例，仅画面表现手法转为剪纸风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在剪纸风格下自然流畅地展现【/ACTION】。整段画面统一呈现剪纸风格，艺术质感一致。\n\noverall_soundscape: 轻快喜庆的环境声，剪纸质感，民间气息\n\nnon_diegetic_music: 喜庆明快的民间配乐，热闹活泼，剪纸风情"
+            },
+            {
+              "id": "st_stainedglass",
+              "name": "彩色玻璃",
+              "name_en": "Stained Glass",
+              "description": "教堂彩色玻璃的光影透亮",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "彩色玻璃",
+                "教堂",
+                "透光",
+                "镶嵌",
+                "光感"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为彩色玻璃风格：画面转为教堂彩色玻璃镶嵌画：画面由大小色块的玻璃片镶嵌而成，深色铅条勾勒轮廓，光线透过玻璃形成明亮通透的彩色辉光，庄严而绚丽。保留原图的主体结构、构图与比例，仅画面表现手法转为彩色玻璃风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在彩色玻璃风格下自然流畅地展现【/ACTION】。整段画面统一呈现彩色玻璃风格，艺术质感一致。\n\noverall_soundscape: 庄严空灵的环境声，教堂光影氛围，神圣通透\n\nnon_diegetic_music: 庄严神圣的管风琴与合唱，空灵圣洁，光透绚丽"
+            },
+            {
+              "id": "st_artnouveau",
+              "name": "新艺术运动",
+              "name_en": "Art Nouveau",
+              "description": "新艺术运动的流畅曲线与装饰",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "新艺术",
+                "曲线",
+                "装饰",
+                "花卉",
+                "优雅"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为新艺术运动风格：画面转为新艺术运动风格：流畅蜿蜒的植物藤蔓曲线、精致优雅的装饰纹样、柔和的自然色彩，线条如藤蔓般生长蔓延，充满装饰艺术的优雅。保留原图的主体结构、构图与比例，仅画面表现手法转为新艺术运动风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在新艺术运动风格下自然流畅地展现【/ACTION】。整段画面统一呈现新艺术运动风格，艺术质感一致。\n\noverall_soundscape: 优雅舒缓的环境声，自然曲线感，精致雅致\n\nnon_diegetic_music: 优雅浪漫的配乐，旋律流畅，新艺术风情"
+            },
+            {
+              "id": "st_cubism",
+              "name": "立体主义",
+              "name_en": "Cubism",
+              "description": "立体主义的多重视角几何解构",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "立体主义",
+                "几何",
+                "解构",
+                "多视角",
+                "现代"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为立体主义风格：画面转为立体主义绘画：形体被分解为几何块面，从多个视角同时呈现，线条分明、色彩克制而协调，画面充满现代艺术的理性与张力。保留原图的主体结构、构图与比例，仅画面表现手法转为立体主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在立体主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现立体主义风格，艺术质感一致。\n\noverall_soundscape: 现代感的环境声，几何节奏，理性冷峻\n\nnon_diegetic_music: 现代简约的配乐，节奏几何化，立体主义气息"
+            },
+            {
+              "id": "st_popart",
+              "name": "波普艺术",
+              "name_en": "Pop Art",
+              "description": "波普的鲜艳平涂与网点",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "波普",
+                "鲜艳",
+                "平涂",
+                "网点",
+                "现代"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为波普风格：画面转为波普艺术：大胆鲜艳的平涂色块、粗重清晰的黑色轮廓、半色调网点肌理，画面明快抢眼、带有强烈的流行与广告意味。保留原图的主体结构、构图与比例，仅画面表现手法转为波普风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在波普风格下自然流畅地展现【/ACTION】。整段画面统一呈现波普风格，艺术质感一致。\n\noverall_soundscape: 明快响亮的环境声，流行色彩感，抢眼热烈\n\nnon_diegetic_music: 明快热烈的流行配乐，节奏强劲，波普气息"
+            }
+          ]
+        },
+        {
+          "id": "anime",
+          "name": "动漫插画",
+          "name_en": "Anime & Illustration",
+          "description": "日漫、吉卜力、国漫等动画插画风格",
+          "templates": [
+            {
+              "id": "st_anime",
+              "name": "日式动漫",
+              "name_en": "Anime",
+              "description": "经典日式动漫的赛璐珞上色与线条",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "动漫",
+                "日式",
+                "赛璐珞",
+                "上色",
+                "动画"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为日式动漫风格：画面转为经典日式动漫：清晰的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区，色彩鲜艳而统一，充满日本动画的经典质感。保留原图的主体结构、构图与比例，仅画面表现手法转为日式动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在日式动漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现日式动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的环境声，动画质感，活泼清新\n\nnon_diegetic_music: 轻快活泼的日系配乐，节奏明快，动漫气息"
+            },
+            {
+              "id": "st_anime90",
+              "name": "90年代动漫",
+              "name_en": "90s Anime",
+              "description": "90年代复古动漫的胶片质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "动漫",
+                "90年代",
+                "复古",
+                "胶片",
+                "怀旧"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为90年代动漫风格：画面转为90年代复古动漫：略带颗粒的胶片质感、柔和偏暖的色彩、传统的赛璐珞上色与手绘线条，充满旧时代动画的怀旧温度。保留原图的主体结构、构图与比例，仅画面表现手法转为90年代动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在90年代动漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现90年代动漫风格，艺术质感一致。\n\noverall_soundscape: 怀旧的环境声，旧动画质感，温暖怀旧\n\nnon_diegetic_music: 怀旧复古的合成器配乐，90年代感，温暖怀念"
+            },
+            {
+              "id": "st_ghibli",
+              "name": "吉卜力风格",
+              "name_en": "Studio Ghibli",
+              "description": "吉卜力式的柔和田园治愈画风",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "吉卜力",
+                "宫崎骏",
+                "治愈",
+                "柔和",
+                "田园"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为吉卜力风格：画面转为吉卜力式动画：柔和温暖的淡雅色彩、细腻丰富的自然笔触、圆润可爱的造型、通透的空气感与治愈的田园气息，充满宫崎骏式的温柔与想象。保留原图的主体结构、构图与比例，仅画面表现手法转为吉卜力风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在吉卜力风格下自然流畅地展现【/ACTION】。整段画面统一呈现吉卜力风格，艺术质感一致。\n\noverall_soundscape: 温暖治愈的环境声，自然气息，柔和温馨\n\nnon_diegetic_music: 温暖治愈的配乐，旋律温柔，田园诗意"
+            },
+            {
+              "id": "st_shinkai",
+              "name": "新海诚风格",
+              "name_en": "Makoto Shinkai",
+              "description": "新海诚式的高光通透唯美画面",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "新海诚",
+                "唯美",
+                "通透",
+                "高光",
+                "光影"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为新海诚风格：画面转为新海诚式动画：极致通透的光影、明亮发光的天空与高光、细腻丰富的色彩层次、精致的细节刻画，画面唯美梦幻，充满空灵的诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为新海诚风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在新海诚风格下自然流畅地展现【/ACTION】。整段画面统一呈现新海诚风格，艺术质感一致。\n\noverall_soundscape: 通透空灵的环境声，光影流动感，唯美细腻\n\nnon_diegetic_music: 空灵唯美的配乐，旋律悠扬，诗意通透"
+            },
+            {
+              "id": "st_manhua",
+              "name": "国漫风格",
+              "name_en": "Chinese Manhua",
+              "description": "现代国漫的精致线稿与国风色彩",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "国漫",
+                "国风",
+                "精致",
+                "线稿",
+                "动画"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为国漫风格：画面转为现代国漫风格：精致流畅的线稿、考究的国风色彩与配饰细节、柔和的光影渲染，融合传统美学与现代动画的精致质感。保留原图的主体结构、构图与比例，仅画面表现手法转为国漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在国漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现国漫风格，艺术质感一致。\n\noverall_soundscape: 精致的环境声，国风韵味，细腻雅致\n\nnon_diegetic_music: 国风悠扬的配乐，融合古韵与现代，精致大气"
+            },
+            {
+              "id": "st_comic",
+              "name": "美式漫画",
+              "name_en": "Western Comic",
+              "description": "美式漫画的粗线描边与网点",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "美漫",
+                "漫画",
+                "描边",
+                "网点",
+                "美式"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为美式漫画风格：画面转为美式漫画：粗重有力的黑色描边、鲜明的高饱和平涂色彩、夸张的造型与动态、半色调网点肌理，充满美式漫画的冲击力与表现力。保留原图的主体结构、构图与比例，仅画面表现手法转为美式漫画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在美式漫画风格下自然流畅地展现【/ACTION】。整段画面统一呈现美式漫画风格，艺术质感一致。\n\noverall_soundscape: 有力明快的环境声，漫画质感，冲击力强\n\nnon_diegetic_music: 动感有力的配乐，节奏强劲，美漫张力"
+            },
+            {
+              "id": "st_childrenbook",
+              "name": "童书插画",
+              "name_en": "Children's Book Illustration",
+              "description": "温暖可爱的童书水彩插画",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "童书",
+                "插画",
+                "可爱",
+                "水彩",
+                "温暖"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为童书插画风格：画面转为温暖可爱的童书插画：柔和的水彩与蜡笔质感、圆润可爱的造型、明快的色彩、细腻的纸张纹理，充满童真与治愈的温暖。保留原图的主体结构、构图与比例，仅画面表现手法转为童书插画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在童书插画风格下自然流畅地展现【/ACTION】。整段画面统一呈现童书插画风格，艺术质感一致。\n\noverall_soundscape: 温柔可爱的环境声，童书质感，温暖治愈\n\nnon_diegetic_music: 轻快可爱的配乐，旋律童真，温暖俏皮"
+            },
+            {
+              "id": "st_conceptart",
+              "name": "概念艺术",
+              "name_en": "Concept Art",
+              "description": "影视概念设定的绘画质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "概念艺术",
+                "设定",
+                "绘画",
+                "大气",
+                "电影感"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为概念艺术风格：画面转为影视概念艺术：大气磅礴的构图、戏剧性的光影、细腻的笔触与纹理、电影感的色彩氛围，充满艺术设定的想象空间与质感。保留原图的主体结构、构图与比例，仅画面表现手法转为概念艺术风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在概念艺术风格下自然流畅地展现【/ACTION】。整段画面统一呈现概念艺术风格，艺术质感一致。\n\noverall_soundscape: 大气磅礴的环境声，概念设定氛围，恢弘深远\n\nnon_diegetic_music: 宏大电影感的配乐，气势恢弘，概念艺术气质"
+            }
+          ]
+        },
+        {
+          "id": "digital3d",
+          "name": "数字与3D",
+          "name_en": "Digital & 3D",
+          "description": "赛博朋克、像素、3D渲染等数字风格",
+          "templates": [
+            {
+              "id": "st_pixar",
+              "name": "皮克斯3D",
+              "name_en": "Pixar 3D Render",
+              "description": "皮克斯风格的3D渲染质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "皮克斯",
+                "3D",
+                "渲染",
+                "动画",
+                "可爱"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为皮克斯3D风格：画面转为皮克斯风格3D渲染：圆润饱满的立体造型、柔和细腻的材质、温暖明亮的全局光照、丰富的细节与生动的表情，充满顶级动画电影的精致。保留原图的主体结构、构图与比例，仅画面表现手法转为皮克斯3D风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在皮克斯3D风格下自然流畅地展现【/ACTION】。整段画面统一呈现皮克斯3D风格，艺术质感一致。\n\noverall_soundscape: 温暖细腻的环境声，3D渲染质感，精致生动\n\nnon_diegetic_music: 温暖动人的动画配乐，旋律亲切，皮克斯气质"
+            },
+            {
+              "id": "st_lowpoly",
+              "name": "低多边形",
+              "name_en": "Low Poly",
+              "description": "低多边形几何面的现代简约",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "低多边形",
+                "几何",
+                "简约",
+                "3D",
+                "现代"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为低多边形风格：画面转为低多边形3D：形体由清晰的几何多边形面构成，平面着色、棱角分明，色彩明快简洁，充满现代极简与游戏艺术的趣味。保留原图的主体结构、构图与比例，仅画面表现手法转为低多边形风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在低多边形风格下自然流畅地展现【/ACTION】。整段画面统一呈现低多边形风格，艺术质感一致。\n\noverall_soundscape: 轻快简约的环境声，几何质感，现代利落\n\nnon_diegetic_music: 轻快简约的电子配乐，节奏几何，现代极简"
+            },
+            {
+              "id": "st_pixel",
+              "name": "像素艺术",
+              "name_en": "Pixel Art",
+              "description": "复古16位像素游戏风格",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "像素",
+                "16位",
+                "复古游戏",
+                "马赛克",
+                "怀旧"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为像素风格：画面转为16位像素艺术：画面由可见的像素方块构成，色彩鲜明而克制、边缘整齐、充满复古电子游戏的怀旧质感。保留原图的主体结构、构图与比例，仅画面表现手法转为像素风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在像素风格下自然流畅地展现【/ACTION】。整段画面统一呈现像素风格，艺术质感一致。\n\noverall_soundscape: 复古的环境声，电子游戏质感，怀旧有趣\n\nnon_diegetic_music: 8bit复古电子配乐，芯片音色，游戏怀旧"
+            },
+            {
+              "id": "st_cyberpunk",
+              "name": "赛博朋克",
+              "name_en": "Cyberpunk",
+              "description": "赛博朋克的霓虹与未来科技",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "赛博朋克",
+                "霓虹",
+                "未来",
+                "科技",
+                "夜"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为赛博朋克风格：画面转为赛博朋克风格：浓烈的霓虹光效（品红、青色、电光蓝）、潮湿反光的表面、高科技与颓废并存的未来都市氛围、数字故障般的细节，充满未来科幻张力。保留原图的主体结构、构图与比例，仅画面表现手法转为赛博朋克风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在赛博朋克风格下自然流畅地展现【/ACTION】。整段画面统一呈现赛博朋克风格，艺术质感一致。\n\noverall_soundscape: 电子的环境声，霓虹电流与科技噪音，未来感强\n\nnon_diegetic_music: 合成器为主的电子配乐，节奏强烈，赛博未来感"
+            },
+            {
+              "id": "st_vaporwave",
+              "name": "蒸汽波",
+              "name_en": "Vaporwave",
+              "description": "蒸汽波的迷幻复古与故障美学",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "蒸汽波",
+                "迷幻",
+                "复古",
+                "故障",
+                "霓虹"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为蒸汽波风格：画面转为蒸汽波风格：柔和的粉紫青色霓虹渐变、复古的网格与雕塑元素、轻微的扫描线与故障美学、梦幻迷离的复古未来感。保留原图的主体结构、构图与比例，仅画面表现手法转为蒸汽波风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在蒸汽波风格下自然流畅地展现【/ACTION】。整段画面统一呈现蒸汽波风格，艺术质感一致。\n\noverall_soundscape: 迷幻的环境声，复古电子质感，梦幻缥缈\n\nnon_diegetic_music: 慵懒迷幻的复古电子乐，缓拍，蒸汽波氛围"
+            },
+            {
+              "id": "st_flat",
+              "name": "扁平设计",
+              "name_en": "Flat Design",
+              "description": "现代扁平化的简洁色块",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "扁平",
+                "极简",
+                "色块",
+                "现代",
+                "设计"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为扁平设计风格：画面转为现代扁平设计：去除立体与纹理，以大块平涂色块与简洁几何造型呈现，色彩明快协调、构图精简，充满现代平面设计的秩序与简洁。保留原图的主体结构、构图与比例，仅画面表现手法转为扁平设计风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在扁平设计风格下自然流畅地展现【/ACTION】。整段画面统一呈现扁平设计风格，艺术质感一致。\n\noverall_soundscape: 简洁利落的环境声，平面质感，现代秩序\n\nnon_diegetic_music: 简洁现代的电子配乐，节奏干净，扁平设计感"
+            },
+            {
+              "id": "st_clay",
+              "name": "粘土定格",
+              "name_en": "Claymation",
+              "description": "粘土动画的柔软手工质感",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "粘土",
+                "定格",
+                "手工",
+                "柔软",
+                "可爱"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为粘土定格风格：画面转为粘土定格动画：柔软可塑的粘土材质、可见的手工捏制痕迹与指纹、圆润的造型、质朴明快的色彩，充满手工动画的温暖与童趣。保留原图的主体结构、构图与比例，仅画面表现手法转为粘土定格风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在粘土定格风格下自然流畅地展现【/ACTION】。整段画面统一呈现粘土定格风格，艺术质感一致。\n\noverall_soundscape: 温暖的环境声，粘土质感，手工童趣\n\nnon_diegetic_music: 轻快俏皮的配乐，节奏活泼，粘土动画趣味"
+            },
+            {
+              "id": "st_origami",
+              "name": "折纸艺术",
+              "name_en": "Paper Origami",
+              "description": "折纸的棱面与纸张光影",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "折纸",
+                "纸张",
+                "棱面",
+                "手工",
+                "艺术"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为折纸风格：画面转为折纸艺术：形体由纸的折叠棱面构成，纸的纹理与折痕清晰可见，光线在棱面上形成细腻的明暗，色彩以纸色为主，充满手工折纸的精致与趣味。保留原图的主体结构、构图与比例，仅画面表现手法转为折纸风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在折纸风格下自然流畅地展现【/ACTION】。整段画面统一呈现折纸风格，艺术质感一致。\n\noverall_soundscape: 轻巧的环境声，纸张折叠质感，安静精致\n\nnon_diegetic_music: 轻巧灵动的配乐，旋律精致，折纸趣味"
+            }
+          ]
+        },
+        {
+          "id": "style_photo_craft",
+          "name": "摄影工艺",
+          "name_en": "Photo Craft",
+          "description": "双重曝光、长曝光等摄影工艺风格",
+          "templates": [
+            {
+              "id": "st_doubleexp",
+              "name": "双重曝光",
+              "name_en": "Double Exposure",
+              "description": "双重曝光的梦幻叠影",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "双重曝光",
+                "叠影",
+                "梦幻",
+                "超现实",
+                "摄影"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为双重曝光风格：画面转为双重曝光摄影：主体与另一景物以半透明方式叠合，层次交融、影影绰绰，色彩柔和渗透，充满梦幻与超现实的摄影艺术感。保留原图的主体结构、构图与比例，仅画面表现手法转为双重曝光风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在双重曝光风格下自然流畅地展现【/ACTION】。整段画面统一呈现双重曝光风格，艺术质感一致。\n\noverall_soundscape: 虚幻的环境声，叠影氛围，缥缈梦幻\n\nnon_diegetic_music: 梦幻空灵的配乐，缥缈悠远，超现实感"
+            },
+            {
+              "id": "st_longexp",
+              "name": "长曝光",
+              "name_en": "Long Exposure",
+              "description": "长曝光的流动光轨",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "长曝光",
+                "光轨",
+                "流动",
+                "时间",
+                "诗意"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为长曝光风格：画面转为长曝光摄影：运动元素化为柔滑的光轨与丝滑拖影，静止主体保持清晰，色彩清淡柔和，充满时间流动的诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为长曝光风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在长曝光风格下自然流畅地展现【/ACTION】。整段画面统一呈现长曝光风格，艺术质感一致。\n\noverall_soundscape: 悠长的环境声，时间流动感，静谧深远\n\nnon_diegetic_music: 悠远绵长的氛围音乐，空灵诗意，时间感浓"
+            },
+            {
+              "id": "st_tiltshift",
+              "name": "移轴微缩",
+              "name_en": "Tilt-Shift",
+              "description": "移轴镜头的微缩世界",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "移轴",
+                "微缩",
+                "玩具",
+                "景深",
+                "趣味"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为移轴微缩风格：画面转为移轴微缩摄影：景深极浅、上下两端柔和虚化，整体呈微缩模型感，色彩鲜明通透，画面精致有趣，如精致的玩具世界。保留原图的主体结构、构图与比例，仅画面表现手法转为移轴微缩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在移轴微缩风格下自然流畅地展现【/ACTION】。整段画面统一呈现移轴微缩风格，艺术质感一致。\n\noverall_soundscape: 轻微趣味的环境声，微缩细节感，俏皮生动\n\nnon_diegetic_music: 轻快俏皮的配乐，节奏活泼，趣味盎然"
+            },
+            {
+              "id": "st_polaroid",
+              "name": "拍立得",
+              "name_en": "Polaroid",
+              "description": "拍立得的怀旧即时成像",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "拍立得",
+                "即时成像",
+                "怀旧",
+                "复古",
+                "随性"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为拍立得风格：画面转为拍立得即时成像：色彩微褪、对比柔和、高光泛白、四周带柔和框影，画面怀旧随性，充满即时成像的生活质感。保留原图的主体结构、构图与比例，仅画面表现手法转为拍立得风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在拍立得风格下自然流畅地展现【/ACTION】。整段画面统一呈现拍立得风格，艺术质感一致。\n\noverall_soundscape: 怀旧的环境声，即时成像氛围，随性温暖\n\nnon_diegetic_music: 轻快怀旧的配乐，随性惬意，复古生活感"
+            },
+            {
+              "id": "st_infrared",
+              "name": "红外摄影",
+              "name_en": "Infrared",
+              "description": "红外摄影的银白发光",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "红外",
+                "发光",
+                "银白",
+                "超现实",
+                "梦幻"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为红外风格：画面转为红外摄影：植被与高光呈明亮银白色发光，天空与阴影深灰近黑，画面梦幻奇异、脱离现实，充满超自然的静谧。保留原图的主体结构、构图与比例，仅画面表现手法转为红外风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在红外风格下自然流畅地展现【/ACTION】。整段画面统一呈现红外风格，艺术质感一致。\n\noverall_soundscape: 空灵的环境声，静谧奇异，脱离现实\n\nnon_diegetic_music: 空灵神秘的氛围音乐，梦幻悠远，超现实感"
+            },
+            {
+              "id": "st_bw",
+              "name": "黑白摄影",
+              "name_en": "Black & White Photography",
+              "description": "经典黑白摄影的纯粹光影",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "黑白",
+                "摄影",
+                "光影",
+                "经典",
+                "纯粹"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为黑白摄影风格：画面转为经典黑白摄影：去除全部色彩，以黑白灰阶塑造光影与质感，对比与层次细腻丰富，画面纯粹而有力量，充满摄影艺术的经典质感。保留原图的主体结构、构图与比例，仅画面表现手法转为黑白摄影风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在黑白摄影风格下自然流畅地展现【/ACTION】。整段画面统一呈现黑白摄影风格，艺术质感一致。\n\noverall_soundscape: 纯粹的环境声，黑白光影氛围，安静有力\n\nnon_diegetic_music: 简洁克制的配乐，旋律沉静，黑白摄影气质"
+            },
+            {
+              "id": "st_surreal",
+              "name": "超现实主义",
+              "name_en": "Surrealism",
+              "description": "超现实的梦境与悖论",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "超现实",
+                "梦境",
+                "悖论",
+                "奇幻",
+                "想象"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为超现实主义风格：画面转为超现实主义艺术：梦境般的奇异组合、违背常理的透视与比例、细腻真实的质感与荒诞的意象并存，充满想象力与哲思。保留原图的主体结构、构图与比例，仅画面表现手法转为超现实主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在超现实主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现超现实主义风格，艺术质感一致。\n\noverall_soundscape: 奇幻的环境声，梦境氛围，荒诞迷离\n\nnon_diegetic_music: 奇幻迷离的配乐，旋律诡谲，超现实氛围"
+            },
+            {
+              "id": "st_minimal",
+              "name": "极简主义",
+              "name_en": "Minimalism",
+              "description": "极简主义的大面积留白",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "极简",
+                "留白",
+                "简约",
+                "克制",
+                "现代"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为极简主义风格：画面转为极简主义艺术：极度简化的造型、大面积留白与负空间、克制的色彩与线条，画面安静纯粹，充满现代极简的秩序与禅意。保留原图的主体结构、构图与比例，仅画面表现手法转为极简主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在极简主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现极简主义风格，艺术质感一致。\n\noverall_soundscape: 安静纯净的环境声，留白感强，静谧克制\n\nnon_diegetic_music: 极简舒缓的配乐，音符稀疏，留白禅意"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

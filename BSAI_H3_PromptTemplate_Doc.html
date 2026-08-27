@@ -255,6 +255,16 @@ b.en { color: var(--blue); }
 <td>基础运动类 / 跟随与环绕类 / 变焦与焦距类 / 角度与视角类 / 大范围与特殊运镜类</td>
 <td>32</td>
 </tr>
+<tr>
+<td>🎨 电影调色<br><span style="color:#888;font-size:12px">Cinematic Color Grading</span></td>
+<td>经典胶片模拟 / 大片商业风格 / 氛围色调 / 黑白摄影 / 摄影工艺</td>
+<td>30</td>
+</tr>
+<tr>
+<td>🖌️ 风格转绘<br><span style="color:#888;font-size:12px">Style Transfer</span></td>
+<td>手绘绘画 / 传统艺术 / 动漫插画 / 数字与3D / 摄影工艺</td>
+<td>40</td>
+</tr>
 </table>
 
 <!-- ===================== Expression Templates ===================== -->
@@ -358,6 +368,11 @@ b.en { color: var(--blue); }
 
 <!-- ===================== Latest Upgrade ===================== -->
 <h2>9. Latest Upgrade / 最新升级说明</h2>
+<div class="card">
+<div class="card-title">🎨🖌️ New Categories: Color Grading + Style Transfer (v1.11.0) / 新增电影调色与风格转绘</div>
+<p><b>EN:</b> Two new categories added — <b>Cinematic Color Grading</b> (30 templates / 5 subcategories: Film Stock Emulation, Blockbuster Looks, Mood Tones, Monochrome, Photo Craft) and <b>Style Transfer</b> (40 templates / 5 subcategories: Painting &amp; Drawing, Traditional Art, Anime &amp; Illustration, Digital &amp; 3D, Photo Craft). All strictly follow the H3 SKILL three-field structure, are fully generic (only the color grade or art style changes; the input image's subject is preserved), and have bilingual CN/EN names. Total templates: 176 → <b>246</b>; categories: 9 → <b>11</b>.</p>
+<p><b>中文:</b> 新增两大板块——<b>电影调色</b>（30 个模板 / 5 子类：经典胶片模拟、大片商业风格、氛围色调、黑白摄影、摄影工艺）与<b>风格转绘</b>（40 个模板 / 5 子类：手绘绘画、传统艺术、动漫插画、数字与3D、摄影工艺）。全部严格遵循 H3 SKILL 三字段结构、完全通用化（只改变色调或画风，保留输入图像主体特征）、名称中英双语对照。总模板数：176 → <b>246</b>；总分类：9 → <b>11</b>。</p>
+</div>
 <div class="card">
 <div class="card-title">⚡ Direct Mode (v1.10.0) / 直通模式</div>
 <p><b>EN:</b> New <b>Direct Mode / 直通模式</b> in the 🎤 voice dialog: tick "⚡ 直通模式 / Direct Mode", click "⚡ 生成 H3 提示词 / Generate H3" — the spoken/typed text is expanded by a <b>local llama.cpp GGUF LLM</b> into a full H3 three-field prompt per the official H3 SKILL (bypasses templates). Click "✅ 确定并输出 / Confirm &amp; Output" to make <code>prompt_output</code> emit it directly to downstream nodes. Auto-detects <code>gemma-4-26B-A4B Q4_K_M</code>; overridable via <code>BSAI_H3_LLM_MODEL</code> / <code>BSAI_H3_LLM_GPU_LAYERS</code> / <code>BSAI_H3_LLM_API_KEY</code>.</p>

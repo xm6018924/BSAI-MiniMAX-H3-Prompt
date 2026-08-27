@@ -367,7 +367,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 **EN:** The **BSAI H3 Prompt Template** node provides categorized H3 prompt templates. One click outputs a complete three-field structured prompt without needing LLM optimization.
 
-#### 三级分类体系 / Three-Level Category System (176 templates / 9 categories)
+#### 三级分类体系 / Three-Level Category System (246 templates / 11 categories)
 
 | 一级分类 / Category | 二级分类 / Subcategories | 模板示例 / Examples |
 |-|-|-|
@@ -380,12 +380,14 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | **人物表情模板 (Expression)** | 基础表情类 / 微表情类 / 情绪过渡类 / 社交面具类 / 崩溃边缘类 | 微笑、忍住不哭、笑转哭、被揭穿后微笑、沉默太久 |
 | **武打打斗模板 (Combat)** | 拳脚对打类 / 冷兵器对战类 / 快慢镜头类 / 打斗运镜类 / 多人群战类 / 特殊招式类 / 触发词战斗类 / 多图成战类 | 散打对咏春、双刀对长枪、子弹时间闪避、双雄决战 |
 | **电影运镜模板 (Cinematic)** | 基础运动类 / 跟随与环绕类 / 变焦与焦距类 / 角度与视角类 / 大范围与特殊运镜类 | 推镜、甩镜、360度环绕、推拉变焦、子弹时间、无人机穿越 |
+| **电影调色 (Color Grading)** | 经典胶片模拟 / 大片商业风格 / 氛围色调 / 黑白摄影 / 摄影工艺 | 柯达2383、青橙好莱坞大片、黄金时刻、黑色电影、拍立得 |
+| **风格转绘 (Style Transfer)** | 手绘绘画 / 传统艺术 / 动漫插画 / 数字与3D / 摄影工艺 | 水墨画、吉卜力、赛博朋克、浮世绘、皮克斯3D |
 
 #### 使用方法 / Usage
 
 1. 在 ComfyUI 中添加 `BSAI H3 Prompt Template` 节点
 2. 节点上方显示可视化模板浏览器：
-   - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打 / 电影运镜）
+   - **一级分类**下拉框：选择生成模式（图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 / 生长 / 延时 / 表情 / 武打 / 电影运镜 / 电影调色 / 风格转绘）
    - **二级分类**下拉框：选择模板子类（线稿类 / 角色参考类 / 产品展示类 等）
    - **模板列表**：点击任意模板即可加入已选叠加栈
 3. **多选叠加（Multi-Stack）**：默认<b>单选</b>（点击模板即选中并立即预览）。开启列表上方的"多选叠加 / Multi-Stack"开关后可叠加选择多个模板（最多 5 个），如先选"贴身缠斗 | Close Grappling"再选"环绕镜头 | Orbit (Arc Shot)"，画面效果更丰富；第 1 个为基础模板（场景/动作），其余为叠加模板（如运镜）。已选条支持单个移除与一键清除，关闭开关后仅保留基础模板。
@@ -398,7 +400,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 **EN:**
 1. Add the `BSAI H3 Prompt Template` node in ComfyUI.
 2. A visual template browser appears above the node:
-   - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat / Cinematic)
+   - **Category** dropdown: choose a generation mode (I2VA / T2VA / FL2VA / Ref2VA / Growth / Time-Lapse / Expression / Combat / Cinematic / Color Grading / Style Transfer)
    - **Subcategory** dropdown: choose a template subclass
    - **Template list**: click any template to add it to the selection stack
 3. **Multi-select stacking**: stack up to 5 templates, e.g. pick "Close Grappling" first, then "Orbit (Arc Shot)" for a richer result. The 1st template is the base (scene/action); the rest are overlays (e.g. camera moves). The chips bar supports per-item removal and one-click clear.
@@ -408,7 +410,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 7. The optional `external_prompt` input port accepts text from other nodes; when provided it **OVERRIDES the template's action** (e.g. "抬腿" replaces the walking motion) instead of merely appending.
 8. **🎤 语音输入 / Voice input**: click the **🎤 语音 / Voice** button next to the search box, allow the mic, speak, then "Stop & Transcribe". The recording is transcribed locally (offline Vosk) and can be filled into `external_prompt` (action override) or `user_customization`. Install: `pip install vosk` + `python scripts/download_vosk_model.py`.
 
-> **模板通用化 / Generic templates:** 全部 144 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 144 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
+> **模板通用化 / Generic templates:** 全部 246 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 246 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
 #### 预览动画 / Previews
 
@@ -505,6 +507,24 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.11.0 — 新增电影调色 + 风格转绘模板 / Add Cinematic Color Grading + Style Transfer templates
+
+**中文说明：**
+
+- **新增「电影调色」板块**（30 个模板 / 5 子类）：经典胶片模拟（Kodak 2383/2393、富士 3513、Vision3、LOG、35mm 颗粒）、大片商业风格（青橙好莱坞、夏日大片、商业明亮、漂白跳过、低饱和剧情、柔和低饱和）、氛围色调（黄金时刻、冷蓝夜景、暗黑惊悚、梦幻柔和、深褐怀旧、恐怖绿）、黑白摄影（高反差黑白、柔和黑白、黑色电影、红外、银盐、黑白胶片）、摄影工艺（拍立得、长曝光、双重曝光、移轴、达盖尔银版、复古摄影）。
+- **新增「风格转绘」板块**（40 个模板 / 5 子类）：手绘绘画（水彩、古典油画、印象派、水墨、素描、点彩、水粉、厚涂）、传统艺术（浮世绘、工笔、木刻版画、剪纸、彩色玻璃、新艺术、立体主义、波普）、动漫插画（日漫、90年代动漫、吉卜力、新海诚、国漫、美漫、童书插画、概念艺术）、数字与3D（皮克斯3D、低多边形、像素、赛博朋克、蒸汽波、扁平、粘土定格、折纸）、摄影工艺（双重曝光、长曝光、移轴、拍立得、红外、黑白、超现实、极简）。
+- **通用化 + H3 SKILL**：全部模板严格遵守 MiniMax H3 三字段结构（`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`），含分镜时间轴与【ACTION】覆盖标记；只改变色调或画风，绝不描述具体人物/场景细节，不改变输入图像主体特征——适用于图生视频。
+- **双语命名**：所有新模板名称中英双语对照。
+- 总模板数：176 → 246；总分类：9 → 11。
+
+**English:**
+
+- **New "Cinematic Color Grading" category** (30 templates / 5 subcategories): Film Stock Emulation (Kodak 2383/2393, Fuji 3513, Vision3, LOG, 35mm grain), Blockbuster Looks (Teal & Orange, Summer Blockbuster, Bright Commercial, Bleach Bypass, Moody Desaturated, Soft Muted), Mood Tones (Golden Hour, Cool Blue Night, Dark Thriller, Dreamy Pastel, Sepia, Horror Green), Monochrome (High Contrast B&W, Soft Gray, Film Noir, Infrared, Silver Gelatin, B&W Film), Photo Craft (Polaroid, Long Exposure, Double Exposure, Tilt-Shift, Daguerreotype, Vintage).
+- **New "Style Transfer" category** (40 templates / 5 subcategories): Painting & Drawing (Watercolor, Oil, Impressionism, Ink Wash, Sketch, Pointillism, Gouache, Impasto), Traditional Art (Ukiyo-e, Gongbi, Woodcut, Paper Cut, Stained Glass, Art Nouveau, Cubism, Pop Art), Anime & Illustration (Anime, 90s Anime, Ghibli, Shinkai, Manhua, Comic, Children's Book, Concept Art), Digital & 3D (Pixar 3D, Low Poly, Pixel, Cyberpunk, Vaporwave, Flat, Claymation, Origami), Photo Craft (Double Exposure, Long Exposure, Tilt-Shift, Polaroid, Infrared, B&W, Surrealism, Minimalism).
+- **Generic + H3 SKILL**: all templates strictly follow the MiniMax H3 three-field structure, with time-coded shots and 【ACTION】 override markers; only the color grade or art style changes — never describe specific character/scene details, never alter the input image's subject features (I2VA-ready).
+- **Bilingual names** for all new templates.
+- Total templates: 176 → 246; categories: 9 → 11.
 
 ### v1.10.0 — 直通模式（语音/文字 → 完整 H3 提示词）/ Direct Mode (Voice/Text → Full H3 Prompt)
 
