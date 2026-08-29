@@ -23,7 +23,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-wrap {
     display: flex; flex-direction: column; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    height: 100%; min-height: 0; box-sizing: border-box; overflow: hidden;
+    height: 100%; min-height: 0; box-sizing: border-box; overflow-y: auto;
     width: 100%; font-family: sans-serif;
 }
 .bsai-tpl-top {
@@ -198,7 +198,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-cust { margin-top: 6px; flex: 1 1 140px; min-height: 100px; display: flex; flex-direction: column; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
 .bsai-tpl-cust-ta {
-    flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
+    flex: 1 1 auto; width: 100%; min-height: 200px; max-height: none; resize: none;
     background: #222; color: #ddd; border: 1px solid #444;
     border-radius: 4px; padding: 4px 6px; font-size: 11px;
     font-family: monospace; box-sizing: border-box; outline: none;
@@ -248,12 +248,12 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    flex: 1 1 140px; min-height: 140px; display: flex; flex-direction: column;
+    flex: 1 1 250px; min-height: 250px; flex-shrink: 0; display: flex; flex-direction: column;
     margin-top: 6px; width: 100%; box-sizing: border-box;
-    background: rgba(30,32,40,0.5); border-radius: 4px; padding: 4px;
+    background: rgba(30,32,40,0.8); border-radius: 4px; padding: 4px;
 }
 .bsai-tpl-out-ta {
-    flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
+    flex: 1 1 auto; width: 100%; min-height: 200px; max-height: none; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
     overflow-y: auto; margin: 0;
@@ -638,7 +638,7 @@ function buildTemplateUI(node) {
             container.style.setProperty('box-sizing', 'border-box', 'important');
             // Walk up 5 levels setting pixel height on all ancestors
             let el = container.parentElement;
-            for (let i = 0; i < 5 && el; i++) {
+            for (let i = 0; i < 8 && el; i++) {
                 el.style.setProperty('height', avail + 'px', 'important');
                 el.style.setProperty('overflow', 'hidden', 'important');
                 el.style.setProperty('box-sizing', 'border-box', 'important');
