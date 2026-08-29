@@ -76,7 +76,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 320px !important;
+    border: 1px solid #333; border-radius: 4px; max-height: 280px !important;
     overflow-y: auto !important; background: #111; min-height: 60px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
@@ -622,23 +622,27 @@ function buildTemplateUI(node) {
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
+            if (nh === _lastNodeH) return;
             _lastNodeH = nh;
             const avail = Math.max(400, nh - 38);
-            // Container: explicit pixel height with !important
+            // Container gets explicit pixel height - this is the background panel.
             container.style.setProperty('height', avail + 'px', 'important');
             container.style.setProperty('display', 'flex', 'important');
             container.style.setProperty('flex-direction', 'column', 'important');
             container.style.setProperty('overflow', 'hidden', 'important');
-            // Set PIXEL height on ALL ancestors (not 100%) to突破 computeSize constraint.
-            // 100% fails when parent has no explicit height; pixel height always works.
-            let el = container.parentElement;
-            let safety = 0;
-            while (el && safety < 20) {
-                el.style.setProperty('height', avail + 'px', 'important');
-                el.style.setProperty('overflow', 'hidden', 'important');
-                el.style.setProperty('box-sizing', 'border-box', 'important');
-                el = el.parentElement;
-                safety++;
+            container.style.setProperty('box-sizing', 'border-box', 'important');
+            // Direct parent (ComfyUI widget wrapper) gets pixel height too.
+            const par = container.parentElement;
+            if (par) {
+                par.style.setProperty('height', avail + 'px', 'important');
+                par.style.setProperty('overflow', 'hidden', 'important');
+                par.style.setProperty('box-sizing', 'border-box', 'important');
+                // Grandparent: overflow visible so it doesnt clip us, but no height set
+                // (setting height on higher levels disrupts ComfyUI canvas layout)
+                const gp = par.parentElement;
+                if (gp) {
+                    gp.style.setProperty('overflow', 'visible', 'important');
+                }
             }
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
@@ -649,6 +653,11 @@ function buildTemplateUI(node) {
             requestAnimationFrame(_pollSize);
         }
         _pollSize();
+        // Also set height after a short delay to ensure ComfyUI has finished rendering
+        // (ComfyUI may reset widget styles during initial render)
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 200);
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 500);
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 1000);
 
         // Initial fit: set a usable default height
         setTimeout(function() {
