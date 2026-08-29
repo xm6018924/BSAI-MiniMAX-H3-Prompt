@@ -5332,6 +5332,58 @@
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为极简主义风格：画面转为极简主义艺术：极度简化的造型、大面积留白与负空间、克制的色彩与线条，画面安静纯粹，充满现代极简的秩序与禅意。保留原图的主体结构、构图与比例，仅画面表现手法转为极简主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在极简主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现极简主义风格，艺术质感一致。\n\noverall_soundscape: 安静纯净的环境声，留白感强，静谧克制\n\nnon_diegetic_music: 极简舒缓的配乐，音符稀疏，留白禅意"
             }
           ]
+        },
+        {
+          "name": "真人动漫互转",
+          "name_en": "Anime-Real Conversion",
+          "description": "动漫与真人之间的风格互转",
+          "templates": [
+            {
+              "id": "st_anime_to_real",
+              "name": "动漫转真人",
+              "name_en": "Anime to Hyperrealistic",
+              "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "动漫转真人",
+                "超写实",
+                "真人化",
+                "写实",
+                "照片级",
+                "皮肤纹理",
+                "hyperrealistic",
+                "anime to real"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition, pose, facial expression, eye direction, hairstyle, hair color, outfit, accessories, props and background elements of the reference image — only the visual style is converted from anime/illustration to hyperrealistic live-action photography.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入的动漫/插画图像平滑转化为超写实真人照片：动漫风格的大眼睛、简化鼻子、平面上色被转换为自然人类面部比例——真实大小的眼睛、立体的鼻子与嘴唇、自然的牙齿形态、真实的耳廓结构。皮肤呈现极致真实的纹理：可见毛孔、细微瑕疵、皮肤下的血管纹理、自然的油脂光泽、真实的肤色过渡。毛发呈现每一根发丝的真实质感与自然光泽。服装面料呈现真实的织纹、褶皱与材质反光。整体为专业电影级摄影质感：85mm f/1.4 镜头、浅景深、自然柔和的电影级光照、真实的阴影与高光、自然色彩分级、无滤镜感。8K UHD 原始照片质量，RAW 格式直出，无后期修图痕迹。保留原图的主体结构、构图与比例，仅画面表现手法转为超写实真人摄影。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在超写实真人摄影风格下自然流畅地展现，皮肤随动作产生自然的肌肉形变与光影变化，毛发随动作自然飘动【/ACTION】。整段画面统一呈现超写实真人摄影风格，真实质感一致。\n\noverall_soundscape: 真实环境声，电影级现场录音质感，自然的环境氛围\n\nnon_diegetic_music: 沉稳大气的电影配乐，渐强的弦乐，真实感与史诗感"
+            },
+            {
+              "id": "st_real_to_anime",
+              "name": "真人转动漫",
+              "name_en": "Photo to Anime",
+              "description": "将真人照片转换为高质量通用动漫风格，保留人物面部特征与身份，经典赛璐珞上色与清晰墨线",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "真人转动漫",
+                "动漫化",
+                "二次元",
+                "赛璐珞",
+                "动漫风格",
+                "photo to anime",
+                "anime style"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, facial features, face shape, eye shape, jawline, skin tone, bone structure, hairstyle, hair color, age impression, overall气质, composition, pose and outfit of the reference photo — only the visual art style is converted from realistic photography to high-quality anime illustration.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入的真人照片平滑转化为高质量动漫风格：真人的面部特征被保留并动漫化——保持脸型、五官比例、眼睛形状、鼻梁轮廓、嘴唇厚度、下颌线条等身份特征，同时转换为动漫风格的表现：大而明亮的动漫眼睛、清晰的高光与瞳孔细节、干净流畅的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区、鲜艳而统一的色彩。皮肤呈现动漫风格的光滑质感与柔和渐变，毛发呈现动漫风格的色块与高光线条。服装呈现动漫风格的简化色块与清晰褶皱线。整体为高质量日式动漫插画质感：干净的线条、明快的色彩、统一的色调、充满日本动画的经典美感。保留原图的主体结构、构图与比例，仅画面表现手法转为动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在高质量动漫风格下自然流畅地展现，头发与衣物随动作产生动漫风格的动态线条与色块变化【/ACTION】。整段画面统一呈现高质量动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的动画环境声，清新的氛围\n\nnon_diegetic_music: 轻快活泼的日系动漫配乐，节奏明快，充满青春气息"
+            }
+          ]
         }
       ]
     }
