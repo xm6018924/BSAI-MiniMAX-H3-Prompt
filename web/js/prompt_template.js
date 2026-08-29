@@ -21,9 +21,9 @@ if (!document.getElementById(STYLE_ID)) {
     st.id = STYLE_ID;
     st.textContent = `
 .bsai-tpl-wrap {
-    display: flex; flex-direction: column; gap: 6px;
+    display: block; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    height: 100%; min-height: 0; box-sizing: border-box; overflow-y: auto;
+    min-height: 100%; box-sizing: border-box; overflow-y: auto;
     width: 100%; font-family: sans-serif;
 }
 .bsai-tpl-top {
@@ -78,9 +78,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 160px !important;
+    border: 1px solid #333; border-radius: 4px; max-height: 150px !important;
     overflow-y: auto !important; background: #111; min-height: 60px;
-    flex-shrink: 0;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -248,12 +247,11 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    flex: 1 1 250px; min-height: 250px; flex-shrink: 0; display: flex; flex-direction: column;
-    margin-top: 6px; width: 100%; box-sizing: border-box;
+    margin-top: 6px; width: 100%; box-sizing: border-box; display: block;
     background: rgba(30,32,40,0.8); border-radius: 4px; padding: 4px;
 }
 .bsai-tpl-out-ta {
-    flex: 1 1 auto; width: 100%; min-height: 200px; max-height: none; resize: none;
+    display: block; width: 100%; height: 400px; min-height: 300px; max-height: none; resize: vertical;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
     overflow-y: auto; margin: 0;
@@ -609,11 +607,10 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Return node height (minus header) so widget container fills the node.
-                // This is the KEY fix: ComfyUI uses computeSize return value to set
-                // the widget container height, and fixed 300px was constraining us.
-                const h = (node && node.size && Array.isArray(node.size)) ? Math.max(400, node.size[1] - 38) : 500;
-                return [w, h];
+                // Fixed large height ensures ALL controls are visible without scrolling.
+                // ComfyUI uses this value for widget container height; dynamic values
+                // are only read at creation time, so fixed 1200px is more reliable.
+                return [w, 1200];
             };
         }
 
