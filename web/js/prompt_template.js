@@ -78,7 +78,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 200px !important;
+    border: 1px solid #333; border-radius: 4px; max-height: 160px !important;
     overflow-y: auto !important; background: #111; min-height: 60px;
     flex-shrink: 0;
 }
@@ -248,8 +248,9 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    flex: 1 1 140px; min-height: 120px; display: flex; flex-direction: column;
+    flex: 1 1 140px; min-height: 140px; display: flex; flex-direction: column;
     margin-top: 6px; width: 100%; box-sizing: border-box;
+    background: rgba(30,32,40,0.5); border-radius: 4px; padding: 4px;
 }
 .bsai-tpl-out-ta {
     flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
@@ -662,6 +663,28 @@ function buildTemplateUI(node) {
         setTimeout(_pollSize, 500);
         setTimeout(_pollSize, 1000);
         setTimeout(_pollSize, 2000);
+
+        // MutationObserver: if ComfyUI resets widget styles, immediately restore.
+        // This is the most reliable way to fight ComfyUI re-render style resets.
+        try {
+            const _bsaiObserver = new MutationObserver(function(mutations) {
+                for (let i = 0; i < mutations.length; i++) {
+                    const m = mutations[i];
+                    if (m.type === 'attributes' && (m.attributeName === 'style' || m.attributeName === 'class')) {
+                        // Re-apply height immediately (debounced via rAF to avoid loop)
+                        requestAnimationFrame(function() {
+                            try { syncWidgetHeight(); } catch(e) {}
+                        });
+                        break;
+                    }
+                }
+            });
+            // Observe container and its parent for style/class changes
+            if (container.parentElement) {
+                _bsaiObserver.observe(container.parentElement, { attributes: true, attributeFilter: ['style', 'class'], subtree: false });
+            }
+            _bsaiObserver.observe(container, { attributes: true, attributeFilter: ['style', 'class'], subtree: false });
+        } catch(e) {}
         // Also set height after a short delay to ensure ComfyUI has finished rendering
         // (ComfyUI may reset widget styles during initial render)
         setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 200);
