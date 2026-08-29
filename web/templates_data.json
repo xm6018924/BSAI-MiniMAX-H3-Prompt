@@ -5383,7 +5383,8 @@
               ],
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, facial features, face shape, eye shape, jawline, skin tone, bone structure, hairstyle, hair color, age impression, overall气质, composition, pose and outfit of the reference photo — only the visual art style is converted from realistic photography to high-quality anime illustration.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入的真人照片平滑转化为高质量动漫风格：真人的面部特征被保留并动漫化——保持脸型、五官比例、眼睛形状、鼻梁轮廓、嘴唇厚度、下颌线条等身份特征，同时转换为动漫风格的表现：大而明亮的动漫眼睛、清晰的高光与瞳孔细节、干净流畅的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区、鲜艳而统一的色彩。皮肤呈现动漫风格的光滑质感与柔和渐变，毛发呈现动漫风格的色块与高光线条。服装呈现动漫风格的简化色块与清晰褶皱线。整体为高质量日式动漫插画质感：干净的线条、明快的色彩、统一的色调、充满日本动画的经典美感。保留原图的主体结构、构图与比例，仅画面表现手法转为动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在高质量动漫风格下自然流畅地展现，头发与衣物随动作产生动漫风格的动态线条与色块变化【/ACTION】。整段画面统一呈现高质量动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的动画环境声，清新的氛围\n\nnon_diegetic_music: 轻快活泼的日系动漫配乐，节奏明快，充满青春气息"
             }
-          ]
+          ],
+          "id": "anime_real_conversion"
         }
       ]
     }
