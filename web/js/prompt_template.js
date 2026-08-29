@@ -76,8 +76,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 200px;
-    overflow-y: auto; background: #111; min-height: 40px;
+    border: 1px solid #333; border-radius: 4px; max-height: 180px !important;
+    overflow-y: auto !important; background: #111; min-height: 40px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -618,23 +618,25 @@ function buildTemplateUI(node) {
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];  // node.size = [width, height]
-            if (nh === _lastNodeH) return;
+            // Always set height (dont skip on same value, ensures !important sticks)
             _lastNodeH = nh;
-            // container IS the background panel (.bsai-tpl-wrap has background:#1a1a1a).
-            // 38px = node header + top/bottom widget margins.
+            // container IS the background panel. 38px = node header + margins.
             const avail = Math.max(320, nh - 38);
-            // Set container height directly (inline style overrides CSS height:100%)
-            container.style.height = avail + "px";
-            container.style.boxSizing = "border-box";
-            container.style.display = "block";
-            // Walk up the DOM and set ALL ancestors to height:100% + overflow:hidden
-            // This ensures the container's height is not constrained by any parent.
+            // Use setProperty with !important to override ComfyUI built-in styles
+            container.style.setProperty('height', avail + 'px', 'important');
+            container.style.setProperty('display', 'flex', 'important');
+            container.style.setProperty('flex-direction', 'column', 'important');
+            container.style.setProperty('overflow', 'hidden', 'important');
+            container.style.setProperty('box-sizing', 'border-box', 'important');
+            // Walk up ALL ancestors and force height:100% !important + overflow:hidden !important
+            // This is the key: ComfyUI sets widget container heights that constrain us.
             let el = container.parentElement;
             let safety = 0;
-            while (el && safety < 10) {
-                el.style.height = "100%";
-                el.style.overflow = "hidden";
-                el.style.boxSizing = "border-box";
+            while (el && safety < 15) {
+                el.style.setProperty('height', '100%', 'important');
+                el.style.setProperty('overflow', 'hidden', 'important');
+                el.style.setProperty('box-sizing', 'border-box', 'important');
+                el.style.setProperty('display', 'block', 'important');
                 el = el.parentElement;
                 safety++;
             }
