@@ -23,7 +23,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-wrap {
     display: flex; flex-direction: column; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    width: 100%; box-sizing: border-box; font-family: sans-serif;
+    width: 100%; height: 100%; box-sizing: border-box; font-family: sans-serif;
 }
 .bsai-tpl-top {
     display: flex; gap: 8px; align-items: flex-start;
@@ -242,8 +242,11 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-del { background: #4a1f22; color: #f4a7ab; }
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
+.bsai-tpl-out {
+    flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 4px;
+}
 .bsai-tpl-out-ta {
-    width: 100%; height: 72px; min-height: 40px; max-height: 140px; resize: vertical;
+    flex: 1; width: 100%; min-height: 60px; max-height: none; height: auto; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
 }
@@ -596,26 +599,26 @@ function buildTemplateUI(node) {
             dw.options.minHeight = 300;
             // Report the real content size so LiteGraph grows the node to fit the whole UI
             dw.computeSize = function() {
+                // Return minimum size only — let the user drag the node bottom
+                // to freely resize; the output preview textarea flex-fills the extra height.
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                return [w, Math.max(container.scrollHeight || 360, 300)];
+                return [w, 300];
             };
         }
 
-        // Force the node to resize so the solid background fully covers the UI
+        // Initial size fit only — do NOT override the user's manual node drag-resize.
+        // The output preview area flex-fills whatever extra height the user gives the node.
         function refreshNodeSize() {
             if (!node) return;
-            const h = Math.max(300, (container.scrollHeight || 360));
-            if (node.size) {
-                node.setSize([node.size[0], h]);
+            if (node.size && node.size[1] < 300) {
+                node.setSize([node.size[0], 300]);
                 if (node.graph) node.setDirtyCanvas(true, true);
             }
         }
         node._bsaiRefreshSize = refreshNodeSize;
 
-        // Re-measure after layout settles
+        // Re-measure after layout settles (one-time initial fit only)
         setTimeout(refreshNodeSize, 80);
-        // Re-measure when the user resizes the customization textarea
-        custTa.addEventListener("resize", refreshNodeSize);
         // Initial render of the output prompt preview (restored workflow state)
         setTimeout(function() { renderOutputPreview(node); }, 60);
     } else {
