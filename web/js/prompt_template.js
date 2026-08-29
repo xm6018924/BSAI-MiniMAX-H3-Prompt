@@ -242,14 +242,11 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-del { background: #4a1f22; color: #f4a7ab; }
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
-.bsai-tpl-wrap {
-    display: flex; flex-direction: column; height: 100%; min-height: 0; box-sizing: border-box;
-}
 .bsai-tpl-out {
-    flex: 1 1 auto; display: flex; flex-direction: column; min-height: 80px; gap: 4px;
+    margin-top: 6px;
 }
 .bsai-tpl-out-ta {
-    flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
+    width: 100%; min-height: 60px; max-height: none; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
     overflow-y: auto;
@@ -609,43 +606,41 @@ function buildTemplateUI(node) {
             };
         }
 
-        // ── Dynamic widget height: follow node drag-resize ──
-        // ComfyUI DOM widget containers are sized by computeSize() (fixed 300).
-        // To make the output preview fill the node when the user drags the bottom,
-        // we directly set the widget container's height to node.size[1] - header,
-        // and the internal flex layout (wrap=column, out=flex:1, ta=flex:1) fills it.
+        // ── Dynamic output preview height: follow node drag-resize ──
+        // Directly set the textarea height based on node.size[1] and the
+        // offsetTop of the output div (which automatically includes all
+        // content above it). This avoids touching the widget container
+        // height (which caused layout overlap issues).
         let _lastNodeH = 0;
-        function syncWidgetHeight() {
-            if (!node || !node.size) return;
+        function syncOutputHeight() {
+            if (!node || !node.size || !outTa || !outDiv) return;
             const nh = node.size[1];
             if (nh === _lastNodeH) return;
             _lastNodeH = nh;
-            // widget container = container's parent (comfy-widget div)
-            const wContainer = container.parentElement;
-            if (wContainer) {
-                // node header ~30px, widget label ~0 for html type, padding ~8px
-                const avail = Math.max(300, nh - 38);
-                wContainer.style.height = avail + "px";
-                wContainer.style.overflow = "hidden";
-                container.style.height = "100%";
-            }
+            // outDiv.offsetTop = distance from container top to output div
+            // outLbl.offsetHeight = height of the output label row
+            // 38 = node header + margins, 12 = bottom padding
+            const used = outDiv.offsetTop + outLbl.offsetHeight + 38 + 12;
+            const avail = Math.max(60, nh - used);
+            outTa.style.height = avail + "px";
         }
-        node._bsaiSyncWidgetHeight = syncWidgetHeight;
+        node._bsaiSyncOutputHeight = syncOutputHeight;
 
         // Poll node size every frame (cheap: only acts when size changes)
         function _pollSize() {
-            try { syncWidgetHeight(); } catch(e) {}
+            try { syncOutputHeight(); } catch(e) {}
             requestAnimationFrame(_pollSize);
         }
         _pollSize();
 
-        // Initial fit
+        // Initial fit: set a usable default height
         setTimeout(function() {
-            if (node && node.size && node.size[1] < 300) {
-                node.setSize([node.size[0], 500]);
+            if (node && node.size && node.size[1] < 500) {
+                node.setSize([node.size[0], 600]);
                 if (node.graph) node.setDirtyCanvas(true, true);
             }
-            syncWidgetHeight();
+            // Delay height sync to let layout settle
+            setTimeout(syncOutputHeight, 50);
         }, 100);
         // Initial render of the output prompt preview (restored workflow state)
         setTimeout(function() { renderOutputPreview(node); }, 60);
