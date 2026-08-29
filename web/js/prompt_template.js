@@ -209,7 +209,6 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-cust-btn:active { transform: translateY(1px); }
 .bsai-tpl-cust-btn:disabled { opacity: .5; cursor: not-allowed; }
 /* Output prompt preview */
-.bsai-tpl-out { margin-top: 6px; }
 .bsai-tpl-out-lbl {
     font-size: 11px; color: #88a; margin-bottom: 3px;
     display: flex; align-items: center; justify-content: space-between; gap: 6px;
@@ -243,13 +242,13 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    margin-top: 6px;
+    margin-top: 6px; width: 100%; box-sizing: border-box; display: block;
 }
 .bsai-tpl-out-ta {
-    width: 100%; min-height: 60px; max-height: none; resize: none;
+    display: block; width: 100%; min-height: 60px; max-height: none; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
-    overflow-y: auto;
+    overflow-y: auto; margin: 0;
 }
 .bsai-tpl-out-ta:focus { border-color: #3f789e; }
 .bsai-tpl-out-ta::placeholder { color: #445; }
