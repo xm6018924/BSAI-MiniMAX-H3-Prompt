@@ -21,18 +21,17 @@ if (!document.getElementById(STYLE_ID)) {
     st.id = STYLE_ID;
     st.textContent = `
 .bsai-tpl-wrap {
-    display: flex; flex-direction: column; gap: 6px;
+    display: block; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    height: 100%; min-height: 0; box-sizing: border-box; overflow: hidden;
+    height: 100%; min-height: 0; box-sizing: border-box; overflow-y: auto;
     width: 100%; font-family: sans-serif;
 }
 .bsai-tpl-top {
     display: flex; gap: 8px; align-items: flex-start;
-    flex-shrink: 1; min-height: 0; overflow: hidden;
+    margin: 6px 0;
 }
 .bsai-tpl-left {
     flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
-    min-height: 0; overflow: hidden;
 }
 .bsai-tpl-right {
     width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;
@@ -41,7 +40,6 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-search-row {
     display: flex; gap: 5px; align-items: center;
     background: #222; border: 1px solid #444; border-radius: 4px; padding: 2px 6px;
-    flex-shrink: 0;
 }
 .bsai-tpl-search-icon {
     font-size: 12px; color: #668; flex-shrink: 0;
@@ -77,8 +75,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 180px;
-    overflow-y: auto; background: #111; min-height: 40px; flex-shrink: 0;
+    border: 1px solid #333; border-radius: 4px; max-height: 220px;
+    overflow-y: auto; background: #111; min-height: 40px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -193,7 +191,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-voice-hint { font-size: 11px; color: #889; }
 .bsai-voice-drow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 /* Customization textarea */
-.bsai-tpl-cust { margin-top: 6px; flex-shrink: 0; }
+.bsai-tpl-cust { margin-top: 6px; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; }
 .bsai-tpl-cust-ta {
     width: 100%; min-height: 40px; max-height: 100px; resize: vertical;
@@ -246,11 +244,10 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    flex: 1 1 auto; min-height: 120px; display: flex; flex-direction: column;
-    margin-top: 6px; width: 100%; box-sizing: border-box;
+    margin-top: 6px; width: 100%; box-sizing: border-box; display: block;
 }
 .bsai-tpl-out-ta {
-    flex: 1 1 auto; width: 100%; min-height: 80px; max-height: none; resize: none;
+    display: block; width: 100%; height: 240px; min-height: 120px; max-height: none; resize: vertical;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
     overflow-y: auto; margin: 0;
