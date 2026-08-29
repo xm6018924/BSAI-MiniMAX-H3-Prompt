@@ -605,7 +605,11 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                return [w, 300];
+                // Return node height (minus header) so widget container fills the node.
+                // This is the KEY fix: ComfyUI uses computeSize return value to set
+                // the widget container height, and fixed 300px was constraining us.
+                const h = (node && node.size && Array.isArray(node.size)) ? Math.max(400, node.size[1] - 38) : 500;
+                return [w, h];
             };
         }
 
@@ -617,28 +621,33 @@ function buildTemplateUI(node) {
         let _lastNodeH = 0;
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
-            const nh = node.size[1];  // node.size = [width, height]
-            // Always set height (dont skip on same value, ensures !important sticks)
+            const nh = node.size[1];
             _lastNodeH = nh;
-            // container IS the background panel. 38px = node header + margins.
             const avail = Math.max(320, nh - 38);
-            // Use setProperty with !important to override ComfyUI built-in styles
+            // Container: explicit pixel height with !important
             container.style.setProperty('height', avail + 'px', 'important');
             container.style.setProperty('display', 'flex', 'important');
             container.style.setProperty('flex-direction', 'column', 'important');
             container.style.setProperty('overflow', 'hidden', 'important');
-            container.style.setProperty('box-sizing', 'border-box', 'important');
-            // Walk up ALL ancestors and force height:100% !important + overflow:hidden !important
-            // This is the key: ComfyUI sets widget container heights that constrain us.
+            // Find the widget container (ComfyUI wraps our DOM in 2-3 wrapper divs).
+            // Set PIXEL height on it directly (not 100%) to突破 computeSize constraint.
             let el = container.parentElement;
             let safety = 0;
             while (el && safety < 15) {
-                el.style.setProperty('height', '100%', 'important');
+                // Set pixel height on elements that ComfyUI controls (usually first 2-3 levels)
+                if (safety < 4) {
+                    el.style.setProperty('height', avail + 'px', 'important');
+                } else {
+                    el.style.setProperty('height', '100%', 'important');
+                }
                 el.style.setProperty('overflow', 'hidden', 'important');
                 el.style.setProperty('box-sizing', 'border-box', 'important');
-                el.style.setProperty('display', 'block', 'important');
                 el = el.parentElement;
                 safety++;
+            }
+            // Also trigger ComfyUI to recompute widget size
+            if (node && node.setSize) {
+                // node.setSize([node.size[0], nh]);  // may cause loop, skip
             }
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
