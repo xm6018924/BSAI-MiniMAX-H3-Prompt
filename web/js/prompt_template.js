@@ -29,9 +29,11 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-top {
     display: flex; gap: 8px; align-items: flex-start;
     margin: 6px 0; flex-shrink: 0; min-height: 0;
+    overflow: hidden;
 }
 .bsai-tpl-left {
     flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+    min-height: 0; overflow: hidden;
 }
 .bsai-tpl-right {
     width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;
@@ -76,8 +78,9 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 280px !important;
+    border: 1px solid #333; border-radius: 4px; max-height: 200px !important;
     overflow-y: auto !important; background: #111; min-height: 60px;
+    flex-shrink: 0;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -625,24 +628,25 @@ function buildTemplateUI(node) {
             if (nh === _lastNodeH) return;
             _lastNodeH = nh;
             const avail = Math.max(400, nh - 38);
-            // Container gets explicit pixel height - this is the background panel.
+            // Container: explicit pixel height
             container.style.setProperty('height', avail + 'px', 'important');
             container.style.setProperty('display', 'flex', 'important');
             container.style.setProperty('flex-direction', 'column', 'important');
             container.style.setProperty('overflow', 'hidden', 'important');
             container.style.setProperty('box-sizing', 'border-box', 'important');
-            // Direct parent (ComfyUI widget wrapper) gets pixel height too.
-            const par = container.parentElement;
-            if (par) {
-                par.style.setProperty('height', avail + 'px', 'important');
-                par.style.setProperty('overflow', 'hidden', 'important');
-                par.style.setProperty('box-sizing', 'border-box', 'important');
-                // Grandparent: overflow visible so it doesnt clip us, but no height set
-                // (setting height on higher levels disrupts ComfyUI canvas layout)
-                const gp = par.parentElement;
-                if (gp) {
-                    gp.style.setProperty('overflow', 'visible', 'important');
-                }
+            // Walk up 5 levels and set pixel height on ALL (ComfyUI widget wrapper
+            // may be 2-3 levels up; setting only direct parent is insufficient).
+            let el = container.parentElement;
+            for (let i = 0; i < 5 && el; i++) {
+                el.style.setProperty('height', avail + 'px', 'important');
+                el.style.setProperty('overflow', 'hidden', 'important');
+                el.style.setProperty('box-sizing', 'border-box', 'important');
+                el = el.parentElement;
+            }
+            // Higher levels (6+): overflow visible only, no height (dont disrupt canvas)
+            while (el) {
+                el.style.setProperty('overflow', 'visible', 'important');
+                el = el.parentElement;
             }
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
