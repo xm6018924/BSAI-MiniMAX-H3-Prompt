@@ -614,25 +614,28 @@ function buildTemplateUI(node) {
         // height (which caused layout overlap issues).
         let _lastNodeH = 0;
         function syncWidgetHeight() {
-            if (!node || !node.size) return;
-            const nh = node.size[1];
+            if (!node || !node.size || !Array.isArray(node.size)) return;
+            const nh = node.size[1];  // node.size = [width, height]
             if (nh === _lastNodeH) return;
             _lastNodeH = nh;
             // container IS the background panel (.bsai-tpl-wrap has background:#1a1a1a).
-            // Set its height directly to fill the node area — this makes the dark
-            // background cover the entire node (no transparent gap below).
             // 38px = node header + top/bottom widget margins.
             const avail = Math.max(320, nh - 38);
+            // Set container height directly (inline style overrides CSS height:100%)
             container.style.height = avail + "px";
             container.style.boxSizing = "border-box";
-            // Also ensure the immediate parent doesn't constrain us
-            const par = container.parentElement;
-            if (par) {
-                par.style.height = "100%";
-                par.style.overflow = "hidden";
+            container.style.display = "block";
+            // Walk up the DOM and set ALL ancestors to height:100% + overflow:hidden
+            // This ensures the container's height is not constrained by any parent.
+            let el = container.parentElement;
+            let safety = 0;
+            while (el && safety < 10) {
+                el.style.height = "100%";
+                el.style.overflow = "hidden";
+                el.style.boxSizing = "border-box";
+                el = el.parentElement;
+                safety++;
             }
-            // Content inside container is scrollable (overflow-y:auto),
-            // output textarea has fixed 240px with resize:vertical.
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
