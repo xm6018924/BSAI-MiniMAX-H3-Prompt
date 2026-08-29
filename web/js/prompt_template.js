@@ -78,8 +78,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 150px !important;
-    overflow-y: auto !important; background: #111; min-height: 60px;
+    border: 1px solid #333; border-radius: 4px; max-height: 300px !important;
+    overflow-y: auto !important; background: #111; min-height: 80px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -197,7 +197,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-cust { margin-top: 6px; flex: 1 1 140px; min-height: 100px; display: flex; flex-direction: column; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
 .bsai-tpl-cust-ta {
-    flex: 1 1 auto; width: 100%; min-height: 200px; max-height: none; resize: none;
+    display: block; width: 100%; height: 60px; min-height: 50px; max-height: none; resize: vertical;
     background: #222; color: #ddd; border: 1px solid #444;
     border-radius: 4px; padding: 4px 6px; font-size: 11px;
     font-family: monospace; box-sizing: border-box; outline: none;
