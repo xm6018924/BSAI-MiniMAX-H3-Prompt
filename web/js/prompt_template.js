@@ -618,18 +618,21 @@ function buildTemplateUI(node) {
             const nh = node.size[1];
             if (nh === _lastNodeH) return;
             _lastNodeH = nh;
-            // Set the widget container height to fill the node — this makes
-            // the background panel cover the entire node area (no transparent gap).
-            // 38px = node header + top/bottom margins.
-            const wContainer = container.parentElement;
-            if (wContainer) {
-                const avail = Math.max(300, nh - 38);
-                wContainer.style.height = avail + "px";
-                wContainer.style.overflow = "hidden";
-                wContainer.style.boxSizing = "border-box";
+            // container IS the background panel (.bsai-tpl-wrap has background:#1a1a1a).
+            // Set its height directly to fill the node area — this makes the dark
+            // background cover the entire node (no transparent gap below).
+            // 38px = node header + top/bottom widget margins.
+            const avail = Math.max(320, nh - 38);
+            container.style.height = avail + "px";
+            container.style.boxSizing = "border-box";
+            // Also ensure the immediate parent doesn't constrain us
+            const par = container.parentElement;
+            if (par) {
+                par.style.height = "100%";
+                par.style.overflow = "hidden";
             }
-            // container has overflow-y:auto so all content is scrollable,
-            // textarea has fixed 280px height (resize:vertical allows user adjust).
+            // Content inside container is scrollable (overflow-y:auto),
+            // output textarea has fixed 240px with resize:vertical.
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
