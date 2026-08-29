@@ -259,7 +259,8 @@ let _tplData = null;
 async function loadTemplateData() {
     if (_tplData) return _tplData;
     try {
-        const resp = await fetch(DATA_URL);
+        // cache-bust: force fresh fetch so newly-added previews show without hard-refresh
+        const resp = await fetch(DATA_URL + "?v=" + Date.now(), {cache: "no-store"});
         if (resp.ok) {
             _tplData = await resp.json();
             return _tplData;
