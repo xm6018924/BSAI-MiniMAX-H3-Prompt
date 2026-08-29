@@ -28,8 +28,7 @@ if (!document.getElementById(STYLE_ID)) {
 }
 .bsai-tpl-top {
     display: flex; gap: 8px; align-items: flex-start;
-    margin: 6px 0; flex-shrink: 1; min-height: 0;
-    max-height: 42%; overflow-y: auto;
+    margin: 6px 0; flex-shrink: 0; min-height: 0;
 }
 .bsai-tpl-left {
     flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
@@ -77,8 +76,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 160px !important;
-    overflow-y: auto !important; background: #111; min-height: 40px;
+    border: 1px solid #333; border-radius: 4px; max-height: 320px !important;
+    overflow-y: auto !important; background: #111; min-height: 60px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -193,10 +192,10 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-voice-hint { font-size: 11px; color: #889; }
 .bsai-voice-drow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 /* Customization textarea */
-.bsai-tpl-cust { margin-top: 6px; flex-shrink: 1; min-height: 0; display: flex; flex-direction: column; max-height: 25%; }
+.bsai-tpl-cust { margin-top: 6px; flex: 1 1 140px; min-height: 100px; display: flex; flex-direction: column; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
 .bsai-tpl-cust-ta {
-    flex: 1 1 auto; width: 100%; min-height: 30px; max-height: none; resize: none;
+    flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
     background: #222; color: #ddd; border: 1px solid #444;
     border-radius: 4px; padding: 4px 6px; font-size: 11px;
     font-family: monospace; box-sizing: border-box; outline: none;
@@ -246,7 +245,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    flex: 1 1 auto; min-height: 100px; display: flex; flex-direction: column;
+    flex: 1 1 140px; min-height: 120px; display: flex; flex-direction: column;
     margin-top: 6px; width: 100%; box-sizing: border-box;
 }
 .bsai-tpl-out-ta {
@@ -624,31 +623,22 @@ function buildTemplateUI(node) {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
             _lastNodeH = nh;
-            const avail = Math.max(320, nh - 38);
+            const avail = Math.max(400, nh - 38);
             // Container: explicit pixel height with !important
             container.style.setProperty('height', avail + 'px', 'important');
             container.style.setProperty('display', 'flex', 'important');
             container.style.setProperty('flex-direction', 'column', 'important');
             container.style.setProperty('overflow', 'hidden', 'important');
-            // Find the widget container (ComfyUI wraps our DOM in 2-3 wrapper divs).
-            // Set PIXEL height on it directly (not 100%) to突破 computeSize constraint.
+            // Set PIXEL height on ALL ancestors (not 100%) to突破 computeSize constraint.
+            // 100% fails when parent has no explicit height; pixel height always works.
             let el = container.parentElement;
             let safety = 0;
-            while (el && safety < 15) {
-                // Set pixel height on elements that ComfyUI controls (usually first 2-3 levels)
-                if (safety < 4) {
-                    el.style.setProperty('height', avail + 'px', 'important');
-                } else {
-                    el.style.setProperty('height', '100%', 'important');
-                }
+            while (el && safety < 20) {
+                el.style.setProperty('height', avail + 'px', 'important');
                 el.style.setProperty('overflow', 'hidden', 'important');
                 el.style.setProperty('box-sizing', 'border-box', 'important');
                 el = el.parentElement;
                 safety++;
-            }
-            // Also trigger ComfyUI to recompute widget size
-            if (node && node.setSize) {
-                // node.setSize([node.size[0], nh]);  // may cause loop, skip
             }
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
