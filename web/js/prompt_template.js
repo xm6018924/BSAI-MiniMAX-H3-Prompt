@@ -625,17 +625,17 @@ function buildTemplateUI(node) {
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
-            if (nh === _lastNodeH) return;
-            _lastNodeH = nh;
-            const avail = Math.max(400, nh - 38);
-            // Container: explicit pixel height
+            // Minimum 800px ensures all controls fit even if node is short;
+            // follow node height when taller.
+            const avail = Math.max(800, nh - 38);
+            // Container: explicit pixel height - ALWAYS set (dont skip on same value,
+            // because ComfyUI may reset styles during re-render).
             container.style.setProperty('height', avail + 'px', 'important');
             container.style.setProperty('display', 'flex', 'important');
             container.style.setProperty('flex-direction', 'column', 'important');
             container.style.setProperty('overflow', 'hidden', 'important');
             container.style.setProperty('box-sizing', 'border-box', 'important');
-            // Walk up 5 levels and set pixel height on ALL (ComfyUI widget wrapper
-            // may be 2-3 levels up; setting only direct parent is insufficient).
+            // Walk up 5 levels setting pixel height on all ancestors
             let el = container.parentElement;
             for (let i = 0; i < 5 && el; i++) {
                 el.style.setProperty('height', avail + 'px', 'important');
@@ -643,7 +643,6 @@ function buildTemplateUI(node) {
                 el.style.setProperty('box-sizing', 'border-box', 'important');
                 el = el.parentElement;
             }
-            // Higher levels (6+): overflow visible only, no height (dont disrupt canvas)
             while (el) {
                 el.style.setProperty('overflow', 'visible', 'important');
                 el = el.parentElement;
@@ -651,12 +650,18 @@ function buildTemplateUI(node) {
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
-        // Poll node size every frame (cheap: only acts when size changes)
+        // Poll every 300ms (more reliable than rAF which may be throttled)
+        // Also call immediately and after delays to catch ComfyUI initial render
         function _pollSize() {
             try { syncWidgetHeight(); } catch(e) {}
-            requestAnimationFrame(_pollSize);
         }
         _pollSize();
+        setInterval(_pollSize, 300);
+        // Retry after ComfyUI finishes initial render (which may reset styles)
+        setTimeout(_pollSize, 200);
+        setTimeout(_pollSize, 500);
+        setTimeout(_pollSize, 1000);
+        setTimeout(_pollSize, 2000);
         // Also set height after a short delay to ensure ComfyUI has finished rendering
         // (ComfyUI may reset widget styles during initial render)
         setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 200);
