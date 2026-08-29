@@ -242,13 +242,17 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-del { background: #4a1f22; color: #f4a7ab; }
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
+.bsai-tpl-wrap {
+    display: flex; flex-direction: column; height: 100%; min-height: 0; box-sizing: border-box;
+}
 .bsai-tpl-out {
-    flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 4px;
+    flex: 1 1 auto; display: flex; flex-direction: column; min-height: 80px; gap: 4px;
 }
 .bsai-tpl-out-ta {
-    flex: 1; width: 100%; min-height: 60px; max-height: none; height: auto; resize: none;
+    flex: 1 1 auto; width: 100%; min-height: 60px; max-height: none; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
+    overflow-y: auto;
 }
 .bsai-tpl-out-ta:focus { border-color: #3f789e; }
 .bsai-tpl-out-ta::placeholder { color: #445; }
@@ -597,28 +601,52 @@ function buildTemplateUI(node) {
         if (dw) {
             dw.options = dw.options || {};
             dw.options.minHeight = 300;
-            // Report the real content size so LiteGraph grows the node to fit the whole UI
+            // Minimum size only — the widget container height is set dynamically
+            // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
-                // Return minimum size only — let the user drag the node bottom
-                // to freely resize; the output preview textarea flex-fills the extra height.
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
                 return [w, 300];
             };
         }
 
-        // Initial size fit only — do NOT override the user's manual node drag-resize.
-        // The output preview area flex-fills whatever extra height the user gives the node.
-        function refreshNodeSize() {
-            if (!node) return;
-            if (node.size && node.size[1] < 300) {
-                node.setSize([node.size[0], 300]);
-                if (node.graph) node.setDirtyCanvas(true, true);
+        // ── Dynamic widget height: follow node drag-resize ──
+        // ComfyUI DOM widget containers are sized by computeSize() (fixed 300).
+        // To make the output preview fill the node when the user drags the bottom,
+        // we directly set the widget container's height to node.size[1] - header,
+        // and the internal flex layout (wrap=column, out=flex:1, ta=flex:1) fills it.
+        let _lastNodeH = 0;
+        function syncWidgetHeight() {
+            if (!node || !node.size) return;
+            const nh = node.size[1];
+            if (nh === _lastNodeH) return;
+            _lastNodeH = nh;
+            // widget container = container's parent (comfy-widget div)
+            const wContainer = container.parentElement;
+            if (wContainer) {
+                // node header ~30px, widget label ~0 for html type, padding ~8px
+                const avail = Math.max(300, nh - 38);
+                wContainer.style.height = avail + "px";
+                wContainer.style.overflow = "hidden";
+                container.style.height = "100%";
             }
         }
-        node._bsaiRefreshSize = refreshNodeSize;
+        node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
-        // Re-measure after layout settles (one-time initial fit only)
-        setTimeout(refreshNodeSize, 80);
+        // Poll node size every frame (cheap: only acts when size changes)
+        function _pollSize() {
+            try { syncWidgetHeight(); } catch(e) {}
+            requestAnimationFrame(_pollSize);
+        }
+        _pollSize();
+
+        // Initial fit
+        setTimeout(function() {
+            if (node && node.size && node.size[1] < 300) {
+                node.setSize([node.size[0], 500]);
+                if (node.graph) node.setDirtyCanvas(true, true);
+            }
+            syncWidgetHeight();
+        }, 100);
         // Initial render of the output prompt preview (restored workflow state)
         setTimeout(function() { renderOutputPreview(node); }, 60);
     } else {
