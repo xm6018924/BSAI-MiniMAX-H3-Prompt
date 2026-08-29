@@ -23,6 +23,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-wrap {
     display: flex; flex-direction: column; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
+    height: 100%; min-height: 0; box-sizing: border-box; overflow: hidden;
     width: 100%; height: 100%; box-sizing: border-box; font-family: sans-serif;
 }
 .bsai-tpl-top {
@@ -242,13 +243,14 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    margin-top: 6px; width: 100%; box-sizing: border-box; display: block;
+    flex: 1 1 auto; min-height: 80px; display: flex; flex-direction: column;
+    margin-top: 6px; width: 100%; box-sizing: border-box;
 }
 .bsai-tpl-out-ta {
-    display: block; width: 100%; min-height: 60px; max-height: none; resize: none;
+    flex: 1 1 auto; min-height: 60px; max-height: none; resize: none;
     background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
     padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
-    overflow-y: auto; margin: 0;
+    overflow-y: auto; margin: 0; width: 100%;
 }
 .bsai-tpl-out-ta:focus { border-color: #3f789e; }
 .bsai-tpl-out-ta::placeholder { color: #445; }
@@ -611,23 +613,29 @@ function buildTemplateUI(node) {
         // content above it). This avoids touching the widget container
         // height (which caused layout overlap issues).
         let _lastNodeH = 0;
-        function syncOutputHeight() {
-            if (!node || !node.size || !outTa || !outDiv) return;
+        function syncWidgetHeight() {
+            if (!node || !node.size) return;
             const nh = node.size[1];
             if (nh === _lastNodeH) return;
             _lastNodeH = nh;
-            // outDiv.offsetTop = distance from container top to output div
-            // outLbl.offsetHeight = height of the output label row
-            // 38 = node header + margins, 12 = bottom padding
-            const used = outDiv.offsetTop + outLbl.offsetHeight + 38 + 12;
-            const avail = Math.max(60, nh - used);
-            outTa.style.height = avail + "px";
+            // Set the widget container height to fill the node — this makes
+            // the background panel cover the entire node area (no transparent gap).
+            // 38px = node header + top/bottom margins.
+            const wContainer = container.parentElement;
+            if (wContainer) {
+                const avail = Math.max(300, nh - 38);
+                wContainer.style.height = avail + "px";
+                wContainer.style.overflow = "hidden";
+                wContainer.style.boxSizing = "border-box";
+            }
+            // container fills the widget container via CSS height:100% + flex column
+            // The output textarea flex:1 fills whatever space remains above content.
         }
-        node._bsaiSyncOutputHeight = syncOutputHeight;
+        node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
         // Poll node size every frame (cheap: only acts when size changes)
         function _pollSize() {
-            try { syncOutputHeight(); } catch(e) {}
+            try { syncWidgetHeight(); } catch(e) {}
             requestAnimationFrame(_pollSize);
         }
         _pollSize();
@@ -635,11 +643,10 @@ function buildTemplateUI(node) {
         // Initial fit: set a usable default height
         setTimeout(function() {
             if (node && node.size && node.size[1] < 500) {
-                node.setSize([node.size[0], 600]);
+                node.setSize([node.size[0], 700]);
                 if (node.graph) node.setDirtyCanvas(true, true);
             }
-            // Delay height sync to let layout settle
-            setTimeout(syncOutputHeight, 50);
+            setTimeout(syncWidgetHeight, 50);
         }, 100);
         // Initial render of the output prompt preview (restored workflow state)
         setTimeout(function() { renderOutputPreview(node); }, 60);
