@@ -312,6 +312,25 @@
                 "艺术"
               ],
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-3s] The photorealistic image from <Picture 1> transforms into a rich oil painting style. Visible thick brushstrokes emerge across the frame — the Impasto technique. Colors become more saturated and layered. The transformation spreads from center outward. Textured canvas grain becomes visible. [Shot 2] At 00:03.000 [3-8s] The oil-painting scene gains subtle life. Painted elements move gently — painted foliage shifts, painted water ripples with visible brushstroke patterns. Light shifts across the textured paint surface, creating moving highlights on the raised impasto ridges. The camera slowly pushes in. The aesthetic is reminiscent of post-impressionist masters. Rich, warm color palette with visible paint layers.\n\noverall_soundscape: Ambient sounds appropriate to the painted scene, with a subtle texture of brush on canvas as a background element.\n\nnon_diegetic_music: A classical orchestral track in the style of late romantic period composers, with rich strings and woodwinds, evoking a museum gallery atmosphere."
+            },
+            {
+              "id": "anime_to_live_action",
+              "name": "动漫图片转真人视频",
+              "name_en": "Anime to Live-Action Photorealistic",
+              "description": "动漫风格图片逐步转化为真人写实视频并自然动起来。【I2V图生视频模式，上传一张动漫图】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
+              "preview": "anime_to_live_action.webp",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "photorealistic"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-4s] The frame begins with the anime-style image from <Picture 1>. A photorealistic transformation begins at the edges of the frame and spreads inward toward the center. Cel-shaded colors shift into natural lifelike tones. Anime-style skin smooths into realistic human skin with natural texture and subtle pores. Oversized anime eyes adjust to natural human proportions while keeping the same eye color, shape, and expression. Stylized hair becomes real hair with individual strands and natural sheen. Clothing gains real fabric texture and proper folds. The flat anime background becomes a real environment with natural lighting and depth. The character's identity, hair color, eye color, outfit, pose, and composition are all preserved — it is the same person rendered in live-action realism. [Shot 2] At 00:04.000 [4-8s] The fully photorealistic character moves naturally. Hair sways softly in a light breeze. The character blinks naturally and makes a slight head turn. The chest rises and falls with calm breathing. Realistic light shifts across the skin and hair. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
             }
           ]
         }
@@ -5338,20 +5357,39 @@
           "name_en": "Anime-Real",
           "templates": [
             {
+              "id": "st_anime_to_real_i2v",
+              "name": "动漫转真人（单图I2V）",
+              "name_en": "Anime to Real (Single Image I2V)",
+              "description": "单张动漫图片直接转化为真人写实视频，同一个人逐步真人化并自然动起来。【图生视频I2V模式，上传一张动漫图即可】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
+              "preview": "anime_to_live_action.webp",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "photorealistic"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-4s] The frame begins with the anime-style image from <Picture 1>. A photorealistic transformation begins at the edges of the frame and spreads inward toward the center. Cel-shaded colors shift into natural lifelike tones. Anime-style skin smooths into realistic human skin with natural texture and subtle pores. Oversized anime eyes adjust to natural human proportions while keeping the same eye color, shape, and expression. Stylized hair becomes real hair with individual strands and natural sheen. Clothing gains real fabric texture and proper folds. The flat anime background becomes a real environment with natural lighting and depth. The character's identity, hair color, eye color, outfit, pose, and composition are all preserved — it is the same person rendered in live-action realism. [Shot 2] At 00:04.000 [4-8s] The fully photorealistic character moves naturally. Hair sways softly in a light breeze. The character blinks naturally and makes a slight head turn. The chest rises and falls with calm breathing. Realistic light shifts across the skin and hair. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
+            },
+            {
               "name": "动漫转真人",
               "name_en": "Anime to Hyperrealistic",
-              "prompt": "integrated_multimodal_description:\n将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例。\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\nPicture 1 = 动漫图（提供内容、构图、姿势、服装布局）\nPicture 2 = 真人图（提供脸部身份、皮肤纹理、真人风格基准）\n【使用说明 — 三种生成模式】\n模式1：文生视频 (Text to Video) - 无需上传图片，纯靠文字描述生成真人视频。在\"补充修改\"中描述角色外貌、服装、场景和动作。效果：角色外观由文字决定，不是从特定动漫图转换。\n模式2：图生视频 (Image to Video) - 不推荐用于完全转真人。上传动漫图片作为第一帧，效果有限，I2V会强烈保持第一帧的动漫风格，很难完全转为真人。仅用于让动漫图轻微动起来。\n模式3：参考生视频 (Reference to Video) - 【推荐】真正的动漫转真人。必须上传两张图：\n- Picture 1 (ref_image_0) = 动漫原图：模型参考其构图、姿势、服装、场景布局\n- Picture 2 (ref_image_1) = 真人参考图：模型参考其脸部特征、皮肤质感、真人风格\n输出效果：真人的脸 + 动漫的姿势/服装/场景 = 真正的动漫转真人视频\n【画面描述】\n超写实真人摄影，8K分辨率，电影级画质，自然肤色，真实皮肤纹理包括毛孔和细微瑕疵，自然人体比例，真实服装材质纹理，真实光影，浅景深，专业人像摄影风格。角色保持与动漫原图相同的姿势、构图、服装款式和场景布局，但所有元素都以超写实真人风格呈现。\noverall_soundscape:\n环境音：真实场景环境声，根据场景内容自动匹配（室内空间混响、户外自然声等）\nnon_diegetic_music:\n背景音乐：轻柔写实风格配乐，不盖过环境音，增强真实感",
+              "prompt": "subject_definitions:\n<Subject 1> 是目标视频中的主要人物。其脸部五官、面部轮廓、皮肤质感、毛发细节与真人写实摄影风格直接来自 <Picture 1>。其身体结构、姿势、服装款式、发型轮廓、场景布局与画面构图来自 <Picture 2>，全部以 <Picture 1> 的真人写实摄影风格重新呈现。头发必须呈现自然质感，服装必须呈现真实织物的物理质感，不得保留任何动漫渲染、3D建模或塑料光泽特征。\n<Picture 1> 是真人脸部锚定图与写实风格基准图，提供 <Subject 1> 的五官特征、皮肤纹理、毛发质感与摄影质感基准。其自身的构图、姿势、服装与背景不得被引用。\n<Picture 2> 是动漫/插画风格内容参考图，提供人物姿势、身体角度、服装款式、发型轮廓、场景空间布局与画面构图参考，其动漫艺术风格必须完全转换为真人写实风格。\n\nsummary:\n[reference generation] 目标视频是一段真人写实影像。视频以 <Picture 2> 的构图与内容为骨架，将 <Picture 1> 的真人脸部与写实摄影风格注入其中，生成一段固定镜头视频。\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): partially_preserved - 脸部五官与皮肤质感来自 <Picture 1> 并被完全保留；身体结构、姿势、服装、构图与场景来自 <Picture 2> 并以写实风格重新渲染，不保留动漫特征。\n<Picture 1> (脸部锚定与风格基准): very_strong_reference - 提供五官特征、皮肤纹理、毛发质感与写实摄影质感基准，其自身构图/姿势/服装/背景不被引用。\n<Picture 2> (内容与构图参考): strong_reference - 人物姿势、身体角度、服装款式、发型轮廓、场景空间布局与画面构图被参考，动漫风格被完全转换为真人写实风格。\n\ndetailed_description:\n目标视频采用超写实真人电影摄影风格，使用 50mm 定焦镜头拍摄，f/2.8 光圈，浅景深，自然色彩分级无滤镜感，8K UHD RAW 直出画质，零后期修图痕迹。画面构图与 <Picture 2> 完全一致：人物位置、身体角度、视线方向、服装款式、发型轮廓、场景空间布局严格保留 <Picture 2>。人物脸部替换为 <Picture 1> 的真人五官与皮肤质感，整体以超写实真人电影摄影风格渲染。皮肤呈现真实毛孔、细微瑕疵、皮下血管色调、自然油脂光泽、真实肤色过渡——绝对禁止光滑塑料感动漫皮肤。眼睛大小自然（禁止动漫大眼），虹膜细节真实，角膜反射自然，睫毛自然。鼻子立体有软骨结构与鼻翼定义，嘴唇真实纹理与唇红缘、自然湿度。毛发呈现每根发丝质感、自然毛躁与飞碎发、柔和方向光泽，发色为自然人类发色（禁止二次元发色）。服装呈现真实织纹（棉质哑光/皮革光泽/牛仔纹理等）、自然褶皱与物理垂坠感、真实材质反光——绝对禁止赛璐珞平涂色块。背景环境呈现真实空间深度、自然大气透视与真实材质表面。自然方向光在皮肤、毛发与面料表面形成真实明暗过渡与高光。相机保持固定构图，带有微妙的手持呼吸感——极其轻微、无规律的画面微颤，幅度极小，不产生推镜、拉镜或任何机位位移。人物保持 <Picture 2> 的姿势，仅有自然呼吸胸口起伏、轻微眨眼、毛发与面料极轻微摆动。\n\noverall_soundscape:\n真实环境声，电影级现场录音质感，自然的环境氛围\n\nnon_diegetic_music:\n克制的电影配乐，稀疏弦乐，真实感与沉稳基调",
               "generation_mode": "Reference to Video (参考生视频)【必须双图】",
-              "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征。必须使用Ref2V模式：图1=动漫图(构图/姿势/服装)，图2=真人图(脸部/皮肤)",
+              "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例。\n\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\n  • Picture 1 = 动漫图（提供内容、构图、姿势、服装布局）\n  • Picture 2 = 真人图（提供脸部身份、皮肤纹理、真人风格基准）\n\n【使用说明 — 三种生成模式】\n\n▎模式1：文生视频 (Text to Video)\n• 无需上传图片，纯靠文字描述生成真人视频\n• 在\"补充修改\"中描述角色外貌、服装、场景和动作\n• 效果：角色外观由文字决定，不是从特定动漫图转换\n\n▎模式2：图生视频 (Image to Video) ⚠️ 不推荐用于完全转真人\n• 上传动漫图片作为第一帧\n• 效果有限！I2V会强烈保持第一帧的动漫风格，很难完全转为真人\n• 仅用于让动漫图轻微动起来，不建议用于完全的动漫转真人\n\n▎模式3：参考生视频 (Reference to Video) ✅ 【推荐】真正实现动漫转真人\n• 上传两张参考图：\n  - Picture 1 = 动漫图（内容/构图/姿势/服装参考）\n  - Picture 2 = 真人图（脸部身份/皮肤纹理/风格基准）\n• 效果：最好！以动漫图内容为骨架，注入真人图脸部和写实风格\n• 技巧：真人参考图尽量选择与动漫角色性别、年龄、发型相近的真人照片\n\n【参数建议】\n• 时长：3-6秒（短时长风格转换更稳定）\n• 超分放大时请关闭人脸修复（face_restore=Off），避免逐帧修复导致鬼影闪烁",
               "duration": 6,
               "preview": ""
             },
             {
               "name": "真人转动漫",
               "name_en": "Real to Anime",
-              "prompt": "integrated_multimodal_description:\n将真人照片/视频转换为动漫/插画风格，保留构图与角色特征，极致动漫渲染质量。\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\nPicture 1 = 真人图（提供内容、构图、姿势、服装布局）\nPicture 2 = 动漫风格图（提供动漫画风、线条、色彩基准）\n【画面描述】\n高质量动漫渲染，赛璐璐风格或新海诚风格（根据参考图自动匹配），清晰线条，平涂色彩，动漫人物比例，大眼睛，精致五官，动漫服装质感，动漫风格光影，鲜艳色彩，动态构图。角色保持与真人原图相同的姿势、构图、服装款式和场景布局，但所有元素都以动漫风格呈现。\noverall_soundscape:\n环境音：动漫风格环境音，略带夸张和艺术化处理\nnon_diegetic_music:\n背景音乐：动漫风格配乐，轻快或抒情，增强二次元氛围",
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, facial features, face shape, eye shape, jawline, skin tone, bone structure, hairstyle, hair color, age impression, overall气质, composition, pose and outfit of the reference photo — only the visual art style is converted from realistic photography to high-quality anime illustration.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入的真人照片平滑转化为高质量动漫风格：真人的面部特征被保留并动漫化——保持脸型、五官比例、眼睛形状、鼻梁轮廓、嘴唇厚度、下颌线条等身份特征，同时转换为动漫风格的表现：大而明亮的动漫眼睛、清晰的高光与瞳孔细节、干净流畅的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区、鲜艳而统一的色彩。皮肤呈现动漫风格的光滑质感与柔和渐变，毛发呈现动漫风格的色块与高光线条。服装呈现动漫风格的简化色块与清晰褶皱线。整体为高质量日式动漫插画质感：干净的线条、明快的色彩、统一的色调、充满日本动画的经典美感。保留原图的主体结构、构图与比例，仅画面表现手法转为动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在高质量动漫风格下自然流畅地展现，头发与衣物随动作产生动漫风格的动态线条与色块变化【/ACTION】。整段画面统一呈现高质量动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的动画环境声，清新的氛围\n\nnon_diegetic_music: 轻快活泼的日系动漫配乐，节奏明快，充满青春气息",
               "generation_mode": "Reference to Video (参考生视频)【必须双图】",
-              "description": "将真人照片转换为动漫/插画风格，保留构图与角色特征。必须使用Ref2V模式：图1=真人图(构图/姿势)，图2=动漫风格图(画风基准)",
+              "description": "将真人照片转换为高质量通用动漫风格，保留人物面部特征与身份，经典赛璐珞上色与清晰墨线",
               "duration": 6,
               "preview": ""
             }

@@ -312,6 +312,25 @@
                 "艺术"
               ],
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-3s] The photorealistic image from <Picture 1> transforms into a rich oil painting style. Visible thick brushstrokes emerge across the frame — the Impasto technique. Colors become more saturated and layered. The transformation spreads from center outward. Textured canvas grain becomes visible. [Shot 2] At 00:03.000 [3-8s] The oil-painting scene gains subtle life. Painted elements move gently — painted foliage shifts, painted water ripples with visible brushstroke patterns. Light shifts across the textured paint surface, creating moving highlights on the raised impasto ridges. The camera slowly pushes in. The aesthetic is reminiscent of post-impressionist masters. Rich, warm color palette with visible paint layers.\n\noverall_soundscape: Ambient sounds appropriate to the painted scene, with a subtle texture of brush on canvas as a background element.\n\nnon_diegetic_music: A classical orchestral track in the style of late romantic period composers, with rich strings and woodwinds, evoking a museum gallery atmosphere."
+            },
+            {
+              "id": "anime_to_live_action",
+              "name": "动漫图片转真人视频",
+              "name_en": "Anime to Live-Action Photorealistic",
+              "description": "动漫风格图片逐步转化为真人写实视频并自然动起来。【I2V图生视频模式，上传一张动漫图】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
+              "preview": "anime_to_live_action.webp",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "photorealistic"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-4s] The frame begins with the anime-style image from <Picture 1>. A photorealistic transformation begins at the edges of the frame and spreads inward toward the center. Cel-shaded colors shift into natural lifelike tones. Anime-style skin smooths into realistic human skin with natural texture and subtle pores. Oversized anime eyes adjust to natural human proportions while keeping the same eye color, shape, and expression. Stylized hair becomes real hair with individual strands and natural sheen. Clothing gains real fabric texture and proper folds. The flat anime background becomes a real environment with natural lighting and depth. The character's identity, hair color, eye color, outfit, pose, and composition are all preserved — it is the same person rendered in live-action realism. [Shot 2] At 00:04.000 [4-8s] The fully photorealistic character moves naturally. Hair sways softly in a light breeze. The character blinks naturally and makes a slight head turn. The chest rises and falls with calm breathing. Realistic light shifts across the skin and hair. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
             }
           ]
         }
@@ -5338,6 +5357,25 @@
           "name_en": "Anime-Real Conversion",
           "description": "动漫与真人之间的风格互转",
           "templates": [
+            {
+              "id": "st_anime_to_real_i2v",
+              "name": "动漫转真人（单图I2V）",
+              "name_en": "Anime to Real (Single Image I2V)",
+              "description": "单张动漫图片直接转化为真人写实视频，同一个人逐步真人化并自然动起来。【图生视频I2V模式，上传一张动漫图即可】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
+              "preview": "anime_to_live_action.webp",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "photorealistic"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] [0-4s] The frame begins with the anime-style image from <Picture 1>. A photorealistic transformation begins at the edges of the frame and spreads inward toward the center. Cel-shaded colors shift into natural lifelike tones. Anime-style skin smooths into realistic human skin with natural texture and subtle pores. Oversized anime eyes adjust to natural human proportions while keeping the same eye color, shape, and expression. Stylized hair becomes real hair with individual strands and natural sheen. Clothing gains real fabric texture and proper folds. The flat anime background becomes a real environment with natural lighting and depth. The character's identity, hair color, eye color, outfit, pose, and composition are all preserved — it is the same person rendered in live-action realism. [Shot 2] At 00:04.000 [4-8s] The fully photorealistic character moves naturally. Hair sways softly in a light breeze. The character blinks naturally and makes a slight head turn. The chest rises and falls with calm breathing. Realistic light shifts across the skin and hair. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
+            },
             {
               "id": "st_anime_to_real",
               "name": "动漫转真人",

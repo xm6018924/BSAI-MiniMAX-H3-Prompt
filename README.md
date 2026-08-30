@@ -903,6 +903,38 @@ Added Qwen3.8-VL model family support and set as default. Qwen3.8-VL is a 27B de
 
 Initial release implementing automatic prompt optimization based on the MiniMax H3 model manual. Supports both local model and remote API modes, covering 13 reference material types, 5 generation modes, 37+ director styles, 20+ cinematography styles, 50+ film genres, and 40+ score styles.
 
+### v1.3.2 — 新增动漫转真人I2V模板 + 提示词优化 / Anime-to-Live-Action I2V Template + Prompt Optimization
+
+**中文说明：**
+
+新增"动漫图片转真人视频"提示词模板（图生视频 > 风格迁移类）和"动漫转真人（单图I2V）"模板（风格转绘 > 真人动漫互转），支持单张动漫图片直接转化为真人写实视频。
+
+**关键改进：**
+- 提示词从 800 词三阶段超长版优化为 200 词简洁版，采用已验证有效的"边缘扩散"转化模式（与 `photo_to_anime` 模板同构）
+- Shot 1 时长从 3 秒延长至 4 秒，给风格转化留出更多时间
+- 严格遵循 MiniMax H3 I2VA 官方 SKILL 规范：首帧锚定指令、三核心字段、Shot 时间轴结构
+- 新增预览动画 `anime_to_live_action.webp`（400×400, 60帧, 2.8秒循环）
+- 新增测试脚本 `scripts/test_anime_to_live_action.py`（19项测试全覆盖）
+- 修复前端 `web/templates_data.json` 未同步问题（UI显示与后端数据源分离导致模板不显示）
+
+**使用建议：** I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度。风格较写实的动漫图（半写实风、厚涂风）效果最佳。如需高质量转化，推荐使用风格转绘中的"动漫转真人"双图 Ref2V 模式。
+
+**English:**
+
+Added "Anime to Live-Action" prompt template (Video Gen > Style Transfer category) and "Anime to Real (Single Image I2V)" template (Style Transfer > Anime-Real Interchange category), supporting direct transformation of a single anime image into photorealistic live-action video.
+
+**Key improvements:**
+- Optimized prompt from 800-word three-phase verbose version to 200-word concise version, using the proven "edge-to-center spread" transition pattern (same structure as the working `photo_to_anime` template)
+- Extended Shot 1 duration from 3s to 4s for more transformation time
+- Strictly follows MiniMax H3 I2VA official SKILL spec: first-frame anchor instruction, three core fields, Shot timeline structure
+- Added preview animation `anime_to_live_action.webp` (400×400, 60 frames, 2.8s loop)
+- Added test suite `scripts/test_anime_to_live_action.py` (19 tests, full coverage)
+- Fixed frontend `web/templates_data.json` sync issue (UI display and backend data source were separate files, causing templates to not appear in the UI)
+
+**Usage Tip:** I2V mode strongly preserves the first-frame style. Anime-to-real conversion effectiveness depends on how stylized the source image is. Semi-realistic anime styles work best. For high-quality conversion, use the dual-image Ref2V "Anime to Real" template in the Style Transfer category instead.
+
+---
+
 ## 许可证
 
 MIT License
