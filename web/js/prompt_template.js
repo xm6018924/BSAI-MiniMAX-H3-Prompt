@@ -554,9 +554,12 @@ function buildTemplateUI(node) {
     outDiv.appendChild(outLbl);
     outDiv.appendChild(outTa);
     outDiv.appendChild(diffDiv);
+    // Hidden by default — only shown after user clicks Apply (确认修改)
+    outDiv.style.display = "none";
     container.appendChild(outDiv);
 
     // Store refs
+    node._bsaiOutDiv = outDiv;
     node._bsaiCat = catSel;
     node._bsaiSub = subSel;
     node._bsaiList = listDiv;
@@ -1247,7 +1250,11 @@ function applyCustomization(node, done) {
     if (!base) { node._bsaiOutTa.value = cust.trim(); if (done) done(); return; }
     var seq = ++_mergeSeq;
     var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
+    // Show the output area now (was hidden by default)
+    if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
     node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
+    // Refresh node size so the bottom aligns with the now-visible output area
+    if (node.setSize) setTimeout(function() { node.setSize([node.size[0], node.size[1] + 420]); }, 50);
     fetch("/bsai_h3/merge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
