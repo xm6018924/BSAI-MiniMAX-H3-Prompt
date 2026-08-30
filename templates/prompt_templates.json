@@ -5332,6 +5332,30 @@
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description: [镜头1]【0-3秒】画面由输入图像平滑转化为极简主义风格：画面转为极简主义艺术：极度简化的造型、大面积留白与负空间、克制的色彩与线条，画面安静纯粹，充满现代极简的秩序与禅意。保留原图的主体结构、构图与比例，仅画面表现手法转为极简主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在极简主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现极简主义风格，艺术质感一致。\n\noverall_soundscape: 安静纯净的环境声，留白感强，静谧克制\n\nnon_diegetic_music: 极简舒缓的配乐，音符稀疏，留白禅意"
             }
           ]
+        },
+        {
+          "name": "真人动漫互转",
+          "name_en": "Anime-Real",
+          "templates": [
+            {
+              "name": "动漫转真人",
+              "name_en": "Anime to Hyperrealistic",
+              "prompt": "integrated_multimodal_description:\n将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例。\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\nPicture 1 = 动漫图（提供内容、构图、姿势、服装布局）\nPicture 2 = 真人图（提供脸部身份、皮肤纹理、真人风格基准）\n【使用说明 — 三种生成模式】\n模式1：文生视频 (Text to Video) - 无需上传图片，纯靠文字描述生成真人视频。在\"补充修改\"中描述角色外貌、服装、场景和动作。效果：角色外观由文字决定，不是从特定动漫图转换。\n模式2：图生视频 (Image to Video) - 不推荐用于完全转真人。上传动漫图片作为第一帧，效果有限，I2V会强烈保持第一帧的动漫风格，很难完全转为真人。仅用于让动漫图轻微动起来。\n模式3：参考生视频 (Reference to Video) - 【推荐】真正的动漫转真人。必须上传两张图：\n- Picture 1 (ref_image_0) = 动漫原图：模型参考其构图、姿势、服装、场景布局\n- Picture 2 (ref_image_1) = 真人参考图：模型参考其脸部特征、皮肤质感、真人风格\n输出效果：真人的脸 + 动漫的姿势/服装/场景 = 真正的动漫转真人视频\n【画面描述】\n超写实真人摄影，8K分辨率，电影级画质，自然肤色，真实皮肤纹理包括毛孔和细微瑕疵，自然人体比例，真实服装材质纹理，真实光影，浅景深，专业人像摄影风格。角色保持与动漫原图相同的姿势、构图、服装款式和场景布局，但所有元素都以超写实真人风格呈现。\noverall_soundscape:\n环境音：真实场景环境声，根据场景内容自动匹配（室内空间混响、户外自然声等）\nnon_diegetic_music:\n背景音乐：轻柔写实风格配乐，不盖过环境音，增强真实感",
+              "generation_mode": "Reference to Video (参考生视频)【必须双图】",
+              "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征。必须使用Ref2V模式：图1=动漫图(构图/姿势/服装)，图2=真人图(脸部/皮肤)",
+              "duration": 6,
+              "preview": ""
+            },
+            {
+              "name": "真人转动漫",
+              "name_en": "Real to Anime",
+              "prompt": "integrated_multimodal_description:\n将真人照片/视频转换为动漫/插画风格，保留构图与角色特征，极致动漫渲染质量。\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\nPicture 1 = 真人图（提供内容、构图、姿势、服装布局）\nPicture 2 = 动漫风格图（提供动漫画风、线条、色彩基准）\n【画面描述】\n高质量动漫渲染，赛璐璐风格或新海诚风格（根据参考图自动匹配），清晰线条，平涂色彩，动漫人物比例，大眼睛，精致五官，动漫服装质感，动漫风格光影，鲜艳色彩，动态构图。角色保持与真人原图相同的姿势、构图、服装款式和场景布局，但所有元素都以动漫风格呈现。\noverall_soundscape:\n环境音：动漫风格环境音，略带夸张和艺术化处理\nnon_diegetic_music:\n背景音乐：动漫风格配乐，轻快或抒情，增强二次元氛围",
+              "generation_mode": "Reference to Video (参考生视频)【必须双图】",
+              "description": "将真人照片转换为动漫/插画风格，保留构图与角色特征。必须使用Ref2V模式：图1=真人图(构图/姿势)，图2=动漫风格图(画风基准)",
+              "duration": 6,
+              "preview": ""
+            }
+          ]
         }
       ]
     }
