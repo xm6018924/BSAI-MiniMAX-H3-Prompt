@@ -666,7 +666,7 @@ function buildTemplateUI(node) {
                     };
                 }
                 if (node.setSize) {
-                    node.setSize([node.size[0], node.size[1]]);
+                    // setSize removed: [node.size, node.size] is wrong (2D array) and causes infinite resize loop
                 }
                 if (node.onResize) node.onResize();
             } catch(e) {}
