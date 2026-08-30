@@ -623,49 +623,51 @@ function buildTemplateUI(node) {
             };;
         }
 
-        // ── Dynamic output preview height: follow node drag-resize ──
-        // Directly set the textarea height based on node.size[1] and the
-        // offsetTop of the output div (which automatically includes all
-        // content above it). This avoids touching the widget container
-        // height (which caused layout overlap issues).
+        // ── Robust widget height sync: follow node drag-resize ──
         let _lastNodeH = 0;
+        let _widgetEl = null;
+        function _findWidgetEl() {
+            let el = container;
+            for (let i = 0; i < 10 && el && el.parentElement; i++) {
+                const cls = el.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-widget') >= 0 || cls.indexOf('widget') >= 0 || cls.indexOf('input_area') >= 0)) {
+                    return el;
+                }
+                el = el.parentElement;
+            }
+            return container.parentElement || container;
+        }
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
-            // Follow node height exactly; minimum 400px so controls aren't crushed.
             const avail = Math.max(400, nh - 38);
-            const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important; overflow-y:auto !important; overflow-x:hidden !important;';
-            container.style.cssText = css;
-            // Set the widget container (direct parent) FIRST — this is the critical one.
-            // ComfyUI sets widget container height from computeSize, which doesn't update on resize.
-            if (container.parentElement) {
-                container.parentElement.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; overflow:hidden !important;';
+            if (_lastNodeH === avail) return;
+            _lastNodeH = avail;
+            container.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
+            if (!_widgetEl) _widgetEl = _findWidgetEl();
+            if (_widgetEl) {
+                _widgetEl.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; overflow:hidden !important;');
             }
-            // Walk up remaining ancestors (node-content, etc.) — stop at node outer element.
-            let el = container.parentElement ? container.parentElement.parentElement : null;
+            let el = container.parentElement;
             let depth = 0;
-            while (el && depth < 12) {
+            while (el && depth < 15) {
                 const cls = el.className || '';
-                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
-                el.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; box-sizing:border-box !important;';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) break;
+                el.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; box-sizing:border-box !important;');
                 el = el.parentElement;
                 depth++;
             }
+            try { if (node.onResize) node.onResize(); } catch(e) {}
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
-
-        // Poll every 200ms + ResizeObserver for instant resize detection
-        function _pollSize() {
-            try { syncWidgetHeight(); } catch(e) {}
-        }
+        function _pollSize() { _lastNodeH = 0; try { syncWidgetHeight(); } catch(e) {} }
         _pollSize();
-        setInterval(_pollSize, 200);
-        // ResizeObserver: detect node DOM element resize instantly
+        setInterval(_pollSize, 150);
         try {
             let _nodeEl = container;
             while (_nodeEl && _nodeEl.parentElement) {
                 const c = _nodeEl.className || '';
-                if (typeof c === 'string' && (c.indexOf('comfy-node') >= 0 || c.indexOf('lite-node') >= 0 || c.indexOf('node') >= 0 && c.indexOf('widget') < 0)) break;
+                if (typeof c === 'string' && (c.indexOf('comfy-node') >= 0 || c.indexOf('lite-node') >= 0)) break;
                 _nodeEl = _nodeEl.parentElement;
             }
             if (_nodeEl && typeof ResizeObserver !== 'undefined') {
@@ -673,33 +675,26 @@ function buildTemplateUI(node) {
                 _ro.observe(_nodeEl);
             }
         } catch(e) {}
-        // Retry after ComfyUI finishes initial render (which may reset styles)
-        setTimeout(_pollSize, 200);
-        setTimeout(_pollSize, 500);
-        setTimeout(_pollSize, 1000);
-        setTimeout(_pollSize, 2000);
-
-        // MutationObserver: if ComfyUI resets widget styles, immediately restore.
-        // This is the most reliable way to fight ComfyUI re-render style resets.
         try {
-            const _bsaiObserver = new MutationObserver(function(mutations) {
-                for (let i = 0; i < mutations.length; i++) {
-                    const m = mutations[i];
-                    if (m.type === 'attributes' && (m.attributeName === 'style' || m.attributeName === 'class')) {
-                        // Re-apply height immediately (debounced via rAF to avoid loop)
-                        requestAnimationFrame(function() {
-                            try { syncWidgetHeight(); } catch(e) {}
-                        });
-                        break;
+            if (!_widgetEl) _widgetEl = _findWidgetEl();
+            if (_widgetEl && typeof MutationObserver !== 'undefined') {
+                const _mo = new MutationObserver(function(mutations) {
+                    for (let i = 0; i < mutations.length; i++) {
+                        if (mutations[i].type === 'attributes' && mutations[i].attributeName === 'style') {
+                            _pollSize();
+                            break;
+                        }
                     }
-                }
-            });
-            // Observe container and its parent for style/class changes
-            if (container.parentElement) {
-                _bsaiObserver.observe(container.parentElement, { attributes: true, attributeFilter: ['style', 'class'], subtree: false });
+                });
+                _mo.observe(_widgetEl, { attributes: true, attributeFilter: ['style'] });
+                _mo.observe(container, { attributes: true, attributeFilter: ['style'] });
             }
-            _bsaiObserver.observe(container, { attributes: true, attributeFilter: ['style', 'class'], subtree: false });
         } catch(e) {}
+        setTimeout(_pollSize, 100);
+        setTimeout(_pollSize, 300);
+        setTimeout(_pollSize, 700);
+        setTimeout(_pollSize, 1500);
+        setTimeout(_pollSize, 3000);
         // Also set height after a short delay to ensure ComfyUI has finished rendering
         // (ComfyUI may reset widget styles during initial render)
         setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 200);
