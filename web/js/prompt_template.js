@@ -637,39 +637,51 @@ function buildTemplateUI(node) {
             }
             return container.parentElement || container;
         }
+        let _syncing = false;
         function syncWidgetHeight() {
+            if (_syncing) return;
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
             const avail = Math.max(400, nh - 38);
-            const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important;';
-            // Set container itself
-            container.setAttribute('style', css + ' display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
-            // Set EVERY parent element up to the node root
-            let el = container.parentElement;
-            let depth = 0;
-            while (el && depth < 20) {
-                const cls = el.className || '';
-                const tag = el.tagName || '';
-                // Stop at node root or canvas
-                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
-                if (tag === 'CANVAS') break;
-                el.setAttribute('style', css + ' overflow:hidden !important;');
-                el = el.parentElement;
-                depth++;
-            }
-            // Force ComfyUI to recompute widget size
+            _syncing = true;
             try {
-                if (dw && dw.computeSize) {
-                    dw.computeSize = function() {
-                        const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                        return [w, avail];
-                    };
+                const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important;';
+                // 1. Set container DOM height
+                container.setAttribute('style', css + ' display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
+                // 2. Set ALL parent elements up to node root
+                let el = container.parentElement;
+                let depth = 0;
+                while (el && depth < 20) {
+                    const cls = el.className || '';
+                    const tag = el.tagName || '';
+                    if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
+                    if (tag === 'CANVAS') break;
+                    el.setAttribute('style', css + ' overflow:hidden !important;');
+                    el = el.parentElement;
+                    depth++;
                 }
-                if (node.setSize) {
-                    // setSize removed: [node.size, node.size] is wrong (2D array) and causes infinite resize loop
+                // 3. Update ComfyUI internal widget height property
+                if (typeof dw !== 'undefined') {
+                    dw.height = avail;
+                    if (dw.computeSize) {
+                        dw.computeSize = function() {
+                            const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
+                            return [w, avail];
+                        };
+                    }
                 }
-                if (node.onResize) node.onResize();
+                // 4. Force canvas redraw after browser render
+                if (typeof requestAnimationFrame !== 'undefined') {
+                    requestAnimationFrame(function() {
+                        try {
+                            if (app && app.graph && app.graph.setDirtyCanvas) {
+                                app.graph.setDirtyCanvas(true, true);
+                            }
+                        } catch(e) {}
+                    });
+                }
             } catch(e) {}
+            _syncing = false;
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
         function _pollSize() { _lastNodeH = 0; try { syncWidgetHeight(); } catch(e) {} }
