@@ -648,6 +648,7 @@ function buildTemplateUI(node) {
                 const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important;';
                 // 1. Set container DOM height
                 container.setAttribute('style', css + ' display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
+                container.style.height = avail + 'px'; container.style.minHeight = avail + 'px'; container.style.maxHeight = avail + 'px';
                 // 2. Set ALL parent elements up to node root
                 let el = container.parentElement;
                 let depth = 0;
@@ -1797,7 +1798,7 @@ app.registerExtension({
                     if (node._bsaiRefreshSize) {
                         node._bsaiRefreshSize();
                     } else {
-                        node.setSize([440, 360]);
+                        node.setSize([480, 900]);
                     }
                 }
             }, 120);
