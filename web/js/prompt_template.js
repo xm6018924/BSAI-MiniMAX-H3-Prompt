@@ -23,7 +23,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-wrap {
     display: block; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    min-height: 100%; box-sizing: border-box; overflow-y: auto;
+    min-height: 100%; box-sizing: border-box; overflow: hidden;
     width: 100%; font-family: sans-serif;
 }
 .bsai-tpl-top {
@@ -78,7 +78,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 300px !important;
+    border: 1px solid #333; border-radius: 4px; max-height: 400px !important;
     overflow-y: auto !important; background: #111; min-height: 80px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
@@ -611,9 +611,12 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Dynamic height: compact when output is hidden (default), tall when shown.
-                // node._bsaiOutputVisible is set true by applyCustomization after Apply.
-                const h = node._bsaiOutputVisible ? 1200 : 480;
+                // Return actual node height so widget container fills the node.
+                // When user resizes the node taller, widget container grows with it.
+                // Minimum 480px to ensure all controls fit; output area adds ~720px when visible.
+                const nodeH = (node && node.size && Array.isArray(node.size)) ? node.size[1] - 38 : 480;
+                const minH = node._bsaiOutputVisible ? 900 : 480;
+                const h = Math.max(nodeH, minH);
                 return [w, h];
             };
         }
