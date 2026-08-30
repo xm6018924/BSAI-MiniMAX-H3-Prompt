@@ -611,13 +611,10 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Return actual node height so widget container fills the node.
-                // When user resizes the node taller, widget container grows with it.
-                // Minimum 480px to ensure all controls fit; output area adds ~720px when visible.
+                // Return actual node height — ComfyUI uses this for widget container.
+                // We also force-set it via syncWidgetHeight every 300ms.
                 const nodeH = (node && node.size && Array.isArray(node.size)) ? node.size[1] - 38 : 480;
-                const minH = node._bsaiOutputVisible ? 900 : 480;
-                const h = Math.max(nodeH, minH);
-                return [w, h];
+                return [w, Math.max(400, nodeH)];
             };
         }
 
@@ -632,27 +629,43 @@ function buildTemplateUI(node) {
             const nh = node.size[1];
             // Follow node height exactly; minimum 400px so controls aren't crushed.
             const avail = Math.max(400, nh - 38);
-            // ONLY set height — do NOT override display/overflow (CSS handles those:
-            // display:block + overflow-y:auto, so content scrolls instead of being clipped).
-            container.style.setProperty('height', avail + 'px', 'important');
-            container.style.setProperty('box-sizing', 'border-box', 'important');
-            // Walk up ancestors setting pixel height only (no overflow override)
+            // Use cssText for maximum specificity — ComfyUI often resets inline styles.
+            const css = 'height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important;';
+            container.style.cssText = css;
+            // Walk up ALL ancestors until we hit the node element, setting height.
+            // This ensures the widget container truly fills the node.
             let el = container.parentElement;
-            for (let i = 0; i < 8 && el; i++) {
-                el.style.setProperty('height', avail + 'px', 'important');
-                el.style.setProperty('box-sizing', 'border-box', 'important');
+            let depth = 0;
+            while (el && depth < 15) {
+                // Skip the node's outer element (it has its own size)
+                const cls = el.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) break;
+                el.style.cssText = 'height:' + avail + 'px !important; box-sizing:border-box !important;';
                 el = el.parentElement;
+                depth++;
             }
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
 
-        // Poll every 300ms (more reliable than rAF which may be throttled)
-        // Also call immediately and after delays to catch ComfyUI initial render
+        // Poll every 200ms + ResizeObserver for instant resize detection
         function _pollSize() {
             try { syncWidgetHeight(); } catch(e) {}
         }
         _pollSize();
-        setInterval(_pollSize, 300);
+        setInterval(_pollSize, 200);
+        // ResizeObserver: detect node DOM element resize instantly
+        try {
+            let _nodeEl = container;
+            while (_nodeEl && _nodeEl.parentElement) {
+                const c = _nodeEl.className || '';
+                if (typeof c === 'string' && (c.indexOf('comfy-node') >= 0 || c.indexOf('lite-node') >= 0 || c.indexOf('node') >= 0 && c.indexOf('widget') < 0)) break;
+                _nodeEl = _nodeEl.parentElement;
+            }
+            if (_nodeEl && typeof ResizeObserver !== 'undefined') {
+                const _ro = new ResizeObserver(function() { _pollSize(); });
+                _ro.observe(_nodeEl);
+            }
+        } catch(e) {}
         // Retry after ComfyUI finishes initial render (which may reset styles)
         setTimeout(_pollSize, 200);
         setTimeout(_pollSize, 500);
