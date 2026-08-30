@@ -611,11 +611,16 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Return actual node height — ComfyUI uses this for widget container.
-                // We also force-set it via syncWidgetHeight every 300ms.
+                // Return actual node height — ComfyUI uses this for widget container initial size.
                 const nodeH = (node && node.size && Array.isArray(node.size)) ? node.size[1] - 38 : 480;
                 return [w, Math.max(400, nodeH)];
-            };
+            }
+            // Force recompute on node resize by overriding onResize
+            const _origOnResize = node.onResize;
+            node.onResize = function() {
+                if (_origOnResize) _origOnResize.call(this);
+                try { syncWidgetHeight(); } catch(e) {}
+            };;
         }
 
         // ── Dynamic output preview height: follow node drag-resize ──
@@ -629,18 +634,20 @@ function buildTemplateUI(node) {
             const nh = node.size[1];
             // Follow node height exactly; minimum 400px so controls aren't crushed.
             const avail = Math.max(400, nh - 38);
-            // Use cssText for maximum specificity — ComfyUI often resets inline styles.
-            const css = 'height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important;';
+            const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important; overflow-y:auto !important; overflow-x:hidden !important;';
             container.style.cssText = css;
-            // Walk up ALL ancestors until we hit the node element, setting height.
-            // This ensures the widget container truly fills the node.
-            let el = container.parentElement;
+            // Set the widget container (direct parent) FIRST — this is the critical one.
+            // ComfyUI sets widget container height from computeSize, which doesn't update on resize.
+            if (container.parentElement) {
+                container.parentElement.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; overflow:hidden !important;';
+            }
+            // Walk up remaining ancestors (node-content, etc.) — stop at node outer element.
+            let el = container.parentElement ? container.parentElement.parentElement : null;
             let depth = 0;
-            while (el && depth < 15) {
-                // Skip the node's outer element (it has its own size)
+            while (el && depth < 12) {
                 const cls = el.className || '';
-                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) break;
-                el.style.cssText = 'height:' + avail + 'px !important; box-sizing:border-box !important;';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
+                el.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; box-sizing:border-box !important;';
                 el = el.parentElement;
                 depth++;
             }
