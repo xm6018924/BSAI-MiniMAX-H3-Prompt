@@ -560,6 +560,7 @@ function buildTemplateUI(node) {
 
     // Store refs
     node._bsaiOutDiv = outDiv;
+    node._bsaiOutputVisible = false;  // output hidden by default
     node._bsaiCat = catSel;
     node._bsaiSub = subSel;
     node._bsaiList = listDiv;
@@ -610,10 +611,10 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Fixed large height ensures ALL controls are visible without scrolling.
-                // ComfyUI uses this value for widget container height; dynamic values
-                // are only read at creation time, so fixed 1200px is more reliable.
-                return [w, 1200];
+                // Dynamic height: compact when output is hidden (default), tall when shown.
+                // node._bsaiOutputVisible is set true by applyCustomization after Apply.
+                const h = node._bsaiOutputVisible ? 1200 : 480;
+                return [w, h];
             };
         }
 
@@ -1252,9 +1253,12 @@ function applyCustomization(node, done) {
     var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
     // Show the output area now (was hidden by default)
     if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
+    node._bsaiOutputVisible = true;
     node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
-    // Refresh node size so the bottom aligns with the now-visible output area
-    if (node.setSize) setTimeout(function() { node.setSize([node.size[0], node.size[1] + 420]); }, 50);
+    // Recompute widget size: computeSize now returns 1200px because _bsaiOutputVisible=true
+    if (node.setSize) setTimeout(function() {
+        node.setSize([node.size[0], node.size[1] + 720]);
+    }, 50);
     fetch("/bsai_h3/merge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
