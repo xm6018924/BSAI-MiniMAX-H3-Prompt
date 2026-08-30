@@ -613,7 +613,7 @@ function buildTemplateUI(node) {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
                 // Return actual node height — ComfyUI uses this for widget container initial size.
                 const nodeH = (node && node.size && Array.isArray(node.size)) ? node.size[1] - 38 : 480;
-                return [w, Math.max(400, nodeH)];
+                return [w, Math.max(1000, nodeH)];
             }
             // Force recompute on node resize by overriding onResize
             const _origOnResize = node.onResize;
@@ -1818,6 +1818,12 @@ app.registerExtension({
                         node._bsaiRefreshSize();
                     } else {
                         node.setSize([480, 900]);
+                        // Force widget height to match node size after setSize
+                        try {
+                            const _w = node.widgets && node.widgets.find(function(w){return w.name === 'bsai_tpl_ui';});
+                            if (_w) { _w.height = 850; if (_w.computeSize) { _w.computeSize = function(){return [640, 850];}; } }
+                            if (app && app.graph && app.graph.setDirtyCanvas) { app.graph.setDirtyCanvas(true, true); }
+                        } catch(e) {}
                     }
                 }
             }, 120);
