@@ -638,40 +638,60 @@ function buildTemplateUI(node) {
             return container.parentElement || container;
         }
         let _syncing = false;
+        let _syncing = false;
+        function _getNodeEl() {
+            let el = container;
+            while (el && el.parentElement) {
+                const cls = el.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) return el;
+                el = el.parentElement;
+            }
+            return null;
+        }
         function syncWidgetHeight() {
             if (_syncing) return;
-            if (!node || !node.size || !Array.isArray(node.size)) return;
-            const nh = node.size[1];
-            const avail = Math.max(400, nh - 38);
+            // Get actual node DOM height (more reliable than node.size array)
+            const nodeEl = _getNodeEl();
+            let nh = 0;
+            if (nodeEl && nodeEl.offsetHeight) {
+                nh = nodeEl.offsetHeight;
+            } else if (node && node.size && Array.isArray(node.size)) {
+                nh = node.size[1];
+            }
+            if (!nh || nh < 100) return;
+            const avail = Math.max(400, nh - 50);
             _syncing = true;
             try {
                 const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important;';
-                // 1. Set container DOM height
+                // 1. Set container itself (both setAttribute and direct style)
                 container.setAttribute('style', css + ' display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
-                container.style.height = avail + 'px'; container.style.minHeight = avail + 'px'; container.style.maxHeight = avail + 'px';
+                container.style.height = avail + 'px';
+                container.style.minHeight = avail + 'px';
+                container.style.maxHeight = avail + 'px';
                 // 2. Set ALL parent elements up to node root
                 let el = container.parentElement;
                 let depth = 0;
-                while (el && depth < 20) {
+                while (el && depth < 25) {
                     const cls = el.className || '';
                     const tag = el.tagName || '';
                     if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
                     if (tag === 'CANVAS') break;
                     el.setAttribute('style', css + ' overflow:hidden !important;');
+                    el.style.height = avail + 'px';
+                    el.style.minHeight = avail + 'px';
                     el = el.parentElement;
                     depth++;
                 }
-                // 3. Update ComfyUI internal widget height property
+                // 3. Update ComfyUI internal widget height
                 if (typeof dw !== 'undefined') {
                     dw.height = avail;
                     if (dw.computeSize) {
                         dw.computeSize = function() {
-                            const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                            return [w, avail];
+                            return [640, avail];
                         };
                     }
                 }
-                // 4. Force canvas redraw after browser render
+                // 4. Force redraw
                 if (typeof requestAnimationFrame !== 'undefined') {
                     requestAnimationFrame(function() {
                         try {
