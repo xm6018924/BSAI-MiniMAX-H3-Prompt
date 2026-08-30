@@ -641,23 +641,30 @@ function buildTemplateUI(node) {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
             const avail = Math.max(400, nh - 38);
-            if (_lastNodeH === avail) return;
-            _lastNodeH = avail;
-            container.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
-            if (!_widgetEl) _widgetEl = _findWidgetEl();
-            if (_widgetEl) {
-                _widgetEl.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; overflow:hidden !important;');
+            // ALWAYS set, never skip — ComfyUI may reset styles between calls
+            const containerCss = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; display:block !important; overflow-y:auto !important; overflow-x:hidden !important;';
+            container.style.cssText = containerCss;
+            // Find and set the actual widget container (ComfyUI controls this)
+            let wEl = container.parentElement;
+            for (let i = 0; i < 8 && wEl; i++) {
+                const cls = wEl.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('widget') >= 0 || cls.indexOf('input_area') >= 0 || cls.indexOf('comfy-widget') >= 0)) break;
+                wEl = wEl.parentElement;
             }
+            if (!wEl) wEl = container.parentElement;
+            if (wEl) {
+                wEl.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important; overflow:hidden !important;';
+            }
+            // Walk up ALL ancestors, set height on each
             let el = container.parentElement;
             let depth = 0;
             while (el && depth < 15) {
                 const cls = el.className || '';
                 if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) break;
-                el.setAttribute('style', 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; box-sizing:border-box !important;');
+                el.style.cssText = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; box-sizing:border-box !important;';
                 el = el.parentElement;
                 depth++;
             }
-            try { if (node.onResize) node.onResize(); } catch(e) {}
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
         function _pollSize() { _lastNodeH = 0; try { syncWidgetHeight(); } catch(e) {} }
