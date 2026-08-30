@@ -630,26 +630,17 @@ function buildTemplateUI(node) {
         function syncWidgetHeight() {
             if (!node || !node.size || !Array.isArray(node.size)) return;
             const nh = node.size[1];
-            // Minimum 800px ensures all controls fit even if node is short;
-            // follow node height when taller.
-            const avail = Math.max(800, nh - 38);
-            // Container: explicit pixel height - ALWAYS set (dont skip on same value,
-            // because ComfyUI may reset styles during re-render).
+            // Follow node height exactly; minimum 400px so controls aren't crushed.
+            const avail = Math.max(400, nh - 38);
+            // ONLY set height — do NOT override display/overflow (CSS handles those:
+            // display:block + overflow-y:auto, so content scrolls instead of being clipped).
             container.style.setProperty('height', avail + 'px', 'important');
-            container.style.setProperty('display', 'flex', 'important');
-            container.style.setProperty('flex-direction', 'column', 'important');
-            container.style.setProperty('overflow', 'hidden', 'important');
             container.style.setProperty('box-sizing', 'border-box', 'important');
-            // Walk up 5 levels setting pixel height on all ancestors
+            // Walk up ancestors setting pixel height only (no overflow override)
             let el = container.parentElement;
             for (let i = 0; i < 8 && el; i++) {
                 el.style.setProperty('height', avail + 'px', 'important');
-                el.style.setProperty('overflow', 'hidden', 'important');
                 el.style.setProperty('box-sizing', 'border-box', 'important');
-                el = el.parentElement;
-            }
-            while (el) {
-                el.style.setProperty('overflow', 'visible', 'important');
                 el = el.parentElement;
             }
         }
