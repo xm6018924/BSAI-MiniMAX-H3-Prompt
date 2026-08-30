@@ -23,7 +23,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-wrap {
     display: block; gap: 6px;
     padding: 8px; background: #1a1a1a !important;
-    min-height: 100%; box-sizing: border-box; overflow: hidden;
+    min-height: 100%; box-sizing: border-box; overflow-y: auto;
     width: 100%; font-family: sans-serif;
 }
 .bsai-tpl-top {
@@ -78,8 +78,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 400px !important;
-    overflow-y: auto !important; background: #111; min-height: 80px;
+    border: 1px solid #333; border-radius: 4px; max-height: 200px !important;
+    overflow-y: auto !important; background: #111; min-height: 60px;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
