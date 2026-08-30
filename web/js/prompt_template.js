@@ -638,7 +638,6 @@ function buildTemplateUI(node) {
             return container.parentElement || container;
         }
         let _syncing = false;
-        let _syncing = false;
         function _getNodeEl() {
             let el = container;
             while (el && el.parentElement) {
