@@ -21,18 +21,18 @@ if (!document.getElementById(STYLE_ID)) {
     st.id = STYLE_ID;
     st.textContent = `
 .bsai-tpl-wrap {
-    display: block; gap: 6px;
-    padding: 8px; background: #1a1a1a !important;
-    min-height: 100%; box-sizing: border-box; overflow-y: auto;
-    width: 100%; font-family: sans-serif;
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 2px 8px; background: #1a1a1a !important;
+    min-height: 0; box-sizing: border-box; overflow-y: auto;
+    width: 100%; height: auto !important; font-family: sans-serif;
 }
 .bsai-tpl-top {
     display: flex; gap: 8px; align-items: flex-start;
-    margin: 6px 0; flex-shrink: 0; min-height: 0;
+    margin: 6px 0; flex: 0 0 auto; min-height: 0;
     overflow: hidden;
 }
 .bsai-tpl-left {
-    flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+    flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px;
     min-height: 0; overflow: hidden;
 }
 .bsai-tpl-right {
@@ -78,8 +78,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; max-height: 200px !important;
-    overflow-y: auto !important; background: #111; min-height: 60px;
+    border: 1px solid #333; border-radius: 4px; flex: 0 1 auto; min-height: 0;
+    max-height: 620px !important; overflow-y: auto !important; background: #111;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -194,7 +194,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-voice-hint { font-size: 11px; color: #889; }
 .bsai-voice-drow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 /* Customization textarea */
-.bsai-tpl-cust { margin-top: 6px; flex: 1 1 140px; min-height: 100px; display: flex; flex-direction: column; }
+.bsai-tpl-cust { margin-top: 6px; flex: 0 0 auto; min-height: 100px; display: flex; flex-direction: column; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
 .bsai-tpl-cust-ta {
     display: block; width: 100%; height: 60px; min-height: 50px; max-height: none; resize: vertical;
@@ -247,7 +247,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
 .bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
 .bsai-tpl-out {
-    margin-top: 6px; width: 100%; box-sizing: border-box; display: block;
+    margin-top: 6px; flex: 0 1 auto; width: 100%; box-sizing: border-box; display: block;
     background: rgba(30,32,40,0.8); border-radius: 4px; padding: 4px;
 }
 .bsai-tpl-out-ta {
@@ -501,7 +501,7 @@ function buildTemplateUI(node) {
     const diffToggle = document.createElement("button");
     diffToggle.type = "button";
     diffToggle.className = "bsai-tpl-diff-toggle";
-    diffToggle.textContent = "📊 源/修改后 对比 Diff";
+    diffToggle.textContent = "📊 展开对比 ▼ / Show Diff";
     diffToggle.title = "展开/收起「源模板 vs 修改后」对比窗口 / Toggle Source vs Merged diff view";
     outLbl.appendChild(outLblTxt);
     outLbl.appendChild(diffToggle);
@@ -611,9 +611,13 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Return actual node height — ComfyUI uses this for widget container initial size.
-                const nodeH = (node && node.size && Array.isArray(node.size)) ? node.size[1] - 38 : 480;
-                return [w, Math.max(1000, nodeH)];
+                // Content-sized: widget container follows its own content (no forced 1000px),
+                // so there is no wasted empty space at the bottom and no scrollbar.
+                // +28 safety margin: LiteGraph's container height can land a few px
+                // short of the content, which would otherwise show a right-side
+                // scrollbar or clip the last row.
+                const ch = Math.max(320, ((container && container.scrollHeight) || 320)) + 28;
+                return [w, ch];
             }
             // Force recompute on node resize by overriding onResize
             const _origOnResize = node.onResize;
@@ -637,7 +641,8 @@ function buildTemplateUI(node) {
             }
             return container.parentElement || container;
         }
-        let _syncing = false;
+        let _syncing = false, _syncingT = 0;
+        node._bsaiLastHSet = 0; // debounce lock: last time node height was actually changed
         function _getNodeEl() {
             let el = container;
             while (el && el.parentElement) {
@@ -647,66 +652,123 @@ function buildTemplateUI(node) {
             }
             return null;
         }
-        function syncWidgetHeight() {
-            if (_syncing) return;
-            // Get actual node DOM height (more reliable than node.size array)
-            const nodeEl = _getNodeEl();
-            let nh = 0;
-            if (nodeEl && nodeEl.offsetHeight) {
-                nh = nodeEl.offsetHeight;
-            } else if (node && node.size && Array.isArray(node.size)) {
-                nh = node.size[1];
-            }
-            if (!nh || nh < 100) return;
-            const avail = Math.max(400, nh - 50);
-            _syncing = true;
+        function syncWidgetHeight(allowSet) {
+            const _lt = Date.now();
+            if (_syncing && (_lt - _syncingT) < 300) return; // normal re-entrancy guard
+            _syncing = true; _syncingT = _lt; // stale lock (>300ms) self-heals
             try {
-                const css = 'height:' + avail + 'px !important; min-height:' + avail + 'px !important; max-height:' + avail + 'px !important; box-sizing:border-box !important;';
-                // 1. Set container itself (both setAttribute and direct style)
-                container.setAttribute('style', css + ' display:block !important; overflow-y:auto !important; overflow-x:hidden !important;');
-                container.style.height = avail + 'px';
-                container.style.minHeight = avail + 'px';
-                container.style.maxHeight = avail + 'px';
-                // 2. Set ALL parent elements up to node root
+                // ── Content-sized layout ──
+                // The widget container sizes to its own content (no forced height).
+                // Styles are written CONDITIONALLY so repeated no-op writes never
+                // mutate the DOM style attribute and therefore never re-trigger the
+                // MutationObserver below — that self-trigger loop was the flicker.
+                if (container.style.height) container.style.removeProperty('height');
+                if (container.style.minHeight) container.style.removeProperty('min-height');
+                if (container.style.maxHeight) container.style.removeProperty('max-height');
+                if (container.style.display !== 'flex') container.style.display = 'flex';
+                if (container.style.flexDirection !== 'column') container.style.flexDirection = 'column';
+                if (container.style.overflowY !== 'auto') container.style.overflowY = 'auto';
+                if (container.style.overflowX !== 'hidden') container.style.overflowX = 'hidden';
+                // Release forced heights on ancestor elements (keep overflow clipped).
+                // The widget container itself (container.parentElement) is EXCLUDED
+                // from height-release: our own content sizing below owns its height.
                 let el = container.parentElement;
+                if (el) {
+                    if (el.style.overflow !== 'hidden') el.style.overflow = 'hidden';
+                    el = el.parentElement;
+                }
                 let depth = 0;
                 while (el && depth < 25) {
                     const cls = el.className || '';
                     const tag = el.tagName || '';
                     if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
                     if (tag === 'CANVAS') break;
-                    el.setAttribute('style', css + ' overflow:hidden !important;');
-                    el.style.height = avail + 'px';
-                    el.style.minHeight = avail + 'px';
+                    if (el.style.height) el.style.removeProperty('height');
+                    if (el.style.minHeight) el.style.removeProperty('min-height');
+                    if (el.style.maxHeight) el.style.removeProperty('max-height');
+                    if (el.style.overflow !== 'hidden') el.style.overflow = 'hidden';
                     el = el.parentElement;
                     depth++;
                 }
-                // 3. Update ComfyUI internal widget height
-                if (typeof dw !== 'undefined') {
-                    dw.height = avail;
-                    if (dw.computeSize) {
-                        dw.computeSize = function() {
-                            return [640, avail];
-                        };
+                // Non-allowSet calls (poll / onResize / observers) stop here: they only
+                // keep forced styles off — they never measure, resize or repaint. This is
+                // what kills both the resize->onResize loop AND the observer self-trigger.
+                if (!allowSet) { _syncing = false; return; }
+                // Size the DOM-widget container to the content height so the last row is
+                // never clipped. Applied on every allowSet pass (init + content change);
+                // the ancestor loop above intentionally skips this element so it persists.
+                try {
+                    const _dwEl = container.parentElement;
+                    if (_dwEl && container.scrollHeight) _dwEl.style.height = (container.scrollHeight + 16) + 'px';
+                } catch(e) {}
+                // Event-driven (content changed): align the node height to the REAL
+                // content. Single source of truth = LiteGraph's own total height
+                // (title bar + widgets + this DOM widget's content height), obtained
+                // through node.computeSize(). Because we use the SAME value the engine
+                // uses for its own layout, the engine will NOT re-clamp it afterwards,
+                // which kills the resize tug-of-war that caused the flicker
+                // (old bug: sync set 985 -> engine clamped 1081 -> sync set 985 -> ...).
+                void container.offsetHeight;
+                let want = 0;
+                if (node && typeof node.computeSize === 'function') {
+                    try {
+                        const _cs = node.computeSize();
+                        want = (_cs && _cs[1]) || 0;
+                    } catch(e) { want = 0; }
+                }
+                if (!want) want = Math.max(320, (container && container.scrollHeight) || 320) + 46;
+                if (node && node.size && typeof node.size[1] === 'number') {
+                    const now = Date.now();
+                    if (Math.abs(node.size[1] - want) > 2 && (now - (node._bsaiLastHSet || 0)) > 500) {
+                        node._bsaiLastHSet = now;
+                        node.size[1] = want;
+                        if (node.graph) node.graph.setDirtyCanvas(true, true);
+                        // Converge: let LiteGraph re-layout the DOM-widget container to the
+                        // new content height (it can land a few px short and clip the last
+                        // row otherwise). Keep repainting at short intervals until the
+                        // container reaches the content height, or give up after 1.8s.
+                        (function() {
+                            let _t = 0;
+                            const _iv = setInterval(function() {
+                                _t++;
+                                try { if (node.graph) node.graph.setDirtyCanvas(true, true); } catch(e) {}
+                                let _ok = false;
+                                try {
+                                    const _dwEl = container && container.parentElement;
+                                    if (_dwEl && _dwEl.clientHeight >= ((container && container.scrollHeight) || 0) - 2) _ok = true;
+                                } catch(e) {}
+                                if (_t >= 15 || _ok) clearInterval(_iv);
+                            }, 120);
+                        })();
                     }
                 }
-                // 4. Force redraw
-                if (typeof requestAnimationFrame !== 'undefined') {
-                    requestAnimationFrame(function() {
-                        try {
-                            if (app && app.graph && app.graph.setDirtyCanvas) {
-                                app.graph.setDirtyCanvas(true, true);
-                            }
-                        } catch(e) {}
-                    });
-                }
-            } catch(e) {}
-            _syncing = false;
+            } catch(e) { try { console.error('[BSAI tpl] syncWidgetHeight error:', e && e.message, (e && e.stack||'').split('\n')[0]); } catch(_) {} }
+            _syncing = false; _syncingT = 0;
         }
         node._bsaiSyncWidgetHeight = syncWidgetHeight;
-        function _pollSize() { _lastNodeH = 0; try { syncWidgetHeight(); } catch(e) {} }
+        // Event-driven height refresh: UI change handlers call this and it is the ONLY
+        // path allowed to resize the node (allowSet=true). Polling/onResize only calibrate.
+        node._bsaiRefreshSize = function() { try { syncWidgetHeight(true); } catch(e) {} };
+        function _pollSize() {
+            _lastNodeH = 0;
+            try {
+                // Auto-align: if the node height has clearly drifted from the real
+                // content (e.g. initial load before the template list finished
+                // rendering), do ONE event-driven alignment. Once aligned the
+                // difference is ~0 and this stops, so it cannot flicker.
+                let autoAlign = false;
+                if (node && node.size && typeof node.size[1] === 'number' && typeof node.computeSize === 'function') {
+                    try {
+                        const _c = node.computeSize();
+                        const _want = (_c && _c[1]) || 0;
+                        if (_want && Math.abs(node.size[1] - _want) > 60) autoAlign = true;
+                    } catch(e) {}
+                }
+                if (autoAlign) { syncWidgetHeight(true); } else { syncWidgetHeight(); }
+            } catch(e) {}
+        }
         _pollSize();
-        setInterval(_pollSize, 150);
+        setInterval(_pollSize, 1000);
         try {
             let _nodeEl = container;
             while (_nodeEl && _nodeEl.parentElement) {
@@ -722,16 +784,21 @@ function buildTemplateUI(node) {
         try {
             if (!_widgetEl) _widgetEl = _findWidgetEl();
             if (_widgetEl && typeof MutationObserver !== 'undefined') {
+                let _moLast = 0;
                 const _mo = new MutationObserver(function(mutations) {
                     for (let i = 0; i < mutations.length; i++) {
                         if (mutations[i].type === 'attributes' && mutations[i].attributeName === 'style') {
-                            _pollSize();
+                            // Debounce: style writes from our own sync may still arrive;
+                            // throttling prevents any residual self-trigger loop.
+                            const _t = Date.now();
+                            if (_t - _moLast > 250) { _moLast = _t; _pollSize(); }
                             break;
                         }
                     }
                 });
+                // Observe the widget wrapper only, NOT our own container (observing our
+                // own style attribute is what let the sync loop re-trigger itself).
                 _mo.observe(_widgetEl, { attributes: true, attributeFilter: ['style'] });
-                _mo.observe(container, { attributes: true, attributeFilter: ['style'] });
             }
         } catch(e) {}
         setTimeout(_pollSize, 100);
@@ -745,13 +812,12 @@ function buildTemplateUI(node) {
         setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 500);
         setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 1000);
 
-        // Initial fit: set a usable default height
+        // Initial fit: small placeholder, then let content decide the height.
         setTimeout(function() {
             if (node && node.size && node.size[1] < 500) {
-                node.setSize([node.size[0], 700]);
-                if (node.graph) node.setDirtyCanvas(true, true);
+                node.setSize([node.size[0], 520]);
             }
-            setTimeout(syncWidgetHeight, 50);
+            setTimeout(function() { try { syncWidgetHeight(true); } catch(e) {} }, 60);
         }, 100);
         // Initial render of the output prompt preview (restored workflow state)
         setTimeout(function() { renderOutputPreview(node); }, 60);
@@ -771,9 +837,24 @@ function buildTemplateUI(node) {
     // "确认修改 / Apply": merge the customization into the template NOW and show
     // the final prompt in the output preview (manual confirm, no auto-merge).
     custBtn.addEventListener("click", function() {
-        if (node._bsaiCustBtn) node._bsaiCustBtn.disabled = true;
+        var _btn = node._bsaiCustBtn;
+        var _orig = _btn ? _btn.textContent : "";
+        // Only enter the "modifying" state when there is actual customization text
+        var _c = (node._bsaiCustTa && node._bsaiCustTa.value)
+              || (function(){ var _w = findWidget(node, "user_customization"); return (_w && _w.value) || ""; })();
+        var _hasCust = !!(_c && String(_c).trim());
+        var _timer = null;
+        if (_hasCust && _btn) {
+            _btn.textContent = "⏳ 修改中... / Applying...";
+            _btn.disabled = true;
+            // Safety net: force-restore the button after 120s even if the request stalls
+            _timer = setTimeout(function() {
+                if (_btn) { _btn.textContent = _orig; _btn.disabled = false; }
+            }, 120000);
+        }
         applyCustomization(node, function() {
-            if (node._bsaiCustBtn) node._bsaiCustBtn.disabled = false;
+            if (_btn) { _btn.textContent = _orig; _btn.disabled = false; }
+            if (_timer) clearTimeout(_timer);
         });
     });
     diffToggle.addEventListener("click", function() { toggleDiff(node); });
@@ -1235,6 +1316,15 @@ function setDiffOpen(node, open) {
     if (!node || !node._bsaiDiffDiv) return;
     node._bsaiDiffOpen = !!open;
     node._bsaiDiffDiv.style.display = open ? "block" : "none";
+    // Keep an explicit, always-visible 展开/收起 button (label follows state).
+    if (node._bsaiDiffToggle) {
+        node._bsaiDiffToggle.textContent = open
+            ? "📊 收起对比 ▲ / Hide Diff"
+            : "📊 展开对比 ▼ / Show Diff";
+    }
+    // Explicit content change: reset the height debounce lock so the node grows
+    // immediately (no flicker / no stale clipping of the diff panel).
+    if (open && node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
     if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
     if (node.graph && node.graph.setDirtyCanvas) node.graph.setDirtyCanvas(true, true);
 }
@@ -1307,11 +1397,17 @@ function applyCustomization(node, done) {
     // Show the output area now (was hidden by default)
     if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
     node._bsaiOutputVisible = true;
+    // Explicit content change: reset the height debounce lock so the node grows
+    // immediately to reveal the output area (no stale clip).
+    if (node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
+    // Freeze the template browser at its current size (no grow/shrink) so the
+    // output area below can never compress or hide it; output area absorbs leftover.
+    if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
+    if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
     node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
-    // Recompute widget size: computeSize now returns 1200px because _bsaiOutputVisible=true
-    if (node.setSize) setTimeout(function() {
-        node.setSize([node.size[0], node.size[1] + 720]);
-    }, 50);
+    // Node height follows content automatically; trigger an immediate event-driven
+    // recompute so the output panel appears fully (no stale +720 stretch).
+    try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
     fetch("/bsai_h3/merge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1816,6 +1912,11 @@ app.registerExtension({
                 if (node.setSize) {
                     if (node._bsaiRefreshSize) {
                         node._bsaiRefreshSize();
+                        // Re-run a couple of times: on first add, LiteGraph lays the
+                        // DOM-widget container out at its pre-grow height and only
+                        // re-lays it out again after further repaint cycles.
+                        setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 600);
+                        setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 1500);
                     } else {
                         node.setSize([480, 900]);
                         // Force widget height to match node size after setSize
