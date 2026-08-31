@@ -1,0 +1,3 @@
+fix(BSAI_H3_PromptTemplate): external_prompt 改为反向提示词(严禁出现关键字)语义
+
+不再把 external_prompt 作为动作覆盖(_merge_template_prompts 传空，避免负向词如"五官扭曲"被 Action Override 当成要生成的动作)；external_prompt 统一生成约束段"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"追加到 prompt 末尾。用户补充修改框文字保留。

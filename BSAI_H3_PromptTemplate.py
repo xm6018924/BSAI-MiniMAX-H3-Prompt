@@ -296,7 +296,7 @@ Features / 功能特点:
             else:
                 prompt = ""
             if ext:
-                prompt = (prompt + "\n\n" if prompt.strip() else "") + "--- External Prompt / 外部提示词 ---\n" + ext
+                prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
             if cust:
                 try:
                     merged, merr = _merge_custom(prompt, cust) if prompt.strip() else ("", None)
@@ -308,8 +308,11 @@ Features / 功能特点:
                     prompt = _append_custom(prompt, cust)
             return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
 
-        # Merge all selected templates; external prompt OVERRIDES the base action
-        prompt = _merge_template_prompts(tpls, ext)
+        # Merge all selected templates. external_prompt 作为"反向提示词 / 严禁出现的关键字列表"，
+        # 不再作为动作覆盖（避免负向词如"五官扭曲"被当成要生成的动作）。
+        prompt = _merge_template_prompts(tpls, "")
+        if ext:
+            prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
