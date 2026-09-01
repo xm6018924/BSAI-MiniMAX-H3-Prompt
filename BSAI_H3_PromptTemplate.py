@@ -184,6 +184,38 @@ def _append_custom(prompt, cust):
     return (prompt.rstrip() + "\n\n--- User Customization / 用户自定义 ---\n" + cust.strip())
 
 
+# ── Scene reference (图3场景) dynamic clause ──
+# Templates may embed {{SCENE_REF_RULE}} and {{SCENE_SUMMARY}} placeholders.
+# If the optional scene_image input is connected (user provided a <Picture 3> scene),
+# they are replaced with the "use the scene from <Picture 3>" wording; otherwise the
+# "neutral default scene" wording is used.
+_SCENE_REF_RULE_HAS = (
+    "<Picture 3> (SCENE): provides the fighting environment — the output scene must be "
+    "EXACTLY the scene, background, architecture, lighting, and atmosphere from <Picture 3>. "
+    "Preserve this exact environment unchanged throughout the fight."
+)
+_SCENE_REF_RULE_NONE = (
+    "(No scene reference image — the fighting environment is a neutral, uncluttered open "
+    "space suitable for a standing fight; do not introduce any specific location.)"
+)
+_SCENE_SUMMARY_HAS = (
+    "The fighting environment is EXACTLY the scene from <Picture 3> — same background, "
+    "architecture, lighting, and atmosphere, preserved unchanged throughout the fight."
+)
+_SCENE_SUMMARY_NONE = (
+    "The fighting environment is a neutral, uncluttered open space; no specific location is introduced."
+)
+
+
+def _apply_scene_placeholder(prompt, has_scene):
+    """Replace {{SCENE_REF_RULE}} / {{SCENE_SUMMARY}} with scene-vs-default wording."""
+    if not prompt:
+        return prompt
+    ref = _SCENE_REF_RULE_HAS if has_scene else _SCENE_REF_RULE_NONE
+    summ = _SCENE_SUMMARY_HAS if has_scene else _SCENE_SUMMARY_NONE
+    return prompt.replace("{{SCENE_REF_RULE}}", ref).replace("{{SCENE_SUMMARY}}", summ)
+
+
 class BSAI_H3_PromptTemplate:
     """One-click H3 prompt template selector with categorized templates and GIF preview."""
 
@@ -208,6 +240,12 @@ class BSAI_H3_PromptTemplate:
                 ),
             },
             "optional": {
+                "scene_image": (
+                    "IMAGE",
+                    {
+                        "tooltip": "图3场景参考图 (可选) / Scene reference image <Picture 3> (optional)\n提供时提示词按图3场景生成；不提供时按默认场景生成\nIf connected, the prompt uses the scene from <Picture 3>; otherwise it uses a neutral default scene.",
+                    },
+                ),
                 "external_prompt": (
                     "STRING",
                     {
@@ -260,7 +298,7 @@ Features / 功能特点:
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
 """
 
-    def get_template(self, template_select, user_customization="", external_prompt="", direct_prompt=""):
+    def get_template(self, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None):
         direct = (direct_prompt or "").strip()
         if direct:
             # ── Direct mode / 直通模式: bypass templates, output the prompt as-is ──
@@ -331,6 +369,8 @@ Features / 功能特点:
             f"{t.get('name','')} | {t.get('name_en','')}" if t.get("name_en") else t.get("name", "")
             for t in tpls
         )
+        # ── Scene reference (图3场景): if scene_image connected → use <Picture 3> scene wording ──
+        prompt = _apply_scene_placeholder(prompt, scene_image is not None)
         mode = primary.get("generation_mode", "System Recommended / 系统推荐")
         if len(tpls) > 1:
             mode = f"{mode} | 多模板叠加 Multi-Stack"
@@ -343,7 +383,7 @@ Features / 功能特点:
         return (prompt, name_label, mode, desc, duration, preview)
 
     @classmethod
-    def IS_CHANGED(s, template_select, user_customization="", external_prompt="", direct_prompt=""):
+    def IS_CHANGED(s, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None):
         return float("nan")
 
 
