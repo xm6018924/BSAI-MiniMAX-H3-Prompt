@@ -199,20 +199,20 @@ def _append_custom(prompt, cust):
 # they are replaced with the "use the scene from <Picture 3>" wording; otherwise the
 # "neutral default scene" wording is used.
 _SCENE_REF_RULE_HAS = (
-    "<Picture 3> (SCENE): provides the fighting environment — the output scene must be "
-    "EXACTLY the scene, background, architecture, lighting, and atmosphere from <Picture 3>. "
-    "Preserve this exact environment unchanged throughout the fight."
+    "<Picture 3> (SCENE): provides the scene and environment — the output background, architecture, "
+    "lighting, atmosphere and setting must be EXACTLY from <Picture 3>. Preserve this exact environment "
+    "unchanged throughout the video."
 )
 _SCENE_REF_RULE_NONE = (
-    "(No scene reference image — the fighting environment is a neutral, uncluttered open "
-    "space suitable for a standing fight; do not introduce any specific location.)"
+    "(No scene reference image — use a neutral, uncluttered default environment; do not introduce any "
+    "specific location.)"
 )
 _SCENE_SUMMARY_HAS = (
-    "The fighting environment is EXACTLY the scene from <Picture 3> — same background, "
-    "architecture, lighting, and atmosphere, preserved unchanged throughout the fight."
+    "The environment is EXACTLY the scene from <Picture 3> — same background, architecture, lighting and "
+    "atmosphere, preserved unchanged throughout the video."
 )
 _SCENE_SUMMARY_NONE = (
-    "The fighting environment is a neutral, uncluttered open space; no specific location is introduced."
+    "The environment is a neutral, uncluttered default space; no specific location is introduced."
 )
 
 
