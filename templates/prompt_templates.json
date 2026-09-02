@@ -3906,19 +3906,22 @@
               "id": "cam_bullet_time",
               "name": "子弹时间",
               "name_en": "Bullet Time",
-              "description": "时间近乎冻结瞬间摄影机高速环绕定格，超现实时空凝滞感",
+              "description": "主体快速躺倒瞬间时间凝固，摄影机360度完整环绕，图3可选场景",
               "preview": "cam_bullet_time.webp",
-              "generation_mode": "Image to Video (图生视频)",
-              "duration": 5,
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
               "needs_image": true,
               "needs_video": false,
               "needs_audio": false,
               "tags": [
                 "运镜",
                 "子弹时间",
-                "Bullet Time"
+                "Bullet Time",
+                "躺倒",
+                "时间凝固",
+                "360环绕"
               ],
-              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，采用子弹时间运镜（Bullet Time），摄影机在时间近乎冻结的瞬间围绕主体做高速环绕定格，主体动作凝固于空中，摄影机环绕展现空间细节，产生超现实的时空凝滞感。环绕匀速，画面清晰锐利，无跳切。\n\noverall_soundscape: \n凝固时空感的声音处理，环绕气流声清晰可辨。\n\nnon_diegetic_music: \n空灵延展的配乐，突出时间凝滞的超现实感。"
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The character identity, hairstyle, body proportions, clothing and pose from <Picture 1> are preserved.\n\nintegrated_multimodal_description: \n[镜头1]【0-10秒】全程单镜头，一镜到底。{{SCENE_REF_RULE}} 子弹时间运镜（Bullet Time）：主体快速躺倒后时间骤然凝固，随后时间静止、摄影机围绕主体360度完整环绕。\n- 0.0–2.0s: 正常速度。<Subject 1>（参考图人物）以快速动作向后躺倒——身体失去平衡向后倾倒，衣摆、发丝和配饰在快速运动中扬起，动作由快到慢渐入，速度感清晰。\n- 2.0s: 瞬间凝固。时间突然凝固——<Subject 1> 以躺倒的空中姿态骤然定格：身体悬空倾斜约45度，衣摆和发丝停留在扬起的中途，表情和身体角度完全冻结，仿佛时间被按下暂停键。\n- 2.0–8.0s: 时间静止 + 360度环绕。时间完全静止，<Subject 1> 保持躺倒定格姿态一动不动（身体悬空、衣摆发丝凝在半空，无任何呼吸和飘动），摄影机围绕 <Subject 1> 做 360 度完整环绕旋转，展现空间细节——前景、主体、背景三层视差滑动，产生超现实的时空凝滞感。环绕匀速，画面清晰锐利，主体始终锐利无运动模糊，无跳切。\n- 8.0–10.0s: 环绕收尾。摄影机完成 360 度环绕后停在 <Subject 1> 侧面，时间开始缓慢恢复——衣摆和发丝轻微飘动，<Subject 1> 缓缓继续下落。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: \n凝固时空感的声音处理，环绕气流声清晰可辨，躺倒时衣料破空的短促声。\n\nnon_diegetic_music: \n空灵延展的配乐，突出时间凝滞的超现实感，凝固瞬间一声清脆的音效定格。"
             }
           ]
         }
