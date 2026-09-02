@@ -24,12 +24,21 @@ def _load_templates():
 
 
 _TEMPLATE_CACHE = None
+_TEMPLATE_CACHE_MTIME = None
 
 
 def _get_template_data():
-    global _TEMPLATE_CACHE
-    if _TEMPLATE_CACHE is None:
+    """Load template JSON with hot-reload: if the file's mtime changed since the
+    last load, reload it — so editing templates/prompt_templates.json takes effect
+    WITHOUT restarting ComfyUI."""
+    global _TEMPLATE_CACHE, _TEMPLATE_CACHE_MTIME
+    try:
+        mtime = os.path.getmtime(_TEMPLATE_JSON)
+    except Exception:
+        mtime = None
+    if _TEMPLATE_CACHE is None or mtime != _TEMPLATE_CACHE_MTIME:
         _TEMPLATE_CACHE = _load_templates()
+        _TEMPLATE_CACHE_MTIME = mtime
     return _TEMPLATE_CACHE
 
 
