@@ -376,7 +376,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 
 **EN:** The **BSAI H3 Prompt Template** node provides categorized H3 prompt templates. One click outputs a complete three-field structured prompt without needing LLM optimization.
 
-#### 三级分类体系 / Three-Level Category System (246 templates / 11 categories)
+#### 三级分类体系 / Three-Level Category System (254 templates / 11 categories)
 
 | 一级分类 / Category | 二级分类 / Subcategories | 模板示例 / Examples |
 |-|-|-|
@@ -419,7 +419,7 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 7. The optional `external_prompt` input port accepts text from other nodes; when provided it **OVERRIDES the template's action** (e.g. "抬腿" replaces the walking motion) instead of merely appending.
 8. **🎤 语音输入 / Voice input**: click the **🎤 语音 / Voice** button next to the search box, allow the mic, speak, then "Stop & Transcribe". The recording is transcribed locally (offline Vosk) and can be filled into `external_prompt` (action override) or `user_customization`. Install: `pip install vosk` + `python scripts/download_vosk_model.py`.
 
-> **模板通用化 / Generic templates:** 全部 246 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 246 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
+> **模板通用化 / Generic templates:** 全部 254 个模板均经过审计与通用化重写，不包含具体场景或人物形象细节（发型、服装、鞋帽、性别等）。图生视频 / 首尾帧模板只引用输入图像（`<Picture 1>` / `<Picture 2>`）并描述动作、运镜、氛围，不会覆盖输入图像的人物或场景特征。All 254 templates have been audited and genericized — no specific scene or character-appearance details. I2VA/FL2VA templates only reference the input images and describe action/camera/atmosphere, so they never overwrite the input image features.
 
 #### 预览动画 / Previews
 
@@ -516,6 +516,26 @@ integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.5)在欧洲小镇�
 | 语言支持 | 多语言（TTS 精准覆盖 11 种） |
 
 ## 更新日志 / Changelog
+
+### v1.12.0 — 提示词模板总数突破 254 + 全模板图3可选场景 / Template library reaches 254 + all templates support optional scene image
+
+**中文说明：**
+
+- **模板总数：246 → 254**（11 大分类 / 53 子类）。
+- **新增「子弹时间」双模板**（武打打斗 → 快慢镜头类）：
+  - `子弹时间·躲闪抓弹`（图生视频）：极速子弹 → 瞬间凝固 → 慢动作两指夹弹，全程单子弹（CRITICAL 硬限制）。
+  - `子弹时间·双人对射交互`（多参生视频）：图1主角 + 图2枪手 + 图3可选场景，两种站位规则（左右对峙 / 前后对峙·前位侧身单手接弹）。
+- **全部图生 / 文生 / 首尾帧模板支持图3可选场景**：`scene_image` 端口接图3 → 场景严格按图3；不接 → 中性默认场景（`{{SCENE_REF_RULE}}` 占位符）。
+- **慢动作命中瞬间 / 子弹时间运镜** 模板新增图3场景支持；子弹时间运镜改为"躺倒 → 凝固 → 360度环绕"，时长延长至 10s。
+- 场景措辞通用化（去除武打"fighting"限定），适用于所有模板类型。
+
+**English:**
+
+- Template count: **246 → 254** (11 categories / 53 subcategories).
+- New "Bullet Time" twin templates added (Martial Arts → Speed & Rhythm): Bullet Time Dodge & Catch (I2V) and Bullet Time Duel & Catch (Multi-Ref) with staging rules.
+- All Image-to-Video / Text-to-Video / First-Last-Frame templates now support an optional scene image (<Picture 3>) via the `scene_image` port; neutral default when absent.
+- Slow-Mo Impact and Bullet Time camera templates gained optional scene support; Bullet Time camera reworked to "fall → freeze → 360° orbit", extended to 10s.
+- Scene placeholder wording genericized (removed "fighting" limitation).
 
 ### v1.11.10 — 负向约束强注入（"严禁第三人"写满所有字段）/ Negative-constraint enforcement injection
 
