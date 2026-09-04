@@ -5475,6 +5475,342 @@
           ]
         }
       ]
+    },
+    {
+      "name": "画面特效与多视角 | VFX & Multi-View",
+      "name_en": "VFX & Multi-View",
+      "subcategories": [
+        {
+          "name": "画面切割特效 | Split Screen",
+          "name_en": "Split Screen Effect",
+          "templates": [
+            {
+              "id": "vfx_split_duo",
+              "name": "二分屏对比特效",
+              "name_en": "Duo Split-Screen Contrast",
+              "description": "同一画面左右分屏，左屏与右屏内容形成对比或连续变化（自定义<Picture 1><Picture 2>）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "分屏",
+                "二分屏",
+                "对比",
+                "切割",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> and <Picture 2> are fully referenced as the two sides of a split screen. Preserve the exact identity/objects from both reference images.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Split-screen VFX. The frame is divided vertically into two equal panels by a clean animated divider line. The left panel shows the subject from <Picture 1>, the right panel shows the subject from <Picture 2>; both remain faithful to their reference images. 【ACTION】The two panels interact: the same action plays in sync on both sides, or the divider sweeps across and the two contents exchange positions, then snap back. 【/ACTION】Keep both panels sharp, equal brightness, cinematic grade, thin glowing seam between panels. (画面切割为左右两屏，两屏内容完全来自<Picture 1><Picture 2>，中间分割线平滑发光，双屏同步动作或对调。)\n\noverall_soundscape: 分屏切换时伴随轻快的电子提示音与画面扫描声，两侧内容动作有轻微的环境声交织，整体干净利落。\n\nnon_diegetic_music: 一段节奏明快、带合成器脉冲的电子配乐，节拍与分屏切换同步，营造科技感与节奏感。"
+            },
+            {
+              "id": "vfx_split_quad",
+              "name": "四分屏矩阵特效",
+              "name_en": "Quad Split-Screen Matrix",
+              "description": "同一画面四宫格矩阵，四个分区各自播放不同画面（自定义<Picture 1>与自定义场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "四分屏",
+                "矩阵",
+                "多格",
+                "监控",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the primary subject. The scene is customized by the user via the scene reference.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Quad split-screen VFX. The frame is divided into a 2x2 grid by thin neon divider lines. Each quadrant shows the same subject from <Picture 1> in the customized scene, but from a different angle or with a different lens (wide / close-up / low angle / overhead). 【ACTION】The four quadrants run simultaneously with a slight time offset: the action in each panel is the same moment captured from four viewpoints, creating a matrix-style multi-angle effect; panels may briefly highlight one by one. 【/ACTION】All panels stay in sync, cinematic color, subtle glow on dividers. (同一画面四宫格，每格展示<Picture 1>主体在自定义场景中的不同机位视角，四格同时播放同一动作的不同角度。)\n\noverall_soundscape: 多路轻微的环境声叠加，四格同步动作时声音略有延迟交错，带科技感的电子环境底噪。\n\nnon_diegetic_music: 平稳的低频电子律动，节奏规整，营造监控矩阵般的冷静科技氛围。"
+            },
+            {
+              "id": "vfx_pip",
+              "name": "画中画悬浮特效",
+              "name_en": "Picture-in-Picture Floating",
+              "description": "主画面之上悬浮小画中画窗口，播放关联内容（自定义<Picture 1>主画面与<Picture 2>小窗）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "画中画",
+                "悬浮窗",
+                "PIP",
+                "窗口",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> is the main panel content and <Picture 2> is the floating mini-window content. Preserve both reference identities.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Picture-in-Picture VFX. The full frame plays the main scene from <Picture 1>. A smaller floating window (PiP) appears, showing content from <Picture 2>; the window has a rounded-corner border, soft shadow and subtle reflection. 【ACTION】The PiP window drifts gently (bottom-right to center) while the main frame keeps playing; the two contents are related in action — e.g. the main subject reacts to what the PiP window shows. 【/ACTION】Main frame remains sharp, PiP window clean and legible, cinematic grade. (主画面播放<Picture 1>内容，悬浮小窗播放<Picture 2>内容，小窗圆角带投影，可轻微漂移并与主画面内容联动。)\n\noverall_soundscape: 主画面环境声为基底，小窗出现时有清脆的玻璃质感提示音，两层声音层次分明。\n\nnon_diegetic_music: 轻柔的电子氛围音乐，层次丰富，配合画中画的悬浮感与科技感。"
+            }
+          ]
+        },
+        {
+          "name": "人物与空间关系特效 | Person-Space",
+          "name_en": "Person-Space Relation",
+          "templates": [
+            {
+              "id": "vfx_space_micro",
+              "name": "巨空间微缩人物",
+              "name_en": "Tiny Person in Vast Space",
+              "description": "巨大空旷空间中微缩人物，强调人物与空间的强烈比例反差（自定义人物图与自定义场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "微缩",
+                "大小对比",
+                "空间",
+                "比例",
+                "巨人场景"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the person. The scene is a vast, customized space provided by the user.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Cinematic scale-contrast VFX. The person from <Picture 1> appears extremely small against a vast, towering customized space (huge hall, canyon, sky, or monumental architecture). Deep perspective emphasizes the ratio between the tiny figure and the giant environment. 【ACTION】The tiny person moves slowly across the frame, dwarfed by the environment; the camera slowly pushes in, making the space feel even more immense; dust particles and light shafts emphasize scale. 【/ACTION】Photoreal, high dynamic range, shallow-to-deep focus, cinematic. (人物<Picture 1>在自定义的巨大空间中显得渺小，纵深透视强烈对比，人物缓慢移动，镜头缓慢推进强化空间辽阔感。)\n\noverall_soundscape: 空旷空间带回声的环境声，轻微的风声和远处回响，人物脚步声细小清晰，强化空旷感。\n\nnon_diegetic_music: 宏大而静谧的管弦配乐，缓慢铺陈，营造孤独与宏大的氛围。"
+            },
+            {
+              "id": "vfx_space_float",
+              "name": "人物悬浮空间",
+              "name_en": "Floating Person in Space",
+              "description": "人物在空旷空间中失重漂浮，空间关系自由（自定义人物图与自定义场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "悬浮",
+                "失重",
+                "漂浮",
+                "空间",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the floating person. The space is customized by the user.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Zero-gravity VFX. The person from <Picture 1> floats weightlessly inside a customized space, no ground contact. Hair, clothing and loose objects drift slowly. 【ACTION】The person turns and glides gently through the space, softly bumping off invisible surfaces, slow graceful rotation; camera follows with a smooth handheld glide. 【/ACTION】Soft diffuse lighting, photoreal fabric physics, cinematic color. (人物<Picture 1>在自定义空间中失重漂浮，发丝衣摆缓慢飘动，人物缓慢旋转滑行，镜头平滑跟随。)\n\noverall_soundscape: 近乎无声的真空感，只有轻柔的衣物飘动声与呼吸声，偶尔有远处空间设备的低鸣。\n\nnon_diegetic_music: 空灵的环境电子乐，音符稀疏，营造失重与宁静的氛围。"
+            },
+            {
+              "id": "vfx_space_warp",
+              "name": "空间透视拉伸",
+              "name_en": "Perspective Warp Space",
+              "description": "夸张广角透视拉伸，人物与空间的纵深变形关系（自定义人物图与自定义场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "透视",
+                "广角",
+                "拉伸",
+                "空间",
+                "变形"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the person. The space is customized by the user.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Perspective-warp VFX. The customized space is shot with an ultra-wide lens so the edges stretch and distort; the person from <Picture 1> stands at the center, subject to the exaggerated perspective — limbs and environment lean dramatically toward the frame edges. 【ACTION】The camera dollies toward the person while the space warps around them, creating a dynamic depth tunnel; the person stays sharp while the surrounding geometry bends and flows. 【/ACTION】Strong vanishing point, cinematic fisheye-like distortion, vivid color. (超广角拍摄自定义空间，边缘强烈拉伸变形，人物<Picture 1>立于中心，镜头推进时空间如隧道般扭曲流动。)\n\noverall_soundscape: 空间扭曲时伴随低频轰鸣与轻微变调的环境声，脚步回声被拉长。\n\nnon_diegetic_music: 带有失真感的电子合成器音色，节奏渐进增强，营造超现实空间感。"
+            }
+          ]
+        },
+        {
+          "name": "人物与文字排版特效 | Typography",
+          "name_en": "Person + Custom Text Typography",
+          "templates": [
+            {
+              "id": "vfx_text_3d",
+              "name": "3D立体文字环绕",
+              "name_en": "3D Typography Orbit",
+              "description": "3D立体文字环绕人物/场景流动，自定义文字内容排版特效（自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "3D文字",
+                "文字环绕",
+                "排版",
+                "立体字",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the person. The scene is customized. Custom text elements orbit around the subject.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] 3D typography VFX. In the customized scene, the person from <Picture 1> is surrounded by large glossy 3D typography (the user-defined custom text). The letters rotate and orbit around the person in a clean ring formation, with metallic/chrome material and soft reflections. 【ACTION】The 3D text ring slowly revolves around the person, letters scale and swap positions smoothly; the person moves naturally through the orbiting text; a few letters break loose and float toward the camera. 【/ACTION】Cinematic lighting, DOF on the letters, elegant composition. (自定义场景中，<Picture 1>人物被用户定义的三维立体文字环绕，文字以金属质感环形绕人物缓慢旋转，部分文字飘向镜头。)\n\noverall_soundscape: 文字旋转时伴随轻微的能量嗡鸣与清脆的金属碰撞声，环境声低沉衬托。\n\nnon_diegetic_music: 带合成器琶音的电子配乐，律动与文字旋转同步，时尚科技感。"
+            },
+            {
+              "id": "vfx_text_particle",
+              "name": "文字粒子聚散",
+              "name_en": "Typographic Particles",
+              "description": "文字化作粒子流聚集成型或消散飘散（自定义文字内容，自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "粒子",
+                "文字",
+                "消散",
+                "聚合",
+                "特效"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the person. The custom text is rendered as particles. The scene is customized.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Particle-typography VFX. In the customized scene, the person from <Picture 1> stands as thousands of luminous particles stream in and assemble into the user-defined custom text characters floating beside/behind them. 【ACTION】The particles swirl like a controlled wind, forming the text letter by letter, then the text shatters back into a particle stream that spirals around the person before re-assembling; the person remains still and centered while particles flow around. 【/ACTION】Particles glow softly, cinematic bokeh, deep blacks, high contrast. (自定义场景中，<Picture 1>人物身旁的发光粒子流聚集成自定义文字，文字再碎裂为粒子旋绕人物后重新聚合。)\n\noverall_soundscape: 粒子流动时细腻的沙沙声与高频闪烁音，聚合瞬间有清脆的咔嗒提示音。\n\nnon_diegetic_music: 空灵氛围电子乐配以清脆打击节奏，粒子聚散与音符起伏同步。"
+            },
+            {
+              "id": "vfx_text_neon",
+              "name": "霓虹文字背景",
+              "name_en": "Neon Typography Backdrop",
+              "description": "霓虹发光文字作为背景与人物同框，自定义文字内容（自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "霓虹",
+                "文字",
+                "发光",
+                "背景",
+                "赛博朋克"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the person. The custom text appears as neon signage. The scene is customized.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Neon-typography VFX. In the customized scene (rainy night city street by default), the person from <Picture 1> stands in front of glowing neon signs showing the user-defined custom text. The neon letters flicker and cast colored light onto the person. 【ACTION】The neon text pulses and changes glow color; the person walks slowly past the signs, their silhouette rim-lit by the neon; droplets or haze catch the light. 【/ACTION】Cyberpunk mood, strong color contrast, cinematic reflections on wet ground. (自定义场景中，<Picture 1>人物站在发光的自定义霓虹文字招牌前，文字闪烁变色，霓虹光映照人物轮廓，营造赛博朋克氛围。)\n\noverall_soundscape: 霓虹灯电流滋滋声、雨声与远处城市环境声交织，霓虹闪烁时声音轻微起伏。\n\nnon_diegetic_music: 复古合成器合成波（Synthwave）配乐，带慵懒律动，营造夜间赛博氛围。"
+            }
+          ]
+        },
+        {
+          "name": "人物与动漫角色互动 | Anime Interaction",
+          "name_en": "Person + Anime Character Interaction",
+          "templates": [
+            {
+              "id": "vfx_anime_walk",
+              "name": "真人×动漫并肩同行",
+              "name_en": "Real × Anime Walk Together",
+              "description": "真人角色与动漫角色在同一画面并肩同行互动（自定义<Picture 1>真人图与<Picture 2>动漫角色图）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "动漫互动",
+                "并肩",
+                "真人",
+                "二次元",
+                "双角色"
+              ],
+              "prompt": "For the target video, <Picture 1> is the real person and <Picture 2> is the anime character. Both identities are preserved exactly.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Live-action meets anime VFX. The real person from <Picture 1> and the anime character from <Picture 2> appear in the same frame, walking side by side through the customized scene. The anime character is rendered with clean cel-shaded style that visually harmonizes with the live footage (consistent lighting and contact shadows). 【ACTION】They walk together naturally, talking and laughing, occasionally the anime character turns and gestures toward the real person; both faces stay faithful to their reference images. 【/ACTION】Seamless compositing, coherent lighting on both, cinematic depth. (真人<Picture 1>与动漫角色<Picture 2>同框并肩行走互动，动漫角色以赛璐璐渲染并与实拍光影统一，二者动作自然交流。)\n\noverall_soundscape: 两人行走的脚步声与交谈声，轻微环境声，动漫角色音色略卡通化但不突兀。\n\nnon_diegetic_music: 轻快的动漫风配乐，节奏活泼，带口哨或钢琴主旋律。"
+            },
+            {
+              "id": "vfx_anime_battle",
+              "name": "真人×动漫角色对战",
+              "name_en": "Real × Anime Battle",
+              "description": "真人与动漫角色同框对战打斗（自定义<Picture 1>真人图与<Picture 2>动漫角色图）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "对战",
+                "打斗",
+                "动漫",
+                "真人",
+                "双角色"
+              ],
+              "prompt": "For the target video, <Picture 1> is the real person and <Picture 2> is the anime character. Both identities are preserved.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Cross-style battle VFX. The real person from <Picture 1> and the anime character from <Picture 2> face off in the customized arena-like scene. 【ACTION】They clash in a fast, choreographed exchange: the real person dodges as the anime character dashes with speed lines, they trade blows with impact flashes and shockwaves; the anime character uses a stylized energy attack while the real person counters with physical technique. 【/ACTION】Dynamic camera follows the fight, cel-shaded effects blend with live-action subject, cinematic slow-motion on key hits. (真人<Picture 1>与动漫角色<Picture 2>在自定义场景中对战，真人闪避、动漫角色带速度线突进，招式碰撞有冲击波与特效闪光。)\n\noverall_soundscape: 打斗碰撞的打击声、破风声与能量释放轰鸣，节奏紧密有力。\n\nnon_diegetic_music: 高燃电子摇滚配乐，鼓点强劲，与每一记交锋同步重拍。"
+            },
+            {
+              "id": "vfx_anime_feel",
+              "name": "真人×动漫情感互动",
+              "name_en": "Real × Anime Emotional Bond",
+              "description": "真人与动漫角色情感互动（牵手/相拥），自定义<Picture 1>真人图与<Picture 2>动漫角色图",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "情感",
+                "互动",
+                "牵手",
+                "动漫",
+                "真人"
+              ],
+              "prompt": "For the target video, <Picture 1> is the real person and <Picture 2> is the anime character. Both identities are preserved.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Heartfelt cross-style VFX. The real person from <Picture 1> and the anime character from <Picture 2> share an emotional moment in the customized scene (sunset street / garden / rooftop). 【ACTION】They slowly reach out, hands meet and hold; the anime character leans against the real person; they exchange a soft smile and gaze; gentle wind moves their hair and clothes. 【/ACTION】Warm cinematic lighting, shallow DOF, soft glow, both faces faithful to references. (真人<Picture 1>与动漫角色<Picture 2>在自定义场景中牵手相拥，情感细腻，画面温暖柔和。)\n\noverall_soundscape: 柔和的风声与远处环境声，轻微的衣物摩擦与呼吸声，安静而温暖。\n\nnon_diegetic_music: 温柔抒情的钢琴与弦乐配乐，旋律舒缓，烘托情感氛围。"
+            }
+          ]
+        },
+        {
+          "name": "同画面多视角分割 | Multi-View",
+          "name_en": "Multi-View Multi-Angle (same frame)",
+          "templates": [
+            {
+              "id": "vfx_multiview_dual",
+              "name": "双视角同屏分割",
+              "name_en": "Dual-View Split",
+              "description": "同一画面左右分割展示同一主体的两个不同视角（自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "多视角",
+                "双视角",
+                "分割",
+                "同屏",
+                "机位"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the subject. The scene is customized. Two camera angles of the same moment are shown side by side.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Multi-view split VFX. The frame is split left/right; both panels show the SAME subject from <Picture 1> performing the same action at the same time in the customized scene, but from two different camera angles (e.g. left = front medium shot, right = side wide shot). 【ACTION】The action plays synchronously in both panels; occasionally a focus ring highlights one panel, then the other; the two angles together tell one continuous performance. 【/ACTION】Consistent lighting across panels, thin divider, cinematic grade. (同一画面左右分屏，两屏同时播放<Picture 1>主体在自定义场景中的同一动作，但分别来自正机位与侧机位两个视角，动作完全同步。)\n\noverall_soundscape: 同一动作的双机位声音略延迟重叠，带轻微回音，突出多视角感。\n\nnon_diegetic_music: 紧凑的节奏配乐，节拍稳定，营造多机位实时感。"
+            },
+            {
+              "id": "vfx_multiview_grid",
+              "name": "四宫格多视角监控",
+              "name_en": "Quad Multi-Angle Monitor",
+              "description": "同一画面四宫格展示同一主体四个机位的实时监控视角（自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "多视角",
+                "监控",
+                "四宫格",
+                "机位",
+                "实时"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the subject. The scene is customized. Four surveillance-style angles of the same subject fill the frame.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Multi-camera monitor VFX. The frame is a 2x2 monitor grid; each quadrant shows the subject from <Picture 1> in the customized scene captured by a different fixed camera (front / overhead / low corner / close-up). All four run in sync, with a thin timestamp bar and slight vignette to feel like live surveillance. 【ACTION】The subject moves continuously while all four angles track them; one quadrant may briefly zoom in on a detail before returning; the grid stays stable. 【/ACTION】Cool security-camera color, subtle scanlines, cinematic. (四宫格监控视角同屏展示<Picture 1>主体在自定义场景中的四个固定机位画面，四路同步，带时间戳与轻微扫描线。)\n\noverall_soundscape: 多路监控的轻微电流底噪与画面切换音，环境声低沉。\n\nnon_diegetic_music: 克制而紧张的低频电子配乐，营造监控氛围。"
+            },
+            {
+              "id": "vfx_multiview_orbit",
+              "name": "环绕多视角时间切片",
+              "name_en": "Orbit Multi-View Timeslice",
+              "description": "同一画面多格环绕视角展示同一动作的时间切片（自定义人物图与场景）",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "多视角",
+                "环绕",
+                "时间切片",
+                "子弹时间",
+                "同屏"
+              ],
+              "prompt": "For the target video, <Picture 1> is fully referenced as the subject. The scene is customized. Multiple frozen-time viewpoints of one action are shown in one frame.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} [Shot 1] [0-6s] Time-slice bullet-time VFX. The frame is divided into several vertical strips/panels; each panel shows the subject from <Picture 1> at the same frozen instant in the customized scene, but from a different angle around a 180° arc (left, front-left, front, front-right, right). 【ACTION】The frozen moment is held while each panel subtly animates (hair/dust drift), then time resumes and the subject completes the action across the full frame, panels fading away. 【/ACTION】Matrix-style, photoreal, consistent subject pose across panels, cinematic. (同一画面多格环绕视角展示<Picture 1>主体在自定义场景中同一瞬间的 180° 环绕切片，子弹时间定格后恢复运动。)\n\noverall_soundscape: 定格瞬间几乎静音，只有细微粒子声，恢复运动时声音瞬间展开。\n\nnon_diegetic_music: 电影感鼓点配乐，定格时骤停、恢复时重拍推进。"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
