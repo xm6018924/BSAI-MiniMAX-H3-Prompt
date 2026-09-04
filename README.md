@@ -1,3 +1,17 @@
+## 手动提示词（旁白）功能
+
+### 1. H3官方SKILL 三段式输出
+- 节点顶部新增「手动提示词（旁白）」输入框 + 「⚡ H3官方SKILL 3段式输出」按钮。
+- 输入旁白 → 点击按钮 → 一键生成官方 SKILL 标准三段式提示词（integrated_multimodal_description / overall_soundscape / non_diegetic_music），写入直通模式并**直接输出给下游节点**。
+
+### 2. 旁白与模板合并（点「确认修改 / Apply」）
+- 输入旁白后，点击「确认修改 / Apply」即可把旁白与**任意已选提示词模板合并**，作为**画面旁白**输出给下游。
+- 合并方式（双保险）：
+  - 前端把旁白并入修改文本，随模板一起发给本地大模型融合；
+  - 后端 _inject_narration 在模板合并后把旁白注入画面描述段（integrated_multimodal_description 内）或纯文本末尾，保证始终输出。
+- 旁白输入即同步到 
+arration widget，节点运行时自动注入。
+
 # BSAI MiniMax H3 Prompt - ComfyUI 自定义节点
 
 根据 [MiniMax H3 模型使用手册](https://vrfi1sk8a0.feishu.cn/wiki/FIWjwgL33ipnkekzk30crmKUnIh)，将用户手动输入的提示词自动优化为符合 H3 规范的完整结构化提示词。

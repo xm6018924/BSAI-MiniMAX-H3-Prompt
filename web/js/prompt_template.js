@@ -369,6 +369,7 @@ function buildTemplateUI(node) {
     hideWidget(node, "template_select");
     hideWidget(node, "user_customization");
     hideWidget(node, "direct_prompt");
+    hideWidget(node, "narration");
 
     const container = document.createElement("div");
     container.className = "bsai-tpl-wrap";
@@ -401,6 +402,13 @@ function buildTemplateUI(node) {
     const narrTa = document.createElement("textarea");
     narrTa.className = "bsai-tpl-narr-ta";
     narrTa.placeholder = "在此输入旁白台词，如：清晨的阳光洒进老茶馆，老人缓缓讲述五十年前的故事… / Type the voice-over narration here...";
+    // 旁白输入即同步到 narration widget（后端 get_template 注入画面旁白）
+    narrTa.addEventListener("input", function() {
+        if (setWidgetText(node, "narration", narrTa.value)) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+    });
+    node._bsaiNarrTa = narrTa;
     const skillBtn = document.createElement("button");
     skillBtn.type = "button";
     skillBtn.className = "bsai-tpl-skill-btn";
@@ -1468,11 +1476,18 @@ function showDiff(node, src, merged) {
 function applyCustomization(node, done) {
     if (!node) { if (done) done(); return; }
     if (node._bsaiCustTa) setWidgetText(node, "user_customization", node._bsaiCustTa.value);
+    var narr = ((node._bsaiNarrTa && node._bsaiNarrTa.value) || "").trim();
+    if (node._bsaiNarrTa) setWidgetText(node, "narration", node._bsaiNarrTa.value);
     var sel = node._bsaiSelection || [];
     var cust = "";
     var w = findWidget(node, "user_customization");
     if (w && w.value) cust = w.value;
     else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
+    // 旁白并入 customization：点「确认修改 / Apply」时与模板一起融合，作为画面旁白输出
+    if (narr) {
+        var narrLine = "画面旁白（VO narration）: “" + narr + "” —— 以上旁白为画面核心台词/画外音，画面、人物动作与镜头须与旁白同步呈现；旁白作为主音轨清晰可闻。";
+        cust = cust ? cust + "\n" + narrLine : narrLine;
+    }
     var parts = [];
     sel.forEach(function(it) {
         if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
