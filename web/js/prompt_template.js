@@ -153,6 +153,28 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-mode .mode-tag { font-size: 9px; padding: 1px 6px; border-radius: 8px; border: 1px solid #335; color: #678; }
 .bsai-tpl-mode .mode-tag.on { background: #2a4a3a; color: #9d9; border-color: #3a6a4a; }
 .bsai-tpl-mode .mode-tag.off { background: #2a2a2a; color: #889; border-color: #444; }
+/* Manual narration prompt (旁白) + H3 SKILL 3-part output */
+.bsai-tpl-narr {
+    flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px;
+    margin-bottom: 4px; padding: 5px 6px; background: #1a222a;
+    border: 1px solid #2a3a4a; border-radius: 5px;
+}
+.bsai-tpl-narr-lbl { font-size: 11px; font-weight: 700; color: #9bd; }
+.bsai-tpl-narr-ta {
+    width: 100%; box-sizing: border-box; min-height: 52px; max-height: 120px;
+    resize: vertical; background: #11151a; color: #dde;
+    border: 1px solid #2a3a4a; border-radius: 4px; padding: 4px 6px;
+    font-size: 12px; font-family: inherit; line-height: 1.4;
+}
+.bsai-tpl-narr-ta:focus { outline: none; border-color: #4a7a9a; }
+.bsai-tpl-skill-btn {
+    align-self: flex-start; font-size: 11px; font-weight: 700;
+    padding: 4px 12px; background: #2a4a3a; border: 1px solid #3a7a5a;
+    border-radius: 4px; color: #cfc; cursor: pointer;
+}
+.bsai-tpl-skill-btn:hover { background: #2f5a45; }
+.bsai-tpl-skill-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
 /* Voice input button */
 .bsai-tpl-voice-btn {
     margin-left: 6px; cursor: pointer; font-size: 13px; line-height: 1;
@@ -369,6 +391,72 @@ function buildTemplateUI(node) {
     voiceBtn.textContent = "🎤 语音 / Voice";
     voiceBtn.title = "语音输入指令（覆盖模板动作）/ Voice input command (overrides template action)";
     voiceBtn.onclick = function() { openVoiceModal(node); };
+    // ── Manual narration prompt (旁白) + official H3 SKILL 3-part output ──
+    // 放置在「搜索模板 / 语音栏」上方：输入旁白 → 一键生成官方SKILL三段式提示词 → 直接输出给下游
+    const narrDiv = document.createElement("div");
+    narrDiv.className = "bsai-tpl-narr";
+    const narrLbl = document.createElement("div");
+    narrLbl.className = "bsai-tpl-narr-lbl";
+    narrLbl.textContent = "手动提示词（旁白）/ Manual Prompt (Narration):";
+    const narrTa = document.createElement("textarea");
+    narrTa.className = "bsai-tpl-narr-ta";
+    narrTa.placeholder = "在此输入旁白台词，如：清晨的阳光洒进老茶馆，老人缓缓讲述五十年前的故事… / Type the voice-over narration here...";
+    const skillBtn = document.createElement("button");
+    skillBtn.type = "button";
+    skillBtn.className = "bsai-tpl-skill-btn";
+    skillBtn.textContent = "⚡ H3官方SKILL 3段式输出 / H3 SKILL 3-Part Output";
+    skillBtn.title = "将旁白包装为 MiniMax H3 官方 SKILL 标准三段式提示词（integrated_multimodal_description / overall_soundscape / non_diegetic_music），并直接输出给下游节点";
+    function _skillLocalBuild(n) {
+        const q = String.fromCharCode(0x201c) + n + String.fromCharCode(0x201d);
+        return "MiniMax H3 film generation — voice-over narration driven scene （旁白叙事驱动的电影镜头）\n\n" +
+            "integrated_multimodal_description: \n" +
+            "A cinematic scene driven by the following voice-over narration: " + q + ". " +
+            "The visuals, character actions and camera moves follow the rhythm and emotion of the narration; " +
+            "every shot stays consistent with the narrated story, and when the narration is spoken " +
+            "the character's mouth/actions sync with it. （以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）\n\n" +
+            "overall_soundscape: \n" +
+            "The voice-over narration " + q + " is the primary audio track and must remain clearly audible. " +
+            "Subtle ambient sound and sound effects support the scene without masking the narration. " +
+            "（旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）\n\n" +
+            "non_diegetic_music: \n" +
+            "A background music score matching the emotional tone of the narration, kept at low volume " +
+            "so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）";
+    }
+    skillBtn.onclick = function() {
+        const n = narrTa.value.trim();
+        if (!n) { setStatus("请先输入旁白 / Enter narration first", ""); return; }
+        const old = skillBtn.textContent;
+        skillBtn.disabled = true;
+        skillBtn.textContent = "⏳ 生成中… / Generating…";
+        fetch("/bsai_h3/skill_three", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: n }),
+        }).then(function(r) { return r.json().catch(function() { return {}; }); })
+        .then(function(j) {
+            const out = (j && j.ok && j.prompt) ? j.prompt : _skillLocalBuild(n);
+            if (setWidgetText(node, "direct_prompt", out)) {
+                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+            }
+            updateOutputPreview(node, out);
+            setStatus("✅ 已生成 H3 官方SKILL三段式提示词并输出到下游 / 3-part prompt output to downstream", "ok");
+        }).catch(function() {
+            const out = _skillLocalBuild(n);
+            if (setWidgetText(node, "direct_prompt", out)) {
+                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+            }
+            updateOutputPreview(node, out);
+            setStatus("⚠️ 网络错误，已用本地三段式模板输出 / fallback: local 3-part output", "");
+        }).then(function() {
+            skillBtn.disabled = false;
+            skillBtn.textContent = old;
+        });
+    };
+    narrDiv.appendChild(narrLbl);
+    narrDiv.appendChild(narrTa);
+    narrDiv.appendChild(skillBtn);
+    container.appendChild(narrDiv);
+
     searchRow.appendChild(searchIcon);
     searchRow.appendChild(searchInput);
     searchRow.appendChild(searchClr);

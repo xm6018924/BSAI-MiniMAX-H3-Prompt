@@ -610,7 +610,56 @@ def _register_asr_route():
         except Exception as e:
             return web.json_response({"ok": False, "prompt": prompt, "error": str(e)})
 
+    @server.routes.post("/bsai_h3/skill_three")
+    async def bsai_h3_skill_three(request):
+        """Wrap a manual narration (旁白) into the official H3 SKILL 3-part prompt."""
+        try:
+            body = await request.json()
+            text = (body.get("text") or "").strip()
+        except Exception:
+            return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
+        if not text:
+            return web.json_response({"ok": False, "error": "empty narration / 旁白为空"})
+        return web.json_response({"ok": True, "prompt": build_h3_skill_three_part(text)})
+
     return server
+
+
+
+def build_h3_skill_three_part(narration):
+    """Wrap a manual narration (旁白) into the official MiniMax H3 SKILL
+    three-part prompt format:
+        integrated_multimodal_description / overall_soundscape / non_diegetic_music
+    Returns "" for empty narration."""
+    n = (narration or "").strip()
+    if not n:
+        return ""
+    header = (
+        "MiniMax H3 film generation — voice-over narration driven scene "
+        "（旁白叙事驱动的电影镜头）"
+    )
+    desc = (
+        "integrated_multimodal_description: \n"
+        "A cinematic scene driven by the following voice-over narration: \u201c%s\u201d. "
+        "The visuals, character actions and camera moves follow the rhythm and emotion "
+        "of the narration; every shot stays consistent with the narrated story, and "
+        "when the narration is spoken the character\u2019s mouth/actions sync with it. "
+        "（以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）"
+        % n
+    )
+    sound = (
+        "overall_soundscape: \n"
+        "The voice-over narration \u201c%s\u201d is the primary audio track and must remain "
+        "clearly audible. Subtle ambient sound and sound effects support the scene "
+        "without masking the narration. （旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）"
+        % n
+    )
+    music = (
+        "non_diegetic_music: \n"
+        "A background music score matching the emotional tone of the narration, kept "
+        "at low volume so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）"
+    )
+    return header + "\n\n" + desc + "\n\n" + sound + "\n\n" + music
 
 
 _register_asr_route()
