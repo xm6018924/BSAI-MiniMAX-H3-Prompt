@@ -4222,6 +4222,314 @@
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机搭载于高速机械臂系统（Robotic Arm / Bolt Motion Control），执行毫米级精度的复杂运动轨迹。机械臂从初始位置开始，以极高的精度和重复性执行多轴联动运动——摄影机先以微距距离贴近物体表面平行移动，捕捉表面的纹理和反光，随后机械臂突然加速，摄影机以极高的速度绕物体旋转半圈，同时高度从微距位置上升至中景高度。整个运动轨迹平滑而精确，无任何抖动或偏差，机械臂的精密控制使摄影机可以到达人类手持无法到达的刁钻角度。运动速度在慢与快之间急剧变化，创造强烈的节奏对比，最终机械臂精准停在预设位置，画面定格。\n\noverall_soundscape: \n机械臂电机的精密嗡鸣声在微距移动时清晰可闻，高速旋转时风声骤起，停止瞬间电机声戛然而止，声音的精确性配合机械臂的精密运动。\n\nnon_diegetic_music: \n科技感的电子配乐，精密的节拍配合机械臂的精确运动，合成器音色在高速运动时变得尖锐急促，停止时音乐精准收束。"
             }
           ]
+        },
+        {
+          "id": "cam_scene",
+          "name": "实战场景类",
+          "name_en": "Scene-Based Camera",
+          "description": "结合多种基础运镜的实战场景模板，覆盖人物入场、对话、情绪、动作、转场、环境等15大电影场景",
+          "templates": [
+            {
+              "id": "cam_hero_entrance",
+              "name": "人物高光入场",
+              "name_en": "Hero Entrance",
+              "description": "低角度仰拍+慢速推镜+半环绕，人物从阴影走入光中，电影级英雄登场",
+              "preview": "cam_hero_entrance.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "入场",
+                "高光",
+                "仰拍"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。摄影机以低角度仰拍起始，人物从画面阴影区缓步走入光束中心，摄影机沿纵深匀速向前推进（Dolly In）同时伴随轻微半环绕运动（Arc Shot），景别由中景过渡至近景，仰拍角度强化人物的高大与力量感。光束从侧后方打来形成轮廓光（Rim Light），尘埃在光柱中浮动。推进过程平滑稳定，结尾定格于人物正面特写，眼神坚定。\n\noverall_soundscape: \n环境声随人物步伐渐强，脚步声在空间中回响，轻微的衣料摩擦声，光束中尘埃浮动的静谧感。\n\nnon_diegetic_music: \n低沉鼓点渐入，弦乐缓慢攀升，在人物走入光束中心时音乐达到高潮，营造英雄登场的史诗感与仪式感。"
+            },
+            {
+              "id": "cam_dialogue_reverse",
+              "name": "对话正反打",
+              "name_en": "Dialogue Shot-Reverse-Shot",
+              "description": "过肩镜头+缓慢微推，对话双方交替，眼神交流自然，电影级对话场景",
+              "preview": "cam_dialogue_reverse.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "对话",
+                "过肩",
+                "正反打"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-8秒】经典正反打对话场景。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。0-4秒：过肩镜头（Over-the-Shoulder）从人物A肩后拍摄人物B，摄影机缓慢微推（Subtle Dolly In），景别中近景，浅景深虚化前景肩膀，焦点锁定人物B面部表情。4-8秒：镜头自然切换至反打角度，从人物B肩后拍摄人物A，同样缓慢微推，焦点锁定人物A。双方眼神交流自然，面部微表情细腻，说话时头部轻微动作。镜头切换平滑，节奏与对话同步。\n\noverall_soundscape: \n对话声清晰自然，室内环境底噪轻微，说话时伴随轻微的呼吸声与嘴唇开合声，空间混响适度。\n\nnon_diegetic_music: \n轻柔的钢琴或弦乐垫底，音量极低不干扰对话，随情绪微妙起伏，营造对话场景的沉浸氛围。"
+            },
+            {
+              "id": "cam_emotional_breakdown",
+              "name": "情绪崩溃特写",
+              "name_en": "Emotional Breakdown Close-Up",
+              "description": "极慢推镜+手持微晃+浅景深，面部特写，泪水与微表情细节，情绪爆发",
+              "preview": "cam_emotional_breakdown.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "情绪",
+                "特写",
+                "崩溃"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】情绪崩溃特写镜头。画面内容完全保持输入参考图 <Picture 1> 的人物特征。极近距离面部特写（Extreme Close-Up），浅景深仅眼部与鼻梁清晰，背景完全虚化。摄影机以极慢速度向前推进（Very Slow Dolly In），同时伴随手持拍摄的轻微自然晃动（Handheld Sway），增强 raw 感与真实感。0-3秒：人物眼眶逐渐泛红，泪水在眼眶中积聚，嘴唇微微颤抖，呼吸加重。3-6秒：泪水从眼角滑落，沿脸颊流下，人物嘴唇张开似要说话却发不出声，情绪彻底崩溃。侧光勾勒面部轮廓，半明半暗的光影强化内心挣扎。\n\noverall_soundscape: \n极静的环境，只有沉重的呼吸声，泪水滑落的细微声响，心跳声逐渐放大，情绪压抑到极致。\n\nnon_diegetic_music: \n单音钢琴键缓慢敲击，间隔越来越长，在泪水滑落时音乐骤停，只剩呼吸声，强化情绪冲击力。"
+            },
+            {
+              "id": "cam_action_fight",
+              "name": "打斗动作跟拍",
+              "name_en": "Action Fight Tracking",
+              "description": "手持跟拍+快速横摇+低角度，动作连贯流畅，运动模糊，电影级打斗场景",
+              "preview": "cam_action_fight.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "打斗",
+                "动作",
+                "跟拍"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】打斗动作跟拍镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。手持跟拍（Handheld Tracking）紧贴动作主体，低角度仰拍强化力量感。0-2秒：人物A快速出拳，摄影机随拳方向快速横摇（Whip Pan），运动模糊自然，拳头击中瞬间画面轻微震动。2-4秒：人物B闪避反击，摄影机跟随闪避方向快速位移，动作连贯无卡顿，衣料与头发随动作飞扬。4-6秒：双方近身缠斗，摄影机环绕半圈捕捉动作全貌，最后定格于一个有力的动作姿势。全程手持晃动自然，不刻意稳定，增强真实打斗的粗粝感。\n\noverall_soundscape: \n拳风呼啸声，拳头击中肉体的闷响，闪避时的脚步声，衣物摩擦声，急促的呼吸声，动作碰撞声清脆有力。\n\nnon_diegetic_music: \n快节奏打击乐与电子音效，鼓点与动作同步，打斗高潮时音乐强度拉满，营造紧张刺激的动作氛围。"
+            },
+            {
+              "id": "cam_whip_transition",
+              "name": "遮挡物丝滑转场",
+              "name_en": "Whip Pan Transition",
+              "description": "甩镜+前景遮挡物，从一个场景自然过渡到另一个，电影级无缝转场",
+              "preview": "cam_whip_transition.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "转场",
+                "甩镜",
+                "丝滑"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-5秒】遮挡物丝滑转场镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。0-2秒：中景拍摄人物A在场景一中行动，摄影机跟随人物横向移动。2-3秒：一个前景遮挡物（如柱子、门框、人物身体）从画面左侧快速横过，完全遮住画面，摄影机同时快速甩镜（Whip Pan），运动模糊达到最大。3-5秒：遮挡物从画面右侧移出，画面自然过渡到场景二，人物B出现在新场景中，摄影机恢复平稳跟随。转场过程无缝衔接，甩镜速度先快后稳，遮挡物完全覆盖画面的瞬间完成场景切换。\n\noverall_soundscape: \n甩镜时伴随快速的风声 swoosh 音效，遮挡物经过时声音短暂闷住，转场后新场景环境声自然淡入。\n\nnon_diegetic_music: \n转场瞬间音乐节奏加速，甩镜时一个上升音效，转场完成后音乐自然过渡到新场景的氛围音乐。"
+            },
+            {
+              "id": "cam_environment_reveal",
+              "name": "环境氛围揭示",
+              "name_en": "Environment Reveal",
+              "description": "缓慢摇镜+升降，从细节特写逐渐揭示宏大环境，电影级场景展示",
+              "preview": "cam_environment_reveal.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 7,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "环境",
+                "揭示",
+                "摇镜"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-7秒】环境氛围揭示镜头。画面内容完全保持输入参考图 <Picture 1> 的场景特征。0-2秒：极近距离特写（Extreme Close-Up）场景中的一个细节物体（如桌面上的物件、墙上的装饰、水面的波纹），浅景深，细节质感丰富，光线在物体表面流动。2-5秒：摄影机开始缓慢向上摇镜（Tilt Up）同时向后拉远（Dolly Out），画面从细节逐渐展开，更多场景元素进入画面，景别从特写过渡到中景再到全景。5-7秒：摄影机继续缓慢上升（Crane Up），最终展现整个环境的宏大全貌，人物在场景中显得渺小，环境氛围完整呈现。全程运动平滑缓慢，给观众充分的时间感受场景细节。\n\noverall_soundscape: \n细节特写时只有物体本身的微声（如钟表滴答、水面轻响），随镜头展开环境声逐渐丰富，空间混响逐渐增大，最终整个环境的声场完整呈现。\n\nnon_diegetic_music: \n从单一音符开始，随镜头展开音乐层次逐渐丰富，弦乐与氛围音逐渐加入，在全景展现时音乐达到最丰满的状态，营造场景揭示的仪式感。"
+            },
+            {
+              "id": "cam_flashback",
+              "name": "回忆闪回",
+              "name_en": "Flashback Memory",
+              "description": "柔焦+缓慢推镜+过曝光晕，梦幻怀旧感，电影级回忆闪回场景",
+              "preview": "cam_flashback.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "回忆",
+                "闪回",
+                "梦幻"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】回忆闪回镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，但整体呈现梦幻怀旧的回忆质感。画面柔焦（Soft Focus），边缘有轻微光晕（Bloom / Glow），色调偏暖偏旧，类似老电影或褪色照片。0-3秒：中景拍摄回忆场景中的人物，摄影机缓慢向前推进（Slow Dolly In），人物动作缓慢而优雅，仿佛时间被拉长。3-6秒：摄影机继续推进至近景，人物面部表情温柔而略带忧伤，画面过曝程度略微增加，仿佛记忆正在消散。全程画面有轻微的胶片颗粒感（Film Grain）和偶尔的闪烁，强化回忆的不真实感。人物动作比正常速度略慢，营造记忆的朦胧感。\n\noverall_soundscape: \n环境声经过低通滤波处理，仿佛隔着一层水听到的声音，模糊而温暖，人物说话声含糊不清只剩语调，回忆中的声音带有回声和混响。\n\nnon_diegetic_music: \n怀旧的钢琴旋律，经过滤波处理带有老旧唱片的质感，音乐缓慢而温柔，略带忧伤，营造回忆闪回的情感氛围。"
+            },
+            {
+              "id": "cam_suspense_thriller",
+              "name": "悬疑紧张压迫",
+              "name_en": "Suspense Thriller",
+              "description": "荷兰角+缓慢推镜+阴影构图，压迫不安感，电影级悬疑惊悚场景",
+              "preview": "cam_suspense_thriller.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "悬疑",
+                "紧张",
+                "荷兰角"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】悬疑紧张压迫镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。摄影机采用荷兰角（Dutch Angle / Canted Angle）倾斜构图，画面水平线倾斜 15-25 度，营造不安与失衡感。低-key 布光，大面积阴影，人物半隐于黑暗中，只有侧光勾勒轮廓。0-3秒：中景拍摄人物在阴影中缓慢移动，摄影机以极慢速度向前推进（Very Slow Dolly In），压迫感逐渐增强。3-6秒：摄影机推进至近景，人物突然停下，缓缓转头看向镜头方向，眼神中充满警觉与恐惧，面部一半在光中一半在阴影中。全程画面对比度高，阴影浓重，色调偏冷偏暗，营造悬疑惊悚的压迫氛围。\n\noverall_soundscape: \n极静的环境，只有钟表滴答声或水滴声被放大，人物缓慢的脚步声在空旷空间中回响，偶尔传来不明来源的轻微声响，增强悬疑感。\n\nnon_diegetic_music: \n持续的低频 drone 音效，音量缓慢攀升，偶尔加入尖锐的弦乐滑音（string screech），在人物转头时音乐达到最紧张的峰值，营造心理惊悚的压迫感。"
+            },
+            {
+              "id": "cam_romantic_intimate",
+              "name": "浪漫暧昧亲密",
+              "name_en": "Romantic Intimate",
+              "description": "环绕+慢速推镜+暖光逆光，亲密氛围感，电影级浪漫暧昧场景",
+              "preview": "cam_romantic_intimate.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 7,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "浪漫",
+                "暧昧",
+                "环绕"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-7秒】浪漫暧昧亲密镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。暖色调布光，逆光（Backlight）从人物后方打来形成柔和的轮廓光与光晕，空气中有轻微的薄雾或尘埃粒子。0-3秒：中景拍摄两人近距离相对，摄影机以极慢速度环绕两人运动（Slow Orbit / Arc Shot），从正面缓缓绕至侧面，环绕过程平滑稳定。3-5秒：摄影机同时缓慢向前推进（Dolly In），景别从中景过渡至近景，两人之间的距离感被压缩，暧昧氛围增强。5-7秒：摄影机推进至特写，捕捉两人眼神交汇与面部微表情，其中一人缓缓抬手轻触另一人的脸颊，动作温柔而缓慢。全程画面柔和，浅景深，暖光弥漫，营造浪漫亲密的氛围。\n\noverall_soundscape: \n环境声轻柔，只有两人轻微的呼吸声，衣料摩擦的细微声响，远处隐约的环境音乐，空间温暖而私密。\n\nnon_diegetic_music: \n温柔的钢琴与弦乐旋律，节奏缓慢而浪漫，音量随两人靠近逐渐增强，在触碰脸颊时音乐达到最温柔的高潮，营造暧昧亲密的情感氛围。"
+            },
+            {
+              "id": "cam_chase_run",
+              "name": "奔跑追逐",
+              "name_en": "Chase Run",
+              "description": "手持跟拍+低角度+快速移动，速度感紧迫感，电影级奔跑追逐场景",
+              "preview": "cam_chase_run.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "奔跑",
+                "追逐",
+                "速度"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-6秒】奔跑追逐镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。手持跟拍（Handheld Tracking）紧贴奔跑人物后方或侧方，低角度拍摄强化速度感。0-2秒：人物从画面远处快速跑近，摄影机跟随人物快速向前移动，手持晃动自然剧烈，背景因高速移动产生运动模糊（Motion Blur），人物头发与衣料向后飞扬。2-4秒：摄影机切换至侧方跟拍（Side Tracking），与人物平行奔跑，人物面部表情紧张，呼吸急促，脚步有力地踏地，周围景物飞速向后掠过。4-6秒：摄影机再次绕至人物后方，人物加速冲刺，摄影机跟随加速，画面晃动加剧，最后人物一个急转弯或跳跃，摄影机跟随动作甩动，定格于充满张力的瞬间。全程手持晃动剧烈，运动模糊明显，营造高速追逐的紧张感。\n\noverall_soundscape: \n急促的脚步声，沉重的喘息声，衣料与空气摩擦的呼啸声，奔跑时的风声，周围环境声因速度而模糊变形，追逐紧迫感强烈。\n\nnon_diegetic_music: \n快节奏的电子音乐或打击乐，BPM 较高，鼓点与奔跑节奏同步，音乐强度随追逐升级持续攀升，营造高速奔跑的紧张刺激感。"
+            },
+            {
+              "id": "cam_vehicle_driving",
+              "name": "载具行驶",
+              "name_en": "Vehicle Driving",
+              "description": "侧跟+稳定器+车内视角，移动感窗外流动，电影级载具行驶场景",
+              "preview": "cam_vehicle_driving.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 7,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "载具",
+                "行驶",
+                "侧跟"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-7秒】载具行驶镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。0-3秒：车外侧跟镜头（Side Tracking Shot），稳定器（Steadicam）平稳跟随车辆平行移动，车辆在画面中保持居中，窗外景物飞速向后掠过产生运动模糊，车辆行驶平稳，路面细节清晰。3-5秒：镜头自然切换至车内视角（Interior POV），从驾驶座或副驾驶座向前拍摄，前挡风玻璃外的道路与景物持续流动，方向盘轻微转动，驾驶员手部动作自然，仪表盘微光闪烁。5-7秒：镜头在车内缓慢横摇（Pan），从前方道路摇至侧面车窗，窗外城市/乡村景色流动，再摇至后座乘客，人物表情放松或若有所思。全程画面稳定，运动模糊自然，营造载具行驶的移动感与旅途感。\n\noverall_soundscape: \n车辆引擎的低沉嗡鸣声，轮胎与路面摩擦的沙沙声，车内轻微的震动声，风噪，偶尔的喇叭声或其他车辆经过的声音，车内空间混响适度。\n\nnon_diegetic_music: \n节奏适中的公路音乐或氛围电子乐，与车辆行驶速度同步，音乐带有流动感与旅途感，营造驾驶场景的沉浸氛围。"
+            },
+            {
+              "id": "cam_dance_performance",
+              "name": "舞蹈表演",
+              "name_en": "Dance Performance",
+              "description": "环绕+升降+跟拍，全身到特写，节奏与动作同步，电影级舞蹈表演场景",
+              "preview": "cam_dance_performance.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "舞蹈",
+                "表演",
+                "环绕"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-8秒】舞蹈表演镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。舞台灯光聚焦于舞者，背景较暗，侧光与逆光勾勒舞者轮廓。0-2秒：全景（Full Shot）拍摄舞者完整身形，摄影机以中速环绕舞者运动（Orbit Shot），从正面绕至侧面，舞者开始起舞，动作舒展有力。2-4秒：摄影机同时缓慢向前推进（Dolly In）并略微下降，景别从全景过渡至中景，捕捉舞者上半身动作与手臂线条，环绕继续。4-6秒：摄影机推进至中近景，捕捉舞者面部表情与上半身细节，舞者动作进入高潮，旋转或跳跃时摄影机跟随动作轻微升降（Pedestal），保持主体在画面中居中。6-8秒：摄影机缓缓拉远（Dolly Out）同时上升（Crane Up），景别回到全景，舞者以一个有力的结束姿势定格，舞台灯光在结束瞬间达到最亮。全程摄影机运动与舞蹈节奏同步，环绕平滑，升降自然。\n\noverall_soundscape: \n舞蹈音乐清晰有力，舞者脚步踏地的声响，衣料摆动的摩擦声，旋转时的气流声，舞台空间的混响适度。\n\nnon_diegetic_music: \n与舞蹈风格匹配的音乐，节奏鲜明，旋律有起伏，在舞蹈高潮时音乐强度拉满，结束姿势时音乐骤停或余音缭绕，营造舞蹈表演的舞台感。"
+            },
+            {
+              "id": "cam_ending_finale",
+              "name": "结尾落幕",
+              "name_en": "Ending Finale",
+              "description": "缓慢拉镜+垂直上升，从特写到全景，人物渐小，电影级结尾落幕场景",
+              "preview": "cam_ending_finale.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "结尾",
+                "落幕",
+                "拉镜"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-8秒】结尾落幕镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。0-2秒：近景（Close-Up）拍摄人物面部或上半身，人物表情平静而略带释然，摄影机开始缓慢向后拉远（Slow Dolly Out）。2-5秒：摄影机持续拉远，同时缓慢垂直上升（Crane Up / Pedestal Up），景别从近景过渡到中景再到全景，人物在画面中逐渐变小，周围环境逐渐展开，更多场景元素进入画面。5-8秒：摄影机继续上升拉远，最终呈现大远景（Extreme Long Shot）或鸟瞰视角，人物在宏大的环境中显得渺小而孤独，画面逐渐变暗或光线逐渐柔和，仿佛故事落幕。全程运动极其缓慢平稳，给观众充分的时间感受情绪的沉淀与故事的收尾。拉远与上升的速度先缓后更缓，结尾几乎静止。\n\noverall_soundscape: \n环境声随镜头拉远逐渐变小变远，人物的细微声音逐渐消失，最终只剩宏大空间的环境底噪，风声或远处的城市声，空间混响逐渐增大。\n\nnon_diegetic_music: \n音乐从丰满逐渐变薄，乐器一层层减少，最后只剩单一音符或完全静默，在大远景呈现时音乐达到最空灵的状态，营造结尾落幕的惆怅与释然感。"
+            },
+            {
+              "id": "cam_multi_standoff",
+              "name": "多人对峙",
+              "name_en": "Multi-Person Standoff",
+              "description": "横移+过肩+缓慢推镜，张力拉满，电影级多人对峙场景",
+              "preview": "cam_multi_standoff.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 7,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "对峙",
+                "多人",
+                "张力"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-7秒】多人对峙镜头。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征。0-2秒：全景（Wide Shot）拍摄对峙双方分列画面两侧，中间留有空间，摄影机缓慢横向移动（Truck / Lateral Move），从左向右扫过对峙双方，展现双方人数与姿态，张力弥漫。2-4秒：摄影机移动至一方人物身后，过肩镜头（Over-the-Shoulder）拍摄对面人物，缓慢微推（Subtle Dolly In），焦点锁定对面人物的面部表情，眼神锐利充满敌意。4-6秒：摄影机快速甩镜（Whip Pan）切换至另一方过肩镜头，同样缓慢微推，捕捉这一方人物的反应，双方眼神在空中交汇，气氛紧张到极点。6-7秒：摄影机拉回至中景，双方同时做出动作（如拔枪、上前一步、抬手），画面在动作瞬间定格或轻微震动。全程画面对比度高，光影硬朗，色调偏冷，营造对峙的紧张氛围。\n\noverall_soundscape: \n极静的环境，只有双方沉重的呼吸声，衣料轻微摩擦声，偶尔的脚步声，风吹过的声音，在动作瞬间伴随一个尖锐的音效。\n\nnon_diegetic_music: \n持续的低频紧张音效，音量缓慢攀升，偶尔加入心跳声或钟表滴答声，在双方动作瞬间音乐骤停，营造对峙一触即发的紧张感。"
+            },
+            {
+              "id": "cam_prop_macro",
+              "name": "道具细节微距",
+              "name_en": "Prop Macro Detail",
+              "description": "探针镜头+微距+缓慢旋转，细节质感丰富，电影级道具特写场景",
+              "preview": "cam_prop_macro.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "实战场景",
+                "道具",
+                "微距",
+                "细节"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-5秒】道具细节微距镜头。画面内容完全保持输入参考图 <Picture 1> 中的关键道具特征。探针镜头（Probe Lens）微距拍摄，极浅景深，只有道具表面极小区域清晰，前后景完全虚化呈奶油状散景（Bokeh）。0-2秒：特写道具表面的一个细节区域（如纹理、刻字、反光、材质肌理），摄影机以极慢速度沿道具表面滑动（Macro Slide），焦点从一个细节区域缓缓移至另一个，光线在道具表面流动，反射出丰富的高光与阴影。2-4秒：摄影机围绕道具缓慢旋转（Slow Rotation / Orbit），从不同角度展现道具的立体感与材质质感，旋转过程中光影变化丰富，金属/木材/布料等材质特性清晰可见。4-5秒：摄影机缓缓拉远（Pull Back），景别从微距特写过渡到中景，道具全貌逐渐呈现，周围环境淡入。全程画面质感极致，细节丰富，色彩饱满，营造道具特写的电影级质感。\n\noverall_soundscape: \n极静的环境，只有道具本身的细微声响（如金属轻鸣、布料摩擦、液体流动），光线流动时伴随轻微的氛围音，空间安静而聚焦。\n\nnon_diegetic_music: \n极简的氛围音乐，单一乐器（如钢琴或合成器 pad），音符稀疏而悠长，随道具细节的展现微妙变化，营造道具特写的神秘与精致感。"
+            }
+          ]
         }
       ]
     },
