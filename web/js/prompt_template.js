@@ -1378,6 +1378,30 @@ function setCustomizationText(node, text) {
 // customization into the template via the local/API LLM (/bsai_h3/merge) so
 // the user sees the real modified prompt and can verify the change.
 var _mergeSeq = 0;
+// Clean all HTML tags from prompt output while preserving H3 placeholder tags
+// (<Picture N>, <Subject N>, <Audio N>, <Video N>, <Shot N>). This prevents
+// template markup like <b>, <d>, or stray tags from leaking into the downstream prompt.
+function _bsaiCleanPrompt(text) {
+    if (!text) return text;
+    // Protect H3 placeholder tags by replacing with sentinels
+    var ph = [];
+    var protectedText = text.replace(/<\/?(Picture|Subject|Audio|Video|Shot)\s*\d*\s*>/gi, function(m) {
+        ph.push(m);
+        return '\x00' + (ph.length - 1) + '\x00';
+    });
+    // Strip all remaining HTML tags
+    var cleaned = protectedText.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+    // Also strip template placeholder variables that have no resolver (would output literally)
+    cleaned = cleaned.replace(/\{\{[A-Z_]+\}\}/g, '');
+    // Restore H3 placeholder tags
+    for (var i = 0; i < ph.length; i++) {
+        cleaned = cleaned.replace(new RegExp('\\x00' + i + '\\x00', 'g'), ph[i]);
+    }
+    // Collapse multiple blank lines that may result from tag removal
+    cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim();
+    return cleaned;
+}
+
 function renderOutputPreview(node) {
     if (!node || !node._bsaiOutTa) return;
     var sel = node._bsaiSelection || [];
@@ -1387,7 +1411,7 @@ function renderOutputPreview(node) {
     else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
     var parts = [];
     sel.forEach(function(it) {
-        if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
+        if (it && it.tpl && it.tpl.prompt) parts.push(_bsaiCleanPrompt(it.tpl.prompt));
     });
     var base = parts.join("\n\n");
     if (!(cust && cust.trim())) {
@@ -1524,7 +1548,7 @@ function applyCustomization(node, done) {
                 node._bsaiOutTa.value = warn;
                 showDiff(node, base, warn);
             } else {
-                node._bsaiOutTa.value = j.prompt;
+                node._bsaiOutTa.value = _bsaiCleanPrompt(j.prompt);
                 showDiff(node, base, j.prompt);
             }
         } else {
@@ -1672,7 +1696,7 @@ function openVoiceModal(node) {
             body: JSON.stringify({ text: txt })
         }).then(function(r) { return r.json(); }).then(function(j) {
             if (j && j.ok && j.prompt) {
-                ta.value = j.prompt;
+                ta.value = _bsaiCleanPrompt(j.prompt);
                 setStatus("✅ H3 直通提示词已生成，点击「确定并输出」直接发给下游节点 / Generated — click Confirm & Output", "ok");
                 if (_autoGen && !_flowCancelled) {
                     _autoGen = false;
