@@ -3528,6 +3528,86 @@
                 "Oner"
               ],
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。全程无剪辑的连续长镜头（Long Take / Oner）。摄影机从初始位置开始，跟随人物在场景中流畅穿行：先缓慢横移跟随人物行走，经过门框时摄影机顺势穿过门洞，进入另一个空间后环绕人物半圈，最终缓慢后拉展现完整空间。整个过程摄影机运动如流水般连续，无任何剪切或跳切，人物表演连贯完整，空间关系清晰可辨。运动平滑，速度有节奏变化，结尾定格于全景。\n\noverall_soundscape: \n环境声随摄影机在空间中移动而自然变化：不同房间的声场特征差异明显，穿过门洞时声音过渡自然，人物脚步声与对话始终清晰可辨。\n\nnon_diegetic_music: \n连贯的电影配乐，随长镜头的空间转换而变化情绪色彩，从紧张到舒缓再到宏大，音乐与摄影机运动同步呼吸。"
+            },
+            {
+              "id": "cam_slider_dolly",
+              "name": "滑轨镜头",
+              "name_en": "Slider Dolly",
+              "description": "滑轨平滑直线位移，画面稳定细腻，产品展示与空间介绍的首选运镜",
+              "preview": "cam_slider_dolly.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "基础",
+                "滑轨",
+                "平滑",
+                "产品展示"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机安装于滑轨之上，沿水平方向做极其平滑匀速的直线位移（Slider Dolly），全程无任何抖动与晃动，画面如丝般顺滑。滑轨运动从画面左侧缓缓滑向右侧，主体在画面中保持相对稳定，背景随滑轨运动自然流动，空间层次逐步展开。运动速度均匀舒缓，结尾自然减速定格，展现出专业电影级的稳定质感与空间叙事。\n\noverall_soundscape: \n环境声随滑轨运动保持稳定，轻微的空间底噪，滑轨滑动时若有若无的机械声被弱化，声音自然衔接。\n\nnon_diegetic_music: \n轻柔的氛围音乐垫底，节奏舒缓均匀，随滑轨运动微妙起伏，营造专业稳定的空间展示氛围。"
+            },
+            {
+              "id": "cam_speed_ramp",
+              "name": "变速运镜",
+              "name_en": "Speed Ramp",
+              "description": "镜头运动速度由慢到快或由快到慢，制造情绪递进与高潮铺垫的节奏变化",
+              "preview": "cam_speed_ramp.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "基础",
+                "变速",
+                "节奏",
+                "情绪递进"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机沿纵深方向向前推进（Dolly In），但运动速度呈现明显的变速曲线（Speed Ramp）：0-2秒以极慢速度开始推进，画面几乎静止，营造压抑与期待感；2-4秒推进速度逐渐加快，节奏开始上扬，情绪逐步累积；4-6秒推进速度达到最快，画面快速逼近主体，在高潮瞬间骤然减速定格。变速过程平滑自然无顿挫，速度变化与情绪节奏精准同步，制造出强烈的情绪递进与高潮冲击感。\n\noverall_soundscape: \n环境声随镜头速度变化而变化，慢速阶段声音低沉压抑，加速阶段环境声逐渐增强变快，高潮瞬间声音达到峰值后骤停。\n\nnon_diegetic_music: \n音乐节奏随镜头变速同步变化，慢速阶段低沉缓慢，加速阶段节奏逐步加快增强，高潮瞬间音乐爆发后骤停，营造强烈的情绪冲击力。"
+            },
+            {
+              "id": "cam_foreground_occlusion",
+              "name": "前景遮挡运镜",
+              "name_en": "Foreground Occlusion",
+              "description": "利用前景物体掠过制造画面层次与自然转场感，空间切换与人物行动的隐形过渡",
+              "preview": "cam_foreground_occlusion.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "基础",
+                "前景遮挡",
+                "层次",
+                "转场"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机跟随主体横向移动（Truck / Tracking），运动过程中前景有物体（如门框、柱子、行人身体、窗帘）自然掠过画面，在前景物体完全遮挡画面的瞬间，画面自然过渡到新的空间或角度（Foreground Occlusion）。前景遮挡物经过时画面短暂全黑或全模糊，遮挡物移开后场景已悄然变化，转场无缝衔接毫无痕迹。摄影机运动全程平滑稳定，前景遮挡物的运动速度与摄影机同步，制造出自然的空间层次与隐形转场效果。\n\noverall_soundscape: \n前景遮挡物经过时伴随轻微的风声或物体掠过的声响，遮挡瞬间声音短暂闷住，转场后新场景环境声自然淡入。\n\nnon_diegetic_music: \n前景遮挡瞬间音乐节奏轻微加速或加入一个上升音效，转场完成后音乐自然过渡到新场景的氛围，营造丝滑的空间切换感。"
+            },
+            {
+              "id": "cam_pull_away",
+              "name": "抽离镜头",
+              "name_en": "Pull Away",
+              "description": "镜头逐渐远离主体，留下余韵与空间感，结尾升华与情绪落幕的经典收束运镜",
+              "preview": "cam_pull_away.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "基础",
+                "抽离",
+                "拉远",
+                "结尾"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从主体近景开始，以极其缓慢的速度逐渐向后拉远并微微上升（Pull Away / Crane Back），主体在画面中逐渐缩小，周围环境逐步展开，更多空间元素进入画面。拉远过程持续而舒缓，速度先缓后更缓，结尾几乎静止于大远景，主体在宏大的环境中显得渺小而孤独。画面光线随拉远逐渐柔和变暗，仿佛故事缓缓落幕，留下悠长的余韵与情感空间。全程运动平滑稳定，无任何抖动，营造出结尾升华与情绪落幕的惆怅感。\n\noverall_soundscape: \n环境声随镜头拉远逐渐变小变远，人物的细微声音逐渐消失，最终只剩宏大空间的环境底噪与风声，空间混响逐渐增大。\n\nnon_diegetic_music: \n音乐从丰满逐渐变薄，乐器一层层减少，最后只剩单一音符或完全静默，在大远景呈现时音乐达到最空灵的状态，营造结尾落幕的惆怅与释然感。"
             }
           ]
         },
@@ -4528,6 +4608,422 @@
                 "细节"
               ],
               "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {{SCENE_REF_RULE}} \n[镜头1]【0-5秒】道具细节微距镜头。画面内容完全保持输入参考图 <Picture 1> 中的关键道具特征。探针镜头（Probe Lens）微距拍摄，极浅景深，只有道具表面极小区域清晰，前后景完全虚化呈奶油状散景（Bokeh）。0-2秒：特写道具表面的一个细节区域（如纹理、刻字、反光、材质肌理），摄影机以极慢速度沿道具表面滑动（Macro Slide），焦点从一个细节区域缓缓移至另一个，光线在道具表面流动，反射出丰富的高光与阴影。2-4秒：摄影机围绕道具缓慢旋转（Slow Rotation / Orbit），从不同角度展现道具的立体感与材质质感，旋转过程中光影变化丰富，金属/木材/布料等材质特性清晰可见。4-5秒：摄影机缓缓拉远（Pull Back），景别从微距特写过渡到中景，道具全貌逐渐呈现，周围环境淡入。全程画面质感极致，细节丰富，色彩饱满，营造道具特写的电影级质感。\n\noverall_soundscape: \n极静的环境，只有道具本身的细微声响（如金属轻鸣、布料摩擦、液体流动），光线流动时伴随轻微的氛围音，空间安静而聚焦。\n\nnon_diegetic_music: \n极简的氛围音乐，单一乐器（如钢琴或合成器 pad），音符稀疏而悠长，随道具细节的展现微妙变化，营造道具特写的神秘与精致感。"
+            }
+          ]
+        },
+        {
+          "id": "cam_emotion",
+          "name": "情绪镜头类",
+          "name_en": "Emotional Camera",
+          "description": "以情绪表达为核心的导演级运镜，覆盖窥视、定格、窒息、剪影、留白等20种情绪镜头场景",
+          "templates": [
+            {
+              "id": "cam_side_peek",
+              "name": "侧移窥视镜头",
+              "name_en": "Side Peek Shot",
+              "description": "镜头侧向缓慢移动仿佛偷窥，营造隐蔽观察感与紧张氛围，监视与秘密观察的专属运镜",
+              "preview": "cam_side_peek.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "窥视",
+                "侧移",
+                "监视"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从遮挡物（如墙角、门框、窗帘缝隙）后方缓缓侧向移出（Side Peek），仿佛有人在暗中窥视。镜头移动极其缓慢谨慎，画面先从遮挡物边缘露出一小部分场景，随后逐步展开完整画面，主体在画面中被观察而不自知。摄影机保持在遮挡物附近，画面边缘始终有遮挡物的暗角存在，强化偷窥的视角感。全程运动缓慢而克制，营造隐蔽观察、秘密监视的紧张与不安氛围。\n\noverall_soundscape: \n环境声低沉压抑，只有极其轻微的呼吸声与环境底噪，遮挡物后方的空间混响特殊，仿佛声音被阻隔后传入，增强窥视的真实感。\n\nnon_diegetic_music: \n极简的悬疑氛围音乐，单一低沉音符持续，偶尔加入轻微的弦乐滑音暗示不安，音量极低不干扰窥视感，营造紧张隐蔽的氛围。"
+            },
+            {
+              "id": "cam_freeze_gaze",
+              "name": "定格凝视镜头",
+              "name_en": "Freeze Gaze Shot",
+              "description": "画面骤然静止，人物直视镜头，延长凝视时间强化冲击，沉默对峙与悲伤酝酿的强力运镜",
+              "preview": "cam_freeze_gaze.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "定格",
+                "凝视",
+                "冲击"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机以中近景拍摄主体，在运动过程中骤然刹停定格（Freeze Frame），画面完全静止，主体缓缓抬起头直视镜头，眼神中充满复杂情绪——可能是愤怒、悲伤、决绝或无声的控诉。定格状态持续延长，时间仿佛凝固，观众与主体形成直接的眼神对峙，冲击力随凝视时间的延长而不断累积。画面光线在定格瞬间微微变化，强化戏剧感。全程除主体细微的呼吸与眨眼外，画面完全静止，营造沉默对峙、隐忍悲伤的强烈情感冲击。\n\noverall_soundscape: \n定格瞬间所有环境声骤停，只剩极其轻微的心跳声或呼吸声被放大，凝视过程中声音保持极简，强化时间凝固的窒息感。\n\nnon_diegetic_music: \n定格瞬间音乐骤停或只剩一个持续的长音，凝视过程中音乐保持极简的氛围音，在凝视最深处音乐微微增强后缓缓消散，营造强烈的情感冲击。"
+            },
+            {
+              "id": "cam_rapid_push",
+              "name": "极速推进镜头",
+              "name_en": "Rapid Push In",
+              "description": "镜头极速推进主体瞬间拉近，制造冲击与惊吓效果，惊觉发现真相与危机来临的爆发运镜",
+              "preview": "cam_rapid_push.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 4,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "极速",
+                "推进",
+                "冲击"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-4秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从全景或中景开始，以极快速度沿纵深方向向前猛冲推进（Rapid Push In / Crash Zoom），画面在极短时间内从全景急速拉近至主体面部特写，速度之快产生强烈的运动模糊与视觉冲击。推进过程中背景飞速向后掠过，主体在画面中急速放大，在到达特写的瞬间骤然停止，画面定格于主体震惊、恐惧或恍然大悟的表情。极速推进过程平滑但迅猛，无任何抖动，制造出惊觉、发现真相、危机来临的强烈惊吓与冲击效果。\n\noverall_soundscape: \n极速推进时伴随强烈的风声呼啸与速度音效，推进瞬间声音急速上升，到达特写时声音骤停，只剩主体急促的呼吸声。\n\nnon_diegetic_music: \n音乐在推进瞬间急速上升，加入强烈的打击乐或音效冲击，到达特写时音乐骤停，营造惊吓与冲击的爆发效果。"
+            },
+            {
+              "id": "cam_focus_pull_transfer",
+              "name": "拉焦转移镜头",
+              "name_en": "Focus Pull Transfer",
+              "description": "前景清晰后景虚化，焦点缓缓转移到另一个主体，暗示线索出现与关系反转的叙事运镜",
+              "preview": "cam_focus_pull_transfer.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "拉焦",
+                "焦点转移",
+                "叙事"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机固定机位拍摄前后两个主体，初始状态前景主体清晰锐利、后景主体虚化模糊（Rack Focus / Focus Pull）。随着叙事推进，焦点缓缓从前景主体转移到后景主体——前景主体逐渐虚化，后景主体逐渐清晰锐利，焦点转移过程平滑自然。焦点转移的瞬间往往伴随着叙事信息的揭示：后景中出现的线索、人物的表情变化或关系的反转。摄影机全程固定不动，完全依靠焦点的转移来引导观众视线与叙事节奏，营造线索出现、关系反转、暗示秘密的微妙叙事效果。\n\noverall_soundscape: \n环境声保持稳定，焦点转移时后景主体的声音逐渐清晰可辨，前景主体的声音逐渐模糊弱化，声音焦点与视觉焦点同步转移。\n\nnon_diegetic_music: \n音乐氛围随焦点转移微妙变化，焦点转移瞬间加入轻微的音效或音乐层次变化，暗示叙事信息的揭示，营造微妙的叙事张力。"
+            },
+            {
+              "id": "cam_zoom_suffocate",
+              "name": "变焦窒息镜头",
+              "name_en": "Zoom Suffocate",
+              "description": "变焦压缩画面空间被挤压，传递窒息与压抑感，恐惧升级与心理失衡的压迫运镜",
+              "preview": "cam_zoom_suffocate.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "变焦",
+                "窒息",
+                "压迫"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机使用长焦镜头缓慢变焦推近（Slow Zoom In / Telephoto Compression），焦距逐渐变长，画面空间被持续压缩——背景与主体之间的距离感被长焦压缩扁平化，主体仿佛被周围环境挤压包裹，空间越来越逼仄。变焦过程极其缓慢而持续，主体在画面中逐渐放大，背景被压缩成模糊的色块，营造出空间不断收缩、令人窒息的压迫感。摄影机机位固定不动，完全依靠长焦变焦的空间压缩效果来传递心理压力，营造恐惧升级、危险降临、心理失衡的窒息与压抑氛围。\n\noverall_soundscape: \n环境声随变焦推进逐渐变得沉闷压抑，空间感被压缩，声音仿佛被阻隔，呼吸声逐渐加重变快，营造窒息的压迫感。\n\nnon_diegetic_music: \n音乐随变焦推进逐渐增强压迫感，低频 drone 持续攀升，弦乐逐渐加入不和谐音，营造空间收缩的窒息与心理失衡的紧张感。"
+            },
+            {
+              "id": "cam_silhouette_resolve",
+              "name": "剪影决绝镜头",
+              "name_en": "Silhouette Resolve",
+              "description": "人物剪影呈现，逆光或侧光勾勒轮廓，强化决绝与宿命感，离别牺牲与最终抉择的史诗运镜",
+              "preview": "cam_silhouette_resolve.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "剪影",
+                "逆光",
+                "决绝"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机以中全景拍摄主体，强烈的逆光（Backlight）或侧逆光从主体后方打来，主体面部与身体细节完全隐没于阴影之中，只呈现出清晰锐利的黑色剪影轮廓（Silhouette）。轮廓光（Rim Light）在主体边缘勾勒出一圈明亮的光晕，发丝与衣物边缘被光线穿透，营造出神圣而悲壮的氛围。摄影机缓慢向后拉远或微微上升，主体剪影在明亮的背景前显得坚定而决绝，仿佛正在做出某种重大抉择或走向宿命。全程画面高对比，剪影与背景形成强烈视觉冲击，营造离别、牺牲、最终抉择的决绝与宿命感。\n\noverall_soundscape: \n环境声空灵而宏大，风声或远处的环境音被强化，主体的脚步声或衣料声清晰可辨，空间混响宏大，营造史诗感与宿命感。\n\nnon_diegetic_music: \n音乐悲壮而宏大，弦乐与合唱逐步增强，在主体做出抉择的瞬间音乐达到高潮，营造离别牺牲与最终抉择的史诗感与决绝氛围。"
+            },
+            {
+              "id": "cam_macro_loss_control",
+              "name": "微距失控镜头",
+              "name_en": "Macro Loss of Control",
+              "description": "超近距离拍摄细节，放大微小动作或情绪失控临界点，紧张欲言又止与情绪爆发前的窒息运镜",
+              "preview": "cam_macro_loss_control.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 4,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "微距",
+                "失控",
+                "细节"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-4秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机以极近的微距距离（Macro Close-Up）拍摄主体的某个细节部位——可能是微微颤抖的嘴唇、紧攥到发白的手指、微微颤动的睫毛、或即将滑落的泪珠。极浅景深，只有极小区域清晰锐利，前后景完全虚化呈奶油状散景。摄影机以极慢速度微微推进或保持静止，放大观察这个微小细节的微妙变化——嘴唇欲言又止地开合、手指越攥越紧、泪珠在眼眶中积聚即将滑落。全程画面极度聚焦于细节，时间仿佛被拉长，营造紧张、欲言又止、情绪爆发前的窒息与临界感。\n\noverall_soundscape: \n环境声被极度弱化，只剩主体细微的生理声响——呼吸声、心跳声、嘴唇开合的细微声响、手指攥紧的衣料摩擦声，被放大到清晰可辨。\n\nnon_diegetic_music: \n音乐极简，单一音符或持续的低频氛围音，音量极低，在情绪即将爆发的瞬间音乐微微增强但始终克制，营造临界窒息的紧张感。"
+            },
+            {
+              "id": "cam_telephoto_detach",
+              "name": "长焦抽离镜头",
+              "name_en": "Telephoto Detach",
+              "description": "用长焦镜头拉远压缩空间，营造旁观与抽离感，疏远旁观与无法靠近的情感运镜",
+              "preview": "cam_telephoto_detach.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "长焦",
+                "抽离",
+                "旁观"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机使用长焦镜头从远处拍摄主体（Telephoto / Long Lens），焦距极长，画面空间被强烈压缩——主体与背景之间的距离感被压缩扁平化，背景被虚化模糊，主体仿佛被孤立在一个压缩的空间中。摄影机保持在远处，仿佛一个旁观者在远远观察主体，无法靠近也无法介入。长焦镜头的浅景深使主体清晰而周围环境完全虚化，强化主体的孤立感与被抽离感。摄影机可能缓慢变焦拉远或保持固定，主体在画面中逐渐变小或保持稳定，营造疏远、旁观、无法靠近的情感抽离感。\n\noverall_soundscape: \n环境声被长焦的距离感弱化，声音仿佛隔着一层距离传来，模糊而不真实，主体的声音被距离削弱，营造旁观与抽离的距离感。\n\nnon_diegetic_music: \n音乐疏离而克制，氛围音乐带有距离感与空间感，仿佛从远处传来，营造旁观、疏远、无法靠近的情感抽离氛围。"
+            },
+            {
+              "id": "cam_slow_pan_omen",
+              "name": "慢摇预兆镜头",
+              "name_en": "Slow Pan Omen",
+              "description": "缓慢摇动或旋转营造不安，暗示即将发生异样，异样出现危机前奏与环境铺垫的悬疑运镜",
+              "preview": "cam_slow_pan_omen.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "慢摇",
+                "预兆",
+                "悬疑"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机以极其缓慢的速度水平摇动（Slow Pan）或微微旋转，从场景的一侧缓缓扫向另一侧，运动速度慢到几乎难以察觉。摇动过程中，画面逐步展现场景的各个角落——看似平静的环境中暗藏着不安的细节：阴影中隐约的轮廓、微微晃动的物体、不合常理的光影、或突然静止的环境。慢摇的节奏营造出一种不祥的预兆感，仿佛有什么异样即将发生。摄影机运动全程缓慢而克制，画面光线可能在摇动过程中微妙变化，色调逐渐偏冷偏暗，营造异样出现、危机前奏、环境铺垫的悬疑与不安氛围。\n\noverall_soundscape: \n环境声随慢摇逐渐变化，初始平静的环境声中逐渐加入不和谐的细微声响——风声变化、远处不明来源的声响、物体轻微晃动声，营造不祥的预兆感。\n\nnon_diegetic_music: \n音乐缓慢而不安，持续的低频 drone 与不和谐的弦乐逐步增强，在慢摇到关键细节时音乐微微上扬暗示危机，营造悬疑预兆的不安氛围。"
+            },
+            {
+              "id": "cam_empty_lingering",
+              "name": "空镜余韵镜头",
+              "name_en": "Empty Lingering Shot",
+              "description": "空镜头停留延长余韵，留白让情绪延续，失去之后结尾回味与情绪收束的留白运镜",
+              "preview": "cam_empty_lingering.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "情绪",
+                "空镜",
+                "余韵",
+                "留白"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机拍摄一个没有人物的空镜头（Empty Shot / Establishing Shot）——可能是空旷的房间、寂静的街道、飘落的树叶、微风吹动的窗帘、或夕阳下的空椅。空镜头中没有主体人物，只有环境本身在缓慢变化——光影流动、风吹物动、时间流逝。摄影机保持固定或极其缓慢地移动，空镜头停留时间被刻意延长，给观众充分的时间回味与感受。画面光线柔和，色调可能偏暖或偏冷，营造出一种悠长的余韵与情感留白。全程画面宁静而富有诗意，仿佛故事已经结束但情绪仍在延续，营造失去之后、结尾回味、情绪收束的留白与余韵感。\n\noverall_soundscape: \n环境声空灵而宁静，只有自然的环境声——风声、树叶沙沙声、远处的鸟鸣或城市底噪，声音轻柔而持续，营造宁静的留白氛围。\n\nnon_diegetic_music: \n音乐轻柔而悠长，钢琴或弦乐的单音缓慢延续，旋律简单而富有余韵，在空镜头停留中音乐缓缓消散，营造情绪收束的留白与回味感。"
+            }
+          ]
+        },
+        {
+          "id": "cam_action",
+          "name": "动作镜头类",
+          "name_en": "Action Camera",
+          "description": "以动作调度为核心的导演级运镜，覆盖弧线跟进、包抄、压迫、穿行、旋落等16种动作镜头场景",
+          "templates": [
+            {
+              "id": "cam_arc_approach",
+              "name": "弧线跟进",
+              "name_en": "Arc Approach",
+              "description": "镜头沿弧形轨迹逼近主体，兼顾空间展开与情绪聚焦，人物试探与关系升温的优雅运镜",
+              "preview": "cam_arc_approach.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "弧线",
+                "跟进",
+                "优雅"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机沿一条优美的弧形轨迹（Arc / Curved Dolly）向主体逼近，运动路径呈弧线而非直线，在推进的同时缓缓环绕主体侧面。弧线运动兼顾了空间展开与情绪聚焦——推进过程中背景随弧线运动自然流动展开，同时主体在画面中逐渐放大拉近。摄影机运动平滑优雅，弧线半径适中，运动速度均匀舒缓，主体始终保持在画面中的视觉焦点位置。弧线跟进的运动方式比直线推进更富有动感与优雅感，营造人物试探、关系升温、情感递进的优雅与细腻氛围。\n\noverall_soundscape: \n环境声随弧线运动自然流动，空间感随视角变化而微妙转换，主体的声音始终清晰，背景声随弧线运动自然变化。\n\nnon_diegetic_music: \n音乐优雅而细腻，弦乐或钢琴的旋律随弧线运动流畅展开，节奏舒缓而富有动感，营造人物试探与关系升温的优雅氛围。"
+            },
+            {
+              "id": "cam_reverse_flank",
+              "name": "反向包抄镜头",
+              "name_en": "Reverse Flank",
+              "description": "镜头反向绕到主体背后或侧后方，形成包抄态势，对峙升级与身份揭晓的战术运镜",
+              "preview": "cam_reverse_flank.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "反向",
+                "包抄",
+                "对峙"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从主体正面或侧面开始，以较快速度反向环绕运动（Reverse Orbit / Flank），绕到主体的背后或侧后方，形成一种包抄与围堵的态势。运动过程中主体从正面逐渐转为侧面再转为背面，观众的视角从面对主体转为尾随主体，形成强烈的视角转换与心理冲击。反向包抄的运动速度适中偏快，环绕半径较小，主体在画面中始终保持视觉焦点。当摄影机到达主体背后时，画面可能揭示主体面前的场景或对手的存在，形成对峙升级或身份揭晓的戏剧效果。全程运动平滑有力，营造对峙升级、身份揭晓、战术包抄的紧张与戏剧感。\n\noverall_soundscape: \n环境声随视角转换而变化，正面时环境声正常，转到背后时主体面前的声音变得清晰可辨，揭示对峙场景的声音信息。\n\nnon_diegetic_music: \n音乐随反向包抄运动逐步增强紧张感，节奏加快，在到达主体背后揭示场景时音乐达到高潮，营造对峙升级与身份揭晓的戏剧张力。"
+            },
+            {
+              "id": "cam_oppressive_approach",
+              "name": "压迫式逼近",
+              "name_en": "Oppressive Approach",
+              "description": "长焦机位持续拉近人物呼吸空间，形成心理压强，审讯时刻与心理博弈的窒息运镜",
+              "preview": "cam_oppressive_approach.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "压迫",
+                "逼近",
+                "审讯"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机使用长焦镜头从正面持续缓慢逼近主体（Oppressive Telephoto Push In），焦距逐渐变长，画面空间被持续压缩，主体的面部在画面中逐渐放大，周围的空间被长焦压缩得越来越逼仄。逼近过程极其缓慢而持续，仿佛一种无形的压力在不断向主体逼近，主体的呼吸空间被持续压缩。长焦镜头的浅景深使背景完全虚化，所有视觉焦点都集中在主体的面部表情上——紧张、抗拒、崩溃或心理防线逐渐瓦解。摄影机全程固定机位，完全依靠长焦变焦的持续逼近来制造心理压强，营造审讯时刻、心理博弈、心理防线崩溃的窒息与压迫感。\n\noverall_soundscape: \n环境声被极度弱化，只剩主体的呼吸声与心跳声被放大，呼吸逐渐加重变快，营造窒息的压迫感与心理博弈的紧张。\n\nnon_diegetic_music: \n音乐持续而压迫，低频 drone 缓慢攀升，弦乐加入不和谐音，随逼近持续增强心理压强，营造审讯与心理博弈的窒息氛围。"
+            },
+            {
+              "id": "cam_yield_reveal",
+              "name": "退让式让位镜头",
+              "name_en": "Yield Reveal",
+              "description": "镜头边退边让出前景空间，引出新信息主体，线索出现与第二人物登场的揭示运镜",
+              "preview": "cam_yield_reveal.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "退让",
+                "让位",
+                "揭示"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从主体近景开始，边向后拉远边侧向移动（Yield / Pull Back Reveal），在后退的过程中逐步让出前景空间，画面中逐渐出现新的元素——可能是第二个人物、一个关键线索物品、或一个之前被遮挡的场景信息。退让式运动缓慢而有目的性，摄影机在后退的同时微微侧向移动，为新出现的主体或信息让出画面空间。初始主体在画面中逐渐移到一侧或缩小，新出现的主体或信息逐步成为画面的视觉焦点。全程运动平滑自然，营造线索出现、第二人物登场、信息揭示的叙事转折效果。\n\noverall_soundscape: \n环境声随镜头退让逐渐丰富，新出现的主体或信息带来新的声音元素，初始主体的声音逐渐弱化，新主体的声音逐渐清晰。\n\nnon_diegetic_music: \n音乐随退让揭示微妙变化，在新主体或信息出现的瞬间音乐加入新的层次或旋律变化，营造叙事转折与信息揭示的戏剧效果。"
+            },
+            {
+              "id": "cam_cross_traverse",
+              "name": "交叉穿行镜头",
+              "name_en": "Cross Traverse",
+              "description": "镜头在多人或障碍间连续穿行，保持叙事推进，群戏调度与追逐转场的动态运镜",
+              "preview": "cam_cross_traverse.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "交叉",
+                "穿行",
+                "群戏"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机在多人或障碍物之间连续穿行运动（Cross Traverse / Weaving），镜头路径呈交叉穿梭的曲线，在人群、桌椅、柱子或其他障碍物之间灵活穿行。穿行过程中摄影机不断改变方向与高度，从一个主体旁穿过再绕到另一个主体前，画面中人物与障碍物交替出现又交替掠过，形成丰富的视觉层次与动态节奏。摄影机运动平滑而灵活，仿佛一条游鱼在空间中自由穿梭，始终保持叙事的推进与视觉的连贯。全程运动富有动感与空间探索感，营造群戏调度、追逐转场、复杂空间探索的动态与活力氛围。\n\noverall_soundscape: \n环境声随穿行运动不断变化，不同主体与区域的声音交替出现又交替远去，空间混响随位置变化而丰富多变，营造动态穿行的沉浸感。\n\nnon_diegetic_music: \n音乐节奏明快而富有动感，旋律随穿行运动流畅变化，节奏与摄影机运动同步，营造群戏调度与追逐转场的动态活力氛围。"
+            },
+            {
+              "id": "cam_ground_skim",
+              "name": "贴地掠行镜头",
+              "name_en": "Ground Skim",
+              "description": "超低机位近地高速掠过，突出速度与冲击，车辆冲刺与战斗开场的极速运镜",
+              "preview": "cam_ground_skim.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 4,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "贴地",
+                "掠行",
+                "极速"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-4秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机以超低机位贴近地面（Ground Skim / Low Angle Skim），距离地面仅几十厘米，以极高速度沿地面水平掠过。超低机位使地面在画面中占据很大比例，地面纹理、尘土、水渍或碎片在高速掠过中产生强烈的运动模糊与速度感。摄影机运动速度极快，画面飞速向前推进，前方的主体或场景在超低视角中显得高大而有冲击力。贴地掠行的运动方式营造出强烈的速度感、冲击力与低视角的压迫感，全程运动迅猛而有力，画面可能因高速而产生轻微的震动与运动模糊，营造车辆冲刺、战斗开场、极速追逐的动感与冲击氛围。\n\noverall_soundscape: \n环境声被高速运动强化，风声呼啸、地面摩擦声、尘土飞扬声、引擎轰鸣声，声音随速度急剧增强，营造极速冲刺的冲击感。\n\nnon_diegetic_music: \n音乐节奏极速而强烈，打击乐与电子音效密集，节奏与高速运动同步，在掠行过程中音乐强度持续攀升，营造极速追逐与战斗开场的冲击氛围。"
+            },
+            {
+              "id": "cam_top_spin_descend",
+              "name": "顶视旋落镜头",
+              "name_en": "Top Spin Descend",
+              "description": "镜头从顶视角旋转下落至人物层面，建立戏剧反差，命运转折与情绪崩塌的史诗运镜",
+              "preview": "cam_top_spin_descend.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "顶视",
+                "旋落",
+                "命运"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-6秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从正上方的顶视角（Top Down / Bird's Eye View）开始，画面中主体在宏大的空间中显得渺小。摄影机开始旋转并缓缓下降（Spin Descend / Spiral Down），视角从垂直俯视逐渐倾斜，旋转的同时向主体层面降落。下降过程中主体在画面中逐渐放大，空间的宏大战与人物的渺小形成强烈对比。当摄影机下降到人物层面时，旋转停止，视角转为与主体平视或略微仰视，完成从上帝视角到人物视角的戏剧性转换。顶视旋落的运动方式营造出命运转折、情绪崩塌、格局拉开的史诗感与戏剧反差，全程运动平滑而富有仪式感。\n\noverall_soundscape: \n环境声随下降逐渐变化，顶视时环境声宏大而空灵，下降过程中主体的声音逐渐清晰可辨，到达人物层面时环境声转为正常的空间混响。\n\nnon_diegetic_music: \n音乐宏大而富有仪式感，弦乐与合唱从顶视的空灵逐渐增强，在下降到人物层面时音乐达到高潮，营造命运转折与情绪崩塌的史诗氛围。"
+            },
+            {
+              "id": "cam_sudden_stop_gaze",
+              "name": "突停凝视镜头",
+              "name_en": "Sudden Stop Gaze",
+              "description": "运动镜头中骤然刹停并定格主体，放大情绪停顿，真相刺痛与内心震荡的冲击运镜",
+              "preview": "cam_sudden_stop_gaze.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "突停",
+                "凝视",
+                "冲击"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机处于运动状态——可能是跟随、推进或横移，运动速度适中偏快，画面充满动感。在运动过程中，摄影机骤然刹停（Sudden Stop / Whip Stop），运动瞬间停止，画面从动态骤然转为静止，定格于主体的面部或关键动作。突停的瞬间产生强烈的视觉冲击——运动惯性带来的画面轻微晃动后迅速稳定，主体的表情在静止中被放大观察——震惊、痛苦、恍然大悟或内心震荡。突停后摄影机保持静止，凝视主体持续片刻，让情绪在静止中沉淀与放大。全程运动从动态到静止的转换急剧而有力，营造真相刺痛、内心震荡、情绪爆发的强烈冲击效果。\n\noverall_soundscape: \n运动过程中环境声充满动感，突停瞬间所有声音骤停，只剩主体急促的呼吸声或心跳声被放大，凝视过程中声音保持极简，强化情绪冲击。\n\nnon_diegetic_music: \n运动过程中音乐节奏明快，突停瞬间音乐骤停或只剩一个持续的强音，凝视过程中音乐缓缓增强，在情绪最深处达到高潮，营造强烈的内心震荡冲击。"
+            },
+            {
+              "id": "cam_pullback_reveal",
+              "name": "回撤揭示镜头",
+              "name_en": "Pullback Reveal",
+              "description": "镜头从局部快速回撤，揭示完整局面或反转信息，陷阱曝光与局势逆转的揭示运镜",
+              "preview": "cam_pullback_reveal.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "回撤",
+                "揭示",
+                "反转"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机从主体的局部特写开始——可能是面部、手部或某个细节，画面聚焦于局部信息。摄影机开始快速向后回撤（Pullback / Reveal），同时可能微微上升，画面从局部特写迅速拉开，逐步揭示出完整的场景与局面。回撤过程中，之前看不到的信息不断进入画面——可能是主体周围的环境、其他人物的存在、陷阱的全貌、或局势的真实状态。当摄影机回撤到全景或大远景时，完整的局面被揭示，观众恍然大悟——原来局部特写中隐藏的信息在完整局面中有着完全不同的含义。回撤运动快速而有力，揭示过程充满戏剧性，营造陷阱曝光、局势逆转、真相大白的反转与冲击效果。\n\noverall_soundscape: \n局部特写时环境声极简，只有局部的细微声响，回撤过程中环境声迅速丰富，完整局面的声音信息不断涌入，揭示全貌时环境声达到最丰富。\n\nnon_diegetic_music: \n回撤过程中音乐从极简快速增强，节奏加快，在揭示完整局面的瞬间音乐达到高潮或加入反转音效，营造局势逆转与真相大白的戏剧冲击。"
+            },
+            {
+              "id": "cam_rhythm_burst",
+              "name": "节奏爆发镜头",
+              "name_en": "Rhythm Burst",
+              "description": "镜头在音乐或动作节点瞬间加速冲刺，配合情绪爆点，高潮出场与决战前奏的燃向运镜",
+              "preview": "cam_rhythm_burst.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 5,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "运镜",
+                "动作",
+                "节奏",
+                "爆发",
+                "燃向"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The scene content, characters and objects from the reference image are fully preserved and must remain unchanged throughout.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} \n[镜头1]【0-5秒】全程单镜头，一镜到底。画面内容完全保持输入参考图 <Picture 1> 的场景与人物特征，主体位置与外观不发生任何改变。摄影机初始以中速跟随或推进主体，运动节奏平稳。在音乐节拍或动作节点的瞬间，摄影机骤然加速冲刺（Rhythm Burst / Speed Burst），运动速度在极短时间内达到峰值，画面飞速向前推进或环绕主体，产生强烈的运动模糊与速度感。加速冲刺与音乐的鼓点或动作的爆发精准同步，在情绪爆点的瞬间摄影机运动达到最强烈。爆发过后摄影机运动可能骤然减速或保持高速继续，配合情绪的延续。全程运动节奏鲜明，快慢对比强烈，与音乐或动作的节奏精准同步，营造高潮出场、决战前奏、情绪爆发的燃向与热血氛围。\n\noverall_soundscape: \n运动平稳阶段环境声正常，爆发瞬间环境声急剧增强，风声、动作声、撞击声与音乐同步爆发，营造强烈的节奏冲击与燃向氛围。\n\nnon_diegetic_music: \n音乐节奏鲜明，平稳阶段节奏适中，爆发瞬间鼓点与音效密集爆发，与摄影机加速精准同步，在情绪爆点音乐达到最高潮，营造燃向热血的决战氛围。"
             }
           ]
         }
