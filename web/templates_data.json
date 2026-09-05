@@ -3293,6 +3293,506 @@
               "prompt": "{{SCENE_REF_RULE}}\nsubject_definitions:\n<Subject 1> is the main fighter from <Picture 1>, whose facial identity, hair, clothing, body proportions, weapon, and personal energy come from <Picture 1>.\n<Subject 2> is the opponent fighter from <Picture 2>, whose facial identity, hair, clothing, body proportions, weapon, and personal energy come from <Picture 2>.\n<Picture 3> is the only battlefield: the environment, weather, and lighting come entirely from <Picture 3>, and must be preserved EXACTLY — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire battle takes place within this exact battlefield scene.\n\nsummary: [reference generation + combat showcase] Create a 15-second high-density duel between <Subject 1> and <Subject 2> inside the environment of <Picture 3>. <Picture 1> and <Picture 2> supply the two fighters' identities; <Picture 3> supplies the only environment, weather, and lighting. The two fighters engage in a continuous exchange of their weapons from the reference pictures with readable trajectories, immediate deflections, counter-strikes, and synchronized environmental feedback.\n\nretention_analysis:\n<Subject 1> (appears throughout): fully_preserved - identity, weapon, and energy stay locked to <Picture 1>.\n<Subject 2> (appears throughout): fully_preserved - identity, weapon, and energy stay locked to <Picture 2>.\n<Picture 3> (battlefield throughout): fully_preserved - the environment, weather, and lighting remain the sole environment; the display backgrounds of <Picture 1> and <Picture 2> never enter the scene.\n\ndetailed_description: The target video is a cinematic duel with a single continuous camera side and trajectory-first choreography, and clear causal chains between every strike.\n[Shot 1] 00:00.000-00:04.000, a low medium shot starts directly from the fused first frame with both fighters already inside the environment, mist/atmosphere curling around their feet. <Subject 1> first sweeps their weapon in a low arc that slices through two elements of the environment, which topple outward and shatter; <Subject 2> does not retreat, stepping through the falling debris and snapping their weapon at <Subject 1>'s chest, the tip deflected off the blade edge with a shower of sparks.\n声音: 武器切断环境的脆响、倒下碎裂声、武器破空声、刃与刃相击的火星爆鸣、脚步在湿/干地面的摩擦声，以及环境中的雨滴/风沙声。\n[Shot 2] At 00:04.000-00:09.000, a lateral tracking shot follows the exchange as they shift positions. <Subject 2> feints high and thrusts low, <Subject 1> parries and pivots the weapon to hook <Subject 2>'s shaft, yanking them off balance; <Subject 2> rolls with the pull, lands on one knee, and sweeps a kick at <Subject 1>'s ankle, forcing them to leap; droplets/particles scatter from the blade tips as they continue trading blows, each contact clear and immediate.\n声音: 连续多次刃器相交的金属鸣、武器钩住枪杆的绞动声、落地的闷响、扫堂腿带起的水/泥声、雨水/沙尘从刃尖甩落的细响，以及两人急促的呼吸。\n[Shot 3] At 00:09.000-00:13.000, the camera drops to a lower angle and pushes in as the duel escalates. <Subject 1> spins the weapon into a full-circle energy arc, forcing <Subject 2> back against a dense wall of the environment; <Subject 2> plants a foot on a fallen piece, reverses grip, and drives the weapon in a rising thrust that grazes past <Subject 1>'s shoulder guard, slicing a shallow line across the armor as both energies flare at the contact point; both fighters break apart, breathing hard, mist/atmosphere swirling between them.\n声音: 旋戟带起的风声、武器擦过肩甲的摩擦声、双方能量相撞的嗡鸣、环境被撞的摇晃声、急促的喘息，以及雨势/风势渐大的声音。\n[Shot 4] At 00:13.000-00:15.000, a grand wide shot reveals the clearing. <Subject 1> and <Subject 2> circle once, then charge and collide in a final crossing exchange: the weapons meet at the exact center of the frame, both locked, energy flaring, before they shove apart and hold ready stances among the mist and falling debris; the camera slowly pulls back, the light fading as the atmosphere deepens.\n声音: 终局冲刺的踏地声、武器咬合的金属鸣、双方推开时的发力闷哼、雾气翻涌的低频声、碎片飘落的细响，以及环境声在片尾逐渐减弱。\n\noverall_soundscape: No spoken dialogue. Continuous environmental ambience, weapon clashes, metal-on-wood impacts, wet footsteps, breathing, and the rustle of falling debris throughout.\n\nnon_diegetic_music: N/A"
             }
           ]
+        },
+        {
+          "id": "weapon_duel",
+          "name": "兵器对打类",
+          "name_en": "Weapon Duel",
+          "description": "各类冷兵器一对一决斗：枪对刀、剑对棍、警棍对短刀、关刀对双刀、三节棍对武士刀、流星锤对刀剑、横刀对双斧、长棍对武士刀",
+          "templates": [
+            {
+              "id": "wd_spear_vs_saber",
+              "name": "红缨枪对朴刀",
+              "name_en": "Spear vs Saber",
+              "description": "长枪一寸长一寸强，拦拿扎主攻；阔刀刚猛霸道劈砍为主。枪走灵活点线面，刀走刚猛劈砍路。",
+              "preview": "wd_spear_vs_saber.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "枪",
+                "刀",
+                "红缨枪",
+                "朴刀"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面缓慢横移跟随两人位移，低位仰拍突出兵器力量感。<Subject 1>（参考图人物）持红缨枪，<Subject 2>持阔刀/朴刀。\n- 0.0–1.5s: <Subject 1>起手拦枪——双手握枪使枪尖向左下方画弧，随即拿枪向右上方格挡，最后扎枪直刺<Subject 2>胸口。<Subject 2>举刀横格，刀枪碰撞火星飞溅，被枪劲推退半步。\n- 1.5–3.0s: <Subject 1>进步扎枪凤点头——枪头点地借力，快速进退反击，枪尖如毒蛇出洞直刺面门。<Subject 2>侧身闪避，刀从下向上撩击枪杆。<Subject 1>上撩枪格开，顺势斜劈枪砸向<Subject 2>肩部。\n- 3.0–5.0s: <Subject 2>飞身劈枪式白云盖顶——全身之力自上而下猛劈。<Subject 1>横枪上架，枪杆弯曲受力，脚下碎石飞溅。<Subject 1>云顶扫枪式横扫千军，枪尾横扫<Subject 2>腰侧，<Subject 2>踉跄后退。\n- 5.0–6.5s: <Subject 1>下踩脚压枪追击，泰山压顶长枪直劈。<Subject 2>滚地闪避，起身横斩。<Subject 1>回马枪——左右手来回互换，枪尖从腋下反刺，<Subject 2>猝不及防侧身躲过，枪尖划破衣料。\n- 6.5–8.0s: 两人各自退回戒备姿态，<Subject 1>持枪而立红缨飘动，<Subject 2>拖刀而立呼吸粗重，目光锁定对方。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 金属枪杆碰撞声，刀刃劈砍风声，枪尖破空声，脚步落地声，粗重呼吸声，火星飞溅声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_sword_vs_staff",
+              "name": "汉剑对齐眉棍",
+              "name_en": "Han Sword vs Staff",
+              "description": "八面汉剑又长又窄分八面研磨，直刺横斩凌厉；空心钢管当齐眉棍用，架棍格挡刚猛。一寸短一寸险的经典博弈。",
+              "preview": "wd_sword_vs_staff.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "汉剑",
+                "棍",
+                "八面汉剑",
+                "齐眉棍"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机缓慢前推，始终保持在两人侧面不越过轴线。<Subject 1>（参考图人物）持八面汉剑，<Subject 2>持齐眉棍/空心钢管。\n- 0.0–1.2s: <Subject 1>进马右前刺——剑尖直刺<Subject 2>面门，剑路凌厉。<Subject 2>立棍格挡，棍身横架格开剑锋，金属碰撞发出清脆声响。\n- 1.2–2.5s: <Subject 2>左横展棍横扫<Subject 1>头部，<Subject 1>低头闪避，同时右横斩剑——剑沿水平弧线斩向<Subject 2>腰侧。<Subject 2>架棍格挡，棍身被剑刃劈出火花。\n- 2.5–4.0s: <Subject 1>下劈剑自上而下猛劈，<Subject 2>举棍上架，棍身弯曲受力。<Subject 1>左横切剑——剑从左向右平切<Subject 2>颈部，<Subject 2>后仰闪避，剑锋擦过鼻尖。<Subject 1>转身再横扫剑，<Subject 2>用棍尾格开。\n- 4.0–5.5s: <Subject 2>抓住空档连续扫棍——左扫右扫连击，棍风呼啸。<Subject 1>连续闪避，剑随身转，突然近身直刺，剑尖直指<Subject 2>持棍手腕。<Subject 2>缩手后撤，棍法被破。\n- 5.5–7.0s: <Subject 2>暴怒抡棍全力横扫，<Subject 1>不挡不闪，侧身贴棍而入，剑贴棍身滑进，剑尖抵住<Subject 2>咽喉。两人定格对峙，<Subject 2>僵住不敢妄动。\n- 7.0–8.0s: <Subject 1>收剑后退，<Subject 2>也收棍戒备，两人呼吸粗重目光交汇。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 剑刃破空的锐响，棍身碰撞的闷响，金属摩擦声，脚步移动声，粗重呼吸声，衣料挥动声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_baton_vs_knife",
+              "name": "伸缩警棍对短刀",
+              "name_en": "Expandable Baton vs Knife",
+              "description": "《杀破狼》甄子丹VS吴京巷战教科书。警棍下劈反劈斜劈连续低扫，短刀反削正推立刀格挡翻腕削腕，近身兵器格斗的极致。",
+              "preview": "wd_baton_vs_knife.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "警棍",
+                "短刀",
+                "巷战",
+                "杀破狼"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中近景构图，手持轻微晃动镜头增加临场感，摄影机在两人侧面快速横移跟随。<Subject 1>（参考图人物）持伸缩警棍，<Subject 2>持短刀/匕首。狭窄巷战空间。\n- 0.0–1.0s: <Subject 1>下劈棍——警棍自上而下猛劈<Subject 2>头部，<Subject 2>立刀格挡，棍刀碰撞火花飞溅。<Subject 1>反劈棍——棍从下向上反撩，<Subject 2>缩头闪避。\n- 1.0–2.5s: <Subject 1>斜劈棍接连续低扫棍——棍沿斜线劈向肩侧，随即贴地横扫脚踝。<Subject 2>跳跃闪避低扫，落地同时反削刀——刀刃从下向上削向<Subject 1>手腕。<Subject 1>收棍格开。\n- 2.5–4.0s: <Subject 1>右砸棍——棍身平砸<Subject 2>面门，<Subject 2>转刀再挡，刀刃格住棍身。<Subject 1>正砸棍接平扫棍——连续两棍一上一下，<Subject 2>架刀横挡，被棍劲推退两步。\n- 4.0–5.5s: <Subject 2>反击：正推刀直刺<Subject 1>腹部，<Subject 1>侧身闪避，同时下扎棍——棍尾向下砸击<Subject 2>持刀手腕。<Subject 2>勾刀下拉格开，反手反刀削腕——刀刃横向削向<Subject 1>持棍手腕。\n- 5.5–7.0s: <Subject 1>翻腕闪避，甩臂横削棍反击，<Subject 2>反手再削刀，两人兵器高速交错，火花连续飞溅。<Subject 1>突然下劈棍全力一击，<Subject 2>举刀硬接，被巨大力道压得单膝跪地。\n- 7.0–8.0s: <Subject 2>滚地闪避脱身，两人重新对峙，警棍和短刀同时举起，呼吸粗重目光锁定。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 警棍劈砸的闷响，短刀削切的锐响，金属碰撞火花声，狭窄空间回声，脚步摩擦地面声，粗重喘息声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_guandao_vs_twinblades",
+              "name": "关刀对双刀",
+              "name_en": "Guan Dao vs Twin Blades",
+              "description": "单手立关刀，脚踢起刀快速起手，回身封刀挂刀全身扫刀，五花顺势俯身斩腿。长柄重兵器对短双刀的距离博弈。",
+              "preview": "wd_guandao_vs_twinblades.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "关刀",
+                "双刀",
+                "长柄兵器",
+                "京剧武行"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中全景构图，摄影机缓慢环绕两人，低位仰拍突出关刀的重量感和压迫感。<Subject 1>（参考图人物）持青龙偃月刀/关刀，<Subject 2>持双刀/双短刀。\n- 0.0–1.5s: <Subject 1>脚踢起刀——脚尖踢击刀柄末端快速起手，这是长柄兵器的快速起手式。关刀抡起带起风声，<Subject 2>双刀交叉格挡，被巨大力道震得手臂发麻。\n- 1.5–3.0s: <Subject 1>回身封刀——刀身横封格开<Subject 2>的双刀连击，随即挂刀——刀刃勾挂<Subject 2>的一把刀，顺势夺力。<Subject 2>松手弃刀后退，另一刀护在身前。\n- 3.0–4.5s: <Subject 1>全身扫刀——关刀沿水平方向全力横扫，刀风呼啸。<Subject 2>后仰倒地闪避，关刀从鼻尖上方掠过带起气流。<Subject 2>鲤鱼打挺起身，双刀齐出直刺。\n- 4.5–6.0s: <Subject 1>五花顺势——刀身在头顶挽出刀花，化解<Subject 2>的直刺，随即俯身斩腿——关刀贴地横扫<Subject 2>脚踝。<Subject 2>跳跃闪避，空中翻身双刀下劈。\n- 6.0–7.5s: <Subject 1>举刀上架格住双刀下劈，关刀沉重的重量将<Subject 2>压得落地不稳。<Subject 1>顺势推刀，刀身将<Subject 2>推出数步。\n- 7.5–8.0s: 两人重新对峙，<Subject 1>拖刀而立关刀拖地，<Subject 2>双刀护胸呼吸急促。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 关刀抡动的沉重风声，金属碰撞的厚重闷响，刀身摩擦声，脚步踏地声，粗重呼吸声，衣料挥动声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_three_section_staff_vs_katana",
+              "name": "三节棍对武士刀",
+              "name_en": "Three-Section Staff vs Katana",
+              "description": "三节棍单梢节握法远距离击打，中结和游离梢节点劈砸扫，跃步横扫摇棍对攻。软兵器对硬兵器的灵活博弈。",
+              "preview": "wd_three_section_staff_vs_katana.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "三节棍",
+                "武士刀",
+                "软兵器",
+                "霍元甲"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机快速摇移跟随三节棍的运动轨迹，手持轻微晃动增加临场感。<Subject 1>（参考图人物）持三节棍，<Subject 2>持武士刀/日本刀。\n- 0.0–1.5s: <Subject 1>持棍手法切换为单梢节握法——右手握持一梢节，中结和游离梢节做远距离击打。游离梢节甩出直点<Subject 2>面门，<Subject 2>举刀格挡，梢节弹回。\n- 1.5–3.0s: <Subject 1>跃步横扫——三节棍沿水平弧线全力横扫，棍身在空中展开形成大范围攻击。<Subject 2>持刀强压近身，试图缩短距离破解长兵器优势。<Subject 1>一手持梢节另一手持中节，通过操作游离节进行点劈砸扫连续攻击。\n- 3.0–4.5s: <Subject 2>近身成功，武士刀连续劈斩——正劈斜劈反劈，刀光闪烁。<Subject 1>连续摇棍对攻，三节棍的软身特性让刀难以格挡，棍梢从意想不到的角度袭来。<Subject 2>甩棍反击，刀背格开棍梢。\n- 4.5–6.0s: <Subject 1>回身甩棍——三节棍从肩后甩出，棍梢直击<Subject 2>持刀手腕。<Subject 2>缩手闪避，同时反手刀削向棍链。<Subject 1>快速收棍，三节棍折叠收回手中，随即再次展开攻击。\n- 6.0–7.5s: 两人高速攻防交错，三节棍的软身攻击和武士刀的刚猛劈砍形成鲜明对比。<Subject 1>突然全力一棍劈下，<Subject 2>举刀硬接，三节棍的三节同时受力弯曲，巨大冲击力将<Subject 2>震退。\n- 7.5–8.0s: 两人各自退回戒备，<Subject 1>三节棍收于身侧，<Subject 2>武士刀刀尖指地，呼吸粗重。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 三节棍挥舞的呼啸声，棍节碰撞的清脆声响，武士刀劈砍的锐响，金属碰撞声，脚步移动声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_meteor_hammer_vs_sword",
+              "name": "流星锤对刀剑",
+              "name_en": "Meteor Hammer vs Sword",
+              "description": "《杀死比尔》经典视听设计。流星锤铁球撞击墙面，高频快切手持跟拍，机位紧贴铁球运动轨迹。软兵器远程攻击对刀剑的距离压制。",
+              "preview": "wd_meteor_hammer_vs_sword.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "流星锤",
+                "刀剑",
+                "杀死比尔",
+                "软兵器"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n对称全景构图开场，以大厅立柱分割对战双方，冷暖双色测光包裹两名角色。打斗开启后高频快切，手持镜头跟拍，机位紧贴流星锤铁球的运动轨迹。<Subject 1>（参考图人物）持流星锤，<Subject 2>持刀剑。\n- 0.0–1.0s: 对称全景，两人分属立柱左右两个视觉分区。<Subject 1>挥舞流星锤，铁链带动铁球在头顶旋转加速，铁球带起风声形成圆形残影。<Subject 2>举刀戒备，脚步微调寻找空档。\n- 1.0–2.5s: <Subject 1>甩出流星锤——铁球沿铁链高速飞出直砸<Subject 2>头部。<Subject 2>侧身闪避，铁球砸中身后立柱，木石碎屑飞溅。<Subject 1>收链再甩，铁球从另一个角度横砸腰侧。\n- 2.5–4.0s: <Subject 2>举刀格开铁球，刀刃与铁球碰撞火花飞溅，但巨大冲击力让<Subject 2>手臂发麻。<Subject 1>连续甩锤——铁球从上下左右四个角度连续攻击，<Subject 2>连续闪避格挡，被逼得连连后退。\n- 4.0–5.5s: <Subject 2>抓住铁球回收的空档，持刀突进近身，试图缩短距离破解流星锤的远程优势。<Subject 1>不慌不忙，铁链回收缠绕手臂，铁球握在手中变成近战锤，迎面砸向<Subject 2>面门。\n- 5.5–7.0s: 近身缠斗——<Subject 1>铁链缠绕<Subject 2>持刀手腕，用力一拉夺刀。<Subject 2>松手弃刀，赤手空拳后退。<Subject 1>流星锤再次甩出，铁球在<Subject 2>脸前停住，铁链绷紧。\n- 7.0–8.0s: 定格对峙——铁球停在<Subject 2>鼻尖前，<Subject 2>僵住不敢妄动。<Subject 1>收锤后退，两人重新戒备。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 流星锤铁链挥舞的呼啸声，铁球撞击的沉重闷响，铁球砸中立柱的碎裂声，金属碰撞火花声，脚步移动声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_horizontal_blade_vs_twin_axes",
+              "name": "横刀对双斧",
+              "name_en": "Horizontal Blade vs Twin Axes",
+              "description": "2026安志杰《怒袭》冷兵器对决。横刀利用长度优势横斩斜劈撩刀控制中距离，双斧势大力沉腾空360度悬身下劈。距离控制与力量爆发的博弈。",
+              "preview": "wd_horizontal_blade_vs_twin_axes.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "横刀",
+                "双斧",
+                "怒袭",
+                "安志杰"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面缓慢横移跟随，低位仰拍突出双斧的力量感。<Subject 1>（参考图人物）持横刀/单刀，<Subject 2>持双斧。\n- 0.0–1.5s: <Subject 2>双斧齐出——左右两斧同时劈向<Subject 1>，斧风呼啸势大力沉。<Subject 1>横刀格开左斧，侧身闪避右斧，同时横斩——刀沿水平弧线斩向<Subject 2>肋部。<Subject 2>收斧格挡，刀斧碰撞火花飞溅。\n- 1.5–3.0s: <Subject 1>利用横刀长度优势控制中距离——连续斜劈撩刀，刀路从上下左右连续攻击，始终保持距离不让双斧近身。<Subject 2>试图格挡并再次贴近，双斧连续劈砍但都被<Subject 1>的距离控制化解。\n- 3.0–4.5s: <Subject 2>久攻不下，使出绝招——腾空360度悬身下劈，双斧在旋转中积蓄巨大力量，自上而下全力劈向<Subject 1>头顶。<Subject 1>来不及闪避，横刀举过头顶硬接，刀身弯曲受力，脚下地面被巨大压力震裂。\n- 4.5–6.0s: <Subject 1>借格挡反力侧身滑出，同时撩刀——刀从下向上撩击<Subject 2>落地未稳的腰侧。<Subject 2>转身用斧背格开，双斧再次抡起，斧风将地面尘土吹起。\n- 6.0–7.5s: 两人高速攻防交错，横刀的灵动和双斧的刚猛形成鲜明对比。<Subject 1>突然贴地滑铲，刀从下方横扫<Subject 2>脚踝。<Subject 2>跳跃闪避，空中双斧下劈，<Subject 1>滚地闪避，双斧劈在地面上劈出深痕。\n- 7.5–8.0s: 两人各自退回戒备，横刀刀尖指地，双斧举于肩侧，呼吸粗重目光锁定。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 双斧劈砍的沉重风声，横刀斩击的锐响，金属碰撞火花声，斧刃劈入地面的碎裂声，脚步踏地声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wd_staff_vs_katana",
+              "name": "长棍对武士刀",
+              "name_en": "Long Staff vs Katana",
+              "description": "《卧底神探》释小龙长棍对打武士刀，招式利落攻防有序。长棍一寸长一寸强，武士刀近身劈砍凌厉，距离控制与贴身突破的经典博弈。",
+              "preview": "wd_staff_vs_katana.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "兵器对打",
+                "长棍",
+                "武士刀",
+                "释小龙",
+                "卧底神探"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面缓慢横移跟随，天台开阔又受限的空间感。<Subject 1>（参考图人物）持长棍/齐眉棍，<Subject 2>持武士刀。\n- 0.0–1.5s: <Subject 1>长棍直刺——棍端直指<Subject 2>胸口，利用长度优势控制距离。<Subject 2>举刀格开棍端，同时上步试图缩短距离。<Subject 1>收棍再刺，连续三点刺攻击面门咽喉腹部，<Subject 2>连续格挡被逼退。\n- 1.5–3.0s: <Subject 2>抓住空档，武士刀连续劈斩——正劈斜劈反劈，刀光闪烁试图近身破棍。<Subject 1>长棍横扫格开刀刃，棍身与刀身碰撞发出清脆声响。<Subject 1>顺势棍尾直击<Subject 2>腹部，<Subject 2>弯腰后退。\n- 3.0–4.5s: <Subject 2>改变战术，低身突进——从长棍下方滚地近身，武士刀上撩直刺<Subject 1>持棍手腕。<Subject 1>反应极快，长棍竖立下劈格开刀刃，同时抬脚侧踢<Subject 2>肩部，将<Subject 2>踢退。\n- 4.5–6.0s: <Subject 1>长棍连续攻击——左扫右扫上劈下砸，棍风呼啸覆盖大范围。<Subject 2>连续闪避，寻找长棍回收的空档。突然<Subject 2>贴棍而入，武士刀直刺<Subject 1>胸口。<Subject 1>侧身闪避，刀刃擦过衣料。\n- 6.0–7.5s: <Subject 1>长棍回收缠绕，棍身横封格开<Subject 2>的连续刺击，随即棍尾上挑击中<Subject 2>下巴。<Subject 2>后仰后退，<Subject 1>长棍直刺停在<Subject 2>咽喉前，棍端抵住皮肤。\n- 7.5–8.0s: 定格对峙——长棍停在<Subject 2>咽喉前，<Subject 2>僵住。<Subject 1>收棍后退，两人重新戒备，呼吸粗重。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 长棍挥舞的风声，棍端破空声，武士刀劈砍的锐响，金属碰撞声，脚步移动声，粗重呼吸声，衣料摩擦声。\n\nnon_diegetic_music: N/A"
+            }
+          ]
+        },
+        {
+          "id": "martial_arts_duel",
+          "name": "拳脚流派对打类",
+          "name_en": "Martial Arts Duel",
+          "description": "各格斗流派对决：泰拳对拳击、巴西柔术对摔跤、MMA综合格斗、太极对散打、八极拳对咏春、截拳道对跆拳道",
+          "templates": [
+            {
+              "id": "ma_muaythai_vs_boxing",
+              "name": "泰拳对拳击",
+              "name_en": "Muay Thai vs Boxing",
+              "description": "泰拳八臂拳术肘膝腿全身武器，拳击双拳快攻组合拳。站立打击流派的经典对决，拳腿组合 vs 纯拳连击。",
+              "preview": "ma_muaythai_vs_boxing.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "泰拳",
+                "拳击",
+                "站立格斗",
+                "MMA"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面缓慢横移跟随，拳台/格斗空间。<Subject 1>（参考图人物）泰拳风格，<Subject 2>拳击风格。\n- 0.0–1.5s: <Subject 2>拳击先手——刺拳探路接右直拳重击，拳路清晰快速。<Subject 1>泰拳提膝格挡，同时低扫腿——右腿横扫<Subject 2>支撑腿大腿外侧，<Subject 2>被踢得踉跄。\n- 1.5–3.0s: <Subject 2>调整后组合拳连击——左刺拳+右直拳+左勾拳，三拳连击快速密集。<Subject 1>双手抱架格挡，同时正蹬腿——前脚掌直蹬<Subject 2>胸口控制距离，将<Subject 2>蹬退。\n- 3.0–4.5s: <Subject 1>泰拳内围——双手箍颈接连续膝撞，右膝左膝连续撞击<Subject 2>腹部和肋部。<Subject 2>用手臂格挡膝击，同时下潜抱腰试图takedown，<Subject 1>肘击<Subject 2>后背将其推开。\n- 4.5–6.0s: <Subject 2>摆脱后爆发——连续大摆拳左右开弓，拳风呼啸。<Subject 1>后仰闪避第一拳，侧身闪避第二拳，同时转身鞭腿——右腿高扫<Subject 2>头部，<Subject 2>屈臂格挡但被巨大力道震退。\n- 6.0–7.5s: <Subject 1>乘胜追击——左肘横击+右肘下劈+左膝顶腹，泰拳八臂武器连续攻击。<Subject 2>抱头格挡，突然反击右手上勾拳击中<Subject 1>腹部，<Subject 1>弯腰后退。\n- 7.5–8.0s: 两人各自退回戒备姿态，泰拳选手提膝戒备，拳击选手双拳护胸，呼吸粗重目光锁定。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 拳击的快速击打声，泰拳扫腿的沉闷撞击声，膝撞的闷响，肘击的清脆声，脚步移动声，粗重喘息声，护具碰撞声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ma_bjj_vs_wrestling",
+              "name": "巴西柔术对摔跤",
+              "name_en": "BJJ vs Wrestling",
+              "description": "巴西柔术地面降服裸绞三角锁十字固，摔跤takedown压制控制。地面缠斗流派的经典对决，以小博大的杠杆技术 vs 力量压制的摔跤控制。",
+              "preview": "ma_bjj_vs_wrestling.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "巴西柔术",
+                "摔跤",
+                "地面缠斗",
+                "降服技"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中近景构图，摄影机低位侧拍跟随地面缠斗，缓慢环绕。<Subject 1>（参考图人物）巴西柔术风格，<Subject 2>摔跤风格。\n- 0.0–1.5s: <Subject 2>摔跤先手——下潜抱双腿takedown，冲击力强大将<Subject 1>顶退。<Subject 1>反应极快，在被摔倒的瞬间顺势guard防守——双腿抬起架在<Subject 2>髋部，形成封闭式防守。\n- 1.5–3.0s: <Subject 2>在<Subject 1>guard中试图压制——用体重下压控制，同时试图通过guard。<Subject 1>利用guard中的杠杆技术——左手控制<Subject 2>右臂，右腿架在<Subject 2>颈部，开始布置三角绞。\n- 3.0–4.5s: <Subject 2>感觉到三角绞的威胁，奋力起身试图挣脱。<Subject 1>顺势翻转——利用<Subject 2>起身的力量将其翻倒，自己骑乘在<Subject 2>胸口，取得mount优势位置。\n- 4.5–6.0s: <Subject 1>在mount位置连续攻击——左右直拳击打<Subject 2>头部，<Subject 2>双手抱头防守。<Subject 1>趁机抓住<Subject 2>右臂，身体后倒布置十字固——双腿夹住<Subject 2>头部，双手控制手臂向后发力。\n- 6.0–7.5s: <Subject 2>在十字固中奋力抵抗，翻滚身体试图逃脱。<Subject 1>跟随翻滚保持控制，转换为裸绞——从背后双臂箍颈，双腿勾住<Subject 2>腰部，裸绞成型。<Subject 2>拍垫认输。\n- 7.5–8.0s: <Subject 1>松开裸绞起身，<Subject 2>也坐起揉脖子，两人互相点头致意。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 摔跤takedown的撞击声，地面缠斗的摩擦声，降服技发力的闷哼声，拍垫认输的拍打声，粗重呼吸声，衣料摩擦声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ma_mma_mixed",
+              "name": "MMA综合格斗",
+              "name_en": "MMA Mixed Martial Arts",
+              "description": "综合格斗五大领域全覆盖：站立打击(拳击+泰拳)、摔跤takedown、地面降服、地面锤击、站立缠斗。真实MMA比赛的完整攻防转换。",
+              "preview": "ma_mma_mixed.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "MMA",
+                "综合格斗",
+                "UFC",
+                "站立+地面"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机环绕式跟随，拳台铁笼空间。<Subject 1>（参考图人物）vs <Subject 2>，MMA综合格斗规则。\n- 0.0–1.5s: 站立试探——<Subject 1>刺拳探路接低扫腿，<Subject 2>侧闪同时正蹬控制距离。两人脚步快速移动，刺拳和腿法交替试探，寻找空档。\n- 1.5–3.0s: 站立对攻——<Subject 2>突然组合拳连击：左刺拳+右直拳+左勾拳+右低扫，拳腿组合密集。<Subject 1>抱架格挡前两拳，侧身闪避勾拳，同时右手上勾拳反击击中<Subject 2>腹部，<Subject 2>弯腰后退。\n- 3.0–4.5s: takedown转换——<Subject 1>乘胜追击，下潜抱双腿takedown，将<Subject 2>摔倒在地。<Subject 2>在倒地瞬间guard防守，<Subject 1>在half guard位置试图通过。\n- 4.5–6.0s: 地面锤击——<Subject 1>成功通过guard取得side control，连续地面锤击——左右拳交替击打<Subject 2>头部和肋部。<Subject 2>抱头防守，同时用虾行移动试图逃脱。\n- 6.0–7.5s: 降服技转换——<Subject 2>突然起桥翻转，将<Subject 1>掀翻，自己取得mount位置。<Subject 2>连续锤击，<Subject 1>用手臂格挡，同时抓住<Subject 2>手臂布置十字固，但被<Subject 2>抽手逃脱。\n- 7.5–9.0s: 回到站立——两人同时起身，<Subject 1>右高扫腿踢向<Subject 2>头部，<Subject 2>屈臂格挡，同时近身箍颈接膝撞，右膝重击<Subject 1>腹部。<Subject 1>弯腰后退，<Subject 2>追击右直拳。\n- 9.0–10.0s: 两人同时后退拉开距离，重新进入戒备状态，呼吸粗重汗水飞溅，目光锁定对方寻找下一次进攻机会。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 拳击击打声，腿法扫击声，takedown撞击声，地面锤击的闷响，降服技发力声，铁笼回声，粗重喘息声，汗水飞溅声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ma_taiji_vs_sanda",
+              "name": "太极对散打",
+              "name_en": "Tai Chi vs Sanda",
+              "description": "太极以柔克刚借力打力推手化劲，散打快拳快腿爆发力强。传统内家拳vs现代搏击的理念碰撞，以慢打快以柔克刚的经典演绎。",
+              "preview": "ma_taiji_vs_sanda.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "太极",
+                "散打",
+                "以柔克刚",
+                "传统武术"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机缓慢环绕，中式庭院/练武场空间。<Subject 1>（参考图人物）太极风格，<Subject 2>散打风格。\n- 0.0–1.5s: <Subject 2>散打先手——快速滑步接近，左刺拳+右直拳连击，拳路快速凌厉。<Subject 1>太极不挡不架，侧身含胸化劲——身体微转将拳力化去，同时右手搭住<Subject 2>手腕开始推手。\n- 1.5–3.0s: <Subject 2>被推手牵引失去平衡，奋力抽手同时低扫腿反击。<Subject 1>提膝化去腿力，同时双手按在<Subject 2>肩膀上借力发力——<Subject 2>被自己的冲力带得向前踉跄。\n- 3.0–4.5s: <Subject 2>暴怒，连续组合拳猛攻——左右直拳+摆拳+鞭腿，攻击密集快速。<Subject 1>太极云手——双手如行云流水般连续化劲，每一拳每一腿都被身体的旋转和重心移动化解，<Subject 1>脚步如猫步轻盈移动。\n- 4.5–6.0s: <Subject 2>全力一击右直拳重击，<Subject 1>不闪不避，身体微转接住拳力，同时转身捋劲——将<Subject 2>的拳力引导到侧方，<Subject 2>收不住力向前冲出，<Subject 1>顺势一掌按在<Subject 2>后背上，<Subject 2>跌出数步。\n- 6.0–7.5s: <Subject 2>稳住身形，改变战术用腿法——高扫腿踢向<Subject 1>头部。<Subject 1>下势化劲——身体下沉，双手接住<Subject 2>脚踝，借力上掀，<Subject 2>单腿站立失去平衡摔倒在地。\n- 7.5–8.0s: <Subject 2>坐地喘气，<Subject 1>收势站立，太极起手式恢复平静，呼吸均匀。<Subject 2>抱拳致意，<Subject 1>回礼。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 散打拳击的快速击打声，腿法扫击声，太极化劲的衣料挥动声，脚步移动的轻响，摔倒的闷响，呼吸声，中式庭院环境声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ma_bajiquan_vs_wingchun",
+              "name": "八极拳对咏春",
+              "name_en": "Baji Quan vs Wing Chun",
+              "description": "八极拳刚猛暴烈贴身靠打顶心肘铁山靠，咏春短桥窄马寸劲发力日字冲拳。刚猛外家拳vs短打内家拳的风格碰撞。",
+              "preview": "ma_bajiquan_vs_wingchun.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "八极拳",
+                "咏春",
+                "刚猛",
+                "短打"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面快速横移跟随，练武场/武馆空间。<Subject 1>（参考图人物）八极拳风格，<Subject 2>咏春拳风格。\n- 0.0–1.5s: <Subject 1>八极拳先手——震脚发力，右顶心肘直击<Subject 2>胸口，肘法刚猛暴烈。<Subject 2>咏春摊手格开肘击，同时日字冲拳——中路连续冲拳直击<Subject 1>面门，拳速极快寸劲发力。\n- 1.5–3.0s: <Subject 1>被冲拳逼退，随即铁山靠——全身蓄力用肩膀和背部撞击<Subject 2>，巨大的冲击力将<Subject 2>撞退数步。<Subject 2>稳住身形，咏春膀手格开<Subject 1>追击的拳，同时耕脚——低脚勾踢<Subject 1>支撑腿脚踝。\n- 3.0–4.5s: <Subject 1>被勾脚失去平衡，但八极拳下盘稳固，跺脚稳住身形，同时连续两拳——左拳右拳直击<Subject 2>胸腹。<Subject 2>咏春问手防守，左右摊手交替格开，同时反手掌击打<Subject 1>肋部。\n- 4.5–6.0s: 两人近身缠斗——八极拳的贴身靠打和咏春的黏手短打在近距离交锋。<Subject 1>连续肘击膝撞，<Subject 2>连续日字冲拳和掌击，两人兵器（拳脚）高速交错，攻击密集。\n- 6.0–7.5s: <Subject 1>抓住空档，八极拳大缠丝——左手缠住<Subject 2>右臂，同时右拳重击<Subject 2>腹部，随即顶膝撞击<Subject 2>大腿。<Subject 2>被连续重击弯腰，咏春寸劲反击——短距离发力右掌击打<Subject 1>胸口，将<Subject 1>震退。\n- 7.5–8.0s: 两人各自退回戒备，八极拳选手震脚蓄力，咏春选手问手戒备，呼吸粗重目光锁定。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 八极拳震脚的沉重踏地声，肘击膝撞的闷响，铁山靠的撞击声，咏春日字冲拳的快速击打声，掌击声，近身缠斗的衣料摩擦声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ma_jeet_kune_do_vs_taekwondo",
+              "name": "截拳道对跆拳道",
+              "name_en": "Jeet Kune Do vs Taekwondo",
+              "description": "截拳道快攻直取以无法为有法，李小龙式简洁高效的攻防；跆拳道腿法为主华丽高踢，旋风踢后旋踢。快攻直取vs腿法华丽的风格对决。",
+              "preview": "ma_jeet_kune_do_vs_taekwondo.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "拳脚对打",
+                "截拳道",
+                "跆拳道",
+                "李小龙",
+                "腿法"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面快速横移跟随，道馆/练武场空间。<Subject 1>（参考图人物）截拳道风格，<Subject 2>跆拳道风格。\n- 0.0–1.5s: <Subject 1>截拳道先手——前手刺拳快速探路，同时前脚侧踢控制距离，动作简洁高效没有多余动作。<Subject 2>跆拳道侧闪，同时前踢反击，脚法快速。\n- 1.5–3.0s: <Subject 2>跆拳道腿法展开——连续横踢（右横踢接左横踢），腿法华丽快速，脚背击打<Subject 1>腰肋。<Subject 1>截拳道不硬接，脚步快速移动闪避，同时抓住腿法回收的空档，直拳直击<Subject 2>面门，<Subject 2>后仰闪避。\n- 3.0–4.5s: <Subject 2>被激怒，使出旋风踢——360度转身横踢，腿法华丽带起风声，脚背直踢<Subject 1>头部。<Subject 1>截拳道下潜闪避，同时上勾拳反击击中<Subject 2>腹部，<Subject 2>旋风踢落空弯腰。\n- 4.5–6.0s: <Subject 1>乘胜追击——截拳道连续快攻：刺拳+直拳+勾拳+侧踢，攻防一体快速密集。<Subject 2>连续格挡后退，突然后旋踢——转身反踢，脚后跟直踢<Subject 1>头部。<Subject 1>后仰闪避，脚后跟擦过鼻尖。\n- 6.0–7.5s: 两人高速攻防交错，截拳道的简洁快攻和跆拳道的华丽腿法形成鲜明对比。<Subject 1>突然低身扫堂腿——贴地横扫<Subject 2>支撑腿，<Subject 2>跳跃闪避，空中下劈腿直劈<Subject 1>头顶。<Subject 1>滚地闪避，下劈腿劈在地面上。\n- 7.5–8.0s: 两人各自退回戒备，截拳道选手戒备式简洁，跆拳道选手双架护胸，呼吸粗重目光锁定。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 截拳道快拳的击打声，侧踢的闷响，跆拳道横踢的击打声，旋风踢后旋踢的风声，下劈腿的劈砸声，脚步快速移动声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            }
+          ]
+        },
+        {
+          "id": "one_vs_many",
+          "name": "一对多群战类",
+          "name_en": "One vs Many",
+          "description": "一人对抗多人的群战场面：视觉群殴(成龙式)、一镜到底混战、一对多一招制敌、走廊枪战一对多",
+          "templates": [
+            {
+              "id": "ovm_visual_brawl",
+              "name": "视觉群殴（成龙式）",
+              "name_en": "Visual Brawl (Jackie Chan Style)",
+              "description": "《警察故事》开创的视觉群殴拍摄方式。全方位立体攻击感，主角与正前方对手对招时，反派随时从身后侧面出拳出脚，机位变化展示盲区威胁。一人同时对抗多人的真实压迫感。",
+              "preview": "ovm_visual_brawl.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "一对多",
+                "群战",
+                "成龙式",
+                "视觉群殴",
+                "盲区威胁"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中全景构图，手持晃动镜头增加临场混乱感，摄影机围绕主角快速移动展示全方位攻击。<Subject 1>（参考图人物）主角被5-6名反派包围。\n- 0.0–1.5s: <Subject 1>被包围在中心，正面一名反派率先出拳，<Subject 1>侧身闪避同时反击直拳。就在<Subject 1>与正面对手对招时，侧面一名反派偷袭出拳，<Subject 1>用眼角余光察觉，低头闪避，拳头从头顶掠过。\n- 1.5–3.0s: 视觉群殴展开——<Subject 1>同时应对来自正面、侧面、身后的多路攻击。正面反派出拳，<Subject 1>格挡反击；侧面反派踢腿，<Subject 1>转身格开；身后反派偷袭，<Subject 1>头也不回肘击反击。机位不断变化，展示主角被全方位攻击的压迫感。\n- 3.0–4.5s: <Subject 1>利用环境道具——抓起旁边的椅子格挡多路攻击，椅子腿挡住拳打脚踢，同时用椅子撞击最近的反派，将其撞退。另一名反派从高处跳下攻击，<Subject 1>侧身闪避，反派摔在地上。\n- 4.5–6.0s: <Subject 1>连续快攻——先击倒正面反派，转身踢倒侧面反派，再用擒拿技锁住身后反派的手臂将其摔倒。但更多反派涌上来，<Subject 1>体力开始下降，呼吸粗重动作变慢。\n- 6.0–7.5s: 反派抓住<Subject 1>体力下降的机会，同时从三个方向攻击——正面拳打、侧面腿踢、身后抱腰。<Subject 1>被抱住腰部无法移动，正面反派一拳击中<Subject 1>面部，<Subject 1>头被打得偏向一侧。\n- 7.5–9.0s: <Subject 1>暴怒爆发——头槌撞击抱腰反派的鼻子，抱腰反派松手后退。<Subject 1>转身连续快拳击倒正面反派，侧踢击倒侧面反派，再一个旋风踢扫倒刚爬起来的反派。剩下的反派不敢上前，围在周围犹豫。\n- 9.0–10.0s: <Subject 1>站立在倒地的反派中间，呼吸粗重汗水飞溅，目光扫过周围剩余的反派，摆出戒备姿态。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 拳打脚踢的密集击打声，椅子格挡的碰撞声，环境道具破碎声，反派的喊叫声，主角的粗重喘息声，衣料挥动声，地面摩擦声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ovm_one_take_melee",
+              "name": "一镜到底混战",
+              "name_en": "One-Take Melee",
+              "description": "《火遮眼》18分钟警局一镜到底混战风格。零特效零替身零快剪，长镜头死死咬住主角，看着他在体力透支伤痕累累状态下用意志硬抗车轮战，窒息感拉满。",
+              "preview": "ovm_one_take_melee.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 12,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "一对多",
+                "群战",
+                "一镜到底",
+                "长镜头",
+                "车轮战",
+                "火遮眼"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中全景一镜到底，摄影机死死咬住<Subject 1>（参考图人物），跟随他在狭窄空间中移动，手持轻微晃动增加临场感。<Subject 1>被多名反派车轮战围攻。\n- 0.0–2.0s: <Subject 1>已经伤痕累累，嘴角带血，呼吸粗重。第一名反派冲上来，<Subject 1>用最后的力气格挡反击，两拳击倒对方。但第二名反派立刻补上，不给<Subject 1>喘息机会。\n- 2.0–4.0s: 长镜头跟随<Subject 1>从走廊一端打到另一端，反派一个接一个冲上来。<Subject 1>动作开始变慢，拳力减弱，但意志顽强，每一拳都用尽全力。第三名反派从侧面偷袭，<Subject 1>用手臂格开但被震得后退，撞在墙上。\n- 4.0–6.0s: <Subject 1>靠着墙喘息，第四名反派冲上来一脚踢在<Subject 1>腹部，<Subject 1>弯腰但随即抓住反派的腿，用力一掀将反派摔倒。<Subject 1>捡起地上的警棍/木棍，用武器格挡接下来的攻击。\n- 6.0–8.0s: 两名反派同时冲上来，<Subject 1>用警棍格开左边的拳，同时右肘撞击右边反派的脸。左边反派抱住<Subject 1>持棍的手，右边反派一拳击中<Subject 1>腹部，<Subject 1>弯腰但用头槌撞击右边反派的鼻子。\n- 8.0–10.0s: <Subject 1>挣脱束缚，警棍连续挥击击倒两名反派。但更多反派涌上来，<Subject 1>体力透支到极限，单膝跪地。反派围上来准备最后一击，<Subject 1>突然爆发——从地上弹起，警棍横扫击倒最近的反派，再一个旋风踢扫倒另一名。\n- 10.0–12.0s: 最后一名反派不敢上前，<Subject 1>拄着警棍站立，全身是伤呼吸粗重，但目光如炬盯着对方。长镜头缓缓拉远，展示<Subject 1>站在倒地的反派中间，如同不屈的战神。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 拳打脚踢的沉闷击打声，警棍挥击的呼啸声和碰撞声，身体撞墙的闷响，反派的喊叫声和倒地声，主角粗重的喘息声，衣料摩擦声，狭窄走廊的回声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ovm_one_shot_quick_kill",
+              "name": "一对多一招制敌",
+              "name_en": "One-vs-Many Quick Kills",
+              "description": "《卧底神探》释小龙式一对多。小混混打架没有章法但人数占优势，主角出手极快争取每一招都一招制敌，迅速解决战斗避免缠斗。天台开阔又受限的空间里张弛有度。",
+              "preview": "ovm_one_shot_quick_kill.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "一对多",
+                "群战",
+                "一招制敌",
+                "释小龙",
+                "卧底神探"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中景构图，摄影机侧面快速横移跟随，天台/开阔空间。<Subject 1>（参考图人物）主角被4-5名小混混包围。\n- 0.0–1.0s: <Subject 1>被包围在中心，小混混们没有章法地叫嚣。最前面的小混混率先冲上来一拳打来，<Subject 1>侧身闪避同时扣住对方手腕，顺势一拧，小混混痛得跪地，一招制敌。\n- 1.0–2.0s: 第二名小混混从侧面冲上来，<Subject 1>不与他缠斗，直接低扫腿——贴地横扫对方脚踝，小混混失去平衡摔倒。<Subject 1>随即踩住对方手腕，让其失去战斗力。\n- 2.0–3.5s: 第三名和第四名小混混同时冲上来，<Subject 1>出手极快——左掌击打第三名咽喉，右肘撞击第四名胸口，两人同时中招后退弯腰。<Subject 1>再补两脚，将两人踢倒在地。\n- 3.5–5.0s: 第五名小混混看到同伴纷纷倒地，胆怯了不敢上前，但还是硬着头皮冲上来。<Subject 1>不慌不忙，等对方冲到近前，突然侧身让过拳头，同时手刀砍击对方后颈，小混混眼前一黑扑倒在地。\n- 5.0–6.5s: 所有小混混都被击倒，<Subject 1>站在中间拍了拍手，呼吸平稳几乎没有喘息。他走到天台边缘，看向远方，动作潇洒从容。\n- 6.5–8.0s: <Subject 1>转身离开，倒地的小混混们呻吟着爬不起来。摄影机跟随<Subject 1>的背影，他步伐稳健地走向出口。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 快速击打的清脆声响，关节拧动的声音，扫腿的风声，摔倒的闷响，小混混的痛叫声和呻吟声，主角平稳的呼吸声，天台风声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "ovm_corridor_gun_kata",
+              "name": "走廊枪战一对多",
+              "name_en": "Corridor Gun Kata",
+              "description": "《疾速追杀》式走廊一对多枪战。狭窄空间连续击杀，战术换弹，枪斗术Gun Kata融合枪械和近身格斗。CQB室内近战战术，精准射击和近身格斗的无缝转换。",
+              "preview": "ovm_corridor_gun_kata.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "一对多",
+                "枪战",
+                "走廊",
+                "疾速追杀",
+                "Gun Kata",
+                "CQB"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中近景构图，摄影机跟随<Subject 1>（参考图人物）在狭窄走廊中推进，手持晃动增加紧张感，低位仰拍突出压迫感。<Subject 1>持手枪，走廊中多名持枪敌人。\n- 0.0–1.5s: <Subject 1>贴墙靠近走廊转角，听声辨位确认敌人位置。突然探身出枪，两发点射击倒走廊尽头的第一名敌人。枪声在狭窄走廊中回荡，枪口闪光照亮<Subject 1>的脸。\n- 1.5–3.0s: <Subject 1>快速推进，第二名敌人从侧面房间冲出，<Subject 1>不瞄准直接腰射，两发击中对方胸口。第三名敌人从<Subject 1>身后出现，<Subject 1>听到脚步声，转身同时出枪，一发击中对方头部。\n- 3.0–4.5s: <Subject 1>的手枪子弹打光，他一边移动一边快速换弹——弹夹掉落，新弹夹插入，拉套筒上膛，整个过程不到两秒。换弹完成的瞬间，第四名敌人冲上来，<Subject 1>抬枪射击，三发连击击倒对方。\n- 4.5–6.0s: 第五名敌人冲到近前，<Subject 1>枪里只剩一发子弹，他用最后一发击中对方肩膀，对方吃痛但仍冲上来。<Subject 1>丢掉空枪，近身格斗——左手格开对方的刀，右拳重击对方面门，再一个膝撞撞击腹部，将对方击倒。\n- 6.0–7.5s: <Subject 1>捡起对方掉落的枪，继续推进。第六名和第七名敌人同时从前后出现，<Subject 1>转身射击后面的敌人两发，再转身射击前面的敌人三发，两人同时倒地。<Subject 1>战术动作干净利落，没有多余动作。\n- 7.5–9.0s: 走廊尽头最后一名敌人躲在掩体后射击，子弹打在<Subject 1>身边的墙上溅起碎屑。<Subject 1>侧身移动寻找角度，突然滑铲出枪，在滑行中射击，两发击中掩体后的敌人，敌人倒地。\n- 9.0–10.0s: <Subject 1>站起身，检查枪里的子弹，换了一个新弹夹。走廊里到处是倒地的敌人，<Subject 1>步伐稳健地继续前进。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 手枪射击的清脆枪声，走廊回声，弹夹掉落的金属声，换弹的机械声，近身格斗的击打声，子弹击中墙壁的碎屑声，滑铲的摩擦声，粗重呼吸声。\n\nnon_diegetic_music: N/A"
+            }
+          ]
+        },
+        {
+          "id": "war_battle",
+          "name": "战争场面类",
+          "name_en": "War Battle",
+          "description": "大规模战争场面：古代军阵冲锋、重骑兵冲锋、步兵方阵对骑兵、水战火攻",
+          "templates": [
+            {
+              "id": "wb_ancient_charge",
+              "name": "古代军阵冲锋",
+              "name_en": "Ancient Army Charge",
+              "description": "中国古代冷兵器战争层次布阵：拒马在前，刀盾兵次之，长矛兵居中，弓箭手和强弩兵在后远程压制。步兵为主弓箭为先的经典军阵冲锋场面。",
+              "preview": "wb_ancient_charge.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "战争场面",
+                "古代战争",
+                "军阵",
+                "步兵",
+                "弓箭",
+                "长矛"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n大远景开场，摄影机从高空缓缓下降展示完整军阵，随后低空跟随冲锋。古代战场平原，参考图中的军阵和环境严格保留。\n- 0.0–2.0s: 大远景俯拍——两军对峙，军阵严整。<Subject 1>方（参考图军队）阵前是拒马，其后依次是刀盾兵、长矛兵、弓箭手、强弩兵，层次分明。战鼓声震天，军旗在风中猎猎作响。\n- 2.0–4.0s: 进攻开始——强弩兵首先齐射，弩箭如乌云般遮天蔽日飞向敌方，箭雨落下敌方阵中传来惨叫声。弓箭手随后齐射，箭雨覆盖敌方前阵。敌方开始冲锋，马蹄声和脚步声震天动地。\n- 4.0–6.0s: 两军接阵——敌方骑兵冲到拒马前被阻挡，刀盾兵上前格挡骑兵冲锋，长矛兵从盾阵缝隙中刺出长矛，骑兵纷纷落马。短兵相接，刀盾兵和长矛兵与敌方步兵绞杀在一起，喊杀声震天。\n- 6.0–8.0s: 战阵推进——<Subject 1>方的长矛方阵稳步推进，长矛如林，敌方步兵被长矛阵逼退。刀盾兵在长矛阵前方开路，盾牌格挡敌方攻击，短刀从盾下刺出。弓箭手在后方持续射击，压制敌方后阵。\n- 8.0–10.0s: 敌方阵线崩溃——<Subject 1>方全军冲锋，战鼓声达到最高潮，士兵们呐喊着冲向溃退的敌军。摄影机跟随一名士兵冲锋，他举着长矛越过倒地的敌人，军旗在他身后飘扬。大远景拉开展示整个战场的胜利场面。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 震天的战鼓声，弩箭和弓箭的破空声，箭雨落下的嗖嗖声，骑兵冲锋的马蹄声，短兵相接的金属碰撞声，喊杀声，士兵的呐喊声，军旗的猎猎声，战场的嘈杂环境声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wb_cavalry_charge",
+              "name": "重骑兵冲锋",
+              "name_en": "Heavy Cavalry Charge",
+              "description": "黑甲重骑兵从战旗下冲出，战马披着厚重铁甲，骑兵手持长枪，红色盔缨和披风被狂风拉起，马蹄踏起大量沙尘。万马奔腾尘土铺满整个战场的史诗冲锋场面。",
+              "preview": "wb_cavalry_charge.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "战争场面",
+                "骑兵",
+                "重骑兵",
+                "冲锋",
+                "战马",
+                "史诗"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n低位仰拍开场，摄影机接近地面，重骑兵从战旗下冲出。随后摄影机跟随骑兵群冲锋，大远景展示万马奔腾。古代战场平原，参考图中的骑兵和环境严格保留。\n- 0.0–1.5s: 低位仰拍——镜头降低到接近地面，一队黑甲重骑兵从战旗下冲出。战马披着厚重铁甲，骑兵手持长枪，红色盔缨和披风被狂风拉起。马蹄踏起大量沙尘，在低角度阳光中形成金色尘雾。\n- 1.5–3.0s: 摄影机跟随骑兵侧面移动，重骑兵加速冲锋，马蹄声越来越密集响亮。骑兵们伏低身体贴在马背上，长枪平举指向前方，枪尖在阳光下闪烁。战马的鼻孔喷出白气，肌肉在铁甲下绷紧。\n- 3.0–5.0s: 大远景俯拍——重骑兵在前，黑甲步兵在两侧列队冲锋，士兵举着长枪向前奔跑。大批巨型战旗在军阵上方翻卷，万马奔腾，尘土铺满整个战场，遮天蔽日。冲锋的军阵如黑色洪流席卷平原。\n- 5.0–6.5s: 骑兵冲入敌方步兵阵中——长枪刺穿敌方盾牌，战马撞飞敌方士兵，骑兵在马上用长枪挑刺敌人。敌方阵线被骑兵冲锋撕开一个巨大的缺口，步兵纷纷倒地。\n- 6.5–8.0s: 骑兵冲锋过后，战场上留下倒地的士兵和战马，尘烟缓缓散去。摄影机缓缓上升，大远景展示整个战场的惨烈场面，胜利方的军旗在风中飘扬。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 重骑兵冲锋的震天马蹄声，战马的嘶鸣声，铁甲碰撞的金属声，长枪刺穿盾牌的闷响，士兵的喊杀声和惨叫声，战旗的猎猎声，狂风呼啸声，战场的嘈杂环境声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wb_phalanx_vs_cavalry",
+              "name": "步兵方阵对骑兵",
+              "name_en": "Phalanx vs Cavalry",
+              "description": "马其顿方阵/斯巴达盾墙对抗骑兵冲锋。长矛如林盾牌互锁，骑兵冲锋被方阵化解。藤牌兵五人一组小型盾墙阵型顺势转动分散骑兵冲击力。步兵对抗骑兵的经典战术场面。",
+              "preview": "wb_phalanx_vs_cavalry.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "战争场面",
+                "步兵方阵",
+                "骑兵",
+                "盾墙",
+                "长矛",
+                "斯巴达"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n中远景构图，摄影机侧面展示方阵对抗骑兵的完整场面。古代战场平原，参考图中的方阵和环境严格保留。\n- 0.0–2.0s: <Subject 1>方（参考图军队）步兵方阵严阵以待——前排士兵将长矛斜指前方，长矛如林，后排士兵将长矛竖直。盾牌互锁形成铜墙铁壁，士兵们肩并肩紧密排列。方阵前方是拒马和壕沟。\n- 2.0–4.0s: 敌方骑兵从远方冲锋而来，马蹄声震天，尘土飞扬。骑兵越来越近，骑兵们举着长枪呐喊冲锋。方阵士兵们握紧长矛，屏住呼吸等待。骑兵冲到拒马前，最前排的战马被拒马刺中，骑兵落马。\n- 4.0–6.0s: 后续骑兵绕过拒马继续冲锋，撞到方阵的盾墙上。长矛刺中战马和骑兵，盾牌挡住骑兵的攻击，方阵纹丝不动。骑兵冲锋的巨大冲击力被盾墙化解，战马在方阵前人立而起，骑兵被甩落马下。\n- 6.0–8.0s: 藤牌兵五人一组的小型盾墙阵型开始行动——他们分成五人一组，组成小型的圆形盾墙，在骑兵中穿梭。当骑兵冲过来时，阵型顺势转动，将骑兵的冲击力分散到侧面，而不是硬接。藤牌兵用盾牌格挡骑兵的攻击，用短刀从盾下刺击马腿。\n- 8.0–10.0s: 敌方骑兵冲锋被完全化解，骑兵损失惨重开始撤退。方阵士兵们发出胜利的呐喊，长矛高举。大远景拉开展示方阵完好无损，敌方骑兵溃退的场面。画面稳定流畅，无肢体畸形，无闪烁跳帧。\n\noverall_soundscape: 骑兵冲锋的震天马蹄声，战马的嘶鸣声，长矛刺中战马的闷响，盾牌格挡的碰撞声，拒马刺中战马的声音，士兵的呐喊声，方阵的呼号声，战场的嘈杂环境声。\n\nnon_diegetic_music: N/A"
+            },
+            {
+              "id": "wb_naval_battle",
+              "name": "水战火攻",
+              "name_en": "Naval Battle Fire Attack",
+              "description": "《赤壁》式水战火攻。战船列阵江面，火船冲锋，江面变成火海，火箭齐射，士兵在船上短兵相接。水战的独特空间感和火攻的史诗场面。",
+              "preview": "wb_naval_battle.webp",
+              "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "武打",
+                "战争场面",
+                "水战",
+                "火攻",
+                "战船",
+                "赤壁",
+                "江面"
+              ],
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n大远景俯拍开场，展示江面战船列阵。摄影机随后跟随火船冲锋，最后展示火海场面。江面战场，参考图中的战船和环境严格保留。\n- 0.0–2.0s: 大远景俯拍——宽阔的江面上，两军战船列阵对峙。<Subject 1>方（参考图军队）的战船排列成阵，船上站满士兵，旌旗飘扬。敌方战船在江对面列阵，战鼓声声声入耳。江面上雾气弥漫，气氛紧张。\n- 2.0–4.0s: 火攻开始——<Subject 1>方推出数十艘装满干草和火油的火船，点燃后顺流冲向敌方战船。火船在江面上飞速前进，火光冲天，照亮了江面。敌方战船试图躲避，但江面狭窄，火船如火龙般冲入敌方船阵。\n- 4.0–6.0s: 火船撞上敌方战船，火油倾泻，大火瞬间蔓延。敌方战船一艘接一艘被点燃，江面变成一片火海。士兵们在火中惨叫，纷纷跳江逃生。火箭齐射——<Subject 1>方的弓箭手向敌方战船射出带火的箭，火箭如流星雨般落入火海，加剧火势。\n- 6.0–8.0s: <Subject 1>方的战船趁势冲锋，接近敌方未被点燃的战船。士兵们用钩镰枪勾住敌方战船，搭上跳板，士兵们呐喊着冲上敌方战船，在船上短兵相接。刀光剑影，喊杀声震天，士兵们在狭窄的船甲板上激烈拼杀。\n- 8.0–10.0s: 水战结束——敌方战船大部分被烧毁或被俘，江面上漂浮着烧毁的船板和落水的士兵。<Subject 1>方的战船凯旋，战旗在火光和烟雾中飘扬。大远景拉开展示整个江面火海的史诗场面。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 战鼓声，火船燃烧的噼啪声，火油燃烧的呼啸声，火箭破空的嗖嗖声，战船碰撞的闷响，士兵的喊杀声和惨叫声，江水的波涛声，火焰燃烧的轰鸣声，战场的嘈杂环境声。\n\nnon_diegetic_music: N/A"
+            }
+          ]
         }
       ]
     },
