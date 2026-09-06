@@ -282,6 +282,15 @@ class BSAI_H3_PromptTemplate:
                         "tooltip": "图3场景参考图 (可选) / Scene reference image <Picture 3> (optional)\n提供时提示词按图3场景生成；不提供时按默认场景生成\nIf connected, the prompt uses the scene from <Picture 3>; otherwise it uses a neutral default scene.",
                     },
                 ),
+                "ref_image_1": ("IMAGE", {"tooltip": "参考图1 <Picture 1> (可选) / Reference image 1\n角色/物体参考图，连接后提示词自动引用 <Picture 1>"}),
+                "ref_image_2": ("IMAGE", {"tooltip": "参考图2 <Picture 2> (可选) / Reference image 2\n第二个角色/物体参考图，连接后提示词自动引用 <Picture 2>，严禁与<Picture 1>角色重复"}),
+                "ref_image_3": ("IMAGE", {"tooltip": "参考图3 <Picture 3> (可选) / Reference image 3\n第三个角色/物体或场景参考图"}),
+                "ref_image_4": ("IMAGE", {"tooltip": "参考图4 <Picture 4> (可选) / Reference image 4"}),
+                "ref_image_5": ("IMAGE", {"tooltip": "参考图5 <Picture 5> (可选) / Reference image 5"}),
+                "ref_image_6": ("IMAGE", {"tooltip": "参考图6 <Picture 6> (可选) / Reference image 6"}),
+                "ref_image_7": ("IMAGE", {"tooltip": "参考图7 <Picture 7> (可选) / Reference image 7"}),
+                "ref_image_8": ("IMAGE", {"tooltip": "参考图8 <Picture 8> (可选) / Reference image 8"}),
+                "ref_image_9": ("IMAGE", {"tooltip": "参考图9 <Picture 9> (可选) / Reference image 9\n官方最多支持9张参考图"}),
                 "external_prompt": (
                     "STRING",
                     {
@@ -342,7 +351,7 @@ Features / 功能特点:
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
 """
 
-    def get_template(self, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None, narration=""):
+    def get_template(self, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
         direct = (direct_prompt or "").strip()
         if direct:
             # ── Direct mode / 直通模式: bypass templates, output the prompt as-is ──
@@ -394,6 +403,28 @@ Features / 功能特点:
         # Merge all selected templates. external_prompt 作为"反向提示词 / 严禁出现的关键字列表"，
         # 不再作为动作覆盖（避免负向词如"五官扭曲"被当成要生成的动作）。
         prompt = _merge_template_prompts(tpls, "")
+        # ── 多参考图动态引用 + 去重约束 ──
+        ref_imgs = [ref_image_1, ref_image_2, ref_image_3, ref_image_4, ref_image_5,
+                     ref_image_6, ref_image_7, ref_image_8, ref_image_9]
+        connected_refs = [i + 1 for i, img in enumerate(ref_imgs) if img is not None]
+        if connected_refs:
+            # 生成多参考图声明
+            ref_decl = "MULTI-REFERENCE COMPLIANCE / 多参考图合规声明:\n"
+            for idx in connected_refs:
+                ref_decl += f"  <Picture {idx}> is fully referenced as an independent reference — its subject identity, face, hairstyle, clothing, body proportions and styling must be preserved EXACTLY.\n"
+            if len(connected_refs) >= 2:
+                ref_decl += (
+                    "  STRICT ANTI-DUPLICATION RULE / 严禁重复角色规则: "
+                    f"Each of <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
+                    "represents a DISTINCT, UNIQUE character/object. "
+                    "NEVER duplicate, clone, or copy the same reference character into two roles. "
+                    "When two characters appear in the same frame, they MUST have different faces, "
+                    "different hairstyles, different clothing, and different body proportions — "
+                    "each matching its own <Picture N> reference exactly. "
+                    "严禁在同一画面中出现两个一模一样的参考角色，每个参考图角色必须保持独立身份，"
+                    "面部、发型、服装、体型必须各不相同，分别严格匹配各自的<Picture N>参考图。\n"
+                )
+            prompt = ref_decl + "\n" + prompt
         if ext:
             prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
         if cust:
@@ -430,7 +461,7 @@ Features / 功能特点:
         return (prompt, name_label, mode, desc, duration, preview)
 
     @classmethod
-    def IS_CHANGED(s, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None):
+    def IS_CHANGED(s, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
         return float("nan")
 
 
