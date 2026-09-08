@@ -296,8 +296,7 @@ class BSAI_H3_PromptTemplate:
                     {
                         "default": "",
                         "multiline": True,
-                        "forceInput": True,
-                        "tooltip": "External prompt text input port / 外部提示词文本输入端口\nConnect from another node to OVERRIDE the template's action / 可从其他节点连接外部文本，用于覆盖模板中的动作描述\nE.g. input \"抬腿\" to replace the template's walking/motion with leg-lifting / 例如输入“抬腿”可将模板中的行走动作替换为抬腿",
+                        "tooltip": "External prompt text input port / 外部提示词文本输入端口\nConnect from another node to OVERRIDE the template's action / 可从其他节点连接外部文本，用于覆盖模板中的动作描述\nE.g. input \"抬腿\" to replace the template's walking/motion with leg-lifting / 例如输入\"抬腿\"可将模板中的行走动作替换为抬腿",
                     },
                 ),
                 "direct_prompt": (
@@ -731,4 +730,9 @@ def build_h3_skill_three_part(narration):
     return header + "\n\n" + desc + "\n\n" + sound + "\n\n" + music
 
 
-_register_asr_route()
+try:
+    _register_asr_route()
+except Exception as _e:
+    print(f"[BSAI H3 PromptTemplate] ASR route registration failed: {_e}")
+    import traceback as _tb
+    _tb.print_exc()

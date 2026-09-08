@@ -313,6 +313,8 @@ function findWidget(node, name) {
 function hideWidget(node, name) {
     const w = findWidget(node, name);
     if (!w) return;
+    if (!w._bsaiOrigType) w._bsaiOrigType = w.type;
+    if (!w._bsaiOrigComputeSize) w._bsaiOrigComputeSize = w.computeSize;
     w.type = "hidden";
     w._bsaiHidden = true;
     w.computeSize = function() { return [0, 0]; };
@@ -370,6 +372,15 @@ function buildTemplateUI(node) {
     hideWidget(node, "user_customization");
     hideWidget(node, "direct_prompt");
     hideWidget(node, "narration");
+    // external_prompt: just hide the widget (like the others).
+    // Previously tried auto-converting to input via convertWidgetToInput(),
+    // but that broke on some ComfyUI versions — calling hideWidget() after
+    // convertWidgetToInput() overwrites the "converted-widget" type with
+    // "hidden", severing the input linkage so connected text never reaches
+    // the backend.  Now we simply hide it; users who want to connect text
+    // from another node can right-click the node → "Convert Widget to Input"
+    // → external_prompt.  The voice dialog still fills it via setWidgetText().
+    hideWidget(node, "external_prompt");
 
     const container = document.createElement("div");
     container.className = "bsai-tpl-wrap";
@@ -1986,7 +1997,26 @@ app.registerExtension({
         nodeType.prototype.onNodeCreated = function() {
             if (origCreated) origCreated.apply(this, arguments);
             const node = this;
-            setTimeout(function() { buildTemplateUI(node); }, 50);
+            setTimeout(function() {
+                try {
+                    buildTemplateUI(node);
+                } catch (e) {
+                    console.error("[BSAI H3 PromptTemplate] buildTemplateUI failed:", e);
+                    // Restore widgets so the node is still usable with raw widgets
+                    (node.widgets || []).forEach(function(w) {
+                        if (w._bsaiHidden) {
+                            w.type = w._bsaiOrigType || "STRING";
+                            w._bsaiHidden = false;
+                            if (w._bsaiOrigComputeSize) {
+                                w.computeSize = w._bsaiOrigComputeSize;
+                            } else {
+                                delete w.computeSize;
+                            }
+                        }
+                    });
+                    node._bsaiTplReady = false;
+                }
+            }, 50);
         };
 
         const origConfigure = nodeType.prototype.onConfigure;
