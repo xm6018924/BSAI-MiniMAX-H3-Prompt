@@ -3926,6 +3926,35 @@
               "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. STRICT REFERENCE COMPLIANCE: The character's exact facial identity, hairstyle, body proportions, clothing, accessories, and any weapon/prop visible in <Picture 1> must be preserved EXACTLY throughout the entire video — no alteration, replacement, or redesign. The environment/background, architecture, props, lighting, color tone, and atmosphere from <Picture 1> must be used EXACTLY as the scene — DO NOT replace with a neutral space, DO NOT generate a new background, DO NOT remove or add scene elements. The entire action takes place within the scene from <Picture 1>.\n\n<Picture 2> is fully referenced as the opponent — a DISTINCT, UNIQUE character whose face, hairstyle, clothing, body proportions and styling come from <Picture 2>. The opponent MUST be visually different from <Subject 1> in every way — different face, different hair, different outfit, different build. NEVER duplicate <Subject 1>'s appearance for the opponent. <Picture 2>是<Subject 2>的独立参考图——<Subject 2>的面部、发型、服装、体型、造型必须严格来自<Picture 2>，与<Subject 1>在各个方面都必须完全不同，严禁复制<Subject 1>的形象作为<Subject 2>。\n\nintegrated_multimodal_description: {SCENE_REF_RULE} 全程单镜头，一镜到底。环境严格使用参考图中的场景，所有背景元素、建筑、道具、灯光、色调、氛围必须与参考图完全一致，不得替换为中性空间，不得自行生成新背景。\n\n大远景俯拍开场，展示江面战船列阵。摄影机随后跟随火船冲锋，最后展示火海场面。江面战场，参考图中的战船和环境严格保留。\n- 0.0–2.0s: 大远景俯拍——宽阔的江面上，两军战船列阵对峙。<Subject 1>方（参考图军队）的战船排列成阵，船上站满士兵，旌旗飘扬。敌方战船在江对面列阵，战鼓声声声入耳。江面上雾气弥漫，气氛紧张。\n- 2.0–4.0s: 火攻开始——<Subject 1>方推出数十艘装满干草和火油的火船，点燃后顺流冲向敌方战船。火船在江面上飞速前进，火光冲天，照亮了江面。敌方战船试图躲避，但江面狭窄，火船如火龙般冲入敌方船阵。\n- 4.0–6.0s: 火船撞上敌方战船，火油倾泻，大火瞬间蔓延。敌方战船一艘接一艘被点燃，江面变成一片火海。士兵们在火中惨叫，纷纷跳江逃生。火箭齐射——<Subject 1>方的弓箭手向敌方战船射出带火的箭，火箭如流星雨般落入火海，加剧火势。\n- 6.0–8.0s: <Subject 1>方的战船趁势冲锋，接近敌方未被点燃的战船。士兵们用钩镰枪勾住敌方战船，搭上跳板，士兵们呐喊着冲上敌方战船，在船上短兵相接。刀光剑影，喊杀声震天，士兵们在狭窄的船甲板上激烈拼杀。\n- 8.0–10.0s: 水战结束——敌方战船大部分被烧毁或被俘，江面上漂浮着烧毁的船板和落水的士兵。<Subject 1>方的战船凯旋，战旗在火光和烟雾中飘扬。大远景拉开展示整个江面火海的史诗场面。画面稳定流畅，无肢体畸形。\n\noverall_soundscape: 战鼓声，火船燃烧的噼啪声，火油燃烧的呼啸声，火箭破空的嗖嗖声，战船碰撞的闷响，士兵的喊杀声和惨叫声，江水的波涛声，火焰燃烧的轰鸣声，战场的嘈杂环境声。\n\nnon_diegetic_music: N/A"
             }
           ]
+        },
+        {
+          "id": "weapon_arsenal_duel",
+          "name": "十八般兵器对战",
+          "name_en": "Eighteen Weapons Duel",
+          "description": "画面左右各一列十八般冷兵器，双方各抽一件后持所选兵器对决",
+          "templates": [
+            {
+              "id": "eighteen_weapons_duel",
+              "name": "十八般兵器对战",
+              "name_en": "Eighteen-weapons arsenal duel",
+              "description": "图1人物A+图2人物B（图3可选场景）：画面左右两侧各陈列一列刀枪剑戟等十八般冷兵器，双方各从自己一侧抽选一件兵器，随后持所选兵器对决，招式特性随所选兵器变化",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1人物A+图2人物B+图3可选场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "兵器对战",
+                "十八般兵器",
+                "双人物",
+                "对决",
+                "动作",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is COMBATANT A on the LEFT — face, hairstyle, body proportions, clothing and identity must be preserved EXACTLY throughout the whole video. <Picture 2> is COMBATANT B on the RIGHT — face, hairstyle, body proportions, clothing and identity must be preserved EXACTLY. <Picture 3> is the optional SCENE reference — if a scene image is provided, the whole duel takes place inside the environment from <Picture 3>: background, architecture, props, lighting, color tone and atmosphere must come EXACTLY from <Picture 3>, DO NOT generate a new background; if no scene image is provided, a neutral ancient-arena setting is used. 本提示词中 <Picture 1> 是左侧对战者A（面部/发型/体型/服装/身份严格保持，不得改变），<Picture 2> 是右侧对战者B（面部/发型/体型/服装/身份严格保持），<Picture 3> 是可选场景参考。两人形象各自独立，严禁把图1的脸/服装安到图2身上。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as combatant A and <Picture 2> as combatant B. STRICT REFERENCE COMPLIANCE: both fighters keep their exact facial identity, hairstyle, body proportions and clothing from their own reference image — no alteration, no swapping.\n\nintegrated_multimodal_description:  [Shot 1] [0-3s] Cinematic wuxia wide shot. A weapon rack stands on the LEFT side of the frame displaying a column of eighteen classic cold weapons (saber, spear, straight sword, halberd, axe, battle-axe, hook, trident, whip, mace, hammer, staff, lance, cudgel, pike, rake, etc.) all standing upright. An identical weapon rack stands on the RIGHT. Combatant A from <Picture 1> stands before the left rack, combatant B from <Picture 2> before the right rack; their faces, hairstyles, bodies and clothing are EXACTLY as their reference images. If <Picture 3> is provided the background matches it exactly. 【ACTION】A steps to the left rack and draws ONE weapon from the left column (a slender straight sword); B steps to the right rack and draws ONE weapon from the right column (a heavy broadsword). From this moment, ONLY these two drawn weapons exist in the fight — every other weapon stays back on its rack and is never touched, never wielded, never appears in the combat. The two fighters turn to face each other in fighting stances.【/ACTION】\n[Shot 2] At 00:03.000 [3-10s] Camera orbits around the two fighters as they clash. 【ACTION】A's swordplay is swift and graceful — light footwork, feints, quick thrusts and elegant parries (剑走轻灵); B's broadsword swings are heavy and decisive — broad arcs, powerful chops, low impact stances (刀势沉猛). They exchange three attacks: A lunges with a fast thrust, B blocks with a heavy horizontal sweep, A leaps back and strikes again; sparks fly on every blade contact. Choreography clearly reflects each fighter's drawn weapon, and neither fighter ever picks up or uses any weapon other than the one drawn at the rack.【/ACTION】 Lighting stays consistent with the scene reference; both fighters' faces, hairstyles and clothing remain identical to <Picture 1> and <Picture 2> throughout; clean effects, no distortion, no extra limbs, no duplicated weapons.\n\noverall_soundscape: Deep ancient-arena room tone, stone footfalls, whooshing blade cuts, sharp metallic clangs on every parry, distant wind.\n\nnon_diegetic_music: Epic wuxia orchestral score with taiko drums and erhu lead, rising tension, heavy percussion hits on every blade clash, ending on a dramatic unresolved chord."
+            }
+          ]
         }
       ]
     },
@@ -7689,6 +7718,553 @@
                 "多图参考"
               ],
               "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the SCANNER DEVICE reference — the handheld scanning device (scanner wand, phone, tablet, visor, etc.) must match <Picture 1>'s exact model, shape, color and surface details. <Picture 2> is the TARGET OBJECT reference — a person or an object; the target's identity, appearance, shape and proportions must be preserved EXACTLY. <Picture 3> is the optional INTERNAL STRUCTURE reference — if provided, the internal structure revealed by the scan must match <Picture 3>'s exact shape, layout and details; if no internal-structure image is provided, the default internal structure is the complete human skeletal system — skull, spine, ribs, pelvis and all limb bones — in medical X-ray white-blue style, shown clearly inside the figure. 本提示词中 <Picture 1> 是扫描设备参考（手持扫描仪/手机/平板/头显等，其外形、颜色、细节必须与 <Picture 1> 一致），<Picture 2> 是扫描对象参考（人物或物体，其身份、外观、形态、比例必须严格保持，不得改变），<Picture 3> 是可选内部结构参考——若提供，透视显示的内部结构必须与 <Picture 3> 完全一致；若未提供，按对象类型显示默认内部结构（人物=人体骨骼系统X光视图，物体=其合理内部构造）。严禁自行设计、替换或改动扫描设备与对象外观。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the handheld scanning device and <Picture 2> as the target object/person. STRICT REFERENCE COMPLIANCE: the target's identity, appearance, shape and proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 1>'s exact model, shape, color and surface details must be preserved. The environment/background from <Picture 2> is preserved.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic. Medium shot. The scanning device from <Picture 1> is held in the operator's hand (or worn / mounted), facing the target object/person from <Picture 2> standing or placed in the scene; the background comes from <Picture 2>. 【ACTION】The operator activates the scanner: the device's screen / scanning head lights up, emitting a glowing scan beam with holographic grid lines. The beam sweeps across the target from top to bottom (or side to side). As the beam passes, the target's surface becomes translucent, and the internal structure is revealed inside the target — clearly visible through the semi-transparent exterior, matching <Picture 3> exactly if provided, or showing the complete human skeletal system — skull, spine, ribs, pelvis and all limb bones — in medical X-ray white-blue style inside the figure. The internal structure stays clearly visible for a few seconds as the scan completes, then the target gradually returns to its normal opaque appearance. The target's outer identity, shape and proportions remain unchanged at all times; the scanning device stays identical to <Picture 1> the whole time.【/ACTION】 Clean holographic X-ray effect, no distortion, no duplicated figure, no deformed anatomy beyond the revealed structure.\n\noverall_soundscape: High-frequency electronic scanner hum and beeps as the beam sweeps, soft holographic shimmer, subtle room tone.\n\nnon_diegetic_music: Tech-sci-fi scanning track — pulsing synth bass with metallic accents, building during the sweep and resolving as the scan completes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "material_morph",
+      "name": "人物质感转化",
+      "name_en": "Material Morph",
+      "description": "真人/文物在材质层面发生电影级形变——石化、铜活化、手办化、火焰化",
+      "icon": "🗿",
+      "subcategories": [
+        {
+          "id": "statue_relief",
+          "name": "雕像与文物活化",
+          "name_en": "Statue & Relic Awakening",
+          "description": "真人石化为雕像、铜像活化、同姿态材质定格",
+          "templates": [
+            {
+              "id": "human_to_marble_statue",
+              "name": "真人→大理石雕像（美杜莎石化）",
+              "name_en": "Human to marble statue (Medusa petrification)",
+              "description": "图1真人+图2同姿态大理石雕像：眼部闪光→指尖皮肤开始石化→向全身蔓延→最终完全定格为图2那尊雕像",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1真人+图2目标雕像】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "石化",
+                "大理石",
+                "美杜莎",
+                "材质转化",
+                "雕像",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is fully referenced as the living human being (start frame) — face, hairstyle, body proportions and identity must be preserved EXACTLY until the petrification completes. <Picture 2> is fully referenced as the target marble statue (end frame) — material, pose, carved facial features and every sculpted detail must come EXACTLY from <Picture 2>; the final frozen pose MUST match <Picture 2>. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是真人起始形象，面部/发型/体型/身份严格保持，直到石化完成；<Picture 2> 是目标大理石雕像，材质/姿态/五官雕刻细节完全来自图2，最终定格必须与图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the living human. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions are preserved EXACTLY until petrification is complete; the final frozen statue must match <Picture 2> EXACTLY in material, pose and sculpted detail.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic. Slow dolly-in, low warm key light in a quiet museum hall, marble dust motes floating in the air. 【ACTION】At 0.00s the human from <Picture 1> stands centered, identity and hairstyle intact. At ~1.5s a faint golden gleam flashes in the eyes; at ~2.5s the fingertips turn pale grey and the skin hardens into cold veined marble, the stone creeping up the hands and wrists; at ~4.5s the petrification spreads past the arms and chest, fabric details freezing into carved marble folds, skin texture replaced by crystalline stone grain; at ~6s the creeping stone reaches the face and hair, features locking into carved marble; by ~8.0s the figure is fully frozen, the final statue's material, pose and carved features matching <Picture 2> EXACTLY.【/ACTION】 No distortion, no extra limbs, no morphing of unrelated objects; identity and pose consistent from <Picture 1> to <Picture 2>.\n\noverall_soundscape: Deep resonant stone hum, faint cracking and grinding as skin hardens into marble, echoing gallery reverb, then total stone stillness.\n\nnon_diegetic_music: Solemn, mythological cinematic score with deep strings and a slowly swelling choir, ending on a heavy stone-strike hit."
+            },
+            {
+              "id": "statue_to_human_awaken",
+              "name": "大理石雕像活化（反向）",
+              "name_en": "Marble statue to living human (reverse)",
+              "description": "图1雕像+图2同姿态真人：雕像表面裂纹渗出金光→石雕剥落→血肉生长→完全活化成图2那个人",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1雕像+图2目标真人】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "活化",
+                "雕像复活",
+                "石化反向",
+                "材质转化",
+                "电影感",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is fully referenced as the marble statue (start frame) — material and pose must come EXACTLY from <Picture 1>. <Picture 2> is fully referenced as the living human (end frame) — face, hairstyle, body proportions and identity must be preserved EXACTLY. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是起始大理石雕像，材质与姿态严格来自图1；<Picture 2> 是活化后真人，面部/发型/体型/身份严格保持。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the starting marble statue. STRICT REFERENCE COMPLIANCE: the statue's material and pose come EXACTLY from <Picture 1>; at the end of the video the awakened human's face, hairstyle and identity match <Picture 2> EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, slow push-in on a marble statue in a dark hall, a single shaft of warm light from above. 【ACTION】At 0.00s the statue from <Picture 1> stands frozen, veined marble surface cold and still. At ~1.5s thin cracks spiderweb across the chest and face, golden light seeping from within; at ~3.0s the stone skin cracks and flakes outward, glowing veins running through the fissures; at ~4.5s marble chips slough away to reveal living warm flesh underneath, the carved folds unfreezing into real skin and hair; at ~6.5s the figure takes a soft breath, eyes opening, the body fully fleshed and alive; by ~8.0s it stands as the living human from <Picture 2>, face, hairstyle and identity matching <Picture 2> EXACTLY.【/ACTION】 No distortion, no extra limbs; the transition is one continuous material change from <Picture 1> to <Picture 2>.\n\noverall_soundscape: Deep stone groan and cracking, warm blood-flow whoosh as flesh returns, a soft relieved breath at the end, hall reverb.\n\nnon_diegetic_music: Ethereal awakening score, gentle piano and swelling strings, lifting into warmth as the figure comes alive."
+            },
+            {
+              "id": "bronze_relic_alive",
+              "name": "铜首文物活化",
+              "name_en": "Bronze relic comes alive",
+              "description": "图1青铜文物（如铜首）+图2场景线稿：铜像在博物馆展柜中金属表面流转金光，形体从器物活过来转为人形/兽形，青铜材质不变、形体动起来",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1文物+图2场景线稿】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "文物活化",
+                "青铜",
+                "博物馆",
+                "材质转化",
+                "铜首",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is fully referenced as the bronze relic (e.g. a bronze head, start element) — verdigris patina, engraved patterns and sculpted shape must come EXACTLY from <Picture 1>, and the bronze material is RETAINED throughout the awakening. <Picture 2> is fully referenced as the scene line art (environment) — the environment composition, display fixtures and layout must come EXACTLY from <Picture 2>, with the line art colored into a real scene. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是青铜文物（如铜首），铜绿/纹饰/造型细节严格来自图1，活化后仍保持青铜材质；<Picture 2> 是场景线稿，环境构图与陈设来自图2，线稿上色为实景。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the bronze relic sitting inside the museum display case; <Picture 2> is fully referenced as the scene environment, colored into a real space. STRICT REFERENCE COMPLIANCE: the relic's patina, engravings and shape come EXACTLY from <Picture 1>; bronze material is never lost.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic museum night shot, dark hall with spotlights, glass display case, the environment composition exactly from <Picture 2>. 【ACTION】At 0.00s the bronze relic from <Picture 1> sits motionless in the case, verdigris and engraved patterns faithful to <Picture 1>. At ~1.5s molten golden light begins to flow across the bronze surface, rippling over the carved patterns; at ~3.0s the relic's form starts to move within the metal — joints shifting, the bronze body lifting and turning, the material staying solid cast bronze the whole time; at ~5.0s it reshapes from vessel form into a moving bronze humanoid/beast figure, engravings and patina still intact across its skin; by ~8.0s it stands alive inside the display case, still pure bronze, metal sheen flowing over every surface.【/ACTION】 No distortion, no extra limbs; bronze material and <Picture 1> details preserved at all times.\n\noverall_soundscape: Low resonant bronze hum, metallic sliding and clinking as the form moves, faint case-electronic hum, quiet museum air.\n\nnon_diegetic_music: Ancient-ritual cinematic score, deep taiko drums and low bronze bell tones, slow and solemn."
+            }
+          ]
+        },
+        {
+          "id": "object_alchemy",
+          "name": "材质炼金",
+          "name_en": "Material Alchemy",
+          "description": "真人转化为潮玩手办、火焰生物等异质形态",
+          "templates": [
+            {
+              "id": "human_to_chibi_figure",
+              "name": "真人→潮玩手办/黏土人",
+              "name_en": "Human to chibi PVC figure",
+              "description": "图1真人+图2手办/黏土人：真人站立中逐渐Q版化、比例缩小、皮肤变为PVC哑光质感、关节与涂装细节与图2手办一致，最终定格为那只手办摆上展架",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1真人+图2目标手办】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "手办化",
+                "Q版",
+                "潮玩",
+                "PVC",
+                "材质转化",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is fully referenced as the living human (start) — the starting appearance must come EXACTLY from <Picture 1>. <Picture 2> is fully referenced as the target chibi figure / nendoroid (end frame) — chibi proportions, paint job, base and sculpted details must come EXACTLY from <Picture 2>; the final figure MUST match <Picture 2>. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是真人起始形象，起始形象严格来自图1；<Picture 2> 是目标潮玩手办/黏土人，Q版比例/涂装/底座/造型细节完全来自图2，最终定格必须与图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the standing human. STRICT REFERENCE COMPLIANCE: the starting figure comes EXACTLY from <Picture 1>; the final chibi figure's proportions, paint, base and details match <Picture 2> EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Bright clean product-shot lighting, soft studio backdrop, a display shelf and acrylic base in the background. 【ACTION】At 0.00s the human from <Picture 1> stands centered. At ~1.5s the body begins to shrink and chibi-ify, the head growing larger relative to a smaller body, real skin turning into smooth matte PVC; at ~3.5s the surface shifts fully to plastic, seams and painted joints appearing, clothes turning into crisp painted sculpted parts; at ~5.5s the figure settles into the exact pose, proportions, paint scheme and base of <Picture 2>; by ~8.0s it sits perfectly on the shelf, every sculpted and painted detail matching <Picture 2> EXACTLY.【/ACTION】 No distortion, no extra parts; the morph is one smooth continuous material change from <Picture 1> to <Picture 2>.\n\noverall_soundscape: Soft plastic click and air-release as the body shrinks, gentle shelf-setting thud, light studio room tone.\n\nnon_diegetic_music: Cute upbeat toy-shop jingle, bouncy xylophone and plucky bass, ending on a playful pop."
+            },
+            {
+              "id": "human_to_flame_beast",
+              "name": "人→火焰/岩浆生物",
+              "name_en": "Human to flame creature",
+              "description": "图1人物+图2火焰形态：人物行走中轮廓开始燃烧，皮肤边缘溶解为跃动火焰，衣物化为焰舌，最终完全成为图2那种火焰人形生物，火星四溅",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1人物+图2火焰形态】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "火焰化",
+                "岩浆",
+                "火焰生物",
+                "材质转化",
+                "热血",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is fully referenced as the person (start) — face, hairstyle and clothing must come EXACTLY from <Picture 1>. <Picture 2> is fully referenced as the target flame creature (end frame) — flame color, silhouette and fire shape must come EXACTLY from <Picture 2>; the final fiery form MUST match <Picture 2>. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是起始人物，起始面部/发型/服装严格来自图1；<Picture 2> 是目标火焰形态，火焰颜色/轮廓/焰形完全来自图2，最终形态必须与图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the walking person. STRICT REFERENCE COMPLIANCE: the starting face, hairstyle and outfit come EXACTLY from <Picture 1>; the final flame creature's color, silhouette and fire shape match <Picture 2> EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Dark smoky environment, backlit, glowing embers drifting, high-contrast firelight. 【ACTION】At 0.00s the person from <Picture 1> walks forward, face and outfit intact. At ~1.5s the outline begins to smolder, the edges of the shoulders and hairline flickering into living flame; at ~3.5s real skin dissolves outward into leaping tongues of fire, clothing turning into waving flame ribbons instead of fabric, sparks scattering with every step; at ~5.5s the body is entirely made of flickering fire, the human silhouette preserved inside the blaze; by ~8.0s it stands as the complete fire-humanoid creature from <Picture 2>, flame color, outline and fire shape matching <Picture 2> EXACTLY, embers bursting outward.【/ACTION】 No distortion, no extra limbs; flame and ember effects are physical and cinematic.\n\noverall_soundscape: Roaring whoosh of igniting flames, crackling fire and snapping embers, low hot wind, sparks hissing.\n\nnon_diegetic_music: Intense epic orchestral build, driving taiko drums and rising brass, climaxing in a fire-hit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wardrobe_transition",
+      "name": "变装转场",
+      "name_en": "Wardrobe Transition",
+      "description": "服装/造型的电影级转场——卡点、转身、擦镜、穿越、四季延时",
+      "icon": "✨",
+      "subcategories": [
+        {
+          "id": "cut_change",
+          "name": "卡点硬切换装",
+          "name_en": "Beat-sync Hard Cut",
+          "description": "同脸同构图的服装卡点切换",
+          "templates": [
+            {
+              "id": "beatsync_outfit_swap",
+              "name": "首尾帧丝滑卡点换装",
+              "name_en": "Beat-sync outfit swap",
+              "description": "图1穿服装A+图2穿服装B（同一张脸、同一构图）：跟着节拍点服装A→B渐变卡点切换，面部始终不变。generation_mode=First+Last Frame (首尾帧)【图3可选场景】。",
+              "preview": "",
+              "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "卡点",
+                "换装",
+                "首尾帧",
+                "硬切",
+                "节拍",
+                "同脸",
+                "穿搭"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, standing pose and camera framing, together with outfit A worn at the start, must be preserved EXACTLY at 0.00 seconds. <Picture 2> is the LAST-FRAME reference — the very SAME face, hairstyle, identity, pose and framing, now wearing outfit B: the garment's cut, color, pattern and fabric texture must come EXACTLY from <Picture 2>. The face and identity must remain IDENTICAL across the whole clip; ONLY the outfit changes on the beat. NEVER render outfit A onto the last frame, NEVER render outfit B onto the first frame, NEVER mix one <Picture N>'s clothing onto another frame. 中文复述：本提示词中 <Picture 1> 为首帧参考（同一人物的面部/发型/体型/身份/站立姿势/镜头构图，以及开场服装A必须在第0秒严格保持），<Picture 2> 为尾帧参考（同一张脸、同一身份、同一姿势与构图，仅换装为服装B；其版型/颜色/花纹/材质必须完全来自 <Picture 2>）；全程人脸与身份不得改变，仅服装随节拍点切换，严禁把两帧的服装互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing and outfit A from <Picture 1> must be preserved EXACTLY at the start. At the end of the target video, <Picture 2> is fully referenced as the last frame — the very same face, hairstyle and pose, now wearing outfit B, preserved EXACTLY at the end. STRICT REFERENCE COMPLIANCE: the character's facial identity must never change between the two pictures; only the garment swaps.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, locked-off medium-full shot, identical framing for the entire clip, soft clean studio light. 【ACTION】The character stands frozen in the exact pose of <Picture 1>, wearing outfit A. On each musical downbeat a sharp on-beat transition fires — the garment snaps hard from outfit A to outfit B in a single punchy cut perfectly synced to the rhythm; between beats the body, face, hairstyle, pose and camera stay completely still, only the clothing flash-swaps. This beat-sync snap repeats a few times, landing solidly on outfit B, and the final freeze holds exactly on <Picture 2>.【/ACTION】 The face, identity, hairstyle, body proportions and camera framing remain unchanged throughout; the outfit swaps are clean hard cuts on the beat with no morphing blur, no distorted fabric, no extra limbs.\n\noverall_soundscape: A tight percussive click on every downbeat as the outfit snaps, a faint fabric flutter between beats, minimal clean room tone.\n\nnon_diegetic_music: Punchy electronic dance track with a strong kick and crisp beat drops, each outfit snap landing exactly on the downbeat, ending on a confident hit."
+            },
+            {
+              "id": "handscreen_fit_tryon",
+              "name": "虚拟试衣硬切换装",
+              "name_en": "Virtual try-on hard cut",
+              "description": "图1人物+图2服装平铺图：人物抬手用手掌/平持物遮向镜头，遮挡瞬间硬切，移开手后同一姿势同一张脸，身上衣服已换成图2那套（版型/颜色/花纹/材质完全来自图2）。",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1人物+图2服装+图3场景可选】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "虚拟试衣",
+                "遮挡转场",
+                "硬切",
+                "换装",
+                "多图参考",
+                "手掌遮镜"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout, and the character's starting pose must match <Picture 1>. <Picture 2> is the OUTFIT reference — the target garment's cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>; after the cut the character wears THIS outfit and no other. <Picture 3> is the optional SCENE reference — if a scene image is provided, the environment (background, architecture, props, lighting, color tone and atmosphere) must come EXACTLY from <Picture 3>, DO NOT generate a new background; if not provided, keep the environment from <Picture 1>. NEVER mix the garment of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1> 是人物参考（面部/发型/体型/身份严格保持，起始姿势与该图一致），<Picture 2> 是服装参考（版型/颜色/花纹/材质细节完全来自该图，遮挡后人物穿上的就是这套服装），<Picture 3> 为可选场景参考（背景/建筑/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用服装。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 2> is fully referenced as the outfit worn after the transition: the garment must match <Picture 2>'s exact cut, color, pattern and fabric texture — no substitution, no redesign. The environment comes from <Picture 3> when provided, otherwise from <Picture 1>.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic medium shot, clean scene. 【ACTION】The character from <Picture 1> raises one hand (or a flat handheld object held flush against the lens) and brings it forward toward the camera; the palm / flat object slides across and fully fills the entire frame, completely covering the view. At the exact instant the coverage is complete, a hard cut fires — the hand pulls away, and in the very same pose, with the very same face and hairstyle, the character is already wearing the outfit from <Picture 2>: its cut, color, pattern and fabric texture identical to <Picture 2>. The character settles and gives a small showcase tilt so the new garment reads clearly.【/ACTION】 The face, identity, hairstyle and body proportions remain unchanged before and after the cut; the pose is continuous across the cut; clean single hard cut, no morph, no distorted fabric, no extra limbs.\n\noverall_soundscape: A quick fabric swish as the arm moves, a soft whoosh exactly on the hidden cut, gentle room tone.\n\nnon_diegetic_music: Stylish, upbeat pop-funk groove with a slick brass stab landing on the hard cut."
+            },
+            {
+              "id": "action_anchor_snap_swap",
+              "name": "动作锚点瞬移换装",
+              "name_en": "Action-anchor snap change",
+              "description": "纯文生：人物抬手/擦汗/拨头发的动作做到一半，衣服+背景瞬间切换成另一套造型与场景，动作连贯不中断。",
+              "preview": "",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "动作锚点",
+                "瞬移换装",
+                "文生视频",
+                "硬切",
+                "变装",
+                "丝滑动作"
+              ],
+              "prompt": "[STRICT DEFAULT CONFIG / 默认配置声明]: No reference images are connected for this wardrobe template — the video runs in TEXT-TO-VIDEO mode with the built-in default character and default styling. DEFAULT CHARACTER: a young woman in her mid-20s, delicate facial features, long black hair, slender well-proportioned figure. DEFAULT STARTING OUTFIT: a relaxed everyday casual look — a simple soft top and tailored trousers. DEFAULT TRANSFORMED OUTFIT: a polished going-out look — a fitted dress with clean tailoring and refined fabric. 未连接任何参考图，本模板以文生视频模式运行并使用内置默认配置：默认人物=年轻女性（黑色长发、五官精致、身材匀称），开场默认造型=休闲日常穿搭，瞬移后默认造型=精致出街造型。默认人物的面部/发型/体型/身份全程保持一致，仅服装与背景随动作切换。\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic medium shot in a neutral soft-lit indoor space. 【ACTION】The default character raises one hand mid-gesture — brushing hair away from her face / wiping at her brow — with the arm moving through its motion. Exactly at the halfway point of that gesture, in a single clean snap with the motion never interrupted, her outfit and the background flash-change: the casual look swaps to the polished going-out dress and the room shifts to a refined setting. Her arm keeps traveling along the very same motion and lands naturally, as if nothing paused.【/ACTION】 The face, hairstyle and body proportions remain identical before and after the snap; the gesture is continuous and unbroken; clean hard cut, no distorted fabric, no extra limbs.\n\noverall_soundscape: A soft swish of fabric mid-gesture, a subtle flash whoosh exactly on the snap, light ambient room tone.\n\nnon_diegetic_music: Modern upbeat pop beat with a tight snare hit landing exactly on the outfit snap."
+            }
+          ]
+        },
+        {
+          "id": "continuous_flow",
+          "name": "丝滑过渡换装",
+          "name_en": "Seamless Flow Change",
+          "description": "用运镜/风吹/季节变化完成无缝换装",
+          "templates": [
+            {
+              "id": "turn_push_wardrobe",
+              "name": "转身推镜无缝换装",
+              "name_en": "Turn + push-in seamless swap",
+              "description": "首尾帧2张：人物转身+镜头推近，转身遮挡的瞬间完成服装/发型/场景切换，首尾帧严格落在参考图。",
+              "preview": "",
+              "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转身",
+                "推镜",
+                "无缝换装",
+                "首尾帧",
+                "丝滑",
+                "转场"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, pose, framing, starting outfit and starting scene must be preserved EXACTLY at 0.00 seconds. <Picture 2> is the LAST-FRAME reference — the very SAME face and identity, now with the changed hairstyle, outfit and scene after the turn, preserved EXACTLY at the end. The character's facial identity must stay identical across the whole clip; the change happens during the turn's back-facing occlusion. NEVER mix <Picture 1>'s outfit/scene onto the last frame, or <Picture 2>'s onto the first frame. 中文复述：本提示词中 <Picture 1> 为转身前首帧参考（人物面部/发型/体型/身份/姿势/构图/开场服装与场景在第0秒严格保持），<Picture 2> 为转身后尾帧参考（同一张脸、同一身份，但换装/换发型/换场景后完全以 <Picture 2> 为准）；人脸与身份全程不变，变化仅发生在转身背对镜头的遮挡瞬间，严禁首尾帧服装与场景互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing, outfit and scene from <Picture 1> must be preserved EXACTLY at the start. At the end of the target video, <Picture 2> is fully referenced as the last frame — the same face now in the changed styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic, smooth camera move. 【ACTION】The clip begins exactly as <Picture 1>. The character begins to turn their body away from camera while the camera slowly pushes in. As the character turns fully away, their back fills the frame and the rear of their body fully occludes the face — in that one beat of total occlusion, the outfit, hairstyle and entire scene morph seamlessly: the old garment and background dissolve into the new styling and environment. The character keeps turning, the camera continues to push in, and as they turn back toward the lens the new look is already in place; the motion carries through until the final frame lands exactly on <Picture 2>.【/ACTION】 The face and identity remain the same person throughout; the push-in and turn are smooth and continuous, no jump cut, no distorted limbs, no duplicated figure.\n\noverall_soundscape: A soft fabric swish of the spin, a gentle wind lift during the occlusion, ambient room tone that shifts subtly to match the new scene.\n\nnon_diegetic_music: Dreamy uplifting synth-pop that swells as the camera pushes in, resolving on a warm clean chord."
+            },
+            {
+              "id": "handwipe_screen_transition",
+              "name": "手掌擦镜转场",
+              "name_en": "Hand-wipe screen transition",
+              "description": "图1擦镜前造型+图2擦镜后造型：一只手掌从镜头前擦过，手掌划过的区域像擦玻璃一样把画面替换成下一造型，首末帧严格对应两张参考。",
+              "preview": "",
+              "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "手掌擦镜",
+                "转场",
+                "无缝换装",
+                "首尾帧",
+                "玻璃擦除",
+                "丝滑"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the FIRST-FRAME reference — the character's exact face, hairstyle, identity, pose, framing, outfit and pre-wipe styling must be preserved EXACTLY at 0.00 seconds. <Picture 2> is the LAST-FRAME reference — the very SAME face and identity in the post-wipe styling, preserved EXACTLY at the end. The palm wipe sweeps across the lens and the swept region replaces the image like glass being wiped clean; the face/identity never changes. NEVER mix <Picture 1>'s styling onto the last frame or <Picture 2>'s onto the first. 中文复述：本提示词中 <Picture 1> 为擦镜前首帧参考（人物面部/发型/身份/姿势/构图/服装在第0秒严格保持），<Picture 2> 为擦镜后尾帧参考（同一张脸、同一身份，仅造型/服装/背景切换后完全以 <Picture 2> 为准）；手掌划过镜头，划过区域如擦玻璃般把画面替换为下一造型，人脸与身份全程不变，严禁首尾帧造型互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the first frame — all visual elements from <Picture 1> preserved EXACTLY at the start. At the end of the target video, <Picture 2> is fully referenced as the last frame — the same face in the post-wipe styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic, fixed framing. 【ACTION】The clip begins exactly as <Picture 1>. One hand enters from the side, palm flat and facing the lens, and wipes across the screen from left to right like a squeegee cleaning glass. The region the palm has passed over instantly clears and reveals the post-wipe styling from <Picture 2> — outfit, hairstyle and background underneath transforming as the wipe edge advances; the un-wiped region still shows <Picture 1>. When the palm sweeps fully off the frame, the whole image has become the post-wipe look, and the final frame lands exactly on <Picture 2>.【/ACTION】 The face and identity remain the same person; the wipe edge is smooth and continuous, no hard cut, no distorted limbs, no duplicated figure.\n\noverall_soundscape: A soft palm-glide whoosh across the lens, a faint glass-cleaning shimmer, subtle ambient tone.\n\nnon_diegetic_music: Sleek, stylish R&B-pop with a glossy pad that blooms as the wipe completes."
+            },
+            {
+              "id": "era_travel_wardrobe",
+              "name": "时代穿越换装",
+              "name_en": "Era-travel wardrobe",
+              "description": "图1现代装人物+图2目标古典服装+图3古建筑背景：人物站在古建筑前，风吹衣角、时钟倒转特效，现代西装/连衣裙溶解为图2那套汉服/和服/中世纪礼服，场景完全来自图3。",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1人物+图2服装+图3场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "时代穿越",
+                "古装",
+                "换装",
+                "古风",
+                "多图参考",
+                "溶解",
+                "穿越"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout; the character starts in modern clothing. <Picture 2> is the TARGET OUTFIT reference — the historical garment (hanfu / kimono / medieval gown) its cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>; after the transition the character wears THIS outfit and no other. <Picture 3> is the SCENE reference — the ancient architecture, background, props, lighting, color tone and atmosphere must come EXACTLY from <Picture 3>, DO NOT generate a new background. NEVER mix one <Picture N>'s material onto another frame. 中文复述：本提示词中 <Picture 1> 是人物参考（面部/发型/体型/身份严格保持，开场为现代装束），<Picture 2> 是目标古典服装参考（版型/颜色/花纹/材质细节完全来自该图，穿越后人物穿上的就是这套汉服/和服/中世纪礼服），<Picture 3> 是场景参考（古建筑/背景/道具/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用素材。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout — no alteration, replacement or redesign. <Picture 2> is fully referenced as the target historical outfit: the garment must match <Picture 2>'s exact cut, color, pattern and fabric texture — no substitution, no redesign. <Picture 3> is fully referenced as the scene: architecture, background, lighting and atmosphere EXACTLY as the scene reference.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic medium-full shot inside the ancient architecture from <Picture 3>. 【ACTION】The character from <Picture 1> stands in the scene in their modern suit / modern dress. A breeze rises and lifts the hem and hair; behind them a clock-rewind / time-flow effect spins backward — swirling light particles and drifting petals or leaves. The modern fabric begins to dissolve from the feet upward, threads of light weaving across the body as the historical garment from <Picture 2> materializes — its cut, color, pattern and fabric texture identical to <Picture 2>. By the end the full hanfu / kimono / medieval gown is settled on the body, the character turns gently to present it, and the environment remains the ancient architecture from <Picture 3>.【/ACTION】 The face, identity, hairstyle base and body proportions remain unchanged; the dissolve is continuous and elegant, clean effects, no distorted fabric, no extra limbs.\n\noverall_soundscape: A rising wind and drifting chimes, a low time-rewind hum during the dissolve, soft fabric rustle as the historical garment settles, ambient tone of the ancient courtyard.\n\nnon_diegetic_music: Cinematic East-Asian orchestral score with bamboo flute and strings, swelling as the dissolve completes, resolving on a resonant traditional chord."
+            },
+            {
+              "id": "four_seasons_outfit_timelapse",
+              "name": "四季/日转夜换装延时",
+              "name_en": "Four-seasons outfit timelapse",
+              "description": "图1人物+图2~5四张季节造型参考：同一人同一站立姿势，背景与服装随春樱→夏海→秋枫→冬雪连续溶解切换，四次季节之间平滑过渡，人脸始终一致。",
+              "preview": "",
+              "generation_mode": "Multimodal Fusion (多模态融合)",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "四季",
+                "延时",
+                "换装",
+                "日转夜",
+                "多模态",
+                "同款不同装",
+                "季节"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY across the whole timelapse; the character holds the SAME standing pose throughout. <Picture 2> is the SPRING styling — the spring outfit's cut, color, pattern, fabric texture and the spring color tone / cherry-blossom atmosphere must come EXACTLY from <Picture 2>. <Picture 3> is the SUMMER styling — the summer outfit and the summer sea / bright-sun tone must come EXACTLY from <Picture 3>. <Picture 4> is the AUTUMN styling — the autumn outfit and the autumn maple / warm tone must come EXACTLY from <Picture 4>. <Picture 5> is the WINTER styling — the winter outfit and the winter snow / cold tone must come EXACTLY from <Picture 5>. The four seasonal looks appear strictly in spring → summer → autumn → winter order; each season's clothing and tone come ONLY from its own <Picture N>. NEVER mix one season's outfit onto another season. 中文复述：本提示词中 <Picture 1> 是人物参考（面部/发型/体型/身份严格保持，全程保持同一站立姿势），<Picture 2> 为春、<Picture 3> 为夏、<Picture 4> 为秋、<Picture 5> 为冬——每季的服装版型/颜色/花纹/材质与季节色调必须完全来自对应参考图，严格按春→夏→秋→冬顺序出现；人脸与身份全程一致，严禁把某一季的服装串到另一季。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire timelapse — no alteration, replacement or redesign. Each seasonal outfit must match its own <Picture N>'s exact cut, color, pattern, fabric texture and tone — no substitution, no redesign.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic fixed medium-full shot, same framing the whole time. 【ACTION】The character stands in the exact pose of <Picture 1>. In the first quarter the scene and clothing are the SPRING look from <Picture 2> — cherry blossoms and soft pink tone — which continuously dissolves into the SUMMER look from <Picture 3> — bright sunlight and sea-blue tone. That in turn dissolves into the AUTUMN look from <Picture 4> — falling maple leaves and warm amber tone, and finally into the WINTER look from <Picture 5> — falling snow and cool pale tone. Each seasonal transition is a smooth organic cross-dissolve of both background and outfit, four in total, with a natural rhythm from blossom to summer heat to autumn foliage to winter snow.【/ACTION】 The face, identity, hairstyle, body proportions and standing pose remain identical across all four seasons; the transitions are continuous cross-dissolves, no hard cuts, no distorted fabric, no extra limbs.\n\noverall_soundscape: A light seasonal ambience that flows from spring birdsong to summer breeze, autumn leaf rustle and finally soft falling snow, continuous undercurrent.\n\nnon_diegetic_music: A gentle piano-and-strings piece that cycles through spring-to-winter moods, warm and tender, resolving softly on the final winter note."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "character_transform",
+      "name": "角色变换",
+      "name_en": "Character Transform",
+      "description": "身份/年龄/物种/角色的形变与替换——铠甲觉醒、宠物拟人、双角互换、换角",
+      "icon": "🎭",
+      "subcategories": [
+        {
+          "id": "awaken_morph",
+          "name": "觉醒与形变",
+          "name_en": "Awakening & Morph",
+          "description": "铠甲觉醒、宠物拟人、年龄变化",
+          "templates": [
+            {
+              "id": "starforged_armor_awakening",
+              "name": "星灵铠甲觉醒",
+              "name_en": "Starforged armor awakening",
+              "description": "图1主角单图：情绪特写→掌心发光媒介/身上徽记触发变身→甲片逐块从光点凝聚嵌合到全身→定格拔剑。可走星座/元素光效主题。",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)【单图首帧】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "铠甲觉醒",
+                "变身",
+                "星灵",
+                "形变",
+                "特效",
+                "单图首帧"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1> is the ONLY character reference in this prompt and MUST be strictly followed — the character's exact face, hairstyle, body proportions and identity must be preserved EXACTLY throughout the entire video; the armor is newly grown onto the body as part of the transformation, but the facial features never change. NEVER alter the identity of the character. 中文复述：本提示词中 <Picture 1> 是主角本人（面部、发型、体型、身份严格保持，铠甲是新生长出来的变身过程，但五官始终不变，严禁把脸换成别的人）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the main character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must remain unchanged for the whole video. A glowing medium held in the palm / a glowing emblem on the body is the sole trigger — no other device or prop is named.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, dark cosmic backdrop with faint drifting starlight. Close-up of the character's face from <Picture 1>, eyes showing rising emotion. 【ACTION】The character raises the hand: a tiny luminous point ignites on the glowing medium in the palm (or the emblem on the body flares up), pulsing brighter and spilling stardust; the light erupts outward and countless light points stream toward the body, condensing piece by piece into armor plates — shoulder pauldrons first, then chest plate, arm guards, waist and greaves, each plate snapping into place with a crisp metallic latch and a shower of sparks; finally the character lifts the newly materialized blade and freezes mid-draw, starlight crackling across the armor.【/ACTION】 The face, hairstyle and body proportions stay exactly as <Picture 1> the whole time; armor grows on the body but never reshapes the face; clean VFX, no distortion, no extra limbs.\n\noverall_soundscape: Low cosmic hum, rising crystalline energy whoosh, crisp metallic latches as each armor plate snaps on, final blade-ring at the freeze frame.\n\nnon_diegetic_music: Epic heroic orchestral build, swelling strings and brass climax on the draw-and-freeze, echoing with a starlight shimmer."
+            },
+            {
+              "id": "pet_human_anthro",
+              "name": "宠物↔人（拟人走秀）",
+              "name_en": "Pet to human anthro",
+              "description": "图1宠物（猫/柴犬等）+图2拟人形象：宠物逐渐直立、长出人形、保留原物种的毛色/耳/尾特征，走T台步。",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1宠物+图2拟人形态】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "宠物拟人",
+                "形变",
+                "走秀",
+                "双图参考",
+                "物种特征",
+                "变身"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the starting animal — its fur color, eyes, breed features and all species details must be preserved EXACTLY and carried over through the whole transformation. <Picture 2> is the target anthro humanoid — its body proportions, outfit and facial features must come EXACTLY from <Picture 2>, while still keeping the species-recognition features (ears, tail, fur-tone accents) inherited from <Picture 1>. NEVER blend one <Picture N>'s material onto the other incorrectly. 中文复述：本提示词中 <Picture 1> 是起始宠物（毛色、五官、品种特征严格来自该图），<Picture 2> 是目标拟人形态（体型比例、服装、五官完全来自该图，且保留 <Picture 1> 的物种识别特征：耳朵、尾巴、毛色点缀，严禁自行设计替换）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the starting pet. At the end of the transformation, the figure must fully match the anthro form from <Picture 2> while retaining the species features of <Picture 1>. STRICT REFERENCE COMPLIANCE: never lose the fur color, ears and tail; never redesign the outfit or face.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic fashion runway, soft key light from above, clean glossy floor. Medium shot begins on the pet from <Picture 1>. 【ACTION】The pet slowly rises on hind legs, its body elongating into a humanoid figure in one continuous, fluid morph — fur retracts into skin but the same-colored ears stay up on the head and the fluffy tail remains; the outfit from <Picture 2> materializes onto the newly formed body, cut and color identical to <Picture 2>; once the anthro form is complete, the figure turns and strides confidently down the catwalk in a model's runway walk.【/ACTION】 Fur color, ear shape and tail match <Picture 1>; body proportions, outfit and facial features match <Picture 2>; seamless morph, no distortion, no extra limbs.\n\noverall_soundscape: Soft runway floor taps, a light magical shimmer during the morph, faint crowd murmur.\n\nnon_diegetic_music: Upbeat playful fashion-show beat with warm synth plucks, confident and bouncy on the runway walk."
+            },
+            {
+              "id": "text_age_swap",
+              "name": "文字指令换人/换龄",
+              "name_en": "Text-driven age swap",
+              "description": "纯文生：画面中一个人随时间轴平滑变为婴儿→童年→老年版本，同一人不同年龄段，面部骨相连贯变化。",
+              "preview": "",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "年龄变化",
+                "纯文生",
+                "形变",
+                "同一人",
+                "时间轴",
+                "面部连贯"
+              ],
+              "prompt": "[DEFAULT CONFIGURATION / 默认配置声明]: This is a text-to-video prompt with NO reference image. The default subject is a young East Asian woman in her early twenties, long straight black hair, balanced slim build, natural everyday outfit, neutral plain studio background. The entire age-change sequence must keep her the SAME recognizable person — face, bone structure and identity flow continuously through every age stage; no different person is introduced. 中文复述：本提示词无参考图，默认主角为一位二十出头的东亚年轻女性，黑长直长发、匀称身材、日常便服、中性纯色棚拍背景；全片为同一人不同年龄段的连贯变化，面部骨相连贯，严禁中途换人。\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, soft even studio light, plain neutral backdrop. Fixed medium shot of the subject standing center frame. 【ACTION】The video runs one continuous time-lapse of the SAME person's aging in a single frame: starting as the young adult woman, her features smoothly de-age — face rounding, eyes large, shrinking down into a chubby baby, then a toddler, then a school-age child; the flow reverses and she ages forward through youth, middle age, until the final moments show a graceful elderly version of the same face, wrinkles and silver hair arriving gradually; at every transition the underlying bone structure and identity stay recognizably hers.【/ACTION】 One single recognizable identity across all age stages; coherent facial continuity, seamless morph, no distortion, no extra limbs.\n\noverall_soundscape: Quiet room tone, faint soft air whoosh marking each age-stage transition, gentle breath.\n\nnon_diegetic_music: Tender ambient piano solo, slow reflective tempo, swelling softly as the years pass, ending warm and resolved."
+            }
+          ]
+        },
+        {
+          "id": "role_swap",
+          "name": "双角色与换角",
+          "name_en": "Dual-role & Replacement",
+          "description": "镜像分屏互换、帧级换角、跨场景锁脸换衣",
+          "templates": [
+            {
+              "id": "mirror_dual_swap",
+              "name": "镜像/分屏双角色互换",
+              "name_en": "Mirror split dual swap",
+              "description": "图1角色A+图2角色B：镜面（或左右分屏）两侧各站一人，涟漪闪过，两侧身份/服装/体型互换，严格来自各自参考图。",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1角色A+图2角色B】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "双角色",
+                "镜像互换",
+                "分屏",
+                "换角",
+                "双图参考",
+                "锁脸"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is Character A — face, hairstyle, body proportions, outfit and identity must be preserved EXACTLY. <Picture 2> is Character B — face, hairstyle, body proportions, outfit and identity must be preserved EXACTLY. After the swap, each side must strictly equal the OTHER reference's face, outfit and body, never the same side's original; DO NOT mix identities across sides wrongly. 中文复述：本提示词中 <Picture 1> 是角色A（面部/发型/体型/服装/身份严格保持），<Picture 2> 是角色B（面部/发型/体型/服装/身份严格保持）；互换之后左侧严格变成 <Picture 2> 的样子、右侧严格变成 <Picture 1> 的样子，严禁串改、严禁把两人特征混到一张脸上。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the left-side character A and <Picture 2> as the right-side character B. STRICT REFERENCE COMPLIANCE: left side begins exactly as <Picture 1>, right side begins exactly as <Picture 2>; after the ripple the left side must equal <Picture 2> and the right side must equal <Picture 1>.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic symmetrical composition, a vertical mirror (or a clean left-right split) down the center, soft dramatic side light. Two figures stand facing each other — the left figure from <Picture 1>, the right figure from <Picture 2>. 【ACTION】A luminous ripple of light sweeps across the mirror surface; for one beat both figures are washed in the flash; as the light fades, the left figure has taken on the exact face, hairstyle, body and outfit of <Picture 2>, while the right figure has taken on the exact face, hairstyle, body and outfit of <Picture 1>; each side pauses and looks down at its swapped hands, then holds still.【/ACTION】 Left side post-swap strictly equals <Picture 2>; right side post-swap strictly equals <Picture 1>; no blended faces, no distorted proportions, no extra limbs.\n\noverall_soundscape: Deep glass-like resonant hum, a soft water ripple whoosh on the flash, quiet settle at the end.\n\nnon_diegetic_music: Mysterious cinematic pulse, shimmering synth swell on the ripple, resolving into a quiet mysterious chord."
+            },
+            {
+              "id": "frame_level_char_replace",
+              "name": "多参考帧级角色替换",
+              "name_en": "Frame-level character replacement",
+              "description": "图1新角色+图2同场景同姿态首尾帧：把画面里的人整体换成图1这个角色，动作与场景保持与首尾帧一致，新角色的脸/发型/体型严格来自图1。",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1新角色+图2目标场景/姿态】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "帧级换角",
+                "换脸",
+                "锁脸",
+                "双图参考",
+                "场景锁定",
+                "动作复用"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the NEW character to be inserted — face, hairstyle, body proportions and outfit must come EXACTLY from <Picture 1>. <Picture 2> is the target scene and pose — the composition, camera framing, body action, environment and lighting must come EXACTLY from <Picture 2>, DO NOT invent a new scene. The person inside <Picture 2> is entirely replaced by the character from <Picture 1>, while the action and scene stay unchanged. 中文复述：本提示词中 <Picture 1> 是要替换进去的新角色（面部/发型/体型/服装严格来自该图），<Picture 2> 是目标场景与姿态（构图/机位/动作/环境/灯光完全来自该图，严禁另造场景）；把 <Picture 2> 画面里原来的人整体换成 <Picture 1> 这个角色，但动作与场景保持不变。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 2> (from [Shot 1]) is fully referenced as the scene, camera framing and pose, while the figure in it is the character from <Picture 1>. At the end of the target video, the figure still matches <Picture 1> and the framing/action still matches <Picture 2>. STRICT REFERENCE COMPLIANCE: face, hairstyle, body and outfit of the inserted figure must equal <Picture 1>; composition, action and environment must equal <Picture 2>.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic shot matching <Picture 2>'s exact composition, framing and environment. The frame begins with the composition of <Picture 2>. 【ACTION】A soft flash of light passes over the figure; the original person in the scene is replaced in one beat by the character from <Picture 1> — same face, same hairstyle, same body proportions, same outfit — yet the camera framing, the character's pose and motion, and the whole environment continue exactly as in <Picture 2>, carrying through the original action without interruption.【/ACTION】 Inserted character strictly equals <Picture 1>; scene, framing and action strictly equal <Picture 2>; clean replacement, no distortion, no extra limbs.\n\noverall_soundscape: Natural ambient sound of the scene from <Picture 2>, a brief soft flash whoosh at the replacement, then continuous scene tone.\n\nnon_diegetic_music: Subtle cinematic underlay, gentle pulse that hides the replacement cut, resolving naturally with the scene's mood."
+            },
+            {
+              "id": "subject_scene_freestyle",
+              "name": "主体参照跨场景换衣",
+              "name_en": "Lock-face cross-scene outfit swaps",
+              "description": "图1主体人脸单图：锁死这张脸，文字指示任意切场景换衣服，无物理转场，靠溶解/闪光切换，人脸全程不变。",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)【单图首帧】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "锁脸",
+                "跨场景",
+                "换装",
+                "单图首帧",
+                "溶解切换",
+                "身份保持"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1> is the ONLY reference and MUST be strictly followed — the subject's exact face and identity must be locked and preserved EXACTLY across every scene and every outfit; the outfit and the background may change freely according to the description, but the face never changes. NEVER swap, alter or redesign the face. 中文复述：本提示词中 <Picture 1> 是主体本人（面部/身份严格锁死、全程保持，服装与场景可按描述自由变化，严禁换脸、严禁把五官改成人）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the subject. STRICT REFERENCE COMPLIANCE: the subject's exact face and identity must remain identical across all cuts; only clothing and background change.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, fluid multi-cut sequence. Medium close-up of the subject from <Picture 1>. 【ACTION】Without any physical walk or transition, a quick dissolve / soft flash cuts the subject across several different scenes and outfits in a row — e.g. from a city street in casual wear, dissolving into a coffee shop in a knit sweater, dissolving again into a night rooftop in a formal dress; each cut is only a brief light wash, and the subject simply poses or turns naturally in the new setting.【/ACTION】 The face, identity and expression consistency stay exactly as <Picture 1> throughout all cuts; only outfit and background change; seamless dissolves, no distorted face, no extra limbs.\n\noverall_soundscape: A continuous airy shimmer bridge between scenes, faint ambient hint of each new environment, no hard cut sound.\n\nnon_diegetic_music: Stylish, light pop groove with a soft sparkle on each dissolve, breezy and confident throughout.",
+              "text_fallback_prompt": "[DEFAULT CONFIGURATION / 默认配置声明]: This is a text-to-video fallback with NO reference image. The default subject is a young East Asian woman in her early twenties, long straight black hair, balanced slim build, in default urban everyday wear. Her face and identity are locked for the whole video; only outfit and background change across cuts. 中文复述：无参考图时，默认主角为一位二十出头的东亚年轻女性、黑长直长发、匀称身材、默认都市日常服装；全程锁死同一张脸，只换服装与场景。\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, fluid multi-cut sequence. Medium close-up of the default young woman. 【ACTION】Without any physical walk or transition, a quick dissolve / soft flash cuts her across several different scenes and outfits in a row — from a city street in casual wear, dissolving into a coffee shop in a knit sweater, dissolving again into a night rooftop in a formal dress; each cut is only a brief light wash, and she simply poses or turns naturally in the new setting.【/ACTION】 The face and identity stay exactly the same throughout all cuts; only outfit and background change; seamless dissolves, no distorted face, no extra limbs.\n\noverall_soundscape: A continuous airy shimmer bridge between scenes, faint ambient hint of each new environment, no hard cut sound.\n\nnon_diegetic_music: Stylish, light pop groove with a soft sparkle on each dissolve, breezy and confident throughout.",
+              "text_fallback_mode": "Text to Video (文生视频)【默认人物+默认都市服装】"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cross_dimension",
+      "name": "跨次元同框",
+      "name_en": "Cross-Dimension Cameo",
+      "description": "名画/文明/二次元与现实世界同框——名画复活走秀、兵马俑×蒙娜丽莎、立绘穿镜变真人",
+      "icon": "🌌",
+      "subcategories": [
+        {
+          "id": "art_cameo",
+          "name": "名画与文明同框",
+          "name_en": "Famous Art Cameo",
+          "description": "世界名画人物走上T台、不同文明符号跨时空共舞",
+          "templates": [
+            {
+              "id": "famous_painting_runway",
+              "name": "世界名画复活走秀",
+              "name_en": "Famous painting runway",
+              "description": "图1世界名画（蒙娜丽莎/戴珍珠少女等）单图：画中人物从画框里\"活\"起来，走上现代T台穿现代时装，360°环绕运镜，面部特征与画中严格一致",
+              "preview": "",
+              "generation_mode": "Image to Video (图生视频)【单图首帧】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "名画",
+                "复活",
+                "走秀",
+                "T台",
+                "穿越",
+                "环绕运镜",
+                "单图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1> is an independent reference and MUST be strictly followed — the face, hairstyle, expression, skin tone, body proportions and the exact painted identity of the figure must be preserved EXACTLY, even as the figure rises from the flat canvas into a living 3D human. The identity is the painted character, not a new model; DO NOT redesign the face or substitute a generic face. NEVER change the identity across the video. 中文复述：<Picture 1> 是那幅世界名画中的人物（五官、发型、神态、肤色、体型与画作身份严格保持，从二维平面立体化为真人，但长相就是画中人）；严禁替换为普通网红脸、严禁自行重画五官或更换人物身份。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the first frame. STRICT REFERENCE COMPLIANCE: the figure's exact facial features, hairstyle, expression and painted identity must be preserved EXACTLY throughout the entire video, only transformed from flat canvas into a solid living human.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, 360-degree orbit camera. Opens on a museum wall at golden-hour side light, <Picture 1>'s painting hanging in an ornate gold frame. 【ACTION】At 0.0-2.5s, the painted figure inside the frame slowly blinks and turns her head toward the viewer; canvas pixels start to lift off the 2D plane and gain real volume — fabric folds, skin and hair become tactile and three-dimensional while the face stays identical to <Picture 1>. At 2.5-5.5s, she steps out of the frame frame-first, her painted robes dissolving into a tailored modern runway outfit (contemporary couture cut, clean neutral palette) as her foot touches the polished runway floor. At 5.5-10s, the camera circles 360° around her on a glass runway under spotlight, she glides forward in a confident strut, pauses, turns to the camera with the exact Mona Lisa / pearl-earring smile from <Picture 1>, and gives a subtle chin lift.【/ACTION】Face, hairstyle, expression and painted identity remain identical to <Picture 1> throughout; no distortion, no extra limbs, no duplicate figures, background stays a clean modern runway.\\n\\noverall_soundscape: Low museum-room air hum that blooms into crisp runway floor footsteps on polished glass, faint fabric rustle, distant camera shutters.\\n\\nnon_diegetic_music: Orchestral-meets-modern runway score — delicate strings opening into a confident fashion-beat drop, ending on a single glittering hit.",
+              "text_fallback_prompt": "A young woman with dark long hair and an elegant, enigmatic smile steps out of a classical oil painting frame onto a modern glass runway; her face and expression stay painterly and iconic, she glides under spotlight as the camera orbits 360 degrees, canvas texture dissolving into a tailored contemporary couture outfit.",
+              "text_fallback_mode": "Text to Video (文生视频)【默认人物+默认场景】"
+            },
+            {
+              "id": "civilization_crossover",
+              "name": "文明同框跨时空",
+              "name_en": "Civilization crossover",
+              "description": "图1主体A（如兵马俑）+图2主体B（如蒙娜丽莎）+图3场景：两个不同文明/时空的角色共舞/同框，背景从秦陵→卢浮宫→外滩穿越切换，两主体各自形象严格来自对应参考图",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1主体A+图2主体B+图3场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "跨文明",
+                "同框",
+                "时空穿越",
+                "多主体",
+                "场景切换",
+                "三图参考",
+                "奇幻"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1>, <Picture 2> and <Picture 3> are three independent references and MUST be strictly followed — NEVER mix material, identity or props between them. <Picture 1> is Subject A: its silhouette, surface material, color, ornament and exact identity (e.g. a terracotta warrior) must come EXACTLY from <Picture 1>; <Picture 2> is Subject B: its face, hairstyle, garment, painting-style identity (e.g. Mona Lisa) must come EXACTLY from <Picture 2>; <Picture 3> is the scene/environment: background architecture, props, lighting atmosphere and color grading must come EXACTLY from <Picture 3>, DO NOT generate a new environment. NEVER put Subject A's material onto Subject B's frame or vice versa. 中文复述：<Picture 1> 是主体A（外形/材质/颜色/纹饰/身份完全来自该图，例如一尊兵马俑，严禁串到主体B身上）；<Picture 2> 是主体B（面部/发型/服装/画作身份完全来自该图，例如蒙娜丽莎，严禁自行换脸）；<Picture 3> 是场景（建筑/道具/光线氛围完全来自该图，不得另起炉灶）。三图职责互不串扰。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as Subject A, <Picture 2> is fully referenced as Subject B, and <Picture 3> is fully referenced as the opening environment. STRICT REFERENCE COMPLIANCE: Subject A's identity and terracotta material, Subject B's face and painterly identity, and the scene's lighting all stay EXACT throughout.\\n\\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic cross-era sequence. Opens inside the environment of <Picture 3>, warm directional light. 【ACTION】At 0.0-2.5s, Subject A from <Picture 1> stands center frame, rough ochre terracotta surface and exact sculpted features clearly visible, looking toward an unseen partner; dust motes drift in the beam. At 2.5-5s, Subject B from <Picture 2> glides into frame from the opposite side, her painted face, hairstyle and robe identity identical to <Picture 2>; a soft horizontal wipe of golden light sweeps the background through a time portal — the Qin mausoleum atmosphere melts into a Louvre-style gallery, then into a Bund-style waterfront skyline, all while both subjects keep their own exact materials and identities. At 5-10s, they meet mid-frame and perform a slow, weightless cross-era dance — one low warrior bow meets a graceful Renaissance curtsy, their silhouettes overlap under the rotating light, ending in a symmetrical side-by-side pose facing the camera.【/ACTION】Subject A's material/identity stays exactly from <Picture 1>, Subject B's face/outfit/identity stays exactly from <Picture 2>, environment atmosphere references <Picture 3>; no material cross-contamination, no distortion, no extra limbs.\\n\\noverall_soundscape: Deep low-pitched stone-room rumble that shifts to a grand gallery reverb, gentle swish of the light portal, soft distant city hum on the final setting.\\n\\nnon_diegetic_music: Epic East-West fusion score — Qin-style bronze percussion and dizi-style flute woven with a soaring string quartet, swelling to a cinematic joint crescendo.",
+              "text_fallback_prompt": "A rough ochre terracotta warrior and a Renaissance-style painted lady with a subtle smile meet inside a grand gallery; a horizontal golden light wipe sweeps the background from an ancient tomb to a museum hall to a modern waterfront skyline, and the two figures perform a slow, weightless cross-era dance, ending side by side under warm light.",
+              "text_fallback_mode": "Text to Video (文生视频)【默认双主体+默认场景】"
+            },
+            {
+              "id": "anime_real_set_bts",
+              "name": "二次元↔真人片场互转",
+              "name_en": "2D character ↔ real set BTS",
+              "description": "图1立绘+图2真人+图3片场：立绘穿过镜面/画框溶解为真人片场拍摄花絮，或真人片场溶解还原为2D立绘质感；三者角色形象严格对应",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1立绘+图2真人+图3场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "二次元",
+                "真人",
+                "片场",
+                "互转",
+                "溶解",
+                "镜面穿越",
+                "三图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1>, <Picture 2> and <Picture 3> are three independent references and MUST be strictly followed — NEVER mix styles or materials across them. <Picture 1> is the 2D illustration (立绘): the character's 2D design, line-art style, hair shape, outfit cut, color palette and cel-shading must come EXACTLY from <Picture 1>; <Picture 2> is the corresponding real human: face, hairstyle, outfit cut/color/material must match <Picture 1> as the live-action version of the SAME character, and must come EXACTLY from <Picture 2>; <Picture 3> is the film-set environment: studio lighting, props, cameras, crew silhouette and atmosphere must come EXACTLY from <Picture 3>. NEVER replace the 2D line-art with a different character, and NEVER put the real human's costume onto the illustration frame. 中文复述：<Picture 1> 是二次元立绘（2D造型/线稿风格/发型/服装剪裁配色/赛璐璐上色严格来自该图）；<Picture 2> 是同一角色的真人版（五官/发型/服装与图1为同一角色，严格保持，完全来自该图）；<Picture 3> 是片场场景（布光/道具/摄影器材/群演与氛围完全来自该图）。三者角色形象严格对应、互不串改。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced as the opening 2D illustration, <Picture 2> is fully referenced as the matching real human, and <Picture 3> is fully referenced as the film-set environment. STRICT REFERENCE COMPLIANCE: the 2D design stays exactly from <Picture 1>, the live-action identity stays exactly from <Picture 2>, and the set atmosphere stays exactly from <Picture 3>.\\n\\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic behind-the-scenes short. Opens on the film set of <Picture 3>, warm studio key light with visible softboxes and crew silhouettes in the background. 【ACTION】At 0.0-3s, a standing glass mirror on the set reflects a 2D cel-shaded illustration of the character exactly matching <Picture 1>; the line-art girl in the mirror slowly smiles and lifts a hand toward the glass surface. At 3-6.5s, her hand presses through the mirror — ink lines and flat color dissolve at the contact point into real skin, fabric and light; the whole illustrated figure pulls herself out through the mirror into the real set, transitioning smoothly from 2D cel-shading to the live-action version whose face, hairstyle and outfit match <Picture 2> exactly. At 6.5-10s, the now-real character steps onto the marked spot on the floor of <Picture 3>'s set, a clapperboard snaps in the foreground, she waves at the off-camera director, and the camera slowly pushes in as a subtle re-cel-shading filter begins to creep back over her image at the very last beat.【/ACTION】2D design stays identical to <Picture 1>, live-action identity and outfit stay identical to <Picture 2>, set environment stays identical to <Picture 3>; no character identity swap, no distortion, no extra limbs.\\n\\noverall_soundscape: Warm studio room tone, faint humming of film lights, a crisp clapperboard snap, and soft whoosh as the illustration crosses through the mirror.\\n\\nnon_diegetic_music: Playful studio-chic pop soundtrack — light pizzicato strings opening, blossoming into a warm retro Japanese-animation-style theme with a gentle lo-fi beat.",
+              "text_fallback_prompt": "On a warm-lit film set, a standing mirror reflects a cel-shaded anime girl; she presses her hand through the glass and dissolves out of the 2D illustration into a real live-action version of the same character, steps onto the marked floor, a clapperboard snaps, and she waves at the off-camera director as subtle cel-shading creeps back over her.",
+              "text_fallback_mode": "Text to Video (文生视频)【默认立绘↔真人互转】"
             }
           ]
         }
