@@ -7598,9 +7598,9 @@
             },
             {
               "id": "magic_mediator_wardrobe_change",
-              "name": "三图换装·魔法媒介触发",
-              "name_en": "Three-image magic mediator wardrobe change",
-              "description": "三图参考+可选场景图：图1人物+图2服装+图3媒介道具(手机/眼镜/镜子等画面前景物)+图4可选场景图。人物操作/佩戴媒介，媒介屏幕或镜面显示AI换装界面触发魔法换装，换装场景可自由指定",
+              "name": "多图换装·魔法媒介触发",
+              "name_en": "Multi-image magic mediator wardrobe change",
+              "description": "多图参考+可选场景图：图1人物+图2服装+图3媒介道具(手机/眼镜/镜子等画面前景物)+图4可选场景图。人物操作/佩戴媒介，媒介屏幕或镜面显示AI换装界面触发魔法换装，换装场景可自由指定",
               "preview": "",
               "generation_mode": "Reference to Video (参考生视频)【图1人物+图2服装+图3媒介+图4场景可选】",
               "duration": 8,
@@ -7610,7 +7610,7 @@
               "tags": [
                 "换装",
                 "变装",
-                "三图",
+                "多图",
                 "媒介",
                 "手机",
                 "眼镜",
