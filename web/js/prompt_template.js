@@ -27,7 +27,7 @@ if (!document.getElementById(STYLE_ID)) {
     width: 100%; height: auto !important; font-family: sans-serif;
 }
 .bsai-tpl-top {
-    display: flex; gap: 8px; align-items: flex-start;
+    display: flex; gap: 8px; align-items: stretch;
     margin: 6px 0; flex: 0 0 auto; min-height: 0;
     overflow: hidden;
 }
@@ -78,8 +78,8 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; flex: 0 1 auto; min-height: 0;
-    max-height: 620px !important; overflow-y: auto !important; background: #111;
+    border: 1px solid #333; border-radius: 4px; flex: 1 1 0; min-height: 80px;
+    max-height: none; overflow-y: auto !important; background: #111;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
 .bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
@@ -718,12 +718,11 @@ function buildTemplateUI(node) {
             // via syncWidgetHeight() to follow the user's node drag-resize.
             dw.computeSize = function() {
                 const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
-                // Content-sized: widget container follows its own content (no forced 1000px),
-                // so there is no wasted empty space at the bottom and no scrollbar.
-                // +28 safety margin: LiteGraph's container height can land a few px
-                // short of the content, which would otherwise show a right-side
-                // scrollbar or clip the last row.
-                const ch = Math.max(320, ((container && container.scrollHeight) || 320)) + 28;
+                // Use clientHeight (visible height) instead of scrollHeight so that
+                // the template list's internal scroll content doesn't inflate the
+                // node height.  The list scrolls inside its own flex-constrained box;
+                // the container only needs to be as tall as its visible layout.
+                const ch = Math.max(320, ((container && container.clientHeight) || 320)) + 28;
                 return [w, ch];
             }
             // Force recompute on node resize by overriding onResize
@@ -823,7 +822,7 @@ function buildTemplateUI(node) {
                         want = (_cs && _cs[1]) || 0;
                     } catch(e) { want = 0; }
                 }
-                if (!want) want = Math.max(320, (container && container.scrollHeight) || 320) + 46;
+                if (!want) want = Math.max(320, (container && container.clientHeight) || 320) + 46;
                 if (node && node.size && typeof node.size[1] === 'number') {
                     const now = Date.now();
                     if (Math.abs(node.size[1] - want) > 2 && (now - (node._bsaiLastHSet || 0)) > 500) {
@@ -921,8 +920,8 @@ function buildTemplateUI(node) {
 
         // Initial fit: small placeholder, then let content decide the height.
         setTimeout(function() {
-            if (node && node.size && node.size[1] < 500) {
-                node.setSize([node.size[0], 520]);
+            if (node && node.size && node.size[1] < 400) {
+                node.setSize([node.size[0], 480]);
             }
             setTimeout(function() { try { syncWidgetHeight(true); } catch(e) {} }, 60);
         }, 100);
@@ -2075,11 +2074,10 @@ app.registerExtension({
                         setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 600);
                         setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 1500);
                     } else {
-                        node.setSize([480, 900]);
-                        // Force widget height to match node size after setSize
+                        node.setSize([480, 600]);
                         try {
                             const _w = node.widgets && node.widgets.find(function(w){return w.name === 'bsai_tpl_ui';});
-                            if (_w) { _w.height = 850; if (_w.computeSize) { _w.computeSize = function(){return [640, 850];}; } }
+                            if (_w) { _w.height = 550; if (_w.computeSize) { _w.computeSize = function(){return [640, 550];}; } }
                             if (app && app.graph && app.graph.setDirtyCanvas) { app.graph.setDirtyCanvas(true, true); }
                         } catch(e) {}
                     }
