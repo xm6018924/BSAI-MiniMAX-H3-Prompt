@@ -430,6 +430,16 @@ Features / 功能特点:
         if connected_refs:
             # 生成多参考图声明
             ref_decl = "MULTI-REFERENCE COMPLIANCE / 多参考图合规声明:\n"
+            ref_decl += (
+                "  [ABSOLUTE REFERENCE MANDATE / 绝对参考强制]: The generated video MUST strictly follow ALL connected reference images. "
+                f"Every <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> is the SOLE SOURCE OF TRUTH for its assigned role. "
+                "It is STRICTLY FORBIDDEN to generate any character, outfit, scene, prop, accessory, hairstyle, or face "
+                "that is not explicitly shown in the corresponding reference image. "
+                "The model MUST NOT invent, improvise, guess, hallucinate, or 'improve' anything beyond what the reference images show. "
+                "If the prompt text and a reference image disagree, the reference image WINS. "
+                "生成的视频必须严格按照所有已连接的参考图生成。严禁生成任何与参考图无关的人物、服装、场景、道具、配饰、发型或面部。"
+                "模型不得凭空创造、自行设计、猜测或美化参考图中未明确展示的任何内容。提示词文字与参考图冲突时，一律以参考图为准。\n"
+            )
             for idx in connected_refs:
                 ref_decl += f"  <Picture {idx}> is fully referenced as an independent reference — its subject identity, face, hairstyle, clothing, body proportions and styling must be preserved EXACTLY.\n"
             if len(connected_refs) >= 2:

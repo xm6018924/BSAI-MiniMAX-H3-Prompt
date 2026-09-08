@@ -339,6 +339,77 @@ def _is_copy_append(orig, result):
     return i >= len(o)
 
 
+def _is_too_similar(orig, result, min_changed=60):
+    """True when `result` barely differs from `orig` -- e.g. the model renamed
+    one token without actually merging the user's edit. We require at least
+    `min_changed` characters of net change to accept a merge result."""
+    if orig is None or result is None:
+        return True
+    if orig == result:
+        return True
+    try:
+        import difflib
+        sm = difflib.SequenceMatcher(None, orig, result, autojunk=False)
+        changed = 0
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag != "equal":
+                changed += abs((i2 - i1) - (j2 - j1)) + min(i2 - i1, j2 - j1) * 2
+        return changed < min_changed
+    except Exception:
+        return False
+
+
+def _is_repetitive_garbage(text, min_repeats=5):
+    """Detect repetitive tag-list garbage (e.g. a model that loops on
+    'black hair ribbon, black hair scrunchie, ...' hundreds of times).
+    Returns True when the output is dominated by short repeated comma-separated
+    fragments — a pattern typical of prompt-enhancer models misused for merging."""
+    if not text:
+        return False
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    if not lines:
+        return False
+    # Collect all comma-separated fragments across the text
+    fragments = []
+    for line in lines:
+        parts = [p.strip().lower() for p in line.split(",") if p.strip()]
+        fragments.extend(parts)
+    if len(fragments) < min_repeats * 3:
+        return False
+    from collections import Counter
+    counts = Counter(fragments)
+    # Check 1: exact fragment duplication
+    most_common = counts.most_common(1)
+    if most_common:
+        top_word, top_count = most_common[0]
+        if top_count >= min_repeats and top_count > len(fragments) * 0.1:
+            return True
+    # Check 2: common prefix — if >60% of fragments start with the same 2-word
+    # prefix, it's a looping pattern (e.g. "black hair ..." repeated)
+    unique_frags = list(counts.keys())
+    if len(unique_frags) >= 5:
+        prefix_counts = Counter()
+        for frag in unique_frags:
+            words = frag.split()
+            if len(words) >= 2:
+                prefix = " ".join(words[:2])
+                prefix_counts[prefix] += 1
+        if prefix_counts:
+            top_prefix, top_prefix_count = prefix_counts.most_common(1)[0]
+            if top_prefix_count >= 5 and top_prefix_count > len(unique_frags) * 0.5:
+                return True
+    # Check 3: if >60% of lines are near-identical (Jaccard), it's garbage
+    if len(lines) >= min_repeats * 2:
+        sample = lines[:50]
+        unique = set()
+        for l in sample:
+            words = frozenset(l.lower().split())
+            unique.add(words)
+        if len(unique) < len(sample) * 0.4:
+            return True
+    return False
+
+
 # Small LRU cache for merged results so re-running the same template+edit is instant
 # (the first call still loads the LLM; later identical requests hit the cache).
 _merge_cache = {}
@@ -395,33 +466,37 @@ def merge_customization(prompt, customization):
     if cfg:
         try:
             r = _clean(_generate_api(user_msg, cfg, _H3_MERGE_SYSTEM_PROMPT))
-            if r and not _is_copy_append(p, r):
+            if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
                 result = r
+            elif r and _is_repetitive_garbage(r):
+                error = "API output detected as repetitive garbage / API输出检测到重复垃圾内容"
         except Exception as e:
             error = "API: %s" % e
-    if result == p or _is_copy_append(p, result):
+    if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
         # Local attempts: try the fast merge model (sulphur) first, then a
-        # stronger one (e.g. gemma). Reject outputs that merely copy the template.
+        # stronger one (e.g. gemma). Reject outputs that merely copy the template
+        # or produce repetitive garbage (e.g. "hair ribbon, hair scrunchie, ..." loops).
         tried = []
         for mp in (_pick_merge_model_path(), _pick_model_path()):
             if not mp or mp in tried:
                 continue
             tried.append(mp)
-            # free any previously loaded smaller model so a bigger one fits in VRAM
             _free_llm_except(mp)
             try:
                 r = _clean(_generate_local(
                     user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=mp))
-                if r and r != p and not _is_copy_append(p, r):
+                if r and r != p and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
                     result = r
                     error = None
                     break
+                elif r and _is_repetitive_garbage(r):
+                    error = "Local LLM (%s) output detected as repetitive garbage / 本地模型输出检测到重复垃圾内容" % os.path.basename(mp)
             except Exception as e:
                 error = "Local LLM (%s): %s" % (os.path.basename(mp), e)
-        if result == p or _is_copy_append(p, result):
+        if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
             if error is None:
                 error = ("models only copied the template without merging the edit "
-                         "(no rewrite produced) / 模型仅复制模板而未将修改融入字段")
+                         "(no rewrite produced, change too small) / 模型仅复制模板而未将修改融入字段（改动过小）")
     _last_merge_error = error
     # cache (LRU)
     if key not in _merge_cache:
