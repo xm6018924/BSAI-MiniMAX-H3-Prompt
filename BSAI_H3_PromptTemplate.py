@@ -406,6 +406,27 @@ Features / 功能特点:
         ref_imgs = [ref_image_1, ref_image_2, ref_image_3, ref_image_4, ref_image_5,
                      ref_image_6, ref_image_7, ref_image_8, ref_image_9]
         connected_refs = [i + 1 for i, img in enumerate(ref_imgs) if img is not None]
+        # ── 无参考图文生回退: 模板声明了 text_fallback_prompt 且用户未连接任何图片(含场景图) →
+        #    使用内置默认人物/默认服装/默认设备, 转为文生视频模式 ──
+        if not connected_refs and scene_image is None and tpls and tpls[0].get("text_fallback_prompt"):
+            fb = (tpls[0].get("text_fallback_prompt") or "").strip()
+            if fb:
+                fb_mode = tpls[0].get("text_fallback_mode") or "Text to Video (文生视频)"
+                prompt = fb
+                if ext:
+                    prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
+                if cust:
+                    try:
+                        merged, merr = _merge_custom(prompt, cust)
+                        if merged and merged.strip() and merged != prompt:
+                            prompt = merged
+                        else:
+                            prompt = _append_custom(prompt, cust)
+                    except Exception:
+                        prompt = _append_custom(prompt, cust)
+                prompt = _inject_narration(prompt, narration)
+                name_label = f"{tpls[0].get('name','')} | {tpls[0].get('name_en','')}" if tpls[0].get("name_en") else tpls[0].get("name", "")
+                return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""))
         if connected_refs:
             # 生成多参考图声明
             ref_decl = "MULTI-REFERENCE COMPLIANCE / 多参考图合规声明:\n"
