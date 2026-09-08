@@ -7624,6 +7624,69 @@
           ]
         }
       ]
+    },
+    {
+      "id": "xray_scan",
+      "name": "透视扫描 | X-Ray Scan",
+      "name_en": "X-Ray Scan",
+      "description": "手持扫描设备扫过人物或物体, 对象透视显示内部结构(骨骼/内部构造), 内部结构图可选",
+      "icon": "🩻",
+      "subcategories": [
+        {
+          "id": "xray_scan_general",
+          "name": "透视扫描类",
+          "name_en": "X-Ray Scan Templates",
+          "description": "扫描设备+对象(+可选内部结构图)透视扫描模板",
+          "templates": [
+            {
+              "id": "xray_see_through_scan",
+              "name": "透视扫描·X光透视",
+              "name_en": "X-ray see-through scan",
+              "description": "手持扫描设备(图1)扫过对象(图2, 人物或物体), 对象自动显示内部结构(图3可选, 未提供时人物默认显示人体骨骼系统, 物体默认显示内部构造)",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1扫描设备+图2对象+图3内部结构可选】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "透视",
+                "扫描",
+                "X光",
+                "骨骼",
+                "内部结构",
+                "全息",
+                "设备",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the SCANNER DEVICE reference — the handheld scanning device (scanner wand, phone, tablet, visor, etc.) must match <Picture 1>'s exact model, shape, color and surface details. <Picture 2> is the TARGET OBJECT reference — a person or an object; the target's identity, appearance, shape and proportions must be preserved EXACTLY. <Picture 3> is the optional INTERNAL STRUCTURE reference — if provided, the internal structure revealed by the scan must match <Picture 3>'s exact shape, layout and details; if no internal-structure image is provided, the default internal structure is used: for a human target, the skeletal system (skull, spine, ribs, pelvis, limb bones) in X-ray style; for an object target, its plausible internal construction. 本提示词中 <Picture 1> 是扫描设备参考（手持扫描仪/手机/平板/头显等，其外形、颜色、细节必须与 <Picture 1> 一致），<Picture 2> 是扫描对象参考（人物或物体，其身份、外观、形态、比例必须严格保持，不得改变），<Picture 3> 是可选内部结构参考——若提供，透视显示的内部结构必须与 <Picture 3> 完全一致；若未提供，按对象类型显示默认内部结构（人物=人体骨骼系统X光视图，物体=其合理内部构造）。严禁自行设计、替换或改动扫描设备与对象外观。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the handheld scanning device and <Picture 2> as the target object/person. STRICT REFERENCE COMPLIANCE: the target's identity, appearance, shape and proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 1>'s exact model, shape, color and surface details must be preserved. The environment/background from <Picture 2> is preserved.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic. Medium shot. The scanning device from <Picture 1> is held in the operator's hand (or worn / mounted), facing the target object/person from <Picture 2> standing or placed in the scene; the background comes from <Picture 2>. 【ACTION】The operator activates the scanner: the device's screen / scanning head lights up, emitting a glowing scan beam with holographic grid lines. The beam sweeps across the target from top to bottom (or side to side). As the beam passes, the target's surface becomes translucent, and the internal structure is revealed inside the target — clearly visible through the semi-transparent exterior, matching <Picture 3> exactly if provided, or showing the default internal structure (for a person: the skeletal system — skull, spine, ribs, pelvis and limb bones in X-ray white-blue holographic style; for an object: its plausible internal construction in the same style). The internal structure stays clearly visible for a few seconds as the scan completes, then the target gradually returns to its normal opaque appearance. The target's outer identity, shape and proportions remain unchanged at all times; the scanning device stays identical to <Picture 1> the whole time.【/ACTION】 Clean holographic X-ray effect, no distortion, no duplicated figure, no deformed anatomy beyond the revealed structure.\n\noverall_soundscape: High-frequency electronic scanner hum and beeps as the beam sweeps, soft holographic shimmer, subtle room tone.\n\nnon_diegetic_music: Tech-sci-fi scanning track — pulsing synth bass with metallic accents, building during the sweep and resolving as the scan completes."
+            },
+            {
+              "id": "xray_human_skeleton_scan",
+              "name": "透视扫描·人体骨骼透视",
+              "name_en": "Human skeleton X-ray scan",
+              "description": "扫描设备(图1)扫过人物(图2), 人物显示人体骨骼系统X光视图(图3可选替换内部结构; 未提供时默认完整骨骼系统: 颅骨/脊柱/肋骨/骨盆/四肢长骨)",
+              "preview": "",
+              "generation_mode": "Reference to Video (参考生视频)【图1扫描设备+图2人物+图3内部结构可选】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "透视",
+                "扫描",
+                "X光",
+                "人体骨骼",
+                "医学",
+                "全息",
+                "设备",
+                "多图参考"
+              ],
+              "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1> is the SCANNER DEVICE reference — the handheld scanning device (scanner wand, phone, tablet, visor, etc.) must match <Picture 1>'s exact model, shape, color and surface details. <Picture 2> is the TARGET OBJECT reference — a person or an object; the target's identity, appearance, shape and proportions must be preserved EXACTLY. <Picture 3> is the optional INTERNAL STRUCTURE reference — if provided, the internal structure revealed by the scan must match <Picture 3>'s exact shape, layout and details; if no internal-structure image is provided, the default internal structure is the complete human skeletal system — skull, spine, ribs, pelvis and all limb bones — in medical X-ray white-blue style, shown clearly inside the figure. 本提示词中 <Picture 1> 是扫描设备参考（手持扫描仪/手机/平板/头显等，其外形、颜色、细节必须与 <Picture 1> 一致），<Picture 2> 是扫描对象参考（人物或物体，其身份、外观、形态、比例必须严格保持，不得改变），<Picture 3> 是可选内部结构参考——若提供，透视显示的内部结构必须与 <Picture 3> 完全一致；若未提供，按对象类型显示默认内部结构（人物=人体骨骼系统X光视图，物体=其合理内部构造）。严禁自行设计、替换或改动扫描设备与对象外观。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the handheld scanning device and <Picture 2> as the target object/person. STRICT REFERENCE COMPLIANCE: the target's identity, appearance, shape and proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 1>'s exact model, shape, color and surface details must be preserved. The environment/background from <Picture 2> is preserved.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic. Medium shot. The scanning device from <Picture 1> is held in the operator's hand (or worn / mounted), facing the target object/person from <Picture 2> standing or placed in the scene; the background comes from <Picture 2>. 【ACTION】The operator activates the scanner: the device's screen / scanning head lights up, emitting a glowing scan beam with holographic grid lines. The beam sweeps across the target from top to bottom (or side to side). As the beam passes, the target's surface becomes translucent, and the internal structure is revealed inside the target — clearly visible through the semi-transparent exterior, matching <Picture 3> exactly if provided, or showing the complete human skeletal system — skull, spine, ribs, pelvis and all limb bones — in medical X-ray white-blue style inside the figure. The internal structure stays clearly visible for a few seconds as the scan completes, then the target gradually returns to its normal opaque appearance. The target's outer identity, shape and proportions remain unchanged at all times; the scanning device stays identical to <Picture 1> the whole time.【/ACTION】 Clean holographic X-ray effect, no distortion, no duplicated figure, no deformed anatomy beyond the revealed structure.\n\noverall_soundscape: High-frequency electronic scanner hum and beeps as the beam sweeps, soft holographic shimmer, subtle room tone.\n\nnon_diegetic_music: Tech-sci-fi scanning track — pulsing synth bass with metallic accents, building during the sweep and resolving as the scan completes."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
