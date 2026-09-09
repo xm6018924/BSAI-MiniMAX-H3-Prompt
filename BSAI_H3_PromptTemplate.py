@@ -432,7 +432,7 @@ Features / 功能特点:
             ref_decl = "MULTI-REFERENCE COMPLIANCE / 多参考图合规声明:\n"
             ref_decl += (
                 "  [ABSOLUTE REFERENCE MANDATE / 绝对参考强制]: The generated video MUST strictly follow ALL connected reference images. "
-                f"Every <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> is the SOLE SOURCE OF TRUTH for its assigned role. "
+                f"Every <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> is the SOLE SOURCE OF TRUTH for its assigned role as defined in the prompt. "
                 "It is STRICTLY FORBIDDEN to generate any character, outfit, scene, prop, accessory, hairstyle, or face "
                 "that is not explicitly shown in the corresponding reference image. "
                 "The model MUST NOT invent, improvise, guess, hallucinate, or 'improve' anything beyond what the reference images show. "
@@ -441,18 +441,13 @@ Features / 功能特点:
                 "模型不得凭空创造、自行设计、猜测或美化参考图中未明确展示的任何内容。提示词文字与参考图冲突时，一律以参考图为准。\n"
             )
             for idx in connected_refs:
-                ref_decl += f"  <Picture {idx}> is fully referenced as an independent reference — its subject identity, face, hairstyle, clothing, body proportions and styling must be preserved EXACTLY.\n"
+                ref_decl += f"  <Picture {idx}> must be copied EXACTLY as shown — whatever it depicts (person, outfit, scene, object) must appear in the video with zero redesign.\n"
             if len(connected_refs) >= 2:
                 ref_decl += (
                     "  STRICT ANTI-DUPLICATION RULE / 严禁重复角色规则: "
                     f"Each of <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
-                    "represents a DISTINCT, UNIQUE character/object. "
-                    "NEVER duplicate, clone, or copy the same reference character into two roles. "
-                    "When two characters appear in the same frame, they MUST have different faces, "
-                    "different hairstyles, different clothing, and different body proportions — "
-                    "each matching its own <Picture N> reference exactly. "
-                    "严禁在同一画面中出现两个一模一样的参考角色，每个参考图角色必须保持独立身份，"
-                    "面部、发型、服装、体型必须各不相同，分别严格匹配各自的<Picture N>参考图。\n"
+                    "represents a DISTINCT subject. Do NOT merge, blend, or confuse different reference images. "
+                    "If <Picture 1> is the person, <Picture 2> is the outfit, <Picture 3> is the scene — treat them as separate inputs.\n"
                 )
             prompt = ref_decl + "\n" + prompt
         if ext:
