@@ -386,7 +386,7 @@ Features / 功能特点:
             else:
                 prompt = ""
             if ext:
-                prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
+                prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
             if cust:
                 try:
                     merged, merr = _merge_custom(prompt, cust) if prompt.strip() else ("", None)
@@ -414,7 +414,7 @@ Features / 功能特点:
                 fb_mode = tpls[0].get("text_fallback_mode") or "Text to Video (文生视频)"
                 prompt = fb
                 if ext:
-                    prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
+                    prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
                 if cust:
                     try:
                         merged, merr = _merge_custom(prompt, cust)
@@ -456,7 +456,7 @@ Features / 功能特点:
                 )
             prompt = ref_decl + "\n" + prompt
         if ext:
-            prompt = (prompt + "\n\n" if prompt.strip() else "") + f"生成的视频画面严禁出现external_prompt输入的关键字问题：{ext}"
+            prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
