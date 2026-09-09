@@ -7443,7 +7443,7 @@
               "name": "动漫转真人（单图I2V）",
               "name_en": "Anime to Real (Single Image I2V)",
               "description": "单张动漫图片直接转化为真人写实视频，同一个人逐步真人化并自然动起来。【图生视频I2V模式，上传一张动漫图即可】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
-              "preview": "anime_to_live_action.webp",
+              "preview": "st_anime_to_real_i2v.webp",
               "generation_mode": "Image to Video (图生视频)【图3可选场景】",
               "duration": 8,
               "needs_image": true,
@@ -7464,7 +7464,17 @@
               "generation_mode": "Reference to Video (参考生视频)【必须双图】",
               "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例。\n\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\n  • Picture 1 = 动漫图（提供内容、构图、姿势、服装布局）\n  • Picture 2 = 真人图（提供脸部身份、皮肤纹理、真人风格基准）\n\n【使用说明 — 三种生成模式】\n\n▎模式1：文生视频 (Text to Video)\n• 无需上传图片，纯靠文字描述生成真人视频\n• 在\"补充修改\"中描述角色外貌、服装、场景和动作\n• 效果：角色外观由文字决定，不是从特定动漫图转换\n\n▎模式2：图生视频 (Image to Video) ⚠️ 不推荐用于完全转真人\n• 上传动漫图片作为第一帧\n• 效果有限！I2V会强烈保持第一帧的动漫风格，很难完全转为真人\n• 仅用于让动漫图轻微动起来，不建议用于完全的动漫转真人\n\n▎模式3：参考生视频 (Reference to Video) ✅ 【推荐】真正实现动漫转真人\n• 上传两张参考图：\n  - Picture 1 = 动漫图（内容/构图/姿势/服装参考）\n  - Picture 2 = 真人图（脸部身份/皮肤纹理/风格基准）\n• 效果：最好！以动漫图内容为骨架，注入真人图脸部和写实风格\n• 技巧：真人参考图尽量选择与动漫角色性别、年龄、发型相近的真人照片\n\n【参数建议】\n• 时长：3-6秒（短时长风格转换更稳定）\n• 超分放大时请关闭人脸修复（face_restore=Off），避免逐帧修复导致鬼影闪烁",
               "duration": 6,
-              "preview": "st_anime_to_real.webp"
+              "preview": "st_anime_to_real.webp",
+              "id": "st_anime_to_real",
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "双图参考"
+              ],
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false
             },
             {
               "name": "真人转动漫",
@@ -7473,7 +7483,17 @@
               "generation_mode": "Reference to Video (参考生视频)【必须双图】",
               "description": "将真人照片转换为高质量通用动漫风格，保留人物面部特征与身份，经典赛璐珞上色与清晰墨线",
               "duration": 6,
-              "preview": "st_real_to_anime.webp"
+              "preview": "st_real_to_anime.webp",
+              "id": "st_real_to_anime",
+              "tags": [
+                "风格迁移",
+                "真人转动漫",
+                "动漫化",
+                "双图参考"
+              ],
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false
             },
             {
               "name": "动漫转真人（I2V首帧模式）",
@@ -7482,7 +7502,17 @@
               "generation_mode": "Image to Video (图生视频)【单图首帧】",
               "description": "将动漫/插画角色转换为超写实真人，首帧严格来自动漫图，服装/场景/发色/姿势完全保留，仅风格真人化+脸部替换为描述的真人特征。\n\n【使用方法 — 必须配合 v1.5 工作流】\n1. 加载 v1.5 工作流（不是v1.4！v1.5已断开last_frame避免转场）\n2. 模式选择「图生视频 (Image to Video)」\n3. 图1上传动漫图（作为首帧，提供服装/场景/姿势/发色）\n4. 图2上传真人图（仅用于参考，v1.5已断开图2到模型的连接）\n5. 在提示词的 FACIAL REFERENCE 区域，把 [在此详细填写...] 替换为真人图的脸部特征描述（越详细越好）\n6. 运行\n\n【为什么不用双图参考生视频】\nReferenceToVideo 模式本质是两张图之间的转场融合，会导致最终变成真人图的服装/场景/发型（已验证失败）。I2V首帧模式只有动漫图作为起点，从根本上避免转场问题。\n\n【为什么脸部用文字描述而不是图片】\nI2V模式只接受一张首帧图。真人图不连接模型，仅作为用户参考，脸部特征通过文字描述注入。这样模型不会被真人图的服装/场景干扰。",
               "duration": 8,
-              "preview": "st_anime_to_real_firstframe.webp"
+              "preview": "st_anime_to_real_firstframe.webp",
+              "id": "st_anime_to_real_firstframe",
+              "tags": [
+                "风格迁移",
+                "动漫转真人",
+                "写实化",
+                "首帧模式"
+              ],
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false
             }
           ],
           "id": "style_anime_real"
@@ -10886,6 +10916,367 @@
                 "氛围"
               ],
               "prompt": "integrated_multimodal_description:  [镜头1]【0-8秒】真实电影摄影，都市诗意。雨夜都市，人物撑伞漫步，湿面倒影扭曲霓虹与窗光，暖窗光与冷街光交织，氛围抒情。【ACTION】人物缓步穿过街道，伞沿滴水，倒影在脚下流动，车辆驶过带起水花，窗内人影晃动。【/ACTION】镜头以缓慢跟踪与固定交替，节奏如诗。\n\noverall_soundscape: 雨声，脚步踏水，远处车流，窗内模糊人声，风铃。\n\nnon_diegetic_music: 舒缓的钢琴与弦乐，旋律抒情，带城市雨夜的浪漫感。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shaw_brothers_style",
+      "name": "邵氏电影风格",
+      "name_en": "Shaw Brothers Style",
+      "description": "全网最全邵氏电影美学：运镜（崩溃变焦/低角度/升格慢镜/甩镜）、切镜（暴雨剪辑/度量剪辑/建构剪辑/空镜气口）、色彩（特艺彩色/张彻大地色/复古青黄调/新邵氏配色）、布光与派别（顶光阴阳脸/逆光剪影/红蓝补色/胡金铨竹林禅意）",
+      "icon": "🎬",
+      "subcategories": [
+        {
+          "id": "shaw_camera",
+          "name": "邵氏运镜类",
+          "name_en": "Shaw Camera Motion",
+          "description": "崩溃变焦、低角度仰拍、升格慢镜、甩镜——邵氏标志性运镜",
+          "templates": [
+            {
+              "id": "shaw_crash_zoom_reveal",
+              "name": "邵氏崩溃变焦·惊变揭示",
+              "name_en": "Shaw crash zoom on a sudden revelation",
+              "description": "标志性 Shaw-style crash zoom：镜头从全景瞬间硬推到面部特写，硬起硬停无缓动，用于剧情急转/对峙揭示时刻，昆汀《杀死比尔》直接致敬的邵氏运镜",
+              "preview": "shaw_crash_zoom_reveal.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "崩溃变焦",
+                "快推",
+                "惊变",
+                "戏剧"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Shaw Brothers wuxia film style, Technicolor high saturation, heavy 35mm film grain, aged yellow-green vintage cast, anamorphic widescreen composition. A studio-built ancient inn hall with painted backdrops, fake wooden beams, visible set seams. Two martial artists in period robes face each other across the hall, one holding a long sword. Camera starts on a wide establishing shot showing the whole hall. Non-naturalistic dramatic studio lighting, warm tungsten glow, hard light, strong shadows. [Shot 2] At 00:04.000 [4-8s] The moment a third figure bursts through the door — Shaw-style crash zoom: the camera slams from the wide shot to a tight close-up of the arriving hero's face in a single abrupt motion, hard start, rapid focal-length change, no parallax, no smooth easing. The zoom lands with a jolt and holds frozen for a beat. Exaggerated melodramatic acting, fierce eyes, tense jaw. The freeze and the zoom together feel like a blow to the viewer's eye.\n\noverall_soundscape: The inn door slamming open with a heavy wooden thud, the crisp metallic ring of a sword being drawn, robes whipping through the air, the faint crackle of vintage film audio noise in the background, an abrupt gong hit accenting the crash zoom moment.\n\nnon_diegetic_music: Shaw Brothers studio soundtrack style — a sudden dramatic gong-and-drum hit synchronized with the crash zoom, followed by tense Peking opera percussion beats, building to a sharp cut-off freeze."
+            },
+            {
+              "id": "shaw_low_angle_hero",
+              "name": "邵氏低角度仰拍·英雄登场",
+              "name_en": "Shaw low-angle heroic entrance",
+              "description": "张彻式「让摄影师趴在地上拍」的极低角度仰拍：低机位强化侠客压迫感与英雄气概，配合大踏步入场与衣袍翻飞，热血「新派」标志",
+              "preview": "shaw_low_angle_hero.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "低角度",
+                "仰拍",
+                "英雄",
+                "张彻"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, Eastmancolor bold vivid colors, gritty 35mm film grain, anamorphic widescreen. A vast studio-built wilderness set: painted mountain backdrop, artificial rocks and dead trees, visible studio seams, warm tungsten light from above. An extremely low camera angle looking up from ground level, the lens almost touching the dirt floor — the hero's silhouette looms large against the bright painted sky backdrop. [Shot 2] At 00:04.000 [4-8s] The camera stays glued to the ground as the hero strides forward in big determined steps, robes sweeping, long hair and cloth belt whipping in the wind machine blast. The low angle makes his torso and face tower over the frame, heroic and intimidating. Dust and grit swirl in the foreground. Hard top light sculpts his face into a chiaroscuro mask, half-lit. He stops, plants his sword in the ground, and stares straight ahead with fierce resolve. Exaggerated theatrical posture, held like a classic Shaw poster freeze.\n\noverall_soundscape: Heavy footsteps on packed dirt, cloth robes snapping in the wind, sword blade grinding into soil, wind machine roar, sparse vintage film hiss, a low distant drum roll.\n\nnon_diegetic_music: Sweeping Hollywood-style orchestral wuxia theme with a bold horn fanfare (Chang Cheh innovation), swelling as the hero strides, landing on a dramatic held chord when he stops."
+            },
+            {
+              "id": "shaw_slow_motion_sacrifice",
+              "name": "邵氏升格慢镜·悲壮一击",
+              "name_en": "Shaw slow-motion sacrificial blow",
+              "description": "张彻首创的仪式化升格慢镜头：蓄力、腾空、血如玫瑰绽放、缓缓倒下，暴力美学与悲壮殉道合一的标志性慢镜",
+              "preview": "shaw_slow_motion_sacrifice.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "升格",
+                "慢镜头",
+                "悲壮",
+                "暴力美学"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Shaw Brothers wuxia film style, saturated Technicolor, heavy film grain, aged vintage tones, anamorphic 2.35:1. A studio-lit martial arts hall at night, painted backdrop of moonlit cliffs, artificial rocks, torches flickering as real light sources. A wounded hero in a blood-stained white robe stands alone facing three black-clad attackers. Torchlight flickers across his face. [Shot 2] At 00:04.000 [5-7s] High-speed photography slow motion: the hero launches into a rising leap, robe and hair floating weightlessly in the air, every fold of fabric visible. He arches backward in an impossible pose, sword extended. [Shot 3] At 00:07.000 [7-10s] The slow motion continues as he strikes — a spray of vivid blood-red bursts outward like a blooming rose against the dark backdrop (Shaw's signature exaggerated blood burst). He slowly, gracefully crumples and falls, the camera holding on his face as life fades, heroic and tragic. The fall is weightless, balletic, operatic. A single flickering torchlight keeps dancing in the corner of the frame.\n\noverall_soundscape: The whoosh of the sword arc stretched into a slow-motion breath, cloth tearing (the classic Shaw ripping-cloth sound for a sword cut), the heartbeat-like thud of the blood burst, torch flames crackling, a prolonged vintage hiss of silence.\n\nnon_diegetic_music: Mournful erhu solo over deep drum pulses, the tempo slowing with the motion, a single high gong note ringing out at the moment of the blood burst, fading into a dying chord of strings."
+            },
+            {
+              "id": "shaw_whip_pan_duel",
+              "name": "邵氏甩镜·双雄对打",
+              "name_en": "Shaw whip-pan duel between two masters",
+              "description": "快速甩镜（whip pan）串联两个动作点：镜头横扫连接攻守双方，速度感凌厉，配京剧锣鼓点节奏",
+              "preview": "shaw_whip_pan_duel.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "甩镜",
+                "横摇",
+                "打斗",
+                "双雄"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Shaw Brothers kung fu film style, vivid Technicolor, film grain, warm tungsten studio lighting, painted studio backdrop of a mountain temple courtyard with artificial pine trees. Two kung fu masters — one in dark blue robes, one in ochre robes — circle each other slowly in the center, sleeves swaying, fists half-raised, intense eye contact, exaggerated melodramatic tension. [Shot 2] At 00:04.000 [4-8s] The fight explodes: a violent whip pan — the camera snaps sideways at blinding speed from the dark-robed master's punch to the ochre-robed master's counter, the motion blur smearing the background into streaks. Another whip pan back as they exchange a rapid sequence of blows, each strike punctuated by a sharp cut on the beat. Camera occasionally holds a brief freeze on a fist mid-punch before whipping to the next action point. The choreography is crisp, stage-like, every strike landing with theatrical impact — no fancy CGI, pure physical Shaw-style fight rhythm.\n\noverall_soundscape: Rapid whooshes of punches, cloth snapping with each strike, the thud of blows landing like sandbags, quick metallic clinks, sharp Peking opera gong and cymbal hits on every exchange.\n\nnon_diegetic_music: Fast-paced Peking opera percussion, gong and drum in a tight accelerating rhythm matching the whip pans, with a dramatic horn stab at each freeze."
+            }
+          ]
+        },
+        {
+          "id": "shaw_color",
+          "name": "邵氏色彩类",
+          "name_en": "Shaw Color & Tone",
+          "description": "特艺彩色、张彻大地色血战、复古青黄调、新邵氏配色",
+          "templates": [
+            {
+              "id": "shaw_technicolor_jianghu",
+              "name": "邵氏特艺彩色·高饱和江湖",
+              "name_en": "Shaw Technicolor saturated jianghu",
+              "description": "特艺彩色（Technicolor）高饱和高对比的浓墨重彩：客栈群战，红蓝补色戏剧光，油画般的邵氏全盛期色彩",
+              "preview": "shaw_technicolor_jianghu.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "特艺彩色",
+                "高饱和",
+                "客栈",
+                "群战"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, Technicolor process, extremely high saturation and contrast, oil-painting rich colors, heavy film grain, anamorphic widescreen. A crowded studio-built inn hall: red lacquered pillars, hanging lanterns, painted backdrop of a village street visible through the open door, fake wooden tables, obvious studio props. Dozens of martial artists in bright robes — vermilion, emerald green, imperial gold, indigo — sit at tables, steaming bowls and chopsticks. Non-naturalistic dramatic lighting with intense red-blue complementary light washing over the scene, warm and vivid. [Shot 2] At 00:04.000 [4-7s] A chair flies through the air and the hall erupts into chaos. Tables flip, bowls shatter, fighters leap between balconies and stairs in a swirling mass of saturated color. [Shot 3] At 00:07.000 [7-10s] The hero in a white robe weaves through the melee, each opponent knocked flying with theatrical exaggeration. The colors grow even more intense as the fight peaks — crimson robes, gold lanterns, teal shadows — then a sudden freeze-frame on the hero mid-leap, like a Shaw movie poster come to life.\n\noverall_soundscape: The smash of porcelain bowls, chairs cracking on wood, grunts and exaggerated yells, rapid footsteps on wooden floors, cloth whooshing, the crowd's noise under a layer of vintage film hiss.\n\nnon_diegetic_music: Energetic Shaw studio fight music — fast gong, drum and cymbal percussion, brass fanfare stabs, climaxing at the freeze-frame with a big chord."
+            },
+            {
+              "id": "shaw_changcheh_blood",
+              "name": "张彻大地色·血战长街",
+              "name_en": "Chang Cheh earth-tone bloody street battle",
+              "description": "张彻标志性配色：土黄/枯褐/炭黑大地色系，视觉点缀全靠兵器冷银与鲜血红的强对比，阳刚暴力美学",
+              "preview": "shaw_changcheh_blood.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "张彻",
+                "大地色",
+                "血战",
+                "暴力"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Chang Cheh Shaw Brothers style: earth-tone palette of ochre, dead brown and charcoal black, with the only strong colors being cold silver blades and vivid blood red. Heavy 35mm film grain, hard studio top light, anamorphic widescreen. A long studio-built street at dusk: dirt road, ochre walls, dried mud, dead trees, painted sky backdrop with a setting sun. Two bare-chested warriors in torn earth-colored trousers stand facing each other in the middle of the street, sweat glistening, wounds already bleeding. [Shot 2] At 00:04.000 [4-7s] They charge — the fight is raw and brutal: fists, kicks, grapples, bodies slamming against ochre walls. Blood sprays vividly against the drab earth tones, each wound exaggerated, the red startlingly bright against the brown world. [Shot 3] At 00:07.000 [7-10s] The winner stands panting over the fallen, backlit by the setting sun, his silhouette rimmed in gold against the ochre dust. The camera is low, heroic. Blood drips from his fist to the dirt. The earth-tone world is punctuated by that single red streak — classic Chang Cheh masculine tragedy.\n\noverall_soundscape: Heavy breathing and grunts, fist impacts like sandbag thuds, the tearing-cloth sound of sword cuts, blood splattering, dust kicked up by feet, a low wind across the empty street.\n\nnon_diegetic_music: Sparse, mournful soundtrack — a lone flute over slow drums, building into a hard-driving percussion beat during the fight, then cutting to silence except the wind at the end."
+            },
+            {
+              "id": "shaw_vintage_amber",
+              "name": "邵氏复古青黄调·老港味",
+              "name_en": "Shaw vintage amber old-Hong-Kong flavor",
+              "description": "当下最火的雪山救狐狸式复古青黄综合色调：棚拍假农家院、泛黄做旧、胶片颗粒、红蓝补色，一眼老港味",
+              "preview": "shaw_vintage_amber.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "复古",
+                "青黄调",
+                "棚拍",
+                "老港味"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, aged yellow-green vintage tone, obvious film grain and slight flicker, Technicolor saturation, anamorphic widescreen. An obviously studio-built small farmhouse courtyard: painted backdrop of distant mountains, artificial rockery, fake wooden fence, a haystack with visible prop texture, stage-like flat lighting with red-blue complementary drama lights, soft but high contrast. A young farmer in an ochre cloth jacket and rolled sleeves chops firewood with exaggerated operatic vigor, sweat flying. [Shot 2] At 00:04.000 [4-8s] A beautiful swordswoman in a bright red dress kicks open the wooden gate — the door slams with an obviously prop-like thud and exaggerated wood chips fly. She strides in, red cape fluttering, cold and fierce, long sword drawn. The farmer stares, mouth agape, axe frozen mid-swing. The vintage amber-green cast, fake set, and melodramatic acting create the classic old-Hong-Kong flavor. Freeze on their staring standoff.\n\noverall_soundscape: The axe splitting wood with a sharp crack, the gate slamming open with a prop-like thud, exaggerated swoosh of the cape, vintage film hiss, a dramatic pause of silence.\n\nnon_diegetic_music: Shaw classic soundtrack — cheerful but tense gong and drum patter, a jaunty folk melody that abruptly stops with a single gong hit at the standoff freeze."
+            },
+            {
+              "id": "shaw_neo_palette",
+              "name": "新邵氏配色·现代演绎",
+              "name_en": "New-Shaw palette modern interpretation",
+              "description": "听风录式新邵氏配色系统：冷青破晓水墨云海、钴蓝清崖暖金轮廓光、蜜金灯火青绿窗光，古典美学现代演绎",
+              "preview": "shaw_neo_palette.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "新邵氏",
+                "配色",
+                "冷青",
+                "现代"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] Modern Neo-Shaw Brothers aesthetic: a refined color system of cold cyan dawn over ink-wash sea of clouds, small accents of deep red. A white-and-teal dressed female warrior in flowing robes plays a bamboo flute standing on a pine-covered cliff edge above a sea of clouds. The camera pushes in slowly, her gaze drifting horizontally, gentle mist rolling. Soft natural light mixed with subtle studio glow. [Shot 2] At 00:04.000 [4-8s] Cut to a new scene: cobalt blue sky over a cliff, golden sunlight rimming the mountain ridge, the same warrior in blue-white silk turning slowly at the cliff edge, warm golden contour light tracing her silhouette against the deep cobalt sky. A single red scarf flutters. The palette is precise — cobalt blue, warm gold, skin tone warmth, restrained dark shadows — new Shaw color discipline with modern cinematic finish. The camera tracks smoothly, elegant and calm, every frame like a painted composition with breathing space.\n\noverall_soundscape: Wind through pine needles, the soft note of a bamboo flute, distant mountain echo, robes rustling, layered quiet with a subtle vintage hiss.\n\nnon_diegetic_music: Minimal modern wuxia score — soft guzheng plucks and airy pads, sparse and elegant, building gently with the camera push, fading into the wind."
+            }
+          ]
+        },
+        {
+          "id": "shaw_editing",
+          "name": "邵氏切镜类",
+          "name_en": "Shaw Editing & Cuts",
+          "description": "暴雨剪辑、度量式剪辑、建构式轻功三段、空镜头气口",
+          "templates": [
+            {
+              "id": "shaw_rainstorm_montage",
+              "name": "邵氏暴雨剪辑·刀光快切",
+              "name_en": "Shaw rainstorm-cut blade montage",
+              "description": "胡金铨式暴雨剪辑：镜头切到半秒甚至6帧，刀光快到摄影机追不上，快切本身即是打击感",
+              "preview": "shaw_rainstorm_montage.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "暴雨剪辑",
+                "快切",
+                "刀光",
+                "胡金铨"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, saturated Technicolor, heavy film grain, studio bamboo forest set with painted backdrop and artificial mist. Two sword fighters clash in a tight bamboo grove — the cutting is a violent storm: a rapid montage of shots lasting half a second or less, the blade flashing faster than the eye can follow. A flurry of ultra-short shots: a hand gripping the sword hilt, eyes locking, feet pivoting on dirt, a blade slicing through bamboo leaves, sparks of metal-on-metal, a face jerking back. Each cut lands like a physical blow. The bamboo stalks whip through the foreground between cuts. The rhythm is percussive and relentless. [Shot 2] At 00:04.000 [4-8s] The montage climaxes — a rapid series of 6-frame shots of the final exchange, then one clean cut: one fighter's sword stops a millimeter from the other's throat. Sudden stillness after the storm, bamboo leaves slowly falling in the silence, mist drifting. The held breath of the fight.\n\noverall_soundscape: Metallic blade clashes in rapid succession, bamboo stalks snapping, cloth whipping, sharp exhales, the whistle of each swing, then a sudden dead silence broken by a single falling leaf.\n\nnon_diegetic_music: Machine-gun Peking opera drum and gong percussion matching every cut, accelerating to a peak, then cutting to total silence with one lingering gong resonance."
+            },
+            {
+              "id": "shaw_metric_rhythm",
+              "name": "邵氏度量式剪辑·锣鼓节奏",
+              "name_en": "Shaw metric-editing drum rhythm",
+              "description": "胡金铨式度量式剪辑：按帧数算术切镜（30帧拆10+10+10+12），节奏如京剧锣鼓点，精确到帧的韵律",
+              "preview": "shaw_metric_rhythm.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "度量剪辑",
+                "帧数",
+                "锣鼓",
+                "节奏"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, saturated colors, film grain, studio courtyard set with painted backdrop, artificial rocks and a fountain. The heroine in golden robes runs toward the right side of the frame — the shot is cut on an exact arithmetic rhythm like Peking opera percussion: 10 frames of her running, cut, 10 frames from a new angle, cut, 10 frames closer, cut, then a 12-frame burst of impact as she collides with an opponent. The cuts are metronomic, timed like drumbeats, each one snapping on the beat. [Shot 2] At 00:04.000 [4-8s] The same metric pattern drives the whole exchange: every punch, kick, and block is broken into staccato frame-counted fragments, the rhythm accelerating like a ratcheting drum roll. The fighters move in bursts, each burst separated by razor-sharp cuts. The overall effect is musical — violence choreographed to an invisible gong. It ends on a held frame: the heroine's fist frozen an inch from the villain's face, the drum roll stopping dead.\n\noverall_soundscape: Drumbeat-accurate impact sounds, each thud and clash landing exactly on the cut, cloth whooshes in short bursts, breathy gasps, a final abrupt silence.\n\nnon_diegetic_music: Metronomic Peking opera drum and bangzi rhythm driving the entire sequence, each drum hit landing precisely on a cut, ending with a single cymbal crash and silence."
+            },
+            {
+              "id": "shaw_constructive_leap",
+              "name": "邵氏建构式剪辑·轻功三段",
+              "name_en": "Shaw constructive-cut flying leap",
+              "description": "建构式剪辑：无主镜头，靠碎片空间拼合轻功——起跳(镜1)→飞行(镜2)→落地(镜3)，剪得快就能「飞」",
+              "preview": "shaw_constructive_leap.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "建构剪辑",
+                "轻功",
+                "三段式",
+                "飞檐走壁"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, vivid Technicolor, film grain, studio ancient city wall and rooftop set with painted backdrop. The hero in dark blue robes crouches at the edge of a rooftop — [Shot A] low angle of his legs coiling, feet leaving the tile edge, dust puffing. Cut. [Shot B] A completely different angle: he is already mid-air, horizontal, robes streaming, no master shot connecting the two — the space is assembled purely by the cut. [Shot C] Another angle: his feet touch the next rooftop, knees bending to absorb, a small puff of dust. The three fragments create a weightless flying leap that never shows the full arc — constructive cutting that makes him \"fly\". [Shot 2] At 00:04.000 [4-8s] The pattern repeats across a chase: each leap built from jump-fly-land fragments, each fragment from a different angle, the speed relentless. Then a final landing: he alights silently on a moonlit rooftop, robes settling, and turns to look back, the camera holding on a dramatic framed composition with the moon behind him.\n\noverall_soundscape: Sharp whooshes on each jump, tile clinks, robe snapping, brief wind gusts, punctuated thuds on each landing, an owl's call in the night.\n\nnon_diegetic_music: Light, bouncy Peking opera percussion with flute, each leap punctuated by a drum hit, settling into a calm moonlit erhu melody at the final landing."
+            },
+            {
+              "id": "shaw_empty_shot_zen",
+              "name": "邵氏空镜头气口·禅意",
+              "name_en": "Shaw empty-shot breathing zen",
+              "description": "胡金铨式空镜头插入：激烈打斗中插入风吹芦苇、流水云动的空镜，既是喘息也是禅意与意境延伸",
+              "preview": "shaw_empty_shot_zen.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "空镜头",
+                "禅意",
+                "留白",
+                "胡金铨"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, restrained earthy palette with ink-wash sensibility, fine film grain, studio set of a misty reedy lake with painted distant mountains. A lone swordsman in a dark robe stands motionless in the reeds at dawn, sword half-drawn, facing unseen enemies. The camera is still, meditative. [Shot 2] At 00:04.000 [5-7s] Insert empty shot: wind passes through the reeds, the tall grass bending and swaying in waves, water ripples spreading across the lake surface, mist drifting across the mountain backdrop — no people, no action, pure nature breathing. The shot lingers, giving the sequence a \"breath\". [Shot 3] At 00:07.000 [7-10s] Cut back to the swordsman — in the stillness he moves with one single, economical strike. A brief flash of steel, then he sheathes the sword. The reeds keep swaying, the water keeps rippling, as if nothing happened. Zen calm restored, the violence swallowed by nature. Empty-shot poetry framing the violence.\n\noverall_soundscape: Wind rustling through dry reeds, water lapping gently, distant birdsong, fabric shifting softly, a single clean sword note, then back to wind and water.\n\nnon_diegetic_music: Sparse, contemplative score — a lone guqin note over silence, occasional bamboo flute phrases, extremely restrained, ending on natural ambient sound."
+            }
+          ]
+        },
+        {
+          "id": "shaw_lighting_director",
+          "name": "邵氏布光与派别",
+          "name_en": "Shaw Lighting & Director Styles",
+          "description": "顶光阴阳脸、逆光剪影、红蓝补色、胡金铨竹林禅意",
+          "templates": [
+            {
+              "id": "shaw_toplight_dual_face",
+              "name": "邵氏顶光阴阳脸·对峙",
+              "name_en": "Shaw toplight chiaroscuro standoff",
+              "description": "邵氏影城天窗直射顶光：面部明暗分割成阴阳脸，隐喻道德分裂，张彻暴力美学的光影符号",
+              "preview": "shaw_toplight_dual_face.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "顶光",
+                "阴阳脸",
+                "明暗",
+                "对峙"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Shaw Brothers wuxia film style, saturated color, heavy film grain, studio hall set with painted backdrop of a night forest. A single shaft of hard top light falls from directly above — the classic Shaw studio skylight effect — splitting a kneeling warrior's face into a half-lit, half-shadowed chiaroscuro mask. The lit half shows sweat and grit; the shadowed half hides his eyes in darkness. He grips a long sword planted before him. [Shot 2] At 00:04.000 [4-8s] His opponent steps into the same shaft of light from the other side — also split into yin-yang face, the two half-faces facing each other across the light beam. Dust motes drift visibly through the light column. The camera slowly pushes in on their faces as the tension builds, both half-hidden, both half-revealed — moral ambiguity made visible through light. A slow zoom tightens until the frame holds on the two lit halves of their faces, the shadows closing in, then cut to black on the held standoff.\n\noverall_soundscape: Dust motes drifting in silence, cloth shifting, slow breaths, the faint ring of a blade being lifted, a deep drum pulse like a heartbeat under vintage hiss.\n\nnon_diegetic_music: Minimal and ominous — low drum pulses and a sustained gong drone, strings playing a single held dissonant chord, intensifying as the camera pushes in, ending on sudden silence."
+            },
+            {
+              "id": "shaw_backlight_silhouette",
+              "name": "邵氏逆光剪影·大漠独行",
+              "name_en": "Shaw backlit silhouette desert rider",
+              "description": "强烈逆光勾勒轮廓剪影：大漠黄沙、单骑独行、高光溢出，苍凉孤寂的邵氏西部武侠构图",
+              "preview": "shaw_backlight_silhouette.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "逆光",
+                "剪影",
+                "大漠",
+                "独行"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s Shaw Brothers wuxia film style, bleach-bypass wasteland tones with intense warm backlight, heavy film grain, studio desert set with painted sand-dune backdrop and blowing sand. A lone rider on horseback is silhouetted against an enormous setting sun — intense backlight with strong highlight clipping, the rider and horse reduced to a clean black cutout with a thin golden rim light tracing their edges. Sand whips across the foreground, catching the light in glowing streaks. [Shot 2] At 00:04.000 [4-8s] The rider moves slowly across the frame, a long tracking shot from a low angle. The sun blazes behind him, flaring across the lens. He wears a wide straw hat and a tattered dark cloak; the wind presses the cloth forward, the horse's mane streaming. The silhouette stays perfect — no face, no detail, pure shape and light. He stops on a dune crest, silhouetted against the full blazing disc, and looks back the way he came. Loneliness, dust, and fire-colored sky — the whole frame is light and shadow.\n\noverall_soundscape: Wind across open sand, the horse's slow hoofbeats on sand, saddle leather creaking, cloak snapping in the wind, distant howl of wind over dunes, a faint vintage hiss.\n\nnon_diegetic_music: Spare, mournful wuxia theme — a lonely flute melody over a slow drum, strings entering softly, all echoing the vast emptiness, fading with the wind."
+            },
+            {
+              "id": "shaw_red_blue_drama",
+              "name": "邵氏红蓝补色·戏剧光",
+              "name_en": "Shaw red-blue complementary drama light",
+              "description": "非自然主义红蓝补色戏剧灯光：柔和但对比鲜明，棚拍舞台感，人物在红蓝光域间表演夸张情绪",
+              "preview": "shaw_red_blue_drama.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "红蓝补色",
+                "戏剧光",
+                "棚拍",
+                "表现主义"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1970s Shaw Brothers wuxia film style, Technicolor saturation, film grain, studio set of a night chamber with painted backdrop of a moonlit garden. The room is washed in two opposing colored lights — deep red light from stage left, cold blue light from stage right — the classic Shaw red-blue complementary dramatic lighting, soft-edged but boldly contrasting. A beautiful woman in an ornate red-and-gold dress stands where the two lights meet, her face half crimson, half icy blue, tears glistening in both colors. [Shot 2] At 00:04.000 [4-8s] She turns slowly, the two color fields sliding across her face. In the red light she looks passionate and vengeful; in the blue light, cold and broken. A masked swordsman steps out of the blue shadow behind her — his silhouette rimmed in red. The camera slowly circles, the red and blue pools shifting around them like an expressionist painting. She raises a dagger; the blade catches both colors. The final frame holds them in perfect red-blue balance, frozen in theatrical tension, obviously staged, obviously dramatic — Shaw's unreal, dreamlike artificiality at its peak.\n\noverall_soundscape: Soft fabric rustles, slow footsteps, a dagger being drawn with a whisper of metal, a heartbeat-like low pulse, the faint crackle of vintage audio.\n\nnon_diegetic_music: Melodramatic Shaw strings — a sweeping emotional melody alternating between warm and cold registers, with a tense gong roll building to a frozen chord."
+            },
+            {
+              "id": "shaw_kinghu_bamboo",
+              "name": "胡金铨·竹林禅意",
+              "name_en": "King Hu bamboo-forest zen wuxia",
+              "description": "胡金铨美学：京剧身段、竹林决战、框架构图、山水留白、自然光+棚光，文人禅意武侠的巅峰",
+              "preview": "shaw_kinghu_bamboo.webp",
+              "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "邵氏",
+                "胡金铨",
+                "竹林",
+                "禅意",
+                "京剧"
+              ],
+              "prompt": "integrated_multimodal_description: [Shot 1] [0-4s] 1960s King Hu Shaw Brothers wuxia film style, ink-painting restrained palette with deep bamboo greens and misty whites, fine film grain, studio bamboo forest with painted backdrop, artificial mist, natural light mixed with soft studio fill. A white-robed swordsman and a black-clad assassin fight among the bamboo — but the fight moves like Peking opera: every stance, every leap is a precise theatrical pose, arms and legs held in angular, balletic postures. Bamboo stalks whip through the foreground between them, the camera weaving through the trunks, framing them through natural frames of bamboo and leaves. [Shot 2] At 00:04.000 [5-7s] They break apart; an insert of the bamboo tops swaying against a white sky, mist rolling between the stalks — empty-shot breathing. [Shot 3] At 00:07.000 [7-10s] They clash again in a burst of rapid, percussive motion — blades singing, robes spinning — then freeze in a final theatrical pose, sword-tip to sword-tip, surrounded by drifting mist and gently swaying bamboo. The composition holds them in a large empty space of white mist and green stalks, zen-like, quiet, perfect. The wind moves the bamboo long after they are still.\n\noverall_soundscape: Bamboo creaking and swaying, leaves rustling, the sharp song of blades, opera-like rhythmic footwork, mist drifting, a distant temple bell.\n\nnon_diegetic_music: Peking opera percussion with gongs and cymbals in tight patterns during the fight, falling silent for the empty-shot insert, then a lone dizi flute and guqin for the final tableau, deeply serene."
             }
           ]
         }
