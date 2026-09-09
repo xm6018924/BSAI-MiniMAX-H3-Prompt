@@ -333,6 +333,254 @@
               "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a black-and-white checkered dress, the video shows THAT exact checkered dress — not a solid black dress, not a floral dress, not a different cut. If the reference image shows long black hair, the video shows long black hair — not short hair, not brown hair, not a ponytail. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是黑白格子裙，视频就必须是那件黑白格子裙——不是纯黑裙、不是碎花裙、不是不同剪裁。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description:  [Shot 1] [0-4s] The frame begins with the anime-style image from <Picture 1>. A photorealistic transformation begins at the edges of the frame and spreads inward toward the center. Cel-shaded colors shift into natural lifelike tones. Anime-style skin smooths into realistic human skin with natural texture and subtle pores. Oversized anime eyes adjust to natural human proportions while keeping the same eye color, shape, and expression. Stylized hair becomes real hair with individual strands and natural sheen. Clothing gains real fabric texture and proper folds. The flat anime background becomes a real environment with natural lighting and depth. The character's identity, hair color, eye color, outfit, pose, and composition are all preserved — it is the same person rendered in live-action realism. [Shot 2] At 00:04.000 [4-8s] The fully photorealistic character moves naturally. Hair sways softly in a light breeze. The character blinks naturally and makes a slight head turn. The chest rises and falls with calm breathing. Realistic light shifts across the skin and hair. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
             }
           ]
+        },
+        {
+          "id": "drawing_to_reality",
+          "name": "画画变现实",
+          "name_en": "Drawing to Reality",
+          "description": "将涂鸦/线稿/简笔画/儿童画实体化为真实的人、物、场景与生物（全球最新创意模板）",
+          "templates": [
+            {
+              "id": "sketch_product_water_awakening",
+              "name": "线稿产品水唤醒变实物",
+              "name_en": "Pencil sketch awakened by water into the real product",
+              "description": "铅笔素描产品被一滴水激活，水波流过之处线稿渐变出真实材质，最终立在浮动的纸面水面上，适合电商/文创产品展示",
+              "preview": "sketch_product_water_awakening.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "线稿",
+                "水",
+                "产品",
+                "实物",
+                "过渡"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】俯拍白色纸面，中央是<Picture 1>中的铅笔素描产品，石墨线条清晰、结构完整，纸面纹理可见。一滴晶莹的水珠从画面上方坠落，落在素描产品轮廓线上溅起细小水花。水波以落点为圆心向四周扩散，流经之处黑色线条开始溶解、泛起柔和光泽，线稿轮廓逐渐被真实的材质色彩填充——金属反光、布料褶皱、玻璃透光逐层浮现，素描慢慢\"浸透\"成真实物体。电影级画质，微距质感，纸面颗粒与水面反光细节丰富。[镜头2] 在00:04.000【4-8秒】，镜头缓慢推近转为平视角度，水波退去，<Picture 1>素描中的产品已完全实体化，真实地立在纸面薄薄的水洼中，表面挂着细密水珠，倒影清晰。【ACTION】产品表面水珠缓缓滑落，轻微晃动带起涟漪，周围光线在水面与产品表面流动，产品保持<Picture 1>中完全相同的形状与结构比例，仅由二维线条变为三维实物。【/ACTION】画面静谧高级，光斑在水面上轻轻摇曳。\n\noverall_soundscape: 一滴晶莹的水珠坠落、在纸面上溅开的清脆声响，水波向四周扩散的轻柔哗啦声，产品表面水珠缓缓滑落的细响，纸面在微湿状态下细微的沙沙声，整体氛围安静通透、层次分明。\n\nnon_diegetic_music: 极简钢琴单音以缓慢空灵的节奏奏响，辅以低音量环境电子氛围音垫底，随水波扩散逐渐增强、再随水波退去缓缓收束，营造高级静谧的质感。"
+            },
+            {
+              "id": "sketch_product_light_stroke",
+              "name": "涂鸦光痕扫过变真实产品",
+              "name_en": "Sketch turned real by a passing stroke of light",
+              "description": "白色背景上的快速炭笔涂鸦，一道光痕横扫画面，涂鸦在光痕经过之处瞬间变成超写实立体产品，适合运动鞋/潮玩/数码产品广告",
+              "preview": "sketch_product_light_stroke.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "涂鸦",
+                "光痕",
+                "产品",
+                "超写实",
+                "广告"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】纯净白色摄影棚背景，画面中央是<Picture 1>中的炭笔涂鸦产品，笔触快速有力、线条粗犷。镜头固定，画面安静。一道柔和的白色光痕从画面左侧横向扫过，光痕经过涂鸦的瞬间，涂鸦线条如被点燃般泛起暖白辉光，所过之处二维线条逐层\"生长\"出三维体积——轮廓线变成立体边缘，炭笔灰变成本色材质，阴影与高光自然浮现，涂鸦在光痕的扫掠中完成实体化。电影级画质，光痕运动流畅，粒子微光漂浮。[镜头2] 在00:03.500【3.5-6秒】，镜头以产品为中心做小幅推近，光痕完全扫过，<Picture 1>涂鸦中的产品已变成超写实立体实物悬停在画面中央，缓慢自转展示。【ACTION】产品沿中轴缓缓旋转约30度，表面材质随角度变化折射光线——皮革纹理、金属拉丝、玻璃透亮清晰可见，产品形状与<Picture 1>涂鸦完全一致。【/ACTION】画面干净利落，光影锐利，商业广告质感。\n\noverall_soundscape: 光痕横扫时轻微的空气嗡鸣与粒子闪烁的细碎声，线条被点亮时如引燃般的轻微爆裂声，产品实体化后表面材质的光泽摩擦声，环境保持干净安静。\n\nnon_diegetic_music: 现代电子乐，节奏轻快利落，以合成器脉冲与短促鼓点配合光痕扫过的节拍，干脆有力，商业广告风格。"
+            },
+            {
+              "id": "sketch_product_spray_paint",
+              "name": "线稿喷涂上色变实物潮玩",
+              "name_en": "Line art spray-painted into a real collectible toy",
+              "description": "黑白线稿被喷枪逐层上色，颜料落在线稿上长出真实材质与光泽，线稿变成立体的可售卖潮玩实物",
+              "preview": "sketch_product_spray_paint.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "线稿",
+                "喷涂",
+                "潮玩",
+                "上色",
+                "实物"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】纯色浅灰背景，画面中央是<Picture 1>中的黑白产品/潮玩线稿，线条精细完整。一支喷枪从画面右侧入画，喷嘴对准线稿，按下扳机，细腻的颜料雾从喷枪喷出、覆盖在线稿表面。颜料落处黑色线条被覆盖，色彩如活物般沿轮廓线蔓延填充——先是底色，再是阴影层次，最后是高光点缀，线稿在喷涂中逐渐获得体积、材质与光泽，从平面线条变成立体实物。电影级画质，颜料雾颗粒细腻，喷涂过程流畅。[镜头2] 在00:04.500【4.5-8秒】，喷枪移出画面，镜头环绕产品半周，<Picture 1>线稿中的产品已完全实体化——光滑的塑料外壳、细腻的涂装、清晰的细节分模线，立在画面中央如展柜中的陈列品。【ACTION】产品轻微转动展示各角度，表面光泽流动，喷涂未干的漆面泛着湿润的光。【/ACTION】画面清爽高级，棚拍质感。\n\noverall_soundscape: 喷枪持续喷出漆雾的嘶嘶声，颜料落在纸面上细密的沙沙声，喷枪短暂停顿与移开时的余音，漆面未干时轻微的湿润声，节奏均匀充满制作感。\n\nnon_diegetic_music: 轻快 Lo-fi 节拍，鼓点与贝斯律动活泼，带一点俏皮的合成器点缀，配合喷涂上色的过程，轻松明快。"
+            },
+            {
+              "id": "kid_doodle_dinosaur",
+              "name": "儿童涂鸦恐龙变真实巨兽",
+              "name_en": "Child's crayon doodle dinosaur becomes a real giant beast",
+              "description": "孩子的蜡笔涂鸦恐龙在草原上慢慢站起来，涂鸦线条长成真实的皮肤、鳞片与肌肉，国家地理纪录片质感",
+              "preview": "kid_doodle_dinosaur.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "儿童涂鸦",
+                "恐龙",
+                "真实",
+                "草原",
+                "纪录片"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】清晨的金色草原，镜头低角度对准地面。地面上平放着一张孩子画的蜡笔涂鸦恐龙——<Picture 1>中线条笨拙、配色大胆的恐龙画。涂鸦上的蜡笔线条开始微微发亮、起伏，像被风吹动。恐龙轮廓线缓缓隆起，从纸面向上升起，线条\"长\"出真实的皮肤质感：鳞片一片片浮现，肌肉线条在皮下滚动，蜡笔的粗犷轮廓变成真实的巨兽骨架。涂鸦从纸面立起，脚掌踩实草地，扬起细小草屑。电影级画质，国家地理自然纪录风格，侧逆光勾勒巨兽轮廓。[镜头2] 在00:04.000【4-10秒】，镜头缓慢拉开至全景，真实的恐龙已经完全从涂鸦中实体化，站在金色草原上，形状、姿态与<Picture 1>涂鸦保持一致——同样的头身比例、同样的角与背棘、同样的姿态特征。【ACTION】恐龙缓缓转头，喷出一口温热的气息，迈步向前走去，脚步沉重踏地，草丛随之晃动，远处鸟群惊飞。【/ACTION】光影恢弘，草原晨雾流动，史诗感十足。\n\noverall_soundscape: 清晨草原的风声与草叶晃动声，恐龙脚掌沉重踏实的脚步声，低沉的呼吸声与喉间呼噜，远处鸟群惊飞的振翅声，旷野的辽阔感。\n\nnon_diegetic_music: 恢弘的纪录片式管弦乐，低音鼓与铜管声部逐渐加强，弦乐铺底营造史诗感，随着恐龙迈步达到高潮后缓缓收束。"
+            },
+            {
+              "id": "kid_doodle_cat",
+              "name": "儿童简笔画猫咪变真实小猫",
+              "name_en": "Child's simple drawing of a cat becomes a real kitten",
+              "description": "孩子歪歪扭扭的简笔画小猫从纸上探出头，变成一只真实的小猫跳下桌子，温暖治愈",
+              "preview": "kid_doodle_cat.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "简笔画",
+                "猫咪",
+                "真实",
+                "治愈",
+                "家庭"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】暖色调的儿童房书桌上，摊着一张画纸，纸上画着<Picture 1>中歪歪扭扭的简笔画小猫——圆脑袋、三角耳、胡须几根。午后的阳光从窗户斜照进来。纸上的小猫线条开始扭动，圆脑袋缓缓从纸面\"拱\"起来，胡须从线条变成真实的绒毛，耳朵轮廓立起，一双眼睛从纸面睁开、眨动。小猫的身体像从纸里慢慢\"长\"出来，先是一颗毛茸茸的脑袋，接着是前爪搭上纸边，整个身子从纸面探出。电影级画质，暖光弥漫，绒毛细节清晰。[镜头2] 在00:04.000【4-8秒】，镜头跟随，小猫完全实体化，从画纸上轻巧地跳下书桌，落在地板上，尾巴高高翘起，姿态与<Picture 1>简笔画的神态一致——同样的头型、耳位、花纹特征。【ACTION】小猫落地后伸了个懒腰，然后歪头看向镜头，喉咙发出细小的呼噜声，缓步走向画面深处。【/ACTION】画面温暖治愈，日常光感，浅浅景深。\n\noverall_soundscape: 午后房间安静的氛围音，画纸被轻轻翻动的声响，小猫从纸上探出时绒毛摩擦声，落地轻巧的声响，随后是细小的呼噜声与铃铛轻响，温暖治愈。\n\nnon_diegetic_music: 温暖的原声吉他轻拨，节奏舒缓悠扬，辅以轻柔的钢琴点缀，整体治愈而放松，像家庭影像的配乐。"
+            },
+            {
+              "id": "kid_doodle_house",
+              "name": "儿童涂鸦房子变真实小屋",
+              "name_en": "Child's doodle house becomes a real little house",
+              "description": "画纸上的儿童涂鸦房子逐渐立体化，变成一座真实的小木屋，房门打开，温暖的灯光透出",
+              "preview": "kid_doodle_house.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "涂鸦",
+                "房子",
+                "真实",
+                "童话",
+                "温暖"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】绿色山坡上立着一块画架，画纸上画着<Picture 1>中孩子的涂鸦房子——歪斜的屋顶、方方的窗、冒着烟囱的烟。镜头缓缓推近画纸，纸上的涂鸦开始\"膨胀\"，线条隆起，屋顶从纸面立起来，烟囱冒出的圈圈烟变成真实的炊烟，窗户从黑色方块变成透光的玻璃。整座房子像从纸上\"长\"出来，逐渐变大、落地，立在画架旁的真实山坡上，与<Picture 1>涂鸦保持着完全相同的形状——同样的屋顶线条、同样的窗户位置、同样的门。电影级画质，童话绘本质感，光线柔和梦幻。[镜头2] 在00:04.500【4.5-10秒】，镜头从侧面平移，房子完全实体化，木质墙面纹理真实，屋檐挂着风铃。【ACTION】木门\"吱呀\"一声从里面推开，暖黄的灯光从门内倾泻而出，洒在门前草地上，门内有隐约的温馨剪影晃动，屋檐风铃被风吹动发出清脆声响。【/ACTION】画面温暖明亮，童话与现实交融。\n\noverall_soundscape: 山坡上的微风与草叶声，木门被从内推开的吱呀声，屋檐风铃随风轻响的清脆声，屋内隐约的壁炉噼啪声与低语，童话般的静谧。\n\nnon_diegetic_music: 八音盒与竖琴交织的童话旋律，节奏轻柔梦幻，带一点温暖的弦乐铺底，营造故事书般的氛围。"
+            },
+            {
+              "id": "lineart_girl_runway",
+              "name": "简笔画女孩变真人走红毯",
+              "name_en": "Line-art girl becomes a real model on the red carpet",
+              "description": "杂志内页的简笔画女孩轮廓被闪光灯点亮，线条长成真实的晚礼服与五官，走上星光红毯，灰姑娘式蜕变",
+              "preview": "lineart_girl_runway.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "简笔画",
+                "走秀",
+                "红毯",
+                "真人",
+                "蜕变"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】黑暗的摄影棚，聚光灯照亮画面中央的白纸，纸上画着<Picture 1>中简笔画的女孩轮廓——线条简单的身形与裙摆。快门闪光灯连续亮起，每一次闪光，简笔画就被\"点亮\"一层：第一次闪光，线条轮廓变成立体身形；第二次闪光，黑色线条长成真实的深色礼服面料，裙摆出现褶皱与光泽；第三次闪光，头部线条长成真实的五官——眉眼、鼻唇、发丝逐层浮现。简笔画女孩从纸上站立起来，变成一位真实的年轻女性，五官与身型严格保持<Picture 1>简笔画的比例特征。电影级画质，闪光灯频闪效果，时尚大片质感。[镜头2] 在00:04.500【4.5-10秒】，镜头切换至红毯全景，女孩穿着与<Picture 1>简笔画相同的礼服，从纸上步入真实的红毯，两侧闪光灯如星海。【ACTION】女孩步态自信优雅，裙摆随步伐摆动，发丝轻扬，走到镜头前微微停顿、浅笑，继续向前走去，红毯尽头灯光辉煌。【/ACTION】画面奢华大气，动态追焦，明星登场感。\n\noverall_soundscape: 密集的快门声与闪光灯咔哒声交织，高跟鞋踏上红毯的清脆脚步声，人群的低语与零散掌声，红毯现场的喧闹与庄重。\n\nnon_diegetic_music: 时尚走秀电子乐，节拍强劲清晰，合成器旋律干练，配合步点与闪光节奏，奢华大气的秀场氛围。"
+            },
+            {
+              "id": "lineart_girl_dance_rain",
+              "name": "线稿女孩雨幕中变真人起舞",
+              "name_en": "Line-art girl becomes real and dances in the rain",
+              "description": "雨幕中的线稿女孩轮廓被雨滴逐点染上色彩，线条长成真实的人与裙摆，在雨中旋转起舞",
+              "preview": "lineart_girl_dance_rain.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "线稿",
+                "雨",
+                "舞蹈",
+                "真人",
+                "唯美"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】夜晚的城市街头，雨幕密集，昏黄路灯下立着一块玻璃画板，上面画着<Picture 1>中简笔画的女孩轮廓。雨滴落在玻璃上，每落一滴，女孩线条上就晕开一点色彩——先是指尖染上肤色，然后是发丝泛起光泽，裙摆被雨滴点染出真实的布料颜色。线条从玻璃上\"走\"下来，在雨中逐渐实体化，变成一个真实的年轻女孩，五官与身形保留<Picture 1>简笔画的特征比例。电影级画质，雨丝在灯光下闪闪发光，霓虹倒影在地面流淌。[镜头2] 在00:04.000【4-8秒】，女孩完全实体化，站在雨中，仰起脸，开始旋转起舞。【ACTION】女孩在雨中旋转，裙摆甩出细密的水珠，发丝在灯光下飞扬，脚尖踏过积水溅起涟漪，雨幕环绕，画面唯美如电影镜头。【/ACTION】光线透过雨幕形成光晕，整体氛围浪漫迷离。\n\noverall_soundscape: 密集的雨声覆盖全片，女孩旋转时裙摆甩动水珠的细响，脚尖踏过积水的溅水声，远处城市霓虹下的环境低音，浪漫迷离。\n\nnon_diegetic_music: 抒情钢琴与小提琴交织的旋律，节奏舒缓而富有张力，随舞蹈旋转渐强、在雨幕中收尾，唯美如电影配乐。"
+            },
+            {
+              "id": "sketch_dragon_fantasy",
+              "name": "涂鸦巨龙变真实奇幻生物",
+              "name_en": "Doodle dragon becomes a real fantasy beast",
+              "description": "笔记本页角的涂鸦小巨龙从纸面腾空而起，长成鳞甲嶙峋的真实奇幻巨龙，掠过头顶山峦",
+              "preview": "sketch_dragon_fantasy.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "涂鸦",
+                "巨龙",
+                "奇幻",
+                "电影",
+                "腾空"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】深夜的书桌，台灯下摊开一本笔记本，页角画着<Picture 1>中孩子气的涂鸦小巨龙——圆滚滚的身体、小小的翅膀、锯齿状的背鳍。台灯光线忽然闪烁，纸上的巨龙线条开始扭动，背鳍从纸面立起，身体鼓起，涂鸦从页角爬出来，在桌面上越变越大。鳞片从线条间生长出来，獠牙、利爪、翼膜逐层实体化，圆润的涂鸦线条变成肌肉虬结的真实龙躯，但形状、翅膀结构、背鳍数量严格保持<Picture 1>涂鸦的特征。电影级画质，烛火般的光线在鳞片上流动。[镜头2] 在00:04.500【4.5-10秒】，镜头切换至夜空全景，巨龙完全实体化，展翅腾空而起，从书房窗口掠向星空下的山峦。【ACTION】巨龙振翅，气流掀起窗帘与纸页，它发出一声低沉悠长的龙吟，盘旋一周后向远山飞去，月光在鳞甲上泛着冷光。【/ACTION】画面宏大震撼，史诗奇幻感。\n\noverall_soundscape: 深夜书桌台灯细微的电流声，纸页被气流掀动的哗啦声，龙翼展开的破风声，低沉悠长的龙吟在夜空中回荡，远山的回声。\n\nnon_diegetic_music: 史诗电影配乐，低音鼓与号角齐鸣，混入庄严合唱，随巨龙腾空达到高潮，随后渐弱让位于夜空的空旷。"
+            },
+            {
+              "id": "sketch_f1_racecar",
+              "name": "建筑师桌上草图变真实赛车",
+              "name_en": "F1 sketch on an architect's desk becomes a real race car",
+              "description": "建筑师工作台上的 F1 赛车铅笔草图逐渐隆起实体化，变成一台真实赛车停在桌面，微缩与真实之间切换",
+              "preview": "sketch_f1_racecar.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "草图",
+                "赛车",
+                "桌面",
+                "微缩",
+                "写实"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】俯拍建筑师的工作台，图纸、直尺、铅笔散落，图纸中央是<Picture 1>中精细的 F1 赛车铅笔草图——流畅的车身线条、尾翼、进气口结构清晰。镜头微距缓缓推进，草图线条开始微微隆起，车身形体从纸面\"浮\"起，碳纤维纹路在轮廓线上生长出来，轮毂、尾翼、鼻翼逐层实体化。草图变成一台真实的 F1 赛车，完整地立在图纸上，与<Picture 1>草图保持相同的比例与结构。电影级画质，微距摄影，桌面景深虚化，铅笔灰与碳纤维质感对比鲜明。[镜头2] 在00:04.500【4.5-10秒】，镜头缓慢环绕，赛车完全实体化，停在散落着图纸与工具的桌面上，如一个精心制作的高精度模型。【ACTION】赛车引擎轻轻轰鸣，车身微微震动，尾翼小幅度摆动，仪表盘灯光亮起，随后重归静止，像在等待被启动。【/ACTION】画面精致写实，细节控的视觉盛宴。\n\noverall_soundscape: 开场铅笔在图纸上摩擦的沙沙声，随后引擎低吼由远及近、逐渐增强，机械部件轻微的咔哒与液压声，工作台环境的安静背景。\n\nnon_diegetic_music: 现代科技感电子乐，低音脉冲稳健推进，加入细微的机械节奏音色，速度感与精密感并重。"
+            },
+            {
+              "id": "drawing_frame_escape",
+              "name": "画框里的涂鸦世界变真实",
+              "name_en": "The doodle world inside a frame becomes real",
+              "description": "墙上儿童画框里的涂鸦世界逐渐立体延伸，画面中的小路从画框延伸出来，画里的人物走出画框",
+              "preview": "drawing_frame_escape.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "画框",
+                "涂鸦",
+                "世界",
+                "走出",
+                "奇幻"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】温馨的客厅墙上挂着一个画框，里面是<Picture 1>中孩子的涂鸦画——一条弯弯的小路、太阳、几棵歪扭的树、一个小小的火柴人。镜头缓缓推近画框，画里的太阳开始发出真正的光芒，涂鸦小路从画框底部\"延伸\"出来，铺到真实的墙面上、地板上，变成一条真实的小径。画里的歪树从画框中\"长\"出枝干，火柴人从画里迈出第一步，线条手臂长成真实的手臂，变成一个小小的真实人影，沿着延伸的小路走出画框。电影级画质，魔幻现实主义，画内画外光影过渡自然。[镜头2] 在00:04.500【4.5-10秒】，镜头跟随火柴人走出画框，完全实体化，站在客厅地板上，回头看向画框，画框里的涂鸦世界仍在微微发光。【ACTION】火柴人（真实的小人形象，保留<Picture 1>涂鸦的身形特征）沿着小路向前走几步，好奇地环顾四周，画框中的太阳光芒渐渐收敛，小路缓缓缩回画中，一切恢复平静。【/ACTION】画面温暖奇幻，虚实交错。\n\noverall_soundscape: 客厅安静的空气感，画框内传来轻微的嗡鸣与发光声，小人物走出画框、脚步踩上真实地面的轻响，画中光芒缓缓收敛的细碎声，整体奇幻而温暖。\n\nnon_diegetic_music: 魔幻钢琴琶音与八音盒音色，节奏轻盈梦幻，带一点弦乐铺底的温馨感，虚实交错的神秘氛围。"
+            },
+            {
+              "id": "kid_doodle_food",
+              "name": "儿童涂鸦美食变真实大餐",
+              "name_en": "Child's doodle food becomes a real feast",
+              "description": "餐桌上的涂鸦美食逐渐实体化，变成冒着热气的真实菜肴，香气仿佛溢出画面",
+              "preview": "kid_doodle_food.webp",
+              "generation_mode": "Image to Video (图生视频)【图1涂鸦/线稿，可选图2场景】",
+              "duration": 8,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "涂鸦",
+                "美食",
+                "真实",
+                "餐桌",
+                "治愈"
+              ],
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1> — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。涂鸦/线稿参考图中画出的形状、比例、轮廓、特征元素（如动物的角、翅膀、尾巴、耳朵数量，产品的结构线、按钮、开孔）必须被严格保留，作为实体化后物体的结构骨架，禁止增删或改变主体形态。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. The drawing/sketch in <Picture 1> defines the exact silhouette, proportions, and key structural features of the subject; the transformation must begin from this exact drawing and stay faithful to its outline while it comes to life.\n\nintegrated_multimodal_description:  [镜头1]【0-4秒】俯拍一张木质餐桌，桌面上摊着几张画纸，纸上画着<Picture 1>中孩子涂鸦的美食——圆圆的汉堡、带笑脸的煎蛋、歪歪扭扭的薯条、一杯冒泡的饮料。镜头缓缓推近，纸上的涂鸦开始\"膨胀\"：汉堡的圆线条隆起成松软的面包胚，笑脸煎蛋的黑色线条变成真实的蛋白与蛋黄，薯条从纸面立起来变成金黄酥脆的薯条，饮料杯里真的冒出气泡。所有涂鸦美食从纸上实体化，落在画纸旁的餐盘里，形状严格保持<Picture 1>涂鸦的特征。电影级画质，美食摄影质感，热气升腾，光线温暖。[镜头2] 在00:04.500【4.5-8秒】，镜头转为平视，餐桌上摆满了刚刚实体化的真实美食，冒着热气。【ACTION】一杯饮料的气泡缓缓上升破裂，汉堡上的芝麻微微颤动，煎蛋上的\"笑脸\"边缘泛起诱人的焦色，热气在灯光下袅袅升腾。【/ACTION】画面诱人治愈，香气扑面感。\n\noverall_soundscape: 气泡在饮料杯中缓缓上升破裂的细响，食物热气升腾的轻柔声响，煎蛋边缘泛起焦色的滋啦声，餐具与餐盘轻微的碰撞声，香气四溢的温暖感。\n\nnon_diegetic_music: 轻快温暖的爵士钢琴与波萨诺瓦节奏，旋律欢快治愈，带一点俏皮的打击乐点缀，像家庭餐桌的愉快时光。"
+            }
+          ]
         }
       ]
     },
