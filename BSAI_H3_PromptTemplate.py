@@ -434,60 +434,30 @@ Features / 功能特点:
                 name_label = f"{tpls[0].get('name','')} | {tpls[0].get('name_en','')}" if tpls[0].get("name_en") else tpls[0].get("name", "")
                 return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""))
         if connected_refs:
-            # 生成多参考图声明
-            ref_decl = "MULTI-REFERENCE COMPLIANCE / 多参考图合规声明:\n"
-            ref_decl += (
-                "  [ABSOLUTE REFERENCE MANDATE / 绝对参考强制]: The generated video MUST strictly follow ALL connected reference images. "
-                f"Every <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> is the SOLE SOURCE OF TRUTH for its assigned role as defined in the prompt. "
-                "It is STRICTLY FORBIDDEN to generate any character, outfit, scene, prop, accessory, hairstyle, or face "
-                "that is not explicitly shown in the corresponding reference image. "
-                "The model MUST NOT invent, improvise, guess, hallucinate, or 'improve' anything beyond what the reference images show. "
-                "If the prompt text and a reference image disagree, the reference image WINS. "
-                "生成的视频必须严格按照所有已连接的参考图生成。严禁生成任何与参考图无关的人物、服装、场景、道具、配饰、发型或面部。"
-                "模型不得凭空创造、自行设计、猜测或美化参考图中未明确展示的任何内容。提示词文字与参考图冲突时，一律以参考图为准。\n"
-            )
-            for idx in connected_refs:
-                ref_decl += f"  <Picture {idx}> must be copied EXACTLY as shown — whatever it depicts (person, outfit, scene, object) must appear in the video with zero redesign.\n"
-            if len(connected_refs) >= 2:
-                ref_decl += (
-                    "  STRICT ANTI-DUPLICATION RULE / 严禁重复角色规则: "
-                    f"Each of <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
-                    "represents a DISTINCT subject. Do NOT merge, blend, or confuse different reference images. "
-                    "If <Picture 1> is the person, <Picture 2> is the outfit, <Picture 3> is the scene — treat them as separate inputs.\n"
-                )
-            # ── 换装模板专用约束: 服装和场景必须严格匹配参考图 ──
+            # ── 精简参考图约束（避免prompt过长被模型截断）──
+            # 旧版3000+字符导致MiniMax H3模型token溢出，约束被完全忽略。
+            # 新版：仅3-5行核心约束，确保模型能完整读取。
             is_wardrobe = any(
                 kw in (t.get("name", "") + t.get("name_en", "") + " ".join(t.get("tags", []))).lower()
                 for t in tpls for kw in ("换装", "wardrobe", "outfit", "穿衣", "变装")
             )
+            parts = []
+            parts.append(
+                f"[STRICT REFERENCE / 参考图强制] "
+                f"<Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
+                f"are the ONLY source of truth — copy EXACTLY, no redesign. "
+                f"图{'、图'.join(str(x) for x in connected_refs)}为唯一参考，必须严格照抄，禁止自行设计。"
+            )
+            if 1 in connected_refs:
+                parts.append("<Picture 1>=face/identity 图1=人物面部")
             if is_wardrobe and 2 in connected_refs:
-                ref_decl += (
-                    "  [OUTFIT EXACT COPY MANDATE / 服装精确复制强制]: <Picture 2> is the OUTFIT reference. "
-                    "After the wardrobe change, the character MUST wear the EXACT outfit from <Picture 2> — "
-                    "same garment type, same color, same pattern, same print, same fabric texture, same collar, "
-                    "same sleeves, same hem length, same buttons/zippers/pockets, same belt, same accessories. "
-                    "Do NOT add ANY pattern, print, decoration, bow, star, cross, stripe, dot, floral motif, lace, "
-                    "embroidery or 'improvement' that is NOT visible in <Picture 2>. "
-                    "If <Picture 2> shows a SOLID COLOR garment, the output garment is SOLID COLOR — no added patterns. "
-                    "If <Picture 2> shows a specific PATTERN, the output has THAT EXACT pattern — no different pattern. "
-                    "服装精确复制强制：<Picture 2>是服装参考。换装后人物必须穿着与图2完全一致的服装——"
-                    "相同款式、颜色、花纹、印花、面料质感、领口、袖长、裙摆、纽扣/拉链/口袋、腰带、配饰。"
-                    "严禁添加图2中未出现的任何图案、印花、装饰、蝴蝶结、星星、十字、条纹、圆点、花朵、蕾丝、刺绣或'美化'。"
-                    "图2是纯色就是纯色，图2是什么花纹就是什么花纹，严禁自行设计或改变。\n"
-                )
+                parts.append("<Picture 2>=EXACT outfit (color/pattern/style/fabric) 图2=服装照抄")
             if is_wardrobe and 3 in connected_refs:
-                ref_decl += (
-                    "  [SCENE EXACT COPY MANDATE / 场景精确复制强制]: <Picture 3> is the SCENE reference. "
-                    "The ENTIRE video MUST take place in the EXACT environment shown in <Picture 3> — "
-                    "same background, same architecture, same room layout, same furniture, same plants, same windows, "
-                    "same lighting, same color tone, same atmosphere, same weather (if outdoor), same time of day. "
-                    "Do NOT replace the background with a different scene. Do NOT generate a new environment. "
-                    "Do NOT use a neutral/studio background. The environment = <Picture 3> from frame 1 to the last frame. "
-                    "场景精确复制强制：<Picture 3>是场景参考。整个视频必须在图3展示的环境中拍摄——"
-                    "相同背景、建筑、房间布局、家具、植物、窗户、灯光、色调、氛围、天气、时段。"
-                    "严禁替换为不同场景，严禁生成新环境，严禁使用中性/纯色背景。从第一帧到最后帧，环境=图3。\n"
-                )
-            prompt = ref_decl + "\n" + prompt
+                parts.append("<Picture 3>=EXACT scene (background/lighting/environment) 图3=场景照抄")
+            elif 3 in connected_refs:
+                parts.append("<Picture 3>=scene 图3=场景")
+            ref_decl = " ".join(parts) + "\n\n"
+            prompt = ref_decl + prompt
         if ext:
             prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
         if cust:
