@@ -406,6 +406,12 @@ Features / 功能特点:
         ref_imgs = [ref_image_1, ref_image_2, ref_image_3, ref_image_4, ref_image_5,
                      ref_image_6, ref_image_7, ref_image_8, ref_image_9]
         connected_refs = [i + 1 for i, img in enumerate(ref_imgs) if img is not None]
+        # If scene_image is connected but ref_image_3 is not, treat scene_image
+        # as <Picture 3> so the template's <Picture 3> scene references are
+        # backed by an actual connected reference in the compliance header.
+        if scene_image is not None and 3 not in connected_refs:
+            connected_refs.append(3)
+            connected_refs.sort()
         # ── 无参考图文生回退: 模板声明了 text_fallback_prompt 且用户未连接任何图片(含场景图) →
         #    使用内置默认人物/默认服装/默认设备, 转为文生视频模式 ──
         if not connected_refs and scene_image is None and tpls and tpls[0].get("text_fallback_prompt"):
@@ -448,6 +454,38 @@ Features / 功能特点:
                     f"Each of <Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
                     "represents a DISTINCT subject. Do NOT merge, blend, or confuse different reference images. "
                     "If <Picture 1> is the person, <Picture 2> is the outfit, <Picture 3> is the scene — treat them as separate inputs.\n"
+                )
+            # ── 换装模板专用约束: 服装和场景必须严格匹配参考图 ──
+            is_wardrobe = any(
+                kw in (t.get("name", "") + t.get("name_en", "") + " ".join(t.get("tags", []))).lower()
+                for t in tpls for kw in ("换装", "wardrobe", "outfit", "穿衣", "变装")
+            )
+            if is_wardrobe and 2 in connected_refs:
+                ref_decl += (
+                    "  [OUTFIT EXACT COPY MANDATE / 服装精确复制强制]: <Picture 2> is the OUTFIT reference. "
+                    "After the wardrobe change, the character MUST wear the EXACT outfit from <Picture 2> — "
+                    "same garment type, same color, same pattern, same print, same fabric texture, same collar, "
+                    "same sleeves, same hem length, same buttons/zippers/pockets, same belt, same accessories. "
+                    "Do NOT add ANY pattern, print, decoration, bow, star, cross, stripe, dot, floral motif, lace, "
+                    "embroidery or 'improvement' that is NOT visible in <Picture 2>. "
+                    "If <Picture 2> shows a SOLID COLOR garment, the output garment is SOLID COLOR — no added patterns. "
+                    "If <Picture 2> shows a specific PATTERN, the output has THAT EXACT pattern — no different pattern. "
+                    "服装精确复制强制：<Picture 2>是服装参考。换装后人物必须穿着与图2完全一致的服装——"
+                    "相同款式、颜色、花纹、印花、面料质感、领口、袖长、裙摆、纽扣/拉链/口袋、腰带、配饰。"
+                    "严禁添加图2中未出现的任何图案、印花、装饰、蝴蝶结、星星、十字、条纹、圆点、花朵、蕾丝、刺绣或'美化'。"
+                    "图2是纯色就是纯色，图2是什么花纹就是什么花纹，严禁自行设计或改变。\n"
+                )
+            if is_wardrobe and 3 in connected_refs:
+                ref_decl += (
+                    "  [SCENE EXACT COPY MANDATE / 场景精确复制强制]: <Picture 3> is the SCENE reference. "
+                    "The ENTIRE video MUST take place in the EXACT environment shown in <Picture 3> — "
+                    "same background, same architecture, same room layout, same furniture, same plants, same windows, "
+                    "same lighting, same color tone, same atmosphere, same weather (if outdoor), same time of day. "
+                    "Do NOT replace the background with a different scene. Do NOT generate a new environment. "
+                    "Do NOT use a neutral/studio background. The environment = <Picture 3> from frame 1 to the last frame. "
+                    "场景精确复制强制：<Picture 3>是场景参考。整个视频必须在图3展示的环境中拍摄——"
+                    "相同背景、建筑、房间布局、家具、植物、窗户、灯光、色调、氛围、天气、时段。"
+                    "严禁替换为不同场景，严禁生成新环境，严禁使用中性/纯色背景。从第一帧到最后帧，环境=图3。\n"
                 )
             prompt = ref_decl + "\n" + prompt
         if ext:
