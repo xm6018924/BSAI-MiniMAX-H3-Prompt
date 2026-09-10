@@ -351,7 +351,24 @@ Features / 功能特点:
 """
 
     def get_template(self, template_select, user_customization="", external_prompt="", direct_prompt="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
-        direct = (direct_prompt or "").strip()
+        # ── Debug: detect hidden widget values that silently override behavior ──
+        # external_prompt and direct_prompt widgets are HIDDEN by the JS frontend.
+        # Old values from voice input / direct mode can persist invisibly and
+        # completely bypass the template system. Log them so users can diagnose
+        # "template doesn't work" issues.
+        _ext = (external_prompt or "").strip()
+        _direct = (direct_prompt or "").strip()
+        _cust = (user_customization or "").strip()
+        if _ext:
+            print(f"[BSAI H3 PromptTemplate] ⚠ WARNING: external_prompt has hidden text ({len(_ext)} chars). Right-click node → Convert Widget to Input → external_prompt to view/clear.")
+            print(f"  Preview: {_ext[:100]}")
+        if _direct:
+            print(f"[BSAI H3 PromptTemplate] ⚠ CRITICAL: direct_prompt has hidden text ({len(_direct)} chars). DIRECT MODE IS ACTIVE — ALL TEMPLATES ARE BYPASSED!")
+            print(f"  Preview: {_direct[:100]}")
+            print(f"  Fix: Right-click node → 'Convert Widget to Input' → direct_prompt → clear it → convert back.")
+        if _cust:
+            print(f"[BSAI H3 PromptTemplate] user_customization: {len(_cust)} chars")
+        direct = _direct
         if direct:
             # ── Direct mode / 直通模式: bypass templates, output the prompt as-is ──
             prompt = direct
@@ -376,14 +393,11 @@ Features / 功能特点:
             if t is not None:
                 tpls.append(t)
 
-        ext = (external_prompt or "").strip()
-        cust = (user_customization or "").strip()
+        ext = _ext
+        cust = _cust
+        direct = _direct
 
-        # Debug: log hidden widget values that could silently modify the prompt
-        if ext:
-            print(f"[BSAI H3 PromptTemplate] WARNING: external_prompt has hidden text ({len(ext)} chars): {ext[:80]}...")
-        if cust:
-            print(f"[BSAI H3 PromptTemplate] user_customization: {len(cust)} chars")
+        # Hidden widgets (external_prompt, direct_prompt) are already logged above.
 
         if not tpls:
             custom_text = (template_select or "").strip()
