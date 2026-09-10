@@ -78,7 +78,7 @@ if (!document.getElementById(STYLE_ID)) {
 .bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Template list */
 .bsai-tpl-list {
-    border: 1px solid #333; border-radius: 4px; flex: 1 1 0; min-height: 80px;
+    border: 1px solid #333; border-radius: 4px; flex: 1 1 0; min-height: 220px;
     max-height: none; overflow-y: auto !important; background: #111;
 }
 .bsai-tpl-list::-webkit-scrollbar { width: 5px; }
