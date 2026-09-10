@@ -456,8 +456,11 @@ Features / 功能特点:
                 parts.append("<Picture 3>=EXACT scene (background/lighting/environment) 图3=场景照抄")
             elif 3 in connected_refs:
                 parts.append("<Picture 3>=scene 图3=场景")
-            ref_decl = " ".join(parts) + "\n\n"
-            prompt = ref_decl + prompt
+            # v2.5: 模板自带[STRICT REFERENCE]时不重复加，避免双段冲突
+            _already_has_ref = prompt.lstrip().startswith('[STRICT REFERENCE') or prompt.lstrip().startswith('[ABSOLUTE REFERENCE LOCK') or prompt.lstrip().startswith('[CRITICAL REFERENCE LOCK')
+            if not _already_has_ref:
+                ref_decl = " ".join(parts) + "\n\n"
+                prompt = ref_decl + prompt
         if ext:
             prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
         if cust:
