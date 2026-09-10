@@ -379,14 +379,21 @@ Features / 功能特点:
         ext = (external_prompt or "").strip()
         cust = (user_customization or "").strip()
 
+        # Debug: log hidden widget values that could silently modify the prompt
+        if ext:
+            print(f"[BSAI H3 PromptTemplate] WARNING: external_prompt has hidden text ({len(ext)} chars): {ext[:80]}...")
+        if cust:
+            print(f"[BSAI H3 PromptTemplate] user_customization: {len(cust)} chars")
+
         if not tpls:
             custom_text = (template_select or "").strip()
             if custom_text and not custom_text.startswith("("):
                 prompt = custom_text
             else:
                 prompt = ""
-            if ext:
-                prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
+            # external_prompt is hidden — do not append (see comment below)
+            # if ext:
+            #     prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
             if cust:
                 try:
                     merged, merr = _merge_custom(prompt, cust) if prompt.strip() else ("", None)
@@ -461,8 +468,13 @@ Features / 功能特点:
             if not _already_has_ref:
                 ref_decl = " ".join(parts) + "\n\n"
                 prompt = ref_decl + prompt
-        if ext:
-            prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
+        # external_prompt is a HIDDEN widget — its value persists across template
+        # changes and can silently corrupt the prompt (e.g. old voice-input text
+        # overrides <Picture 3> scene references). It was originally an action
+        # override but that was removed (see comment above). Do NOT append it
+        # to the main prompt. If it has text, the debug log above will warn.
+        # if ext:
+        #     prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
