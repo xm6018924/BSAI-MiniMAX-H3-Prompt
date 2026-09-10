@@ -370,7 +370,6 @@ function buildTemplateUI(node) {
 
     hideWidget(node, "template_select");
     hideWidget(node, "user_customization");
-    hideWidget(node, "direct_prompt");
     hideWidget(node, "narration");
     // external_prompt: just hide the widget (like the others).
     // Previously tried auto-converting to input via convertWidgetToInput(),
@@ -381,6 +380,9 @@ function buildTemplateUI(node) {
     // from another node can right-click the node → "Convert Widget to Input"
     // → external_prompt.  The voice dialog still fills it via setWidgetText().
     hideWidget(node, "external_prompt");
+    // direct_prompt has been REMOVED from the template node entirely.
+    // Direct mode is now a separate node: BSAI_H3_DirectPrompt.
+    // This prevents hidden direct_prompt values from silently bypassing templates.
 
     const container = document.createElement("div");
     container.className = "bsai-tpl-wrap";
