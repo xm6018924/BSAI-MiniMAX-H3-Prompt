@@ -418,7 +418,11 @@ Features / 功能特点:
             elif 3 in connected_refs:
                 parts.append("<Picture 3>=scene 图3=场景")
             # v2.5: 模板自带[STRICT REFERENCE]时不重复加，避免双段冲突
-            _already_has_ref = prompt.lstrip().startswith('[STRICT REFERENCE') or prompt.lstrip().startswith('[ABSOLUTE REFERENCE LOCK') or prompt.lstrip().startswith('[CRITICAL REFERENCE LOCK')
+            _already_has_ref = (prompt.lstrip().startswith('[STRICT REFERENCE')
+                                or prompt.lstrip().startswith('[ABSOLUTE REFERENCE LOCK')
+                                or prompt.lstrip().startswith('[CRITICAL REFERENCE LOCK')
+                                or prompt.lstrip().startswith('[REFERENCE IMAGES ARE THE SOLE TRUTH')
+                                or prompt.lstrip().startswith('[REFERENCE IMAGES ARE THE SOLE TRUTH'))
             if not _already_has_ref:
                 ref_decl = " ".join(parts) + "\n\n"
                 prompt = ref_decl + prompt
