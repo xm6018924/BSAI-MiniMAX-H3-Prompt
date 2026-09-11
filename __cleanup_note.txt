@@ -1,0 +1,4 @@
+please ignore - debug leftovers, safe to delete
+_diag.py
+_diag_result.txt
+__cleanup_note.txt

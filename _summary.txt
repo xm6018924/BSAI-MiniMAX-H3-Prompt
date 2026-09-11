@@ -1,0 +1,41 @@
+prompt_templates.json
+  xray_scan: 透视扫描 | X-Ray Scan | X-Ray Scan
+  description: 医学透视扫描 + 医用人体结构板块：手持扫描设备扫过人物或物体显示内部结构(骨骼/内脏)，或直接输出医用人体图谱 3D 渲染——骨骼/肌肉/内脏/神经血管/五官/手脚/皮肤/组织切片全套中英双语解剖标注，医用人体结构拆分为男性/女性两个独立...
+  - sub: xray_scan_general              | 透视扫描类                | X-Ray Scan Templates                | templates=2
+      * xray_see_through_scan                  | 透视扫描·X光透视                 | X-ray see-through scan
+      * xray_human_skeleton_scan               | 透视扫描·人体骨骼透视               | Human skeleton X-ray scan
+  - sub: medical_anatomy_male           | 医用人体·男性              | Medical Human Anatomy - Male        | templates=6
+      * med_full_body_anatomy_male             | 医用人体·男性·全身解剖图谱            | Male Full-Body Anatomy Atlas
+      * med_skeletal_system_male               | 医用人体·男性·全身骨骼系统            | Male Skeletal System 206 Bones
+      * med_muscular_system_male               | 医用人体·男性·全身肌肉系统            | Male Muscular System ~640 Muscles
+      * med_organ_systems_male                 | 医用人体·男性·九大系统内脏            | Male Nine Organ Systems
+      * med_face_features_closeup_male         | 医用人体·男性·五官精细解剖            | Male Facial Features Anatomy
+      * med_hands_feet_skin_male               | 医用人体·男性·手脚皮肤毛囊组织          | Male Hands, Feet, Skin, Follicles, Tissue Slices
+  - sub: medical_anatomy_female         | 医用人体·女性              | Medical Human Anatomy - Female      | templates=6
+      * med_full_body_anatomy_female           | 医用人体·女性·全身解剖图谱            | Female Full-Body Anatomy Atlas
+      * med_skeletal_system_female             | 医用人体·女性·全身骨骼系统            | Female Skeletal System 206 Bones
+      * med_muscular_system_female             | 医用人体·女性·全身肌肉系统            | Female Muscular System ~640 Muscles
+      * med_organ_systems_female               | 医用人体·女性·九大系统内脏            | Female Nine Organ Systems
+      * med_face_features_closeup_female       | 医用人体·女性·五官精细解剖            | Female Facial Features Anatomy
+      * med_hands_feet_skin_female             | 医用人体·女性·手脚皮肤毛囊组织          | Female Hands, Feet, Skin, Follicles, Tissue Slices
+
+templates_data.json
+  xray_scan: 透视扫描 | X-Ray Scan | X-Ray Scan
+  description: 医学透视扫描 + 医用人体结构板块：手持扫描设备扫过人物或物体显示内部结构(骨骼/内脏)，或直接输出医用人体图谱 3D 渲染——骨骼/肌肉/内脏/神经血管/五官/手脚/皮肤/组织切片全套中英双语解剖标注，医用人体结构拆分为男性/女性两个独立...
+  - sub: xray_scan_general              | 透视扫描类                | X-Ray Scan Templates                | templates=2
+      * xray_see_through_scan                  | 透视扫描·X光透视                 | X-ray see-through scan
+      * xray_human_skeleton_scan               | 透视扫描·人体骨骼透视               | Human skeleton X-ray scan
+  - sub: medical_anatomy_male           | 医用人体·男性              | Medical Human Anatomy - Male        | templates=6
+      * med_full_body_anatomy_male             | 医用人体·男性·全身解剖图谱            | Male Full-Body Anatomy Atlas
+      * med_skeletal_system_male               | 医用人体·男性·全身骨骼系统            | Male Skeletal System 206 Bones
+      * med_muscular_system_male               | 医用人体·男性·全身肌肉系统            | Male Muscular System ~640 Muscles
+      * med_organ_systems_male                 | 医用人体·男性·九大系统内脏            | Male Nine Organ Systems
+      * med_face_features_closeup_male         | 医用人体·男性·五官精细解剖            | Male Facial Features Anatomy
+      * med_hands_feet_skin_male               | 医用人体·男性·手脚皮肤毛囊组织          | Male Hands, Feet, Skin, Follicles, Tissue Slices
+  - sub: medical_anatomy_female         | 医用人体·女性              | Medical Human Anatomy - Female      | templates=6
+      * med_full_body_anatomy_female           | 医用人体·女性·全身解剖图谱            | Female Full-Body Anatomy Atlas
+      * med_skeletal_system_female             | 医用人体·女性·全身骨骼系统            | Female Skeletal System 206 Bones
+      * med_muscular_system_female             | 医用人体·女性·全身肌肉系统            | Female Muscular System ~640 Muscles
+      * med_organ_systems_female               | 医用人体·女性·九大系统内脏            | Female Nine Organ Systems
+      * med_face_features_closeup_female       | 医用人体·女性·五官精细解剖            | Female Facial Features Anatomy
+      * med_hands_feet_skin_female             | 医用人体·女性·手脚皮肤毛囊组织          | Female Hands, Feet, Skin, Follicles, Tissue Slices
