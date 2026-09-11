@@ -8129,7 +8129,8 @@
               "duration_sec": 10,
               "need_images": true,
               "text_fallback_prompt": "",
-              "text_fallback_mode": "off"
+              "text_fallback_mode": "off",
+              "preview": "multi_ref_magic_wardrobe.webp"
             },
             {
               "id": "mirror_wardrobe_swap",
@@ -8140,7 +8141,8 @@
               "duration_sec": 8,
               "need_images": true,
               "text_fallback_prompt": "",
-              "text_fallback_mode": "off"
+              "text_fallback_mode": "off",
+              "preview": "mirror_wardrobe_swap.webp"
             }
           ],
           "id": "wardrobe_change_variants"
