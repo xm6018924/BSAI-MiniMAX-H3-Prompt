@@ -371,18 +371,9 @@ function buildTemplateUI(node) {
     hideWidget(node, "template_select");
     hideWidget(node, "user_customization");
     hideWidget(node, "narration");
-    // external_prompt: just hide the widget (like the others).
-    // Previously tried auto-converting to input via convertWidgetToInput(),
-    // but that broke on some ComfyUI versions — calling hideWidget() after
-    // convertWidgetToInput() overwrites the "converted-widget" type with
-    // "hidden", severing the input linkage so connected text never reaches
-    // the backend.  Now we simply hide it; users who want to connect text
-    // from another node can right-click the node → "Convert Widget to Input"
-    // → external_prompt.  The voice dialog still fills it via setWidgetText().
-    hideWidget(node, "external_prompt");
-    // direct_prompt has been REMOVED from the template node entirely.
-    // Direct mode is now a separate node: BSAI_H3_DirectPrompt.
-    // This prevents hidden direct_prompt values from silently bypassing templates.
+    // external_prompt and direct_prompt have been COMPLETELY REMOVED from the
+    // template node. Direct mode is a separate node: BSAI_H3_DirectPrompt.
+    // This prevents hidden widget values from silently polluting the prompt.
 
     const container = document.createElement("div");
     container.className = "bsai-tpl-wrap";
@@ -456,18 +447,12 @@ function buildTemplateUI(node) {
         }).then(function(r) { return r.json().catch(function() { return {}; }); })
         .then(function(j) {
             const out = (j && j.ok && j.prompt) ? j.prompt : _skillLocalBuild(n);
-            if (setWidgetText(node, "direct_prompt", out)) {
-                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-            }
-            updateOutputPreview(node, out);
-            setStatus("✅ 已生成 H3 官方SKILL三段式提示词并输出到下游 / 3-part prompt output to downstream", "ok");
+            setCustomizationText(node, out);
+            setStatus("✅ 已生成 H3 官方SKILL三段式提示词，已填入补充修改 / 3-part prompt filled into customization", "ok");
         }).catch(function() {
             const out = _skillLocalBuild(n);
-            if (setWidgetText(node, "direct_prompt", out)) {
-                node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-            }
-            updateOutputPreview(node, out);
-            setStatus("⚠️ 网络错误，已用本地三段式模板输出 / fallback: local 3-part output", "");
+            setCustomizationText(node, out);
+            setStatus("⚠️ 网络错误，已用本地三段式模板填入补充修改 / fallback: local 3-part filled into customization", "");
         }).then(function() {
             skillBtn.disabled = false;
             skillBtn.textContent = old;
@@ -1578,56 +1563,6 @@ function applyCustomization(node, done) {
     });
 }
 
-// Show the final prompt (sent to downstream nodes) in the node's output preview box
-function updateOutputPreview(node, text) {
-    if (node && node._bsaiOutTa) {
-        node._bsaiOutTa.value = text || "";
-    }
-}
-
-// Ask "how to output?" — used in Direct mode after transcription.
-// doRaw:      output the raw transcribed text directly (bypass H3 generation)
-// doGenerate: expand the text into a full H3 prompt, then output
-// showEdit:   true → full 4-choice dialog (incl. "edit text");
-//             false → 2/3-choice dialog (raw / H3 / cancel) — user is already editing
-function askModifyBox(node, ov, ta, doRaw, doGenerate, showEdit) {
-    var box = document.createElement("div");
-    box.className = "bsai-voice-overlay";
-    box.style.zIndex = 9999;
-    var editBtn = showEdit
-        ? '  <button class="bsai-voice-btn" data-b="edit">✏️ 修改文字 / Edit text</button>\n'
-        : '';
-    var promptLine = showEdit
-        ? '转写完成。可选择：直通输出原文、生成 H3 三段式提示词，或先修改文字。<br>Transcription done — output the raw text, generate a full H3 prompt, or edit first?'
-        : '文字已按你的修改更新。选择输出方式：直通原文，或生成 H3 三段式提示词。<br>Text updated. Choose how to output: raw text, or a full H3 prompt?';
-    box.innerHTML =
-        '<div class="bsai-voice-card" style="max-width:500px">' +
-        '<div class="bsai-voice-title">❓ 如何输出？ / How to output?</div>' +
-        '<div class="bsai-voice-status" style="white-space:normal">' + promptLine + '</div>' +
-        '<div class="bsai-voice-btns">' +
-        '  <button class="bsai-voice-btn primary" data-b="raw">⚡ 直通输出原文（不生成H3）/ Output raw text</button>' +
-        '  <button class="bsai-voice-btn" data-b="gen">⚡ 生成 H3 提示词 / Generate H3</button>' + '\n' +
-        editBtn +
-        '  <button class="bsai-voice-btn danger" data-b="no">✕ 取消 / Cancel</button>' +
-        '</div></div>';
-    document.body.appendChild(box);
-    function close() { try { box.remove(); } catch (e) {} }
-    box.querySelector('[data-b="raw"]').onclick = function() {
-        close();
-        doRaw();
-    };
-    box.querySelector('[data-b="gen"]').onclick = function() {
-        close();
-        doGenerate();
-    };
-    var bEdit = box.querySelector('[data-b="edit"]');
-    if (bEdit) bEdit.onclick = function() {
-        close();
-        if (ta) { try { ta.focus(); } catch (e) {} }
-    };
-    box.querySelector('[data-b="no"]').onclick = close;
-    return box;
-}
 
 function openVoiceModal(node) {
     if (!node) return;
@@ -1637,20 +1572,12 @@ function openVoiceModal(node) {
     ov.className = "bsai-voice-overlay";
     ov.innerHTML =
         '<div class="bsai-voice-card">' +
-        '<div class="bsai-voice-title">🎤 语音指令 / Voice Command</div>' +
+        '<div class="bsai-voice-title">🎤 语音输入 / Voice Input</div>' +
         '<div class="bsai-voice-status">点击"开始录音"，说完后点击"停止并转写" / Click Start, speak, then Stop & Transcribe</div>' +
         '<textarea class="bsai-voice-ta" placeholder="转写结果 / Transcription…"></textarea>' +
-        '<div class="bsai-voice-direct">' +
-        '  <label class="bsai-voice-chk"><input type="checkbox" data-act="drtgl" /> ⚡ 直通模式 / Direct Mode <span class="bsai-voice-hint">将文字直接扩写为完整 H3 提示词（绕过模板）/ expand into a full H3 prompt, bypassing templates</span></label>' +
-        '  <div class="bsai-voice-drow" data-act="drow" style="display:none">' +
-        '    <button class="bsai-voice-btn" data-act="gen" disabled>⚡ 生成 H3 提示词 / Generate H3</button>' +
-        '    <button class="bsai-voice-btn primary" data-act="confirm" disabled>✅ 确定并输出 / Confirm & Output</button>' +
-        '  </div>' +
-        '</div>' +
         '<div class="bsai-voice-btns">' +
         '  <button class="bsai-voice-btn primary" data-act="rec">● 开始录音 / Start</button>' +
         '  <button class="bsai-voice-btn" data-act="stop" disabled>■ 停止并转写 / Stop & Transcribe</button>' +
-        '  <button class="bsai-voice-btn" data-act="ext" disabled>➤ 填入外部提示词（覆盖动作）/ Set as external_prompt</button>' +
         '  <button class="bsai-voice-btn" data-act="cust" disabled>✎ 填入补充修改 / Set as customization</button>' +
         '  <button class="bsai-voice-btn danger" data-act="close">✕ 关闭 / Close</button>' +
         '</div></div>';
@@ -1659,148 +1586,19 @@ function openVoiceModal(node) {
     var ta = ov.querySelector(".bsai-voice-ta");
     var btnRec = ov.querySelector('[data-act="rec"]');
     var btnStop = ov.querySelector('[data-act="stop"]');
-    var btnExt = ov.querySelector('[data-act="ext"]');
     var btnCust = ov.querySelector('[data-act="cust"]');
-    var chkDirect = ov.querySelector('[data-act="drtgl"]');
-    var rowDirect = ov.querySelector('[data-act="drow"]');
-    var btnGen = ov.querySelector('[data-act="gen"]');
-    var btnConfirm = ov.querySelector('[data-act="confirm"]');
 
     function setStatus(txt, cls) {
         status.textContent = txt;
         status.className = "bsai-voice-status" + (cls ? " " + cls : "");
     }
     function enableFill() {
-        var has = !!(ta.value && ta.value.trim());
-        btnExt.disabled = !has;
-        btnCust.disabled = !has;
-        btnGen.disabled = !(chkDirect.checked && has);
-        btnConfirm.disabled = !(chkDirect.checked && has);
+        btnCust.disabled = !(ta.value && ta.value.trim());
     }
     ta.addEventListener("input", function() {
-        cancelAutoFlow();
-        enableFill();
-        // The user manually edited the text → never show the "how to output?" dialog.
-        // Stop the 3s timer and close any already-open dialog; they can use the
-        // always-present buttons (⚡ Generate H3 / ✅ Confirm & Output) instead.
-        if (_directAskTimer || _directAskBox) {
-            clearDirectAsk();
-            closeDirectAskBox();
-            setStatus("✅ 已修改文字：可直接点击下方「⚡ 生成 H3 提示词」或「✅ 确定并输出」/ Edited — use the buttons below (Generate H3 or Confirm & Output)", "ok");
-        }
-    });
-    chkDirect.addEventListener("change", function() {
-        rowDirect.style.display = chkDirect.checked ? "flex" : "none";
-        if (!chkDirect.checked) cancelAutoFlow();
         enableFill();
     });
 
-    // ── Direct mode: expand text into a full H3 prompt via local LLM ──
-    btnGen.onclick = function() {
-        var txt = (ta.value || "").trim();
-        if (!txt) { _autoGen = false; return; }
-        btnGen.disabled = true;
-        var old = ta.value;
-        setStatus("⚡ 正在生成 H3 提示词（本地模型，首次约 1 分钟）… / Generating H3 prompt (local LLM, ~1 min first time)…");
-        fetch("/bsai_h3/direct", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: txt })
-        }).then(function(r) { return r.json(); }).then(function(j) {
-            if (j && j.ok && j.prompt) {
-                ta.value = _bsaiCleanPrompt(j.prompt);
-                setStatus("✅ H3 直通提示词已生成，点击「确定并输出」直接发给下游节点 / Generated — click Confirm & Output", "ok");
-                if (_autoGen && !_flowCancelled) {
-                    _autoGen = false;
-                    btnConfirm.onclick();
-                    return;
-                }
-            } else {
-                ta.value = old;
-                _autoGen = false;
-                setStatus("生成失败：" + ((j && j.error) || "unknown") + " / Generate failed", "");
-            }
-            enableFill();
-        }).catch(function(e) {
-            ta.value = old;
-            _autoGen = false;
-            setStatus("网络错误 / Network error: " + e, "");
-            enableFill();
-        });
-    };
-    btnConfirm.onclick = function() {
-        // Direct mode confirm: write the generated H3 prompt to direct_prompt and
-        // close — the node outputs it immediately to downstream nodes.
-        var out = ta.value.trim();
-        if (setWidgetText(node, "direct_prompt", out)) {
-            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-        }
-        updateOutputPreview(node, out);
-        ov.remove();
-    };
-
-    // ── Direct-mode auto flow ──
-    // Direct mode: 3s of mic silence → auto stop & transcribe;
-    // after transcription, if the user does NOT edit the text → auto generate H3
-    // and output to downstream, then auto-close the dialog.
-    var _autoTimer = null;
-    var _flowCancelled = false;
-    var _autoGen = false;
-    function cancelAutoFlow() {
-        _flowCancelled = true;
-        _autoGen = false;
-        if (_autoTimer) { clearTimeout(_autoTimer); _autoTimer = null; }
-    }
-    // (startAutoFlow removed: after transcription, Direct mode now shows the
-    //  "edit or output as-is?" dialog instead of auto-generating after 3s.)
-
-    // ── Direct-mode 3s grace period ──
-    var _directAskTimer = null;
-    var _directAskShown = false;
-    var _directAskBox = null;   // the "how to output?" dialog DOM (if open)
-    function clearDirectAsk() {
-        if (_directAskTimer) { clearTimeout(_directAskTimer); _directAskTimer = null; }
-        _directAskShown = false;
-    }
-    function closeDirectAskBox() {
-        if (_directAskBox) {
-            try { _directAskBox.remove(); } catch (e) {}
-            _directAskBox = null;
-        }
-    }
-    function doRawOutput() {
-        // send the raw transcribed text downstream, bypassing H3 generation
-        var raw = ta.value.trim();
-        if (setWidgetText(node, "direct_prompt", raw)) {
-            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-        }
-        updateOutputPreview(node, raw);
-        ov.remove();
-    }
-    function doGenerateOutput() {
-        // expand into a full H3 prompt, then output downstream
-        _autoGen = true;
-        _flowCancelled = false;
-        btnGen.onclick();
-    }
-    function showDirectAsk(showEdit) {
-        clearDirectAsk();
-        closeDirectAskBox();
-        _directAskBox = askModifyBox(node, ov, ta, doRawOutput, doGenerateOutput, showEdit);
-    }
-    function startDirectAsk() {
-        clearDirectAsk();
-        closeDirectAskBox();
-        _flowCancelled = false;
-        _directAskShown = false;
-        setStatus("⏳ 直通模式：3 秒后弹出输出选项；此时直接修改文字可直接用下方按钮输出 / Direct: output options in 3s — edit now to use the buttons below directly", "ok");
-        _directAskTimer = setTimeout(function() {
-            _directAskTimer = null;
-            if (_directAskShown) return;
-            _directAskShown = true;
-            showDirectAsk(true);   // no edit within 3s → full dialog (edit / raw / H3 / cancel)
-        }, 3000);
-    }
     function cleanupVoice() {
         try { _voice.proc && _voice.proc.disconnect(); } catch (e) {}
         try { _voice.src && _voice.src.disconnect(); } catch (e) {}
@@ -1829,28 +1627,13 @@ function openVoiceModal(node) {
                 if (!_voice.rec) return;
                 var d = e.inputBuffer.getChannelData(0);
                 _voice.chunks.push(new Float32Array(d));
-                // peak detection for silence auto-stop (direct mode)
-                var peak = 0;
-                for (var i = 0; i < d.length; i++) { var a = Math.abs(d[i]); if (a > peak) peak = a; }
-                if (peak > 0.02) _voice.lastSoundAt = Date.now();
             };
             _voice.src.connect(_voice.proc);
             _voice.proc.connect(_voice.ctx.destination);
             _voice.rec = true;
-            _voice.lastSoundAt = Date.now();
-            // direct mode: auto stop & transcribe after 3s of silence
-            _voice.autoStopInt = setInterval(function() {
-                if (!_voice.rec) return;
-                if (chkDirect.checked && (Date.now() - _voice.lastSoundAt) >= 3000) {
-                    try { btnStop.onclick(); } catch (e) {}
-                }
-            }, 400);
             btnRec.disabled = true;
             btnStop.disabled = false;
-            setStatus(chkDirect.checked
-                ? "● 正在录音… 3 秒无声音将自动停止并转写 / Recording… auto-stops after 3s of silence"
-                : "● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now",
-                "rec");
+            setStatus("● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now", "rec");
         }).catch(function(err) {
             setStatus("无法访问麦克风：" + (err && err.name ? err.name : err) + " / Mic access denied", "");
         });
@@ -1859,12 +1642,10 @@ function openVoiceModal(node) {
     btnStop.onclick = function() {
         if (!_voice.rec) return;
         _voice.rec = false;
-        // collect samples
         var total = 0;
         _voice.chunks.forEach(function(a) { total += a.length; });
         var all = new Float32Array(total), off = 0;
         _voice.chunks.forEach(function(a) { all.set(a, off); off += a.length; });
-        // cleanup
         cleanupVoice();
         _voice.proc = _voice.src = _voice.stream = _voice.ctx = null;
         btnRec.disabled = false;
@@ -1874,20 +1655,12 @@ function openVoiceModal(node) {
             return;
         }
         setStatus("正在转写… / Transcribing…");
-        // downsample to 16k
         var s16 = downsampleTo16k(all, _voice.rate);
         var wav = encodeWavPcm16(s16, 16000);
         fetch("/bsai_h3/asr", { method: "POST", body: wav }).then(function(r) { return r.json(); }).then(function(j) {
             if (j && j.ok) {
                 ta.value = j.text || "";
                 setStatus("转写完成 / Done", "ok");
-                // Direct mode: 3s grace period after transcription.
-                //  - If the user edits the text within 3s → immediately show the
-                //    2-choice dialog (raw output / H3 generate).
-                //  - Otherwise after 3s → show the full 4-choice dialog (incl. edit).
-                if (chkDirect.checked && (ta.value || "").trim()) {
-                    startDirectAsk();
-                }
             } else {
                 setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
             }
@@ -1897,24 +1670,15 @@ function openVoiceModal(node) {
         });
     };
 
-    btnExt.onclick = function() {
-        if (setWidgetText(node, "external_prompt", ta.value.trim())) {
-            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
-        }
-        ov.remove();
-    };
     btnCust.onclick = function() {
         setCustomizationText(node, ta.value.trim());
         ov.remove();
     };
     ov.querySelector('[data-act="close"]').onclick = function() {
         cleanupVoice();
-        cancelAutoFlow();
-        clearDirectAsk();
-        closeDirectAskBox();
         ov.remove();
     };
-    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); cancelAutoFlow(); clearDirectAsk(); closeDirectAskBox(); ov.remove(); } });
+    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); ov.remove(); } });
 }
 
 function downsampleTo16k(samples, fromRate) {
@@ -2035,10 +1799,6 @@ app.registerExtension({
                     const custW = findWidget(node, "user_customization");
                     if (custW && node._bsaiCustTa) {
                         node._bsaiCustTa.value = custW.value || "";
-                    }
-                    const dirW = findWidget(node, "direct_prompt");
-                    if (dirW && node._bsaiOutTa) {
-                        updateOutputPreview(node, dirW.value || "");
                     }
                 }, 100);
             }

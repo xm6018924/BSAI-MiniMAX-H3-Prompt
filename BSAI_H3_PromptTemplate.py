@@ -291,14 +291,6 @@ class BSAI_H3_PromptTemplate:
                 "ref_image_7": ("IMAGE", {"tooltip": "参考图7 <Picture 7> (可选) / Reference image 7"}),
                 "ref_image_8": ("IMAGE", {"tooltip": "参考图8 <Picture 8> (可选) / Reference image 8"}),
                 "ref_image_9": ("IMAGE", {"tooltip": "参考图9 <Picture 9> (可选) / Reference image 9\n官方最多支持9张参考图"}),
-                "external_prompt": (
-                    "STRING",
-                    {
-                        "default": "",
-                        "multiline": True,
-                        "tooltip": "External prompt text input port / 外部提示词文本输入端口\nConnect from another node to OVERRIDE the template's action / 可从其他节点连接外部文本，用于覆盖模板中的动作描述\nE.g. input \"抬腿\" to replace the template's walking/motion with leg-lifting / 例如输入\"抬腿\"可将模板中的行走动作替换为抬腿",
-                    },
-                ),
                 "narration": (
                     "STRING",
                     {
@@ -334,19 +326,14 @@ Features / 功能特点:
 - Multi-select stacking: combine 2+ templates (e.g. combat + camera move) into one H3 prompt / 多选叠加：组合 2+ 个模板（如武打+运镜）合并为一个 H3 提示词
 - GIF/WebP preview on the right panel / 右侧预览动画
 - Optional user customization textarea / 可选的补充修改文本框
-- External prompt input port (external_prompt) OVERRIDES the template's action, e.g. "抬腿" replaces walking / 外部提示词输入端口（external_prompt）覆盖模板中的动作，如“抬腿”替换行走动作
-- 🎤 Voice input button: speak into the mic → offline local ASR (Vosk, vosk-model-small-cn-0.22) → fills external_prompt / 语音输入按钮：麦克风说话 → 本地离线识别（Vosk 中文模型）→ 填入外部提示词
-- ⚡ Direct mode (直通模式): voice/text instruction → local LLM → full H3 prompt (bypasses templates) / 直通模式：语音/文本指令 → 本地大模型 → 完整 H3 提示词（绕过模板）
+- 🎤 Voice input button: speak into the mic → offline local ASR (Vosk, vosk-model-small-cn-0.22) → fills user_customization / 语音输入按钮：麦克风说话 → 本地离线识别（Vosk 中文模型）→ 填入补充修改
 - Bilingual template names (中文 | English) / 模板名称中英双语对照
 - 46 expression & micro-expression templates / 46个表情与微表情模板
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
 """
 
-    def get_template(self, template_select, user_customization="", external_prompt="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
-        ext = (external_prompt or "").strip()
+    def get_template(self, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
         cust = (user_customization or "").strip()
-        if ext:
-            print(f"[BSAI H3 PromptTemplate] external_prompt connected: {len(ext)} chars")
         if cust:
             print(f"[BSAI H3 PromptTemplate] user_customization: {len(cust)} chars")
 
@@ -364,9 +351,6 @@ Features / 功能特点:
                 prompt = custom_text
             else:
                 prompt = ""
-            # external_prompt is hidden — do not append (see comment below)
-            # if ext:
-            #     prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
             if cust:
                 try:
                     merged, merr = _merge_custom(prompt, cust) if prompt.strip() else ("", None)
@@ -379,8 +363,7 @@ Features / 功能特点:
             prompt = _inject_narration(prompt, narration)
             return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
 
-        # Merge all selected templates. external_prompt 作为"反向提示词 / 严禁出现的关键字列表"，
-        # 不再作为动作覆盖（避免负向词如"五官扭曲"被当成要生成的动作）。
+        # Merge all selected templates.
         prompt = _merge_template_prompts(tpls, "")
         # ── 多参考图动态引用 + 去重约束 ──
         ref_imgs = [ref_image_1, ref_image_2, ref_image_3, ref_image_4, ref_image_5,
@@ -399,8 +382,6 @@ Features / 功能特点:
             if fb:
                 fb_mode = tpls[0].get("text_fallback_mode") or "Text to Video (文生视频)"
                 prompt = fb
-                if ext:
-                    prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
                 if cust:
                     try:
                         merged, merr = _merge_custom(prompt, cust)
@@ -441,13 +422,6 @@ Features / 功能特点:
             if not _already_has_ref:
                 ref_decl = " ".join(parts) + "\n\n"
                 prompt = ref_decl + prompt
-        # external_prompt is a HIDDEN widget — its value persists across template
-        # changes and can silently corrupt the prompt (e.g. old voice-input text
-        # overrides <Picture 3> scene references). It was originally an action
-        # override but that was removed (see comment above). Do NOT append it
-        # to the main prompt. If it has text, the debug log above will warn.
-        # if ext:
-        #     prompt = (prompt + "\n\n" if prompt.strip() else "") + ext
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
@@ -482,7 +456,7 @@ Features / 功能特点:
         return (prompt, name_label, mode, desc, duration, preview)
 
     @classmethod
-    def IS_CHANGED(s, template_select, user_customization="", external_prompt="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
+    def IS_CHANGED(s, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
         return float("nan")
 
 
@@ -498,7 +472,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
 # ══════════════════════════════════════════════════════════════════════════════
 #  Voice input (ASR) — local offline transcription via Vosk (vosk-model-small-cn)
 #  The browser records audio → encodes 16kHz mono WAV → POST /bsai_h3/asr →
-#  transcribed text is filled back into external_prompt / user_customization.
+#  transcribed text is filled back into user_customization.
 # ══════════════════════════════════════════════════════════════════════════════
 import io
 import struct
