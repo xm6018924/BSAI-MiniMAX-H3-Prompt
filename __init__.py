@@ -32,6 +32,16 @@ except Exception:
     print("[BSAI-MiniMAX-H3-Prompt] Failed to import BSAI_H3_DirectPrompt (direct mode node will be unavailable!):")
     traceback.print_exc()
 
+# Merge Direct Prompt node (独立直通模式节点，与模板节点完全分离)
+try:
+    from .BSAI_H3_DirectPrompt import NODE_CLASS_MAPPINGS as _DIRECT_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as _DIRECT_DISPLAY
+    NODE_CLASS_MAPPINGS.update(_DIRECT_MAPPINGS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(_DIRECT_DISPLAY)
+except Exception:
+    print("[BSAI-MiniMAX-H3-Prompt] Failed to import BSAI_H3_DirectPrompt (direct mode node will be unavailable!):")
+    import traceback
+    traceback.print_exc()
+
 # Register web extension directory (relative path for ComfyUI)
 WEB_DIRECTORY = "./web"
 
