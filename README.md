@@ -1,3 +1,51 @@
+# BSAI-MiniMAX-H3-Prompt
+
+> **English overview (full Chinese details below). / 英文总览，详细中文说明见下文。**
+
+## What This Is / 插件简介
+
+A ComfyUI custom node pack that turns **MiniMax H3** text-to-video prompts into production-grade **3-part standard H3 prompt format** (header + integrated_multimodal_description + overall_soundscape + non_diegetic_music) via a local GGUF LLM (Qwen3 family) or a remote API. It includes **23+ built-in template categories** for PV promos, VFX & multi-view shots, character cards, and more.
+
+## Key Features / 核心功能
+
+- **Prompt optimization & format conversion**: raw prompts → standard H3 3-part format with multimodal description, soundscape and music sections
+- **PV Promotional Video templates (8)**: Director-PV storyboard function — text-controllable, multi-image reference, first/last-frame strong control, LoRA control. 3 sub-categories: Basic PV (single-person / text-only / product), Multi-image Storyboard PV (person+product, two-person, director multi-shot, first-last frame), Stylized PV (fashion TVC)
+- **VFX & Multi-View templates (15)**: split screen, person-space, typography, anime interaction, multi-view split — all multi-reference (Picture 1/2 + custom scene)
+- **Manual voiceover (旁白) support**, stability mechanisms (deterministic output, no random drift), character card asset templates, LoRA management
+- **Two modes**: local model (GGUF + mmproj) or remote API (zero VRAM)
+
+## Nodes / 节点
+
+| Node | Function |
+|---|---|
+| **BSAI H3 Model Loader** | Load GGUF LLM (Qwen3 family), optional mmproj for vision |
+| **BSAI MiniMAX H3 Prompt** | Local prompt optimizer: prompt + optional image_1~10 / video_1~4 / audio_1~3 → `prompt_output` |
+| **BSAI H3 Remote API** | Cloud LLM prompt optimization, no VRAM used, independent node |
+| Template nodes | PV / VFX / character-card template emitters (multi-param) |
+
+## Install / 安装
+
+1. Copy repo into `ComfyUI/custom_nodes/BSAI-MiniMAX-H3-Prompt/`
+2. Install deps (`pip install -r requirements.txt` or via ComfyUI Manager search "BSAI MiniMax H3")
+3. Put GGUF model (+ mmproj for vision) into `ComfyUI/models/LLM/`
+4. Restart ComfyUI
+
+## Quick Start / 快速开始
+
+- **Local mode**: `BSAI H3 Model Loader → BSAI MiniMAX H3 Prompt → 视频生成节点`; connect optional image/video/audio inputs
+- **Remote API mode**: `BSAI H3 Remote API → 视频生成节点`; fill `api_base_url` / `api_key` / `model_name`
+- **PV templates**: pick a PV template (e.g. 单图人物PV or 导演分镜PV) → upload reference images per the slot table (optional; falls back to text-to-video) → choose free-composition or force-first-frame → write any on-screen text (auto-avoids faces/products, per-character fidelity; use 片尾卡 for logo) → suggested duration 10–15s, test at low res 0.2 first, then 0.5/0.915
+
+## Model Support / 支持模型
+
+Local GGUF: Qwen3 family; Remote API: OpenAI-compatible chat completions endpoints. Full parameter reference, stability mechanisms, output format and changelog are documented in the Chinese sections below.
+
+## License / 许可证
+
+MIT (see 许可证 section below).
+
+---
+
 ﻿# BSAI-MiniMAX-H3-Prompt
 
 ## 2026-09-12 新增：PV宣传片模板（8 个，导演PV分镜功能）
