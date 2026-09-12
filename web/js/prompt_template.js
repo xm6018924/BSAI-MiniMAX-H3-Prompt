@@ -218,6 +218,12 @@ if (!document.getElementById(STYLE_ID)) {
 /* Customization textarea */
 .bsai-tpl-cust { margin-top: 6px; flex: 0 0 auto; min-height: 100px; display: flex; flex-direction: column; }
 .bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
+.bsai-tpl-pv-hint {
+    display: block; margin: 2px 0 4px; padding: 6px 8px;
+    background: #1d2b3a; border: 1px solid #2f6f9e; border-radius: 5px;
+    color: #bfe0ff; font-size: 11px; line-height: 1.5; flex-shrink: 0;
+    white-space: pre-wrap; word-break: break-word;
+}
 .bsai-tpl-cust-ta {
     display: block; width: 100%; height: 60px; min-height: 50px; max-height: none; resize: vertical;
     background: #222; color: #ddd; border: 1px solid #444;
@@ -580,7 +586,13 @@ function buildTemplateUI(node) {
     custBtn.className = "bsai-tpl-cust-btn";
     custBtn.textContent = "确认修改 / Apply";
     custBtn.title = "将补充修改真正融合进模板，并在下方输出提示词预览中查看最终结果 / Merge the customization into the template and preview the final result below";
+    // v-pv: per-template guidance banner (纯文字PV·无图生成 asks the user to type
+    // PV copy / script / ad lines here, then 确认修改 merges it into the template).
+    const pvHint = document.createElement("div");
+    pvHint.className = "bsai-tpl-pv-hint";
+    pvHint.style.display = "none";
     custDiv.appendChild(custLbl);
+    custDiv.appendChild(pvHint);
     custDiv.appendChild(custTa);
     custDiv.appendChild(custBtn);
     container.appendChild(custDiv);
@@ -665,6 +677,8 @@ function buildTemplateUI(node) {
     node._bsaiClr = clrBtn;
     node._bsaiCnt = cntSpan;
     node._bsaiCustTa = custTa;
+    node._bsaiCustLbl = custLbl;
+    node._bsaiPvHint = pvHint;
     node._bsaiCustBtn = custBtn;
     node._bsaiOutTa = outTa;
     node._bsaiDiffToggle = diffToggle;
@@ -1314,6 +1328,7 @@ function syncSelectionUI(node) {
     if (node.graph) node.setDirtyCanvas(true, true);
     if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 20);
     renderOutputPreview(node);
+    syncCustomizationHint(node, sel);
 }
 
 function clearSelection(node) {
@@ -1494,6 +1509,25 @@ function showDiff(node, src, merged) {
 // Merge the customization into the selected template(s) immediately and show the
 // final prompt in the output preview. Called by the "确认修改 / Apply" button.
 // `done` (optional) is invoked when the merge completes/fails.
+// ── v-pv: per-template customization guidance ──
+// When the primary (first) selected template carries a `customization_hint`
+// (e.g. 纯文字PV·无图生成), turn the "补充修改" box into a guided PV-copy input:
+// banner + label + placeholder change; otherwise restore the generic wording.
+function syncCustomizationHint(node, sel) {
+    var tpl = (sel && sel.length > 0) ? sel[0].tpl : null;
+    var hint = (tpl && tpl.customization_hint) ? String(tpl.customization_hint) : "";
+    var lbl = node._bsaiCustLbl, banner = node._bsaiPvHint, ta = node._bsaiCustTa;
+    if (hint) {
+        if (lbl) lbl.textContent = "✍️ PV宣传文字 / 补充修改（纯文字PV 必填引导）:";
+        if (banner) { banner.textContent = hint; banner.style.display = "block"; }
+        if (ta) ta.placeholder = "在此输入你的 PV 宣传文字 / 文稿 / 广告语…（写清主角长相/服装/年龄、场景、动作、镜头、要不要屏幕文字/写什么字；越具体画面越可控）";
+    } else {
+        if (lbl) lbl.textContent = "补充修改 / Customization (Optional):";
+        if (banner) { banner.textContent = ""; banner.style.display = "none"; }
+        if (ta) ta.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    }
+}
+
 function applyCustomization(node, done) {
     if (!node) { if (done) done(); return; }
     if (node._bsaiCustTa) setWidgetText(node, "user_customization", node._bsaiCustTa.value);
@@ -1514,7 +1548,21 @@ function applyCustomization(node, done) {
         if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
     });
     var base = parts.join("\n\n");
-    if (!(cust && cust.trim())) { renderOutputPreview(node); if (done) done(); return; }
+    if (!(cust && cust.trim())) {
+        // v-pv: text-only PV template with no copy typed yet — guide the user
+        // instead of silently doing nothing.
+        var _pv0 = (node._bsaiSelection && node._bsaiSelection.length) ? node._bsaiSelection[0].tpl : null;
+        if (_pv0 && _pv0.customization_hint) {
+            if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
+            node._bsaiOutputVisible = true;
+            if (node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
+            if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
+            if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
+            node._bsaiOutTa.value = "⚠️ 纯文字PV模板需要你的宣传文字：请在“补充修改”输入框填写 PV 宣传文字 / 文稿 / 广告语，再点「确认修改」融合进提示词。\n" + _pv0.customization_hint;
+            try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
+        }
+        renderOutputPreview(node); if (done) done(); return;
+    }
     if (!base) { node._bsaiOutTa.value = cust.trim(); if (done) done(); return; }
     var seq = ++_mergeSeq;
     var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
