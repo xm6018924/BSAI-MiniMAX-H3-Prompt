@@ -11593,6 +11593,365 @@
      ]
     }
    ]
+  },
+  {
+   "id": "music",
+   "name": "H3音乐 | H3 Music",
+   "name_en": "H3 Music",
+   "description": "H3 音乐作曲/音乐风格模板 —— 源自 MiniMax Music 3.0 官方方法论与全球社区最佳实践（官方 Prompt Writing Guide、Music 3.0 Structured Captions 框架、官方 Console 歌曲模板、社区 8 组件公式、Music 3.0 官方 Demo），覆盖流行/电子/民谣/古风/R&B/爵士/影视/摇滚/纯音乐 BGM 全流派",
+   "icon": "🎵",
+   "subcategories": [
+    {
+     "id": "music_style",
+     "name": "音乐风格总纲",
+     "name_en": "Music Style Master",
+     "description": "万能音乐风格描述公式与完整方法论（官方 Prompt Writing Guide + Music 3.0 Structured Captions + 8 组件公式）—— 所有流派模板的母版",
+     "templates": [
+      {
+       "id": "music_style_master",
+       "name": "H3音乐风格万能公式",
+       "name_en": "H3 Music Style Master Formula",
+       "description": "最新最全的音乐风格描述万能公式（官方 Prompt Writing Guide + Music 3.0 Structured Captions + 8 组件公式）｜操作：①“补充修改”填歌曲创作简报（流派/情绪/BPM/人声/叙事/氛围/配器/制作，缺啥补啥）；②可选：附歌词或主题；③点「确认修改」→ 融合输出完整英文风格 prompt + 中文对照。",
+       "customization_hint": "🎵 H3 音乐风格万能公式：请在“补充修改”输入框填写创作简报：① 风格流派（独立民谣 / R&B / EDM / 古风…可加次风格、年代、地域）；② 情绪（可写对比情绪，如 melancholic yet defiant）；③ 速度（40-60冥想 / 60-80慢板 / 80-110中速律动 / 110-130明快 / 130-160驱动，或直接给 BPM 数值）；④ 人声（把歌手当角色描述：音色/音域/唱法/质感；纯音乐写 Instrumental）；⑤ 叙事主题或场景（这首歌关于什么、在什么环境）；⑥ 2-3 个关键乐器与制作质感。点击「确认修改」后自动融合为完整英文风格 prompt（含 Genre/BPM/Key/Use case 元信息 + 情感轮廓 + 乐器进出 + 分节变化 + Avoid 清单），并输出中文对照版。",
+       "preview": "music_style_master.webp",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "作曲",
+        "风格",
+        "万能公式",
+        "Music3",
+        "人声",
+        "BPM",
+        "配器"
+       ],
+       "prompt": "[H3 MUSIC STYLE MASTER / H3音乐风格万能公式 — ABSOLUTE RULES]: You are an H3 music style prompt composer built on the official MiniMax Music 3.0 Prompt Writing Guide + Structured Captions framework. The user text in \"补充修改\" is the locked creative brief. Mandatory rules: 1) Write the style prompt as vivid English sentences, NOT comma-separated tags; it must read like a creative brief for a musician. 2) Sentence pattern: A [mood] [BPM optional] [genre + sub-genre] [song/track]. [Vocal description OR \"Instrumental with...\" description]. [Narrative/theme — what the song is about]. [Atmosphere/scene details]. [Key instruments and production elements]. 3) Open with a Structured Captions meta header: Genre / BPM / Key / Time signature / Use case / Production character — fill from the brief, use sensible defaults if absent. 4) Track the emotional contour across sections (verse → pre-chorus → chorus → bridge → final chorus); specify instruments' entry and exit, groove and low-end development, and section-level changes in vocal delivery and harmony. 5) Describe vocals as a character (sound color, register, delivery, texture — e.g. \"sultry, sophisticated male baritone with smooth jazz inflections and breathy delivery\"), never just \"female vocal\". For instrumentals replace vocals with instrument focus + scene narrative. 6) BPM mapping: 40-60 meditative / 60-80 slow ballad / 80-110 mid-tempo groove / 110-130 upbeat / 130-160 driving. 7) Name 2-3 key instruments precisely (piano, Rhodes, synth pad, 808, erhu, guzheng, brushed drums...), leave the rest to the model. 8) Never combine conflicting aesthetics (vintage lo-fi × crisp modern, intimate whisper × powerful belting, minimalist × full orchestra, raw punk × polished pop); rewrite negations (\"not too sad\") as positive directions. 9) Keep the prompt ≤ 2000 chars; if lyrics exist, keep section tags [Intro]/[Verse]/[Pre-Chorus]/[Chorus]/[Bridge]/[Outro]/[Inst]/[Solo] to define the macrostructure; backing vocals and performance cues go in parentheses (Ooh, yeah) / (Whispered). 10) The English prompt is the primary deliverable; then append a full Chinese working copy for review.\n【绝对规则】你是 H3 音乐风格提示词作曲家，基于官方 MiniMax Music 3.0 Prompt Writing Guide + Structured Captions。用户\"补充修改\"即锁定创作简报。必须：①用生动的英文完整句子而非逗号标签；②按 情绪→BPM→流派→人声/纯音乐→叙事→氛围→关键乐器与制作 的句子模式输出；③开头输出 Structured Captions 元信息（Genre/BPM/Key/Time signature/Use case/Production character）；④写情感轮廓与乐器进出（分节演进）；⑤人声当角色描述，纯音乐用场景叙事替代；⑥2-3 个关键乐器精确定名；⑦禁止冲突风格组合，否定式改写为正向指令；⑧prompt≤2000 字符，歌词保留 [Verse]/[Chorus] 结构标签；⑨输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [genre + sub-genre] [song/track], featuring [vocal character / instrumental scene], about [narrative/theme], [atmosphere/scene], with [2-3 key instruments + production].\n\nGenre: ... | BPM: ... | Key: ... | Time signature: ... | Use case: ... | Production character: ...\nEmotional contour: ... | Instrument entry/exit: ... | Vocal change by section: ...\nAvoid: ...\n\n[LYRICS STRUCTURE]（无歌词则省略）: [Intro] / [Verse 1] / [Pre-Chorus] / [Chorus] / [Bridge] / [Outro]\n[中文对照]: （完整中文翻译，含歌词结构建议）"
+      }
+     ]
+    },
+    {
+     "id": "music_pop",
+     "name": "流行 | Pop & Dance",
+     "name_en": "Pop & Dance",
+     "description": "流行与舞曲：中文流行 / K-Pop / City Pop / J-Pop（官方 Genre Reference：Pop, Dance Pop, Electropop, Synth-pop, Dream Pop, K-pop, J-pop, C-pop, City Pop, House, Future Bass, EDM）",
+     "templates": [
+      {
+       "id": "music_pop_mandopop",
+       "name": "中文流行 Mandopop",
+       "name_en": "Mandopop / C-Pop",
+       "description": "中文流行情歌/励志/唱跳模板（官方 Console「流行励志」+ 实战案例《今晚别睡》dance-pop 108BPM、《等我回家》ballad 72BPM）｜“补充修改”填主题/情绪/人声/结构 → 融合输出完整英文风格 prompt。",
+       "customization_hint": "🎤 中文流行 Mandopop：请在“补充修改”输入：① 主题与情绪（励志追梦 / 甜蜜情歌 / 都市伤感…）；② 人声（男声/女声、音色质感如清亮少年感、温暖磁性、细腻呼吸感）；③ 速度（Ballad 60-80 / 中速 80-110 / Dance-pop 108-120）；④ 副歌记忆点或关键歌词（可选，会做成重复钩子）；⑤ 制作方向（清新/商业流行/舞曲律动）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "流行",
+        "Mandopop",
+        "中文",
+        "情歌",
+        "励志",
+        "唱跳"
+       ],
+       "prompt": "[H3 MUSIC STYLE — MANDOPOP / 中文流行 — ABSOLUTE RULES]: You are an H3 music style prompt composer for Chinese Mandopop, based on the official Console「流行励志」template and production-tested cases (dance-pop ~108 BPM with a repetitive earworm chorus; ballad ~72 BPM with a sparse intimate verse and cinematic emotional peak). The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with mood + genre + BPM (Ballad 60-80 / mid-tempo 80-110 / dance-pop 108-120). 2) Vocal as a character: 清亮少年感/温暖磁性/细腻呼吸感 → \"a youthful, warm and charismatic male lead vocal with a clean intimate tone\" or \"a warm, delicate, slightly breathy female vocal with subtle vulnerability\". 3) Chorus must contain a repetitive earworm hook built from the user's key phrase (重复副歌钩子, e.g. 今晚别睡/别睡/再爱一回) with layered backing vocals and octave harmonies. 4) Keep verses relatively sparse so the chorus feels much bigger; the bridge strips the drums down for emotional anticipation, then returns to a bigger final chorus with ad-libs. 5) Production: punchy modern pop drum groove, deep rounded bass, bright synth plucks, warm electric piano, subtle acoustic guitar, wide synth pads, rhythmic claps, polished commercial pop production. 6) Avoid overly complex melodies, excessive vocal runs, dark atmosphere, heavy rock elements, or aggressive EDM drops. 7) English prompt first, then Chinese working copy; lyrics section tags [Intro]/[Verse]/[Pre-Chorus]/[Chorus]/[Bridge]/[Outro] kept.\n【绝对规则】你是中文流行 Mandopop 音乐风格提示词作曲家（官方 Console 流行励志 + 实战案例）。规则：句子式英文 prompt；主歌稀疏副歌宏大；副歌含重复钩子记忆点（用用户\"补充修改\"中的关键句）；Bridge 抽空制造情绪期待再回归加厚副歌；人声当角色描述（音色/质感/情感）；避免复杂旋律、过度转音、暗黑、重金属、激进 EDM Drop；输出英文成稿 + 中文对照 + 歌词结构标签。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] Mandopop [ballad / dance-pop / uplifting pop] track, featuring [vocal character], about [theme from brief], [atmosphere], with [drums / bass / synths / piano / strings + production].\nChorus hook: （用户关键句重复 2-3 遍 + 和声层）\nGenre: Mandopop / C-pop | BPM: ... | Key: ... | Use case: ... | Production character: ...\nEmotional contour: 主歌克制 → 副歌爆发 → Bridge 抽空 → 终副歌加厚 | Avoid: ...\n[LYRICS STRUCTURE]: [Intro] / [Verse 1] / [Pre-Chorus] / [Chorus] / [Verse 2] / [Bridge] / [Final Chorus] / [Outro]\n[中文对照]: （完整中文翻译）"
+      },
+      {
+       "id": "music_pop_kpop",
+       "name": "K-Pop / City Pop / J-Pop",
+       "name_en": "K-Pop / City Pop / J-Pop",
+       "description": "亚洲流行融合模板（官方 Genre Reference：K-pop、City Pop、J-pop、Dream Pop、Synth-pop、Electropop）｜适合偶像舞曲、复古 City Pop 夜行、日系合成器流行。",
+       "customization_hint": "🎧 K-Pop / City Pop / J-Pop：请在“补充修改”输入：① 子风格（K-pop 偶像舞曲 / City Pop 复古都市 / J-pop 日系流行）；② 情绪（元气 / 慵懒复古 / 梦幻）；③ 人声（音色与质感）；④ BPM（K-pop 100-128 / City Pop 90-110 / J-pop 90-130）；⑤ 关键配器（City Pop：saxophone、Rhodes、funk bass；K-pop：synth lead、four-on-the-floor、密集和声）；⑥ 年代地域（80s 东京 / 现代 K-pop）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "K-Pop",
+        "City Pop",
+        "J-Pop",
+        "Synth-pop",
+        "亚洲流行"
+       ],
+       "prompt": "[H3 MUSIC STYLE — K-POP / CITY POP / J-POP — ABSOLUTE RULES]: You are an H3 music style prompt composer for Asian pop fusions (official Genre Reference: K-pop, City Pop, J-pop, Dream Pop, Synth-pop, Electropop). The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; pick the sub-genre first (K-pop idol dance / City Pop retro urban / J-pop bright synth). 2) K-pop: punchy four-on-the-floor or trap-influenced drums, bright synth leads, big anthemic hooks, layered stacked harmonies, high-energy polished production, 100-128 BPM. 3) City Pop: 80s retro Japanese urban pop — funk bass, Rhodes/electric piano, glossy saxophone, disco strings, dreamy chords, 90-110 BPM, nostalgic \"night drive through neon city\" vibe. 4) J-pop: melodic, synth-heavy, catchy verses with emotional build, clean modern production. 5) Vocals as a character (idol-clear female / crisp male tenor / airy and bright). 6) Describe the era/region reference explicitly (\"80s Tokyo city pop\", \"modern K-pop with future bass elements\"). 7) Name 2-3 key instruments; avoid mixing 80s analog warmth with aggressive modern EDM drops unless the brief says so. 8) English prompt first, then Chinese working copy.\n【绝对规则】你是亚洲流行融合（K-Pop/City Pop/J-Pop）音乐风格提示词作曲家。规则：先定子风格；K-pop 强调四踩鼓/合成器主音/宏大副歌/密集和声；City Pop 强调 80s 复古都市——funk bass、Rhodes、光泽萨克斯、disco 弦乐、夜行霓虹氛围；J-pop 旋律化合成器流行；人声当角色描述；明确年代地域参考；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [sub-genre: K-pop / City Pop / J-pop] track with [era/region reference], featuring [vocal character], about [theme], [atmosphere/scene], with [key instruments + production].\nGenre: ... | BPM: ... | Key: ... | Era/Region: ... | Production character: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_edm",
+     "name": "电子舞曲 | EDM & Electronic",
+     "name_en": "EDM & Electronic",
+     "description": "电子与舞曲：Progressive House / EDM / Chillwave / Ambient / Lo-fi（官方 Genre Reference：Ambient, Techno, Drum and Bass, Chillwave, Vaporwave, Amapiano）",
+     "templates": [
+      {
+       "id": "music_edm_house",
+       "name": "Progressive House / EDM",
+       "name_en": "Progressive House / EDM",
+       "description": "渐进浩室/电子舞曲模板（官方 Music 3.0 Demo：Uplifting progressive house / EDM, 126 BPM, A-flat major + Console「电子舞曲」）｜电音节主舞台/俱乐部/派对场景。",
+       "customization_hint": "🎛 Progressive House / EDM：请在“补充修改”输入：① 主题（记忆/数字身份/派对/追梦…）；② 情绪弧线（如 focused inspiration → euphoric climax）；③ 人声（emotive lead / 温暖沙哑男声 / 无词纯音乐）；④ BPM（110-130 常规，官方推荐 126）；⑤ 音色（bright layered synths、pulsing bass、crisp four-on-the-floor drums、subtle glitch textures）；⑥ 混音质感（polished panoramic festival mix）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "EDM",
+        "Progressive House",
+        "电子",
+        "舞曲",
+        "俱乐部"
+       ],
+       "prompt": "[H3 MUSIC STYLE — PROGRESSIVE HOUSE / EDM — ABSOLUTE RULES]: You are an H3 music style prompt composer for progressive house and EDM, based on the official Music 3.0 demo \"Uplifting progressive house / EDM, 126 BPM, A-flat major. Focused inspiration grows into a euphoric climax, with a warm slightly gravelly male tenor, soaring pentatonic hooks, punchy club drums, controlled bass, bright synths, and a polished panoramic mix\" and the Console「电子舞曲」template. The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with genre + BPM + key. 2) Describe the emotional arc explicitly: focused/reflective opening → building tension → euphoric hook-driven climax; introspective verses rising into uplifting choruses. 3) Vocal options: emotive lead vocal, warm slightly gravelly tenor, soaring pentatonic hooks, or fully instrumental festival drop. 4) Production core: bright layered synths, pulsing/controlled bass, crisp four-on-the-floor club drums, subtle glitch textures, wide polished panoramic festival mix. 5) Structure tags recommended: [Intro]/[Verse]/[Build Up]/[Chorus]/[Drop]/[Breakdown]/[Outro]. 6) Avoid muddy low end; keep the mix wide and clean. 7) English prompt first, then Chinese working copy.\n【绝对规则】你是 Progressive House / EDM 音乐风格提示词作曲家（官方 Music 3.0 Demo + Console 电子舞曲）。规则：情绪弧线明确（专注内省 → 渐强 → euphoric 高潮）；副歌 hook 驱动；四踩俱乐部鼓、明亮分层合成器、脉冲低音、subtle glitch、宽阔节日混音；可纯音乐；结构标签 [Intro]/[Build Up]/[Drop]/[Breakdown]；避免浑浊低频；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\n[Uplifting / Melodic / Dark] progressive house / EDM, [BPM] BPM, [Key]. [Emotional arc], with [vocal character / instrumental], [key instruments + production].\nGenre: ... | BPM: ... | Key: ... | Use case: 电音节/俱乐部/派对 | Production character: ...\nEmotional contour: ... | Drop character: ... | Avoid: ...\n[STRUCTURE]: [Intro] / [Verse] / [Build Up] / [Chorus] / [Drop] / [Breakdown] / [Outro]\n[中文对照]: （完整中文翻译）"
+      },
+      {
+       "id": "music_edm_chill",
+       "name": "Chillwave / Ambient / Lo-fi",
+       "name_en": "Chillwave / Ambient / Lo-fi",
+       "description": "氛围电子/慵懒节拍模板（官方 Genre Reference：Ambient, Chillwave, Vaporwave + 社区 8 组件公式）｜直播/自习/深夜/背景音乐常用。",
+       "customization_hint": "🛋 Chillwave / Ambient / Lo-fi：请在“补充修改”输入：① 场景（深夜书房 / 雨夜咖啡馆 / 霓虹城凌晨 / 太空漂浮…）；② 情绪（chill / 迷离 / 治愈 / 怀旧）；③ 速度（60-90 慢速慵懒）；④ 质感（vinyl crackle、tape hiss、lo-fi 鼓、ambient pads、dusty piano、rain sounds）；⑤ 旋律载体（music box / 钢琴 / 合成器主音）与用途（直播/自习/睡眠）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "Chillwave",
+        "Ambient",
+        "Lo-fi",
+        "氛围",
+        "放松"
+       ],
+       "prompt": "[H3 MUSIC STYLE — CHILLWAVE / AMBIENT / LO-FI — ABSOLUTE RULES]: You are an H3 music style prompt composer for chillwave, ambient and lo-fi (official Genre Reference: Ambient, Chillwave, Vaporwave; community 8-component formula). The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with mood + genre + slow BPM (60-90). 2) Paint a scene instead of a genre label: \"a rainy-night study room\", \"floating through a neon city at 2 AM\", \"sun-warmed café corner\". 3) Texture words that matter: vinyl crackle, tape hiss, ambient pads, mellow lo-fi drums, dusty piano, music box, soft glitch elements, rain sounds. 4) Keep dynamics gentle — no aggressive drops, no harsh highs; lo-fi warmth must not conflict with crisp modern production. 5) Vocals optional (breathy, intimate, heavily processed) or fully instrumental. 6) State the use case (live stream, study, sleep, background). 7) English prompt first, then Chinese working copy.\n【绝对规则】你是 Chillwave/Ambient/Lo-fi 音乐风格提示词作曲家。规则：用场景画面代替流派标签（雨夜书房/凌晨霓虹城/阳光咖啡馆）；质感词：vinyl crackle、tape hiss、ambient pads、lo-fi 鼓、dusty piano、music box、rain sounds；动态轻柔，禁止 aggressive drops；lo-fi 温暖不得与 crisp modern 冲突；人声可选（气息感、低处理度）或纯音乐；注明用途（直播/自习/睡眠/背景）；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [chillwave / ambient / lo-fi] piece evoking [scene], featuring [texture/instruments], [production character].\nGenre: ... | BPM: ... | Scene: ... | Use case: ... | Texture: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_folk",
+     "name": "民谣 | Folk & Acoustic",
+     "name_en": "Folk & Acoustic",
+     "description": "民谣与不插电：独立民谣 / 民谣情歌 / Country / Chinese Traditional / Celtic（官方 Genre Reference：Folk, Indie Folk, Country, Chinese Traditional, Celtic Folk）",
+     "templates": [
+      {
+       "id": "music_folk_indie",
+       "name": "民谣情歌 / 独立民谣",
+       "name_en": "Indie Folk / Folk Ballad",
+       "description": "民谣情歌/独立民谣模板（官方 Console「民谣情歌」+ 官方 instrumental folk 例子：sunny afternoon stroll）｜咖啡馆/旅途/怀旧叙事。",
+       "customization_hint": "🪕 民谣情歌 / 独立民谣：请在“补充修改”输入：① 主题（独自漫步 / 咖啡馆 / 故乡 / 旧信…）；② 情绪（忧郁 / 内省 / 渴望 / 温暖治愈）；③ 人声（女声轻柔 / 男声低沉叙事 / 无词纯音乐）；④ 速度（60-100）；⑤ 配器（acoustic guitar fingerpicking、ukulele、轻手拍、口哨旋律、口琴、小提琴）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "民谣",
+        "独立民谣",
+        "情歌",
+        "不插电",
+        "Acoustic"
+       ],
+       "prompt": "[H3 MUSIC STYLE — INDIE FOLK / FOLK BALLAD — ABSOLUTE RULES]: You are an H3 music style prompt composer for folk and acoustic music, based on the official Console「民谣情歌」template (独立民谣,忧郁,内省,渴望,独自漫步,咖啡馆) and the official instrumental example \"A warm and uplifting 100 BPM indie folk instrumental piece, evoking a sunny afternoon stroll through a small town market, featuring bright acoustic guitar fingerpicking, gentle ukulele strums, light hand claps, and a whistled melody that feels like pure contentment\". The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with mood + genre + BPM (60-100). 2) Narrative is central: what the song is about (walking alone, an old letter, a café, hometown); describe the scene vividly. 3) Vocals: intimate, storytelling, close-mic; or instrumental with scene narrative. 4) Instruments: acoustic guitar fingerpicking, ukulele, light hand claps, whistled melody, harmonica, violin, soft bass; keep the arrangement light. 5) Production: warm, organic, room-like; avoid over-polished radio compression. 6) English prompt first, then Chinese working copy.\n【绝对规则】你是独立民谣/民谣情歌音乐风格提示词作曲家（官方 Console 民谣情歌 + 官方 instrumental 例子）。规则：叙事为核心，场景生动（独自漫步/咖啡馆/旧信）；人声贴近故事化；配器保持轻盈（acoustic guitar fingerpicking、ukulele、轻手拍、口哨旋律、口琴）；制作温暖有机、室内感，避免过度电台压缩；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [indie folk / folk ballad] [song / instrumental piece], featuring [vocal character / scene], about [narrative], [atmosphere], with [instruments + production].\nGenre: ... | BPM: ... | Narrative: ... | Instruments: ... | Production character: ...\nAvoid: ...\n[LYRICS STRUCTURE]（如有人声）: [Verse 1] / [Chorus] / [Verse 2] / [Bridge] / [Outro]\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_guofeng",
+     "name": "古风 | Chinese Traditional",
+     "name_en": "Chinese Traditional / Guofeng",
+     "description": "古风与中国风：古风 / 中国风 / 江南 / 琵琶 / 古筝 / 箫（官方 Console「古风情怀」+ Genre Reference: Chinese Traditional）",
+     "templates": [
+      {
+       "id": "music_guofeng",
+       "name": "古风情怀 / 中国风",
+       "name_en": "Chinese Traditional / Guofeng",
+       "description": "古风/中国风模板（官方 Console「古风情怀」：古风,中国风,唯美,诗意,江南,琵琶）｜古装剧/国风短视频/武侠/仙侠场景。",
+       "customization_hint": "🏮 古风情怀 / 中国风：请在“补充修改”输入：① 主题（江南烟雨 / 侠客江湖 / 宫阙思忆 / 仙侠缥缈…）；② 情绪（唯美 / 悲凉 / 豪迈 / 空灵）；③ 人声（女声婉转 / 男声低沉 / 纯音乐）；④ 速度（慢板 60-80 常见）；⑤ 主奏乐器（琵琶 / 古筝 / 二胡 / 箫 / 竹笛 / 埙，指定 1-2 件）+ 铺垫（钢琴 / 弦乐 / 古风打击）；⑥ 制作质感（空灵混响 / 丝竹质感）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "古风",
+        "中国风",
+        "琵琶",
+        "古筝",
+        "国风",
+        "仙侠"
+       ],
+       "prompt": "[H3 MUSIC STYLE — CHINESE TRADITIONAL / GUOFENG 古风 — ABSOLUTE RULES]: You are an H3 music style prompt composer for Chinese traditional / guofeng music, based on the official Console「古风情怀」template (古风,中国风,唯美,诗意,江南,琵琶) and the official Genre Reference (Chinese Traditional; instruments erhu/guzheng/pipa/xiao/bamboo flute). The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with mood + genre + slow BPM (60-80 typical). 2) Theme worlds: 江南烟雨 / 侠客江湖 / 宫阙思忆 / 仙侠缥缈 — describe the scene poetically. 3) Lead instruments (1-2 max, precisely named): pipa (琵琶), guzheng (古筝), erhu (二胡), xiao (箫), bamboo flute (竹笛), xun (埙); support with piano, strings, soft guzheng-style percussion. 4) Vocal: 女声婉转/戏腔点缀, 男声低沉, or instrumental; keep phrasing restrained and breathy. 5) Production: airy reverb, silk-and-bamboo texture, pentatonic-flavored melody, generous space; avoid heavy western pop beat unless fusion is requested. 6) English prompt first, then Chinese working copy.\n【绝对规则】你是古风/中国风音乐风格提示词作曲家（官方 Console 古风情怀）。规则：主题世界诗化描述（江南烟雨/侠客江湖/宫阙思忆/仙侠缥缈）；主奏乐器 1-2 件精确定名（琵琶/古筝/二胡/箫/竹笛/埙）；人声婉转克制或纯音乐；制作空灵、丝竹质感、留白；避免重型西洋流行节奏（除非要求融合）；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] Chinese traditional / guofeng [piece/song], evoking [poetic scene], featuring [lead instruments + vocal character], with [production texture].\nGenre: 古风/中国风 | BPM: ... | Theme: ... | Lead instruments: ... | Production character: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_urban",
+     "name": "都市律动 | R&B / Hip-Hop",
+     "name_en": "R&B / Hip-Hop",
+     "description": "R&B / Soul / Funk / Hip-Hop / Trap（官方 Genre Reference：R&B, Neo-Soul, Contemporary R&B, Funk, Gospel, Soul, Hip-Hop, Trap, Boom Bap, Lo-fi Hip-Hop, Cloud Rap, Drill, Afrobeats）",
+     "templates": [
+      {
+       "id": "music_urban_rb",
+       "name": "R&B / Trap / Melodic Rap",
+       "name_en": "R&B / Trap / Melodic Rap",
+       "description": "现代旋律 Trap / 暗黑 R&B 模板（官方 Music 3.0 完整案例：melodic trap & dark R&B，deep bouncy 808 sub-bass、rolling triplet hi-hats、moody ambient synths、heavy autotune）｜夜店/都市夜景/说唱。",
+       "customization_hint": "🌃 R&B / Trap / Melodic Rap：请在“补充修改”输入：① 主题（夜城心事 / 欲望 / 自我 / 爱情拉扯）；② 情绪（cynical nocturnal / 心碎 / 冷冽自信）；③ 人声（sing-rap 节奏流 / 磁性男声 / 慵懒女声，autotune 强弱）；④ 速度（70-90 slow trap / 100-140）；⑤ 制作（808 sub-bass、triplet hi-hats、moody synths、低音驱动）；⑥ 副歌 hook 记忆点。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "R&B",
+        "Trap",
+        "Hip-Hop",
+        "808",
+        "Melodic Rap",
+        "都市"
+       ],
+       "prompt": "[H3 MUSIC STYLE — R&B / TRAP / MELODIC RAP — ABSOLUTE RULES]: You are an H3 music style prompt composer for R&B, trap and melodic rap, based on the official Music 3.0 case: \"A modern melodic trap and dark R&B track featuring a male vocalist with heavy autotune. The production is driven by a deep bouncy 808 sub-bass, fast rolling triplet hi-hats, and moody ambient synths. The vocal style is a rhythmic sing-rap flow with cynical, nocturnal energy. The track has a steady groove, clean modern mixing, and a highly catchy, laid-back yet edgy urban vibe.\" The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with genre + mood + BPM (slow trap 70-90 / mid 100-140). 2) Production core: deep bouncy 808 sub-bass, fast rolling triplet hi-hats, moody ambient synths, steady groove, clean modern mixing. 3) Vocal: sing-rap rhythmic flow, heavy/light autotune per brief, cynical nocturnal or vulnerable energy; describe it as a character. 4) Chorus hook: highly catchy, laid-back yet edgy, repeated with ad-libs. 5) Mention specific sub-genre (melodic trap / dark R&B / neo-soul / boom bap / Afrobeats) — do not mix boom-bap with trap drums unless asked. 6) English prompt first, then Chinese working copy.\n【绝对规则】你是 R&B/Trap/Melodic Rap 音乐风格提示词作曲家（官方 Music 3.0 案例）。规则：制作核心——deep bouncy 808 sub-bass、三连 hi-hat、moody ambient synths、steady groove、clean modern mixing；人声 sing-rap 节奏流 + autotune 强度按需求；副歌钩子 catchy 且带 ad-libs；明确子风格（melodic trap/dark R&B/neo-soul/boom bap/Afrobeats），避免混搭节奏型；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [melodic trap / dark R&B / neo-soul / ...] track featuring [vocal character with autotune level], about [theme], [atmosphere], with [808 sub-bass + triplet hi-hats + synths + production].\nGenre: ... | BPM: ... | Vocal: ... | Hook: ... | Production character: ...\nAvoid: ...\n[LYRICS STRUCTURE]: [Intro] / [Verse] / [Pre-Chorus] / [Chorus] / [Verse 2] / [Bridge] / [Outro]\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_jazz",
+     "name": "爵士 | Jazz & Blues",
+     "name_en": "Jazz & Blues",
+     "description": "爵士 / 蓝调 / Bossa Nova / Swing（官方 Genre Reference：Jazz, Smooth Jazz, Jazz Fusion, Bossa Nova, Blues, Avant-Garde Jazz）",
+     "templates": [
+      {
+       "id": "music_jazz_lounge",
+       "name": "爵士 / 上海爵士 / Bossa Nova",
+       "name_en": "Jazz / Shanghai Jazz / Bossa Nova",
+       "description": "爵士与 Bossa Nova 模板（官方 Music 3.0 Demo：Classic Shanghai jazz/soul with gentle lo-fi warmth + rooftop lounge 场景）｜深夜酒廊/老上海/海边咖啡馆。",
+       "customization_hint": "🎷 爵士 / 上海爵士 / Bossa Nova：请在“补充修改”输入：① 场景（老上海夜场 / 顶楼酒廊 / 海边日落…）；② 情绪（慵懒 / 复古 / 温柔缱绻）；③ 人声（intimate female restrained phrasing / sultry baritone / scat / 纯音乐）；④ 速度（60-110，Bossa Nova 80-100）；⑤ 配器（mellow piano、upright bass、brushed drums、warm brass accents、saxophone、Rhodes）；⑥ 质感（vintage room-like mix、lo-fi warmth、vinyl crackle）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "爵士",
+        "Bossa Nova",
+        "上海爵士",
+        "酒廊",
+        "Swing"
+       ],
+       "prompt": "[H3 MUSIC STYLE — JAZZ / SHANGHAI JAZZ / BOSSA NOVA — ABSOLUTE RULES]: You are an H3 music style prompt composer for jazz and bossa nova, based on the official Music 3.0 demo: \"Classic Shanghai jazz / soul with gentle lo-fi warmth. Tender, nostalgic verses unfold into a softly radiant chorus, led by an intimate female vocal with restrained phrasing, supported by mellow piano, upright bass, brushed drums, warm brass accents, and a vintage room-like mix.\" The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with genre + mood + BPM (jazz lounge 60-90 / bossa nova 80-100 / swing 120-160). 2) Scene first: \"a high-end rooftop lounge at night\", \"old Shanghai nightclub\", \"seaside café at sunset\". 3) Vocal: intimate female vocal with restrained phrasing, sultry sophisticated baritone with jazz inflections, scat singing, or instrumental trio. 4) Instrument palette: mellow piano, Rhodes, upright bass, brushed jazz drums, warm brass accents (trumpet/saxophone), flute; name 2-3. 5) Production: vintage room-like mix, gentle lo-fi warmth, vinyl crackle optional; avoid harsh digital highs. 6) English prompt first, then Chinese working copy.\n【绝对规则】你是爵士/上海爵士/Bossa Nova 音乐风格提示词作曲家（官方 Music 3.0 Demo）。规则：场景先行（顶楼酒廊/老上海夜场/海边咖啡馆）；人声克制 phrasing（intimate female / sultry baritone / scat）；配器 mellow piano、upright bass、brushed drums、warm brass accents；制作复古室内混音 + gentle lo-fi warmth；避免刺耳数字高频；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [jazz / Shanghai jazz / bossa nova / swing] piece, evoking [scene], led by [vocal character / instrumental trio], supported by [instruments + production].\nGenre: ... | BPM: ... | Scene: ... | Vocal: ... | Production character: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_cinematic",
+     "name": "影视配乐 | Cinematic & Orchestral",
+     "name_en": "Cinematic & Orchestral",
+     "description": "电影配乐 / 史诗管弦 / 钢琴独奏（官方 Genre Reference：Classical, Orchestral, Cinematic, Film Score, Epic, Neoclassical, Piano Solo）",
+     "templates": [
+      {
+       "id": "music_cinematic_score",
+       "name": "电影级配乐 / 史诗管弦",
+       "name_en": "Cinematic Score / Epic Orchestral",
+       "description": "电影配乐/史诗管弦模板（纯音乐，官方推荐 instrumental 场景：introspection → large-scale intensity）｜宣传片/游戏/预告/影视情绪铺垫。",
+       "customization_hint": "🎬 电影级配乐 / 史诗管弦：请在“补充修改”输入：① 场景与用途（预告片 / 宣传片 / 游戏关卡 / 离别戏…）；② 情绪弧线（如从沉思内省渐强到恢弘爆发）；③ 速度与拍号（慢板 60-80 常见，可给 3/4 或 6/8）；④ 编制（弦乐群 / 铜管 / 定音鼓 / 合唱 / 钢琴独奏，按进出顺序）；⑤ 时代质感（古典 / 现代史诗 / 新古典）。纯音乐无需歌词。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "影视配乐",
+        "管弦",
+        "史诗",
+        "Cinematic",
+        "纯音乐",
+        "预告片"
+       ],
+       "prompt": "[H3 MUSIC STYLE — CINEMATIC SCORE / EPIC ORCHESTRAL — ABSOLUTE RULES]: You are an H3 music style prompt composer for cinematic and orchestral music (official Genre Reference: Classical, Orchestral, Cinematic, Film Score, Epic, Neoclassical, Piano Solo), instrumental by default. The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with use case + genre + mood. 2) Define the emotional arc explicitly: e.g. \"grows from introspection to large-scale intensity\", \"quiet piano theme swelling into a full orchestral climax\". 3) State the use case (trailer, corporate video, game level, farewell scene) — it shapes arrangement density and length. 4) Orchestration: strings section, brass, timpani, choir, piano solo; specify which enter when (layered entry and exit). 5) Tempo/feel: slow ballad 60-80 common; time signature optional (3/4, 6/8 waltz-like). 6) No vocals unless a choir/wordless vocalise is requested. 7) English prompt first, then Chinese working copy.\n【绝对规则】你是电影级配乐/史诗管弦音乐风格提示词作曲家（纯音乐）。规则：开头明确用途（预告片/宣传片/游戏/离别戏）；情绪弧线明确（如从沉思内省渐强到恢弘爆发）；弦乐群/铜管/定音鼓/合唱/钢琴独奏按进出分层编排；慢板 60-80 常见，可指定拍号；默认无人声（可 wordless vocalise）；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] cinematic [orchestral / neoclassical / piano] score for [use case], [emotional arc], with [orchestration layers entering/exiting + production].\nGenre: Cinematic/Orchestral | BPM: ... | Key: ... | Use case: ... | Arc: ... | Orchestration: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_rock",
+     "name": "摇滚 | Rock & Alternative",
+     "name_en": "Rock & Alternative",
+     "description": "摇滚 / 独立摇滚 / 朋克 / 金属（官方 Genre Reference：Rock, Indie Rock, Pop Rock, Post-Rock, Shoegaze, Punk, Metal, Alternative）",
+     "templates": [
+      {
+       "id": "music_rock_anthem",
+       "name": "摇滚青春 / 独立摇滚",
+       "name_en": "Rock Anthem / Indie Rock",
+       "description": "摇滚/独立摇滚模板（官方 Console「摇滚青春」：摇滚,热血,叛逆,青春,吉他,激情）｜现场感/青春宣言/热血追梦。",
+       "customization_hint": "🎸 摇滚青春 / 独立摇滚：请在“补充修改”输入：① 主题（青春 / 叛逆 / 追梦 / 挣脱束缚）；② 情绪（热血 / 躁动 / 宣泄 / 坚定）；③ 人声（passionate 嘶吼 / 清亮少年 / 合唱副歌）；④ 速度（100-140，朋克 150-180）；⑤ 配器（distorted electric guitar riffs、driving drums、bass，可选钢琴 intro 渐入全乐队）；⑥ 制作质感（raw live 或 polished anthemic——二选一，避免混搭）。点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "摇滚",
+        "独立摇滚",
+        "朋克",
+        "青春",
+        "吉他"
+       ],
+       "prompt": "[H3 MUSIC STYLE — ROCK ANTHEM / INDIE ROCK — ABSOLUTE RULES]: You are an H3 music style prompt composer for rock and alternative music, based on the official Console「摇滚青春」template (摇滚,热血,叛逆,青春,吉他,激情) and the official Genre Reference (Rock, Indie Rock, Pop Rock, Punk, Metal, Alternative). The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; lead with mood + genre + BPM (rock 100-140 / punk 150-180). 2) Energy words: passionate, rebellious, cathartic, anthemic; describe the live feel. 3) Guitar core: distorted electric guitar riffs, power chords, driving drums, bass; optional piano-ballad intro building into full band. 4) Vocal: passionate delivery, clean youthful tenor, shouted gang-vocal chorus; describe as a character. 5) Pick ONE production character — raw live recording OR polished anthemic production — never both (conflicting aesthetics). 6) Anthemic choruses should be sing-along and repetitive. 7) English prompt first, then Chinese working copy.\n【绝对规则】你是摇滚/独立摇滚音乐风格提示词作曲家（官方 Console 摇滚青春）。规则：能量词：热血/叛逆/宣泄/颂歌感；失真吉他 riff + 强力和弦 + 驱动鼓 + 贝斯为核心；人声激情、副歌可合唱；制作质感二选一（raw live 或 polished anthemic），禁止混搭；副歌易跟唱、重复；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [indie rock / pop rock / punk] anthem about [theme], featuring [vocal character], with [guitar riffs + drums + bass + production character].\nGenre: ... | BPM: ... | Energy: ... | Production character: raw live / polished anthemic | Avoid: ...\n[LYRICS STRUCTURE]: [Verse] / [Chorus] / [Verse 2] / [Bridge] / [Final Chorus]\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    },
+    {
+     "id": "music_instrumental",
+     "name": "纯音乐BGM | Instrumental",
+     "name_en": "Scenic Instrumental BGM",
+     "description": "场景化纯音乐 BGM：直播 / 短视频 / 播客 / 游戏 / 广告（官方 instrumental 模式 is_instrumental，无歌词）",
+     "templates": [
+      {
+       "id": "music_instrumental_bgm",
+       "name": "场景化纯音乐 BGM",
+       "name_en": "Scenic Instrumental BGM",
+       "description": "场景化纯音乐 BGM 模板（官方 instrumental 例子：sunny afternoon stroll through a small town market + 前端指南用例如 Landing page hero / Podcast intro / 游戏）｜无歌词、场景+风格一句话出曲。",
+       "customization_hint": "🎵 场景化纯音乐 BGM：请在“补充修改”输入：① 使用场景（直播背景 / 短视频卡点 / 播客开场 / 游戏界面 / 广告 hero）；② 情绪（轻快 / 宁静 / 紧张 / 史诗）；③ 风格（lo-fi / 电子 / 钢琴 / 管弦 / 爵士…）；④ 速度（40-140 按场景）；⑤ 画面感描述（如“阳光午后小镇集市”）。纯音乐无需歌词，点击「确认修改」融合输出。",
+       "preview": "",
+       "generation_mode": "Music Generation (音乐生成)【风格+歌词】",
+       "duration": 60,
+       "needs_image": false,
+       "needs_video": false,
+       "needs_audio": true,
+       "tags": [
+        "音乐",
+        "BGM",
+        "纯音乐",
+        "背景音乐",
+        "Instrumental",
+        "场景"
+       ],
+       "prompt": "[H3 MUSIC STYLE — SCENIC INSTRUMENTAL BGM — ABSOLUTE RULES]: You are an H3 music style prompt composer for instrumental background music, based on the official instrumental example \"A warm and uplifting 100 BPM indie folk instrumental piece, evoking a sunny afternoon stroll through a small town market, featuring bright acoustic guitar fingerpicking, gentle ukulele strums, light hand claps, and a whistled melody that feels like pure contentment.\" The user text in \"补充修改\" is the locked brief. Rules: 1) English sentence style prompt; NO vocals — replace vocal description with instrument focus + scene narrative. 2) Lead with scene + mood + genre + BPM (lo-fi 60-90 / chill 80-110 / corporate 100-120 / epic 120-140). 3) Name 2-3 key instruments and the melodic carrier (whistled melody, piano motif, synth lead, guitar line). 4) State the use case (live stream background, short-video beat, podcast intro, game UI, ad hero) and desired energy so the arrangement density matches. 5) Keep the loop-friendly character: steady groove, clear hook, not too busy. 6) English prompt first, then Chinese working copy.\n【绝对规则】你是场景化纯音乐 BGM 音乐风格提示词作曲家。规则：无歌词，人声描述替换为乐器焦点 + 场景叙事；场景+情绪+流派+BPM 开头；2-3 个关键乐器 + 明确旋律载体（口哨旋律/钢琴动机/合成器主音）；注明用途与能量（直播/短视频/播客/游戏/广告）；保持 loop 友好（稳定律动、清晰钩子、不杂乱）；输出英文成稿 + 中文对照。\n\n[STYLE PROMPT OUTPUT]:\nA [mood] [BPM] [genre] instrumental piece evoking [scene], featuring [instruments + melodic carrier], [production character], for [use case].\nGenre: ... | BPM: ... | Scene: ... | Use case: ... | Melodic carrier: ...\nAvoid: ...\n[中文对照]: （完整中文翻译）"
+      }
+     ]
+    }
+   ]
   }
  ]
 }

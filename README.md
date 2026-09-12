@@ -4,7 +4,7 @@
 
 ## What This Is / 插件简介
 
-A ComfyUI custom node pack that turns **MiniMax H3** text-to-video prompts into production-grade **3-part standard H3 prompt format** (header + integrated_multimodal_description + overall_soundscape + non_diegetic_music) via a local GGUF LLM (Qwen3 family) or a remote API. It includes **23+ built-in template categories** for PV promos, VFX & multi-view shots, character cards, and more.
+A ComfyUI custom node pack that turns **MiniMax H3** text-to-video prompts into production-grade **3-part standard H3 prompt format** (header + integrated_multimodal_description + overall_soundscape + non_diegetic_music) via a local GGUF LLM (Qwen3 family) or a remote API. It includes **24+ built-in template categories** for PV promos, VFX & multi-view shots, H3 music composition/style prompts, character cards, and more.
 
 ## Key Features / 核心功能
 
@@ -47,6 +47,28 @@ MIT (see 许可证 section below).
 ---
 
 ﻿# BSAI-MiniMAX-H3-Prompt
+
+## 2026-09-12 新增：H3 音乐作曲/音乐风格模板（12 个，全网最新最全）
+> 新增顶级分类「H3音乐 | H3 Music」，含 10 个子类、12 个模板。源自 **MiniMax Music 3.0 官方方法论 + 全球社区最佳实践**：官方 Prompt Writing Guide（句子式 prompt、5 要素结构、风格/人声/配器/BPM 参考表）、Music 3.0 Structured Captions 框架（Genre/BPM/Key/Use case/Production character 元信息 + 情感轮廓 + 乐器进出 + 分节变化）、官方 Console 歌曲模板（民谣情歌/流行励志/电子舞曲/古风情怀/摇滚青春）、社区 8 组件公式与冲突风格规避、官方 Music 3.0 Demo（上海爵士/Progressive House/Trap 等完整风格描述）。
+>
+> 每个模板均为**融合型指令**：用户在「补充修改」填创作简报（流派/情绪/BPM/人声/叙事/氛围/配器/制作）→ 点「确认修改」→ 自动融合输出**完整英文音乐风格 prompt**（含 Structured Captions 元信息头 + 情感轮廓 + Avoid 清单）+ **中文对照**，可直接用于 MiniMax Music 3.0 API / 本地 Music3 工作流。
+
+| 子类 | 模板 | 适用 |
+|---|---|---|
+| 音乐风格总纲 \| Music Style Master | **H3音乐风格万能公式**（全方法论母版） | 任意风格一句话出曲 |
+| 流行 \| Pop & Dance | 中文流行 Mandopop / K-Pop·City Pop·J-Pop | 中文情歌/励志/唱跳、偶像舞曲、复古都市 |
+| 电子舞曲 \| EDM & Electronic | Progressive House·EDM / Chillwave·Ambient·Lo-fi | 电音节/俱乐部、直播/自习/深夜氛围 |
+| 民谣 \| Folk & Acoustic | 民谣情歌·独立民谣 | 咖啡馆/旅途/怀旧叙事 |
+| 古风 \| Chinese Traditional | 古风情怀·中国风 | 古装剧/国风短视频/武侠/仙侠 |
+| 都市律动 \| R&B / Hip-Hop | R&B·Trap·Melodic Rap | 夜店/都市夜景/说唱（808 + 三连 hi-hat） |
+| 爵士 \| Jazz & Blues | 爵士·上海爵士·Bossa Nova | 深夜酒廊/老上海/海边咖啡馆 |
+| 影视配乐 \| Cinematic & Orchestral | 电影级配乐·史诗管弦（纯音乐） | 预告片/宣传片/游戏/影视情绪 |
+| 摇滚 \| Rock & Alternative | 摇滚青春·独立摇滚 | 现场感/青春宣言/热血追梦 |
+| 纯音乐BGM \| Instrumental | 场景化纯音乐 BGM（无歌词） | 直播/短视频/播客/游戏/广告 |
+
+**通用用法**：选模板 → 「补充修改」填创作简报（每模板引导框会提示填哪些要素）→ 可选附歌词（带 [Verse]/[Chorus] 结构标签效果最佳）→ 点「确认修改」→ 输出英文风格 prompt + 中文对照（可再编辑）。风格描述 ≤2000 字符，歌词 ≤3500 字符。
+
+---
 
 ## 2026-09-12 新增：PV宣传片模板（8 个，导演PV分镜功能）
 > 新增顶级分类「PV宣传片 | PV Promotional Video」，含 3 个子类、8 个模板。对应 MiniMaxH3 导演PV分镜功能：**文字可控、多图参考、首尾帧强控、LoRA可控**。每个模板均为三段式标准 H3 格式（header + integrated_multimodal_description + overall_soundscape + non_diegetic_music），并内置 **PV 文字叠层控制段**（无字/自定义文字/指定位置/防遮挡/逐字保真）。
