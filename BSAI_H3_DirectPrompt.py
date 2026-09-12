@@ -61,6 +61,7 @@ class BSAI_H3_DirectPrompt:
     )
     FUNCTION = "process"
     CATEGORY = "BSAI"
+    OUTPUT_NODE = True
     OUTPUT_IS_LIST = (False, False, False, False, False, False)
     DESCRIPTION = """
 BSAI H3 直通模式节点 / Direct Prompt Node
@@ -71,9 +72,16 @@ BSAI H3 直通模式节点 / Direct Prompt Node
 """
 
     def process(self, prompt, user_customization="", narration=""):
-        from BSAI_H3_PromptTemplate import (
-            _merge_custom, _append_custom, _inject_narration,
-        )
+        # ComfyUI 新版不再把插件目录加入 sys.path，顶层绝对导入会失败，
+        # 因此依次尝试 绝对导入 → 相对导入，保证在真实 ComfyUI 与独立测试中均可运行。
+        try:
+            from BSAI_H3_PromptTemplate import (
+                _merge_custom, _append_custom, _inject_narration,
+            )
+        except ImportError:
+            from .BSAI_H3_PromptTemplate import (
+                _merge_custom, _append_custom, _inject_narration,
+            )
         p = (prompt or "").strip()
         cust = (user_customization or "").strip()
         if cust:
@@ -86,7 +94,13 @@ BSAI H3 直通模式节点 / Direct Prompt Node
             except Exception:
                 p = _append_custom(p, cust)
         p = _inject_narration(p, narration)
-        return (p, "直通模式 | Direct Mode", "Direct / 直通", "Direct H3 prompt / 直通 H3 提示词", 0, "")
+        result = (p, "直通模式 | Direct Mode", "Direct / 直通", "Direct H3 prompt / 直通 H3 提示词", 0, "")
+        # 返回 ui + result：ui 部分会触发前端 executed 事件并显示在节点上，
+        # result 部分作为真实下游数据（与普通 tuple 返回完全一致）。
+        return {
+            "ui": {"text": [p]},
+            "result": result,
+        }
 
 
 NODE_CLASS_MAPPINGS = {

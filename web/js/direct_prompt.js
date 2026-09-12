@@ -120,6 +120,7 @@ function buildDirectUI(node) {
     custRow.appendChild(custLbl);
     custRow.appendChild(custInput);
     container.appendChild(custRow);
+    node._bsaiDirectCustInput = custInput;
 
     // Tool buttons
     const tools = document.createElement("div");
@@ -256,11 +257,34 @@ app.registerExtension({
                     }
                     const cw = findWidget(node, "user_customization");
                     if (cw && node._bsaiDirectCustInput) {
-                        // find the cust input in the DOM
-                        const inputs = node._bsaiDirectTa.parentElement.querySelectorAll(".bsai-direct-cust-input");
-                        if (inputs[0]) inputs[0].value = cw.value || "";
+                        node._bsaiDirectCustInput.value = cw.value || "";
                     }
                 }, 100);
+            }
+        };
+
+        // Show execution output on the node itself (works for both ▶ single-node run
+        // and full workflow run, since the node is now an OUTPUT_NODE).
+        const origExecuted = nodeType.prototype.onExecuted;
+        nodeType.prototype.onExecuted = function(message) {
+            if (origExecuted) origExecuted.apply(this, arguments);
+            const node = this;
+            let out = "";
+            if (message) {
+                out = message["prompt_output (提示词输出)"] ?? message.prompt_output ?? message.text ?? "";
+            }
+            if (Array.isArray(out)) out = out.join("\n");
+            if (out === null || out === undefined) out = "";
+            if (typeof out !== "string") out = String(out);
+            if (node._bsaiDirectStatus) {
+                if (out) {
+                    const preview = out.length > 80 ? out.slice(0, 80) + "…" : out;
+                    node._bsaiDirectStatus.textContent = "✅ 已输出到下游 / Output: " + preview;
+                    node._bsaiDirectStatus.className = "bsai-direct-status ok";
+                } else {
+                    node._bsaiDirectStatus.textContent = "⚠️ 输出为空 / Output is empty";
+                    node._bsaiDirectStatus.className = "bsai-direct-status warn";
+                }
             }
         };
 
