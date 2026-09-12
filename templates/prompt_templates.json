@@ -11552,6 +11552,47 @@
      ]
     }
    ]
+  },
+  {
+   "id": "storyboard",
+   "name": "一键视频分镜",
+   "name_en": "One-Click Storyboard",
+   "description": "数字人口播分镜：锁定口播文稿+人物/场景/产品参考 → Ref2VA 六段分镜提示词（电商带货、政企讲解、新闻播报、教育网课等口播场景）",
+   "icon": "clapperboard",
+   "subcategories": [
+    {
+     "id": "storyboard_digital_human",
+     "name": "数字人口播",
+     "name_en": "Digital-Human Presenter",
+     "description": "口播驱动的数字人分镜：正式场景固定机位、10-15秒长单元、台词逐字落镜",
+     "templates": [
+      {
+       "id": "storyboard_digital_human",
+       "name": "一键视频分镜·数字人口播",
+       "name_en": "One-Click Storyboard - Digital Human Presenter",
+       "description": "一键视频分镜·数字人口播｜操作：①在“补充修改”填口播文案/脚本（必填，逐字）；②填数字人用途（电商带货/政企讲解/新闻播报/教育网课/文旅导游等）；③有参考图就传（人物/场景/产品），无图写清长相/服装/年龄/场景；④点「确认修改」→ 自动融合成 Ref2VA 六段分镜提示词。正式场景自动固定机位。",
+       "customization_hint": "🎬 一键视频分镜·数字人口播：请在上方“补充修改”输入框填写：① 口播文案/脚本（必填，逐字保留标点）；② 数字人用途（电商带货/政企讲解/新闻播报/教育网课/文旅导游/真人IP复刻等）；③ 人物/场景/产品描述（有参考图直接上传图1/图2/图3，无图写清长相、服装、年龄、场景、道具）；④ 可选：视觉风格、画幅、总时长。点击「确认修改」后自动融合为完整 Ref2VA 分镜提示词，输出给下游多模态融合节点。",
+       "preview": "storyboard_digital_human.webp",
+       "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+       "duration": 15,
+       "needs_image": true,
+       "needs_video": false,
+       "needs_audio": false,
+       "tags": [
+        "分镜",
+        "数字人",
+        "口播",
+        "Ref2VA",
+        "主播",
+        "电商",
+        "讲解",
+        "一键"
+       ],
+       "prompt": "[DIGITAL-HUMAN STORYBOARD / 数字人口播分镜 — ABSOLUTE RULES]: You are a digital-human presenter storyboard director for MiniMax H3. The user text in \"补充修改\" is the LOCKED script + production brief. Mandatory rules: 1) Output ONLY the Ref2VA six-section structure: subject_definitions: / summary: / retention_analysis: / detailed_description: / overall_soundscape: / non_diegetic_music:. 2) 口播台词逐字保留原文与标点，只写入 <d>[Language] 原文</d>；每个完整句子完整落在一个生成单元内；切点与句/段边界重合。3) 单元 10–15 秒贴近 15 秒上限（按语速档位聚合：稳档160-200字/分约40-50字/15秒，中档200-240约50-60字，快档240-260约60-65字）；镜头按脚本顺序连续拼接，总时长为各单元 seconds 之和。4) 讲者绑定稳定 (S1)/(S2)，首次出现给出身份（年龄/性别/音高/语速/口音）；<Subject N> 说话时写 <Subject N> (Sx)。5) 参考图规则：<Picture N> 是帧锚点（每单元最多 9 张）；人物/场景/产品参考在 subject_definitions 内用 <Subject N> 定义并引用（如 <Subject 1> is the presenter in <Picture 1>, ...）；上传顺序 P# → <Picture N> 机械映射。无参考图时用文字详述主体长相/服装/年龄/场景。6) 正式严肃场景（新闻播报/政企讲解/教育网课/金融保险/企业内训/医疗科普/法律合规）全程 Static Shot 固定机位，相机位置/角度/焦段/构图持续锁定；不得默认推拉摇移升降环绕跟拍变焦。电商带货按用户选择的快剪/正常切镜风格执行（快剪=约15秒单元内2-3秒一次高密度内部切镜）。7) 每个单元 detailed_description 写可执行布光方案：动机光源方向（front/45-degree side/three-quarter back/top/underlight）+ 主光软硬 + 补光/负补光 + 分离光（rim/edge/backlight）+ 实用光源/背景/反射贡献。8) 转场：连续转场下一镜以复述上一镜精确终帧起笔（保留轴线/站位/光向/道具状态）；硬切处声明新构图/轴线/运镜前提。9) detailed_description 按序：画面质感与用光 → 构图与主动态 → 完整表演/动作/运镜（含 (Sx) 讲话与 <d> 台词）→ 精确终帧。内部切镜 [Shot N] At MM:SS.mmm；[Shot 1] 省略时间戳。10) 数字人口播 non_diegetic_music: 固定写 N/A.；overall_soundscape 只写必要的环境声与物理动作声，不写配乐。11) 画面内可见文字放英文双引号并逐字保留。12) 双语交付：英文为可直接复制的 H3 提示词成稿；随后给出中文工作版对齐审核（H3 字段名与参考标签保持英文）。【数字人口播分镜·绝对规则】你是 MiniMax H3 数字人口播分镜导演。\"补充修改\"中的用户文本即锁定脚本+制作要求，须逐字保留口播台词（含标点）写入 <d>[Language]</d>；每个完整句子完整落在一个 10–15 秒生成单元（尽量贴近 15 秒）；输出严格使用 Ref2VA 六段结构；讲者绑定稳定 (S1)/(S2)；正式场景全程固定机位；每单元写可执行布光方案；连续转场复述上一镜精确终帧；数字人项目 non_diegetic_music 写 N/A.；英文成稿+中文审核版双语交付。\n\nsubject_definitions:\n  <Subject 1> is the presenter in <Picture 1>, ...（讲者/场景/产品参考定义；无图时用文字详述；有参考音色时 <Audio 1> is the voice-timbre reference for <Subject 1> (S1)）\nsummary:\n  [reference generation + audio reference]（按任务选 reference generation / video continuation / audio reference 等，多关系用 + 组合）\nretention_analysis:\n  <Subject 1> (appears in [Shot 1], [Shot N]): fully_preserved - ...（可见内容关系；音频用 reference / fully_copy / partially_copy）\ndetailed_description:\n  [Shot 1] （风格句 + 固定机位或运镜 + 讲者 (S1) 开场 <d>[Language] 本单元台词原文</d> + 布光 + 精确终帧）\n  [Shot N] At MM:SS.mmm, ...（内部切镜/转场，台词跨切用 <scenetrans>）\noverall_soundscape:\n  （1-4句英文：环境声与物理动作声；不写配乐）\nnon_diegetic_music: N/A."
+      }
+     ]
+    }
+   ]
   }
  ]
 }
