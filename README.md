@@ -105,6 +105,15 @@ arration widget，节点运行时自动注入。
 - 输入 PV 文案 → 点「确认修改 / Apply」→ 通过本地/云端大模型将文案**融合进模板提示词内部**（失败自动退回追加模式），并在「输出提示词预览」中展示融合结果，最终 prompt_output 输出给下游文生视频节点。
 - 实现机制：模板数据 customization_hint 字段驱动前端引导（数据驱动，不写死模板 id）；融合复用既有 user_customization → _merge_custom（h3_direct_llm.merge_customization）→ _append_custom 兜底 链路。
 
+### 4. 「确认修改」内容保真（通用修复）：用户输入的内容必定进入融合结果
+- **问题**：LLM 融合是概率性重写——当用户输入的是「内容型」文本（如 PV 广告语、文案、台词、屏幕文字），模型可能在改写模板结构时把具体内容吞掉或简化，导致点「确认修改」后输出里看不到补充修改的内容。
+- **修复（h3_direct_llm.py，对所有模板通用）**：`merge_customization` 收尾新增**内容保真校验 + 确定性兜底**：
+  1. 把用户输入拆成有意义短语（≥4 字符，规范化去空白/全角）；
+  2. 若 LLM 改写结果（或兜底结果）中一个短语都没出现 → 判定用户内容丢失 → 把用户原文以结构化 `[USER TEXT / 用户指定文字]` 块**确定性并入**结果；
+  3. 并入位置按模板类型：PV 模板（含 `[TEXT OVERLAY CONTROL]`）插入在 `detailed_description` 之后、`overall_soundscape` 之前（与模板的文字叠层规则联动）；三段式模板注入 `integrated_multimodal_description`；其他模板末尾追加；
+  4. 内容已并入即视为成功（error 清空），前端直接显示含用户内容的融合结果，不再出现「改写了但内容没了」。
+- **缓存**：merge 缓存 key 升级（`_MERGE_VER=2`），历史「丢内容」的缓存结果自动失效。
+
 # BSAI MiniMax H3 Prompt - ComfyUI 自定义节点
 
 根据 [MiniMax H3 模型使用手册](https://vrfi1sk8a0.feishu.cn/wiki/FIWjwgL33ipnkekzk30crmKUnIh)，将用户手动输入的提示词自动优化为符合 H3 规范的完整结构化提示词。

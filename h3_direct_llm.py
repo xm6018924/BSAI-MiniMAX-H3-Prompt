@@ -412,6 +412,9 @@ def _is_repetitive_garbage(text, min_repeats=5):
 
 # Small LRU cache for merged results so re-running the same template+edit is instant
 # (the first call still loads the LLM; later identical requests hit the cache).
+# v2: cache key carries _MERGE_VER so any old cached result that dropped the
+# user's content is invalidated after this content-fidelity fix ships.
+_MERGE_VER = 2
 _merge_cache = {}
 _merge_cache_order = []
 _MERGE_CACHE_MAX = 64
@@ -419,6 +422,65 @@ _MERGE_CACHE_MAX = 64
 # Last merge failure reason, so callers/frontend can surface WHY a merge did not
 # take effect (e.g. VRAM OOM while an H3 job is running, model missing, etc.).
 _last_merge_error = None
+
+
+def _norm(s):
+    """Normalize text for substring matching: strip all whitespace and unify
+    CJK/full-width punctuation to ASCII so LLM re-wording still matches."""
+    t = re.sub(r"\s+", "", (s or ""))
+    for a, b in (("，", ","), ("。", "."), ("：", ":"), ("；", ";"),
+                 ("、", ","), ("！", "!"), ("？", "?")):
+        t = t.replace(a, b)
+    return t
+
+
+def _user_core_fragments(cust, min_len=4):
+    """Split the customization into meaningful fragments (>= min_len chars,
+    normalized) used to verify the user's ACTUAL content survived the LLM
+    rewrite. Label fragments like 画面顶部金色广告语 are included too — but if
+    none of them (in particular the content ones: brand names, slogans) appear
+    in the rewritten prompt, the rewrite dropped the user's content."""
+    parts = re.split(r"[\s,，。；;：:!！?？、\n\r\t]+", (cust or "").strip())
+    out = []
+    for p in parts:
+        n = _norm(p)
+        if len(n) >= min_len:
+            out.append(n)
+    return out
+
+
+def _inject_user_content(prompt, cust):
+    """Deterministically embed the user's customization INTO the prompt when the
+    LLM rewrite dropped it (content fidelity fallback). Priority:
+      1) PV templates ([TEXT OVERLAY CONTROL] present) -> insert a
+         [USER TEXT / 用户指定文字] block right after detailed_description
+         (before overall_soundscape) so the overlay rules apply to it verbatim.
+      2) H3 three-field templates -> inject into integrated_multimodal_description.
+      3) anything else -> append a clearly-marked user block at the end.
+    Returns the merged prompt (always contains cust verbatim)."""
+    c = (cust or "").strip()
+    if not c:
+        return prompt
+    p = prompt or ""
+    user_block = (
+        "[USER TEXT / 用户指定文字 — 必须按原文逐字呈现，位置、内容与风格严格按用户要求执行]:\n"
+        + c
+    )
+    if "[TEXT OVERLAY CONTROL" in p:
+        m = re.search(r"(?m)^(overall_soundscape:)", p)
+        if m:
+            return p[:m.start()] + user_block + "\n\n" + p[m.start():]
+    m = re.search(r"(?m)^(integrated_multimodal_description:)", p)
+    if m:
+        nxt = re.search(
+            r"(?m)^(subject_definitions:|summary:|retention_analysis:|detailed_description:|overall_soundscape:|non_diegetic_music:)",
+            p[m.end():])
+        if nxt:
+            at = m.end() + nxt.start()
+            sep = "" if p[at-1:at].isspace() else " "
+            return p[:at] + "\n" + user_block + sep + p[at:]
+        return p + "\n\n" + user_block
+    return p.rstrip() + "\n\n--- User Customization / 用户自定义 ---\n" + c
 
 
 def merge_customization(prompt, customization):
@@ -436,7 +498,7 @@ def merge_customization(prompt, customization):
     if not p or not c:
         _last_merge_error = None
         return p, None
-    key = (p, c)
+    key = (p, c, _MERGE_VER)
     hit = _merge_cache.get(key)
     if hit is not None:
         _last_merge_error = hit[1]
@@ -497,6 +559,19 @@ def merge_customization(prompt, customization):
             if error is None:
                 error = ("models only copied the template without merging the edit "
                          "(no rewrite produced, change too small) / 模型仅复制模板而未将修改融入字段（改动过小）")
+    # ── Content fidelity (deterministic bottom line) ──
+    # Whatever the LLM did, the user's actual content MUST survive. If none of
+    # the user's content fragments appear in the result (common when a
+    # content-type input — PV ad copy, slogan, on-screen text — gets rewritten
+    # away), embed the user text INTO the prompt deterministically and treat it
+    # as success, because the content is now guaranteed present.
+    frags = _user_core_fragments(c)
+    if frags:
+        norm_r = _norm(result)
+        if not any(_norm(f) in norm_r for f in frags):
+            base = result if (result or "").strip() else p
+            result = _inject_user_content(base, c)
+            error = None  # content merged in — no longer a failure
     _last_merge_error = error
     # cache (LRU)
     if key not in _merge_cache:
