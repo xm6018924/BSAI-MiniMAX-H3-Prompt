@@ -715,37 +715,114 @@ def build_h3_skill_three_part(narration):
     """Wrap a manual narration (旁白) into the official MiniMax H3 SKILL
     three-part prompt format:
         integrated_multimodal_description / overall_soundscape / non_diegetic_music
+
+    Smart classification (2026-09-13): the input is NOT always a narration.
+      - motion/video reference (参考视频N / 视频N / 动作参考 / motion reference)
+        → ACTION-DRIVEN scene: <Picture N> appearance lock + <Video N> motion lock
+      - silent (无配音 / 无旁白 / 不说话 / 静音 / silent / no voice-over / no narration /
+        no dialogue) → NO voice at all, ambient sound only
+      - explicit narration keywords (旁白/配音/口播/台词/说出/朗读/voice-over/narrate/dialogue)
+        → classic voice-over narration driven scene (backward compatible)
     Returns "" for empty narration."""
+    import re as _re
     n = (narration or "").strip()
     if not n:
         return ""
-    header = (
-        "MiniMax H3 film generation — voice-over narration driven scene "
-        "（旁白叙事驱动的电影镜头）"
-    )
-    desc = (
-        "integrated_multimodal_description: \n"
-        "A cinematic scene driven by the following voice-over narration: \u201c%s\u201d. "
-        "The visuals, character actions and camera moves follow the rhythm and emotion "
-        "of the narration; every shot stays consistent with the narrated story, and "
-        "when the narration is spoken the character\u2019s mouth/actions sync with it. "
-        "（以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）"
-        % n
-    )
-    sound = (
-        "overall_soundscape: \n"
-        "The voice-over narration \u201c%s\u201d is the primary audio track and must remain "
-        "clearly audible. Subtle ambient sound and sound effects support the scene "
-        "without masking the narration. （旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）"
-        % n
-    )
-    music = (
-        "non_diegetic_music: \n"
-        "A background music score matching the emotional tone of the narration, kept "
-        "at low volume so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）"
-    )
-    return header + "\n\n" + desc + "\n\n" + sound + "\n\n" + music
+    low = n.lower()
+    is_motion = bool(_re.search(
+        r"参考视频|动作参考|模仿.*动作|按.*视频.*动作|视频\s*\d+\s*[中里]的?人?物|motion\s*reference|"
+        r"reference\s*video", low))
+    is_silent = bool(_re.search(
+        r"[无不]配音|[无不]旁白|[无不]说话|[无不]发声|[无不]出声|无配乐|静音|无声|silent|"
+        r"no\s*voice|no\s*narration|no\s*dialogue|without\s*(voice|narration|dialogue)", low))
+    # 先剔除否定静音短语（无配音/无旁白/不说话…），剩余文本再测肯定旁白意图，
+    # 避免“无配音无旁白”里的“配音/旁白”被误判为旁白请求。
+    _noise = _re.sub(r"[无不]配音|[无不]旁白|[无不]说话|[无不]发声|[无不]出声|无配乐|静音|无声", "", low)
+    is_narr = bool(_re.search(
+        r"旁白|配音|口播|台词|说出|念出|朗读|voice\s*over|narration|narrate|speak|say\b|dialogue|字幕", _noise))
 
+    if is_motion and not is_narr:
+        # ── 动作 / 视频参考驱动（用户“参考视频N做动作”场景）──
+        header = (
+            "MiniMax H3 film generation — action & motion-reference driven scene "
+            "（动作参考驱动场景）"
+        )
+        desc = (
+            "integrated_multimodal_description: \n"
+            "A cinematic scene driven by the following motion instruction: \u201c%s\u201d. "
+            "<Picture N> is the ONLY appearance source — copy the face/appearance EXACTLY; "
+            "<Video N> is the ONLY motion source — the character copies its motion EXACTLY "
+            "frame by frame (head shaking left-right, then tilting up and down, etc.). "
+            "The scene is ACTION-DRIVEN; it is NOT a narration-driven scene. "
+            "（以下为动作参考指令：图N外观严格照抄、视频N动作逐帧照抄；场景由动作驱动，"
+            "不是旁白驱动，禁止把动作指令当作旁白或台词。）"
+            % n
+        )
+        sound = (
+            "overall_soundscape: \n"
+            "Only natural ambient sound matching the scene (room tone / subtle foley). "
+            "NO voice-over, NO narration, NO dialogue. （仅自然环境声，全程无配音无旁白。）"
+            if is_silent else
+            "overall_soundscape: \n"
+            "Natural ambient sound matching the motion scene; no speech unless explicitly "
+            "specified. （与动作场景匹配的环境声；未明确要求时不加入任何语音。）"
+        )
+        music = (
+            "non_diegetic_music: N/A. （无配乐。）"
+            if is_silent else
+            "non_diegetic_music: A subtle background music score matching the motion rhythm "
+            "and atmosphere, kept low. （贴合动作节奏与氛围的轻量配乐，音量压低。）"
+        )
+    elif is_silent and not is_narr:
+        # ── 静默无声场景 ──
+        header = (
+            "MiniMax H3 film generation — silent / no-voice scene "
+            "（静默无声场景）"
+        )
+        desc = (
+            "integrated_multimodal_description: \n"
+            "A cinematic scene based on the following silent instruction: \u201c%s\u201d. "
+            "The character never speaks: no voice-over, no narration, no dialogue; "
+            "only visible actions and ambient presence. "
+            "（根据以下静默指令生成场景：角色全程不说话，无配音、无旁白、无对话，仅动作与环境表现。）"
+            % n
+        )
+        sound = (
+            "overall_soundscape: \n"
+            "Only subtle ambient sound (room tone / nature / city ambience); NO speech, "
+            "no voice-over, no narration. （仅轻微环境声，无任何语音。）"
+        )
+        music = (
+            "non_diegetic_music: N/A. （无配乐。）"
+        )
+    else:
+        # ── 经典旁白叙事驱动（默认，向后兼容）──
+        header = (
+            "MiniMax H3 film generation — voice-over narration driven scene "
+            "（旁白叙事驱动的电影镜头）"
+        )
+        desc = (
+            "integrated_multimodal_description: \n"
+            "A cinematic scene driven by the following voice-over narration: \u201c%s\u201d. "
+            "The visuals, character actions and camera moves follow the rhythm and emotion "
+            "of the narration; every shot stays consistent with the narrated story, and "
+            "when the narration is spoken the character\u2019s mouth/actions sync with it. "
+            "（以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）"
+            % n
+        )
+        sound = (
+            "overall_soundscape: \n"
+            "The voice-over narration \u201c%s\u201d is the primary audio track and must remain "
+            "clearly audible. Subtle ambient sound and sound effects support the scene "
+            "without masking the narration. （旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）"
+            % n
+        )
+        music = (
+            "non_diegetic_music: \n"
+            "A background music score matching the emotional tone of the narration, kept "
+            "at low volume so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）"
+        )
+    return header + "\n\n" + desc + "\n\n" + sound + "\n\n" + music
 
 try:
     _register_asr_route()

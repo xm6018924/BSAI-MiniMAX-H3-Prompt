@@ -36,7 +36,18 @@ _H3_SYSTEM_PROMPT = (
     "overall_soundscape: the ambient sound design.\n"
     "non_diegetic_music: the background music mood (or N/A if none).\n"
     "When the user gives a subject/action description in Chinese, translate it to English "
-    "in the output."
+    "in the output.\n"
+    "INPUT CLASSIFICATION (mandatory): (1) NEVER treat the user input as voice-over narration, "
+    "dialogue or on-screen speech unless the user EXPLICITLY asks for 旁白/配音/口播/台词/说出/朗读/voice-over/narrate/speak/say. "
+    "(2) If the input references a video (参考视频N / 视频N / reference video / motion reference / 动作参考), "
+    "write it as ACTION/MOTION REFERENCE: '<Picture 1> is the exact appearance source; <Video N> is the "
+    "motion reference — the character copies <Video N>'s motion (e.g. head shaking left-right, then "
+    "tilting up and down) EXACTLY frame by frame' — the scene is ACTION-DRIVEN, NOT narration-driven; "
+    "never quote the instruction as a spoken line. (3) If the input says 无配音/无旁白/不说话/静音/silent/ "
+    "no voice-over/no narration/no dialogue, the output MUST state 'NO voice-over, NO narration, NO "
+    "dialogue — the character is completely silent'; overall_soundscape = ambient sounds only; "
+    "non_diegetic_music = N/A. (4) Never invent a narrator, never add speech, never make the character "
+    "talk when the input does not ask for it."
 )
 
 _H3_MERGE_SYSTEM_PROMPT = (
