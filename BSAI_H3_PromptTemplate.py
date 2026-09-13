@@ -225,6 +225,51 @@ def _apply_scene_placeholder(prompt, has_scene):
     return prompt.replace("{{SCENE_REF_RULE}}", ref).replace("{{SCENE_SUMMARY}}", summ)
 
 
+# ── 参考图锁定头 ──
+_REF_LOCK_PREFIXES = (
+    "[STRICT REFERENCE",
+    "[ABSOLUTE REFERENCE LOCK",
+    "[CRITICAL REFERENCE LOCK",
+    "[REFERENCE IMAGES ARE THE SOLE TRUTH",
+)
+
+
+def _has_ref_lock(prompt):
+    """True if the prompt already carries a reference-image lock header at the top."""
+    if not prompt:
+        return False
+    return prompt.lstrip().startswith(_REF_LOCK_PREFIXES)
+
+
+def _build_ref_decl(connected_refs, tpls):
+    """Build the compact reference-image lock header (3-5 lines) to prepend to the prompt.
+
+    Kept short so MiniMax H3 can read it fully without token overflow. This header is the
+    final guarantee that connected <Picture N> images are treated as the ONLY source of
+    truth even after the local-LLM merge step (which may otherwise drop such directives).
+    """
+    is_wardrobe = any(
+        kw in (t.get("name", "") + t.get("name_en", "") + " ".join(t.get("tags", []))).lower()
+        for t in tpls for kw in ("换装", "wardrobe", "outfit", "穿衣", "变装")
+    )
+    parts = []
+    parts.append(
+        f"[STRICT REFERENCE / 参考图强制] "
+        f"<Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
+        f"are the ONLY source of truth — copy EXACTLY, no redesign. "
+        f"图{'、图'.join(str(x) for x in connected_refs)}为唯一参考，必须严格照抄，禁止自行设计。"
+    )
+    if 1 in connected_refs:
+        parts.append("<Picture 1>=face/identity 图1=人物面部")
+    if is_wardrobe and 2 in connected_refs:
+        parts.append("<Picture 2>=EXACT outfit (color/pattern/style/fabric) 图2=服装照抄")
+    if is_wardrobe and 3 in connected_refs:
+        parts.append("<Picture 3>=EXACT scene (background/lighting/environment) 图3=场景照抄")
+    elif 3 in connected_refs:
+        parts.append("<Picture 3>=scene 图3=场景")
+    return " ".join(parts) + "\n\n"
+
+
 
 def _inject_narration(prompt, narration):
     """Merge a manual narration (画面旁白) into the prompt as the visual VO line.
@@ -394,38 +439,6 @@ Features / 功能特点:
                 prompt = _inject_narration(prompt, narration)
                 name_label = f"{tpls[0].get('name','')} | {tpls[0].get('name_en','')}" if tpls[0].get("name_en") else tpls[0].get("name", "")
                 return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""))
-        if connected_refs:
-            # ── 精简参考图约束（避免prompt过长被模型截断）──
-            # 旧版3000+字符导致MiniMax H3模型token溢出，约束被完全忽略。
-            # 新版：仅3-5行核心约束，确保模型能完整读取。
-            is_wardrobe = any(
-                kw in (t.get("name", "") + t.get("name_en", "") + " ".join(t.get("tags", []))).lower()
-                for t in tpls for kw in ("换装", "wardrobe", "outfit", "穿衣", "变装")
-            )
-            parts = []
-            parts.append(
-                f"[STRICT REFERENCE / 参考图强制] "
-                f"<Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
-                f"are the ONLY source of truth — copy EXACTLY, no redesign. "
-                f"图{'、图'.join(str(x) for x in connected_refs)}为唯一参考，必须严格照抄，禁止自行设计。"
-            )
-            if 1 in connected_refs:
-                parts.append("<Picture 1>=face/identity 图1=人物面部")
-            if is_wardrobe and 2 in connected_refs:
-                parts.append("<Picture 2>=EXACT outfit (color/pattern/style/fabric) 图2=服装照抄")
-            if is_wardrobe and 3 in connected_refs:
-                parts.append("<Picture 3>=EXACT scene (background/lighting/environment) 图3=场景照抄")
-            elif 3 in connected_refs:
-                parts.append("<Picture 3>=scene 图3=场景")
-            # v2.5: 模板自带[STRICT REFERENCE]时不重复加，避免双段冲突
-            _already_has_ref = (prompt.lstrip().startswith('[STRICT REFERENCE')
-                                or prompt.lstrip().startswith('[ABSOLUTE REFERENCE LOCK')
-                                or prompt.lstrip().startswith('[CRITICAL REFERENCE LOCK')
-                                or prompt.lstrip().startswith('[REFERENCE IMAGES ARE THE SOLE TRUTH')
-                                or prompt.lstrip().startswith('[REFERENCE IMAGES ARE THE SOLE TRUTH'))
-            if not _already_has_ref:
-                ref_decl = " ".join(parts) + "\n\n"
-                prompt = ref_decl + prompt
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
@@ -448,6 +461,10 @@ Features / 功能特点:
         prompt = _apply_scene_placeholder(prompt, scene_image is not None)
         # ── 画面旁白：与模板合并，作为画面旁白输出给下游 ──
         prompt = _inject_narration(prompt, narration)
+        # ── 参考图锁定头：LLM 融合可能丢弃此类指令，此处最后强制注入，
+        #    保证输出给下游的提示词必含强参考约束（模板自带锁定头则不重复加）──
+        if connected_refs and not _has_ref_lock(prompt):
+            prompt = _build_ref_decl(connected_refs, tpls) + prompt
         mode = primary.get("generation_mode", "System Recommended / 系统推荐")
         if len(tpls) > 1:
             mode = f"{mode} | 多模板叠加 Multi-Stack"

@@ -56,6 +56,7 @@ _H3_MERGE_SYSTEM_PROMPT = (
     "'detailed_description:', 'overall_soundscape:', 'non_diegetic_music:' — with NO markdown, "
     "NO bold, NO bullet, NO numbering, NO code fences, NO indentation before the field name. "
     "Keep <Subject N> / <Picture N> / <d>…</d> tags intact. "
+    "If the original prompt begins with a reference-image lock header (e.g. [STRICT REFERENCE], [ABSOLUTE REFERENCE LOCK], [CRITICAL REFERENCE LOCK], [REFERENCE IMAGES ARE THE SOLE TRUTH], or any paragraph stating that <Picture N> must be copied EXACTLY / is the ONLY source of truth), REPRODUCE that header VERBATIM at the very top of your output, BEFORE subject_definitions: — never drop, shorten, reword or relocate it. 若原提示词开头含参考图锁定声明（[STRICT REFERENCE] / [ABSOLUTE REFERENCE LOCK] / 图N为唯一参考、必须严格照抄等），必须在输出最前面逐字保留，不得删除、缩写或改写。 "
     "ABSOLUTELY FORBIDDEN: do NOT copy the original prompt verbatim and append the modification "
     "at the end. You MUST REWRITE the ENTIRE prompt and place the modification INSIDE the "
     "relevant field blocks — e.g. a 'no third person' constraint goes into summary, "
