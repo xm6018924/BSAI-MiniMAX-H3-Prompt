@@ -48,6 +48,47 @@ MIT (see 许可证 section below).
 
 ﻿# BSAI-MiniMAX-H3-Prompt
 
+## 2026-09-16 新增：四选一模板拆分为 12 个模式锁定子模板 / New: 3 pick-one-of-four templates split into 12 mode-locked sub-templates
+> 将 3 个四选一模板（国风招式武打 / 武打风格 / 镜头穿梭）全部拆分为 **12 个模式锁定子模板**（原父模板已删除）：每个子模板 = 模式锁定段（LOCKED）+ 单模式招式链 / 风格 / 形态描述 + 专属音效配乐 + integrated 单模式改写，彻底避免多模式混搭串味。双文件同步（templates_data.json + prompt_templates.json），12 张新预览图（含百声 AI 圆形 logo），JSON 校验通过。
+> EN: The 3 "pick-one-of-four" templates (Wushu Moves / Fight Styles / Camera Flythrough) were fully split into **12 mode-locked sub-templates** (parent templates removed). Each sub-template = mode-locked segment (LOCKED) + single-mode move-chain / style / shot description + dedicated SFX & music + integrated single-mode rewrite, eliminating cross-mode contamination. Both JSON files synced, 12 new preview images (with Baisheng AI round logo), JSON validated.
+
+### ① 国风招式武打 / Wushu Moves（4 个）
+> 图1+图2 对打双方、图3 可选场景，8s。招式术语驱动、命中反馈真实、身体失衡诚实。
+> EN: Img1+Img2 = the two fighters, Img3 optional scene, 8s. Driven by authentic move terminology, realistic impact feedback, honest body imbalance.
+
+| 模板 | 中文 | English | 招式链 / Move chain |
+|---|---|---|---|
+| combat_wushu_dash | 突进近身 | Dash & Close-In | 极影瞬步突进→低身滑步近袭→灵跃贴身快打→侧闪绕身换位→后撤蓄势反扑 |
+| combat_wushu_aerial | 空中连击 | Aerial Combo | 凌空飞踢压制→腾空旋身斩击→空中滞空连击→俯冲下压突袭 |
+| combat_wushu_ground | 震地重击 | Ground Smash | 横扫腿击破阵→落地震地重击→蓄力重拳冲击→霸体冲身破防 |
+| combat_wushu_counter | 格挡反制 | Guard & Counter | 反手格挡防御→抬手震气击退→借力打力反击→后撤诱敌反扑 |
+
+### ② 武打风格 / Fight Styles（4 个）
+> 同样的招式，以该风格呈现；图1+图2 对打双方、图3 可选场景，8s。
+> EN: The same moves rendered in this style; Img1+Img2 = fighters, Img3 optional scene, 8s.
+
+| 模板 | 中文 | English | 视觉特征 / Look |
+|---|---|---|---|
+| combat_style_shaolin | 邵氏经典武侠 | Shaolin Classic | 中式室内（武馆/酒馆/大院）或竹林山野、练功服长衫、硬桥硬马顿挫分明、复古胶片颗粒暖调 |
+| combat_style_ink | 水墨写意武侠 | Ink-Wash Wuxia | 水墨山水（竹林/山水/雨夜）、留白构图、衣袂翻飞、气劲炸裂成墨迹波纹 |
+| combat_style_cyber | 赛博霓虹格斗 | Cyber Neon | 霓虹街巷/天台/地下拳场、冷蓝紫+霓虹粉光效、能量光轨随招式迸发、金属玻璃反光 |
+| combat_style_doc | 写实纪录片格斗 | Doc Realism | 现代拳馆/八角笼/街头、手持跟拍轻微晃动、汗水灰尘真实飞溅、肌肉发力清晰 |
+
+### ③ 镜头穿梭 / Camera Flythrough（4 个）
+> 均为一镜到底单镜头，前景快速掠过带运动模糊、关键节点变速、视差强化空间感；图1 起点 + 图2 可选终点 + 图3 可选场景，10s。
+> EN: All are one-take continuous shots with motion-blurred foreground pass-by, variable speed at key beats, parallax depth; Img1 start + Img2 optional end + Img3 optional scene, 10s.
+
+| 模板 | 中文 | English | 运镜特征 / Camera move |
+|---|---|---|---|
+| cam_flythrough_fpv | FPV 极速俯冲 | FPV Dive | 从高空/远景极速俯冲，穿过云层/晨雾/拱门/门窗/人群，史诗级空间感 |
+| cam_flythrough_pass | 穿越物体 | Pass-Through | 镜头直接穿过门/窗/隧道/罐体/水幕/纸张/玻璃，穿模瞬间自然无缝、露出另一侧空间 |
+| cam_flythrough_journey | 场景旅程 | Scene Journey | 镜头连续飞行穿过多个场景无缝衔接（由远及近、室外到室内、天空到地面），场景沿飞行渐进变化 |
+| cam_flythrough_follow | 跟拍穿梭 | Subject Follow | 锁定主体（图1）与镜头一同穿梭，主体始终突出、前景快速掠过 |
+
+**通用用法 / How to use**：模板面板选择对应子模板 → 按模板要求放置图1/图2/图3 参考图 → 点「确认修改 / Apply」融合生成。预览图已更新（12 张新预览，删除 3 张旧父模板预览）。
+
+---
+
 ## 2026-09-12 新增：H3 音乐作曲/音乐风格模板（12 个，全网最新最全）
 > 新增顶级分类「H3音乐 | H3 Music」，含 10 个子类、12 个模板。源自 **MiniMax Music 3.0 官方方法论 + 全球社区最佳实践**：官方 Prompt Writing Guide（句子式 prompt、5 要素结构、风格/人声/配器/BPM 参考表）、Music 3.0 Structured Captions 框架（Genre/BPM/Key/Use case/Production character 元信息 + 情感轮廓 + 乐器进出 + 分节变化）、官方 Console 歌曲模板（民谣情歌/流行励志/电子舞曲/古风情怀/摇滚青春）、社区 8 组件公式与冲突风格规避、官方 Music 3.0 Demo（上海爵士/Progressive House/Trap 等完整风格描述）。
 >
