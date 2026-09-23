@@ -48,6 +48,10 @@ MIT (see 许可证 section below).
 
 ﻿# BSAI-MiniMAX-H3-Prompt
 
+## 2026-09-23 新增：灵感库精选分类（4 个视频灵感模板，576 个模板） / New: Web Inspiration category (4 video-prompt templates, 576 total)
+> 新增顶级分类「灵感库精选 | Web Inspiration」含子类「视频灵感模板 | Video Web Prompts」共 **4 个模板**（全网真实案例提取）：10秒古风变装丝滑卡点 / 西域公主短剧分镜 / 古风白衣女侠瀑布武侠 / 中式新娘变装 Vlog。全部为三段式标准 H3 格式（integrated_multimodal_description + overall_soundscape + non_diegetic_music）。双文件同步（prompt_templates.json + templates_data.json，**576 模板 / 24 分类**），4 张新预览图（含百声 AI 圆形 logo），JSON 校验通过。
+> EN: New top-level category "Web Inspiration" with subcategory "Video Web Prompts" — **4 templates** extracted from real web cases (10s ancient-style costume change / Western-region princess mini-drama / waterfall wuxia swordswoman / Chinese bride transformation Vlog). All in 3-part standard H3 format. Both JSON files synced (**576 templates / 24 categories**), 4 new previews (with Baisheng AI round logo), JSON validated.
+
 ## 2026-09-16 新增：四选一模板拆分为 12 个模式锁定子模板 / New: 3 pick-one-of-four templates split into 12 mode-locked sub-templates
 > 将 3 个四选一模板（国风招式武打 / 武打风格 / 镜头穿梭）全部拆分为 **12 个模式锁定子模板**（原父模板已删除）：每个子模板 = 模式锁定段（LOCKED）+ 单模式招式链 / 风格 / 形态描述 + 专属音效配乐 + integrated 单模式改写，彻底避免多模式混搭串味。双文件同步（templates_data.json + prompt_templates.json），12 张新预览图（含百声 AI 圆形 logo），JSON 校验通过。
 > EN: The 3 "pick-one-of-four" templates (Wushu Moves / Fight Styles / Camera Flythrough) were fully split into **12 mode-locked sub-templates** (parent templates removed). Each sub-template = mode-locked segment (LOCKED) + single-mode move-chain / style / shot description + dedicated SFX & music + integrated single-mode rewrite, eliminating cross-mode contamination. Both JSON files synced, 12 new preview images (with Baisheng AI round logo), JSON validated.
