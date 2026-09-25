@@ -1,4 +1,4 @@
-# BSAI-MiniMAX-H3-Prompt
+﻿# BSAI-MiniMAX-H3-Prompt
 
 > **English overview (full Chinese details below). / 英文总览，详细中文说明见下文。**
 
@@ -47,6 +47,10 @@ MIT (see 许可证 section below).
 ---
 
 ﻿# BSAI-MiniMAX-H3-Prompt
+
+## 2026-09-25 新增：节日祝福贺卡（视频）分类（12 个视频贺卡模板，588 个模板 / 25 分类） / New: Festival Greeting Cards (Video) category (12 video greeting-card templates, 588 total / 25 categories)
+> 全球全网搜索精选 12 个节日视频贺卡模板，新增顶级分类「节日祝福贺卡（视频）| Festival Greeting Cards (Video)」子类「视频贺卡 | Video Greeting Cards」：新年金色烟花粒子 / 春节红色灯笼 / 情人节粒子爱心 / 母亲节花束绽放 / 儿童节3D气球蛋糕 / 中秋玉兔明月 / 国庆红旗礼花 / 万圣节南瓜鬼屋 / 圣诞3D贺卡翻开 / 生日金色粒子蛋糕 / 婚礼戒指光效 / 教师节手绘花束。全部为三段式标准 H3 格式（integrated_multimodal_description + overall_soundscape + non_diegetic_music），时长 5-6 秒，双文件同步（prompt_templates.json + templates_data.json，**588 模板 / 25 分类**），12 张预览图全部带百声 AI 圆形 logo，JSON 校验通过。
+> EN: 12 globally-curated festival video greeting-card templates in new top-level category "Festival Greeting Cards (Video)" / subcategory "Video Greeting Cards": New Year golden fireworks / Spring Festival red lanterns / Valentine particle heart / Mother's Day blooming bouquet / Children's Day 3D balloons & cake / Mid-Autumn jade rabbit & moon / National Day flags & salutes / Halloween pumpkin & haunted house / Christmas 3D pop-up card / Birthday golden particles & cake / Wedding ring light / Teachers' Day hand-drawn flowers. All in 3-part standard H3 format (integrated_multimodal_description + overall_soundscape + non_diegetic_music), 5-6s duration, both JSON files synced (**588 templates / 25 categories**), all 12 previews carry the Baisheng AI round logo, JSON validated.
 
 ## 2026-09-23 新增：灵感库精选分类（4 个视频灵感模板，576 个模板） / New: Web Inspiration category (4 video-prompt templates, 576 total)
 > 新增顶级分类「灵感库精选 | Web Inspiration」含子类「视频灵感模板 | Video Web Prompts」共 **4 个模板**（全网真实案例提取）：10秒古风变装丝滑卡点 / 西域公主短剧分镜 / 古风白衣女侠瀑布武侠 / 中式新娘变装 Vlog。全部为三段式标准 H3 格式（integrated_multimodal_description + overall_soundscape + non_diegetic_music）。双文件同步（prompt_templates.json + templates_data.json，**576 模板 / 24 分类**），4 张新预览图（含百声 AI 圆形 logo），JSON 校验通过。
