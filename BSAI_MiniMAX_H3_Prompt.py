@@ -1,0 +1,3371 @@
+﻿"""
+BSAI MiniMax H3 Prompt Optimizer Node
+
+根据 MiniMax H3 模型使用手册，将用户手动输入的提示词优化为符合 H3 规范的完整提示词。
+提示词公式：完整提示词 = 参考素材说明 + 核心创意 + 画面过程说明
+
+参考文档：飞书 Wiki - MiniMax H3 模型使用手册
+GitHub: https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt
+"""
+
+import os
+import io
+import gc
+import json
+import base64
+import inspect
+import re
+
+import folder_paths
+import comfy.model_management as mm
+
+try:
+    import torch
+except Exception:
+    torch = None
+
+try:
+    from PIL import Image as PILImage
+except Exception:
+    PILImage = None
+
+try:
+    import requests
+except Exception:
+    requests = None
+
+try:
+    from llama_cpp import Llama
+except Exception:
+    Llama = None
+
+try:
+    from llama_cpp.llama_chat_format import Qwen3VLChatHandler
+except Exception:
+    Qwen3VLChatHandler = None
+
+try:
+    from llama_cpp.llama_chat_format import Qwen35ChatHandler
+except Exception:
+    Qwen35ChatHandler = None
+
+try:
+    from llama_cpp.llama_chat_format import Gemma4ChatHandler
+except Exception:
+    Gemma4ChatHandler = None
+
+
+# ============================================================
+# 辅助函数
+# ============================================================
+
+def _bsai_list_llm_files():
+    folder_name = "LLM"
+    llm_dir = os.path.join(folder_paths.models_dir, folder_name)
+    try:
+        if folder_name not in folder_paths.folder_names_and_paths:
+            folder_paths.folder_names_and_paths[folder_name] = (
+                [llm_dir],
+                {".gguf", ".safetensors", ".bin", ".pth", ".pt"},
+            )
+    except Exception:
+        pass
+    try:
+        return folder_paths.get_filename_list("LLM")
+    except Exception:
+        return []
+
+
+def _bsai_call_chat_completion(llm, messages, params):
+    kwargs = dict(params or {})
+    kwargs["messages"] = messages
+    try:
+        sig = inspect.signature(llm.create_chat_completion)
+        has_var_kw = any(
+            p.kind == inspect.Parameter.VAR_KEYWORD
+            for p in sig.parameters.values()
+        )
+    except Exception:
+        sig = None
+        has_var_kw = True
+
+    if sig is not None and not has_var_kw:
+        allowed = sig.parameters
+        if (
+            "presence_penalty" in kwargs
+            and "presence_penalty" not in allowed
+            and "present_penalty" in allowed
+        ):
+            kwargs["present_penalty"] = kwargs.pop("presence_penalty")
+        kwargs = {k: v for k, v in kwargs.items() if k in allowed}
+    return llm.create_chat_completion(**kwargs)
+
+
+def _bsai_normalize_seed(seed_value):
+    try:
+        seed_value = int(seed_value)
+    except Exception:
+        return None
+    if seed_value < 0:
+        return None
+    return seed_value
+
+
+def _bsai_reset_llm_state(llm):
+    try:
+        ctx = getattr(llm, "_ctx", None)
+        if ctx is not None and hasattr(ctx, "memory_clear"):
+            ctx.memory_clear(True)
+    except Exception:
+        pass
+    try:
+        reset = getattr(llm, "reset", None)
+        if callable(reset):
+            reset()
+        elif hasattr(llm, "n_tokens"):
+            llm.n_tokens = 0
+    except Exception:
+        pass
+
+
+def _bsai_image_tensor_to_data_uri(image_input):
+    """将 ComfyUI IMAGE 张量转换为 base64 JPEG data URI。
+
+    ComfyUI IMAGE 格式: torch.Tensor, shape=[B, H, W, C], dtype=float32, 值域[0,1]
+    返回 list[str]，每个元素是一张图的 data URI。
+    """
+    if image_input is None or PILImage is None or torch is None:
+        return []
+
+    images = image_input
+    # 单张图可能无 batch 维度，统一添加
+    if images.ndim == 3:
+        images = images.unsqueeze(0)
+
+    data_uris = []
+    for i in range(images.shape[0]):
+        img_tensor = images[i]
+        # [H, W, C] float32 [0,1] → numpy uint8 [0,255]
+        img_np = (img_tensor.cpu().numpy() * 255.0).clip(0, 255).astype("uint8")
+        pil_img = PILImage.fromarray(img_np)
+        buf = io.BytesIO()
+        # 限制最大边长，减少 token 消耗
+        max_side = 1024
+        if max(pil_img.size) > max_side:
+            ratio = max_side / max(pil_img.size)
+            pil_img = pil_img.resize(
+                (int(pil_img.size[0] * ratio), int(pil_img.size[1] * ratio)),
+                PILImage.LANCZOS,
+            )
+        pil_img.save(buf, format="JPEG", quality=85)
+        b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+        data_uris.append(f"data:image/jpeg;base64,{b64}")
+    return data_uris
+
+
+def _bsai_video_to_data_uris(video_input, max_frames=4):
+    """Extract key frames from a video (IMAGE tensor batch) and convert to data URIs.
+
+    Takes evenly spaced frames (first, middle, last, etc.) to represent the video.
+    Limits to max_frames to control token usage.
+    """
+    if video_input is None or PILImage is None or torch is None:
+        return []
+
+    images = video_input
+    if images.ndim == 3:
+        images = images.unsqueeze(0)
+
+    total_frames = images.shape[0]
+    if total_frames == 0:
+        return []
+
+    # Select key frames: evenly spaced across the video
+    if total_frames <= max_frames:
+        frame_indices = list(range(total_frames))
+    else:
+        frame_indices = [
+            int(i * (total_frames - 1) / (max_frames - 1)) for i in range(max_frames)
+        ]
+
+    data_uris = []
+    for idx in frame_indices:
+        img_tensor = images[idx]
+        img_np = (img_tensor.cpu().numpy() * 255.0).clip(0, 255).astype("uint8")
+        pil_img = PILImage.fromarray(img_np)
+        buf = io.BytesIO()
+        max_side = 1024
+        if max(pil_img.size) > max_side:
+            ratio = max_side / max(pil_img.size)
+            pil_img = pil_img.resize(
+                (int(pil_img.size[0] * ratio), int(pil_img.size[1] * ratio)),
+                PILImage.LANCZOS,
+            )
+        pil_img.save(buf, format="JPEG", quality=85)
+        b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+        data_uris.append(f"data:image/jpeg;base64,{b64}")
+    return data_uris
+
+
+def _bsai_tensor_image_stats(img_tensor):
+    """读取 ComfyUI IMAGE tensor 并提取稳定的本地视觉统计信息。"""
+    if torch is None or img_tensor is None:
+        return None
+    try:
+        img = img_tensor.detach().float().cpu().clamp(0, 1)
+        if img.ndim != 3:
+            return None
+        h, w = int(img.shape[0]), int(img.shape[1])
+        c = int(img.shape[2]) if img.ndim == 3 else 1
+        rgb = img[..., :3] if c >= 3 else img.repeat(1, 1, 3)
+        mean = rgb.reshape(-1, 3).mean(dim=0)
+        std = rgb.reshape(-1, 3).std(dim=0)
+        brightness = float(rgb.mean().item())
+        contrast = float(rgb.std().item())
+        saturation = float((rgb.max(dim=2).values - rgb.min(dim=2).values).mean().item())
+        r, g, b = [float(x) for x in mean.tolist()]
+
+        if brightness < 0.25:
+            exposure = "dark / low-key"
+        elif brightness > 0.72:
+            exposure = "bright / high-key"
+        else:
+            exposure = "balanced exposure"
+
+        if saturation < 0.12:
+            colorfulness = "low saturation / muted colors"
+        elif saturation > 0.35:
+            colorfulness = "high saturation / vivid colors"
+        else:
+            colorfulness = "moderate saturation"
+
+        if r > b + 0.06:
+            temperature = "warm color temperature"
+        elif b > r + 0.06:
+            temperature = "cool color temperature"
+        else:
+            temperature = "neutral color temperature"
+
+        dominant_idx = int(mean.argmax().item())
+        dominant = ["red/warm channel", "green channel", "blue/cool channel"][dominant_idx]
+
+        if w > h * 1.2:
+            framing = "landscape/wide frame"
+        elif h > w * 1.2:
+            framing = "portrait/vertical frame"
+        else:
+            framing = "near-square frame"
+
+        return {
+            "size": f"{w}x{h}",
+            "channels": c,
+            "framing": framing,
+            "exposure": exposure,
+            "colorfulness": colorfulness,
+            "temperature": temperature,
+            "dominant": dominant,
+            "brightness": brightness,
+            "contrast": contrast,
+            "saturation": saturation,
+            "mean_rgb": (r, g, b),
+            "std_rgb": tuple(float(x) for x in std.tolist()),
+        }
+    except Exception:
+        return None
+
+
+def _bsai_format_image_stats(label, stats):
+    if not stats:
+        return f"{label}: image connected, but local visual statistics could not be extracted."
+    r, g, b = stats["mean_rgb"]
+    return (
+        f"{label}: {stats['size']}, {stats['framing']}, {stats['exposure']}, "
+        f"{stats['colorfulness']}, {stats['temperature']}, dominant {stats['dominant']}; "
+        f"brightness={stats['brightness']:.2f}, contrast={stats['contrast']:.2f}, "
+        f"saturation={stats['saturation']:.2f}, mean RGB=({r:.2f},{g:.2f},{b:.2f})."
+    )
+
+
+def _bsai_image_tensor_to_descriptions(image_input, label="image"):
+    """读取图片输入端口，并为每张图片生成本地资料说明。"""
+    if image_input is None or torch is None:
+        return []
+    try:
+        images = image_input
+        if images.ndim == 3:
+            images = images.unsqueeze(0)
+        descriptions = []
+        total = int(images.shape[0])
+        for i in range(total):
+            image_label = f"<Picture {i + 1} from {label}>" if total > 1 else f"<Picture from {label}>"
+            stats = _bsai_tensor_image_stats(images[i])
+            descriptions.append(_bsai_format_image_stats(image_label, stats))
+        return descriptions
+    except Exception as e:
+        return [f"{label}: image input connected, but local analysis failed: {type(e).__name__}: {e}"]
+
+
+def _bsai_video_to_descriptions(video_input, label="video", max_frames=4):
+    """读取视频 IMAGE batch 输入端口，提取帧数、尺寸、关键帧统计和粗略变化强度。"""
+    if video_input is None or torch is None:
+        return []
+    try:
+        frames = video_input
+        if frames.ndim == 3:
+            frames = frames.unsqueeze(0)
+        total_frames = int(frames.shape[0])
+        if total_frames == 0:
+            return [f"{label}: video input connected but contains 0 frames."]
+        h, w = int(frames.shape[1]), int(frames.shape[2])
+        if total_frames <= max_frames:
+            frame_indices = list(range(total_frames))
+        else:
+            frame_indices = [int(i * (total_frames - 1) / (max_frames - 1)) for i in range(max_frames)]
+
+        change_desc = "unknown visual change"
+        if total_frames > 1:
+            try:
+                sample = frames[frame_indices].detach().float().cpu().clamp(0, 1)
+                if sample.shape[0] > 1:
+                    diffs = (sample[1:] - sample[:-1]).abs().mean(dim=(1, 2, 3))
+                    avg_diff = float(diffs.mean().item())
+                    if avg_diff < 0.035:
+                        change_desc = "low frame-to-frame visual change"
+                    elif avg_diff > 0.12:
+                        change_desc = "high frame-to-frame visual change"
+                    else:
+                        change_desc = "moderate frame-to-frame visual change"
+            except Exception:
+                pass
+
+        descriptions = [
+            f"<Video from {label}>: {total_frames} frame(s) received as IMAGE batch, resolution {w}x{h}, {change_desc}. "
+            f"Selected keyframe indices for local analysis: {frame_indices}."
+        ]
+        for key_i, frame_idx in enumerate(frame_indices):
+            stats = _bsai_tensor_image_stats(frames[frame_idx])
+            descriptions.append(_bsai_format_image_stats(f"<Video {label} keyframe {key_i + 1} / frame {frame_idx}>", stats))
+        return descriptions
+    except Exception as e:
+        return [f"{label}: video input connected, but local analysis failed: {type(e).__name__}: {e}"]
+
+
+def _bsai_audio_to_description(audio_input, label="audio"):
+    """Extract metadata from ComfyUI AUDIO input for text-based reference.
+
+    ComfyUI AUDIO format: dict with "waveform" (torch.Tensor) and "sample_rate" (int).
+    Since most LLM backends cannot directly process audio, we generate a text description
+    noting the audio reference so the model can reference it in the prompt.
+
+    Returns (description_str, base64_str_or_None) tuple.
+    base64_str is available for remote APIs that support audio input.
+    """
+    if audio_input is None:
+        return None, None
+
+    try:
+        if isinstance(audio_input, dict):
+            waveform = audio_input.get("waveform")
+            sample_rate = audio_input.get("sample_rate", 0)
+        else:
+            waveform = audio_input
+            sample_rate = 0
+
+        if waveform is None:
+            return None, None
+
+        # Get tensor info
+        if torch is not None and hasattr(waveform, "shape"):
+            shape = waveform.shape
+            # ComfyUI AUDIO waveform shape: [batch, channels, samples] or [channels, samples]
+            if len(shape) == 3:
+                samples = shape[-1]
+                channels = shape[-2]
+            elif len(shape) == 2:
+                samples = shape[-1]
+                channels = shape[-2]
+            elif len(shape) == 1:
+                samples = shape[0]
+                channels = 1
+            else:
+                samples = 0
+                channels = 0
+        else:
+            samples = 0
+            channels = 0
+
+        sr = int(sample_rate) if sample_rate else 0
+        duration = (samples / sr) if sr > 0 else 0
+
+        audio_features = []
+        try:
+            if torch is not None and hasattr(waveform, "detach"):
+                wav = waveform.detach().float().cpu()
+                peak = float(wav.abs().max().item()) if wav.numel() else 0.0
+                rms = float((wav ** 2).mean().sqrt().item()) if wav.numel() else 0.0
+                silent_ratio = float((wav.abs() < 0.01).float().mean().item()) if wav.numel() else 0.0
+                if rms < 0.015:
+                    loudness_desc = "very quiet / near silence"
+                elif rms < 0.06:
+                    loudness_desc = "quiet"
+                elif rms > 0.25:
+                    loudness_desc = "loud / high energy"
+                else:
+                    loudness_desc = "moderate loudness"
+                audio_features.append(f"{loudness_desc}, rms={rms:.3f}, peak={peak:.3f}, silence_ratio={silent_ratio:.2f}")
+        except Exception:
+            pass
+
+        feature_text = "; " + "; ".join(audio_features) if audio_features else ""
+        desc = f"{label}: {channels}ch, {duration:.1f}s, {sr}Hz{feature_text}"
+
+        # Generate base64 for remote API support
+        b64 = None
+        try:
+            if torch is not None and hasattr(waveform, "cpu"):
+                import wave
+
+                wav_tensor = waveform
+                if wav_tensor.ndim == 3:
+                    wav_tensor = wav_tensor[0]  # remove batch dim
+                if wav_tensor.ndim == 2:
+                    # Transpose to [samples, channels]
+                    wav_tensor = wav_tensor.T
+
+                wav_np = wav_tensor.cpu().numpy()
+                # Normalize to int16
+                wav_np = (wav_np * 32767).clip(-32768, 32767).astype("int16")
+
+                buf = io.BytesIO()
+                with wave.open(buf, "wb") as wf:
+                    wf.setnchannels(int(channels) if channels else 1)
+                    wf.setsampwidth(2)
+                    wf.setframerate(sr if sr else 44100)
+                    wf.writeframes(wav_np.tobytes())
+                b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+                b64 = f"data:audio/wav;base64,{b64}"
+        except Exception:
+            pass
+
+        return desc, b64
+    except Exception:
+        return None, None
+
+
+def _bsai_build_multimodal_content(text, image_data_uris, image_label):
+    """构建多模态 user message content（OpenAI 兼容格式）。
+
+    text: 纯文本部分
+    image_data_uris: list[str] data URI
+    image_label: 每张图的标注前缀，如 "图片1"
+    返回 list[dict]，每个 dict 是 {"type": "text"/"image_url", ...}
+    """
+    content = []
+    if text:
+        content.append({"type": "text", "text": text})
+    for idx, uri in enumerate(image_data_uris):
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": uri},
+            }
+        )
+        # 在图片后追加标注文本，帮助模型理解图片编号
+        label = f"{image_label}{idx + 1}" if image_label else f"图片{idx + 1}"
+        content.append(
+            {"type": "text", "text": f"（以上是 {label}）"}
+        )
+    return content
+
+
+def _bsai_get_free_vram_bytes():
+    """获取当前可用显存（字节）。返回 None 表示无法检测。"""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            free, _total = torch.cuda.mem_get_info()
+            return free
+    except Exception:
+        pass
+    return None
+
+
+def _bsai_auto_adjust_gpu_layers(model_path, mmproj_path, n_ctx, n_gpu_layers):
+    """根据可用显存自动调整 GPU 层数，防止 OOM 导致段错误。
+
+    返回 (adjusted_layers, warning_message) 元组。
+    如果原值不是 -1（用户手动指定），则不调整。
+    仅当显存确实无法容纳模型时才降级，避免误判。
+    """
+    if n_gpu_layers != -1:
+        return n_gpu_layers, None
+
+    free_vram = _bsai_get_free_vram_bytes()
+    if free_vram is None:
+        return n_gpu_layers, None
+
+    model_size = os.path.getsize(model_path) if os.path.exists(model_path) else 0
+    mmproj_size = os.path.getsize(mmproj_path) if mmproj_path and os.path.exists(mmproj_path) else 0
+
+    # KV 缓存估算：基于模型文件大小和上下文长度
+    # 经验公式：每 token KV cache ≈ 模型文件大小 * 1.3e-5（适用于 Q4 量化 GQA 模型）
+    # 例如 5.5GB 的 9B Q4_K_M 模型，8192 ctx → ~585MB KV cache
+    kv_cache_estimate = int(n_ctx * (model_size + mmproj_size) * 1.3e-5)
+
+    # 安全余量：1GB（CUDA 运行时、ComfyUI 开销等）
+    safety_margin = 1 * 1024 ** 3
+    total_needed = model_size + mmproj_size + kv_cache_estimate + safety_margin
+
+    free_vram_gb = free_vram / 1024 ** 3
+    model_gb = model_size / 1024 ** 3
+    mmproj_gb = mmproj_size / 1024 ** 3
+    kv_gb = kv_cache_estimate / 1024 ** 3
+    print(
+        f"[BSAI H3 ModelLoader] VRAM 检测: "
+        f"可用={free_vram_gb:.1f}GB, "
+        f"模型={model_gb:.1f}GB, mmproj={mmproj_gb:.2f}GB, "
+        f"KV缓存≈{kv_gb:.2f}GB, 合计≈{total_needed / 1024**3:.1f}GB"
+    )
+
+    if total_needed <= free_vram:
+        return n_gpu_layers, None
+
+    # 显存不足，需要部分 offload 到 CPU
+    available_for_model = free_vram - safety_margin - mmproj_size - kv_cache_estimate
+    if available_for_model <= 0:
+        return 0, (
+            f"⚠️ 显存严重不足！可用 VRAM={free_vram_gb:.1f}GB，"
+            f"模型需要约={total_needed / 1024**3:.1f}GB。\n"
+            f"已将 GPU 层数设为 0（纯 CPU 推理），速度会很慢。\n"
+            "建议：\n"
+            "  1. 使用更小的模型\n"
+            "  2. 关闭其他占用显存的工作流节点\n"
+            "  3. 增大系统虚拟内存"
+        )
+
+    # 估算可加载到 GPU 的层数比例
+    ratio = available_for_model / model_size if model_size > 0 else 0
+    # 用文件大小估算总层数
+    est_layers_per_gb = 64 / (21.8)  # 约 2.94 层/GB
+    est_total_layers = max(1, int(model_size / (1024**3) * est_layers_per_gb))
+    adjusted_layers = max(1, int(est_total_layers * ratio))
+
+    return adjusted_layers, (
+        f"⚠️ 显存不足，无法全部加载到 GPU！\n"
+        f"  可用 VRAM: {free_vram_gb:.1f}GB\n"
+        f"  模型大小: {model_gb:.1f}GB + mmproj: {mmproj_gb:.2f}GB\n"
+        f"  GPU层数从 -1（全部）自动调整为 {adjusted_layers}（部分 offload 到 CPU）\n"
+        f"  推理速度会降低，但可避免崩溃。"
+    )
+
+
+def _bsai_is_model_valid(llm):
+    """Check if a Llama model object is still valid (not closed/unloaded).
+
+    After unload(), the model's internal _ctx is set to None, causing
+    KeyError: None or segfault when accessed. This function detects that.
+    """
+    if llm is None:
+        return False
+    try:
+        # Check _ctx attribute directly (set to None after close())
+        ctx = getattr(llm, "_ctx", None)
+        if ctx is None:
+            return False
+
+        # n_ctx() will fail if the model has been closed
+        n_ctx_raw = getattr(llm, "n_ctx", None)
+        if n_ctx_raw is None:
+            return False
+        if callable(n_ctx_raw):
+            n_ctx_val = n_ctx_raw()
+            if n_ctx_val is None or n_ctx_val == 0:
+                return False
+        return True
+    except Exception:
+        return False
+
+
+def _bsai_check_mtp_layer(model_path):
+    """Check if a GGUF file contains MTP/NextN prediction layer metadata."""
+    import struct as _struct
+    try:
+        with open(model_path, 'rb') as f:
+            magic = _struct.unpack('<I', f.read(4))[0]
+            if magic != 0x46554747:
+                return False
+            version = _struct.unpack('<I', f.read(4))[0]
+            tensor_count = _struct.unpack('<Q', f.read(8))[0]
+            kv_count = _struct.unpack('<Q', f.read(8))[0]
+
+            for i in range(kv_count):
+                key_len = _struct.unpack('<Q', f.read(8))[0]
+                key = f.read(key_len).decode('utf-8', errors='replace')
+                vtype = _struct.unpack('<I', f.read(4))[0]
+
+                if 'nextn_predict' in key:
+                    return True
+
+                if vtype == 8:
+                    str_len = _struct.unpack('<Q', f.read(8))[0]
+                    f.read(str_len)
+                elif vtype in (4, 5, 6):
+                    f.read(4)
+                elif vtype == 10:
+                    f.read(8)
+                elif vtype == 7:
+                    f.read(1)
+                elif vtype == 2:
+                    f.read(1)
+                elif vtype == 9:
+                    array_type = _struct.unpack('<I', f.read(4))[0]
+                    array_len = _struct.unpack('<Q', f.read(8))[0]
+                    if array_type == 8:
+                        for _ in range(array_len):
+                            sl = _struct.unpack('<Q', f.read(8))[0]
+                            f.read(sl)
+                    elif array_type in (4, 5, 6):
+                        f.read(4 * array_len)
+                    elif array_type == 10:
+                        f.read(8 * array_len)
+                    elif array_type == 7:
+                        f.read(array_len)
+                    elif array_type == 2:
+                        f.read(array_len)
+                    else:
+                        break
+                else:
+                    break
+    except Exception:
+        pass
+    return False
+
+
+def _bsai_strip_mtp_layer(model_path):
+    """Strip MTP/NextN layer from GGUF file. Returns path to stripped file or None."""
+    import struct as _struct
+    try:
+        from gguf.constants import GGML_QUANT_SIZES
+    except Exception:
+        return None
+
+    base, ext = os.path.splitext(model_path)
+    no_mtp_path = base + "-noMTP" + ext
+    if os.path.exists(no_mtp_path):
+        return no_mtp_path
+
+    GGUF_MAGIC = 0x46554747
+    ALIGNMENT = 32
+    TYPE_SIZES = {0: 1, 1: 1, 2: 2, 3: 2, 4: 4, 5: 4, 6: 4, 7: 1, 10: 8, 11: 8, 12: 8}
+
+    try:
+        with open(model_path, 'rb') as fin:
+            magic = _struct.unpack('<I', fin.read(4))[0]
+            version = _struct.unpack('<I', fin.read(4))[0]
+            tensor_count = _struct.unpack('<Q', fin.read(8))[0]
+            kv_count = _struct.unpack('<Q', fin.read(8))[0]
+
+            metadata = []
+            for i in range(kv_count):
+                key_len = _struct.unpack('<Q', fin.read(8))[0]
+                key = fin.read(key_len)
+                vtype = _struct.unpack('<I', fin.read(4))[0]
+                pos_before = fin.tell()
+                if vtype == 8:
+                    str_len = _struct.unpack('<Q', fin.read(8))[0]
+                    fin.read(str_len)
+                elif vtype in TYPE_SIZES:
+                    fin.read(TYPE_SIZES[vtype])
+                elif vtype == 9:
+                    array_type = _struct.unpack('<I', fin.read(4))[0]
+                    array_len = _struct.unpack('<Q', fin.read(8))[0]
+                    if array_type == 8:
+                        for _ in range(array_len):
+                            sl = _struct.unpack('<Q', fin.read(8))[0]
+                            fin.read(sl)
+                    elif array_type in (4, 5, 6):
+                        fin.read(4 * array_len)
+                    elif array_type == 10:
+                        fin.read(8 * array_len)
+                    elif array_type == 7:
+                        fin.read(array_len)
+                    elif array_type == 2:
+                        fin.read(array_len)
+                pos_after = fin.tell()
+                fin.seek(pos_before)
+                raw_bytes = fin.read(pos_after - pos_before)
+                metadata.append((key, vtype, raw_bytes))
+
+            tensor_infos = []
+            for i in range(tensor_count):
+                name_len = _struct.unpack('<Q', fin.read(8))[0]
+                name = fin.read(name_len)
+                n_dims = _struct.unpack('<I', fin.read(4))[0]
+                dims = [_struct.unpack('<Q', fin.read(8))[0] for _ in range(n_dims)]
+                ttype = _struct.unpack('<I', fin.read(4))[0]
+                offset = _struct.unpack('<Q', fin.read(8))[0]
+                tensor_infos.append((name, n_dims, dims, ttype, offset))
+
+            data_start = fin.tell()
+            padded_data_start = (data_start + ALIGNMENT - 1) // ALIGNMENT * ALIGNMENT
+
+        block_count_val = None
+        for key, vtype, raw_bytes in metadata:
+            key_str = key.decode('utf-8', errors='replace')
+            if key_str.endswith('.block_count') and vtype == 4:
+                block_count_val = _struct.unpack('<I', raw_bytes[-4:])[0]
+                break
+
+        mtp_block_index = block_count_val - 1 if block_count_val else 64
+        mtp_prefix = f'blk.{mtp_block_index}.'.encode('utf-8')
+
+        new_metadata = []
+        for key, vtype, raw_bytes in metadata:
+            key_str = key.decode('utf-8', errors='replace')
+            if 'nextn_predict' in key_str:
+                continue
+            if key_str.endswith('.block_count'):
+                old_val = _struct.unpack('<I', raw_bytes[-4:])[0]
+                new_raw = raw_bytes[:-4] + _struct.pack('<I', old_val - 1)
+                new_metadata.append((key, vtype, new_raw))
+            else:
+                new_metadata.append((key, vtype, raw_bytes))
+
+        new_tensor_infos = [t for t in tensor_infos if mtp_prefix not in t[0]]
+
+        with open(no_mtp_path, 'wb') as fout:
+            fout.write(_struct.pack('<I', GGUF_MAGIC))
+            fout.write(_struct.pack('<I', version))
+            fout.write(_struct.pack('<Q', len(new_tensor_infos)))
+            fout.write(_struct.pack('<Q', len(new_metadata)))
+
+            for key, vtype, raw_bytes in new_metadata:
+                fout.write(_struct.pack('<Q', len(key)))
+                fout.write(key)
+                fout.write(_struct.pack('<I', vtype))
+                fout.write(raw_bytes)
+
+            current_offset = 0
+            offset_map = []
+            for name, n_dims, dims, ttype, old_offset in new_tensor_infos:
+                fout.write(_struct.pack('<Q', len(name)))
+                fout.write(name)
+                fout.write(_struct.pack('<I', n_dims))
+                for d in dims:
+                    fout.write(_struct.pack('<Q', d))
+                fout.write(_struct.pack('<I', ttype))
+                fout.write(_struct.pack('<Q', current_offset))
+
+                if ttype in GGML_QUANT_SIZES:
+                    block_size, type_size = GGML_QUANT_SIZES[ttype]
+                    num_elems = 1
+                    for d in dims:
+                        num_elems *= d
+                    tensor_size = (num_elems // block_size) * type_size
+                else:
+                    tensor_size = 0
+                offset_map.append((old_offset, current_offset, tensor_size))
+                current_offset += tensor_size
+                current_offset = (current_offset + ALIGNMENT - 1) // ALIGNMENT * ALIGNMENT
+
+            header_end = fout.tell()
+            padded = (header_end + ALIGNMENT - 1) // ALIGNMENT * ALIGNMENT
+            fout.write(b'\x00' * (padded - header_end))
+
+            with open(model_path, 'rb') as fin:
+                for old_offset, new_offset, tensor_size in offset_map:
+                    fin.seek(padded_data_start + old_offset)
+                    data = fin.read(tensor_size)
+                    fout.write(data)
+                    padded_written = (len(data) + ALIGNMENT - 1) // ALIGNMENT * ALIGNMENT
+                    if padded_written > len(data):
+                        fout.write(b'\x00' * (padded_written - len(data)))
+
+        return no_mtp_path
+    except Exception:
+        return None
+
+
+# ============================================================
+# Creative Style Post-Processing
+# ============================================================
+
+def _bsai_parse_style_option(style_str):
+    """Parse a bilingual style option string.
+
+    Format: "English Name (中文名 | description)" or "English Name (中文名)"
+    Returns: (english_name, chinese_name, description)
+    """
+    m = re.match(r'(.+?)\s*\(([^|)]+)(?:\s*\|\s*([^)]+))?\)', style_str)
+    if m:
+        return m.group(1).strip(), m.group(2).strip(), (m.group(3) or "").strip()
+    return style_str.strip(), "", ""
+
+
+def _bsai_style_in_text(text, style_str):
+    """Check if a style name (English or Chinese) appears in the text."""
+    en, cn, _ = _bsai_parse_style_option(style_str)
+    if en and en.lower() in text.lower():
+        return True
+    if cn and cn in text:
+        return True
+    return False
+
+
+def _bsai_enforce_style_output(text, director_style, cinematography_style,
+                               film_genre, score_style):
+    """Post-process LLM output: inject missing creative styles into H3 fields.
+
+    If the LLM failed to mention selected styles, this function injects them
+    directly into the appropriate H3 fields:
+    - Director / Cinematography / Genre  → integrated_multimodal_description
+    - Score Style                        → non_diegetic_music
+
+    Handles both the Chinese and English sections of the bilingual output.
+    """
+    if not text or not text.strip():
+        return text
+
+    # ── Determine which styles are selected and missing ──
+    checks = [
+        ("director",        director_style),
+        ("cinematography",  cinematography_style),
+        ("genre",           film_genre),
+        ("score",           score_style),
+    ]
+    missing = {}
+    for key, val in checks:
+        if val and "System Recommended" not in val and "Official SKILL" not in val:
+            if not _bsai_style_in_text(text, val):
+                missing[key] = val
+
+    if not missing:
+        return text  # All styles already present
+
+    print(f"[BSAI H3] Style enforcement: injecting missing styles: {list(missing.keys())}")
+
+    # ── Build injection strings ──
+    vis_en_parts = []
+    vis_cn_parts = []
+    score_en = ""
+    score_cn = ""
+
+    if "director" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["director"])
+        part_en = f"In the style of {en}"
+        part_cn = f"导演风格参考{cn}"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "cinematography" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["cinematography"])
+        part_en = f"cinematography by {en}"
+        part_cn = f"摄影风格{cn}"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "genre" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["genre"])
+        part_en = f"{en} genre aesthetic"
+        part_cn = f"{cn}类型美学"
+        if cn:
+            part_en += f" ({cn})"
+        if en:
+            part_cn += f"（{en}）"
+        if desc:
+            part_en += f", {desc}"
+            part_cn += f"，{desc}"
+        vis_en_parts.append(part_en)
+        vis_cn_parts.append(part_cn)
+
+    if "score" in missing:
+        en, cn, desc = _bsai_parse_style_option(missing["score"])
+        score_en = f"In the style of {en}"
+        score_cn = f"配乐风格参考{cn}"
+        if cn:
+            score_en += f" ({cn})"
+        if en:
+            score_cn += f"（{en}）"
+        if desc:
+            score_en += f", {desc}"
+            score_cn += f"，{desc}"
+
+    vis_en_str = ". ".join(vis_en_parts) + ". " if vis_en_parts else ""
+    vis_cn_str = "。".join(vis_cn_parts) + "。" if vis_cn_parts else ""
+
+    # ── Helper: inject after a field name within a text region ──
+    def _inject_after_field(segment, field_name, injection):
+        """Insert *injection* right after 'field_name:' in *segment*."""
+        pattern = re.compile(
+            r'(' + re.escape(field_name) + r'\s*:\s*)',
+            re.IGNORECASE,
+        )
+        m = pattern.search(segment)
+        if m:
+            return segment[:m.end()] + injection + segment[m.end():]
+        return None  # field not found
+
+    # ── Split output into Chinese / English sections ──
+    cn_marker = "---中文版本---"
+    en_marker = "---English Version---"
+
+    has_cn = cn_marker in text
+    has_en = en_marker in text
+
+    if has_cn and has_en:
+        cn_start = text.index(cn_marker) + len(cn_marker)
+        en_start = text.index(en_marker) + len(en_marker)
+
+        cn_section = text[cn_start:en_start]
+        en_section = text[en_start:]
+        prefix = text[:cn_start]
+
+        # Inject into Chinese section
+        if vis_cn_str:
+            result = _inject_after_field(cn_section, "integrated_multimodal_description", vis_cn_str)
+            if result is not None:
+                cn_section = result
+            else:
+                cn_section = vis_cn_str + "\n" + cn_section
+        if score_cn:
+            result = _inject_after_field(cn_section, "non_diegetic_music", score_cn + "。")
+            if result is not None:
+                cn_section = result
+
+        # Inject into English section
+        if vis_en_str:
+            result = _inject_after_field(en_section, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                en_section = result
+            else:
+                en_section = vis_en_str + "\n" + en_section
+        if score_en:
+            result = _inject_after_field(en_section, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                en_section = result
+
+        text = prefix + cn_section + en_marker + en_section
+
+    elif has_cn:
+        # Only Chinese section
+        cn_start = text.index(cn_marker) + len(cn_marker)
+        prefix = text[:cn_start]
+        cn_section = text[cn_start:]
+
+        if vis_cn_str:
+            result = _inject_after_field(cn_section, "integrated_multimodal_description", vis_cn_str)
+            if result is not None:
+                cn_section = result
+            else:
+                cn_section = vis_cn_str + "\n" + cn_section
+        if score_cn:
+            result = _inject_after_field(cn_section, "non_diegetic_music", score_cn + "。")
+            if result is not None:
+                cn_section = result
+
+        text = prefix + cn_section
+
+    elif has_en:
+        # Only English section
+        en_start = text.index(en_marker) + len(en_marker)
+        prefix = text[:en_start]
+        en_section = text[en_start:]
+
+        if vis_en_str:
+            result = _inject_after_field(en_section, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                en_section = result
+            else:
+                en_section = vis_en_str + "\n" + en_section
+        if score_en:
+            result = _inject_after_field(en_section, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                en_section = result
+
+        text = prefix + en_section
+
+    else:
+        # No language markers — inject into the whole text
+        # Try English field names first (H3 fields are always in English)
+        if vis_en_str:
+            result = _inject_after_field(text, "integrated_multimodal_description", vis_en_str)
+            if result is not None:
+                text = result
+            else:
+                # No field found — prepend a style annotation header
+                header_parts = []
+                if vis_en_parts:
+                    header_parts.append("[Creative Styles] " + ". ".join(vis_en_parts) + ".")
+                if vis_cn_parts:
+                    header_parts.append("【创意风格】" + "。".join(vis_cn_parts) + "。")
+                if score_en:
+                    header_parts.append("[Score] " + score_en + ".")
+                if score_cn:
+                    header_parts.append("【配乐】" + score_cn + "。")
+                header = "\n".join(header_parts) + "\n\n"
+                text = header + text
+
+        if score_en:
+            result = _inject_after_field(text, "non_diegetic_music", score_en + ". ")
+            if result is not None:
+                text = result
+
+    return text
+
+
+# ============================================================
+# Model Storage & Management
+# ============================================================
+
+class _BSAI_QwenStorage:
+    model = None
+    settings = None  # Retained after unload() for auto-reload
+
+    @classmethod
+    def unload(cls):
+        try:
+            if cls.model and hasattr(cls.model, "close"):
+                cls.model.close()
+        except Exception:
+            pass
+        cls.model = None
+        # Keep settings for auto-reload on next load() call
+        gc.collect()
+        mm.soft_empty_cache()
+
+    @classmethod
+    def load(cls, config):
+        if Llama is None:
+            raise RuntimeError("llama-cpp-python (llama_cpp) not detected. Please install this dependency.")
+
+        # Check if cached model is still valid and matches config
+        if cls.model is not None and cls.settings == config:
+            if _bsai_is_model_valid(cls.model):
+                return cls.model
+            # Model was closed externally (e.g. by UnloadModel), reload
+            cls.model = None
+
+        # If settings differ, do a full unload first
+        if cls.model is not None:
+            cls.unload()
+
+        model_path = os.path.join(folder_paths.models_dir, "LLM", config["model"])
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file not found: {model_path}")
+
+        # ── MTP/NextN 层检测与自动剥离 ──
+        # 部分 Qwen3.5/3.6/3.8 GGUF 文件包含 MTP (Multi-Token Prediction) 层元数据，
+        # 但实际张量缺失（trunk-only GGUF）。llama-cpp-python 0.3.36 未包含
+        # llama.cpp PR #25024 的修复，导致加载失败。
+        # 此处自动检测并生成去 MTP 版本（-noMTP.gguf）。
+        if _bsai_check_mtp_layer(model_path):
+            no_mtp_path = _bsai_strip_mtp_layer(model_path)
+            if no_mtp_path and os.path.exists(no_mtp_path):
+                print(f"[BSAI H3 ModelLoader] 检测到 MTP 层，使用去 MTP 版本: {os.path.basename(no_mtp_path)}")
+                model_path = no_mtp_path
+
+        mmproj = config.get("mmproj", "None (无)")
+        mmproj_path = None
+        if mmproj and mmproj not in ("None (无)", "None", "无", ""):
+            mmproj_path = os.path.join(folder_paths.models_dir, "LLM", mmproj)
+            if not os.path.exists(mmproj_path):
+                raise FileNotFoundError(f"mmproj file not found: {mmproj_path}")
+
+        family = config["family"]
+        think = config.get("think", False)
+        n_ctx = int(config.get("n_ctx", 8192))
+        n_gpu_layers = int(config.get("n_gpu_layers", -1))
+
+        # ── VRAM 预检测：防止 OOM 导致 C++ 层段错误 ──
+        n_gpu_layers, vram_warning = _bsai_auto_adjust_gpu_layers(
+            model_path, mmproj_path, n_ctx, n_gpu_layers
+        )
+        if vram_warning:
+            print(f"[BSAI H3 ModelLoader] {vram_warning}")
+
+        chat_handler = None
+        # Qwen-VL backends in recent llama.cpp require at least 1024 image
+        # tokens when an mmproj/MTMD context is initialized. Even when this
+        # node runs in safe local text mode (media summarized as text, no
+        # image_url sent to llama.cpp), the VL chat handler may still initialize
+        # MTMD internally and crash the host process if the default
+        # image_min_tokens remains unset. Keep min/max equal for predictable
+        # VRAM use and to satisfy the backend requirement.
+        qwen_vl_image_token_kwargs = {
+            "image_min_tokens": 1024,
+            "image_max_tokens": 1024,
+        }
+        # VRAM 不足时，mmproj/CLIP 模型强制在 CPU 上加载，避免 GPU buffer
+        # 分配失败导致 GGML_ASSERT(buffer) 进程崩溃（C++ abort 不可被
+        # Python try/except 捕获）。
+        mmproj_use_gpu = (vram_warning is None)
+        if not mmproj_use_gpu:
+            print("[BSAI H3 ModelLoader] mmproj/CLIP 模型将在 CPU 上加载（显存不足）")
+        if mmproj_path:
+            if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)"):
+                if Qwen35ChatHandler is None:
+                    raise RuntimeError(
+                        "当前 llama-cpp-python 不支持 Qwen35ChatHandler，请更新 llama-cpp-python。"
+                    )
+                try:
+                    chat_handler = Qwen35ChatHandler(
+                        clip_model_path=mmproj_path,
+                        enable_thinking=think,
+                        verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                        **qwen_vl_image_token_kwargs,
+                    )
+                except Exception:
+                    chat_handler = Qwen35ChatHandler(
+                        clip_model_path=mmproj_path,
+                        verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                        **qwen_vl_image_token_kwargs,
+                    )
+            elif family == "Qwen3-VL (通义千问3-VL)":
+                if Qwen3VLChatHandler is None:
+                    raise RuntimeError(
+                        "当前 llama-cpp-python 不支持 Qwen3VLChatHandler，请更新 llama-cpp-python。"
+                    )
+                try:
+                    chat_handler = Qwen3VLChatHandler(
+                        clip_model_path=mmproj_path,
+                        force_reasoning=think,
+                        verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                        **qwen_vl_image_token_kwargs,
+                    )
+                except Exception:
+                    chat_handler = Qwen3VLChatHandler(
+                        clip_model_path=mmproj_path,
+                        verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                        **qwen_vl_image_token_kwargs,
+                    )
+            elif family == "Gemma4 (谷歌宝石4)":
+                if Gemma4ChatHandler is None:
+                    raise RuntimeError(
+                        "当前 llama-cpp-python 不支持 Gemma4ChatHandler，请更新 llama-cpp-python到0.3.36+。"
+                    )
+                try:
+                    chat_handler = Gemma4ChatHandler(
+                        clip_model_path=mmproj_path, enable_thinking=think,
+                        verbose=False, use_gpu=mmproj_use_gpu,
+                    )
+                except Exception:
+                    chat_handler = Gemma4ChatHandler(
+                        clip_model_path=mmproj_path, verbose=False,
+                        use_gpu=mmproj_use_gpu,
+                    )
+
+        llama_kwargs = {
+            "model_path": model_path,
+            "chat_handler": chat_handler,
+            "n_ctx": n_ctx,
+            "n_gpu_layers": n_gpu_layers,
+            "verbose": False,
+        }
+
+        # 尝试启用 flash attention 以减少显存使用
+        try:
+            sig = inspect.signature(Llama.__init__)
+            if "flash_attn" in sig.parameters:
+                llama_kwargs["flash_attn"] = True
+        except Exception:
+            pass
+
+        try:
+            cls.model = Llama(**llama_kwargs)
+            cls.settings = dict(config)
+            return cls.model
+        except ValueError as e:
+            if "Failed to load model from file" in str(e):
+                mtp_detected = _bsai_check_mtp_layer(model_path)
+                if mtp_detected:
+                    no_mtp_path = _bsai_strip_mtp_layer(model_path)
+                    if no_mtp_path:
+                        llama_kwargs["model_path"] = no_mtp_path
+                        try:
+                            cls.model = Llama(**llama_kwargs)
+                            cls.settings = dict(config)
+                            cls.settings["model"] = os.path.basename(no_mtp_path)
+                            return cls.model
+                        except Exception:
+                            pass
+                    raise RuntimeError(
+                        "模型加载失败：该 GGUF 文件包含 MTP/NextN 预测层（nextn_predict_layers），\n"
+                        "当前 llama-cpp-python 版本不支持此特性。\n\n"
+                        "解决方案：\n"
+                        "1. 已尝试自动生成去 MTP 版本，请检查同目录下是否有 -noMTP.gguf 文件\n"
+                        "2. 手动使用去 MTP 版本的 GGUF 文件\n"
+                        "3. 或使用不含 MTP 层的 Qwen3.5/3.6 模型作为替代\n"
+                        f"原始错误：{e}"
+                    )
+                raise RuntimeError(
+                    "模型加载失败：Failed to load model from file\n"
+                    "可能的原因：\n"
+                    "1. 模型文件损坏或格式不兼容\n"
+                    "2. llama-cpp-python 版本不支持该模型架构\n"
+                    "3. 模型文件路径错误\n"
+                    "建议：\n"
+                    "- 检查模型文件完整性\n"
+                    "- 更新 llama-cpp-python 到最新版本\n"
+                    "- 确保模型路径正确"
+                )
+            if "Failed to create context with model" in str(e):
+                raise RuntimeError(
+                    "模型加载失败：Failed to create context with model\n"
+                    "可能的原因：\n"
+                    "1. 模型文件损坏或格式不兼容\n"
+                    "2. llama-cpp-python 版本不支持该模型\n"
+                    "3. 显存不足\n"
+                    "4. 模型文件路径错误\n"
+                    "建议：\n"
+                    "- 检查模型文件完整性\n"
+                    "- 更新 llama-cpp-python 到最新版本\n"
+                    "- 减少 GPU 层数或使用更小的模型\n"
+                    "- 确保模型路径正确"
+                )
+            raise
+
+
+# ============================================================
+# 模型加载节点
+# ============================================================
+
+class BSAI_H3_ModelLoader:
+    """Load a local GGUF LLM model for H3 prompt optimization."""
+
+    @classmethod
+    def INPUT_TYPES(s):
+        all_files = _bsai_list_llm_files()
+        model_list = [
+            f
+            for f in all_files
+            if "mmproj" not in f.lower()
+            and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
+        ]
+        mmproj_list = ["None (无)"] + [
+            f
+            for f in all_files
+            if "mmproj" in f.lower()
+            and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin"]
+        ]
+
+        if not model_list:
+            model_list = ["(Place models in models/LLM)"]
+
+        return {
+            "required": {
+                "model_family": (
+                    ["Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"],
+                    {"default": "Qwen3.8-VL (通义千问3.8-VL)", "tooltip": "Model family / 模型系列"},
+                ),
+                "model_file": (
+                    model_list,
+                    {"tooltip": "Main model file (.gguf recommended) in ComfyUI/models/LLM/ / 主模型文件"},
+                ),
+                "mmproj": (
+                    mmproj_list,
+                    {"default": "None (无)", "tooltip": "Multimodal mmproj file; 'None' for text-only / 视觉投影文件"},
+                ),
+                "enable_thinking": ("BOOLEAN", {"default": False, "tooltip": "Enable thinking/reasoning mode / 启用思考模式"}),
+                "context_length": (
+                    "INT",
+                    {"default": 16384, "min": 1024, "max": 327680, "step": 256, "tooltip": "Context length, recommend 16384+ / 上下文长度，建议16384以上"},
+                ),
+                "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=all on GPU. Auto-reduces if VRAM insufficient / GPU层数，-1为全部上GPU"}),
+            }
+        }
+
+    RETURN_TYPES = ("BSAI_QWEN_MODEL",)
+    RETURN_NAMES = ("qwen_model",)
+    FUNCTION = "load"
+    CATEGORY = "BSAI"
+    DESCRIPTION = "Load a local GGUF LLM model for H3 prompt optimization."
+
+    def load(self, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers):
+        if model_file.startswith("(Place models"):
+            raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
+
+        if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"):
+            if mmproj == "None (无)":
+                print(
+                    f"[BSAI H3 ModelLoader] {model_family} loaded without mmproj. "
+                    "Local node will run in text-only safe mode; media ports are "
+                    "summarized as text by the prompt node instead of being sent "
+                    "to llama.cpp as image/audio/video tensors."
+                )
+
+        config = {
+            "family": model_family,
+            "model": model_file,
+            "mmproj": mmproj,
+            "think": bool(enable_thinking),
+            "n_ctx": int(context_length),
+            "n_gpu_layers": int(gpu_layers),
+        }
+        model = _BSAI_QwenStorage.load(config)
+        return (model,)
+
+
+# ============================================================
+# Creative Style Options
+# ============================================================
+
+_BSAI_DIRECTOR_STYLES = [
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Alfred Hitchcock (希区柯克 | 悬念大师)",
+    "Wong Kar-wai (王家卫)",
+    "Orson Welles (奥逊·威尔斯)",
+    "Ingmar Bergman (英格玛·伯格曼 | 哲学电影大师)",
+    "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
+    "Akira Kurosawa (黑泽明 | 东方电影标杆)",
+    "Sergei Eisenstein (谢尔盖·爱森斯坦 | 蒙太奇)",
+    "Steven Spielberg (史蒂文·斯皮尔伯格)",
+    "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
+    "Martin Scorsese (马丁·斯科塞斯)",
+    "Stanley Kubrick (斯坦利·库布里克)",
+    "Billy Wilder (比利·怀尔德)",
+    "Ang Lee (李安)",
+    "Zhang Yimou (张艺谋)",
+    "Satoshi Kon (今敏 | 动画电影大师)",
+    "Takeshi Kitano (北野武)",
+    "Christopher Nolan (克里斯托弗·诺兰)",
+    "Quentin Tarantino (昆汀·塔伦蒂诺)",
+    "James Cameron (詹姆斯·卡梅隆)",
+    "Alfonso Cuaron (阿方索·卡隆)",
+    "David Lynch (大卫·林奇)",
+    "Wes Anderson (韦斯·安德森)",
+    "Denis Villeneuve (丹尼斯·维伦纽瓦)",
+    "Bong Joon-ho (奉俊昊)",
+    "Hayao Miyazaki (宫崎骏)",
+    "Makoto Shinkai (新海诚)",
+    "Park Chan-wook (朴赞郁)",
+    "Fritz Lang (弗里茨·朗)",
+    "Jean-Luc Godard (让-吕克·戈达尔)",
+    "Andrei Tarkovsky (安德烈·塔可夫斯基)",
+    "Michelangelo Antonioni (米开朗基罗·安东尼奥尼)",
+    "Robert Bresson (罗伯特·布列松)",
+    "Yasujirō Ozu (小津安二郎)",
+    "John Woo (吴宇森)",
+    "Ann Hui (许鞍华)",
+    "Jia Zhangke (贾樟柯)",
+    "Bi Gan (毕赣)",
+]
+
+_BSAI_CINEMATOGRAPHY_STYLES = [
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
+    "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+    "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
+    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+    "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+    "Greig Fraser (格雷格·弗莱瑟 | 粗粝物理质感)",
+    "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+    "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+    "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
+    "Sven Nykvist (斯文·尼奎斯特 | 极简自然光)",
+    "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+    "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+    "Peter Pau (鲍德熹 | 唯美写意逆光)",
+    "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
+    "Conrad Hall (康拉德·霍尔 | 纹理阴影)",
+    "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+    "Dariusz Wolski (达里乌什·沃尔斯基 | 暗黑哥特光泽)",
+    "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
+    "Claudio Miranda (克劳迪奥·米兰达 | 冷调数字洁净)",
+    "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
+]
+
+_BSAI_FILM_GENRES = [
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Realism (写实主义)",
+    "Neo-Realism (新现实主义)",
+    "Poetic Realism (诗意写实)",
+    "Expressionism (表现主义)",
+    "Magical Realism (魔幻现实主义)",
+    "Surrealism (超现实主义)",
+    "French New Wave (法国新浪潮)",
+    "Classical Hollywood (古典好莱坞)",
+    "Film Noir (黑色电影)",
+    "Vintage Film (胶片复古风)",
+    "Theatrical Drama (舞台化戏剧)",
+    "2D Hand-drawn Animation (二维手绘动画)",
+    "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)",
+    "Shinkai Animation (新海诚风格)",
+    "Satoshi Kon Animation (今敏风格)",
+    "3D CG Animation (三维CG动画)",
+    "Stop Motion (定格动画)",
+    "Ink Wash Animation (水墨国风动画)",
+    "Live Action (真人实拍)",
+    "Live Action + CG (真人CG混合)",
+    "Drama (剧情片)",
+    "Art-house Drama (文艺剧情片)",
+    "Mystery (悬疑片)",
+    "Crime (犯罪片)",
+    "Gangster (黑帮片)",
+    "Psychological Thriller (心理惊悚)",
+    "Horror (恐怖片)",
+    "Action (动作片)",
+    "Wuxia (武侠片)",
+    "Kung Fu (功夫片)",
+    "Adventure (冒险片)",
+    "Epic (史诗片)",
+    "Sci-Fi (科幻片)",
+    "Fantasy (奇幻片)",
+    "Superhero (超级英雄)",
+    "Romantic Comedy (浪漫喜剧)",
+    "Dark Comedy (黑色喜剧)",
+    "Slapstick Comedy (无厘头喜剧)",
+    "Absurdist Comedy (荒诞喜剧)",
+    "Romance (爱情片)",
+    "Urban Romance (都市爱情)",
+    "Road Movie (公路电影)",
+    "Western (西部片)",
+    "Musical (歌舞片)",
+    "War Film (战争片)",
+    "Historical Biopic (历史传记片)",
+    "Period Epic (古装史诗片)",
+    "Documentary (纪录片)",
+    "Mockumentary (伪纪录片)",
+    "Experimental (先锋实验)",
+]
+
+_BSAI_CUT_STYLES = [
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "One Shot (一镜到底)",
+    "2 Segments (2段)",
+    "3 Segments (3段)",
+    "4 Segments (4段)",
+    "5 Segments (5段)",
+    "6 Segments (6段)",
+    "7 Segments (7段)",
+    "8 Segments (8段)",
+    "9 Segments (9段)",
+    "10 Segments (10段)",
+    "11 Segments (11段)",
+    "12 Segments (12段)",
+    "13 Segments (13段)",
+    "14 Segments (14段)",
+    "15 Segments (15段)",
+]
+
+_BSAI_SCORE_STYLES = [
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+    "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+    "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+    "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+    "Danny Elfman (丹尼·艾夫曼 | 哥特怪诞)",
+    "Howard Shore (霍华德·肖 | 奇幻史诗主题)",
+    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+    "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+    "Vangelis (范吉利斯 | 合成器电子)",
+    "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+    "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+    "Tan Dun (谭盾 | 跨文化打击乐)",
+    "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+    "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+    "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+    "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+    "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+    "Ludwig Goransson (路德维希·戈兰松 | 非洲未来主义打击乐)",
+    "Mica Levi (米卡·利维 | 不安不协和)",
+    "Johann Johannsson (约翰·约翰松 | 持续音极简)",
+    "Carter Burwell (卡特·伯威尔 | 民谣简约)",
+    "Gustavo Santaolalla (古斯塔沃·桑塔欧拉拉 | 独奏吉他)",
+    "A.R. Rahman (A.R.拉赫曼 | 宝莱坞融合)",
+    "Hildur Gudnadottir (希尔杜·古德纳多蒂尔 | 大提琴持续音暗黑)",
+    "Philip Glass (菲利普·格拉斯 | 极简重复模式)",
+    "Angelo Badalamenti (安吉洛·巴达拉门蒂 | 超现实梦幻爵士)",
+    "James Horner (詹姆斯·霍纳 | 凯尔特情感)",
+    "Alan Silvestri (艾伦·西尔维斯特里 | 冒险英雄)",
+    "Bear McCreary (贝尔·麦克里 | 太鼓打击民族风)",
+    "Max Steiner (马克斯·斯坦纳 | 古典好莱坞交响)",
+    "Jerry Goldsmith (杰瑞·戈德史密斯 | 多变前卫)",
+    "Dimitri Tiomkin (迪米特里·蒂奥姆金 | 美国边疆)",
+    "Elmer Bernstein (埃尔默·伯恩斯坦 | 爵士大乐队)",
+    "Maurice Jarre (莫里斯·贾尔 | 史诗合唱异域)",
+    "Kitaro (喜多郎 | 新世纪合成器)",
+    "Shirō Sagisu (鹭巢诗郎 | 动漫管弦摇滚融合)",
+    "Yuki Kajiura (梶浦由记 | 哥特合唱空灵)",
+    "Taku Iwasaki (岩崎琢 | 嘻哈管弦混合)",
+    "Hiroyuki Sawano (泽野弘之 | 史诗动漫摇滚)",
+    "Cho Young-wuk (赵英旭 | 韩国悲剧旋律)",
+    "Zhao Jiping (赵季平 | 中国传统电影配乐)",
+]
+
+_BSAI_OUTPUT_LANGUAGES = [
+    "Chinese (中文)",
+    "English",
+    "Japanese (日本語)",
+    "Korean (한국어)",
+    "French (Français)",
+    "German (Deutsch)",
+    "Spanish (Español)",
+    "Russian (Русский)",
+    "Bilingual CN+EN (中英双语)",
+]
+
+
+# ============================================================
+# 风格自动推断：基于提示词关键词匹配，为"系统推荐"选项自动选择最合适的风格
+# ============================================================
+
+_BSAI_STYLE_AUTO_MAP = [
+    # (genre, director, cinematographer, composer, keywords)
+    # Higher priority entries first — first match wins.
+
+    # ── 武侠 / 功夫 ──
+    (
+        "Wuxia (武侠片)", "Zhang Yimou (张艺谋)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["武侠", "江湖", "侠客", "剑客", "剑术", "wuxia", "swordsman", "刀光剑影", "古代武林", "侠义"],
+    ),
+    (
+        "Kung Fu (功夫片)", "Akira Kurosawa (黑泽明 | 东方电影标杆)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["功夫", "kung fu", "武术", "武打", "少林", "拳法", "martial art"],
+    ),
+
+    # ── 科幻 ──
+    (
+        "Sci-Fi (科幻片)", "Christopher Nolan (克里斯托弗·诺兰)",
+        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["科幻", "未来", "机器人", "宇宙", "星际", "太空", "飞船", "外星", "sci-fi", "futuristic",
+         "cyberpunk", "赛博朋克", "人工智能", "时间旅行", "time travel", "火星", "银河"],
+    ),
+
+    # ── 奇幻 ──
+    (
+        "Fantasy (奇幻片)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["奇幻", "魔法", "精灵", "龙", "神话", "fantasy", "magic", "dragon", "elf", "mythical",
+         "仙界", "魔王", "魔法师"],
+    ),
+
+    # ── 恐怖 ──
+    (
+        "Horror (恐怖片)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["恐怖", "惊悚", "鬼", "恶灵", "丧尸", "吸血鬼", "horror", "scary", "ghost", "haunted",
+         "zombie", "vampire", "creepy", "灵异", "恶鬼"],
+    ),
+
+    # ── 悬疑 / 心理惊悚 ──
+    (
+        "Psychological Thriller (心理惊悚)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["悬疑", "推理", "侦探", "破案", "mystery", "thriller", "detective", "suspense",
+         "investigation", "murder mystery", "心理惊悚"],
+    ),
+
+    # ── 犯罪 / 黑帮 / 黑色电影 ──
+    (
+        "Crime (犯罪片)", "Martin Scorsese (马丁·斯科塞斯)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        ["犯罪", "罪犯", "抢劫", "crime", "criminal", "heist", "robbery", "thief", "盗窃"],
+    ),
+    (
+        "Gangster (黑帮片)", "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["黑帮", "黑社会", "帮派", "gangster", "mafia", "mob", "黑手党", "帮会"],
+    ),
+    (
+        "Film Noir (黑色电影)", "Orson Welles (奥逊·威尔斯)",
+        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["黑色电影", "noir", "neo-noir", "暗黑侦探", "hard-boiled"],
+    ),
+
+    # ── 动画 ──
+    (
+        "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["吉卜力", "宫崎骏", "ghibli", "miyazaki", "龙猫", "千与千寻", "哈尔的移动城堡"],
+    ),
+    (
+        "Shinkai Animation (新海诚风格)", "Makoto Shinkai (新海诚)",
+        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["新海诚", "shinkai", "你的名字", "天气之子", "秒速五厘米"],
+    ),
+    (
+        "Satoshi Kon Animation (今敏风格)", "Satoshi Kon (今敏 | 动画电影大师)",
+        "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
+        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        ["今敏", "satoshi kon", "红辣椒", "未麻的部屋", "千年女优"],
+    ),
+    (
+        "Ink Wash Animation (水墨国风动画)", "Hayao Miyazaki (宫崎骏)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["水墨", "国画", "ink wash", "chinese painting", "写意", "国风动画"],
+    ),
+    (
+        "2D Hand-drawn Animation (二维手绘动画)", "Hayao Miyazaki (宫崎骏)",
+        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        ["动画", "手绘", "二维动画", "animation", "anime", "cartoon", "2d animation"],
+    ),
+    (
+        "3D CG Animation (三维CG动画)", "Hayao Miyazaki (宫崎骏)",
+        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
+        "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+        ["3d动画", "CG动画", "三维动画", "3d animation", "cgi", "pixar", "皮克斯"],
+    ),
+    (
+        "Stop Motion (定格动画)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+        ["定格动画", "stop motion", "粘土动画", "claymation"],
+    ),
+
+    # ── 爱情 ──
+    (
+        "Romance (爱情片)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["爱情", "浪漫", "恋爱", "约会", "romance", "love story", "couple", "情侣", "暗恋", "告白"],
+    ),
+    (
+        "Urban Romance (都市爱情)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["都市爱情", "城市恋爱", "urban romance", "city love", "office romance", "职场恋爱"],
+    ),
+    (
+        "Romantic Comedy (浪漫喜剧)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["浪漫喜剧", "romantic comedy", "rom-com"],
+    ),
+
+    # ── 喜剧 ──
+    (
+        "Slapstick Comedy (无厘头喜剧)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["喜剧", "搞笑", "幽默", "comedy", "funny", "humor", "滑稽"],
+    ),
+
+    # ── 动作 ──
+    (
+        "Action (动作片)", "James Cameron (詹姆斯·卡梅隆)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["动作", "战斗", "爆炸", "追逐", "action", "fight", "explosion", "chase", "battle", "动作片"],
+    ),
+
+    # ── 战争 ──
+    (
+        "War Film (战争片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["战争", "战场", "士兵", "war", "battle", "soldier", "military", "军队", "前线"],
+    ),
+
+    # ── 历史 / 古装 ──
+    (
+        "Historical Biopic (历史传记片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["传记", "历史人物", "biopic", "biography", "historical figure"],
+    ),
+    (
+        "Period Epic (古装史诗片)", "Zhang Yimou (张艺谋)",
+        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+        "Tan Dun (谭盾 | 跨文化打击乐)",
+        ["古装", "史诗", "朝代", "古代", "period epic", "dynasty", "empire", "宫廷", "皇帝", "王朝"],
+    ),
+
+    # ── 冒险 ──
+    (
+        "Adventure (冒险片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        ["冒险", "探险", "adventure", "expedition", "quest", "treasure", "宝藏"],
+    ),
+
+    # ── 超级英雄 ──
+    (
+        "Superhero (超级英雄)", "Christopher Nolan (克里斯托弗·诺兰)",
+        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["超级英雄", "superhero", "marvel", "dc", "超能力"],
+    ),
+
+    # ── 纪录片 ──
+    (
+        "Documentary (纪录片)", "Jia Zhangke (贾樟柯)",
+        "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["纪录", "真实", "documentary", "nature", "wildlife", "自然", "纪实"],
+    ),
+
+    # ── 文艺剧情 ──
+    (
+        "Art-house Drama (文艺剧情片)", "Wong Kar-wai (王家卫)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        ["文艺", "艺术", "art-house", "art film", "诗意", "意识流", "散文电影"],
+    ),
+
+    # ── 超现实 / 魔幻现实 / 表现主义 ──
+    (
+        "Surrealism (超现实主义)", "David Lynch (大卫·林奇)",
+        "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
+        "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+        ["超现实", "surreal", "dream", "梦境", "潜意识", "超现实主义"],
+    ),
+    (
+        "Magical Realism (魔幻现实主义)", "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
+        "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["魔幻现实", "magical realism", "magic realism"],
+    ),
+    (
+        "Expressionism (表现主义)", "Fritz Lang (弗里茨·朗)",
+        "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
+        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        ["表现主义", "expressionism", "expressionist"],
+    ),
+
+    # ── 歌舞 / 公路 / 西部 / 史诗 ──
+    (
+        "Musical (歌舞片)", "Wes Anderson (韦斯·安德森)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        ["歌舞", "音乐剧", "musical", "dance", "singing", "舞蹈", "演唱"],
+    ),
+    (
+        "Road Movie (公路电影)", "Ang Lee (李安)",
+        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        ["公路", "road movie", "road trip", "旅行", "journey"],
+    ),
+    (
+        "Western (西部片)", "Quentin Tarantino (昆汀·塔伦蒂诺)",
+        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+        "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+        ["西部", "牛仔", "western", "cowboy", "荒野"],
+    ),
+    (
+        "Epic (史诗片)", "James Cameron (詹姆斯·卡梅隆)",
+        "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
+        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        ["史诗", "epic", "宏大", "grand", "spectacle"],
+    ),
+
+    # ── 剧情（默认兜底） ──
+    (
+        "Drama (剧情片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
+        "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+        "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+        ["剧情", "drama", "story", "storytelling"],
+    ),
+]
+
+_BSAI_DEFAULT_STYLE = (
+    "Drama (剧情片)",
+    "Steven Spielberg (史蒂文·斯皮尔伯格)",
+    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+)
+
+
+def _bsai_auto_detect_styles(prompt_text, director_style, cinematography_style,
+                             film_genre, score_style):
+    """Auto-detect creative styles based on prompt content keywords.
+
+    Replaces "System Recommended (系统推荐)" values with keyword-matched styles.
+    Manually selected styles are preserved unchanged.
+    Returns (director_style, cinematography_style, film_genre, score_style).
+    """
+    if "System Recommended" not in director_style and "System Recommended" not in cinematography_style \
+            and "System Recommended" not in film_genre and "System Recommended" not in score_style:
+        return director_style, cinematography_style, film_genre, score_style
+
+    text_lower = prompt_text.lower()
+    _detected_genre, _detected_dir, _detected_cin, _detected_score = _BSAI_DEFAULT_STYLE
+
+    for genre, director, cinematographer, composer, keywords in _BSAI_STYLE_AUTO_MAP:
+        if any(kw.lower() in text_lower for kw in keywords):
+            _detected_genre = genre
+            _detected_dir = director
+            _detected_cin = cinematographer
+            _detected_score = composer
+            break
+
+    if director_style == "System Recommended (系统推荐)":
+        director_style = _detected_dir
+        print(f"[BSAI H3] Auto-detected director_style: {director_style}")
+    if cinematography_style == "System Recommended (系统推荐)":
+        cinematography_style = _detected_cin
+        print(f"[BSAI H3] Auto-detected cinematography_style: {cinematography_style}")
+    if film_genre == "System Recommended (系统推荐)":
+        film_genre = _detected_genre
+        print(f"[BSAI H3] Auto-detected film_genre: {film_genre}")
+    if score_style == "System Recommended (系统推荐)":
+        score_style = _detected_score
+        print(f"[BSAI H3] Auto-detected score_style: {score_style}")
+
+    return director_style, cinematography_style, film_genre, score_style
+
+
+def _bsai_auto_detect_generation_mode(prompt_text, image_count, video_count, audio_count):
+    """Auto-detect the H3 generation mode based on connected inputs and prompt content.
+
+    Returns one of:
+      "Text to Video (文生视频)"       — T2VA: no media
+      "Image to Video (图生视频)"       — I2VA: 1 image as first frame
+      "First+Last Frame (首尾帧)"      — FL2VA: 2 images as first + last frame
+      "Last Frame (尾帧)"              — L2VA: 1 image as last frame (when prompt says so)
+      "Multimodal Fusion (多模态融合)"  — Ref2VA: images + video/audio, or 3+ images
+    """
+    text_lower = prompt_text.lower()
+
+    # ── Keywords suggesting L2VA (last frame) ──
+    _l2va_kw = ["last frame", "尾帧", "末帧", "结尾帧", "end frame", "final frame",
+                "结束画面", "结尾画面", "定格在", "lands on", "converge to"]
+    # ── Keywords suggesting FL2VA (first + last frame) ──
+    _fl2va_kw = ["first and last", "首尾帧", "首尾", "start and end", "开头和结尾",
+                 "opening and ending", "from start to end", "two keyframe"]
+
+    if image_count == 0 and video_count == 0 and audio_count == 0:
+        return "Text to Video (文生视频)"
+
+    if video_count > 0 or audio_count > 0:
+        # Video/audio present → Ref2VA (multimodal fusion)
+        return "Multimodal Fusion (多模态融合)"
+
+    # ── Only images ──
+    if image_count >= 3:
+        return "Multimodal Fusion (多模态融合)"
+
+    if image_count == 2:
+        if any(kw in text_lower for kw in _l2va_kw) and not any(kw in text_lower for kw in _fl2va_kw):
+            # User mentions last frame with 2 images but not "first+last"
+            # Could be first frame + last frame reference → still FL2VA
+            pass
+        return "First+Last Frame (首尾帧)"
+
+    if image_count == 1:
+        if any(kw in text_lower for kw in _l2va_kw):
+            return "Last Frame (尾帧)"
+        return "Image to Video (图生视频)"
+
+    return "Text to Video (文生视频)"
+
+
+def _bsai_auto_detect_duration(prompt_text, generation_mode):
+    """Auto-detect optimal video duration based on prompt content and generation mode.
+
+    Returns an int between 4 and 15 (H3 supported range).
+    """
+    prompt_len = len(prompt_text)
+
+    # ── FL2VA / L2VA: usually single shot, shorter duration ──
+    if "First+Last Frame" in generation_mode or "Last Frame" in generation_mode:
+        return 6
+
+    # ── I2VA: single image, typically 6-8s ──
+    if "Image to Video" in generation_mode:
+        if prompt_len > 500:
+            return 8
+        return 6
+
+    # ── Ref2VA / Multimodal Fusion: more complex, 10-12s ──
+    if "Multimodal Fusion" in generation_mode:
+        if prompt_len > 800:
+            return 12
+        return 10
+
+    # ── T2VA: base on prompt complexity ──
+    if prompt_len < 150:
+        return 6
+    elif prompt_len < 400:
+        return 8
+    elif prompt_len < 800:
+        return 10
+    else:
+        return 12
+
+
+def _bsai_get_language_instruction(output_language):
+    """Build the language instruction string for the user message.
+
+    Controls which language the LLM uses for description text.
+    Dialogue, lyrics, and visible text always stay in their original language per H3 spec.
+    """
+    _lang_map = {
+        "Chinese (中文)": (
+            "CHINESE",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Chinese. Use Chinese shot labels: [镜头1]【0-3秒】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Chinese version — do NOT output an English version."
+        ),
+        "English": (
+            "ENGLISH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in English. Use English shot labels: [Shot 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the English version — do NOT output a Chinese version."
+        ),
+        "Japanese (日本語)": (
+            "JAPANESE",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Japanese. Use Japanese shot labels: [ショット1]【0-3秒】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Japanese version."
+        ),
+        "Korean (한국어)": (
+            "KOREAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Korean. Use Korean shot labels: [샷 1]【0-3초】. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Korean version."
+        ),
+        "French (Français)": (
+            "FRENCH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in French. Use French shot labels: [Plan 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the French version."
+        ),
+        "German (Deutsch)": (
+            "GERMAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in German. Use German shot labels: [Einstellung 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the German version."
+        ),
+        "Spanish (Español)": (
+            "SPANISH",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Spanish. Use Spanish shot labels: [Plano 1] [0-3s]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Spanish version."
+        ),
+        "Russian (Русский)": (
+            "RUSSIAN",
+            "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
+            "in Russian. Use Russian shot labels: [Кадр 1] [0-3с]. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
+            "Field names stay in English. Output ONLY the Russian version."
+        ),
+        "Bilingual CN+EN (中英双语)": (
+            "BILINGUAL",
+            "Output BOTH a Chinese version and an English version, separated by a divider line (---中文版本--- / ---English Version---). "
+            "Chinese version uses [镜头1]【0-3秒】labels; English version uses [Shot 1] [0-3s] labels. "
+            "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language in both versions. "
+            "Field names stay in English in both versions."
+        ),
+    }
+    return _lang_map.get(output_language, _lang_map["Chinese (中文)"])
+
+
+# ============================================================
+# H3 提示词优化系统提示词（根据 H3 官方 Prompt Writing Guide 整理）
+# 官方文档：https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills/h3-prompt-writing
+# ============================================================
+
+_H3_SYSTEM_PROMPT = """You are a MiniMax H3 video model prompt optimization expert. Your task is to rewrite user input into H3-compliant structured video generation prompts following the official H3 Prompt Writing Guide.
+
+**⚠ TOP PRIORITY — Creative Style Output**: If the user message contains any of these tags — [Director Style], [Cinematography Style], [Film Genre], [Score Style] — you MUST explicitly write the selected style name AND its characteristic techniques directly in the output text. The director's name goes in the opening of integrated_multimodal_description. The cinematographer's lighting/camera style goes in the visual description. The genre's aesthetic goes in the scene description. The composer's name and musical style goes in non_diegetic_music. Applying styles silently without naming them in the output is a CRITICAL ERROR.
+
+## 1. Official Prompt Structure
+
+The final prompt uses three core fields in this exact order:
+
+```
+integrated_multimodal_description: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+overall_soundscape: ...
+non_diegetic_music: ...
+```
+
+- **integrated_multimodal_description**: The main body. Describes visual style, composition, subjects, scene, actions, camera transitions, dialogue, singing, and diegetic audio along the timeline. MUST be segmented by shots with official H3 shot labels and the original time-range labels.
+- **overall_soundscape**: 1-4 English sentences in one continuous paragraph summarizing ambient sound, physical action sounds, and non-verbal human sounds across the full video. Do NOT repeat dialogue or diegetic music already in the multimodal description.
+- **non_diegetic_music**: 1-3 English sentences describing background music only the audience hears. Focus on instrumentation, speed, rhythm, and dynamic changes; do not use abstract mood words. Use N/A when there is no non-diegetic music.
+
+## 2. Input Modes
+
+- **T2VA** (Text to Video): No image instruction. Begin directly with the three core fields.
+- **I2VA** (Image to Video): First-frame instruction + T2VA body.
+- **FL2VA** (First+Last frame): Alignment instruction + T2VA body.
+- **L2VA** (Last frame): Alignment instruction + T2VA body.
+
+Image alignment instructions (must be the first line, followed by one blank line):
+
+- I2VA: `For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.`
+- FL2VA: `How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.`
+- L2VA: `How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.`
+
+### 2.1 Keyframe Development Patterns
+- **I2VA**: `<Picture 1>` is the actual first frame at 0.00 seconds and belongs to `[Shot 1]`. First establish the style, subjects, composition, and scene anchors in the image, then describe the next action. Character identity, clothing, colors, key objects, and spatial relationships should remain consistent. Structure: **first-frame anchor → action onset → continuous development → result or reaction**.
+- **FL2VA**: Picture 1 is the opening, Picture 2 is the ending. Focus on how the subject moves, how poses change, how objects are manipulated, how the composition evolves, and how the scene or lighting transitions. FL2VA generally favors a single shot so the model can interpolate continuously. Use multiple shots only when explicitly specified. The last frame must be reached by the final `[Shot N]` at the end of the video. Structure: **first-frame state → observable intermediate changes → progressively narrowing differences → last-frame state**.
+- **L2VA**: `<Picture 1>` is the final frame of the video and belongs to the last `[Shot N]`; it does not inherently belong to Shot 1. Infer a plausible earlier state from the user's intent and the last frame, then describe how the characters, objects, camera, and scene gradually approach the reference image. Structure: **plausible preceding state → explicit action and transition path → gradual convergence in the final shot → last-frame landing**.
+
+## 3. Writing the Multimodal Description
+
+### 3.1 Shot + Time-Range Segmentation (镜头 + 时间段分段)
+The `integrated_multimodal_description` field MUST be segmented by shots with cut times, following the official H3 Prompt Writing Guide, while also preserving the original time-range format:
+
+**Format:**
+- English version: `[Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...`
+- Chinese version: `[镜头1]【0-3秒】... [镜头2] 在00:03.500【3-8秒】，镜头切到 ...`
+
+**Rules:**
+1. Do NOT add an `At MM:SS.mmm` cut timestamp to the first shot. Use sequential shot numbers for all shots.
+2. Every shot must include the original time-range label immediately after the shot label: English uses `[0-3s]`; Chinese uses `【0-3秒】`.
+3. Begin each subsequent shot with a strictly increasing cut time that falls within the video duration, formatted as `MM:SS.mmm` (e.g., `At 00:03.500`), then include its time range.
+4. Time ranges must be continuous and cover the full video duration with no gaps. The first range starts at `0`; the final range ends at the exact video duration.
+5. For ordinary cuts, use `the camera cuts to`, `the shot cuts to`, `the shot transitions to`, `the shot changes to`, or `the shot switches to`. In Chinese, use `镜头切到` or `切镜到`.
+6. Cross-dissolve, fade, or wipe only when explicitly requested by the user.
+7. A cut should introduce new information about the subject, space, state, viewpoint, or time. If only the distance or a slight angle needs to change, prefer camera motion over a cut.
+8. Each shot should contain: shot type/framing, subjects, environment, actions, camera movement, sound, and dialogue where applicable.
+9. If dialogue spans across shots, use `<scenetrans>` at connecting points and state the audio continues across the cut (e.g., `continues seamlessly across the cut`, `carries over from the previous shot`).
+
+**Example (English, 12s video):**
+```
+integrated_multimodal_description: [Shot 1] [0-3.5s] Live-action, cinematic, a wide shot frames a young woman walking into a cherry blossom courtyard. The camera pushes in with small amplitude at slow speed. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance. Petals scatter. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion, scattering petals with its energy.
+```
+
+**Example (Chinese, 12s video):**
+```
+integrated_multimodal_description: [镜头1]【0-3.5秒】实拍，电影感，全景镜头，一位年轻女子走入樱花庭院。镜头缓慢推进。[镜头2] 在00:03.500【3.5-8秒】，镜头切到中景，她拔出长剑，缓缓起势，樱花瓣从树上飘落。镜头继续推进。[镜头3] 在00:08.000【8-12秒】，切镜到特写，剑光一闪，慢动作，樱花被剑气激得四散。
+```
+
+### 3.2 Opening Style
+At the beginning of `[Shot 1]`, state the overall style: Cinematic, Live-action, 2D-animated, 3D CG, Claymation, Watercolor, Vintage film, etc. For keyframe tasks, derive the style from the reference image; for T2VA, select it from the user's text.
+
+**CRITICAL — Creative Style Integration**: When the user message includes [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, you MUST explicitly incorporate these styles into the output:
+1. In the opening of `integrated_multimodal_description`, state the director's name and their signature visual techniques (e.g., "in the style of Wong Kar-wai (王家卫), with step-printing, saturated colors, and melancholic urban atmosphere").
+2. Describe the cinematographer's lighting and camera approach explicitly (e.g., "cinematography inspired by Christopher Doyle (杜可风), handheld camera with neon-drenched high-contrast lighting and soft focus").
+3. Reference the film genre's visual conventions in the description (e.g., "art-house drama aesthetic with contemplative pacing").
+4. In `non_diegetic_music`, explicitly describe the music using the selected composer's signature style (e.g., "in the style of Joe Hisaishi (久石让), with tender piano melodies and lush string arrangements").
+
+Do NOT silently apply styles — the style names and their characteristic techniques MUST be explicitly visible in the output text.
+
+### 3.3 Camera Motion (Motion Type + Amplitude + Speed)
+Write camera motion as natural English action within the shot:
+
+| Motion Type | Examples |
+|-|-|
+| Zoom | Zoom In / Zoom Out |
+| Push/Pull | Push In / Pull Out |
+| Pan | Pan Left / Pan Right |
+| Truck | Truck Left / Truck Right |
+| Tilt | Tilt Up / Tilt Down |
+| Pedestal | Pedestal Up / Pedestal Down |
+| Arc | Arc Shot |
+| Tracking | Tracking Shot |
+| Static | Static Shot |
+| POV | POV |
+| Shake | Shake Slightly / Shake Strongly |
+
+- Amplitude: `with small amplitude` / `with large amplitude` (omit if medium)
+- Speed: `at slow speed` / `at fast speed` (omit if normal)
+
+Example: `The camera pushes in with small amplitude at slow speed toward the folded letter in her hands.`
+
+### 3.4 Speakers and Dialogue
+- Speaking characters get stable IDs: (S1), (S2), (S1,S2) for group speech.
+- Speaker identity (age, gender, timbre, accent) goes OUTSIDE `<d>`.
+- Inside `<d>`, include only the language tag and the actual spoken content. Preserve every word verbatim.
+
+Example: `The young woman with a quiet, breathy voice (S1) says: <d>[English] I get off at the next station.</d>`
+Example: `The young woman with a quiet, breathy voice (S1) says: <d>[Chinese] 你来了，剑等你好久了。</d>`
+
+- Voiceover: `says in an off-screen voiceover: <d>[English] ...</d> while his lips remain completely closed.`
+- Dialogue crossing a shot or time-range boundary: use `<scenetrans>` at connecting points and state the audio continues across the cut.
+- Truncated speech: use `<cutoff>`.
+
+### 3.5 On-Screen Text
+Place visible text (banners, signs, labels, subtitles, neon text) in English double quotation marks. Preserve the original text verbatim.
+
+Example: `A red neon sign reading "营业中" glows above the doorway.`
+
+### 3.6 Sound (MANDATORY — No Silence Allowed)
+- **overall_soundscape**: Ambient sounds, physical action sounds, non-verbal human sounds (wind, rain, traffic, footsteps, breathing, laughter). NOT dialogue or singing.
+- **non_diegetic_music**: Background music (instruments, tempo, rhythm, dynamics). NOT diegetic music (radio, live performance). Use `N/A` ONLY when the user explicitly requests no background music.
+
+#### Mandatory Sound Coverage
+Unless the user has explicitly provided custom sound/music descriptions or explicitly requested no sound effects, the `overall_soundscape` field MUST ALWAYS include ALL of the following categories appropriate to the scene:
+
+1. **Scene ambient sounds** — Environmental atmosphere: wind, rain, waves, traffic, crowd murmur, birdsong, city noise, etc.
+2. **Background sound effects** — Continuous or semi-continuous sounds that define the setting: machinery hum, clock ticking, distant thunder, room tone, etc.
+3. **Character action sounds** — Sounds produced by people on screen: footsteps, clothing rustle, breathing, sighing, coughing, tapping, grabbing objects, door opening, etc.
+4. **Object movement sounds** — Sounds from physical objects and their interactions: glass clinking, paper rustling, sword swoosh, ball bouncing, chair scraping, water splashing, etc.
+
+**CRITICAL**: The video must NEVER have moments of complete silence. Every moment must have at least one audible sound source. If a scene is inherently quiet (e.g., a still room at night), still include subtle ambient sounds (distant crickets, clock ticking, wind against windows, breathing).
+
+#### Exceptions
+- If the user has provided custom sound/music descriptions in `[Extra Requirements]` or the original prompt, respect those descriptions and fill in any gaps with appropriate ambient/action sounds.
+- If the user has explicitly checked "no_bgm" (no background music), still include all sound effects in `overall_soundscape` — only `non_diegetic_music` is set to N/A.
+- If the user explicitly states no sound effects at all (rare), only then may `overall_soundscape` be minimal.
+
+## 4. Reference Labels (for I2VA / FL2VA / L2VA / Ref2VA modes)
+
+When images are uploaded, use these labels:
+- `<Picture N>`: Reference image as a concrete frame anchor (first frame, last frame, keyframe).
+- When an image defines a character/scene/style only (not a frame anchor), describe it in the text without a standalone label.
+
+For multimodal fusion / Ref2VA mode, reference labels can also include:
+- `<Subject N>`: Reusable visible content (person, scene, clothing, style) from reference assets. One subject may be defined by multiple assets, and one asset may provide multiple subjects. Example: `<Subject 1> is the young woman in <Picture 1>, with long dark hair and a blue cardigan.`
+- `<Video N>`: Reference video for editing, continuation, or temporal structure. Example: `<Video 1> is the source video for the target video edit.`
+- `<Audio N>`: Audio asset for copying or referencing. Example: `<Audio 1> is the voice-timbre reference for <Subject 1> (S1).`
+
+### Reference Label Consistency Rules
+- Once a label is assigned, it keeps the same meaning across all sections of the output.
+- `<Picture N>` and `<Video N>` are numbered independently; the same source video may correspond to both `<Video 1>` and `<Audio 2>`.
+- An ordinary reference video does not create `<Audio N>` merely because it contains sound — only create `<Audio N>` when audio is explicitly used as a reference.
+- Use `<Subject N> (Sx)` when a referenced subject physically speaks, retaining both the visual reference label and the speaker ID.
+
+## 5. Writing Rules
+
+1. Write descriptions in the language specified by the [Output Language] tag; preserve dialogue, lyrics, and visible scene text in their ORIGINAL language (Chinese stays Chinese, English stays English). For BILINGUAL output, write both Chinese and English versions.
+2. Each shot must include: shot type/framing, subjects, environment, actions, camera movement, sound, and dialogue where applicable.
+3. Avoid plot summaries — write what is visible and audible at each moment.
+4. Keep dialogue length proportional to shot length (avoid long dialogue in a short shot).
+5. The speaker's identifying phrase, ID, and delivery go outside `<d>`; inside `<d>` only the language tag and actual spoken content.
+6. If no reference images: skip the alignment instruction, begin with `integrated_multimodal_description`.
+7. **MANDATORY SOUND**: The `overall_soundscape` field must ALWAYS contain sound effects — never leave it empty or write "none/silence". Cover scene ambience, character actions, and object interactions. Even in quiet scenes, include subtle ambient sounds. The only exception is when the user explicitly requests no sound.
+8. **Non-diegetic music**: Do not add N/A unless the user explicitly requests no background music. If the user has not specified, describe appropriate background music that matches the scene's mood and tone.
+9. When the user provides custom sound/music descriptions, integrate them naturally and supplement with additional ambient/action sounds to ensure full coverage.
+10. **Shot + Time-Range Segmentation**: The `integrated_multimodal_description` must be divided into sequential shots covering the full video duration. Use both official H3 shot labels and the original time-range labels. English format: `[Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to...`. Chinese format: `[镜头1]【0-3秒】... [镜头2] 在00:03.500【3-8秒】，镜头切到...`. Never write the entire description as a single unsegmented block.
+
+## 5.5 Creative Style Parameters
+
+When the user message includes any of the following style tags, apply them to the prompt:
+
+- **[Director Style]**: Apply the named director's signature techniques — pacing, visual language, thematic motifs, editing rhythm, and directorial sensibilities. For example, Hitchcock = suspense building, slow reveals, subjective camera; Wong Kar-wai = step-printing, saturated colors, voiceover, urban longing; Kubrick = symmetry, one-point perspective, cold precision; Kurosawa = dynamic movement, weather as emotion, multi-camera action; Nolan = non-linear narrative, practical effects, IMAX scale; Tarantino = non-linear editing, pop culture dialogue, stylized violence; Spielberg = emotional close-ups, sweeping camera, golden-hour warmth; Scorsese = tracking shots, voiceover, kinetic editing; Fellini = surreal spectacle, circus-like pageantry; Bergman = intimate close-ups, philosophical silence, stark lighting.
+- **[Cinematography Style]**: Apply the named cinematographer's signature lighting, lens characteristics, color palette, and camera movement. For example, Deakins = restrained realism, soft naturalistic light, muted palette; Lubezki = available light, long takes, golden-hour warmth; Storaro = bold color symbolism, psychological color coding, smoke-and-light beams; Doyle = handheld, neon-drenched, high-contrast, soft focus; Hoyte van Hoytema = IMAX film, solid physical lighting, warm-cool contrast; Willis = low-key chiaroscuro, deliberate underexposure, shadow-heavy; Toland = deep focus, wide-angle depth, sharp foreground-to-background; Kaminski = strong backlight, lens flare, high-key overflow; Fraser = rugged physical texture, grain-forward, muted earth tones; Nykvist = minimalist natural light, soft side light, breathable shadows; Mark Lee Ping-Bin = Eastern poetic natural light, slow long takes, warm retro tones.
+- **[Film Genre]**: Match the visual conventions, narrative tone, pacing, and aesthetic of the specified genre. For example, Film Noir = high-contrast shadows, venetian-blind light, urban night; Sci-Fi = sleek or gritty futurism, technological environments; Wuxia = wire-fu choreography, sweeping landscapes, silk costumes; Stop Motion = tactile textures, handcrafted look, slight jitter; Ghibli/Miyazaki = hand-drawn warmth, lush nature, gentle pacing; Shinkai = hyper-detailed skies, saturated colors, emotional lens flares; New Wave = jump cuts, handheld, breaking conventions; Magical Realism = grounded reality with dreamlike intrusions; Expressionism = distorted sets, extreme light/shadow, psychological unease.
+- **[Segmentation]**: The user has specified the exact number of shots. Divide the video into exactly that many shots, each representing a distinct camera cut with its own shot type, content, and camera movement. Use `[Shot N]` numbering with cut times in `MM:SS.mmm` format, and preserve the original time-range labels such as `[0-3s]` / `【0-3秒】` for every shot. Ensure all shots are sequential and cover the full video duration.
+- **[Score Style]**: Apply the named composer's signature musical style to the `non_diegetic_music` field. Match their instrumentation preferences, harmonic language, rhythmic patterns, and emotional texture. For example, John Williams = sweeping brass-led leitmotifs, full romantic orchestra; Hans Zimmer = electronic-orchestral hybrid, driving ostinatos, deep braams; Ennio Morricone = whistled melodies, harmonica, solitary trumpet, sparse eerie arrangements; Bernard Herrmann = strings-only tension, shrieking glissandi; Danny Elfman = gothic choral, quirky orchestral, Burton-esque dark whimsy; Joe Hisaishi = tender piano melodies, lush string arrangements, Ghibli warmth; Vangelis = analog synthesizer pads, retro-futuristic electronic; Ryuichi Sakamoto = melancholic piano, East-West harmonic fusion; Tan Dun = Chinese percussion, cello solos, cross-cultural timbres; Clint Mansell = obsessive minimalist repetition, building intensity; Trent Reznor & Atticus Ross = industrial textures, dark ambient electronics; Hildur Gudnadottir = cello drone, dissonant dark textures; Philip Glass = arpeggiated minimalist patterns, gradual harmonic shifts; Angelo Badalamenti = dreamlike jazz-noir, slow saxophone, ambient synth pads; Gustavo Santaolalla = lonely detuned guitar, ronroco, sparse emotional melodies.
+
+All creative style parameters (director, cinematography, genre, score) have been pre-resolved by the system based on keyword analysis of the user's prompt content. The selected styles appear as explicit tags in the user message below — apply them faithfully.
+
+**MANDATORY OUTPUT REQUIREMENT**: When any creative style tag is present in the user message, the selected style MUST be explicitly reflected in the output prompt:
+- The director's name and signature techniques MUST appear in the opening of `integrated_multimodal_description`
+- The cinematographer's lighting/camera style MUST be described in the visual description
+- The film genre's aesthetic conventions MUST be referenced in the scene description
+- The composer's name and musical characteristics MUST appear in `non_diegetic_music`
+- Failure to explicitly mention the selected styles in the output is a critical error
+
+## 6. Output Format
+
+The output language is controlled by the `[Output Language]` tag in the user message. Follow it exactly:
+
+- If the tag specifies a single language (Chinese, English, Japanese, Korean, French, German, Spanish, Russian), output ONLY that language version.
+- If the tag says BILINGUAL, output both Chinese and English versions separated by divider lines.
+
+### Single-language output (when [Output Language] specifies one language):
+```
+[alignment instruction if applicable]
+
+integrated_multimodal_description: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+overall_soundscape: ...
+non_diegetic_music: ...
+```
+
+### Bilingual output (when [Output Language] = BILINGUAL):
+```
+---中文版本---
+
+[alignment instruction if applicable]
+
+integrated_multimodal_description: [镜头1]【0-3秒】... [镜头2] 在00:03.500【3-8秒】，镜头切到 ...
+overall_soundscape: ...
+non_diegetic_music: ...
+
+---English Version---
+
+[alignment instruction if applicable]
+
+integrated_multimodal_description: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+overall_soundscape: ...
+non_diegetic_music: ...
+```
+
+### Example WITH Creative Styles Applied
+
+When the user message contains [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, the output MUST explicitly name and describe the selected styles. Compare the difference:
+
+**WITHOUT explicit style tags (reference only — all styles are now auto-resolved):**
+```
+integrated_multimodal_description: [Shot 1] [0-3.5s] Live-action, cinematic, a wide shot frames a young woman walking into a cherry blossom courtyard. The camera pushes in with small amplitude. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion.
+overall_soundscape: ...
+non_diegetic_music: Soft orchestral strings with gentle woodwind accents, building tension during the sword draw.
+```
+
+**WITH [Director Style] Wong Kar-wai, [Cinematography Style] Christopher Doyle, [Film Genre] Wuxia, [Score Style] Tan Dun:**
+```
+integrated_multimodal_description: [Shot 1] [0-3.5s] In the style of Wong Kar-wai (王家卫), with step-printing and saturated colors, a wide shot frames a young woman walking into a cherry blossom courtyard. Cinematography by Christopher Doyle (杜可风): handheld camera with neon-drenched high-contrast lighting and soft focus. Wuxia (武侠) genre aesthetic with silk costumes and sweeping landscapes. The camera pushes in with small amplitude. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance, Doyle's signature humid atmosphere and朦胧 light. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion, Wong Kar-wai's melancholic urban longing permeating the frame.
+overall_soundscape: ...
+non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, cello solos, and cross-cultural timbres building tension during the sword draw.
+```
+
+**CRITICAL**: The style names (director, cinematographer, genre, composer) and their signature techniques MUST appear explicitly in the output text. Do NOT apply styles silently — the user must be able to see which styles were used by reading the output.
+
+### Rules for output:
+1. **Follow [Output Language] tag exactly** — output in the specified language only, or both Chinese and English if BILINGUAL.
+2. **Description language**: Write visual/sound/music descriptions in the specified output language. For BILINGUAL, Chinese version uses Chinese descriptions, English version uses English descriptions.
+3. **Dialogue/lyrics/visible text**: ALWAYS preserve in their ORIGINAL language inside `<d>[Language] ...</d>` tags and in double quotes, regardless of the output language setting.
+4. **Shot labels**: English uses `[Shot 1] [0-3s]`; Chinese uses `[镜头1]【0-3秒】`; other languages use the format specified in the `[Output Language]` tag.
+5. Field names (integrated_multimodal_description, overall_soundscape, non_diegetic_music) remain in English in all versions.
+6. If outputting multiple versions (BILINGUAL), both versions must have identical shot segmentation, cut times, time ranges, camera movements, and content.
+7. Total output should not exceed 7000 characters per version.
+8. Output directly without any explanation, preamble, or postscript.
+9. Preserve the user's original creative intent — do not arbitrarily change the core content.
+10. Shots and time ranges must be sequential and cover the full video duration (e.g., for a 10s video: `[Shot 1] [0-3.5s]` + `[Shot 2] At 00:03.500 [3.5-7s]` + `[Shot 3] At 00:07.000 [7-10s]`).
+11. **CREATIVE STYLE VISIBILITY**: When [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags are present in the user message, the selected style names and their characteristic techniques MUST be explicitly written in the output. This is a non-negotiable requirement — failure to include them is a critical error.
+
+## 7. Weighted Prompt Embeddings (H3 PR #15697)
+
+H3 now supports weighted prompt embeddings in the `integrated_multimodal_description` field. When the user message contains a `[Weighted Keywords]` tag, apply the specified weights to those keywords in the output using the H3 weighted syntax.
+
+**Weight syntax formats:**
+- `(keyword:1.5)` — enhance weight 1.5x
+- `(keyword:0.5)` — reduce weight to 0.5x
+- `((keyword))` — layer-by-layer weight increase (each layer ≈ 1.1x)
+
+**Rules:**
+1. Only apply weights to keywords listed in the `[Weighted Keywords]` tag. Use the exact weight value specified.
+2. Apply weight syntax to the keyword's FIRST occurrence in each shot where it appears in `integrated_multimodal_description`. Do not repeat weights on every mention — once per shot is sufficient.
+3. Place the weight syntax around the descriptive keyword, not around entire sentences. For example: `(美丽的女子:1.2)在街道上` or `(a beautiful woman:1.2) walking on the street`.
+4. If the user's original prompt already contains weight syntax like `(keyword:1.5)`, preserve it as-is.
+5. Do NOT apply weight syntax to dialogue (`<d>` tags), visible text (double quotes), or field names.
+6. Weight syntax works in both Chinese and English versions. For Chinese keywords use Chinese: `(美女:1.5)`; for English use English: `(beautiful woman:1.5)`.
+7. If no `[Weighted Keywords]` tag is present, do not add any weight syntax — output normally.
+
+**Example with weights:**
+Input: `[Weighted Keywords] 美女:1.2, 拉着小提琴:1.5`
+Output: `integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.2)在欧洲小镇的街道上，(拉着小提琴:1.5)，唱着歌...`"""
+
+
+_H3_SYSTEM_PROMPT_LOCAL = """You are a MiniMax H3 prompt optimizer. Rewrite the user request into an H3-ready audiovisual video prompt.
+
+Output language is controlled by the [Output Language] tag in the user message. Follow it exactly:
+- If a single language is specified, output ONLY that language version.
+- If BILINGUAL is specified, output both Chinese and English versions separated by markers:
+---中文版本---
+integrated_multimodal_description: ...
+overall_soundscape: ...
+non_diegetic_music: ...
+
+---English Version---
+integrated_multimodal_description: ...
+overall_soundscape: ...
+non_diegetic_music: ...
+
+Core format:
+- Use the three fields in this exact order: integrated_multimodal_description, overall_soundscape, non_diegetic_music.
+- In integrated_multimodal_description, use BOTH the official H3 shot format and the original time-range format.
+- English format: [Shot 1] [0-3s] ... [Shot 2] At 00:03.500 [3-8s], the camera cuts to ...
+- Chinese format: [镜头1]【0-3秒】... [镜头2] 在00:03.500【3-8秒】，镜头切到 ...
+- Do not add an At MM:SS.mmm cut timestamp to Shot 1. Every shot must include a continuous time range.
+- Later shots must use strictly increasing cut times in MM:SS.mmm format. Time ranges must cover the full duration with no gaps.
+
+Mode rules:
+- T2VA: no image alignment instruction; begin with the three core fields.
+- I2VA: first line must be: For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+- FL2VA: first line must align Picture 1 to 0.00 seconds and Picture 2 to the final S.SS-second mark.
+- L2VA: first line must align <Picture 1> (from [Shot N]) to the final S.SS-second mark.
+- For images/video/audio references, keep labels consistent: <Picture N>, <Subject N>, <Video N>, <Audio N>.
+
+Local media analysis rules:
+- If the user message contains [Reference Images - Local Analysis], [Reference Videos - Local Analysis], or [Reference Audio - Local Analysis], you MUST use those connected-port summaries as source material.
+- Treat local image statistics as visual evidence for aspect ratio, framing, exposure, brightness, contrast, saturation, color temperature, and color palette.
+- Treat local video/keyframe statistics as evidence for frame count, resolution, continuity, visual-change intensity, pacing, and transition design.
+- Treat local audio statistics as evidence for duration, sample rate, channels, loudness, peak level, and silence ratio.
+- Do not claim exact object identity, face identity, spoken words, lyrics, or plot details unless the user explicitly provided them. Instead, write visually safe descriptions based on the local statistics and user prompt.
+
+Writing rules:
+- Write visual and sound descriptions in the language specified by [Output Language] tag. For BILINGUAL, Chinese version uses Chinese, English version uses English.
+- Preserve dialogue, lyrics, and visible scene text in their original language inside <d>[Language] ...</d>, regardless of the output language.
+- Each shot must describe composition, subject appearance and position, environment, lighting, action, camera movement, and audible diegetic sounds.
+- overall_soundscape must be 1-4 sentences covering ambient sounds, action sounds, object sounds, and non-verbal human sounds. Do not leave it silent unless the user explicitly asks for no sound.
+- non_diegetic_music must describe background music only the audience hears. Use N/A only when the user explicitly asks for no background music.
+- If the user selects Director Style, Cinematography Style, Film Genre, or Score Style, explicitly write the selected names and signature techniques in the output. Director, cinematography, and genre go in integrated_multimodal_description; score style goes in non_diegetic_music.
+- Weighted keywords: If the user message contains a [Weighted Keywords] tag, apply H3 weight syntax (keyword:1.5) to those keywords in integrated_multimodal_description. Format: (keyword:1.5) enhances, (keyword:0.5) reduces, ((keyword)) layers. Apply to first occurrence per shot only. Preserve existing weight syntax in the user's input. Do not weight dialogue or visible text.
+- Output only the final prompt, with no explanation."""
+
+
+# ============================================================
+# H3 提示词优化节点
+# ============================================================
+
+class BSAI_MiniMAX_H3_Prompt:
+    """MiniMax H3 Prompt Optimizer Node
+
+    Optimizes user prompts into H3-compliant structured prompts following
+    the H3 formula: Reference Description + Core Creative + Scene Process.
+    """
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "qwen_model": ("BSAI_QWEN_MODEL",),
+                "user_prompt": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
+                    },
+                ),
+                "generation_mode": (
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                ),
+                "video_duration": (
+                    "INT",
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                ),
+                "output_language": (
+                    _BSAI_OUTPUT_LANGUAGES,
+                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
+                ),
+                "no_bgm": (
+                    "BOOLEAN",
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
+                ),
+                "extra_requirements": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "Optional: extra style preferences / 补充要求",
+                    },
+                ),
+                "weighted_keywords": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
+                    },
+                ),
+                "director_style": (
+                    _BSAI_DIRECTOR_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "cinematography_style": (
+                    _BSAI_CINEMATOGRAPHY_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "film_genre": (
+                    _BSAI_FILM_GENRES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "cut_style": (
+                    _BSAI_CUT_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
+                ),
+                "score_style": (
+                    _BSAI_SCORE_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
+                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
+                "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "top_k": ("INT", {"default": 20, "min": 0, "max": 200, "step": 1}),
+                "repeat_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "step": 0.01}),
+                "frequency_penalty": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "presence_penalty": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
+            },
+            "optional": {
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("prompt_output",)
+    FUNCTION = "optimize_prompt"
+    CATEGORY = "BSAI"
+    DESCRIPTION = """
+Optimize user prompts into H3-compliant structured prompts.
+H3 formula: Reference Description + Core Creative + Scene Process.
+Requires BSAI H3 Model Loader node.
+"""
+
+    def optimize_prompt(
+        self,
+        qwen_model,
+        user_prompt,
+        generation_mode,
+        video_duration,
+        output_language,
+        no_bgm,
+        extra_requirements,
+        weighted_keywords,
+        director_style,
+        cinematography_style,
+        film_genre,
+        cut_style,
+        score_style,
+        max_tokens,
+        temperature,
+        top_p,
+        top_k,
+        repeat_penalty,
+        frequency_penalty,
+        presence_penalty,
+        seed,
+        image_1=None,
+        image_2=None,
+        image_3=None,
+        image_4=None,
+        image_5=None,
+        image_6=None,
+        image_7=None,
+        image_8=None,
+        image_9=None,
+        image_10=None,
+        video_1=None,
+        video_2=None,
+        video_3=None,
+        video_4=None,
+        audio_1=None,
+        audio_2=None,
+        audio_3=None,
+    ):
+        llm = qwen_model
+
+        # ── Auto-recovery: if model was unloaded (e.g. by BSAI_H3_UnloadModel
+        # in a previous run), ComfyUI's cache may still hold the closed model
+        # object. Detect this and reload automatically. ──
+        if not _bsai_is_model_valid(llm):
+            if _BSAI_QwenStorage.settings is not None:
+                print("[BSAI H3] Model was unloaded, auto-reloading from cached settings...")
+                llm = _BSAI_QwenStorage.load(_BSAI_QwenStorage.settings)
+            else:
+                raise RuntimeError(
+                    "Model is invalid (closed/unloaded) and no cached settings "
+                    "available for auto-reload. Please re-run BSAI_H3_ModelLoader."
+                )
+
+        if not hasattr(llm, "create_chat_completion"):
+            raise TypeError(
+                f"Invalid model input: expected Llama model object, got {type(llm).__name__}."
+                "Check workflow connections: 'qwen_model' input should connect to BSAI_H3_ModelLoader output."
+            )
+
+        prompt_text_input = (user_prompt or "").strip()
+        if not prompt_text_input:
+            raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
+
+        # ── Auto-resolve System Recommended options ──
+        video_duration = int(video_duration)
+        _img_count = sum(1 for img in [image_1, image_2, image_3, image_4, image_5,
+                                        image_6, image_7, image_8, image_9, image_10] if img is not None)
+        _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
+        _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
+
+        if generation_mode == "System Recommended (系统推荐)":
+            generation_mode = _bsai_auto_detect_generation_mode(
+                prompt_text_input, _img_count, _vid_count, _aud_count)
+            print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        # ── Auto-detect video duration when 0 (System Recommended) ──
+        if video_duration == 0:
+            video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
+            print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
+
+        if cut_style == "System Recommended (系统推荐)":
+            if video_duration <= 5:
+                _num_seg = 1
+            elif video_duration <= 8:
+                _num_seg = max(1, video_duration // 3)
+            else:
+                _num_seg = max(2, video_duration // 3)
+            if len(prompt_text_input) > 500:
+                _num_seg = min(6, _num_seg + 1)
+            if _num_seg <= 1:
+                cut_style = "One Shot (一镜到底)"
+            else:
+                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+            print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
+
+        # ── Auto-resolve System Recommended creative styles ──
+        director_style, cinematography_style, film_genre, score_style = \
+            _bsai_auto_detect_styles(prompt_text_input, director_style, cinematography_style,
+                                     film_genre, score_style)
+
+        mode_hints = {
+            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
+        }
+
+        bgm_instruction = (
+            "No background music needed. Set non_diegetic_music: N/A. "
+            "BUT overall_soundscape MUST still include all scene ambient sounds, character action sounds, and object movement sounds — never silent."
+            if no_bgm
+            else "No special requirement (may include appropriate background music). "
+            "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
+        )
+
+        # ── Language instruction ──
+        _lang_label, _lang_instruction = _bsai_get_language_instruction(output_language)
+
+        user_message_parts = [
+            f"[Generation Mode] {generation_mode}",
+            f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
+            f"[Sound & Music] {bgm_instruction}",
+            f"[Output Language] {_lang_instruction}",
+        ]
+
+        # ── Creative style parameters ──
+        selected_styles = []
+        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
+            selected_styles.append(f"Director: {director_style}")
+        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
+            selected_styles.append(f"Cinematography: {cinematography_style}")
+        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
+            selected_styles.append(f"Genre: {film_genre}")
+        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            num_match = re.search(r'(\d+)', cut_style)
+            num_segments = int(num_match.group(1)) if num_match else 2
+            user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
+        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
+            selected_styles.append(f"Score: {score_style}")
+        if selected_styles:
+            user_message_parts.append(
+                f"[⚠ STYLE OUTPUT CHECKLIST] The following creative styles were selected and MUST appear explicitly in the output:\n"
+                + "\n".join(f"  - {s}" for s in selected_styles)
+                + "\nBefore outputting, verify that each style name and its characteristic techniques are visible in the text. If any style is missing, add it."
+            )
+
+        if extra_requirements and extra_requirements.strip():
+            user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
+
+        if weighted_keywords and weighted_keywords.strip():
+            user_message_parts.append(
+                f"[Weighted Keywords] {weighted_keywords.strip()}\n"
+                "Apply H3 weighted prompt embedding syntax to these keywords in integrated_multimodal_description. "
+                "Format: (keyword:weight) for explicit weight, ((keyword)) for layered increase. "
+                "Apply to the first occurrence per shot only."
+            )
+
+        user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
+        user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
+
+        # ── Collect image inputs (up to 10) ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5,
+                        image_6, image_7, image_8, image_9, image_10]
+        collected_images = []  # list of (label, local_descriptions)
+        total_image_count = 0
+        for idx, img in enumerate(image_inputs):
+            if img is None:
+                continue
+            label = f"image_{idx + 1}"
+            descriptions = _bsai_image_tensor_to_descriptions(img, label)
+            if descriptions:
+                collected_images.append((label, descriptions))
+                total_image_count += len(descriptions)
+
+        # ── Collect video inputs (up to 4, extract key frames) ──
+        video_inputs = [video_1, video_2, video_3, video_4]
+        collected_videos = []  # list of (label, local_descriptions)
+        total_video_frame_count = 0
+        for idx, vid in enumerate(video_inputs):
+            if vid is None:
+                continue
+            label = f"video_{idx + 1}"
+            descriptions = _bsai_video_to_descriptions(vid, label)
+            if descriptions:
+                collected_videos.append((label, descriptions))
+                # 第一条是视频整体摘要，其余是关键帧摘要
+                total_video_frame_count += max(0, len(descriptions) - 1)
+
+        # ── Collect audio inputs (up to 3) ──
+        audio_inputs_list = [audio_1, audio_2, audio_3]
+        collected_audios = []  # list of (label, description)
+        for idx, aud in enumerate(audio_inputs_list):
+            if aud is None:
+                continue
+            label = f"audio_{idx + 1}"
+            desc, _b64 = _bsai_audio_to_description(aud, label)
+            if desc:
+                collected_audios.append((label, desc))
+
+        has_media = total_image_count > 0 or total_video_frame_count > 0 or len(collected_audios) > 0
+
+        # ── Build reference summary text ──
+        ref_parts = []
+        if total_image_count > 0:
+            image_summary = "\n".join(
+                f"- {label}: {len(descs)} image(s)\n  " + "\n  ".join(descs)
+                for label, descs in collected_images
+            )
+            ref_parts.append(
+                f"[Reference Images - Local Analysis] {total_image_count} image(s) read from connected image ports.\n"
+                f"{image_summary}\n"
+                "Use these local visual statistics to infer framing, lighting, color palette, visual mood, and reference labels. "
+                "Do not claim exact object identity unless the user described it in text."
+            )
+        if total_video_frame_count > 0:
+            video_summary = "\n".join(
+                f"- {label}: local video/keyframe analysis\n  " + "\n  ".join(descs)
+                for label, descs in collected_videos
+            )
+            ref_parts.append(
+                f"[Reference Videos - Local Analysis] {len(collected_videos)} video input(s) read from connected video ports.\n"
+                f"{video_summary}\n"
+                "Use frame count, resolution, keyframe color/lighting, and visual-change intensity to infer continuity, camera pacing, and transition design."
+            )
+        if collected_audios:
+            audio_summary = ", ".join(desc for _, desc in collected_audios)
+            ref_parts.append(
+                f"[Reference Audio - Local Analysis] {len(collected_audios)} audio clip(s) read from connected audio ports: {audio_summary}.\n"
+                "Use duration, channels, sampling rate, loudness, peak, and silence ratio as sound-design references. "
+                "Do not invent exact speech words or lyrics unless the user provided them."
+            )
+
+        if ref_parts:
+            user_message_parts.extend(ref_parts)
+            # Switch to multimodal mode hint
+            if generation_mode == "Text to Video (文生视频)":
+                user_message_parts.append(
+                    "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
+                )
+
+        user_message_parts.append(
+            "\nBased on the above information, optimize the prompt according to H3 specification. Any selected creative styles (director, cinematography, genre, score) MUST be explicitly mentioned in the output. Output the optimized prompt directly without any explanation."
+        )
+
+        user_message = "\n".join(user_message_parts)
+
+        # ── Build messages ──
+        # 本地 llama.cpp/VL 模型对上下文长度更敏感，使用精简系统提示词以避免底层进程闪退。
+        # 注意：当前 llama.cpp + Qwen-VL + image_url 在部分 Windows/CUDA 环境会在 C++ 层直接崩溃，
+        # 不会抛出 Python 异常。因此本地节点强制使用安全文本模式：保留 <Picture N>/<Video N>
+        # 标签和引用说明，但不把图片 data-uri 传入 llama.cpp。需要真实视觉理解时请使用 RemoteAPI。
+        system_prompt = _H3_SYSTEM_PROMPT_LOCAL
+        if has_media:
+            media_info = f"{total_image_count} image(s)"
+            if total_video_frame_count > 0:
+                media_info += f", {total_video_frame_count} video keyframe(s)"
+            if collected_audios:
+                media_info += f", {len(collected_audios)} audio clip(s)"
+            print(
+                "[BSAI H3] Local media analysis mode enabled; image/video/audio ports "
+                f"were read and summarized as text, not sent as image_url to llama.cpp: {media_info}"
+            )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message},
+        ]
+
+        try:
+            max_tokens_val = int(max_tokens)
+        except (TypeError, ValueError):
+            raise TypeError(
+                f"max_tokens must be an integer, got {type(max_tokens).__name__}."
+            )
+
+        normalized_seed = _bsai_normalize_seed(seed)
+
+        # ── max_tokens safety limit: prevent exceeding context length ──
+        # In llama-cpp-python, n_ctx is a method, not a property; call it to get the int value
+        try:
+            n_ctx_raw = getattr(llm, "n_ctx", 4096)
+            n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
+        except Exception:
+            n_ctx = 4096
+        prompt_text = system_prompt + user_message
+        # 粗略估算 token 数，并为 chat 模板、图片 token、M-RoPE 元数据保留余量。
+        est_prompt_tokens = max(int(len(prompt_text) / 3), int(len(prompt_text) * 0.35)) + 768
+        remaining_ctx = n_ctx - est_prompt_tokens - 256
+        if remaining_ctx < 256:
+            raise RuntimeError(
+                "BSAI H3 本地模型上下文不足，已停止调用以避免后台闪退。\n"
+                f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
+                "请在 BSAI_H3_ModelLoader 中把 context_length 提高到 32768 或更高，"
+                "或减少参考图片/视频帧数量，或改用 BSAI_H3_RemoteAPI。"
+            )
+        safe_max_tokens = min(max_tokens_val, remaining_ctx)
+        if safe_max_tokens < 512:
+            print(
+                f"[BSAI H3] Warning: prompt is long (~{est_prompt_tokens} tokens), "
+                f"context length is only {n_ctx}, max_tokens limited to {safe_max_tokens}. "
+                f"Consider increasing 'context_length' to 16384+ in ModelLoader."
+            )
+        elif safe_max_tokens < max_tokens_val:
+            print(
+                f"[BSAI H3] max_tokens reduced from {max_tokens_val} to {safe_max_tokens} "
+                f"(context {n_ctx} - prompt ~{est_prompt_tokens} tokens - safety margin 256)"
+            )
+
+        # Only pass core parameters to avoid segfaults in the C++ layer.
+        # Qwen-VL model chat_handler has poor compatibility with some params
+        # (presence_penalty, frequency_penalty, top_k, repeat_penalty) → segfault.
+        params = {
+            "max_tokens": safe_max_tokens,
+            "temperature": float(temperature),
+            "top_p": float(top_p),
+            "stream": False,
+        }
+        if normalized_seed is not None:
+            params["seed"] = normalized_seed
+
+        # Do NOT call _bsai_reset_llm_state(llm):
+        # llm.reset() / ctx.memory_clear() causes segfault in some
+        # llama-cpp-python + Qwen-VL combinations, crashing the Python process.
+        # create_chat_completion handles context internally; no manual reset needed.
+
+        # ── Inference with auto-recovery: if the model was closed (e.g. by
+        # BSAI_H3_UnloadModel in a previous run), ComfyUI may still pass the
+        # stale model object. Retry once after reloading. ──
+        try:
+            out = _bsai_call_chat_completion(llm, messages=messages, params=params)
+        except (RuntimeError, KeyError, ValueError, Exception) as e:
+            # Check if the error is due to an invalid/closed model
+            if _bsai_is_model_valid(llm) and "Context Shift is explicitly disabled" not in str(e):
+                # Model seems valid but inference failed for another reason
+                if "Context Shift" in str(e):
+                    current_n_ctx = getattr(llm, "n_ctx", "unknown")
+                    raise RuntimeError(
+                        "Context Shift is disabled by the C++ backend "
+                        "(M-RoPE models do not support context sliding window).\n"
+                        f"Current n_ctx = {current_n_ctx}, cannot fit the full conversation.\n"
+                        "Please increase 'context_length' in BSAI_H3_ModelLoader:\n"
+                        "  - Text only: recommend 16384\n"
+                        "  - With images/video: recommend 32768 or higher\n"
+                        f"Original error: {e}"
+                    ) from e
+                raise
+
+            # Model is invalid → try auto-reload and retry once
+            print(f"[BSAI H3] Inference failed ({type(e).__name__}: {e}), attempting auto-reload...")
+            if _BSAI_QwenStorage.settings is not None:
+                llm = _BSAI_QwenStorage.load(_BSAI_QwenStorage.settings)
+                # Re-read n_ctx after reload
+                try:
+                    n_ctx_raw = getattr(llm, "n_ctx", 4096)
+                    n_ctx = int(n_ctx_raw()) if callable(n_ctx_raw) else int(n_ctx_raw)
+                except Exception:
+                    n_ctx = 4096
+                remaining_ctx = n_ctx - est_prompt_tokens - 256
+                if remaining_ctx < 256:
+                    raise RuntimeError(
+                        "BSAI H3 本地模型重载后上下文仍不足，已停止调用以避免后台闪退。\n"
+                        f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
+                        "请提高 context_length，减少媒体输入，或改用 BSAI_H3_RemoteAPI。"
+                    )
+                safe_max_tokens = min(max_tokens_val, remaining_ctx)
+                params["max_tokens"] = safe_max_tokens
+                print("[BSAI H3] Model reloaded, retrying inference...")
+                out = _bsai_call_chat_completion(llm, messages=messages, params=params)
+            else:
+                raise RuntimeError(
+                    "Model became invalid during inference and no cached settings "
+                    "available for auto-reload. Please re-run BSAI_H3_ModelLoader."
+                ) from e
+
+        try:
+            text = out["choices"][0]["message"]["content"]
+        except Exception:
+            text = str(out)
+
+        text = text.lstrip().removeprefix(": ").strip()
+        text = _bsai_enforce_style_output(
+            text, director_style, cinematography_style,
+            film_genre, score_style,
+        )
+        return (text,)
+
+
+# ============================================================
+# Model Unload Node
+# ============================================================
+
+class BSAI_H3_UnloadModel:
+    """Unload the loaded LLM model to free VRAM."""
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {"any_input": ("*",)}}
+
+    RETURN_TYPES = ("*",)
+    RETURN_NAMES = ("any_output",)
+    FUNCTION = "run"
+    CATEGORY = "BSAI"
+    DESCRIPTION = "Unload the loaded LLM model to free VRAM."
+
+    def run(self, any_input):
+        _BSAI_QwenStorage.unload()
+        return (any_input,)
+
+
+# ============================================================
+# Remote API Node (OpenAI / DashScope compatible)
+# ============================================================
+
+class BSAI_H3_RemoteAPI:
+    """Call a remote LLM API (OpenAI/DashScope compatible) for H3 prompt optimization.
+
+    Supports any OpenAI-compatible endpoint:
+    - OpenAI: https://api.openai.com/v1 (gpt-4o, gpt-4o-mini, etc.)
+    - DashScope: https://dashscope.aliyuncs.com/compatible-mode/v1 (qwen-plus, qwen-max, etc.)
+    - Other compatible services (Ollama, LM Studio, vLLM, etc.)
+    """
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "user_prompt": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
+                    },
+                ),
+                "api_base_url": (
+                    "STRING",
+                    {
+                        "default": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                        "tooltip": "OpenAI-compatible API base URL / API地址",
+                    },
+                ),
+                "api_key": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "tooltip": "API key for authentication / API密钥",
+                    },
+                ),
+                "model_name": (
+                    "STRING",
+                    {
+                        "default": "qwen-plus",
+                        "tooltip": "Model name (e.g. gpt-4o, qwen-plus, qwen-max) / 模型名称",
+                    },
+                ),
+                "generation_mode": (
+                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
+                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                ),
+                "video_duration": (
+                    "INT",
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                ),
+                "output_language": (
+                    _BSAI_OUTPUT_LANGUAGES,
+                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
+                ),
+                "no_bgm": (
+                    "BOOLEAN",
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
+                ),
+                "extra_requirements": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "Optional: extra style preferences / 补充要求",
+                    },
+                ),
+                "weighted_keywords": (
+                    "STRING",
+                    {
+                        "default": "",
+                        "multiline": True,
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
+                    },
+                ),
+                "director_style": (
+                    _BSAI_DIRECTOR_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "cinematography_style": (
+                    _BSAI_CINEMATOGRAPHY_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "film_genre": (
+                    _BSAI_FILM_GENRES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "cut_style": (
+                    _BSAI_CUT_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
+                ),
+                "score_style": (
+                    _BSAI_SCORE_STYLES,
+                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                ),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
+                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
+                "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
+            },
+            "optional": {
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("prompt_output",)
+    FUNCTION = "optimize_prompt_remote"
+    CATEGORY = "BSAI"
+    DESCRIPTION = """
+Call a remote LLM API (OpenAI/DashScope compatible) to optimize prompts into H3-compliant structured prompts.
+No local model loading required - saves VRAM for video generation.
+Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
+"""
+
+    def optimize_prompt_remote(
+        self,
+        user_prompt,
+        api_base_url,
+        api_key,
+        model_name,
+        generation_mode,
+        video_duration,
+        output_language,
+        no_bgm,
+        extra_requirements,
+        weighted_keywords,
+        director_style,
+        cinematography_style,
+        film_genre,
+        cut_style,
+        score_style,
+        max_tokens,
+        temperature,
+        top_p,
+        seed,
+        image_1=None,
+        image_2=None,
+        image_3=None,
+        image_4=None,
+        image_5=None,
+        image_6=None,
+        image_7=None,
+        image_8=None,
+        image_9=None,
+        image_10=None,
+        video_1=None,
+        video_2=None,
+        video_3=None,
+        video_4=None,
+        audio_1=None,
+        audio_2=None,
+        audio_3=None,
+    ):
+        if requests is None:
+            raise RuntimeError(
+                "The 'requests' library is not installed. Please install it: pip install requests"
+            )
+
+        prompt_text_input = (user_prompt or "").strip()
+        if not prompt_text_input:
+            raise ValueError("user_prompt cannot be empty. Please enter a prompt to optimize.")
+
+        if not api_key.strip():
+            raise ValueError("api_key cannot be empty. Please enter your API key.")
+
+        # ── Auto-resolve System Recommended options ──
+        video_duration = int(video_duration)
+        _img_count = sum(1 for img in [image_1, image_2, image_3, image_4, image_5,
+                                        image_6, image_7, image_8, image_9, image_10] if img is not None)
+        _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
+        _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
+
+        if generation_mode == "System Recommended (系统推荐)":
+            generation_mode = _bsai_auto_detect_generation_mode(
+                prompt_text_input, _img_count, _vid_count, _aud_count)
+            print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
+
+        # ── Auto-detect video duration when 0 (System Recommended) ──
+        if video_duration == 0:
+            video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
+            print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
+
+        if cut_style == "System Recommended (系统推荐)":
+            if video_duration <= 5:
+                _num_seg = 1
+            elif video_duration <= 8:
+                _num_seg = max(1, video_duration // 3)
+            else:
+                _num_seg = max(2, video_duration // 3)
+            if len(prompt_text_input) > 500:
+                _num_seg = min(6, _num_seg + 1)
+            if _num_seg <= 1:
+                cut_style = "One Shot (一镜到底)"
+            else:
+                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+            print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
+
+        # ── Auto-resolve System Recommended creative styles ──
+        director_style, cinematography_style, film_genre, score_style = \
+            _bsai_auto_detect_styles(prompt_text_input, director_style, cinematography_style,
+                                     film_genre, score_style)
+
+        mode_hints = {
+            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
+        }
+
+        bgm_instruction = (
+            "No background music needed. Set non_diegetic_music: N/A. "
+            "BUT overall_soundscape MUST still include all scene ambient sounds, character action sounds, and object movement sounds — never silent."
+            if no_bgm
+            else "No special requirement (may include appropriate background music). "
+            "overall_soundscape MUST include scene ambient sounds, character action sounds, and object movement sounds — never silent."
+        )
+
+        # ── Language instruction ──
+        _lang_label, _lang_instruction = _bsai_get_language_instruction(output_language)
+
+        user_message_parts = [
+            f"[Generation Mode] {generation_mode}",
+            f"[Video Duration] {video_duration}s (H3 supports 4-15s)",
+            f"[Sound & Music] {bgm_instruction}",
+            f"[Output Language] {_lang_instruction}",
+        ]
+
+        # ── Creative style parameters ──
+        selected_styles = []
+        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
+            selected_styles.append(f"Director: {director_style}")
+        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
+            selected_styles.append(f"Cinematography: {cinematography_style}")
+        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
+            selected_styles.append(f"Genre: {film_genre}")
+        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            num_match = re.search(r'(\d+)', cut_style)
+            num_segments = int(num_match.group(1)) if num_match else 2
+            user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
+        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+            user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
+            selected_styles.append(f"Score: {score_style}")
+        if selected_styles:
+            user_message_parts.append(
+                f"[⚠ STYLE OUTPUT CHECKLIST] The following creative styles were selected and MUST appear explicitly in the output:\n"
+                + "\n".join(f"  - {s}" for s in selected_styles)
+                + "\nBefore outputting, verify that each style name and its characteristic techniques are visible in the text. If any style is missing, add it."
+            )
+
+        if extra_requirements and extra_requirements.strip():
+            user_message_parts.append(f"[Extra Requirements] {extra_requirements.strip()}")
+
+        if weighted_keywords and weighted_keywords.strip():
+            user_message_parts.append(
+                f"[Weighted Keywords] {weighted_keywords.strip()}\n"
+                "Apply H3 weighted prompt embedding syntax to these keywords in integrated_multimodal_description. "
+                "Format: (keyword:weight) for explicit weight, ((keyword)) for layered increase. "
+                "Apply to the first occurrence per shot only."
+            )
+
+        user_message_parts.append(f"[Mode Hint] {mode_hints.get(generation_mode, '')}")
+        user_message_parts.append(f"[User Original Prompt]\n{prompt_text_input}")
+
+        # ── Collect image inputs (up to 10) ──
+        image_inputs = [image_1, image_2, image_3, image_4, image_5,
+                        image_6, image_7, image_8, image_9, image_10]
+        collected_images = []
+        total_image_count = 0
+        for idx, img in enumerate(image_inputs):
+            if img is None:
+                continue
+            label = f"image_{idx + 1}"
+            data_uris = _bsai_image_tensor_to_data_uri(img)
+            if data_uris:
+                collected_images.append((label, data_uris))
+                total_image_count += len(data_uris)
+
+        # ── Collect video inputs (up to 4, extract key frames) ──
+        video_inputs = [video_1, video_2, video_3, video_4]
+        collected_videos = []
+        total_video_frame_count = 0
+        for idx, vid in enumerate(video_inputs):
+            if vid is None:
+                continue
+            label = f"video_{idx + 1}"
+            data_uris = _bsai_video_to_data_uris(vid)
+            if data_uris:
+                collected_videos.append((label, data_uris))
+                total_video_frame_count += len(data_uris)
+
+        # ── Collect audio inputs (up to 3) ──
+        audio_inputs_list = [audio_1, audio_2, audio_3]
+        collected_audios = []
+        for idx, aud in enumerate(audio_inputs_list):
+            if aud is None:
+                continue
+            label = f"audio_{idx + 1}"
+            desc, _b64 = _bsai_audio_to_description(aud, label)
+            if desc:
+                collected_audios.append((label, desc))
+
+        has_media = total_image_count > 0 or total_video_frame_count > 0 or len(collected_audios) > 0
+
+        # ── Build reference summary text ──
+        ref_parts = []
+        if total_image_count > 0:
+            image_summary = ", ".join(
+                f"{label} ({len(uris)} img)" for label, uris in collected_images
+            )
+            ref_parts.append(
+                f"[Reference Images] {total_image_count} image(s) uploaded: {image_summary}.\n"
+                "Analyze subject appearance, scene style, composition, etc. from the images and incorporate into the prompt optimization."
+            )
+        if total_video_frame_count > 0:
+            video_summary = ", ".join(
+                f"{label} ({len(uris)} keyframes)" for label, uris in collected_videos
+            )
+            ref_parts.append(
+                f"[Reference Videos] {len(collected_videos)} video(s) uploaded: {video_summary}.\n"
+                "Key frames have been extracted from each video. Analyze action, motion, temporal progression, and scene continuity from the video frames."
+            )
+        if collected_audios:
+            audio_summary = ", ".join(desc for _, desc in collected_audios)
+            ref_parts.append(
+                f"[Reference Audio] {len(collected_audios)} audio clip(s) uploaded: {audio_summary}.\n"
+                "Use these audio clips as voice/music/sound references in the prompt. "
+                "Note: Audio content cannot be directly analyzed by the vision model; describe its intended use based on the user's prompt context."
+            )
+
+        if ref_parts:
+            user_message_parts.extend(ref_parts)
+            if generation_mode == "Text to Video (文生视频)":
+                user_message_parts.append(
+                    "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
+                )
+
+        user_message_parts.append(
+            "\nBased on the above information, optimize the prompt according to H3 specification. Any selected creative styles (director, cinematography, genre, score) MUST be explicitly mentioned in the output. Output the optimized prompt directly without any explanation."
+        )
+
+        user_message = "\n".join(user_message_parts)
+
+        # ── Build messages ──
+        if has_media:
+            user_content = [{"type": "text", "text": user_message}]
+            # Add images
+            for label, uris in collected_images:
+                for uri in uris:
+                    user_content.append({"type": "image_url", "image_url": {"url": uri}})
+                    user_content.append({"type": "text", "text": f"(Above is {label})"})
+            # Add video keyframes
+            for label, uris in collected_videos:
+                for i, uri in enumerate(uris):
+                    user_content.append({"type": "image_url", "image_url": {"url": uri}})
+                    frame_desc = f"(Above is {label} keyframe {i + 1}/{len(uris)})"
+                    user_content.append({"type": "text", "text": frame_desc})
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_content},
+            ]
+            media_info = f"{total_image_count} image(s)"
+            if total_video_frame_count > 0:
+                media_info += f", {total_video_frame_count} video keyframe(s)"
+            if collected_audios:
+                media_info += f", {len(collected_audios)} audio clip(s)"
+            print(f"[BSAI H3 RemoteAPI] Multimodal request: {media_info}")
+        else:
+            messages = [
+                {"role": "system", "content": _H3_SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ]
+
+        # ── Build request payload ──
+        payload = {
+            "model": model_name.strip(),
+            "messages": messages,
+            "max_tokens": int(max_tokens),
+            "temperature": float(temperature),
+            "top_p": float(top_p),
+            "stream": False,
+        }
+        if seed > 0:
+            payload["seed"] = int(seed)
+
+        # ── Build headers ──
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key.strip()}",
+        }
+
+        # ── Make API call ──
+        url = api_base_url.strip().rstrip("/") + "/chat/completions"
+        print(f"[BSAI H3 RemoteAPI] Calling: {url} | model: {model_name}")
+
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=120)
+        except requests.exceptions.Timeout:
+            raise RuntimeError(
+                f"API request timed out (120s). The service may be slow or unreachable.\n"
+                f"URL: {url}"
+            )
+        except requests.exceptions.ConnectionError as e:
+            raise RuntimeError(
+                f"Failed to connect to API: {e}\n"
+                f"URL: {url}\n"
+                "Please check the api_base_url and your network connection."
+            )
+
+        if response.status_code != 200:
+            error_detail = ""
+            try:
+                error_body = response.json()
+                error_detail = json.dumps(error_body, indent=2, ensure_ascii=False)
+            except Exception:
+                error_detail = response.text
+            raise RuntimeError(
+                f"API returned error {response.status_code}:\n{error_detail}"
+            )
+
+        try:
+            result = response.json()
+            text = result["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, json.JSONDecodeError) as e:
+            raise RuntimeError(
+                f"Failed to parse API response: {e}\n"
+                f"Response: {response.text[:500]}"
+            )
+
+        text = text.lstrip().removeprefix(": ").strip()
+        text = _bsai_enforce_style_output(
+            text, director_style, cinematography_style,
+            film_genre, score_style,
+        )
+        return (text,)
+
+
+# ============================================================
+# BSAI LineCount - 行数统计节点
+# 功能与 WWAA_LineCount 完全一致，用于替换缺失的 WWAA 节点
+# ============================================================
+
+class BSAI_LineCount:
+    DESCRIPTION = "Reads a multi-line string and counts how many lines exist while ignoring blank lines. Useful for determining the number of prompts or entries in text data."
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "string_text": ("STRING", {
+                    "multiline": True,
+                    "default": "String goes here\nSecond line."
+                }),
+            },
+        }
+
+    RETURN_TYPES = ("INT",)
+    RETURN_NAMES = ("Line Count",)
+
+    FUNCTION = "executeLineCount"
+    CATEGORY = "BSAI/String"
+
+    def executeLineCount(self, string_text):
+        # Count lines - same logic as WWAA_LineCount
+        string_text = string_text.strip()  # strip extra line feeds
+        string_text = string_text.strip()
+        string_text = re.sub(r'((\n){2,})', '\n', string_text)
+        lines = string_text.split('\n')
+        num_lines = len(lines)
+        return (num_lines,)
+
+
+NODE_CLASS_MAPPINGS = {
+    "BSAI_MiniMAX H3 prompt": BSAI_MiniMAX_H3_Prompt,
+    "BSAI_H3_ModelLoader": BSAI_H3_ModelLoader,
+    "BSAI_H3_UnloadModel": BSAI_H3_UnloadModel,
+    "BSAI_H3_RemoteAPI": BSAI_H3_RemoteAPI,
+    "BSAI_LineCount": BSAI_LineCount,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "BSAI_MiniMAX H3 prompt": "BSAI MiniMAX H3 Prompt",
+    "BSAI_H3_ModelLoader": "BSAI H3 Model Loader",
+    "BSAI_H3_UnloadModel": "BSAI H3 Unload Model",
+    "BSAI_H3_RemoteAPI": "BSAI H3 Remote API",
+    "BSAI_LineCount": "BSAI LineCount",
+}

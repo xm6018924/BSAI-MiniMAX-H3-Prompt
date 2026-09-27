@@ -1,0 +1,1898 @@
+/**
+ * BSAI H3 Prompt Template - Visual Template Browser Extension
+ *
+ * Features:
+ * - Search by keyword across all templates
+ * - Three-level cascading selection: Category > Subcategory > Template
+ * - GIF preview area on the right side
+ * - Solid background (no transparency / no canvas bleed-through)
+ * - Custom user_customization textarea integrated into the DOM widget
+ */
+
+import { app } from "../../../scripts/app.js";
+
+const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
+const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
+
+// ── CSS ──
+const STYLE_ID = "bsai-h3-tpl-css";
+if (!document.getElementById(STYLE_ID)) {
+    const st = document.createElement("style");
+    st.id = STYLE_ID;
+    st.textContent = `
+.bsai-tpl-wrap {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 2px 8px; background: #1a1a1a !important;
+    min-height: 0; box-sizing: border-box; overflow-y: auto;
+    width: 100%; height: auto !important; font-family: sans-serif;
+}
+.bsai-tpl-top {
+    display: flex; gap: 8px; align-items: stretch;
+    margin: 6px 0; flex: 0 0 auto; min-height: 0;
+    overflow: hidden;
+}
+.bsai-tpl-left {
+    flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+    min-height: 0; overflow: hidden;
+}
+.bsai-tpl-right {
+    width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;
+}
+/* Search box */
+.bsai-tpl-search-row {
+    display: flex; gap: 5px; align-items: center;
+    background: #222; border: 1px solid #444; border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0;
+}
+.bsai-tpl-search-icon {
+    font-size: 12px; color: #668; flex-shrink: 0;
+}
+.bsai-tpl-search-input {
+    flex: 1; background: transparent; border: none; color: #ddd;
+    font-size: 12px; outline: none; min-width: 0; padding: 4px 0;
+}
+.bsai-tpl-search-input::placeholder { color: #444; }
+.bsai-tpl-search-clr {
+    font-size: 14px; color: #666; cursor: pointer; flex-shrink: 0;
+    display: none; line-height: 1;
+}
+.bsai-tpl-search-clr:hover { color: #a66; }
+.bsai-tpl-search-result-path {
+    font-size: 9px; color: #5688aa; margin-top: 2px;
+}
+/* Dropdowns */
+.bsai-tpl-dd-row {
+    display: flex; gap: 5px; align-items: center;
+}
+.bsai-tpl-dd-lbl {
+    font-size: 11px; color: #88a; min-width: 80px; text-align: right;
+    white-space: nowrap;
+}
+.bsai-tpl-dd {
+    flex: 1; background: #2a2a2a; color: #ddd; border: 1px solid #444;
+    border-radius: 4px; padding: 4px 6px; font-size: 12px;
+    cursor: pointer; outline: none; min-width: 0; max-width: 100%;
+}
+.bsai-tpl-dd:hover { border-color: #5a8; }
+.bsai-tpl-dd:focus { border-color: #3f789e; box-shadow: 0 0 4px rgba(63,120,158,0.3); }
+.bsai-tpl-dd:disabled { opacity: 0.4; cursor: not-allowed; }
+/* Template list */
+.bsai-tpl-list {
+    border: 1px solid #333; border-radius: 4px; flex: 1 1 0; min-height: 220px;
+    max-height: none; overflow-y: auto !important; background: #111;
+}
+.bsai-tpl-list::-webkit-scrollbar { width: 5px; }
+.bsai-tpl-list::-webkit-scrollbar-track { background: #1a1a1a; }
+.bsai-tpl-list::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+.bsai-tpl-item {
+    padding: 6px 10px; border-bottom: 1px solid #222; cursor: pointer;
+    transition: background 0.12s; user-select: none;
+}
+.bsai-tpl-item:last-child { border-bottom: none; }
+.bsai-tpl-item:hover { background: #2a3a4a; }
+.bsai-tpl-item.active {
+    background: #2a4a6a; border-left: 3px solid #3f789e;
+}
+.bsai-tpl-item-nm { font-size: 12px; color: #cde; font-weight: 600; }
+.bsai-tpl-item-ds { font-size: 10px; color: #777; margin-top: 2px; line-height: 1.3; }
+.bsai-tpl-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+.bsai-tpl-tag {
+    font-size: 9px; background: #2a2a2a; color: #668;
+    padding: 1px 5px; border-radius: 8px; border: 1px solid #333;
+}
+/* Preview */
+.bsai-tpl-prev-box {
+    width: 180px; height: 180px; border: 1px solid #333;
+    border-radius: 4px; background: #0a0a0a; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+.bsai-tpl-prev-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.bsai-tpl-prev-ph { color: #444; font-size: 11px; text-align: center; padding: 16px; }
+.bsai-tpl-prev-nm { font-size: 11px; color: #8cf; font-weight: 600; text-align: center; line-height: 1.3; }
+.bsai-tpl-prev-md { font-size: 10px; color: #668; text-align: center; }
+.bsai-tpl-prev-dur { font-size: 10px; color: #686; text-align: center; }
+/* Info bar */
+.bsai-tpl-bar {
+    display: flex; gap: 8px; justify-content: space-between;
+    align-items: center; padding: 2px 0;
+}
+.bsai-tpl-cnt { font-size: 10px; color: #556; }
+.bsai-tpl-clr {
+    font-size: 10px; color: #a66; cursor: pointer;
+    padding: 2px 8px; border: 1px solid #433; border-radius: 3px; background: #2a1a1a;
+}
+.bsai-tpl-clr:hover { background: #3a2a2a; color: #c88; }
+.bsai-tpl-empty { padding: 16px; text-align: center; color: #444; font-size: 11px; }
+/* Multi-select: selection stack */
+.bsai-tpl-sel { display: flex; flex-wrap: wrap; gap: 4px; min-height: 0; padding: 2px 0; }
+.bsai-tpl-sel-empty { font-size: 10px; color: #556; padding: 2px 0; line-height: 1.3; }
+.bsai-tpl-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #2a4a3a; border: 1px solid #3a6a4a; color: #9d9;
+    font-size: 10px; padding: 2px 7px; border-radius: 10px; line-height: 1.2;
+}
+.bsai-tpl-chip.primary { background: #2a4a6a; border-color: #3f789e; color: #9cf; }
+.bsai-tpl-chip .ord { color: #8d8; font-weight: 700; }
+.bsai-tpl-chip .x { cursor: pointer; color: #a88; font-weight: 700; padding: 0 2px; }
+.bsai-tpl-chip .x:hover { color: #f88; }
+.bsai-tpl-item.sel { background: #2a4a3a; border-left: 3px solid #5a8; }
+.bsai-tpl-item.sel:hover { background: #2a5a4a; }
+.bsai-tpl-item.sel.primary { background: #2a4a6a; border-left: 3px solid #3f789e; }
+.bsai-tpl-ord-badge {
+    display: inline-block; min-width: 15px; text-align: center;
+    background: #5a8; color: #000; font-size: 9px; font-weight: 700;
+    border-radius: 8px; padding: 0 3px; margin-right: 4px; line-height: 1.4;
+}
+.bsai-tpl-sel-hint { font-size: 9px; color: #446; padding: 0 2px; }
+/* Multi-select mode switch */
+.bsai-tpl-mode {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #88a; padding: 2px 2px; user-select: none; cursor: pointer;
+}
+.bsai-tpl-mode input { cursor: pointer; accent-color: #3f789e; margin: 0; }
+.bsai-tpl-mode .mode-tag { font-size: 9px; padding: 1px 6px; border-radius: 8px; border: 1px solid #335; color: #678; }
+.bsai-tpl-mode .mode-tag.on { background: #2a4a3a; color: #9d9; border-color: #3a6a4a; }
+.bsai-tpl-mode .mode-tag.off { background: #2a2a2a; color: #889; border-color: #444; }
+/* Manual narration prompt (旁白) + H3 SKILL 3-part output */
+.bsai-tpl-narr {
+    flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px;
+    margin-bottom: 4px; padding: 5px 6px; background: #1a222a;
+    border: 1px solid #2a3a4a; border-radius: 5px;
+}
+.bsai-tpl-narr-lbl { font-size: 11px; font-weight: 700; color: #9bd; }
+.bsai-tpl-narr-ta {
+    width: 100%; box-sizing: border-box; min-height: 52px; max-height: 120px;
+    resize: vertical; background: #11151a; color: #dde;
+    border: 1px solid #2a3a4a; border-radius: 4px; padding: 4px 6px;
+    font-size: 12px; font-family: inherit; line-height: 1.4;
+}
+.bsai-tpl-narr-ta:focus { outline: none; border-color: #4a7a9a; }
+.bsai-tpl-skill-btn {
+    align-self: flex-start; font-size: 11px; font-weight: 700;
+    padding: 4px 12px; background: #2a4a3a; border: 1px solid #3a7a5a;
+    border-radius: 4px; color: #cfc; cursor: pointer;
+}
+.bsai-tpl-skill-btn:hover { background: #2f5a45; }
+.bsai-tpl-skill-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Voice input button */
+.bsai-tpl-voice-btn {
+    margin-left: 6px; cursor: pointer; font-size: 13px; line-height: 1;
+    padding: 3px 8px; border-radius: 6px; border: 1px solid #335;
+    background: #222; color: #9bd; white-space: nowrap; user-select: none; flex: 0 0 auto;
+}
+.bsai-tpl-voice-btn:hover { background: #2a3a4a; border-color: #4a7a9a; }
+/* Voice modal */
+.bsai-voice-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+}
+.bsai-voice-card {
+    width: 460px; max-width: 92vw; background: #1b1b1b; color: #ddd;
+    border: 1px solid #334; border-radius: 12px; padding: 16px 18px;
+    font-size: 13px; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+.bsai-voice-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #9bd; }
+.bsai-voice-status { font-size: 12px; color: #889; margin: 6px 0; min-height: 16px; }
+.bsai-voice-status.rec { color: #e77; }
+.bsai-voice-status.ok { color: #7d7; }
+.bsai-voice-ta {
+    width: 100%; min-height: 60px; box-sizing: border-box; background: #111; color: #ddd;
+    border: 1px solid #334; border-radius: 8px; padding: 8px; font-size: 13px;
+    resize: vertical; margin: 8px 0;
+}
+.bsai-voice-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.bsai-voice-btn {
+    cursor: pointer; padding: 6px 12px; border-radius: 8px; border: 1px solid #446;
+    background: #223; color: #cde; font-size: 13px;
+}
+.bsai-voice-btn:hover { background: #2a3a4a; }
+.bsai-voice-btn.primary { background: #2a4a3a; border-color: #3a7a5a; color: #cfc; }
+.bsai-voice-btn.danger { background: #4a2a2a; border-color: #7a3a3a; color: #fbb; }
+.bsai-voice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.bsai-voice-direct { margin-top: 8px; border-top: 1px solid #334; padding-top: 8px; }
+.bsai-voice-chk { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #cde; cursor: pointer; flex-wrap: wrap; }
+.bsai-voice-chk input { cursor: pointer; }
+.bsai-voice-hint { font-size: 11px; color: #889; }
+.bsai-voice-drow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+/* Customization textarea */
+.bsai-tpl-cust { margin-top: 6px; flex: 0 0 auto; min-height: 100px; display: flex; flex-direction: column; }
+.bsai-tpl-cust-lbl { font-size: 11px; color: #88a; margin-bottom: 3px; flex-shrink: 0; }
+.bsai-tpl-pv-hint {
+    display: block; margin: 2px 0 4px; padding: 6px 8px;
+    background: #1d2b3a; border: 1px solid #2f6f9e; border-radius: 5px;
+    color: #bfe0ff; font-size: 11px; line-height: 1.5; flex-shrink: 0;
+    white-space: pre-wrap; word-break: break-word;
+}
+.bsai-tpl-cust-ta {
+    display: block; width: 100%; height: 60px; min-height: 50px; max-height: none; resize: vertical;
+    background: #222; color: #ddd; border: 1px solid #444;
+    border-radius: 4px; padding: 4px 6px; font-size: 11px;
+    font-family: monospace; box-sizing: border-box; outline: none;
+}
+.bsai-tpl-cust-ta:focus { border-color: #3f789e; }
+.bsai-tpl-cust-ta::placeholder { color: #444; }
+.bsai-tpl-cust-btn {
+    display: block; margin: 4px 0 0 auto; padding: 4px 14px;
+    background: linear-gradient(135deg, #2a6f9e, #1e4f77); color: #fff;
+    border: none; border-radius: 6px; cursor: pointer; font-size: 11px;
+    font-weight: 600; transition: filter .15s, transform .05s;
+}
+.bsai-tpl-cust-btn:hover { filter: brightness(1.18); }
+.bsai-tpl-cust-btn:active { transform: translateY(1px); }
+.bsai-tpl-cust-btn:disabled { opacity: .5; cursor: not-allowed; }
+/* Output prompt preview */
+.bsai-tpl-out-lbl {
+    font-size: 11px; color: #88a; margin-bottom: 3px;
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+}
+.bsai-tpl-diff-toggle {
+    padding: 2px 8px; background: #23262c; color: #9ab; border: 1px solid #3a3f4a;
+    border-radius: 4px; cursor: pointer; font-size: 10px; white-space: nowrap;
+}
+.bsai-tpl-diff-toggle:hover { border-color: #3f789e; color: #cde; }
+.bsai-tpl-diff {
+    margin-top: 4px; border: 1px solid #334; border-radius: 4px;
+    background: #131519; overflow: hidden;
+}
+.bsai-tpl-diff-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 3px 6px; background: #1b1e24; font-size: 10px; color: #7a8; border-bottom: 1px solid #2a2e35;
+}
+.bsai-tpl-diff-cols { display: flex; align-items: stretch; }
+.bsai-tpl-diff-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bsai-tpl-diff-col + .bsai-tpl-diff-col { border-left: 1px solid #2a2e35; }
+.bsai-tpl-diff-hdr {
+    padding: 2px 6px; font-size: 10px; color: #8ad; background: #171a1f; border-bottom: 1px solid #2a2e35;
+}
+.bsai-tpl-diff-pre {
+    margin: 0; padding: 4px 6px; font-size: 10px; line-height: 1.5;
+    font-family: monospace; color: #bcd; white-space: pre-wrap; word-break: break-all;
+    max-height: 160px; overflow: auto; flex: 1;
+}
+.bsai-tpl-diff-pre .d-eq { color: #bcd; }
+.bsai-tpl-diff-pre .d-del { background: #4a1f22; color: #f4a7ab; }
+.bsai-tpl-diff-pre .d-add { background: #1c3b28; color: #a7e2b8; }
+.bsai-tpl-diff-hint { font-size: 10px; color: #667; padding: 3px 6px; }
+.bsai-tpl-out {
+    margin-top: 6px; flex: 0 1 auto; width: 100%; box-sizing: border-box; display: block;
+    background: rgba(30,32,40,0.8); border-radius: 4px; padding: 4px;
+}
+.bsai-tpl-out-ta {
+    display: block; width: 100%; height: 400px; min-height: 300px; max-height: none; resize: vertical;
+    background: #1a1c20; color: #bcd; border: 1px solid #334; border-radius: 4px;
+    padding: 4px 6px; font-size: 11px; font-family: monospace; box-sizing: border-box; outline: none;
+    overflow-y: auto; margin: 0;
+}
+.bsai-tpl-out-ta:focus { border-color: #3f789e; }
+.bsai-tpl-out-ta::placeholder { color: #445; }
+`;
+    document.head.appendChild(st);
+}
+
+// ── Template data cache ──
+let _tplData = null;
+
+async function loadTemplateData() {
+    if (_tplData) return _tplData;
+    try {
+        // cache-bust: force fresh fetch so newly-added previews show without hard-refresh
+        const resp = await fetch(DATA_URL + "?v=" + Date.now(), {cache: "no-store"});
+        if (resp.ok) {
+            _tplData = await resp.json();
+            return _tplData;
+        }
+    } catch (e) {
+        console.warn("[BSAI H3 Template] Failed to load template data:", e);
+    }
+    return null;
+}
+
+function findWidget(node, name) {
+    if (!node.widgets) return null;
+    for (let i = 0; i < node.widgets.length; i++) {
+        if (node.widgets[i].name === name) return node.widgets[i];
+    }
+    return null;
+}
+
+function hideWidget(node, name) {
+    const w = findWidget(node, name);
+    if (!w) return;
+    if (!w._bsaiOrigType) w._bsaiOrigType = w.type;
+    if (!w._bsaiOrigComputeSize) w._bsaiOrigComputeSize = w.computeSize;
+    w.type = "hidden";
+    w._bsaiHidden = true;
+    w.computeSize = function() { return [0, 0]; };
+    if (w.draw) w.draw = function() {};
+    if (w.drawWidget) w.drawWidget = function() {};
+    if (w.mouse) w.mouse = null;
+    const els = [w.element, w.inputEl, w.labelEl, w.wrapper, w.container, w.domNode];
+    els.forEach(function(el) {
+        if (el && el.style) {
+            el.style.display = "none";
+            el.style.height = "0";
+            el.style.overflow = "hidden";
+        }
+    });
+    if (w.element && w.element.parentElement) {
+        const parent = w.element.parentElement;
+        if (parent && (parent.classList.contains("widget") || parent.classList.contains("widget-wrapper"))) {
+            parent.style.display = "none";
+            parent.style.height = "0";
+            parent.style.overflow = "hidden";
+        }
+    }
+}
+
+// ── Search across all templates ──
+function searchTemplates(keyword) {
+    if (!_tplData) return [];
+    const kw = keyword.toLowerCase().trim();
+    if (!kw) return [];
+    const results = [];
+    (_tplData.categories || []).forEach(function(cat) {
+        (cat.subcategories || []).forEach(function(sub) {
+            (sub.templates || []).forEach(function(tpl) {
+                const haystack = [
+                    tpl.name, tpl.name_en, tpl.description,
+                    cat.name, cat.name_en, sub.name, sub.name_en,
+                    (tpl.tags || []).join(" "),
+                ].join(" ").toLowerCase();
+                if (haystack.indexOf(kw) >= 0) {
+                    results.push({ cat: cat, sub: sub, tpl: tpl });
+                }
+            });
+        });
+    });
+    return results;
+}
+
+// ── Build UI ──
+
+function buildTemplateUI(node) {
+    if (node._bsaiTplReady) return;
+    node._bsaiTplReady = true;
+
+    hideWidget(node, "template_select");
+    hideWidget(node, "user_customization");
+    hideWidget(node, "narration");
+    // external_prompt and direct_prompt have been COMPLETELY REMOVED from the
+    // template node. Direct mode is a separate node: BSAI_H3_DirectPrompt.
+    // This prevents hidden widget values from silently polluting the prompt.
+
+    const container = document.createElement("div");
+    container.className = "bsai-tpl-wrap";
+
+    // ── Search row ──
+    const searchRow = document.createElement("div");
+    searchRow.className = "bsai-tpl-search-row";
+    const searchIcon = document.createElement("span");
+    searchIcon.className = "bsai-tpl-search-icon";
+    searchIcon.textContent = "🔍";
+    const searchInput = document.createElement("input");
+    searchInput.className = "bsai-tpl-search-input";
+    searchInput.type = "text";
+    searchInput.placeholder = "搜索模板 / Search templates...";
+    const searchClr = document.createElement("span");
+    searchClr.className = "bsai-tpl-search-clr";
+    searchClr.textContent = "✕";
+    const voiceBtn = document.createElement("span");
+    voiceBtn.className = "bsai-tpl-voice-btn";
+    voiceBtn.textContent = "🎤 语音 / Voice";
+    voiceBtn.title = "语音输入指令（覆盖模板动作）/ Voice input command (overrides template action)";
+    voiceBtn.onclick = function() { openVoiceModal(node); };
+    // ── Manual narration prompt (旁白) + official H3 SKILL 3-part output ──
+    // 放置在「搜索模板 / 语音栏」上方：输入旁白 → 一键生成官方SKILL三段式提示词 → 直接输出给下游
+    const narrDiv = document.createElement("div");
+    narrDiv.className = "bsai-tpl-narr";
+    const narrLbl = document.createElement("div");
+    narrLbl.className = "bsai-tpl-narr-lbl";
+    narrLbl.textContent = "手动提示词（旁白）/ Manual Prompt (Narration):";
+    const narrTa = document.createElement("textarea");
+    narrTa.className = "bsai-tpl-narr-ta";
+    narrTa.placeholder = "在此输入旁白台词，如：清晨的阳光洒进老茶馆，老人缓缓讲述五十年前的故事… / Type the voice-over narration here...";
+    // 旁白输入即同步到 narration widget（后端 get_template 注入画面旁白）
+    narrTa.addEventListener("input", function() {
+        if (setWidgetText(node, "narration", narrTa.value)) {
+            node.graph && node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+        }
+    });
+    node._bsaiNarrTa = narrTa;
+    const skillBtn = document.createElement("button");
+    skillBtn.type = "button";
+    skillBtn.className = "bsai-tpl-skill-btn";
+    skillBtn.textContent = "⚡ H3官方SKILL 3段式输出 / H3 SKILL 3-Part Output";
+    skillBtn.title = "将旁白包装为 MiniMax H3 官方 SKILL 标准三段式提示词（integrated_multimodal_description / overall_soundscape / non_diegetic_music），并直接输出给下游节点";
+    function _skillLocalBuild(n) {
+        const q = String.fromCharCode(0x201c) + n + String.fromCharCode(0x201d);
+        return "MiniMax H3 film generation — voice-over narration driven scene （旁白叙事驱动的电影镜头）\n\n" +
+            "integrated_multimodal_description: \n" +
+            "A cinematic scene driven by the following voice-over narration: " + q + ". " +
+            "The visuals, character actions and camera moves follow the rhythm and emotion of the narration; " +
+            "every shot stays consistent with the narrated story, and when the narration is spoken " +
+            "the character's mouth/actions sync with it. （以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）\n\n" +
+            "overall_soundscape: \n" +
+            "The voice-over narration " + q + " is the primary audio track and must remain clearly audible. " +
+            "Subtle ambient sound and sound effects support the scene without masking the narration. " +
+            "（旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）\n\n" +
+            "non_diegetic_music: \n" +
+            "A background music score matching the emotional tone of the narration, kept at low volume " +
+            "so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）";
+    }
+    skillBtn.onclick = function() {
+        const n = narrTa.value.trim();
+        if (!n) { setStatus("请先输入旁白 / Enter narration first", ""); return; }
+        const old = skillBtn.textContent;
+        skillBtn.disabled = true;
+        skillBtn.textContent = "⏳ 生成中… / Generating…";
+        fetch("/bsai_h3/skill_three", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: n }),
+        }).then(function(r) { return r.json().catch(function() { return {}; }); })
+        .then(function(j) {
+            const out = (j && j.ok && j.prompt) ? j.prompt : _skillLocalBuild(n);
+            setCustomizationText(node, out);
+            setStatus("✅ 已生成 H3 官方SKILL三段式提示词，已填入补充修改 / 3-part prompt filled into customization", "ok");
+        }).catch(function() {
+            const out = _skillLocalBuild(n);
+            setCustomizationText(node, out);
+            setStatus("⚠️ 网络错误，已用本地三段式模板填入补充修改 / fallback: local 3-part filled into customization", "");
+        }).then(function() {
+            skillBtn.disabled = false;
+            skillBtn.textContent = old;
+        });
+    };
+    narrDiv.appendChild(narrLbl);
+    narrDiv.appendChild(narrTa);
+    narrDiv.appendChild(skillBtn);
+    container.appendChild(narrDiv);
+
+    searchRow.appendChild(searchIcon);
+    searchRow.appendChild(searchInput);
+    searchRow.appendChild(searchClr);
+    searchRow.appendChild(voiceBtn);
+    container.appendChild(searchRow);
+
+    // ── Top section: dropdowns + list (left) | preview (right) ──
+    const topDiv = document.createElement("div");
+    topDiv.className = "bsai-tpl-top";
+
+    const left = document.createElement("div");
+    left.className = "bsai-tpl-left";
+
+    // Category dropdown
+    const catRow = document.createElement("div");
+    catRow.className = "bsai-tpl-dd-row";
+    const catLbl = document.createElement("span");
+    catLbl.className = "bsai-tpl-dd-lbl";
+    catLbl.textContent = "分类 / Category";
+    const catSel = document.createElement("select");
+    catSel.className = "bsai-tpl-dd";
+    catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+    catRow.appendChild(catLbl);
+    catRow.appendChild(catSel);
+    left.appendChild(catRow);
+
+    // Subcategory dropdown
+    const subRow = document.createElement("div");
+    subRow.className = "bsai-tpl-dd-row";
+    const subLbl = document.createElement("span");
+    subLbl.className = "bsai-tpl-dd-lbl";
+    subLbl.textContent = "子类 / Subcategory";
+    const subSel = document.createElement("select");
+    subSel.className = "bsai-tpl-dd";
+    subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+    subSel.disabled = true;
+    subRow.appendChild(subLbl);
+    subRow.appendChild(subSel);
+    left.appendChild(subRow);
+
+    // Info bar
+    const bar = document.createElement("div");
+    bar.className = "bsai-tpl-bar";
+    const cntSpan = document.createElement("span");
+    cntSpan.className = "bsai-tpl-cnt";
+    cntSpan.textContent = "";
+    const clrBtn = document.createElement("span");
+    clrBtn.className = "bsai-tpl-clr";
+    clrBtn.textContent = "✕ 清除 / Clear";
+    clrBtn.style.display = "none";
+    bar.appendChild(cntSpan);
+    bar.appendChild(clrBtn);
+    left.appendChild(bar);
+
+    // Selection stack bar (multi-select)
+    const selBar = document.createElement("div");
+    selBar.className = "bsai-tpl-sel";
+    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">点击模板单选 / Click a template to select (single-select)</div>';
+    left.appendChild(selBar);
+
+    // Mode switch: Single (default) / Multi-Stack
+    const modeRow = document.createElement("label");
+    modeRow.className = "bsai-tpl-mode";
+    modeRow.title = "默认单选：点击模板即选中并预览。开启后为多选叠加：点击多个模板合并为一个提示词 / Default single-select. Enable to stack multiple templates into one prompt.";
+    const modeCb = document.createElement("input");
+    modeCb.type = "checkbox";
+    const modeTxt = document.createElement("span");
+    modeTxt.textContent = "多选叠加 / Multi-Stack";
+    const modeTag = document.createElement("span");
+    modeTag.className = "mode-tag off";
+    modeTag.textContent = "OFF · 单选";
+    modeRow.appendChild(modeCb);
+    modeRow.appendChild(modeTxt);
+    modeRow.appendChild(modeTag);
+    left.appendChild(modeRow);
+
+    // Template list
+    const listDiv = document.createElement("div");
+    listDiv.className = "bsai-tpl-list";
+    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+    left.appendChild(listDiv);
+
+    // Right panel - preview
+    const right = document.createElement("div");
+    right.className = "bsai-tpl-right";
+    const prevBox = document.createElement("div");
+    prevBox.className = "bsai-tpl-prev-box";
+    prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+    right.appendChild(prevBox);
+    const prevNm = document.createElement("div");
+    prevNm.className = "bsai-tpl-prev-nm";
+    right.appendChild(prevNm);
+    const prevMd = document.createElement("div");
+    prevMd.className = "bsai-tpl-prev-md";
+    right.appendChild(prevMd);
+    const prevDur = document.createElement("div");
+    prevDur.className = "bsai-tpl-prev-dur";
+    right.appendChild(prevDur);
+
+    topDiv.appendChild(left);
+    topDiv.appendChild(right);
+    container.appendChild(topDiv);
+
+    // Customization textarea
+    const custDiv = document.createElement("div");
+    custDiv.className = "bsai-tpl-cust";
+    const custLbl = document.createElement("div");
+    custLbl.className = "bsai-tpl-cust-lbl";
+    custLbl.textContent = "补充修改 / Customization (Optional):";
+    const custTa = document.createElement("textarea");
+    custTa.className = "bsai-tpl-cust-ta";
+    custTa.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    const custBtn = document.createElement("button");
+    custBtn.type = "button";
+    custBtn.className = "bsai-tpl-cust-btn";
+    custBtn.textContent = "确认修改 / Apply";
+    custBtn.title = "将补充修改真正融合进模板，并在下方输出提示词预览中查看最终结果 / Merge the customization into the template and preview the final result below";
+    // v-pv: per-template guidance banner (纯文字PV·无图生成 asks the user to type
+    // PV copy / script / ad lines here, then 确认修改 merges it into the template).
+    const pvHint = document.createElement("div");
+    pvHint.className = "bsai-tpl-pv-hint";
+    pvHint.style.display = "none";
+    custDiv.appendChild(custLbl);
+    custDiv.appendChild(pvHint);
+    custDiv.appendChild(custTa);
+    custDiv.appendChild(custBtn);
+    container.appendChild(custDiv);
+
+    // Output prompt preview (shows the text actually sent to downstream nodes)
+    const outDiv = document.createElement("div");
+    outDiv.className = "bsai-tpl-out";
+    const outLbl = document.createElement("div");
+    outLbl.className = "bsai-tpl-out-lbl";
+    const outLblTxt = document.createElement("span");
+    outLblTxt.textContent = "输出提示词预览 / Output Preview (text sent to downstream):";
+    const diffToggle = document.createElement("button");
+    diffToggle.type = "button";
+    diffToggle.className = "bsai-tpl-diff-toggle";
+    diffToggle.textContent = "📊 展开对比 ▼ / Show Diff";
+    diffToggle.title = "展开/收起「源模板 vs 修改后」对比窗口 / Toggle Source vs Merged diff view";
+    outLbl.appendChild(outLblTxt);
+    outLbl.appendChild(diffToggle);
+    const outTa = document.createElement("textarea");
+    outTa.className = "bsai-tpl-out-ta";
+    outTa.readOnly = true;
+    outTa.placeholder = "直通输出或语音生成的提示词将在此显示 / The H3 prompt output to downstream shows here";
+    // Diff panel: source template (left) vs merged result (right), line-level highlight
+    const diffDiv = document.createElement("div");
+    diffDiv.className = "bsai-tpl-diff";
+    diffDiv.style.display = "none";
+    const diffHead = document.createElement("div");
+    diffHead.className = "bsai-tpl-diff-head";
+    const diffTitle = document.createElement("span");
+    diffTitle.textContent = "提示词对比 / Prompt Diff";
+    const diffClose = document.createElement("button");
+    diffClose.type = "button";
+    diffClose.className = "bsai-tpl-diff-toggle";
+    diffClose.textContent = "× 收起 Close";
+    diffHead.appendChild(diffTitle);
+    diffHead.appendChild(diffClose);
+    const diffCols = document.createElement("div");
+    diffCols.className = "bsai-tpl-diff-cols";
+    const colA = document.createElement("div");
+    colA.className = "bsai-tpl-diff-col";
+    const hdrA = document.createElement("div");
+    hdrA.className = "bsai-tpl-diff-hdr";
+    hdrA.textContent = "源模板提示词 / Source Template";
+    const preA = document.createElement("pre");
+    preA.className = "bsai-tpl-diff-pre";
+    const colB = document.createElement("div");
+    colB.className = "bsai-tpl-diff-col";
+    const hdrB = document.createElement("div");
+    hdrB.className = "bsai-tpl-diff-hdr";
+    hdrB.textContent = "修改后提示词 / Merged Result";
+    const preB = document.createElement("pre");
+    preB.className = "bsai-tpl-diff-pre";
+    colA.appendChild(hdrA);
+    colA.appendChild(preA);
+    colB.appendChild(hdrB);
+    colB.appendChild(preB);
+    diffCols.appendChild(colA);
+    diffCols.appendChild(colB);
+    const diffHint = document.createElement("div");
+    diffHint.className = "bsai-tpl-diff-hint";
+    diffHint.textContent = "🟥 红 = 源中被删除 · 🟩 绿 = 修改后新增 · 其余为相同行 / Red = removed from source, Green = added in merged.";
+    diffDiv.appendChild(diffHead);
+    diffDiv.appendChild(diffCols);
+    diffDiv.appendChild(diffHint);
+    outDiv.appendChild(outLbl);
+    outDiv.appendChild(outTa);
+    outDiv.appendChild(diffDiv);
+    // Hidden by default — only shown after user clicks Apply (确认修改)
+    outDiv.style.display = "none";
+    container.appendChild(outDiv);
+
+    // Store refs
+    node._bsaiOutDiv = outDiv;
+    node._bsaiOutputVisible = false;  // output hidden by default
+    node._bsaiCat = catSel;
+    node._bsaiSub = subSel;
+    node._bsaiList = listDiv;
+    node._bsaiPrevBox = prevBox;
+    node._bsaiPrevNm = prevNm;
+    node._bsaiPrevMd = prevMd;
+    node._bsaiPrevDur = prevDur;
+    node._bsaiClr = clrBtn;
+    node._bsaiCnt = cntSpan;
+    node._bsaiCustTa = custTa;
+    node._bsaiCustLbl = custLbl;
+    node._bsaiPvHint = pvHint;
+    node._bsaiCustBtn = custBtn;
+    node._bsaiOutTa = outTa;
+    node._bsaiDiffToggle = diffToggle;
+    node._bsaiDiffDiv = diffDiv;
+    node._bsaiDiffPreA = preA;
+    node._bsaiDiffPreB = preB;
+    node._bsaiDiffOpen = false;
+    node._bsaiSearchInput = searchInput;
+    node._bsaiSearchClr = searchClr;
+    node._bsaiTopDiv = topDiv;
+    node._bsaiSelBar = selBar;
+    node._bsaiSelection = [];
+    node._bsaiMultiMode = false;  // default: single-select
+    node._bsaiModeCb = modeCb;
+    node._bsaiModeTag = modeTag;
+
+    // Mode switch handler: single (default) <-> multi-stack
+    modeCb.addEventListener("change", function() {
+        node._bsaiMultiMode = modeCb.checked;
+        if (!node._bsaiMultiMode && node._bsaiSelection.length > 1) {
+            // back to single: keep only the base (first) template
+            node._bsaiSelection = node._bsaiSelection.slice(0, 1);
+        }
+        syncModeUI(node);
+        syncSelectionUI(node);
+    });
+
+    // Register as DOM widget
+    if (typeof node.addDOMWidget === "function") {
+        const dw = node.addDOMWidget("bsai_tpl_ui", "html", container, {
+            getValue: function() { return ""; },
+            setValue: function() {},
+        });
+        if (dw) {
+            dw.options = dw.options || {};
+            dw.options.minHeight = 300;
+            // Minimum size only — the widget container height is set dynamically
+            // via syncWidgetHeight() to follow the user's node drag-resize.
+            dw.computeSize = function() {
+                const w = Math.min(Math.max(container.scrollWidth || 440, 440), 640);
+                // Use clientHeight (visible height) instead of scrollHeight so that
+                // the template list's internal scroll content doesn't inflate the
+                // node height.  The list scrolls inside its own flex-constrained box;
+                // the container only needs to be as tall as its visible layout.
+                const ch = Math.max(320, ((container && container.clientHeight) || 320)) + 28;
+                return [w, ch];
+            }
+            // Force recompute on node resize by overriding onResize
+            const _origOnResize = node.onResize;
+            node.onResize = function() {
+                if (_origOnResize) _origOnResize.call(this);
+                try { syncWidgetHeight(); } catch(e) {}
+            };;
+        }
+
+        // ── Robust widget height sync: follow node drag-resize ──
+        let _lastNodeH = 0;
+        let _widgetEl = null;
+        function _findWidgetEl() {
+            let el = container;
+            for (let i = 0; i < 10 && el && el.parentElement; i++) {
+                const cls = el.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-widget') >= 0 || cls.indexOf('widget') >= 0 || cls.indexOf('input_area') >= 0)) {
+                    return el;
+                }
+                el = el.parentElement;
+            }
+            return container.parentElement || container;
+        }
+        let _syncing = false, _syncingT = 0;
+        node._bsaiLastHSet = 0; // debounce lock: last time node height was actually changed
+        function _getNodeEl() {
+            let el = container;
+            while (el && el.parentElement) {
+                const cls = el.className || '';
+                if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0)) return el;
+                el = el.parentElement;
+            }
+            return null;
+        }
+        function syncWidgetHeight(allowSet) {
+            const _lt = Date.now();
+            if (_syncing && (_lt - _syncingT) < 300) return; // normal re-entrancy guard
+            _syncing = true; _syncingT = _lt; // stale lock (>300ms) self-heals
+            try {
+                // ── Content-sized layout ──
+                // The widget container sizes to its own content (no forced height).
+                // Styles are written CONDITIONALLY so repeated no-op writes never
+                // mutate the DOM style attribute and therefore never re-trigger the
+                // MutationObserver below — that self-trigger loop was the flicker.
+                if (container.style.height) container.style.removeProperty('height');
+                if (container.style.minHeight) container.style.removeProperty('min-height');
+                if (container.style.maxHeight) container.style.removeProperty('max-height');
+                if (container.style.display !== 'flex') container.style.display = 'flex';
+                if (container.style.flexDirection !== 'column') container.style.flexDirection = 'column';
+                if (container.style.overflowY !== 'auto') container.style.overflowY = 'auto';
+                if (container.style.overflowX !== 'hidden') container.style.overflowX = 'hidden';
+                // Release forced heights on ancestor elements (keep overflow clipped).
+                // The widget container itself (container.parentElement) is EXCLUDED
+                // from height-release: our own content sizing below owns its height.
+                let el = container.parentElement;
+                if (el) {
+                    if (el.style.overflow !== 'hidden') el.style.overflow = 'hidden';
+                    el = el.parentElement;
+                }
+                let depth = 0;
+                while (el && depth < 25) {
+                    const cls = el.className || '';
+                    const tag = el.tagName || '';
+                    if (typeof cls === 'string' && (cls.indexOf('comfy-node') >= 0 || cls.indexOf('lite-node') >= 0 || cls.indexOf('draw_area') >= 0)) break;
+                    if (tag === 'CANVAS') break;
+                    if (el.style.height) el.style.removeProperty('height');
+                    if (el.style.minHeight) el.style.removeProperty('min-height');
+                    if (el.style.maxHeight) el.style.removeProperty('max-height');
+                    if (el.style.overflow !== 'hidden') el.style.overflow = 'hidden';
+                    el = el.parentElement;
+                    depth++;
+                }
+                // Non-allowSet calls (poll / onResize / observers) stop here: they only
+                // keep forced styles off — they never measure, resize or repaint. This is
+                // what kills both the resize->onResize loop AND the observer self-trigger.
+                if (!allowSet) { _syncing = false; return; }
+                // Size the DOM-widget container to the content height so the last row is
+                // never clipped. Applied on every allowSet pass (init + content change);
+                // the ancestor loop above intentionally skips this element so it persists.
+                try {
+                    const _dwEl = container.parentElement;
+                    if (_dwEl && container.scrollHeight) _dwEl.style.height = (container.scrollHeight + 16) + 'px';
+                } catch(e) {}
+                // Event-driven (content changed): align the node height to the REAL
+                // content. Single source of truth = LiteGraph's own total height
+                // (title bar + widgets + this DOM widget's content height), obtained
+                // through node.computeSize(). Because we use the SAME value the engine
+                // uses for its own layout, the engine will NOT re-clamp it afterwards,
+                // which kills the resize tug-of-war that caused the flicker
+                // (old bug: sync set 985 -> engine clamped 1081 -> sync set 985 -> ...).
+                void container.offsetHeight;
+                let want = 0;
+                if (node && typeof node.computeSize === 'function') {
+                    try {
+                        const _cs = node.computeSize();
+                        want = (_cs && _cs[1]) || 0;
+                    } catch(e) { want = 0; }
+                }
+                if (!want) want = Math.max(320, (container && container.clientHeight) || 320) + 46;
+                if (node && node.size && typeof node.size[1] === 'number') {
+                    const now = Date.now();
+                    if (Math.abs(node.size[1] - want) > 2 && (now - (node._bsaiLastHSet || 0)) > 500) {
+                        node._bsaiLastHSet = now;
+                        node.size[1] = want;
+                        if (node.graph) node.graph.setDirtyCanvas(true, true);
+                        // Converge: let LiteGraph re-layout the DOM-widget container to the
+                        // new content height (it can land a few px short and clip the last
+                        // row otherwise). Keep repainting at short intervals until the
+                        // container reaches the content height, or give up after 1.8s.
+                        (function() {
+                            let _t = 0;
+                            const _iv = setInterval(function() {
+                                _t++;
+                                try { if (node.graph) node.graph.setDirtyCanvas(true, true); } catch(e) {}
+                                let _ok = false;
+                                try {
+                                    const _dwEl = container && container.parentElement;
+                                    if (_dwEl && _dwEl.clientHeight >= ((container && container.scrollHeight) || 0) - 2) _ok = true;
+                                } catch(e) {}
+                                if (_t >= 15 || _ok) clearInterval(_iv);
+                            }, 120);
+                        })();
+                    }
+                }
+            } catch(e) { try { console.error('[BSAI tpl] syncWidgetHeight error:', e && e.message, (e && e.stack||'').split('\n')[0]); } catch(_) {} }
+            _syncing = false; _syncingT = 0;
+        }
+        node._bsaiSyncWidgetHeight = syncWidgetHeight;
+        // Event-driven height refresh: UI change handlers call this and it is the ONLY
+        // path allowed to resize the node (allowSet=true). Polling/onResize only calibrate.
+        node._bsaiRefreshSize = function() { try { syncWidgetHeight(true); } catch(e) {} };
+        function _pollSize() {
+            _lastNodeH = 0;
+            try {
+                // Auto-align: if the node height has clearly drifted from the real
+                // content (e.g. initial load before the template list finished
+                // rendering), do ONE event-driven alignment. Once aligned the
+                // difference is ~0 and this stops, so it cannot flicker.
+                let autoAlign = false;
+                if (node && node.size && typeof node.size[1] === 'number' && typeof node.computeSize === 'function') {
+                    try {
+                        const _c = node.computeSize();
+                        const _want = (_c && _c[1]) || 0;
+                        if (_want && Math.abs(node.size[1] - _want) > 60) autoAlign = true;
+                    } catch(e) {}
+                }
+                if (autoAlign) { syncWidgetHeight(true); } else { syncWidgetHeight(); }
+            } catch(e) {}
+        }
+        _pollSize();
+        setInterval(_pollSize, 1000);
+        try {
+            let _nodeEl = container;
+            while (_nodeEl && _nodeEl.parentElement) {
+                const c = _nodeEl.className || '';
+                if (typeof c === 'string' && (c.indexOf('comfy-node') >= 0 || c.indexOf('lite-node') >= 0)) break;
+                _nodeEl = _nodeEl.parentElement;
+            }
+            if (_nodeEl && typeof ResizeObserver !== 'undefined') {
+                const _ro = new ResizeObserver(function() { _pollSize(); });
+                _ro.observe(_nodeEl);
+            }
+        } catch(e) {}
+        try {
+            if (!_widgetEl) _widgetEl = _findWidgetEl();
+            if (_widgetEl && typeof MutationObserver !== 'undefined') {
+                let _moLast = 0;
+                const _mo = new MutationObserver(function(mutations) {
+                    for (let i = 0; i < mutations.length; i++) {
+                        if (mutations[i].type === 'attributes' && mutations[i].attributeName === 'style') {
+                            // Debounce: style writes from our own sync may still arrive;
+                            // throttling prevents any residual self-trigger loop.
+                            const _t = Date.now();
+                            if (_t - _moLast > 250) { _moLast = _t; _pollSize(); }
+                            break;
+                        }
+                    }
+                });
+                // Observe the widget wrapper only, NOT our own container (observing our
+                // own style attribute is what let the sync loop re-trigger itself).
+                _mo.observe(_widgetEl, { attributes: true, attributeFilter: ['style'] });
+            }
+        } catch(e) {}
+        setTimeout(_pollSize, 100);
+        setTimeout(_pollSize, 300);
+        setTimeout(_pollSize, 700);
+        setTimeout(_pollSize, 1500);
+        setTimeout(_pollSize, 3000);
+        // Also set height after a short delay to ensure ComfyUI has finished rendering
+        // (ComfyUI may reset widget styles during initial render)
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 200);
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 500);
+        setTimeout(function() { try { syncWidgetHeight(); } catch(e) {} }, 1000);
+
+        // Initial fit: small placeholder, then let content decide the height.
+        setTimeout(function() {
+            if (node && node.size && node.size[1] < 400) {
+                node.setSize([node.size[0], 480]);
+            }
+            setTimeout(function() { try { syncWidgetHeight(true); } catch(e) {} }, 60);
+        }, 100);
+        // Initial render of the output prompt preview (restored workflow state)
+        setTimeout(function() { renderOutputPreview(node); }, 60);
+    } else {
+        console.warn("[BSAI H3 Template] addDOMWidget not available");
+    }
+
+    // ── Sync customization textarea ──
+    const custWidget = findWidget(node, "user_customization");
+    custTa.addEventListener("input", function() {
+        if (custWidget) {
+            custWidget.value = custTa.value;
+            if (node.graph) node.setDirtyCanvas(true, true);
+        }
+        renderOutputPreview(node);
+    });
+    // "确认修改 / Apply": merge the customization into the template NOW and show
+    // the final prompt in the output preview (manual confirm, no auto-merge).
+    custBtn.addEventListener("click", function() {
+        var _btn = node._bsaiCustBtn;
+        var _orig = _btn ? _btn.textContent : "";
+        // Only enter the "modifying" state when there is actual customization text
+        var _c = (node._bsaiCustTa && node._bsaiCustTa.value)
+              || (function(){ var _w = findWidget(node, "user_customization"); return (_w && _w.value) || ""; })();
+        var _hasCust = !!(_c && String(_c).trim());
+        var _timer = null;
+        if (_hasCust && _btn) {
+            _btn.textContent = "⏳ 修改中... / Applying...";
+            _btn.disabled = true;
+            // Safety net: force-restore the button after 120s even if the request stalls
+            _timer = setTimeout(function() {
+                if (_btn) { _btn.textContent = _orig; _btn.disabled = false; }
+            }, 120000);
+        }
+        applyCustomization(node, function() {
+            if (_btn) { _btn.textContent = _orig; _btn.disabled = false; }
+            if (_timer) clearTimeout(_timer);
+        });
+    });
+    diffToggle.addEventListener("click", function() { toggleDiff(node); });
+    diffClose.addEventListener("click", function() { setDiffOpen(node, false); });
+    if (custWidget && custWidget.value) {
+        custTa.value = custWidget.value;
+    }
+
+    // ── Search handler ──
+    let searchTimer = null;
+    searchInput.addEventListener("input", function() {
+        const kw = searchInput.value.trim();
+        searchClr.style.display = kw ? "block" : "none";
+
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            if (!kw) {
+                // Exit search mode — restore normal category view
+                node._bsaiSearchMode = false;
+                // If a category was selected, restore its template list
+                if (catSel.value && subSel.value) {
+                    catSel.onchange();
+                    subSel.onchange();
+                } else {
+                    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+                    cntSpan.textContent = "";
+                    clrBtn.style.display = "none";
+                }
+                return;
+            }
+            // Enter search mode
+            node._bsaiSearchMode = true;
+            const results = searchTemplates(kw);
+            renderSearchResults(node, results, listDiv, cntSpan, clrBtn);
+        }, 200);
+    });
+
+    searchClr.onclick = function() {
+        searchInput.value = "";
+        searchClr.style.display = "none";
+        searchInput.dispatchEvent(new Event("input"));
+    };
+
+    // ── Dropdown handlers ──
+    catSel.onchange = function() {
+        // If in search mode, exit it
+        if (node._bsaiSearchMode) {
+            searchInput.value = "";
+            searchClr.style.display = "none";
+            node._bsaiSearchMode = false;
+        }
+        const catId = catSel.value;
+        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.disabled = true;
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择子类 / Select a subcategory</div>';
+        cntSpan.textContent = "";
+        clrBtn.style.display = "none";
+        updatePreview(null, prevBox, prevNm, prevMd, prevDur);
+        if (!catId || !_tplData) return;
+        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        (cat.subcategories || []).forEach(function(sub) {
+            const opt = document.createElement("option");
+            opt.value = sub.id;
+            opt.textContent = sub.name + " (" + sub.name_en + ")";
+            subSel.appendChild(opt);
+        });
+        subSel.disabled = false;
+    };
+
+    subSel.onchange = function() {
+        if (node._bsaiSearchMode) {
+            searchInput.value = "";
+            searchClr.style.display = "none";
+            node._bsaiSearchMode = false;
+        }
+        const catId = catSel.value;
+        const subId = subSel.value;
+        if (!catId || !subId || !_tplData) {
+            listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择分类和子类 / Select category & subcategory</div>';
+            cntSpan.textContent = "";
+            clrBtn.style.display = "none";
+            return;
+        }
+        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        if (!cat) return;
+        const sub = cat.subcategories.find(function(s) { return s.id === subId; });
+        if (!sub) return;
+        renderTemplateList(node, sub, cat, listDiv);
+    };
+
+    clrBtn.onclick = function() {
+        catSel.value = "";
+        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.disabled = true;
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+        cntSpan.textContent = "";
+        clrBtn.style.display = "none";
+        clearSelection(node);
+        syncSelectionUI(node);
+    };
+
+    // ── Load data ──
+    loadTemplateData().then(function(data) {
+        if (!data) return;
+        catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+        (data.categories || []).forEach(function(cat) {
+            const opt = document.createElement("option");
+            opt.value = cat.id;
+            opt.textContent = (cat.icon || "📁") + " " + cat.name + " (" + cat.name_en + ")";
+            catSel.appendChild(opt);
+        });
+        const tplW = findWidget(node, "template_select");
+        if (tplW && tplW.value && !tplW.value.startsWith("(")) {
+            restoreSelection(node, tplW.value);
+        }
+        if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 120);
+    });
+}
+
+// ── Render search results ──
+function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
+    listDiv.innerHTML = "";
+    cntSpan.textContent = "搜索到 " + results.length + " 个模板 / " + results.length + " results";
+    clrBtn.style.display = "";
+
+    if (results.length === 0) {
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">未找到匹配的模板 / No matching templates found</div>';
+        return;
+    }
+
+    results.forEach(function(item) {
+        const cat = item.cat, sub = item.sub, tpl = item.tpl;
+
+        const el = document.createElement("div");
+        el.className = "bsai-tpl-item";
+        el.setAttribute("data-id", tpl.id);
+        el.setAttribute("data-name", tpl.name);
+        if (isSelected(node, tpl)) {
+            el.classList.add("sel");
+        }
+
+        const nmDiv = document.createElement("div");
+        nmDiv.className = "bsai-tpl-item-nm";
+        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        el.appendChild(nmDiv);
+
+        // Show category path in search results
+        const pathDiv = document.createElement("div");
+        pathDiv.className = "bsai-tpl-search-result-path";
+        pathDiv.textContent = cat.name + " > " + sub.name + " | " + cat.name_en + " > " + sub.name_en;
+        el.appendChild(pathDiv);
+
+        const dsDiv = document.createElement("div");
+        dsDiv.className = "bsai-tpl-item-ds";
+        dsDiv.textContent = tpl.description || "";
+        el.appendChild(dsDiv);
+
+        if (tpl.tags && tpl.tags.length) {
+            const tagsDiv = document.createElement("div");
+            tagsDiv.className = "bsai-tpl-tags";
+            tpl.tags.slice(0, 6).forEach(function(tag) {
+                const tagSpan = document.createElement("span");
+                tagSpan.className = "bsai-tpl-tag";
+                tagSpan.textContent = tag;
+                tagsDiv.appendChild(tagSpan);
+            });
+            el.appendChild(tagsDiv);
+        }
+
+        el.onclick = function() {
+            toggleSelection(node, cat, sub, tpl);
+            // Sync dropdowns to reflect the clicked template's category/subcategory
+            node._bsaiCat.value = cat.id;
+            // Populate subcategories for this category
+            node._bsaiSub.innerHTML = '<option value="">— 选择子类 —</option>';
+            (cat.subcategories || []).forEach(function(s) {
+                const opt = document.createElement("option");
+                opt.value = s.id;
+                opt.textContent = s.name + " (" + s.name_en + ")";
+                if (s.id === sub.id) opt.selected = true;
+                node._bsaiSub.appendChild(opt);
+            });
+            node._bsaiSub.disabled = false;
+        };
+
+        listDiv.appendChild(el);
+    });
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+}
+
+// ── Render template list (normal mode) ──
+function renderTemplateList(node, sub, cat, listDiv) {
+    const templates = sub.templates || [];
+    listDiv.innerHTML = "";
+    node._bsaiCnt.textContent = "共 " + templates.length + " 个模板 / " + templates.length + " templates";
+    node._bsaiClr.style.display = "";
+
+    if (templates.length === 0) {
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">该子类暂无模板 / No templates in this subcategory</div>';
+        return;
+    }
+
+    templates.forEach(function(tpl) {
+        const item = document.createElement("div");
+        item.className = "bsai-tpl-item";
+        item.setAttribute("data-id", tpl.id);
+        item.setAttribute("data-name", tpl.name);
+        if (isSelected(node, tpl)) {
+            item.classList.add("sel");
+        }
+
+        const nmDiv = document.createElement("div");
+        nmDiv.className = "bsai-tpl-item-nm";
+        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        item.appendChild(nmDiv);
+
+        const dsDiv = document.createElement("div");
+        dsDiv.className = "bsai-tpl-item-ds";
+        dsDiv.textContent = tpl.description || "";
+        item.appendChild(dsDiv);
+
+        if (tpl.tags && tpl.tags.length) {
+            const tagsDiv = document.createElement("div");
+            tagsDiv.className = "bsai-tpl-tags";
+            tpl.tags.slice(0, 6).forEach(function(tag) {
+                const tagSpan = document.createElement("span");
+                tagSpan.className = "bsai-tpl-tag";
+                tagSpan.textContent = tag;
+                tagsDiv.appendChild(tagSpan);
+            });
+            item.appendChild(tagsDiv);
+        }
+
+        item.onclick = function() {
+            toggleSelection(node, cat, sub, tpl);
+        };
+
+        listDiv.appendChild(item);
+    });
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+}
+
+// ── Multi-select: selection stack ──
+const MAX_SELECT = 5;
+
+function syncModeUI(node) {
+    const multi = !!node._bsaiMultiMode;
+    if (node._bsaiModeCb) node._bsaiModeCb.checked = multi;
+    if (node._bsaiModeTag) {
+        node._bsaiModeTag.className = "mode-tag " + (multi ? "on" : "off");
+        node._bsaiModeTag.textContent = multi ? "ON · 多选叠加" : "OFF · 单选";
+    }
+}
+
+function isSelected(node, tpl) {
+    return (node._bsaiSelection || []).some(function(it) { return it.tpl.id === tpl.id; });
+}
+
+function toggleSelection(node, cat, sub, tpl) {
+    if (!node._bsaiSelection) node._bsaiSelection = [];
+    if (!node._bsaiMultiMode) {
+        // Single-select (default): replace the selection with this template and preview it
+        node._bsaiSelection = [{ cat: cat, sub: sub, tpl: tpl }];
+        syncSelectionUI(node);
+        return;
+    }
+    // Multi-select: toggle add / remove
+    const idx = node._bsaiSelection.findIndex(function(it) { return it.tpl.id === tpl.id; });
+    if (idx >= 0) {
+        node._bsaiSelection.splice(idx, 1);  // remove
+    } else {
+        if (node._bsaiSelection.length >= MAX_SELECT) return;  // cap
+        node._bsaiSelection.push({ cat: cat, sub: sub, tpl: tpl });  // append -> insertion order
+    }
+    syncSelectionUI(node);
+}
+
+function syncSelectionUI(node) {
+    let sel = node._bsaiSelection || [];
+    // Single-select (default) never keeps more than one template
+    if (!node._bsaiMultiMode && sel.length > 1) {
+        sel = sel.slice(0, 1);
+        node._bsaiSelection = sel;
+    }
+    const selBar = node._bsaiSelBar;
+    const tplW = findWidget(node, "template_select");
+
+    // Hidden widget value: labels joined by "|||"
+    if (tplW) {
+        if (sel.length === 0) {
+            tplW.value = "(None / 自定义 / Custom)";
+        } else {
+            tplW.value = sel.map(function(it) {
+                return it.cat.name + " > " + it.sub.name + " > " + it.tpl.name;
+            }).join(" ||| ");
+        }
+    }
+
+    // Selection bar (chips)
+    if (selBar) {
+        selBar.innerHTML = "";
+        if (sel.length === 0) {
+            const h = document.createElement("div");
+            h.className = "bsai-tpl-sel-empty";
+            h.textContent = node._bsaiMultiMode
+                ? "多选模式：点击模板叠加（第1个为主体）/ Multi: click to stack (1st = base)"
+                : "点击模板单选并预览 / Click a template to select & preview";
+            selBar.appendChild(h);
+        } else {
+            sel.forEach(function(it, i) {
+                const chip = document.createElement("span");
+                chip.className = "bsai-tpl-chip" + (i === 0 ? " primary" : "");
+                const ord = document.createElement("span");
+                ord.className = "ord";
+                ord.textContent = (i + 1);
+                const nm = document.createElement("span");
+                nm.textContent = it.tpl.name + " | " + (it.tpl.name_en || "");
+                const x = document.createElement("span");
+                x.className = "x";
+                x.textContent = "×";
+                x.title = "移除 / Remove";
+                x.onclick = function(e) {
+                    e.stopPropagation();
+                    node._bsaiSelection.splice(i, 1);
+                    syncSelectionUI(node);
+                };
+                chip.appendChild(ord);
+                chip.appendChild(nm);
+                chip.appendChild(x);
+                selBar.appendChild(chip);
+            });
+        }
+    }
+
+    // Mark list items
+    (node._bsaiList || []).querySelectorAll ? node._bsaiList.querySelectorAll(".bsai-tpl-item").forEach(function(el) {
+        const id = el.getAttribute("data-id");
+        el.classList.remove("sel", "primary");
+        sel.forEach(function(it, i) {
+            if (it.tpl.id === id) {
+                el.classList.add("sel");
+                if (i === 0) el.classList.add("primary");
+            }
+        });
+    }) : null;
+
+    // Preview: show primary (first selected); name shows combined list
+    if (sel.length === 0) {
+        updatePreview(null, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+    } else {
+        const primary = sel[0].tpl;
+        updatePreview(primary, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
+        if (node._bsaiPrevNm) {
+            node._bsaiPrevNm.textContent = sel.map(function(it) {
+                return it.tpl.name + " | " + (it.tpl.name_en || "");
+            }).join("  +  ");
+        }
+        if (node._bsaiPrevMd && sel.length > 1) {
+            node._bsaiPrevMd.textContent = "多模板叠加 Multi-Stack (" + sel.length + ")";
+        }
+    }
+
+    if (node.graph) node.setDirtyCanvas(true, true);
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 20);
+    renderOutputPreview(node);
+    syncCustomizationHint(node, sel);
+}
+
+function clearSelection(node) {
+    node._bsaiSelection = [];
+    syncSelectionUI(node);
+}
+
+function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
+    if (!tpl) {
+        if (prevBox) prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+        if (prevNm) prevNm.textContent = "";
+        if (prevMd) prevMd.textContent = "";
+        if (prevDur) prevDur.textContent = "";
+        return;
+    }
+    if (prevNm) prevNm.textContent = tpl.name + " | " + (tpl.name_en || "");
+    if (prevMd) prevMd.textContent = tpl.generation_mode || "";
+    if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | 时长 | 需图片/Image: " + (tpl.needs_image ? "是/Yes" : "否/No");
+    if (prevBox) {
+        if (tpl.preview) {
+            prevBox.innerHTML = '<img class="bsai-tpl-prev-img" src="' + PREVIEW_BASE + tpl.preview + '" alt="preview">';
+        } else {
+            prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">' +
+                '<div style="font-size:22px;margin-bottom:6px;">🎬</div>' +
+                '暂无预览动画<br>No preview available<br>' +
+                '<span style="font-size:9px;color:#555;">点击选择此模板 / Click to select</span></div>';
+        }
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+//  Voice input: record mic → encode 16k mono WAV → POST /bsai_h3/asr → fill widget
+// ════════════════════════════════════════════════════════════════════════════
+var _voice = { ctx: null, src: null, proc: null, stream: null, chunks: [], rec: false, rate: 16000 };
+
+function setWidgetText(node, name, text) {
+    var w = (node.widgets || []).find(function(x) { return x.name === name; });
+    if (!w) return false;
+    w.value = text;
+    if (typeof w.callback === "function") { try { w.callback(text); } catch (e) {} }
+    return true;
+}
+
+// Fill the "user_customization" (补充修改) from the voice dialog and make the
+// change VISIBLE: sync the on-node textarea, the hidden widget (backend input),
+// and re-render the output prompt preview so the user can see it take effect.
+function setCustomizationText(node, text) {
+    text = text || "";
+    if (node._bsaiCustTa) node._bsaiCustTa.value = text;          // on-node UI
+    setWidgetText(node, "user_customization", text);              // backend widget
+    renderOutputPreview(node);                                    // merged prompt preview
+    if (node.graph) node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
+}
+
+// Render the ACTUAL prompt that will be sent downstream (selected templates
+// merged + customization applied) into the node's output preview box.
+// While typing, only an APPEND preview is shown (instant). Pressing the
+// "确认修改 / Apply" button calls applyCustomization() which LIVE-MERGES the
+// customization into the template via the local/API LLM (/bsai_h3/merge) so
+// the user sees the real modified prompt and can verify the change.
+var _mergeSeq = 0;
+// Clean all HTML tags from prompt output while preserving H3 placeholder tags
+// (<Picture N>, <Subject N>, <Audio N>, <Video N>, <Shot N>). This prevents
+// template markup like <b>, <d>, or stray tags from leaking into the downstream prompt.
+function _bsaiCleanPrompt(text) {
+    if (!text) return text;
+    // Protect H3 placeholder tags by replacing with sentinels
+    var ph = [];
+    var protectedText = text.replace(/<\/?(Picture|Subject|Audio|Video|Shot)\s*\d*\s*>/gi, function(m) {
+        ph.push(m);
+        return '\x00' + (ph.length - 1) + '\x00';
+    });
+    // Strip all remaining HTML tags
+    var cleaned = protectedText.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+    // Also strip template placeholder variables that have no resolver (would output literally)
+    cleaned = cleaned.replace(/\{\{[A-Z_]+\}\}/g, '');
+    // Restore H3 placeholder tags
+    for (var i = 0; i < ph.length; i++) {
+        cleaned = cleaned.replace(new RegExp('\\x00' + i + '\\x00', 'g'), ph[i]);
+    }
+    // Collapse multiple blank lines that may result from tag removal
+    cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim();
+    return cleaned;
+}
+
+function renderOutputPreview(node) {
+    if (!node || !node._bsaiOutTa) return;
+    var sel = node._bsaiSelection || [];
+    var cust = "";
+    var w = findWidget(node, "user_customization");
+    if (w && w.value) cust = w.value;
+    else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
+    var parts = [];
+    sel.forEach(function(it) {
+        if (it && it.tpl && it.tpl.prompt) parts.push(_bsaiCleanPrompt(it.tpl.prompt));
+    });
+    var base = parts.join("\n\n");
+    if (!(cust && cust.trim())) {
+        node._bsaiOutTa.value = base;
+        return;
+    }
+    var fallback = base + (base ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
+    node._bsaiOutTa.value = fallback + (base
+        ? "\n\n💡 追加预览（未融合）。点击「确认修改 / Apply」按钮可让大模型把补充修改真正融入模板。 / Append preview (not merged). Click Apply to merge the customization into the template."
+        : "");
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+//  Source vs Merged diff view — lets the user SEE whether the customization
+//  actually changed the template (line-level LCS diff, red/green highlight).
+// ════════════════════════════════════════════════════════════════════════════
+function toggleDiff(node) {
+    setDiffOpen(node, !(node && node._bsaiDiffOpen));
+}
+
+function setDiffOpen(node, open) {
+    if (!node || !node._bsaiDiffDiv) return;
+    node._bsaiDiffOpen = !!open;
+    node._bsaiDiffDiv.style.display = open ? "block" : "none";
+    // Keep an explicit, always-visible 展开/收起 button (label follows state).
+    if (node._bsaiDiffToggle) {
+        node._bsaiDiffToggle.textContent = open
+            ? "📊 收起对比 ▲ / Hide Diff"
+            : "📊 展开对比 ▼ / Show Diff";
+    }
+    // Explicit content change: reset the height debounce lock so the node grows
+    // immediately (no flicker / no stale clipping of the diff panel).
+    if (open && node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 30);
+    if (node.graph && node.graph.setDirtyCanvas) node.graph.setDirtyCanvas(true, true);
+}
+
+// Longest-common-subsequence diff on lines; returns aligned arrays with tags:
+// eq (same), del (only in A), add (only in B).
+function diffLines(a, b) {
+    var A = a.split("\n"), B = b.split("\n");
+    var n = A.length, m = B.length, i, j;
+    var dp = [];
+    for (i = 0; i <= n; i++) dp.push(new Array(m + 1).fill(0));
+    for (i = n - 1; i >= 0; i--) {
+        for (j = m - 1; j >= 0; j--) {
+            dp[i][j] = (A[i] === B[j]) ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+        }
+    }
+    var outA = [], outB = [];
+    i = 0; j = 0;
+    while (i < n && j < m) {
+        if (A[i] === B[j]) { outA.push({ t: A[i], k: "eq" }); outB.push({ t: B[j], k: "eq" }); i++; j++; }
+        else if (dp[i + 1][j] >= dp[i][j + 1]) { outA.push({ t: A[i], k: "del" }); i++; }
+        else { outB.push({ t: B[j], k: "add" }); j++; }
+    }
+    while (i < n) { outA.push({ t: A[i], k: "del" }); i++; }
+    while (j < m) { outB.push({ t: B[j], k: "add" }); j++; }
+    return { a: outA, b: outB };
+}
+
+// Render the source-vs-merged comparison and expand the panel.
+function showDiff(node, src, merged) {
+    if (!node || !node._bsaiDiffPreA) return;
+    var d = diffLines(src || "", merged || "");
+    node._bsaiDiffPreA.innerHTML = "";
+    node._bsaiDiffPreB.innerHTML = "";
+    d.a.forEach(function(it) {
+        var s = document.createElement("span");
+        s.className = it.k === "del" ? "d-del" : "d-eq";
+        s.textContent = it.t + "\n";
+        node._bsaiDiffPreA.appendChild(s);
+    });
+    d.b.forEach(function(it) {
+        var s = document.createElement("span");
+        s.className = it.k === "add" ? "d-add" : "d-eq";
+        s.textContent = it.t + "\n";
+        node._bsaiDiffPreB.appendChild(s);
+    });
+    setDiffOpen(node, true);
+}
+
+// Merge the customization into the selected template(s) immediately and show the
+// final prompt in the output preview. Called by the "确认修改 / Apply" button.
+// `done` (optional) is invoked when the merge completes/fails.
+// ── v-pv: per-template customization guidance ──
+// When the primary (first) selected template carries a `customization_hint`
+// (e.g. 纯文字PV·无图生成), turn the "补充修改" box into a guided PV-copy input:
+// banner + label + placeholder change; otherwise restore the generic wording.
+function syncCustomizationHint(node, sel) {
+    var tpl = (sel && sel.length > 0) ? sel[0].tpl : null;
+    var hint = (tpl && tpl.customization_hint) ? String(tpl.customization_hint) : "";
+    var lbl = node._bsaiCustLbl, banner = node._bsaiPvHint, ta = node._bsaiCustTa;
+    if (hint) {
+        if (lbl) lbl.textContent = "✍️ PV宣传文字 / 补充修改（纯文字PV 必填引导）:";
+        if (banner) { banner.textContent = hint; banner.style.display = "block"; }
+        if (ta) ta.placeholder = "在此输入你的 PV 宣传文字 / 文稿 / 广告语…（写清主角长相/服装/年龄、场景、动作、镜头、要不要屏幕文字/写什么字；越具体画面越可控）";
+    } else {
+        if (lbl) lbl.textContent = "补充修改 / Customization (Optional):";
+        if (banner) { banner.textContent = ""; banner.style.display = "none"; }
+        if (ta) ta.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    }
+}
+
+function applyCustomization(node, done) {
+    if (!node) { if (done) done(); return; }
+    if (node._bsaiCustTa) setWidgetText(node, "user_customization", node._bsaiCustTa.value);
+    var narr = ((node._bsaiNarrTa && node._bsaiNarrTa.value) || "").trim();
+    if (node._bsaiNarrTa) setWidgetText(node, "narration", node._bsaiNarrTa.value);
+    var sel = node._bsaiSelection || [];
+    var cust = "";
+    var w = findWidget(node, "user_customization");
+    if (w && w.value) cust = w.value;
+    else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
+    // 旁白并入 customization：点「确认修改 / Apply」时与模板一起融合，作为画面旁白输出
+    if (narr) {
+        var narrLine = "画面旁白（VO narration）: “" + narr + "” —— 以上旁白为画面核心台词/画外音，画面、人物动作与镜头须与旁白同步呈现；旁白作为主音轨清晰可闻。";
+        cust = cust ? cust + "\n" + narrLine : narrLine;
+    }
+    var parts = [];
+    sel.forEach(function(it) {
+        if (it && it.tpl && it.tpl.prompt) parts.push(it.tpl.prompt);
+    });
+    var base = parts.join("\n\n");
+    if (!(cust && cust.trim())) {
+        // v-pv: text-only PV template with no copy typed yet — guide the user
+        // instead of silently doing nothing.
+        var _pv0 = (node._bsaiSelection && node._bsaiSelection.length) ? node._bsaiSelection[0].tpl : null;
+        if (_pv0 && _pv0.customization_hint) {
+            if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
+            node._bsaiOutputVisible = true;
+            if (node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
+            if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
+            if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
+            node._bsaiOutTa.value = "⚠️ 纯文字PV模板需要你的宣传文字：请在“补充修改”输入框填写 PV 宣传文字 / 文稿 / 广告语，再点「确认修改」融合进提示词。\n" + _pv0.customization_hint;
+            try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
+        }
+        renderOutputPreview(node); if (done) done(); return;
+    }
+    if (!base) { node._bsaiOutTa.value = cust.trim(); if (done) done(); return; }
+    var seq = ++_mergeSeq;
+    var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
+    // Show the output area now (was hidden by default)
+    if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
+    node._bsaiOutputVisible = true;
+    // Explicit content change: reset the height debounce lock so the node grows
+    // immediately to reveal the output area (no stale clip).
+    if (node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
+    // Freeze the template browser at its current size (no grow/shrink) so the
+    // output area below can never compress or hide it; output area absorbs leftover.
+    if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
+    if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
+    node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
+    // Node height follows content automatically; trigger an immediate event-driven
+    // recompute so the output panel appears fully (no stale +720 stretch).
+    try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
+    fetch("/bsai_h3/merge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: base, customization: cust })
+    }).then(function(r) { return r.json(); }).then(function(j) {
+        if (seq !== _mergeSeq) { if (done) done(); return; }
+        if (j && j.ok && j.prompt && j.prompt.trim()) {
+            if (j.prompt === base) {
+                // backend reported ok but nothing changed — surface it
+                var warn = fallback + "\n\n⚠️ 未检测到任何修改！融合结果与源模板完全一致。\n可能原因：① 显存不足（同时运行 H3 生成时本地大模型无法加载）② 未配置/未找到本地模型 ③ ComfyUI 未重启使新后端生效。\n建议：先停止生成再点确认修改；或设置环境变量 BSAI_H3_LLM_API_KEY 使用云端模型（零显存）。\n/ Not changed — merged equals source. " + ((j && j.error) || "");
+                node._bsaiOutTa.value = warn;
+                showDiff(node, base, warn);
+            } else {
+                node._bsaiOutTa.value = _bsaiCleanPrompt(j.prompt);
+                showDiff(node, base, j.prompt);
+            }
+        } else {
+            var fb = fallback + "\n\n⚠️ 融合失败：" + ((j && j.error) || "unknown") + "\n已退回追加 / Merge failed, appended instead.";
+            node._bsaiOutTa.value = fb;
+            showDiff(node, base, fb);
+        }
+        if (done) done();
+    }).catch(function(e) {
+        if (seq !== _mergeSeq) { if (done) done(); return; }
+        var fb = fallback + "\n\n⚠️ 融合失败：" + e + "\n已退回追加 / Merge failed, appended instead.";
+        node._bsaiOutTa.value = fb;
+        showDiff(node, base, fb);
+        if (done) done();
+    });
+}
+
+
+function openVoiceModal(node) {
+    if (!node) return;
+    var old = document.querySelector(".bsai-voice-overlay");
+    if (old) old.remove();
+    var ov = document.createElement("div");
+    ov.className = "bsai-voice-overlay";
+    ov.innerHTML =
+        '<div class="bsai-voice-card">' +
+        '<div class="bsai-voice-title">🎤 语音输入 / Voice Input</div>' +
+        '<div class="bsai-voice-status">点击"开始录音"，说完后点击"停止并转写" / Click Start, speak, then Stop & Transcribe</div>' +
+        '<textarea class="bsai-voice-ta" placeholder="转写结果 / Transcription…"></textarea>' +
+        '<div class="bsai-voice-btns">' +
+        '  <button class="bsai-voice-btn primary" data-act="rec">● 开始录音 / Start</button>' +
+        '  <button class="bsai-voice-btn" data-act="stop" disabled>■ 停止并转写 / Stop & Transcribe</button>' +
+        '  <button class="bsai-voice-btn" data-act="cust" disabled>✎ 填入补充修改 / Set as customization</button>' +
+        '  <button class="bsai-voice-btn danger" data-act="close">✕ 关闭 / Close</button>' +
+        '</div></div>';
+    document.body.appendChild(ov);
+    var status = ov.querySelector(".bsai-voice-status");
+    var ta = ov.querySelector(".bsai-voice-ta");
+    var btnRec = ov.querySelector('[data-act="rec"]');
+    var btnStop = ov.querySelector('[data-act="stop"]');
+    var btnCust = ov.querySelector('[data-act="cust"]');
+
+    function setStatus(txt, cls) {
+        status.textContent = txt;
+        status.className = "bsai-voice-status" + (cls ? " " + cls : "");
+    }
+    function enableFill() {
+        btnCust.disabled = !(ta.value && ta.value.trim());
+    }
+    ta.addEventListener("input", function() {
+        enableFill();
+    });
+
+    function cleanupVoice() {
+        try { _voice.proc && _voice.proc.disconnect(); } catch (e) {}
+        try { _voice.src && _voice.src.disconnect(); } catch (e) {}
+        try { _voice.stream && _voice.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+        try { _voice.ctx && _voice.ctx.close(); } catch (e) {}
+        _voice.rec = false;
+        if (_voice.autoStopInt) { clearInterval(_voice.autoStopInt); _voice.autoStopInt = null; }
+    }
+
+    btnRec.onclick = function() {
+        if (_voice.rec) return;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            setStatus("此浏览器不支持麦克风录音 / Microphone not supported (needs HTTPS or localhost)", "");
+            return;
+        }
+        setStatus("请求麦克风权限… / Requesting mic…");
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+            var AC = window.AudioContext || window.webkitAudioContext;
+            _voice.ctx = new AC();
+            _voice.src = _voice.ctx.createMediaStreamSource(stream);
+            _voice.proc = _voice.ctx.createScriptProcessor(4096, 1, 1);
+            _voice.chunks = [];
+            _voice.stream = stream;
+            _voice.rate = _voice.ctx.sampleRate || 48000;
+            _voice.proc.onaudioprocess = function(e) {
+                if (!_voice.rec) return;
+                var d = e.inputBuffer.getChannelData(0);
+                _voice.chunks.push(new Float32Array(d));
+            };
+            _voice.src.connect(_voice.proc);
+            _voice.proc.connect(_voice.ctx.destination);
+            _voice.rec = true;
+            btnRec.disabled = true;
+            btnStop.disabled = false;
+            setStatus("● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now", "rec");
+        }).catch(function(err) {
+            setStatus("无法访问麦克风：" + (err && err.name ? err.name : err) + " / Mic access denied", "");
+        });
+    };
+
+    btnStop.onclick = function() {
+        if (!_voice.rec) return;
+        _voice.rec = false;
+        var total = 0;
+        _voice.chunks.forEach(function(a) { total += a.length; });
+        var all = new Float32Array(total), off = 0;
+        _voice.chunks.forEach(function(a) { all.set(a, off); off += a.length; });
+        cleanupVoice();
+        _voice.proc = _voice.src = _voice.stream = _voice.ctx = null;
+        btnRec.disabled = false;
+        btnStop.disabled = true;
+        if (all.length < 1600) {
+            setStatus("录音太短，请重试 / Recording too short", "");
+            return;
+        }
+        setStatus("正在转写… / Transcribing…");
+        var s16 = downsampleTo16k(all, _voice.rate);
+        var wav = encodeWavPcm16(s16, 16000);
+        fetch("/bsai_h3/asr", { method: "POST", body: wav }).then(function(r) { return r.json(); }).then(function(j) {
+            if (j && j.ok) {
+                ta.value = j.text || "";
+                setStatus("转写完成 / Done", "ok");
+            } else {
+                setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
+            }
+            enableFill();
+        }).catch(function(e) {
+            setStatus("网络错误 / Network error: " + e, "");
+        });
+    };
+
+    btnCust.onclick = function() {
+        setCustomizationText(node, ta.value.trim());
+        ov.remove();
+    };
+    ov.querySelector('[data-act="close"]').onclick = function() {
+        cleanupVoice();
+        ov.remove();
+    };
+    ov.addEventListener("click", function(e) { if (e.target === ov) { cleanupVoice(); ov.remove(); } });
+}
+
+function downsampleTo16k(samples, fromRate) {
+    var toRate = 16000;
+    if (fromRate === toRate) return samples;
+    var n = Math.max(1, Math.floor(samples.length * toRate / fromRate));
+    var out = new Float32Array(n);
+    for (var i = 0; i < n; i++) {
+        var pos = i * fromRate / toRate;
+        var j = Math.floor(pos);
+        if (j + 1 < samples.length) {
+            var f = pos - j;
+            out[i] = samples[j] * (1 - f) + samples[j + 1] * f;
+        } else {
+            out[i] = samples[samples.length - 1] || 0;
+        }
+    }
+    return out;
+}
+
+function encodeWavPcm16(samples, sampleRate) {
+    var buffer = new ArrayBuffer(44 + samples.length * 2);
+    var view = new DataView(buffer);
+    function wStr(off, s) { for (var i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); }
+    wStr(0, "RIFF"); view.setUint32(4, 36 + samples.length * 2, true); wStr(8, "WAVE");
+    wStr(12, "fmt "); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+    wStr(36, "data"); view.setUint32(40, samples.length * 2, true);
+    var off = 44;
+    for (var i = 0; i < samples.length; i++) {
+        var s = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        off += 2;
+    }
+    return new Blob([buffer], { type: "audio/wav" });
+}
+
+function restoreSelection(node, savedValue) {
+    if (!_tplData) return;
+    node._bsaiSelection = [];
+    const labels = (savedValue || "").split("|||").map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+    // Multi-mode is auto-enabled when the saved value contains stacked labels
+    const multi = labels.length > 1;
+    node._bsaiMultiMode = multi;
+    syncModeUI(node);
+    let first = null;
+    labels.forEach(function(label) {
+        const parts = label.split(" > ");
+        if (parts.length !== 3) return;
+        const catName = parts[0], subName = parts[1], tplName = parts[2];
+        const cat = _tplData.categories.find(function(c) { return c.name === catName; });
+        if (!cat) return;
+        const sub = cat.subcategories.find(function(s) { return s.name === subName; });
+        if (!sub) return;
+        const tpl = sub.templates.find(function(t) { return t.name === tplName; });
+        if (!tpl) return;
+        node._bsaiSelection.push({ cat: cat, sub: sub, tpl: tpl });
+        if (!first) first = { cat: cat, sub: sub, tpl: tpl };
+    });
+    // Point the dropdowns at the primary (first) selected template
+    if (first) {
+        node._bsaiCat.value = first.cat.id;
+        node._bsaiCat.onchange();
+        node._bsaiSub.value = first.sub.id;
+        node._bsaiSub.onchange();
+    }
+    syncSelectionUI(node);
+    if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60);
+}
+
+// ── ComfyUI Extension Registration ──
+
+app.registerExtension({
+    name: "BSAI.H3.PromptTemplate",
+
+    async beforeRegisterNodeDef(nodeType, nodeData) {
+        if (nodeData.name !== "BSAI_H3_PromptTemplate") return;
+
+        const origCreated = nodeType.prototype.onNodeCreated;
+        nodeType.prototype.onNodeCreated = function() {
+            if (origCreated) origCreated.apply(this, arguments);
+            const node = this;
+            setTimeout(function() {
+                try {
+                    buildTemplateUI(node);
+                } catch (e) {
+                    console.error("[BSAI H3 PromptTemplate] buildTemplateUI failed:", e);
+                    // Restore widgets so the node is still usable with raw widgets
+                    (node.widgets || []).forEach(function(w) {
+                        if (w._bsaiHidden) {
+                            w.type = w._bsaiOrigType || "STRING";
+                            w._bsaiHidden = false;
+                            if (w._bsaiOrigComputeSize) {
+                                w.computeSize = w._bsaiOrigComputeSize;
+                            } else {
+                                delete w.computeSize;
+                            }
+                        }
+                    });
+                    node._bsaiTplReady = false;
+                }
+            }, 50);
+        };
+
+        const origConfigure = nodeType.prototype.onConfigure;
+        nodeType.prototype.onConfigure = function(data) {
+            if (origConfigure) origConfigure.apply(this, arguments);
+            const node = this;
+            if (node._bsaiTplReady) {
+                setTimeout(function() {
+                    const tplW = findWidget(node, "template_select");
+                    if (tplW && tplW.value && !tplW.value.startsWith("(")) {
+                        loadTemplateData().then(function() {
+                            restoreSelection(node, tplW.value);
+                        });
+                    }
+                    const custW = findWidget(node, "user_customization");
+                    if (custW && node._bsaiCustTa) {
+                        node._bsaiCustTa.value = custW.value || "";
+                    }
+                }, 100);
+            }
+        };
+
+        // ── Fix: Draw solid background to prevent canvas bleed-through ──
+        const origDrawBG = nodeType.prototype.onDrawBackground;
+        nodeType.prototype.onDrawBackground = function(ctx) {
+            if (origDrawBG) origDrawBG.apply(this, arguments);
+            // Draw solid background filling the entire node body
+            ctx.fillStyle = "#1a1a1a";
+            ctx.fillRect(0, 0, this.size[0], this.size[1]);
+        };
+
+        // Ensure minimum node width
+        const origComputeSize = nodeType.prototype.computeSize;
+        nodeType.prototype.computeSize = function() {
+            const orig = origComputeSize ? origComputeSize.apply(this, arguments) : [200, 100];
+            if (orig[0] < 430) orig[0] = 430;
+            return orig;
+        };
+
+        // Set initial size when added to graph (grow to content height)
+        const origAddedToGraph = nodeType.prototype.onAdded;
+        nodeType.prototype.onAdded = function() {
+            if (origAddedToGraph) origAddedToGraph.apply(this, arguments);
+            const node = this;
+            setTimeout(function() {
+                if (node.setSize) {
+                    if (node._bsaiRefreshSize) {
+                        node._bsaiRefreshSize();
+                        // Re-run a couple of times: on first add, LiteGraph lays the
+                        // DOM-widget container out at its pre-grow height and only
+                        // re-lays it out again after further repaint cycles.
+                        setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 600);
+                        setTimeout(function(){ try { if (node._bsaiRefreshSize) node._bsaiRefreshSize(); } catch(e){} }, 1500);
+                    } else {
+                        node.setSize([480, 600]);
+                        try {
+                            const _w = node.widgets && node.widgets.find(function(w){return w.name === 'bsai_tpl_ui';});
+                            if (_w) { _w.height = 550; if (_w.computeSize) { _w.computeSize = function(){return [640, 550];}; } }
+                            if (app && app.graph && app.graph.setDirtyCanvas) { app.graph.setDirtyCanvas(true, true); }
+                        } catch(e) {}
+                    }
+                }
+            }, 120);
+        };
+    },
+});

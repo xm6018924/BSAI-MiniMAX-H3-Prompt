@@ -1,0 +1,48 @@
+# BSAI MiniMax H3 Prompt - ComfyUI Custom Node
+# GitHub: https://github.com/xm6018924/BSAI-MiniMAX-H3-Prompt
+
+import traceback
+
+from .BSAI_MiniMAX_H3_Prompt import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
+
+# Merge AV Latent nodes (concat/separate for MiniMax-H3)
+try:
+    from .BSAI_PT_H3_AVLatent import NODE_CLASS_MAPPINGS as _AV_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as _AV_DISPLAY
+    NODE_CLASS_MAPPINGS.update(_AV_MAPPINGS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(_AV_DISPLAY)
+except Exception:
+    print("[BSAI-MiniMAX-H3-Prompt] Failed to import BSAI_PT_H3_AVLatent:")
+    traceback.print_exc()
+
+# Merge Prompt Template nodes
+try:
+    from .BSAI_H3_PromptTemplate import NODE_CLASS_MAPPINGS as _TPL_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as _TPL_DISPLAY
+    NODE_CLASS_MAPPINGS.update(_TPL_MAPPINGS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(_TPL_DISPLAY)
+except Exception:
+    print("[BSAI-MiniMAX-H3-Prompt] CRITICAL: Failed to import BSAI_H3_PromptTemplate (template node will be unavailable!):")
+    traceback.print_exc()
+
+# Merge Direct Prompt node (独立直通模式节点，与模板节点完全分离)
+try:
+    from .BSAI_H3_DirectPrompt import NODE_CLASS_MAPPINGS as _DIRECT_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as _DIRECT_DISPLAY
+    NODE_CLASS_MAPPINGS.update(_DIRECT_MAPPINGS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(_DIRECT_DISPLAY)
+except Exception:
+    print("[BSAI-MiniMAX-H3-Prompt] Failed to import BSAI_H3_DirectPrompt (direct mode node will be unavailable!):")
+    traceback.print_exc()
+
+# Merge Direct Prompt node (独立直通模式节点，与模板节点完全分离)
+try:
+    from .BSAI_H3_DirectPrompt import NODE_CLASS_MAPPINGS as _DIRECT_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as _DIRECT_DISPLAY
+    NODE_CLASS_MAPPINGS.update(_DIRECT_MAPPINGS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(_DIRECT_DISPLAY)
+except Exception:
+    print("[BSAI-MiniMAX-H3-Prompt] Failed to import BSAI_H3_DirectPrompt (direct mode node will be unavailable!):")
+    import traceback
+    traceback.print_exc()
+
+# Register web extension directory (relative path for ComfyUI)
+WEB_DIRECTORY = "./web"
+
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
