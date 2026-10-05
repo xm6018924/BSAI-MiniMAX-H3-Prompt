@@ -297,6 +297,42 @@ def _inject_narration(prompt, narration):
             "\u201c" + n + "\u201d\n（以上为画面旁白台词，画面与动作须与旁白同步呈现。）")
 
 
+# ── Video last-frame extraction ──
+
+def _extract_last_frame(video_tensor):
+    """Extract the last frame from a video tensor (B, H, W, C) → (1, H, W, C).
+
+    Returns None if the input is None or empty.
+    """
+    if video_tensor is None:
+        return None
+    try:
+        import torch
+        if not isinstance(video_tensor, torch.Tensor):
+            # ComfyUI sometimes wraps in lists; try first element
+            if isinstance(video_tensor, (list, tuple)) and len(video_tensor) > 0:
+                video_tensor = video_tensor[0]
+            else:
+                return None
+        if video_tensor.dim() < 3:
+            return None
+        # Comfy video is (F, H, W, C) or (B, F, H, W, C) — handle both
+        if video_tensor.dim() == 4:
+            # (F, H, W, C) — take last frame
+            last = video_tensor[-1:, ...]
+        elif video_tensor.dim() == 5:
+            # (B, F, H, W, C) — take first batch, last frame
+            last = video_tensor[0:1, -1:, ...].squeeze(0)
+        else:
+            last = video_tensor[-1:, ...]
+        # Ensure (1, H, W, C) shape
+        if last.dim() == 3:
+            last = last.unsqueeze(0)
+        return last
+    except Exception:
+        return None
+
+
 class BSAI_H3_PromptTemplate:
     """One-click H3 prompt template selector with categorized templates and GIF preview."""
 
@@ -336,6 +372,8 @@ class BSAI_H3_PromptTemplate:
                 "ref_image_7": ("IMAGE", {"tooltip": "参考图7 <Picture 7> (可选) / Reference image 7"}),
                 "ref_image_8": ("IMAGE", {"tooltip": "参考图8 <Picture 8> (可选) / Reference image 8"}),
                 "ref_image_9": ("IMAGE", {"tooltip": "参考图9 <Picture 9> (可选) / Reference image 9\n官方最多支持9张参考图"}),
+                "video_1": ("IMAGE", {"tooltip": "视频1 <Video 1> (可选) / Video reference 1\n输入视频后自动提取最后一帧作为起始画面，用于视频衍生类模板（如360度子弹时间）\n视频会同步直通输出到 video_1_out，可直接连接到下游节点的 video_1 输入"}),
+                "audio_1": ("AUDIO", {"tooltip": "音频1 <Audio 1> (可选) / Audio reference 1\n输入音频后直通输出到 audio_1_out，可直接连接到下游节点的 audio_1 输入"}),
                 "narration": (
                     "STRING",
                     {
@@ -347,7 +385,7 @@ class BSAI_H3_PromptTemplate:
             },
         }
 
-    RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "INT", "STRING")
+    RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "INT", "STRING", "IMAGE", "IMAGE", "AUDIO")
     RETURN_NAMES = (
         "prompt_output (提示词输出)",
         "template_name (模板名称)",
@@ -355,10 +393,13 @@ class BSAI_H3_PromptTemplate:
         "description (描述)",
         "video_duration (视频时长)",
         "preview_file (预览文件)",
+        "last_frame (视频最后一帧)",
+        "video_1_out (视频1直通)",
+        "audio_1_out (音频1直通)",
     )
     FUNCTION = "get_template"
     CATEGORY = "BSAI"
-    OUTPUT_IS_LIST = (False, False, False, False, False, False)
+    OUTPUT_IS_LIST = (False, False, False, False, False, False, False, False, False)
     DESCRIPTION = """
 One-click H3 prompt template selector / 一键式 H3 提示词模板选择器
 
@@ -377,10 +418,16 @@ Features / 功能特点:
 - All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
 """
 
-    def get_template(self, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
+    def get_template(self, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None, video_1=None, audio_1=None):
         cust = (user_customization or "").strip()
         if cust:
             print(f"[BSAI H3 PromptTemplate] user_customization: {len(cust)} chars")
+
+        # Extract last frame from video_1 if connected
+        last_frame = _extract_last_frame(video_1)
+        has_video = video_1 is not None
+        if has_video and last_frame is not None:
+            print(f"[BSAI H3 PromptTemplate] video_1 last frame extracted: shape={tuple(last_frame.shape)}")
 
         # Support multi-select: labels joined by "|||", e.g. "武打打斗模板 > 多图成战类 > 贴身缠斗 ||| 电影运镜模板 > 跟随与环绕类 > 环绕镜头"
         labels = [x.strip() for x in (template_select or "").split(_LABEL_SEP) if x.strip()]
@@ -406,7 +453,7 @@ Features / 功能特点:
                 except Exception:
                     prompt = _append_custom(prompt, cust)
             prompt = _inject_narration(prompt, narration)
-            return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "")
+            return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "", last_frame, video_1, audio_1)
 
         # Merge all selected templates.
         prompt = _merge_template_prompts(tpls, "")
@@ -438,7 +485,7 @@ Features / 功能特点:
                         prompt = _append_custom(prompt, cust)
                 prompt = _inject_narration(prompt, narration)
                 name_label = f"{tpls[0].get('name','')} | {tpls[0].get('name_en','')}" if tpls[0].get("name_en") else tpls[0].get("name", "")
-                return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""))
+                return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""), last_frame, video_1, audio_1)
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
@@ -474,10 +521,10 @@ Features / 功能特点:
         duration = int(primary.get("duration", 0))
         preview = primary.get("preview", "")
 
-        return (prompt, name_label, mode, desc, duration, preview)
+        return (prompt, name_label, mode, desc, duration, preview, last_frame, video_1, audio_1)
 
     @classmethod
-    def IS_CHANGED(s, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None):
+    def IS_CHANGED(s, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None, video_1=None, audio_1=None):
         return float("nan")
 
 

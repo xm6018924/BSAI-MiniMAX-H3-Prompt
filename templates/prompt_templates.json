@@ -1999,6 +1999,203 @@
           ]
         },
         {
+          "id": "video_derived",
+          "name": "视频衍生类",
+          "name_en": "Video Derived",
+          "description": "从输入视频中提取最后一帧作为起始画面，衍生出新的创意视频效果（360度子弹时间、环绕展示等）",
+          "templates": [
+            {
+              "id": "bullet_time_360",
+              "name": "360度子弹时间·无缝循环（视频1最后一帧→环绕旋转）",
+              "name_en": "360° Bullet Time · Seamless Loop (Video1 last frame → orbital rotation)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成360度环绕子弹时间效果，支持无缝循环：时间凝固，摄像机围绕主体做完整的360度水平轨道旋转，最后一帧与第一帧完美重合可无限循环，主体姿势/表情/服装/场景与最后一帧完全一致，电影级《黑客帝国》风格。Auto-extract the last frame of Video1 as the starting image and generate a 360° bullet-time orbital shot with seamless loop: time freezes, camera does a full 360° horizontal orbit around the subject, last frame perfectly matches the first frame for infinite looping, subject pose/expression/outfit/scene match the last frame exactly, cinematic Matrix-style.",
+              "preview": "bullet_time_360.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "子弹时间",
+                "360度",
+                "环绕",
+                "电影感",
+                "黑客帝国",
+                "视频衍生",
+                "无缝循环",
+                "Bullet Time",
+                "Orbit",
+                "360°",
+                "Matrix",
+                "Seamless Loop",
+                "Looping"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The subject (person / animal / object / character) in the output video must be an EXACT copy of the subject in <Picture 1>@图1 — same face, same hairstyle, same outfit, same pose, same expression, same body shape, same accessories, same colors, same textures. The environment / background / scene / lighting / atmosphere must also be EXACTLY copied from <Picture 1>@图1 — same architecture, same props, same light direction, same shadows, same color grading. NOTHING is invented, changed, or redesigned. The only difference is the CAMERA ANGLE: the camera orbits 360 degrees around the subject while everything else (subject, scene, lighting) stays frozen in time.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。输出视频中的主体（人/动物/物体/角色）必须与图1中的主体完全一致——相同的脸、相同的发型、相同的服装、相同的姿势、相同的表情、相同的体型、相同的配饰、相同的颜色、相同的材质。环境/背景/场景/光影/氛围也必须完全照抄图1——相同的建筑、相同的道具、相同的光线方向、相同的阴影、相同的调色。严禁凭空创造、更改或重新设计任何东西。唯一变化的是摄像机角度：摄像机围绕主体做360度轨道旋转，而其他一切（主体、场景、光线）都在时间中凝固。\n\n[BULLET TIME CONCEPT / 子弹时间概念]:\nThis is a \"bullet time\" (a.k.a. \"time slice\" / \"flow-mo\") shot — popularized by The Matrix. Time appears to FROZE completely: the subject is motionless, suspended mid-action, particles hang in mid-air, water droplets are frozen. The CAMERA is the only thing moving — it travels along a perfectly circular horizontal track around the subject, completing a full 360-degree orbit. The camera height stays level. The subject is always centered in frame. The background, lighting, and all objects in the scene remain frozen in their exact positions from <Picture 1>@图1 — they just become viewable from all angles as the camera circles.\n【子弹时间概念】这是\"子弹时间\"（又称\"时间切片\"/\"flow-mo\"）镜头，因《黑客帝国》而闻名。时间似乎完全冻结：主体静止不动，动作悬停在中途，粒子悬浮在空中，水滴凝固。摄像机是唯一在运动的东西——它沿着围绕主体的完美水平圆形轨道移动，完成完整的360度旋转。摄像机高度保持水平。主体始终在画面中央。场景中的背景、光线和所有物体都保持在图1中的精确位置——它们只是随着摄像机环绕而可以从各个角度被看到。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定 — NON-NEGOTIABLE]:\nThis video is a PERFECT seamless loop. The FIRST FRAME and the LAST FRAME must be IDENTICAL — pixel-perfect match in every detail: same camera angle (exactly the same frontal view as <Picture 1>@图1), same subject pose, same facial expression, same lighting, same shadows, same background details, same particles in the same positions, same color grading. There must be NO jump, no pop, no discontinuity when the video is looped — the viewer should not be able to tell where the loop starts or ends. The 360-degree orbit must complete EXACTLY one full revolution so the camera returns to its exact starting position at the final frame. Motion blur and all temporal effects must also match between first and last frame.\n【无缝循环锁定·不可妥协】这是一个完美的无缝循环视频。第一帧和最后一帧必须完全相同——每个细节都像素级匹配：相同的摄像机角度（与图1完全相同的正面视角）、相同的主体姿势、相同的表情、相同的光线、相同的阴影、相同的背景细节、相同位置的相同粒子、相同的调色。循环播放时绝不能有跳动、突变或不连续——观众应该无法分辨循环的起点和终点。360度环绕必须精确地完成一整圈旋转，使摄像机在最后一帧精确回到起始位置。运动模糊和所有时间效果在首尾帧之间也必须匹配。\n\n[CAMERA MOVEMENT / 摄影机运动 — LOCKED SPEC — NON-NEGOTIABLE]:\n- Type: perfect horizontal orbital / circular tracking shot — like a precision motion-control rig on a perfectly circular track\n- Axis: centered on the subject's torso (human) or center of mass (object/animal)\n- Rotation: full 360 degrees, STRICTLY clockwise direction — camera moves ONLY to its left, subject appears to rotate ONLY to the right. UNDER NO CIRCUMSTANCES does the camera reverse direction, roll back, oscillate, wobble, or move counter-clockwise at any point. The motion is ALWAYS forward, always progressing around the circle — never backward, never stuttering, never hesitating, never pausing.\n- Speed: PERFECTLY constant angular velocity — ZERO acceleration, ZERO deceleration, ZERO speed variation. The camera moves at EXACTLY the same speed from frame 1 through the final frame. No speeding up, no slowing down, no pauses, no stutters. Complete EXACTLY one full 360° orbit in the full duration of the shot. Angular speed = 360° / total duration — perfectly uniform.\n- Height: camera stays at EXACTLY the same vertical level throughout (eye-level for humans). ABSOLUTELY NO vertical movement, NO tilting up, NO tilting down, NO bobbing, NO lifting, NO dropping.\n- Distance: camera maintains a PERFECTLY constant distance from the subject (medium shot, showing full body for humans). ABSOLUTELY NO dollying in, NO dollying out, NO zooming, NO approaching, NO retreating. Subject apparent size is identical in every frame — not even 1% change.\n- Focus: subject is always perfectly in focus, always precisely centered. NO drift, NO lag, NO overshoot.\n- Lens: moderately wide (35mm equivalent), NO distortion, NO fisheye, NO lens breathing. Focal length stays perfectly constant.\n- Motion quality: perfectly smooth, ZERO jitter, ZERO wobble, ZERO vibration, ZERO handheld feel — as if mounted on a precision motion-control rig. Every frame is rock-solid stable.\n- CRITICAL CONSTRAINTS (must be obeyed at ALL times, in EVERY frame):\n  • NO reverse motion / NO rollback / NO backtracking — camera only moves forward in its orbit\n  • NO speed changes — always the exact same speed, frame after frame after frame\n  • NO oscillation / NO wobble / NO hesitation / NO stutter — smooth continuous progression\n  • NO vertical movement — always at exactly the same height\n  • NO distance changes — always exactly the same distance from subject\n  • NO camera shake / NO jitter / NO vibration — perfectly smooth\n【摄影机运动·锁定规格·绝对不可妥协】\n- 类型：完美的水平环绕/圆形轨道镜头——如同精密运动控制设备在完美圆形轨道上运行\n- 轴心：以主体躯干（人物）或质心（物体/动物）为中心\n- 旋转：完整360度，严格顺时针方向——摄像机只向左移动，主体看起来只向右旋转。在任何情况下，摄像机都不得反向运动、回退、左右摆动、摇晃或逆时针移动。运动始终向前，始终沿圆周推进——永不后退、永不卡顿、永不犹豫、永不停顿。\n- 速度：完美恒定的角速度——零加速、零减速、零速度变化。摄像机从第一帧到最后一帧始终以完全相同的速度运动。不加速、不减速、不停顿、不卡顿。在整个镜头时长内精确完成一整圈360度环绕。角速度 = 360度 / 总时长——绝对均匀。\n- 高度：摄像机全程保持完全相同的垂直高度（人物为眼部高度）。绝对禁止垂直运动、禁止上仰、禁止下俯、禁止上下浮动、禁止上升、禁止下降。\n- 距离：摄像机与主体保持完美恒定的距离（中景，展示人物全身）。绝对禁止前推、禁止后拉、禁止变焦、禁止靠近、禁止远离。主体在每一帧中的表观大小完全相同——哪怕1%的变化都不允许。\n- 对焦：主体始终完美对焦，始终精确居中。无漂移、无滞后、无过冲。\n- 镜头：中等广角（等效35mm），无畸变，非鱼眼，无镜头呼吸效应。焦距全程完美恒定。\n- 运动质量：完美平滑，零抖动，零摇晃，零振动，零手持感——如同安装在精密运动控制设备上。每一帧都坚如磐石般稳定。\n- 【关键约束·每一帧都必须遵守】：\n  • 禁止反向运动 / 禁止回退 / 禁止倒退——摄像机只在轨道上向前运动\n  • 禁止速度变化——每一帧都保持完全相同的速度\n  • 禁止振荡 / 禁止摇晃 / 禁止犹豫 / 禁止卡顿——平滑连续地推进\n  • 禁止垂直运动——始终保持完全相同的高度\n  • 禁止距离变化——始终与主体保持完全相同的距离\n  • 禁止摄像机抖动 / 禁止振动——完美平滑\n\n[FROZEN TIME DETAILS / 时间凝固细节]:\n- Subject is COMPLETELY MOTIONLESS — frozen at the exact pose from <Picture 1>@图1\n- Hair is frozen mid-sway, clothes frozen mid-drape, expression frozen at that exact moment\n- If there are any dynamic elements in <Picture 1>@图1 (water, fire, smoke, particles, debris, rain, snow) — they are also FROZEN in mid-air: water droplets suspended, flames frozen in shape, smoke pillars motionless, particles hanging\n- Lighting is UNCHANGED throughout the orbit — same direction, same intensity, same shadows (because time is frozen, the sun/light source doesn't move)\n- No blinking, no breathing, no micro-movements — absolute stillness\n【时间凝固细节】\n- 主体完全静止——凝固在图1的精确姿势\n- 头发冻结在飘动中途，衣服冻结在垂坠状态，表情冻结在那一瞬\n- 如果图1中有任何动态元素（水、火、烟、粒子、碎片、雨、雪）——它们也冻结在半空中：水滴悬浮、火焰形状凝固、烟柱静止、粒子悬挂\n- 光线在整个环绕过程中保持不变——相同方向、相同强度、相同阴影（因为时间凝固，太阳/光源不移动）\n- 不眨眼、不呼吸、无微动作——绝对静止\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Cinematic bullet-time orbital shot. The scene from <Picture 1>@图1 is perfectly frozen in time — the subject, all props, the environment, even atmospheric particles hang motionless. The camera begins directly in front of the subject (matching <Picture 1>@图1's exact angle) and smoothly travels along a precise 360-degree circular horizontal track, always centered on the subject. As the camera orbits, new angles of the subject and the environment are revealed — the back of the head, side profiles, background details that were previously out of frame. Lighting stays constant throughout (frozen-time logic). The camera completes a full 360-degree revolution at PERFECTLY constant speed — no speeding up, no slowing down, no reversing, no rollback, no oscillation — smoothly progressing forward around the subject the entire time, ending back at the EXACT original frontal angle. The final frame is IDENTICAL to the first frame for a perfect seamless loop with zero discontinuity. The shot is perfectly smooth, steady, and precise — no camera shake, no speed variation. Medium-full shot, 35mm equivalent lens, deep focus. Film grain is subtle; color grading matches <Picture 1>@图1 exactly.\n【镜头1】[0-8s] 电影级子弹时间环绕镜头。图1的场景在时间中完美凝固——主体、所有道具、环境、甚至大气粒子都静止悬挂。摄像机从主体正前方开始（与图1的角度完全一致），沿着精确的360度圆形水平轨道平滑移动，始终以主体为中心。随着摄像机环绕，主体和环境的新角度逐渐展现——后脑勺、侧面轮廓、之前画面外的背景细节。光线全程保持不变（凝固时间逻辑）。摄像机以完美恒定的速度完成完整360度旋转——不加速、不减速、不反向、不回退、不摇摆——全程围绕主体平滑向前推进，最终精确回到原始正面角度。最后一帧与第一帧完全相同，实现零跳帧的完美无缝循环。镜头完美平滑、稳定、精确——无手持抖动、无速度变化。中全景，等效35mm镜头，深焦。胶片颗粒细腻；调色与图1完全一致。\n\n\n\n[NEGATIVE CONSTRAINTS / 禁止项 — MUST BE AVOIDED]:\nDO NOT do any of the following under any circumstances:\n- NO camera rollback / reverse direction / backtracking\n- NO speed changes — no acceleration, no deceleration, no speeding up, no slowing down\n- NO oscillation / wobble / hesitation / stuttering / jitter in the camera motion\n- NO vertical camera movement — no tilting up, no tilting down, no bobbing\n- NO camera distance changes — no zooming in, no zooming out, no dollying forward, no dollying backward\n- NO camera shake / handheld feel / vibration\n- NO subject teleportation / pose popping / sudden changes\n- NO fisheye distortion / extreme lens distortion\n- NO motion sickness inducing camera work\n【禁止项·任何情况下都不得出现】：\n- 禁止摄像机回退 / 反向运动 / 倒退\n- 禁止速度变化——不加速、不减速、不变快、不变慢\n- 禁止摄像机运动振荡 / 摇晃 / 犹豫 / 卡顿 / 抖动\n- 禁止摄像机垂直运动——不上仰、不下俯、不上下浮动\n- 禁止摄像机距离变化——不推近、不拉远、不前移、不后退\n- 禁止摄像机抖动 / 手持感 / 振动\n- 禁止主体瞬移 / 姿势跳变 / 突然变化\n- 禁止鱼眼畸变 / 极端镜头畸变\n- 禁止导致晕动症的摄像机运动\n\noverall_soundscape:\nA deep, resonant low-frequency drone (subtle bass rumble) that swells slightly as the camera orbits, combined with a high-pitched sine-wave tone (the \"bullet time\" sound effect from The Matrix) that slowly modulates. Very faint whoosh of air as the camera moves. No dialogue, no diegetic sounds from the scene (since time is frozen). 深沉的低频嗡鸣声（轻微贝斯轰鸣），随着摄像机环绕而略微增强，配合缓慢调制的高频正弦音（《黑客帝国》「子弹时间」音效）。摄像机移动时极其轻微的气流嗖嗖声。无对白，无场景内的环境音（因为时间已凝固）。\n\nnon_diegetic_music:\nA slow, atmospheric, cinematic score — deep strings, subtle synth pads, a slow building crescendo that peaks at the 180-degree point of the orbit then gently resolves. Epic yet restrained, mysterious and awe-inspiring. 缓慢、氛围化、电影感的配乐——深沉弦乐、细腻合成器铺底，缓慢渐强，在环绕180度处达到顶峰然后轻柔回落。史诗感但克制，神秘而令人敬畏。"
+            },
+            {
+              "id": "live2d_breathing",
+              "name": "动态立绘·Live2D呼吸感（视频1最后一帧→立绘动起来）",
+              "name_en": "Live2D Style Dynamic Portrait · Breathing (Video1 last frame → live portrait)",
+              "description": "自动提取视频1的最后一帧作为起始画面，将静态立绘转化为Live2D风格的动态立绘：角色自然呼吸、缓慢眨眼、头发随风轻飘、衣物微微摆动，整体柔和自然，像角色从画中活了过来。Auto-extract the last frame of Video1 as the starting image and turn a static portrait into a Live2D-style dynamic portrait: natural breathing, slow blinking, hair gently floating in the wind, clothes slightly swaying — the character comes alive from the painting.",
+              "preview": "dyn_live2d_breathing.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "动态立绘",
+                "Live2D",
+                "呼吸感",
+                "眨眼",
+                "头发飘动",
+                "立绘动画",
+                "视频衍生",
+                "Dynamic Portrait",
+                "Breathing",
+                "Blinking",
+                "Hair Sway",
+                "Seamless Loop"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The subject (person / character / figure) in the output video must be an EXACT copy of the subject in <Picture 1>@图1 — same face, same hairstyle and hair color, same outfit and colors, same body shape and proportions, same accessories, same pose (subtle motion only), same skin tone. The background / scene / environment / lighting / color grading must also be EXACTLY copied from <Picture 1>@图1 — nothing is invented, changed, or redesigned. The only difference is SUBTLE MOTION: the character gently breathes, blinks, and has soft hair/cloth movement, as if a Live2D rig was applied to the still image.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。输出视频中的主体必须与图1中的主体完全一致——相同的脸、相同的发型和发色、相同的服装和颜色、相同的身材比例、相同的配饰、相同的姿势（仅微动）、相同的肤色。背景/场景/环境/光影/调色也必须完全照抄图1——严禁凭空创造、更改或重新设计任何东西。唯一变化的是细微动态：角色轻柔地呼吸、眨眼，头发和衣物有柔和的飘动，如同给静态立绘加上了Live2D骨骼。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定 — NON-NEGOTIABLE]:\nThis video is a PERFECT seamless loop. The FIRST FRAME and the LAST FRAME must be IDENTICAL — pixel-perfect match. The breathing cycle completes exactly within the video duration so the pose returns to the exact starting position. Blinking is timed so the eyes are open at both the first and last frame. All hair and cloth motion follows a smooth cyclic pattern that loops without discontinuity. The viewer should not be able to tell where the loop starts or ends.\n【无缝循环锁定·不可妥协】这是一个完美的无缝循环视频。第一帧和最后一帧必须像素级完全相同。呼吸周期在视频时长内恰好完成一个循环，姿势精确回到起始位置。眨眼时机安排在首尾帧眼睛都是睁开的状态。所有头发和衣物运动遵循平滑的循环模式，无任何不连续。观众无法分辨循环的起点和终点。\n\n[LIVE2D DYNAMIC SPEC / Live2D 动态规格]:\nMotion type: subtle, gentle, continuous — like a well-rigged Live2D model in idle state. NO large movements, NO walking, NO turning, NO camera movement — the camera is perfectly still, the character stays in the exact same position and composition throughout.\nBreathing: slow, gentle chest rise and fall — one full breath cycle every ~4 seconds (2 cycles in 8s). Very subtle, not exaggerated — the chest moves only slightly, matching a relaxed resting breath.\nBlinking: slow, natural blinks — eyes close softly then reopen. 2-3 blinks total across the video, each blink is slow and gentle (not a quick snap). Eyelids move smoothly. Eyes are open at start and end of the loop.\nHair motion: gentle, continuous floating as if in a soft breeze — strands sway slowly and naturally. The overall hair shape stays the same; only individual strands and layers move subtly. Motion matches wind direction (consistent throughout).\nCloth / fabric motion: soft, natural swaying of clothing, ribbons, capes, sleeves, skirts — flowing gently with the same breeze as the hair. Fabric folds shift subtly but naturally.\nAccessories: earrings, necklaces, pendants, hair ornaments sway gently with natural physics — small, pendulum-like motion.\nFacial expression: remains the same as <Picture 1>@图1 — only adding natural blink motion. No smile changes, no mouth movement (unless mouth is open in the reference, it stays open at the same shape).\nCamera: perfectly locked — NO movement, NO zoom, NO pan, NO shake. The composition and framing are IDENTICAL to <Picture 1>@图1 for every frame.\n【Live2D动态规格】\n运动类型：细微、轻柔、持续——如同装配精良的Live2D模型在待机状态。无大幅度运动、无行走、无转身、无摄像机移动——摄像机完全静止，角色全程保持完全相同的位置和构图。\n呼吸：缓慢、轻柔的胸部起伏——每约4秒一个完整呼吸周期（8秒内2个周期）。非常细微，不夸张——胸部只有轻微移动，符合放松休息时的呼吸状态。\n眨眼：缓慢、自然的眨眼——眼睛轻柔闭合然后重新睁开。全视频共2-3次眨眼，每次眨眼缓慢而柔和（不是快速闪动）。眼睑运动平滑。循环首尾眼睛均为睁开状态。\n头发运动：轻柔、持续的飘动，如同在微风中——发束缓慢自然地摇摆。头发整体形状保持不变；只有个别发丝和层次在细微运动。运动方向与风向一致（全程一致）。\n衣物/布料运动：衣物、丝带、披风、袖子、裙摆的柔和自然摆动——与头发同风向轻柔飘动。布料褶皱细微但自然地变化。\n配饰：耳环、项链、吊坠、发饰随自然物理轻轻摇摆——小幅度钟摆式运动。\n表情：保持与图1完全相同——只增加自然的眨眼运动。无笑容变化，无嘴部运动（如果参考图中嘴是张开的，则保持相同的张开形状）。\n摄像机：完全锁定——无运动、无推拉、无平移、无抖动。每一帧的构图和画面都与图1完全一致。\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Perfectly locked medium shot, camera absolutely still — NO movement at all. The character from <Picture 1>@图1 comes alive with gentle Live2D-style idle motion: slow natural breathing (subtle chest rise and fall, completing 2 full breath cycles in 8 seconds), 2-3 slow soft blinks throughout, hair strands gently floating in a soft consistent breeze, clothing and ribbons swaying naturally with the same wind rhythm, accessories swaying gently. Facial expression remains identical to <Picture 1>@图1 — only adding blink motion. The background, lighting, color grading, and composition stay EXACTLY the same as <Picture 1>@图1 for every frame. Perfect seamless loop — the first and last frames are identical with zero discontinuity. The effect is magical: a still portrait painting gently coming to life.\n【镜头1】[0-8s] 完美锁定的中景镜头，摄像机绝对静止——毫无运动。图1中的角色以轻柔的Live2D风格待机动态活了过来：缓慢自然的呼吸（细微的胸部起伏，8秒内完成2个完整呼吸周期），全程2-3次缓慢柔和的眨眼，发丝在柔和持续的微风中轻轻飘动，衣物和丝带随着同样的风韵律自然摆动，配饰轻轻摇曳。表情保持与图1完全一致——只增加眨眼运动。背景、光线、调色、构图每一帧都与图1完全相同。完美无缝循环——首尾帧完全相同，零跳帧。效果神奇：一幅静态肖像画轻柔地活了过来。\n\noverall_soundscape:\nSoft ambient sound matching the scene — gentle wind, subtle fabric rustle, very faint natural atmosphere (birds, water, or room tone depending on the scene from <Picture 1>@图1). No dialogue, no voice-over. 与场景匹配的轻柔环境声——柔和的风声、细微的布料沙沙声、极其淡的自然氛围（鸟鸣、水声或室内环境音，根据图1场景而定）。无对白，无旁白。\n\nnon_diegetic_music:\nA gentle, ethereal, soft ambient score — slow piano notes, subtle synth pads, calm and serene, slightly mystical/magical feeling. Very quiet, almost background-level — the feeling of a painting coming to life. 轻柔、空灵、柔和的氛围配乐——缓慢的钢琴音符、细腻的合成器铺底，平静而安详，略带神秘/魔法感。音量很轻，几乎是背景级别——一幅画活过来的感觉。"
+            },
+            {
+              "id": "game_idle_showcase",
+              "name": "游戏角色待机展示（视频1最后一帧→角色待机动作）",
+              "name_en": "Game Character Idle Showcase (Video1 last frame → idle animation)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成游戏角色风格的待机展示：角色保持原地，做出自然的待机动画——重心微移、手臂轻摆、头部微动、呼吸循环，像游戏角色选择界面的3D展示。Auto-extract the last frame of Video1 as the starting image and generate a game-character-style idle showcase: the character stays in place with natural idle animation — subtle weight shifts, gentle arm motion, slight head movement, breathing cycle — like a 3D character in a game selection screen.",
+              "preview": "dyn_game_idle.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "游戏角色",
+                "待机动作",
+                "角色展示",
+                "idle",
+                "3D感",
+                "视频衍生",
+                "Game Character",
+                "Idle Animation",
+                "Character Showcase",
+                "3D Style",
+                "Seamless Loop"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The character in the output video must be an EXACT copy of the character in <Picture 1>@图1 — same face, same hairstyle/color, same outfit with all details, same body shape, same accessories and weapons, same color palette. The starting pose matches <Picture 1>@图1 exactly. The background style is preserved — if <Picture 1>@图1 has a plain/transparent/gradient background, keep that style; if it has a scene, keep the scene. Lighting and rendering style (cel-shaded / realistic / painterly) are also copied EXACTLY from <Picture 1>@图1.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。输出视频中的角色必须与图1中的角色完全一致——相同的脸、相同的发型/颜色、相同的服装及所有细节、相同的身材、相同的配饰和武器、相同的调色板。起始姿势与图1精确匹配。背景风格保留——如果图1是纯色/透明/渐变背景，保持该风格；如果有场景，保持场景。光影和渲染风格（卡通渲染/写实/绘画感）也完全照抄图1。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定 — NON-NEGOTIABLE]:\nThis is a perfect looping idle animation. The FIRST FRAME and the LAST FRAME are IDENTICAL — same pose, same expression, same everything. The idle motion cycle completes EXACTLY within the 8-second duration so it loops cleanly with zero discontinuity.\n【无缝循环锁定·不可妥协】这是一个完美循环的待机动画。第一帧和最后一帧完全相同——相同的姿势、相同的表情、相同的一切。待机运动周期在8秒内精确完成，循环时零跳帧。\n\n[GAME IDLE ANIMATION SPEC / 游戏待机动作规格]:\nStyle: AAA game character idle animation — natural, organic, slightly stylized, full of personality and life. The character feels alive even while standing still.\nBody motion: subtle weight shifting — the character gently shifts weight from one leg to the other in a slow cycle. Hips sway slightly. Spine has a gentle natural curve that shifts with breathing and weight transfer. NOT stiff, NOT robotic.\nArms and hands: relaxed, natural idle position — arms hang loosely at sides or rest on hips/weapon (matching <Picture 1>@图1's arm position). Subtle swaying motion, very slight hand and finger movement (fingers gently flex and relax with the breath cycle).\nHead and face: gentle head movement — slight nodding, subtle tilting, natural micro-adjustments. 2-3 slow natural blinks. Expression stays consistent with <Picture 1>@图1 — only adding natural life motion.\nBreathing: visible but natural — shoulders and chest rise and fall slowly with each breath. One full breath every ~4 seconds (2 cycles in 8s).\nHair and cloth: natural secondary motion — hair, capes, coats, skirts, ribbons all sway gently with body movement and an implied breeze. Physics feel natural and weight-appropriate.\nAccessories and weapons: if the character has a weapon or accessories, they have natural idle sway — weapons rest naturally, jewelry and ornaments swing gently.\nCamera: slow, gentle ORBIT around the character — like a character showcase / profile view in a game. One full 360-degree orbit in 8 seconds, smooth and steady, at medium distance showing full body. Camera height stays at eye level. OR — if the reference is clearly a close-up portrait — camera stays still (locked) and only the character moves.\n【游戏待机动作规格】\n风格：AAA游戏角色待机动画——自然、有机、略带风格化、充满个性和生命感。角色即使站着不动也感觉是活的。\n身体运动：细微的重心转移——角色缓慢地将重心从一条腿移到另一条腿，形成循环。臀部轻微摆动。脊柱随着呼吸和重心转移有柔和自然的曲线变化。不僵硬，不机械。\n手臂和手：放松自然的待机姿势——手臂松弛垂在身体两侧或放在臀部/武器上（与图1手臂位置一致）。轻微的摆动，非常细微的手和手指运动（手指随呼吸周期轻轻弯曲和放松）。\n头部和脸部：轻柔的头部运动——轻微点头、细微侧倾、自然的微调整。2-3次缓慢自然的眨眼。表情保持与图1一致——只增加自然的生命动态。\n呼吸：可见但自然——肩膀和胸部随每次呼吸缓慢起伏。每约4秒一次完整呼吸（8秒内2个周期）。\n头发和衣物：自然的次级运动——头发、披风、外套、裙摆、丝带都随着身体运动和微风轻轻摆动。物理感自然，重量感恰当。\n配饰和武器：如果角色有武器或配饰，它们有自然的待机摇摆——武器自然放置，珠宝和饰物轻轻晃动。\n摄像机：缓慢柔和的环绕角色——如同游戏中的角色展示/图鉴界面。8秒内完成一整圈360度环绕，平滑稳定，中距离展示全身。摄像机高度保持在视线水平。或者——如果参考图明显是特写头像——摄像机保持静止（锁定），只有角色在动。\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Game character idle showcase, medium-full shot. The character from <Picture 1>@图1 stands in a natural idle pose that matches the reference exactly at the start. Slow organic idle motion plays out: gentle weight shifting between legs, subtle hip sway, natural breathing (shoulders and chest rising and falling — 2 full breaths in 8s), arms hanging relaxed with soft sway, 2-3 slow natural blinks, gentle head micro-movements, hair and clothing flowing naturally with secondary motion. Camera performs one slow smooth 360-degree orbit around the character (if full-body) OR stays perfectly locked (if portrait close-up), showcasing the character from all angles. Perfect seamless loop — first and last frames match exactly. AAA game quality animation, full of personality and life.\n【镜头1】[0-8s] 游戏角色待机展示，中全景。图1中的角色以自然的待机姿势站立，起始时与参考图完全一致。缓慢有机的待机运动展开：双腿之间轻柔的重心转移、细微的髋部摆动、自然的呼吸（肩膀和胸部起伏——8秒内2次完整呼吸）、手臂松弛垂落伴有柔和摆动、2-3次缓慢自然的眨眼、轻柔的头部微运动、头发和衣物随次级运动自然飘动。摄像机围绕角色做一次缓慢平滑的360度环绕（如果是全身）或完全锁定静止（如果是头像特写），从各个角度展示角色。完美无缝循环——首尾帧精确匹配。AAA游戏级动画质量，充满个性和生命力。\n\noverall_soundscape:\nSubtle ambient sound matching the character's theme — soft fabric rustle, gentle wind, faint metallic jingle of armor/accessories, atmospheric environmental tone. No dialogue. 与角色主题匹配的细微环境声——轻柔的布料摩擦声、柔和的风声、盔甲/配饰的细微金属叮当声、大气环境音色。无对白。\n\nnon_diegetic_music:\nCharacter theme-style music — orchestral or electronic depending on the character vibe from <Picture 1>@图1. Moderate tempo, heroic/mysterious/elegant mood matching the character design. Builds subtly then resolves, fitting the loop. 角色主题风格音乐——管弦乐或电子乐，取决于图1中角色的气质。中等节奏，英雄/神秘/优雅的情绪与角色设计匹配。细微地渐强然后回落，适配循环。"
+            },
+            {
+              "id": "clone_mirror_array",
+              "name": "多重分身·镜像阵列（视频1最后一帧→角色多重分身）",
+              "name_en": "Multi-Clone Mirror Array (Video1 last frame → character duplicates)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成多重分身效果：一个角色复制出多个完全相同的分身，排列成阵列/环形/对称队形，各分身做相似但略有差异的动作，营造震撼的视觉效果。Auto-extract the last frame of Video1 as the starting image and generate a multi-clone effect: one character duplicates into multiple identical copies arranged in an array / circle / symmetrical formation, each performing similar but slightly different movements — creating a stunning visual effect.",
+              "preview": "dyn_clone_array.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "多重分身",
+                "镜像阵列",
+                "分身特效",
+                "克隆",
+                "对称",
+                "视频衍生",
+                "Multi-Clone",
+                "Mirror Array",
+                "Duplicate",
+                "Clone Effect",
+                "Symmetry"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. EVERY clone/copy/duplicate in the output video must be an EXACT copy of the character in <Picture 1>@图1 — same face, same hairstyle/color, same outfit, same body, same accessories, same colors. ALL clones are identical. The background style and lighting from <Picture 1>@图1 are preserved and expanded to fit the wider scene with multiple clones.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。输出视频中的每一个分身/复制体都必须是图1角色的精确复制品——相同的脸、相同的发型/颜色、相同的服装、相同的身体、相同的配饰、相同的颜色。所有分身完全相同。图1的背景风格和光线被保留并扩展以容纳多个分身的更宽场景。\n\n[MULTI-CLONE EFFECT SPEC / 多重分身特效规格]:\nNumber of clones: 5-7 identical copies of the character (including the original).\nFormation: symmetrical V-shaped or arc formation — one central character (the original) in the foreground/middle, with the other clones arranged behind and to the sides in a symmetrical pattern, like a team of identical warriors or dancers. Clones are at slightly different depths (some closer, some further) to create a sense of 3D space.\nMotion: synchronized but with slight offset — all clones perform the SAME choreography (pose change, arm movement, body rotation, weapon draw, etc.), but each clone is slightly delayed or phase-shifted, creating a wave / ripple / echo effect through the formation. The motion starts from the center clone and radiates outward, or travels from one side to the other.\nPose transition: the character moves from the original pose in <Picture 1>@图1 into a dynamic action pose — a martial arts stance, a dance pose, a weapon-ready position, or an elegant gesture — all clones transition together in the wave pattern.\nCamera: dynamic but smooth — starts with the single character matching <Picture 1>@图1, then pulls back / widens to reveal the full array of clones. Or a slow orbit around the formation showing all angles. Or a dramatic push-in toward the central character while the clones ripple in motion.\nLighting and atmosphere: dramatic, cinematic lighting that enhances the clone effect. Maybe slight color variation between foreground and background clones (foreground more saturated, background slightly desaturated) to create depth. Atmospheric particles or energy effects that connect the clones — faint glowing lines, energy trails, or aura that flows between them.\nStyle: matches the rendering style of <Picture 1>@图1 — if it is anime / realistic / painterly / 3D cel-shaded, the entire video stays consistent.\n【多重分身特效规格】\n分身数量：5-7个完全相同的角色复制品（包括本体）。\n队形：对称的V字形或弧形排列——一个中心角色（本体）在前景/中间，其他分身对称地排列在后方和两侧，如同一队完全相同的战士或舞者。分身处于略微不同的深度（有些近，有些远），营造3D空间感。\n运动：同步但略有偏移——所有分身执行相同的动作编排（姿势变化、手臂运动、身体旋转、拔武器等），但每个分身略有延迟或相位差，在队形中创造波浪/涟漪/回声效果。运动从中心分身开始向外辐射，或从一侧传播到另一侧。\n姿势转换：角色从图1的原始姿势过渡到一个充满动感的动作姿势——武术架势、舞蹈姿势、武器预备姿势或优雅的姿态——所有分身以波浪模式一起转换。\n摄像机：动态但平滑——从与图1匹配的单个角色开始，然后拉远/拓宽以展示完整的分身阵列。或者缓慢环绕队形展示所有角度。或者在分身们波浪般运动时戏剧性地推向中心角色。\n光影与氛围：戏剧性的电影级光影，增强分身效果。前景和背景分身之间可能有轻微的色彩变化（前景更饱和，背景略淡）以创造深度。连接分身的大气粒子或能量效果——微弱的发光线条、能量轨迹或在分身之间流动的光环。\n风格：与图1的渲染风格匹配——如果是动漫/写实/绘画/3D卡通渲染，整个视频保持一致。\n\nintegrated_multimodal_description:\n[Shot 1] [0-2s] Opening shot matches <Picture 1>@图1 exactly — single character in the original pose and composition. Then the camera smoothly pulls back / the frame widens, and 4-6 additional identical copies of the character materialize / appear behind and beside the original, forming a symmetrical V-shaped or arc formation. [2-6s] All clones perform a synchronized dynamic pose transition — shifting from the original pose into a powerful action stance (martial arts / dance / weapon-ready). The motion ripples through the formation in a wave pattern: center clone moves first, then the next row, then the outer ones, creating a beautiful cascading effect. Each clone is perfectly identical to <Picture 1>@图1's character. [6-8s] The full formation holds the final dynamic pose as the camera slowly orbits or pushes in dramatically. Atmospheric energy effects glow faintly between the clones. The overall feel is epic, powerful, and visually stunning — like a one-person army.\n【镜头1】[0-2s] 开场镜头与图1完全匹配——单个角色处于原始姿势和构图中。然后摄像机平滑拉远/画面拓宽，另外4-6个完全相同的角色复制品显现在本体身后和两侧，形成对称的V字形或弧形队形。[2-6s] 所有分身同步进行动态姿势转换——从原始姿势转变为强有力的动作架势（武术/舞蹈/武器预备）。运动以波浪模式在队形中涟漪传播：中心分身先动，然后下一排，然后最外层，创造美丽的级联效果。每个分身都与图1的角色完美相同。[6-8s] 完整队形保持最终的动态姿势，摄像机缓慢环绕或戏剧性推进。分身之间隐约闪烁着大气能量效果。整体感觉史诗、强大、视觉震撼——如同一人军团。\n\noverall_soundscape:\nCinematic whoosh / swoosh sounds as clones appear and move, subtle energy hum, dramatic impact sounds when the formation strikes the final pose. No dialogue. 分身出现和移动时的电影级嗖嗖声、细微的能量嗡鸣声、队形摆出最终姿势时的戏剧性冲击音。无对白。\n\nnon_diegetic_music:\nEpic, powerful cinematic score — building strings, strong percussion, heroic / mysterious / dramatic mood matching the character design from <Picture 1>@图1. Swells to a climax when the full formation is revealed, then settles into a powerful sustained rhythm. 史诗、强大的电影级配乐——渐强的弦乐、强劲的打击乐，与图1角色设计匹配的英雄/神秘/戏剧情绪。完整队形揭晓时达到高潮，然后稳定在强有力的持续节奏中。"
+            },
+            {
+              "id": "glowing_relic_poster",
+              "name": "动态海报·发光器物（视频1最后一帧→神器发光效果）",
+              "name_en": "Dynamic Poster · Glowing Relic (Video1 last frame → artifact glow effect)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成动态海报风格的发光器物效果：角色手持/身旁有发光的神器、法宝、武器或器物，器物散发神圣光芒，粒子和能量流动，整体是精美的动态海报/角色展示卡风格。Auto-extract the last frame of Video1 as the starting image and generate a dynamic poster style with glowing artifact: the character holds or stands beside a glowing sacred relic / weapon / artifact that radiates divine light, particles and energy flow — overall style is a beautiful dynamic poster / character showcase card.",
+              "preview": "dyn_glowing_relic.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "动态海报",
+                "发光器物",
+                "神器",
+                "法宝",
+                "粒子特效",
+                "角色展示卡",
+                "视频衍生",
+                "Dynamic Poster",
+                "Glowing Relic",
+                "Sacred Artifact",
+                "Magic Weapon",
+                "Particle Effect",
+                "Character Card"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The character must be an EXACT copy — same face, hair, outfit, body, pose, expression. If the character is already holding an object / weapon / artifact in <Picture 1>@图1, THAT object becomes the glowing focal point. If there is no obvious artifact, a fitting sacred relic / magical weapon / glowing orb / lantern / seal materializes near the character, matching the style and theme of the character from <Picture 1>@图1. The background style, color palette, and composition frame are preserved and enhanced with dynamic light and particles.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。角色必须是完全的复制品——相同的脸、头发、服装、身体、姿势、表情。如果图1中角色已经手持物体/武器/器物，那个物体就是发光的焦点。如果没有明显的器物，则在角色旁边生成一个相配的神器/魔法武器/发光宝珠/灯笼/印章，与图1角色的风格和主题匹配。背景风格、调色板和构图框架被保留，并通过动态光和粒子增强。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定]:\nThe glowing and particle effects are perfectly cyclic — the pulse of light, the flow of particles, the shimmer of energy all complete a full cycle that matches the first and last frames exactly. The character's pose also returns to the starting position for seamless looping.\n【无缝循环锁定】发光和粒子效果完美循环——光的脉动、粒子的流动、能量的闪烁都完成一个完整周期，首尾帧精确匹配。角色的姿势也回到起始位置，实现无缝循环。\n\n[GLOWING RELIC EFFECT SPEC / 发光器物特效规格]:\nFocal point: a sacred artifact / magical weapon / glowing relic — the visual centerpiece of the poster. It glows with intense inner light matching the character's color theme (golden for divine / sacred characters, blue/purple for mystical / arcane, red/orange for fiery / powerful, green for nature / life, etc.).\nLight emission: the artifact pulses with light — slow, rhythmic brightening and dimming (one full pulse cycle every ~4 seconds). Light rays / beams radiate outward from the artifact. The glow illuminates the character's face, hands, clothing with colored rim light.\nParticle effects: countless glowing particles / sparkles / energy motes emanate from the artifact — floating upward, swirling around it, drifting gently. Particles vary in size and brightness, some bright and sharp, some soft and diffused. They fade in near the artifact and fade out as they drift away.\nEnergy flow: visible streams / ribbons of energy flow around the artifact and along the character — glowing lines of light that trace the contours of the weapon / artifact / character's body. Slow, graceful motion.\nRunes / symbols: if thematically appropriate (ancient / magical / divine characters), faint glowing runes or symbols rotate slowly around the artifact or appear and dissolve in the light.\nCharacter motion: very subtle — gentle breathing, maybe a slow hand movement near the artifact, hair and clothing softly floating in the energy breeze. The character stays mostly still so the glowing artifact remains the star of the show. Expression matches <Picture 1>@图1.\nCamera: slow, subtle push-in (very gentle zoom in) OR slow slight orbit around the character+artifact. OR perfectly still for a poster feel. The composition stays elegant — like a beautifully framed character showcase card.\nAtmosphere: ethereal, divine, mystical, powerful — the feeling of a legendary weapon / sacred treasure being revealed. Dust motes float in the light beams.\n【发光器物特效规格】\n焦点：一件神器/魔法武器/发光遗物——海报的视觉核心。它散发着与角色色彩主题匹配的强烈内在光芒（神圣/神性角色为金色，神秘/奥术为蓝/紫色，炽烈/强大为红/橙色，自然/生命为绿色等）。\n发光效果：器物随光脉动——缓慢、有节奏地变亮和变暗（每约4秒一个完整脉动周期）。光线/光束从器物向外辐射。光照亮角色的脸、手、衣服，形成彩色轮廓光。\n粒子效果：无数发光粒子/火花/能量微尘从器物中散发出来——向上漂浮、围绕它旋转、轻轻漂移。粒子大小和亮度各不相同，有些明亮锐利，有些柔和弥散。它们在器物附近渐显，随着飘远而渐隐。\n能量流动：可见的能量流/光带围绕器物并沿着角色流动——发光的光线勾勒出武器/器物/角色身体的轮廓。缓慢、优雅的运动。\n符文/符号：如果主题合适（古老/魔法/神性角色），微弱的发光符文或符号围绕器物缓慢旋转，或在光中显现和消散。\n角色运动：非常细微——轻柔的呼吸，可能手部在器物附近缓慢移动，头发和衣物在能量微风中 softly 飘动。角色大部分时间保持静止，让发光器物成为主角。表情与图1一致。\n摄像机：缓慢、细微的推近（非常轻柔的变焦）或缓慢轻微地环绕角色+器物。或者完全静止以营造海报感。构图保持优雅——如同精美的装裱角色展示卡。\n氛围：空灵、神圣、神秘、强大——传说中的武器/圣物被揭晓的感觉。光束中漂浮着尘粒。\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Elegant dynamic poster / character showcase card composition. The character from <Picture 1>@图1 is positioned in the frame exactly matching the reference. In the character's hand or beside them floats / rests a sacred glowing artifact (matching the character's theme and color palette). The artifact pulses with inner light — a slow rhythmic glow that completes 2 full pulse cycles in 8 seconds. Radiating light beams cast colored rim light on the character. Countless glowing particles and energy motes emanate from the artifact, swirling and drifting upward. Streams of glowing energy trace the artifact and character contours. Faint runes or symbols may slowly rotate in the glow. The character has very subtle motion: gentle breathing, soft hair and cloth movement from the energy breeze, possibly a slow hand gesture near the artifact. Camera does a very slow, gentle push-in OR stays perfectly still (poster style). Perfect seamless loop — all light pulses, particle flows, and character motion return to exact starting positions. The overall feel is sacred, mystical, and visually stunning — like a legendary character reveal poster come to life.\n【镜头1】[0-8s] 优雅的动态海报/角色展示卡构图。图1中的角色在画面中的位置与参考图精确匹配。角色手中或身旁漂浮/放置着一件神圣的发光器物（与角色主题和调色板匹配）。器物随内在光芒脉动——缓慢有节奏的发光，8秒内完成2个完整脉动周期。辐射的光束在角色身上投下彩色轮廓光。无数发光粒子和能量微尘从器物中散发出来，旋转并向上飘散。能量光带勾勒出器物和角色的轮廓。微弱的符文或符号可能在光芒中缓慢旋转。角色只有非常细微的运动：轻柔的呼吸、头发和衣物在能量微风中的柔和飘动，可能手部在器物附近做缓慢的手势。摄像机非常缓慢轻柔地推近，或完全静止（海报风格）。完美无缝循环——所有光脉动、粒子流动和角色运动都精确回到起始位置。整体感觉神圣、神秘、视觉震撼——如同传奇角色揭晓海报活了过来。\n\noverall_soundscape:\nEthereal ambient sound — resonant hum / drone that pulses with the light, subtle sparkly particle sounds, faint wind-like whoosh of energy flow. Mystical and sacred atmosphere. No dialogue. 空灵的环境声——随光线脉动的共鸣嗡鸣/低音、细微的粒子闪烁声、能量流动的微弱风声。神秘而神圣的氛围。无对白。\n\nnon_diegetic_music:\nEthereal, sacred, cinematic ambient score — soft choir vocals, gentle strings, shimmering pads, slow build and release. Mystical and awe-inspiring. Matches the character theme: grand and divine for gods/immortals, mysterious and arcane for mages, elegant and delicate for fairies/spirits. 空灵、神圣、电影感的氛围配乐——柔和的合唱团人声、轻柔的弦乐、闪烁的铺底，缓慢的渐强和释放。神秘而令人敬畏。与角色主题匹配：神明/仙人用宏大神圣的，法师用神秘奥术的，精灵/灵体用优雅精致的。"
+            },
+            {
+              "id": "ancient_chi_aura",
+              "name": "古风流光·仙气环绕（视频1最后一帧→仙气流光特效）",
+              "name_en": "Ancient Style Flowing Light · Immortal Aura (Video1 last frame → chi aura effect)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成古风流光仙气效果：角色周身环绕流动的仙气、流光、粒子和光带，衣物和发丝随风飘动，整体是中国风仙侠/古风的精美动态立绘效果。Auto-extract the last frame of Video1 as the starting image and generate an ancient-style flowing light immortal aura effect: the character is surrounded by flowing immortal chi, light streams, particles and ribbons — clothes and hair floating in the wind — overall a stunning Chinese xianxia / gufeng dynamic portrait.",
+              "preview": "dyn_immortal_aura.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "古风",
+                "仙侠",
+                "仙气",
+                "流光",
+                "粒子环绕",
+                "中国风",
+                "视频衍生",
+                "Gufeng",
+                "Xianxia",
+                "Immortal Aura",
+                "Flowing Light",
+                "Chi Energy",
+                "Chinese Style",
+                "Seamless Loop"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The character must be an EXACT copy — same face, same hairstyle (including all hair ornaments and pins), same ancient-style outfit with every detail (robes, sleeves, sashes, ribbons, embroidery patterns, colors), same body, same pose, same expression. The background and composition from <Picture 1>@图1 are preserved and enhanced with xianxia-style atmospheric effects.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。角色必须是完全的复制品——相同的脸、相同的发型（包括所有发饰和发簪）、相同的古风服装及每一个细节（长袍、袖子、腰带、丝带、刺绣纹样、颜色）、相同的身体、相同的姿势、相同的表情。图1的背景和构图被保留，并以仙侠风格的大气效果增强。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定]:\nAll motion — flowing light ribbons, drifting particles, floating petals, hair and cloth sway — completes a perfect cycle within 8 seconds. The first and last frames are identical. The flow is smooth and continuous, with no beginning or end visible.\n【无缝循环锁定】所有运动——流动的光带、飘散的粒子、飞舞的花瓣、头发和衣物的飘动——都在8秒内完成一个完美周期。首尾帧完全相同。流动平滑连续，无始无终。\n\n[XIANXIA AURA EFFECT SPEC / 仙侠仙气特效规格]:\nAura / energy: the character is enveloped in a soft, luminous aura / energy field — gentle, ethereal, divine. The aura pulses slowly (one full pulse every 4 seconds). Color matches the character's theme: gold/yellow for divine immortals, cyan/blue for sword immortals, pink/white for celestial maidens, purple for demonic cultivators, green for nature spirits.\nFlowing light ribbons: graceful, translucent ribbons / streams of light that spiral and flow around the character — like chi / spiritual energy made visible. They flow in elegant curves, wrapping around the character, trailing behind sleeves and hair. Slow, smooth, continuous motion — like silk ribbons floating in water.\nGlowing particles / sparkles: countless tiny glowing particles / sparkles / light motes drift throughout the scene — some rising, some swirling around the character, some floating gently. They vary in size and brightness. Some leave faint trails. They fade in and out gently.\nPetals / leaves: if thematically appropriate (peach blossom, plum blossom, lotus leaf, maple leaf, etc. — matching the character's theme), delicate petals or leaves drift and spiral through the scene, carried on the wind. They add romance and poetry.\nHair and cloth motion: long flowing hair, wide sleeves, long ribbons, sashes, and robe hems all float and sway gently in an ethereal breeze. The motion is slow, graceful, and continuous — fabric moves like water. Long trailing ribbons flow especially beautifully.\nCharacter motion: very subtle — slow gentle breathing, very slight body sway, perhaps a slow graceful hand movement (like casting a spell / manipulating chi). 2 slow soft blinks. Expression matches <Picture 1>@图1 — serene, elegant, dignified.\nCamera: slow, gentle push-in OR a very slow partial orbit (not full 360 — more like a 30-45 degree elegant arc). OR perfectly still for a portrait feel. The composition remains elegant and balanced throughout.\nAtmosphere: ethereal, divine, poetic, dreamlike — the feeling of a xianxia immortal cultivating or displaying their power. Soft volumetric light rays, atmospheric haze, depth of field.\n【仙侠仙气特效规格】\n气场/能量：角色被柔和发光的气场/能量场所包围——温柔、空灵、神圣。气场缓慢脉动（每4秒一次完整脉动）。颜色与角色主题匹配：金色/黄色为神明仙人，青色/蓝色为剑仙，粉色/白色为仙女，紫色为魔道修炼者，绿色为自然精灵。\n流动光带：优雅的、半透明的光带/光流螺旋状环绕角色流动——如同灵气/真气被可视化。它们以优美的曲线流动，缠绕着角色，在袖子和头发后面拖出尾迹。缓慢、平滑、持续的运动——如同水中漂浮的丝带。\n发光粒子/光点：无数微小的发光粒子/火花/光点在整个场景中飘散——有些上升，有些围绕角色旋转，有些轻轻漂浮。它们大小和亮度各不相同。有些留下微弱的轨迹。它们柔和地渐显和渐隐。\n花瓣/树叶：如果主题合适（桃花、梅花、荷叶、枫叶等——与角色主题匹配），精致的花瓣或树叶在风中飘舞旋转穿过场景。增添浪漫和诗意。\n头发和衣物运动：长长的飘发、宽大的袖子、长长的丝带、腰带、长袍下摆都在空灵的微风中飘动和摇摆。运动缓慢、优雅、持续——布料像水一样流动。长长的飘带流动得尤其美丽。\n角色运动：非常细微——缓慢轻柔的呼吸、非常轻微的身体摇曳，可能有缓慢优雅的手部运动（如同施法/运功）。2次缓慢柔和的眨眼。表情与图1匹配——宁静、优雅、端庄。\n摄像机：缓慢轻柔的推近或非常缓慢的部分环绕（不是完整360度——更像30-45度的优雅弧线）。或者完全静止以营造肖像感。构图全程保持优雅平衡。\n氛围：空灵、神圣、诗意、梦幻——仙侠仙人修炼或展示力量的感觉。柔和的体积光束、大气薄雾、景深效果。\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Exquisite xianxia / gufeng dynamic portrait. The character from <Picture 1>@图1 stands in perfect compositional match with the reference. The character is enveloped in a soft pulsing immortal aura (matching their color theme — 2 full pulse cycles in 8s). Graceful translucent light ribbons spiral and flow around the character like visible chi energy — winding around sleeves, hair, and the body in elegant continuous curves. Countless tiny glowing particles and sparkles drift and swirl throughout the scene, rising and fading gently. If thematically appropriate, delicate flower petals or leaves drift on the breeze. Long hair, wide sleeves, flowing ribbons, and robe hems all float and sway gracefully in an ethereal wind — fabric moves like water. The character has very subtle motion: gentle breathing, slight body sway, possibly a slow graceful hand gesture, 2 soft blinks. Camera does a very slow elegant push-in OR stays perfectly still. Perfect seamless loop — all flowing motion returns to exact starting positions. The overall effect is divine, poetic, and breathtakingly beautiful — like an immortal has stepped out of a classical Chinese painting.\n【镜头1】[0-8s] 精美的仙侠/古风动态立绘。图1中的角色以完美的构图匹配站立。角色被柔和脉动的仙气场所包围（与他们的色彩主题匹配——8秒内2个完整脉动周期）。优雅的半透明光带螺旋状环绕角色流动，如同可见的真气——缠绕着袖子、头发和身体，形成优雅连续的曲线。无数微小的发光粒子和光点在整个场景中飘散和旋转，轻柔地上升和消隐。如果主题合适，精致的花瓣或树叶随风飘舞。长发、广袖、飘带和长袍下摆都在空灵的风中优雅飘动——布料如水流动。角色只有非常细微的运动：轻柔的呼吸、轻微的身体摇曳、可能有缓慢优雅的手势、2次柔和眨眼。摄像机非常缓慢优雅地推近或完全静止。完美无缝循环——所有流动的运动都精确回到起始位置。整体效果神圣、诗意、美得令人屏息——如同一位仙人从中国古画中走了出来。\n\noverall_soundscape:\nEthereal gufeng ambient sound — soft bamboo flute notes, gentle guzheng plucks, resonant wind chimes, subtle wind whoosh, faint bell tones. Very peaceful, meditative, mystical. No dialogue. 空灵的古风环境声——柔和的竹笛音符、轻柔的古筝拨弦、共鸣的风铃、细微的风声、微弱的钟声。非常宁静、冥想、神秘。无对白。\n\nnon_diegetic_music:\nEthereal Chinese orchestral score — guzheng, bamboo flute, erhu, soft choir pads, gentle harp arpeggios. Slow, meditative, elegant, mystical. Builds subtly then resolves gracefully. Feels like a xianxia cultivation scene or an immortal's awakening. 空灵的中国管弦配乐——古筝、竹笛、二胡、柔和的合唱团铺底、轻柔的竖琴琶音。缓慢、冥想、优雅、神秘。细微地渐强然后优雅地回落。感觉像是仙侠修炼场景或仙人觉醒。"
+            },
+            {
+              "id": "live_wallpaper_environment",
+              "name": "动态壁纸·环境联动（视频1最后一帧→壁纸级动态背景）",
+              "name_en": "Live Wallpaper · Environment Animation (Video1 last frame → wallpaper-style background)",
+              "description": "自动提取视频1的最后一帧作为起始画面，生成动态壁纸效果：角色保持基本静止（轻微呼吸+眨眼），背景环境生动起来——云朵飘动、水面波光、树叶摇摆、光影变化、粒子飞舞，整体是精美的4K动态壁纸/桌面壁纸风格，无缝循环。Auto-extract the last frame of Video1 as the starting image and generate a live wallpaper effect: character stays mostly still (subtle breathing + blinking), while the background environment comes alive — clouds drift, water ripples, leaves sway, light shifts, particles float — overall a beautiful 4K live wallpaper / desktop wallpaper style with seamless looping.",
+              "preview": "dyn_live_wallpaper.webp",
+              "generation_mode": "Image to Video (图生视频)【图1=视频1最后一帧】",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "动态壁纸",
+                "环境动画",
+                "桌面壁纸",
+                "背景动态",
+                "Live Wallpaper",
+                "Environment Animation",
+                "4K Wallpaper",
+                "Ambient",
+                "Seamless Loop",
+                "视频衍生"
+              ],
+              "prompt": "[STRICT REFERENCE LOCK / 参考图强制锁定 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 is the LAST FRAME of the input video (Video 1) and is the ONLY source of truth. The character must be an EXACT copy — same face, hair, outfit, body, pose, expression, position in frame, scale. The character moves only very subtly (breathing, blinking, hair/cloth sway). The background / scene / environment from <Picture 1>@图1 is preserved and animated — every element of the background that CAN move DOES move, but the overall composition, color palette, lighting mood, and art style remain identical to <Picture 1>@图1.\n【绝对强制·参考图锁定】图1是输入视频（视频1）的最后一帧，是唯一真相来源。角色必须是完全的复制品——相同的脸、头发、服装、身体、姿势、表情、画面位置、比例。角色只有非常细微的运动（呼吸、眨眼、头发/衣物飘动）。图1的背景/场景/环境被保留并赋予动态——背景中每一个能运动的元素都在动，但整体构图、调色板、光影氛围和艺术风格与图1保持完全一致。\n\n[SEAMLESS LOOP LOCK / 无缝循环锁定 — NON-NEGOTIABLE]:\nThis is a PERFECT seamless loop designed for a live wallpaper. The FIRST FRAME and LAST FRAME are pixel-identical. ALL motion cycles perfectly: clouds drift in a loop, water ripples cycle, wind sways return to start, light shifts complete a full cycle, particle flows loop seamlessly. The character's breathing and motion also return to the exact starting pose. The loop is invisible — you cannot tell where it begins or ends.\n【无缝循环锁定·不可妥协】这是一个为动态壁纸设计的完美无缝循环。第一帧和最后一帧像素级完全相同。所有运动都完美循环：云朵循环飘动、水波循环荡漾、风吹摇摆回到起点、光影变化完成完整周期、粒子流动无缝循环。角色的呼吸和运动也精确回到起始姿势。循环是不可见的——你无法分辨它从哪里开始或结束。\n\n[LIVE WALLPAPER EFFECT SPEC / 动态壁纸特效规格]:\nCharacter: very subtle idle motion — slow gentle breathing (2 cycles in 8s), 2-3 slow soft blinks, hair and clothing gently swaying in the ambient breeze. The character stays in the exact same position and pose otherwise. Expression matches <Picture 1>@图1.\nBackground environment animation — EVERY environmental element moves:\n- Sky / clouds: if the scene has sky, clouds drift slowly and smoothly across the sky in a continuous loop. Cloud shapes morph subtly.\n- Water: if there is water (lake, river, sea, fountain, pool), the surface ripples and shimmers with light reflections. Water flows continuously.\n- Trees / plants / grass: leaves and branches sway gently in the wind. Grass waves. Flower petals may drift occasionally.\n- Light / atmosphere: the lighting shifts very slowly and subtly — like clouds passing in front of the sun / moon, causing gentle dappled light changes. Or ambient particles float through sunbeams / moonbeams.\n- Particles / atmosphere: floating motes, dust in light rays, fireflies (if night), cherry blossom petals, falling leaves, snow — whatever matches the scene's theme and season from <Picture 1>@图1.\n- Architecture details: if there are buildings, curtains might sway, lanterns might swing gently, flags might wave, wind chimes move.\n- Fire / candles: if there are flames or candles, they flicker naturally.\nCamera: perfectly STILL — NO movement, NO zoom, NO pan. The camera is locked exactly to the composition of <Picture 1>@图1, just like a static wallpaper image — but the entire scene is alive with subtle motion.\nQuality: wallpaper-level smoothness — every motion is buttery smooth, no jitter, no popping. 4K-ready quality. The overall feel is peaceful, atmospheric, immersive — a window into a living world.\n【动态壁纸特效规格】\n角色：非常细微的待机运动——缓慢轻柔的呼吸（8秒内2个周期）、2-3次缓慢柔和的眨眼、头发和衣物在环境微风中轻轻摆动。角色除此之外保持完全相同的位置和姿势。表情与图1一致。\n背景环境动画——每一个环境元素都在动：\n- 天空/云：如果场景有天空，云朵在天空中缓慢平滑地持续飘动并循环。云的形状微妙地变化。\n- 水：如果有水（湖、河、海、喷泉、水池），水面泛起涟漪并闪烁着光影反射。水流持续流动。\n- 树木/植物/草：树叶和树枝在风中轻轻摇摆。草浪起伏。花瓣偶尔飘落。\n- 光/氛围：光线非常缓慢和细微地变化——如同云朵飘过太阳/月亮前面，造成柔和的斑驳光影变化。或者环境粒子在阳光/月光中漂浮。\n- 粒子/大气：漂浮的微尘、光束中的尘埃、萤火虫（如果是夜晚）、樱花花瓣、落叶、雪——任何与图1场景主题和季节匹配的东西。\n- 建筑细节：如果有建筑物，窗帘可能会摆动，灯笼可能轻轻摇晃，旗帜可能飘扬，风铃在动。\n- 火/蜡烛：如果有火焰或蜡烛，它们自然地闪烁。\n摄像机：完全静止——无运动、无变焦、无平移。摄像机精确锁定在图1的构图上，就像一张静态壁纸图片——但整个场景都因细微的运动而活了起来。\n质量：壁纸级别的流畅度——每一个运动都丝般顺滑，无抖动、无跳帧。4K级画质。整体感觉宁静、有氛围、沉浸式——一扇通向活生生世界的窗户。\n\nintegrated_multimodal_description:\n[Shot 1] [0-8s] Perfectly still camera, locked to the exact composition of <Picture 1>@图1 — like a live wallpaper. The character stands in the same position and pose, with only very subtle idle motion: slow gentle breathing (2 full cycles), 2-3 slow soft blinks, hair and clothing gently swaying in the breeze. Meanwhile, the ENTIRE background environment comes alive with beautiful subtle motion: clouds drift slowly across the sky in a seamless loop, trees and plants sway gently in the wind, water surfaces ripple and shimmer with light reflections, particles and motes float through atmospheric light beams, architectural details (lanterns, curtains, flags) sway softly. If the scene is at night: stars twinkle, fireflies drift. If the scene has flowers: petals drift on the breeze. Lighting shifts very subtly and continuously. Everything moves, everything cycles perfectly. The overall effect is mesmerizing, peaceful, and deeply atmospheric — a static painting that has quietly come to life. Perfect seamless loop — every element returns to its exact starting position.\n【镜头1】[0-8s] 摄像机完全静止，锁定在图1的精确构图上——就像一张动态壁纸。角色站在相同的位置和姿势，只有非常细微的待机运动：缓慢轻柔的呼吸（2个完整周期）、2-3次缓慢柔和的眨眼、头发和衣物在微风中轻轻摆动。与此同时，整个背景环境都因美丽的细微运动而活了起来：云朵在天空中无缝循环地缓慢飘动、树木和植物在风中轻轻摇摆、水面泛起涟漪并闪烁着光影反射、粒子和微尘在大气光束中漂浮、建筑细节（灯笼、窗帘、旗帜）轻轻摇晃。如果是夜晚场景：星星闪烁、萤火虫飘动。如果场景有花：花瓣随风飘落。光线非常细微和持续地变化。一切都在动，一切都完美循环。整体效果迷人、宁静、极具氛围——一幅静态画悄悄活了过来。完美无缝循环——每一个元素都回到精确的起始位置。\n\noverall_soundscape:\nSoft ambient environmental sound matching the scene — gentle wind, rustling leaves, distant water, birds or insects, soft atmospheric hum. Very quiet, immersive, peaceful. No dialogue. 与场景匹配的柔和环境音——轻柔的风声、树叶沙沙声、远处的水声、鸟鸣或虫鸣、柔和的大气嗡鸣。非常安静、沉浸式、宁静。无对白。\n\nnon_diegetic_music:\nVery soft, gentle ambient music — almost imperceptible. Slow piano notes, warm pad synths, gentle strings. Calm, peaceful, meditative. Fades in and out very subtly. Serves as a soft emotional blanket rather than a noticeable melody. 非常轻柔的氛围音乐——几乎察觉不到。缓慢的钢琴音符、温暖的合成器铺底、柔和的弦乐。平静、安宁、冥想。非常细微地渐入渐出。作为柔和的情感底色而非明显的旋律。"
+            }
+          ]
+        },
+        {
           "id": "particle_effect",
           "name": "粒子特效类",
           "name_en": "Particle Effect",
@@ -12994,6 +13191,150 @@
                 "祝福"
               ],
               "prompt": "integrated_multimodal_description:\nCinematic Teachers' Day video greeting card, 5 seconds. A hand-drawn chalk flower bouquet blooms on a green chalkboard, chalk dust sparkles as petals draw themselves; warm sunlight rays sweep across, books and an apple appear gently; hand-drawn crayon texture with warm amber lighting; handwritten title \"老师辛苦了 · Happy Teachers' Day\" appears stroke by stroke; gentle camera push-in; 8K render quality.\n（教师节视频贺卡：绿色黑板上手绘粉笔花束逐笔绽放，粉笔灰如星光闪烁，暖阳扫过，书本与苹果浮现，蜡笔手绘质感，手写标题逐笔显现，镜头轻推。）\n\noverall_soundscape:\nChalk drawing scratch sounds, soft chalk dust rustle, gentle classroom ambience with distant school bell; warm and nostalgic.\n（粉笔书写声，粉笔灰细响，教室氛围与远处上课铃声，温暖怀旧。）\n\nnon_diegetic_music:\nWarm acoustic guitar and soft piano melody, nostalgic and grateful, gentle build, warm ending chord.\n（温暖的原声吉他配柔和钢琴，怀旧感恩，舒缓推进，温暖和弦收尾。）"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mg_intro",
+      "name": "自媒体片头MG动效",
+      "name_en": "Self-Media MG Intro",
+      "description": "自媒体视频片头/开场MG动效模板，纯图形动画+动态文字，适合频道开场、品牌展示",
+      "icon": "video",
+      "subcategories": [
+        {
+          "id": "pure_text",
+          "name": "纯文生视频",
+          "name_en": "Pure Text to Video",
+          "description": "零素材，一句话想法直接生成MG片头",
+          "templates": [
+            {
+              "id": "mg_intro_pure_text",
+              "name": "纯文生MG片头",
+              "name_en": "Pure Text-to-MG Intro",
+              "description": "无参考素材，仅靠文字描述生成完整MG动画片头",
+              "preview": "mg_intro_pure_text.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "自媒体",
+                "文字"
+              ],
+              "prompt": "A sleek motion graphics intro animation for a self-media channel.\nStyle: clean modern MG animation, bold kinetic typography.\n\nintegrated_multimodal_description:\n[Shot 1] [0-1s] Dark navy gradient background, ambient particles floating slowly.\n[Shot 2] [1-3s] Geometric shapes slide in from left and right, assembling into a logo placeholder.\n[Shot 3] [3-5s] Large channel name text slams into center with spring easing, subtle screen shake.\n[Shot 4] [5-7s] Supporting tagline fades in below, thin accent lines draw outward horizontally.\n[Shot 5] [7-8s] All elements gently scale back, subtle glow, hold on final frame.\n\nCamera: static locked-off, 2D motion graphics depth.\nLighting: soft top light, subtle rim glow on text, flat ambient fill.\nColor palette: deep navy background, electric cyan accents, white typography.\nTypography: bold sans-serif, heavy weight, wide letter spacing.\nMotion feel: snappy, punchy, smooth interpolation.\nNo human characters, no live action, pure motion graphics.\n4K quality, clean edges, professional broadcast intro.\n\noverall_soundscape: Subtle ambient hum, soft whoosh on text slam, gentle particle fizz.\n\nnon_diegetic_music: Minimal electronic intro track, punchy synth hit on text reveal, clean and modern."
+            }
+          ]
+        },
+        {
+          "id": "srt_voiceover",
+          "name": "口播字幕驱动",
+          "name_en": "SRT Voiceover Driven",
+          "description": "基于口播文案/SRT字幕自动匹配每段画面",
+          "templates": [
+            {
+              "id": "mg_intro_srt_driven",
+              "name": "口播字幕驱动MG片头",
+              "name_en": "SRT Voiceover-Driven MG Intro",
+              "description": "根据口播字幕内容自动匹配对应MG画面节奏",
+              "preview": "mg_intro_srt_driven.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "口播",
+                "字幕"
+              ],
+              "prompt": "A dynamic motion graphics sequence synced to a voiceover script.\n\nVisual rules:\n- Each voiceover line triggers a corresponding visual beat — not just one animation per line.\n- Key emphasis phrases get LARGE full-screen typography punch-in.\n- Supporting phrases get small floating text cards alongside animated icons.\n- Product / concept mentions get simple flat MG icon animations popping in.\n- Transitions between segments use smooth slide or fade, no hard cuts.\n\nintegrated_multimodal_description:\n[Shot 1] [0-2s] Opening: dark background, title text fades in cleanly.\n[Shot 2] [2-5s] First key phrase: large typography slams center, accent glow.\n[Shot 3] [5-8s] Supporting points: smaller text cards float in from sides, icons animate.\n[Shot 4] [8-10s] Brand lockup: channel name centers, glow pulse, hold.\n\nOverall style: clean 2D motion graphics, professional YouTube intro quality.\nTypography: bold sans-serif, high contrast, readable at 1080p.\nColor scheme: cohesive brand palette, accent color highlights on key words.\nMotion rhythm: punchy on emphasis, gentle on supporting text.\nNo real human footage, pure motion graphics + kinetic typography.\n4K sharpness, clean vector edges, broadcast-ready.\n\noverall_soundscape: Subtle UI clicks on text appear, soft whoosh on transitions.\n\nnon_diegetic_music: Upbeat electronic background, moderate tempo, clean and professional."
+            }
+          ]
+        },
+        {
+          "id": "first_frame",
+          "name": "首帧图参考",
+          "name_en": "First Frame Reference",
+          "description": "基于已有首帧图生成后续MG动画",
+          "templates": [
+            {
+              "id": "mg_intro_first_frame",
+              "name": "首帧图MG片头",
+              "name_en": "First-Frame MG Intro",
+              "description": "从提供的首帧图开始，往后展开MG动画效果",
+              "preview": "mg_intro_first_frame.png",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "首帧",
+                "LOGO"
+              ],
+              "prompt": "A motion graphics intro that starts from the provided first frame image.\nThe opening frame must match the reference image exactly — same composition, same colors, same element positions.\n\nintegrated_multimodal_description:\n[Shot 1] [0-1s] Hold on the first frame, subtle breathing glow on the main subject.\n[Shot 2] [1-3s] Main subject pulses outward, particles fly off from edges, logo scales up slightly.\n[Shot 3] [3-5s] Channel name text fades in below, matching the existing visual style.\n[Shot 4] [5-6s] Accent lines draw outward, subtle parallax depth, gentle settle.\n\nStyle consistency: The entire animation must match the visual language of the first frame — same color palette, same typography feel.\nMotion quality: smooth MG animation, clean easing curves, no jitter.\nNo unexpected elements — everything builds on what's already in the first frame.\n4K quality, sharp edges, professional broadcast intro finish.\n\noverall_soundscape: Soft ambient hum, gentle particle shimmer, subtle glow pulse.\n\nnon_diegetic_music: Calm ambient electronic track, soft synth pads, elegant and understated."
+            }
+          ]
+        },
+        {
+          "id": "multi_asset",
+          "name": "多素材参考",
+          "name_en": "Multi-Asset Reference",
+          "description": "人物/产品/LOGO/截图多素材融合片头",
+          "templates": [
+            {
+              "id": "mg_intro_multi_asset",
+              "name": "多素材融合MG片头",
+              "name_en": "Multi-Asset Fusion MG Intro",
+              "description": "将人物头像、产品截图、LOGO等多参考素材有机组织进片头",
+              "preview": "mg_intro_multi_asset.png",
+              "generation_mode": "Multimodal Fusion (多模态融合)",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "多素材",
+                "品牌"
+              ],
+              "prompt": "A polished motion graphics intro that integrates multiple reference assets into a cohesive sequence.\nAll reference images should be treated as placed assets within the MG scene — rounded corners, subtle borders, gentle floating animation.\n\nintegrated_multimodal_description:\n[Shot 1] [0-2s] Opening transition, geometric shapes sweep across, setting the stage.\n[Shot 2] [2-5s] First asset group animates in — clean slide or pop-in, with subtle drop shadow.\n[Shot 3] [5-8s] Second asset group transitions in, previous elements slide off to make room.\n[Shot 4] [8-10s] Final brand lockup: channel name centers up, accent lines draw outward, hold.\n\nVisual style: premium tech MG animation, consistent shadow and lighting across all assets, unified color grading.\nTypography: bold modern sans-serif, matches the brand feel of the assets.\nTransitions: smooth crossfade + slide, no jarring cuts.\n4K resolution, clean compositing, professional YouTube channel intro quality.\n\noverall_soundscape: Soft swooshes on asset transitions, subtle UI pop on elements appearing.\n\nnon_diegetic_music: Corporate tech electronic track, upbeat but professional, moderate tempo."
+            }
+          ]
+        },
+        {
+          "id": "ref_video_style",
+          "name": "参考视频复刻",
+          "name_en": "Reference Video Style",
+          "description": "拆解参考视频镜头风格，换自己品牌重制",
+          "templates": [
+            {
+              "id": "mg_intro_ref_video",
+              "name": "参考视频风格MG片头",
+              "name_en": "Reference Video Style MG Intro",
+              "description": "跟随参考视频的节奏和动效结构，替换为自有品牌视觉",
+              "preview": "mg_intro_ref_video.png",
+              "generation_mode": "Video Derived (视频衍生)",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "参考视频",
+                "风格复刻"
+              ],
+              "prompt": "A motion graphics intro that follows the visual language and rhythm of the reference video,\nbut rebranded with our own assets and color scheme.\n\nReplication rules:\n1. KEEP: The camera rhythm, text animation timing, transition style, pacing, and overall structure of the reference video.\n2. REPLACE: All text, all brand marks, all color accents — swap in our brand identity.\n3. FEEL: The motion energy and timing should match the reference, but the visual identity is 100% ours.\n\nintegrated_multimodal_description:\n[Opening beat] → [text reveal beat] → [secondary element beat] → [brand lockup beat] → [hold ending]\nEach beat's timing and animation type should follow the reference video's structure.\n\nQuality: 4K, professional broadcast motion graphics, clean edges, smooth motion.\nNo stock footage elements — pure MG animation style throughout.\n\noverall_soundscape: Matches reference video's pacing, soft whooshes and UI pops.\n\nnon_diegetic_music: Same energy level as reference, but rebranded to our genre."
             }
           ]
         }
