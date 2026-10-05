@@ -13195,6 +13195,150 @@
           ]
         }
       ]
+    },
+    {
+      "id": "mg_intro",
+      "name": "自媒体片头MG动效",
+      "name_en": "Self-Media MG Intro",
+      "description": "自媒体视频片头/开场MG动效模板，纯图形动画+动态文字，适合频道开场、品牌展示",
+      "icon": "video",
+      "subcategories": [
+        {
+          "id": "pure_text",
+          "name": "纯文生视频",
+          "name_en": "Pure Text to Video",
+          "description": "零素材，一句话想法直接生成MG片头",
+          "templates": [
+            {
+              "id": "mg_intro_pure_text",
+              "name": "纯文生MG片头",
+              "name_en": "Pure Text-to-MG Intro",
+              "description": "无参考素材，仅靠文字描述生成完整MG动画片头",
+              "preview": "mg_intro_pure_text.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "自媒体",
+                "文字"
+              ],
+              "prompt": "A sleek motion graphics intro animation for a self-media channel.\nStyle: clean modern MG animation, bold kinetic typography.\n\nintegrated_multimodal_description:\n[Shot 1] [0-1s] Dark navy gradient background, ambient particles floating slowly.\n[Shot 2] [1-3s] Geometric shapes slide in from left and right, assembling into a logo placeholder.\n[Shot 3] [3-5s] Large channel name text slams into center with spring easing, subtle screen shake.\n[Shot 4] [5-7s] Supporting tagline fades in below, thin accent lines draw outward horizontally.\n[Shot 5] [7-8s] All elements gently scale back, subtle glow, hold on final frame.\n\nCamera: static locked-off, 2D motion graphics depth.\nLighting: soft top light, subtle rim glow on text, flat ambient fill.\nColor palette: deep navy background, electric cyan accents, white typography.\nTypography: bold sans-serif, heavy weight, wide letter spacing.\nMotion feel: snappy, punchy, smooth interpolation.\nNo human characters, no live action, pure motion graphics.\n4K quality, clean edges, professional broadcast intro.\n\noverall_soundscape: Subtle ambient hum, soft whoosh on text slam, gentle particle fizz.\n\nnon_diegetic_music: Minimal electronic intro track, punchy synth hit on text reveal, clean and modern."
+            }
+          ]
+        },
+        {
+          "id": "srt_voiceover",
+          "name": "口播字幕驱动",
+          "name_en": "SRT Voiceover Driven",
+          "description": "基于口播文案/SRT字幕自动匹配每段画面",
+          "templates": [
+            {
+              "id": "mg_intro_srt_driven",
+              "name": "口播字幕驱动MG片头",
+              "name_en": "SRT Voiceover-Driven MG Intro",
+              "description": "根据口播字幕内容自动匹配对应MG画面节奏",
+              "preview": "mg_intro_srt_driven.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 10,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "口播",
+                "字幕"
+              ],
+              "prompt": "A dynamic motion graphics sequence synced to a voiceover script.\n\nVisual rules:\n- Each voiceover line triggers a corresponding visual beat — not just one animation per line.\n- Key emphasis phrases get LARGE full-screen typography punch-in.\n- Supporting phrases get small floating text cards alongside animated icons.\n- Product / concept mentions get simple flat MG icon animations popping in.\n- Transitions between segments use smooth slide or fade, no hard cuts.\n\nintegrated_multimodal_description:\n[Shot 1] [0-2s] Opening: dark background, title text fades in cleanly.\n[Shot 2] [2-5s] First key phrase: large typography slams center, accent glow.\n[Shot 3] [5-8s] Supporting points: smaller text cards float in from sides, icons animate.\n[Shot 4] [8-10s] Brand lockup: channel name centers, glow pulse, hold.\n\nOverall style: clean 2D motion graphics, professional YouTube intro quality.\nTypography: bold sans-serif, high contrast, readable at 1080p.\nColor scheme: cohesive brand palette, accent color highlights on key words.\nMotion rhythm: punchy on emphasis, gentle on supporting text.\nNo real human footage, pure motion graphics + kinetic typography.\n4K sharpness, clean vector edges, broadcast-ready.\n\noverall_soundscape: Subtle UI clicks on text appear, soft whoosh on transitions.\n\nnon_diegetic_music: Upbeat electronic background, moderate tempo, clean and professional."
+            }
+          ]
+        },
+        {
+          "id": "first_frame",
+          "name": "首帧图参考",
+          "name_en": "First Frame Reference",
+          "description": "基于已有首帧图生成后续MG动画",
+          "templates": [
+            {
+              "id": "mg_intro_first_frame",
+              "name": "首帧图MG片头",
+              "name_en": "First-Frame MG Intro",
+              "description": "从提供的首帧图开始，往后展开MG动画效果",
+              "preview": "mg_intro_first_frame.png",
+              "generation_mode": "Image to Video (图生视频)",
+              "duration": 6,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "首帧",
+                "LOGO"
+              ],
+              "prompt": "A motion graphics intro that starts from the provided first frame image.\nThe opening frame must match the reference image exactly — same composition, same colors, same element positions.\n\nintegrated_multimodal_description:\n[Shot 1] [0-1s] Hold on the first frame, subtle breathing glow on the main subject.\n[Shot 2] [1-3s] Main subject pulses outward, particles fly off from edges, logo scales up slightly.\n[Shot 3] [3-5s] Channel name text fades in below, matching the existing visual style.\n[Shot 4] [5-6s] Accent lines draw outward, subtle parallax depth, gentle settle.\n\nStyle consistency: The entire animation must match the visual language of the first frame — same color palette, same typography feel.\nMotion quality: smooth MG animation, clean easing curves, no jitter.\nNo unexpected elements — everything builds on what's already in the first frame.\n4K quality, sharp edges, professional broadcast intro finish.\n\noverall_soundscape: Soft ambient hum, gentle particle shimmer, subtle glow pulse.\n\nnon_diegetic_music: Calm ambient electronic track, soft synth pads, elegant and understated."
+            }
+          ]
+        },
+        {
+          "id": "multi_asset",
+          "name": "多素材参考",
+          "name_en": "Multi-Asset Reference",
+          "description": "人物/产品/LOGO/截图多素材融合片头",
+          "templates": [
+            {
+              "id": "mg_intro_multi_asset",
+              "name": "多素材融合MG片头",
+              "name_en": "Multi-Asset Fusion MG Intro",
+              "description": "将人物头像、产品截图、LOGO等多参考素材有机组织进片头",
+              "preview": "mg_intro_multi_asset.png",
+              "generation_mode": "Multimodal Fusion (多模态融合)",
+              "duration": 10,
+              "needs_image": true,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "多素材",
+                "品牌"
+              ],
+              "prompt": "A polished motion graphics intro that integrates multiple reference assets into a cohesive sequence.\nAll reference images should be treated as placed assets within the MG scene — rounded corners, subtle borders, gentle floating animation.\n\nintegrated_multimodal_description:\n[Shot 1] [0-2s] Opening transition, geometric shapes sweep across, setting the stage.\n[Shot 2] [2-5s] First asset group animates in — clean slide or pop-in, with subtle drop shadow.\n[Shot 3] [5-8s] Second asset group transitions in, previous elements slide off to make room.\n[Shot 4] [8-10s] Final brand lockup: channel name centers up, accent lines draw outward, hold.\n\nVisual style: premium tech MG animation, consistent shadow and lighting across all assets, unified color grading.\nTypography: bold modern sans-serif, matches the brand feel of the assets.\nTransitions: smooth crossfade + slide, no jarring cuts.\n4K resolution, clean compositing, professional YouTube channel intro quality.\n\noverall_soundscape: Soft swooshes on asset transitions, subtle UI pop on elements appearing.\n\nnon_diegetic_music: Corporate tech electronic track, upbeat but professional, moderate tempo."
+            }
+          ]
+        },
+        {
+          "id": "ref_video_style",
+          "name": "参考视频复刻",
+          "name_en": "Reference Video Style",
+          "description": "拆解参考视频镜头风格，换自己品牌重制",
+          "templates": [
+            {
+              "id": "mg_intro_ref_video",
+              "name": "参考视频风格MG片头",
+              "name_en": "Reference Video Style MG Intro",
+              "description": "跟随参考视频的节奏和动效结构，替换为自有品牌视觉",
+              "preview": "mg_intro_ref_video.png",
+              "generation_mode": "Video Derived (视频衍生)",
+              "duration": 8,
+              "needs_image": false,
+              "needs_video": true,
+              "needs_audio": false,
+              "tags": [
+                "MG动画",
+                "片头",
+                "参考视频",
+                "风格复刻"
+              ],
+              "prompt": "A motion graphics intro that follows the visual language and rhythm of the reference video,\nbut rebranded with our own assets and color scheme.\n\nReplication rules:\n1. KEEP: The camera rhythm, text animation timing, transition style, pacing, and overall structure of the reference video.\n2. REPLACE: All text, all brand marks, all color accents — swap in our brand identity.\n3. FEEL: The motion energy and timing should match the reference, but the visual identity is 100% ours.\n\nintegrated_multimodal_description:\n[Opening beat] → [text reveal beat] → [secondary element beat] → [brand lockup beat] → [hold ending]\nEach beat's timing and animation type should follow the reference video's structure.\n\nQuality: 4K, professional broadcast motion graphics, clean edges, smooth motion.\nNo stock footage elements — pure MG animation style throughout.\n\noverall_soundscape: Matches reference video's pacing, soft whooshes and UI pops.\n\nnon_diegetic_music: Same energy level as reference, but rebranded to our genre."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
