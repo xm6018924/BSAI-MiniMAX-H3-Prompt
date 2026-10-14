@@ -8477,7 +8477,7 @@
                 "立体字",
                 "特效"
               ],
-              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, <Picture 1>@图1 is fully referenced as the person. The scene is customized. Custom text elements orbit around the subject.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] 3D typography VFX. In the EXACT scene from the reference images — no generic or generated background replacement, the person from <Picture 1>@图1 is surrounded by large glossy 3D typography (the user-defined custom text). The letters rotate and orbit around the person in a clean ring formation, with metallic/chrome material and soft reflections. 【ACTION】The 3D text ring slowly revolves around the person, letters scale and swap positions smoothly; the person moves naturally through the orbiting text; a few letters break loose and float toward the camera. 【/ACTION】Cinematic lighting, DOF on the letters, elegant composition. (自定义场景中，<Picture 1>@图1人物被用户定义的三维立体文字环绕，文字以金属质感环形绕人物缓慢旋转，部分文字飘向镜头。)\n\noverall_soundscape: 文字旋转时伴随轻微的能量嗡鸣与清脆的金属碰撞声，环境声低沉衬托。\n\nnon_diegetic_music: 带合成器琶音的电子配乐，律动与文字旋转同步，时尚科技感。"
+              "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, <Picture 1>@图1 is fully referenced as the person. The scene is customized. Custom text elements orbit around the subject.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] 3D typography VFX. In the EXACT scene from the reference images — no generic or generated background replacement, the person from <Picture 1>@图1 is surrounded by large glossy 3D typography (the user-defined custom text; when unspecified the lifted word defaults to 「BSAI」). The letters rotate and orbit around the person in a clean ring formation, with metallic/chrome material and soft reflections. 【ACTION】The 3D text ring slowly revolves around the person; the person raises both arms and reaches toward ONE specific character in the ring — the user-designated letter (default: the 「B」 of 「BSAI」). Both hands lift this single glowing 3D character out of the orbit, palms facing up supporting it from below, cradling it at chest/eye level as it floats gently just above the hands; the remaining letters keep orbiting in the background with soft bokeh. 【/ACTION】Cinematic lighting, DOF on the lifted character, elegant composition. (自定义场景中，<Picture 1>@图1人物被三维立体文字环绕；人物抬起双臂伸向文字环中的一个指定字符——用户可指定该字，未指定时默认「BSAI」；双手将这个发光的3D字符从环绕环中托举出来，掌心向上从下方托住，字符在胸口/视线高度、双手上方轻轻悬浮；其余字符继续在背景环绕并虚化。)\n\noverall_soundscape: 文字旋转时伴随轻微的能量嗡鸣与清脆的金属碰撞声，环境声低沉衬托。\n\nnon_diegetic_music: 带合成器琶音的电子配乐，律动与文字旋转同步，时尚科技感。"
             },
             {
               "id": "vfx_text_particle",
@@ -15452,6 +15452,942 @@
                 "shaolin"
               ],
               "prompt": "A Shaolin monk performing the 跌叉 (Split Fall) martial arts move.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] A Shaolin monk in traditional grey robes stands in a martial arts ready stance. The pose clearly demonstrates the 跌叉 (Split Fall) technique: 两腿前后分开落地成竖叉. Focus on correct body mechanics, balanced stance, and crisp execution.\n[Shot 2] [3-6s] The monk executes the full 跌叉 motion smoothly — arms extend with power, feet plant firmly, body weight shifts correctly. The movement is precise, controlled, and authentic to Shaolin kung fu style.\n\nCamera: medium full shot, eye-level, static camera.\nLighting: soft studio lighting, clear visibility of the martial arts form.\nBackground: simple neutral temple courtyard or plain studio background.\nStyle: realistic, documentary-style martial arts demonstration.\n6-second duration, 24fps, smooth motion.\n\noverall_soundscape: Subtle fabric rustle of robes, faint footstep on wooden floor, calm temple ambient.\n\nnon_diegetic_music: No music, natural temple atmosphere only."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_classic",
+      "name": "动效转场·经典转场",
+      "name_en": "Classic Transitions",
+      "description": "经典转场模板库：经典转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "classic_all",
+          "name": "经典转场",
+          "name_en": "Classic Transitions Collection",
+          "description": "经典转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_fade_to_black",
+              "name": "1. 淡入淡出",
+              "name_en": "1. Fade to Black",
+              "description": "动效转场：淡入淡出 / Fade to Black — the outgoing scene gradually darkens to pure black, then the incoming scene fades up from black",
+              "preview": "transition_fade_to_black.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "经典转场",
+                "Fade to Black"
+              ],
+              "prompt": "A seamless Fade to Black transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene gradually darkens to pure black, then the incoming scene fades up from black. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft rising ambient tone as darkness swallows the frame, gentle breath-like fade. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a minimal ambient pad that swells and recedes, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_cross_dissolve",
+              "name": "2. 交叉溶解",
+              "name_en": "2. Cross Dissolve",
+              "description": "动效转场：交叉溶解 / Cross Dissolve — the outgoing scene slowly dissolves while the incoming scene emerges beneath, both frames overlapping in a soft ghosted blend",
+              "preview": "transition_cross_dissolve.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "经典转场",
+                "Cross Dissolve"
+              ],
+              "prompt": "A seamless Cross Dissolve transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene slowly dissolves while the incoming scene emerges beneath, both frames overlapping in a soft ghosted blend. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: layered whoosh with a soft shimmer, two textures gently overlapping. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a smooth cinematic string pad, slow and emotional, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_dip_to_white",
+              "name": "3. 白闪过渡",
+              "name_en": "3. Dip to White",
+              "description": "动效转场：白闪过渡 / Dip to White — the frame flashes to pure white like a camera flash, then the incoming scene materializes out of the blinding white light",
+              "preview": "transition_dip_to_white.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "经典转场",
+                "Dip to White"
+              ],
+              "prompt": "A seamless Dip to White transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The frame flashes to pure white like a camera flash, then the incoming scene materializes out of the blinding white light. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a sharp blinding flash burst followed by a quiet ringing fade. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a bright optimistic glockenspiel motif, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_soft_wipe",
+              "name": "4. 柔焦擦拭",
+              "name_en": "4. Soft Wipe",
+              "description": "动效转场：柔焦擦拭 / Soft Wipe — a lens-blur edge sweeps across the frame from left to right, the outgoing scene dissolving into soft bokeh while the incoming scene sharpens into focus",
+              "preview": "transition_soft_wipe.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "经典转场",
+                "Soft Wipe"
+              ],
+              "prompt": "A seamless Soft Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A lens-blur edge sweeps across the frame from left to right, the outgoing scene dissolving into soft bokeh while the incoming scene sharpens into focus. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a silky sweeping whoosh with soft lens breath. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a warm ambient acoustic guitar arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_iris_wipe",
+              "name": "5. 圆形光圈",
+              "name_en": "5. Iris Wipe",
+              "description": "动效转场：圆形光圈 / Iris Wipe — a circular iris opens from the center of the outgoing scene, expanding like a camera aperture to reveal the incoming scene inside the growing circle",
+              "preview": "transition_iris_wipe.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "经典转场",
+                "Iris Wipe"
+              ],
+              "prompt": "A seamless Iris Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A circular iris opens from the center of the outgoing scene, expanding like a camera aperture to reveal the incoming scene inside the growing circle. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a mechanical aperture click and a smooth expanding whoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful pizzicato string pattern, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_light",
+      "name": "动效转场·光效转场",
+      "name_en": "Light Transitions",
+      "description": "光效转场模板库：光效转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "light_all",
+          "name": "光效转场",
+          "name_en": "Light Transitions Collection",
+          "description": "光效转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_light_leak",
+              "name": "6. 漏光转场",
+              "name_en": "6. Light Leak",
+              "description": "动效转场：漏光转场 / Light Leak — a warm film light leak blooms across the frame in orange and magenta, overexposing the outgoing scene until it dissolves into the incoming scene",
+              "preview": "transition_light_leak.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "光效转场",
+                "Light Leak"
+              ],
+              "prompt": "A seamless Light Leak transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A warm film light leak blooms across the frame in orange and magenta, overexposing the outgoing scene until it dissolves into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: analog film hiss with a warm glowing bloom, camera shutter click. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a nostalgic lo-fi synth melody, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_lens_flare",
+              "name": "7. 镜头光晕",
+              "name_en": "7. Lens Flare",
+              "description": "动效转场：镜头光晕 / Lens Flare — a bright lens flare streaks across the frame diagonally, the anamorphic light beam slicing the outgoing scene and revealing the incoming scene behind it",
+              "preview": "transition_lens_flare.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "光效转场",
+                "Lens Flare"
+              ],
+              "prompt": "A seamless Lens Flare transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A bright lens flare streaks across the frame diagonally, the anamorphic light beam slicing the outgoing scene and revealing the incoming scene behind it. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a high-pitched optical ping with a streaking air whoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an epic orchestral swell with choir, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_sweep_light",
+              "name": "8. 扫光转场",
+              "name_en": "8. Light Sweep",
+              "description": "动效转场：扫光转场 / Light Sweep — a blade of white light sweeps horizontally across the frame, temporarily washing out the outgoing scene and unveiling the incoming scene in its wake",
+              "preview": "transition_sweep_light.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "光效转场",
+                "Light Sweep"
+              ],
+              "prompt": "A seamless Light Sweep transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A blade of white light sweeps horizontally across the frame, temporarily washing out the outgoing scene and unveiling the incoming scene in its wake. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a crisp sweeping light whoosh with metallic resonance. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a driving electronic pulse beat, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_glow_wipe",
+              "name": "9. 辉光擦拭",
+              "name_en": "9. Glow Wipe",
+              "description": "动效转场：辉光擦拭 / Glow Wipe — a glowing band of neon energy sweeps across the frame, the bright edge burning through the outgoing scene while the incoming scene fades in behind the glow",
+              "preview": "transition_glow_wipe.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "光效转场",
+                "Glow Wipe"
+              ],
+              "prompt": "A seamless Glow Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A glowing band of neon energy sweeps across the frame, the bright edge burning through the outgoing scene while the incoming scene fades in behind the glow. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a glowing hum with a sizzling neon edge, soft crackle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a futuristic synthwave arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_neon_pulse",
+              "name": "10. 霓虹脉冲",
+              "name_en": "10. Neon Pulse",
+              "description": "动效转场：霓虹脉冲 / Neon Pulse — a neon light pulse radiates from the center of the frame in cyan and magenta rings, each ring expanding and washing over the outgoing scene to reveal the incoming scene",
+              "preview": "transition_neon_pulse.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "光效转场",
+                "Neon Pulse"
+              ],
+              "prompt": "A seamless Neon Pulse transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A neon light pulse radiates from the center of the frame in cyan and magenta rings, each ring expanding and washing over the outgoing scene to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: electric neon buzz with rhythmic pulse waves. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a cyberpunk synth bass pulse, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_particle",
+      "name": "动效转场·粒子转场",
+      "name_en": "Particle Transitions",
+      "description": "粒子转场模板库：粒子转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "particle_all",
+          "name": "粒子转场",
+          "name_en": "Particle Transitions Collection",
+          "description": "粒子转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_particle_dissolve",
+              "name": "11. 粒子消散",
+              "name_en": "11. Particle Dissolve",
+              "description": "动效转场：粒子消散 / Particle Dissolve — the outgoing scene breaks apart into thousands of tiny glowing particles that drift and dissolve, the particles regrouping to form the incoming scene",
+              "preview": "transition_particle_dissolve.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "粒子转场",
+                "Particle Dissolve"
+              ],
+              "prompt": "A seamless Particle Dissolve transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene breaks apart into thousands of tiny glowing particles that drift and dissolve, the particles regrouping to form the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a soft crackling swarm of particles, gentle spatial drift. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a delicate electronic music box melody, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_dust_motes",
+              "name": "12. 尘埃升腾",
+              "name_en": "12. Dust Motes",
+              "description": "动效转场：尘埃升腾 / Dust Motes — golden dust motes rise from the outgoing scene, swirling upward and gradually carrying the frame into the incoming scene as the dust settles",
+              "preview": "transition_dust_motes.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "粒子转场",
+                "Dust Motes"
+              ],
+              "prompt": "A seamless Dust Motes transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Golden dust motes rise from the outgoing scene, swirling upward and gradually carrying the frame into the incoming scene as the dust settles. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: airy floating dust with a warm subtle breeze. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a gentle piano piece with soft reverb, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_ember_sparks",
+              "name": "13. 火星迸溅",
+              "name_en": "13. Ember Sparks",
+              "description": "动效转场：火星迸溅 / Ember Sparks — orange ember sparks burst from the edges of the outgoing scene, crackling and flying toward the camera, the sparks coalescing into the incoming scene",
+              "preview": "transition_ember_sparks.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "粒子转场",
+                "Ember Sparks"
+              ],
+              "prompt": "A seamless Ember Sparks transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Orange ember sparks burst from the edges of the outgoing scene, crackling and flying toward the camera, the sparks coalescing into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: sharp crackling ember pops with rising heat shimmer. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a tense percussion build with a fire crackle rhythm, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_confetti_burst",
+              "name": "14. 彩纸爆发",
+              "name_en": "14. Confetti Burst",
+              "description": "动效转场：彩纸爆发 / Confetti Burst — colorful confetti bursts into the frame in a joyful explosion, the paper pieces tumbling across the outgoing scene and settling into the incoming scene",
+              "preview": "transition_confetti_burst.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "粒子转场",
+                "Confetti Burst"
+              ],
+              "prompt": "A seamless Confetti Burst transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Colorful confetti bursts into the frame in a joyful explosion, the paper pieces tumbling across the outgoing scene and settling into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a festive paper burst with cheerful tumbling rustle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an upbeat celebration brass fanfare, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_snow_flurry",
+              "name": "15. 雪花纷飞",
+              "name_en": "15. Snow Flurry",
+              "description": "动效转场：雪花纷飞 / Snow Flurry — falling snowflakes drift across the outgoing scene, the flurry thickening until it blurs into a white veil that clears to reveal the incoming scene",
+              "preview": "transition_snow_flurry.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "粒子转场",
+                "Snow Flurry"
+              ],
+              "prompt": "A seamless Snow Flurry transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Falling snowflakes drift across the outgoing scene, the flurry thickening until it blurs into a white veil that clears to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft snow swish with a quiet winter wind. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a serene music box waltz, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_shape",
+      "name": "动效转场·形状转场",
+      "name_en": "Shape Transitions",
+      "description": "形状转场模板库：形状转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "shape_all",
+          "name": "形状转场",
+          "name_en": "Shape Transitions Collection",
+          "description": "形状转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_hexagon_grid",
+              "name": "16. 六边形矩阵",
+              "name_en": "16. Hexagon Grid",
+              "description": "动效转场：六边形矩阵 / Hexagon Grid — the outgoing scene fragments into a grid of hexagons that peel apart in a honeycomb pattern, each hexagon rotating away to expose the incoming scene beneath",
+              "preview": "transition_hexagon_grid.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "形状转场",
+                "Hexagon Grid"
+              ],
+              "prompt": "A seamless Hexagon Grid transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene fragments into a grid of hexagons that peel apart in a honeycomb pattern, each hexagon rotating away to expose the incoming scene beneath. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a mechanical honeycomb snap with rotating tile clicks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a rhythmic minimal techno beat, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_circle_reveal",
+              "name": "17. 圆形显现",
+              "name_en": "17. Circle Reveal",
+              "description": "动效转场：圆形显现 / Circle Reveal — a perfect circle expands from the center of the outgoing scene like a mask, the circular window sliding open to reveal the incoming scene inside",
+              "preview": "transition_circle_reveal.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "形状转场",
+                "Circle Reveal"
+              ],
+              "prompt": "A seamless Circle Reveal transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A perfect circle expands from the center of the outgoing scene like a mask, the circular window sliding open to reveal the incoming scene inside. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a smooth expanding circle whoosh with soft impact. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a modern cinematic pulse with string layer, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_block_slide",
+              "name": "18. 方块滑动",
+              "name_en": "18. Block Slide",
+              "description": "动效转场：方块滑动 / Block Slide — the outgoing scene splits into rectangular blocks that slide apart in staggered directions, the gaps revealing the incoming scene sliding into place",
+              "preview": "transition_block_slide.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "形状转场",
+                "Block Slide"
+              ],
+              "prompt": "A seamless Block Slide transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene splits into rectangular blocks that slide apart in staggered directions, the gaps revealing the incoming scene sliding into place. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: staggered sliding block thuds with mechanical glide. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an energetic IDM beat with glitch percussion, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_triangle_slice",
+              "name": "19. 三角切片",
+              "name_en": "19. Triangle Slice",
+              "description": "动效转场：三角切片 / Triangle Slice — diagonal triangular slices peel from the outgoing scene like paper cuts, each triangle swinging away to reveal the incoming scene through the angular gaps",
+              "preview": "transition_triangle_slice.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "形状转场",
+                "Triangle Slice"
+              ],
+              "prompt": "A seamless Triangle Slice transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Diagonal triangular slices peel from the outgoing scene like paper cuts, each triangle swinging away to reveal the incoming scene through the angular gaps. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: sharp paper-cut slices with crisp tearing sound. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a sharp percussive build with cymbal swells, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_mosaic_tiles",
+              "name": "20. 马赛克拼图",
+              "name_en": "20. Mosaic Tiles",
+              "description": "动效转场：马赛克拼图 / Mosaic Tiles — the outgoing scene dissolves into a mosaic of small square tiles that scatter outward, the tiles rearranging and reassembling into the incoming scene",
+              "preview": "transition_mosaic_tiles.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "形状转场",
+                "Mosaic Tiles"
+              ],
+              "prompt": "A seamless Mosaic Tiles transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene dissolves into a mosaic of small square tiles that scatter outward, the tiles rearranging and reassembling into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a scattered tile shuffle with crisp square clicks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful glitch-hop beat, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_mg",
+      "name": "动效转场·MG动效转场",
+      "name_en": "MG Motion Transitions",
+      "description": "MG动效转场模板库：MG动效转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "mg_all",
+          "name": "MG动效转场",
+          "name_en": "MG Motion Transitions Collection",
+          "description": "MG动效转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_liquid_blob",
+              "name": "21. 液体流动",
+              "name_en": "21. Liquid Blob",
+              "description": "动效转场：液体流动 / Liquid Blob — a glossy liquid blob stretches and morphs across the frame, the fluid shape swallowing the outgoing scene and reshaping into the incoming scene",
+              "preview": "transition_liquid_blob.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "MG动效转场",
+                "Liquid Blob"
+              ],
+              "prompt": "A seamless Liquid Blob transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A glossy liquid blob stretches and morphs across the frame, the fluid shape swallowing the outgoing scene and reshaping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a gooey liquid squelch with bubbly plops. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a quirky cartoon bassoon melody, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_cartoon_zoom",
+              "name": "22. 卡通冲击",
+              "name_en": "22. Cartoon Zoom Burst",
+              "description": "动效转场：卡通冲击 / Cartoon Zoom Burst — the outgoing scene zoom-bursts with a cartoon impact, speed lines and a star flash stretching the frame before the incoming scene pops in",
+              "preview": "transition_cartoon_zoom.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "MG动效转场",
+                "Cartoon Zoom Burst"
+              ],
+              "prompt": "A seamless Cartoon Zoom Burst transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene zoom-bursts with a cartoon impact, speed lines and a star flash stretching the frame before the incoming scene pops in. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a classic cartoon whoosh with a boing impact. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful bouncing kazoo theme, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_spiral_swirl",
+              "name": "23. 旋涡螺旋",
+              "name_en": "23. Spiral Swirl",
+              "description": "动效转场：旋涡螺旋 / Spiral Swirl — the outgoing scene spirals inward like water going down a drain, the swirling vortex twisting the frame and spinning out into the incoming scene",
+              "preview": "transition_spiral_swirl.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "MG动效转场",
+                "Spiral Swirl"
+              ],
+              "prompt": "A seamless Spiral Swirl transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene spirals inward like water going down a drain, the swirling vortex twisting the frame and spinning out into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a whirling vortex spin with dizzying swoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a hypnotic circling music box phrase, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_bounce_hop",
+              "name": "24. 弹跳过渡",
+              "name_en": "24. Bounce Hop",
+              "description": "动效转场：弹跳过渡 / Bounce Hop — the outgoing scene bounces off the screen with a squash-and-stretch hop, landing away as the incoming scene bounces in from the opposite side",
+              "preview": "transition_bounce_hop.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "MG动效转场",
+                "Bounce Hop"
+              ],
+              "prompt": "A seamless Bounce Hop transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene bounces off the screen with a squash-and-stretch hop, landing away as the incoming scene bounces in from the opposite side. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a springy bounce with rubbery squeaks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an upbeat ukulele strum, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_ribbon_flow",
+              "name": "25. 彩带流动",
+              "name_en": "25. Ribbon Flow",
+              "description": "动效转场：彩带流动 / Ribbon Flow — colorful silk ribbons flow across the frame in flowing waves, the ribbons wrapping around the outgoing scene and unwinding to reveal the incoming scene",
+              "preview": "transition_ribbon_flow.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "MG动效转场",
+                "Ribbon Flow"
+              ],
+              "prompt": "A seamless Ribbon Flow transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Colorful silk ribbons flow across the frame in flowing waves, the ribbons wrapping around the outgoing scene and unwinding to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: silky fabric swishes with flowing air. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a graceful violin melody with harp, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_glitch",
+      "name": "动效转场·故障科技转场",
+      "name_en": "Glitch & Tech Transitions",
+      "description": "故障科技转场模板库：故障科技转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "glitch_all",
+          "name": "故障科技转场",
+          "name_en": "Glitch & Tech Transitions Collection",
+          "description": "故障科技转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_glitch_digital",
+              "name": "26. 数字故障",
+              "name_en": "26. Glitch Digital",
+              "description": "动效转场：数字故障 / Glitch Digital — the outgoing scene glitches into horizontal displacement bands, RGB color channels splitting apart in digital corruption before snapping into the incoming scene",
+              "preview": "transition_glitch_digital.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "故障科技转场",
+                "Glitch Digital"
+              ],
+              "prompt": "A seamless Glitch Digital transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene glitches into horizontal displacement bands, rgb color channels splitting apart in digital corruption before snapping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: digital glitch stutters with electronic zaps. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a glitchy techno beat with data drops, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_pixel_break",
+              "name": "27. 像素破碎",
+              "name_en": "27. Pixel Break",
+              "description": "动效转场：像素破碎 / Pixel Break — the outgoing scene pixelates into chunky blocks that crumble and fall away, pixel fragments cascading down to reveal the incoming scene",
+              "preview": "transition_pixel_break.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "故障科技转场",
+                "Pixel Break"
+              ],
+              "prompt": "A seamless Pixel Break transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene pixelates into chunky blocks that crumble and fall away, pixel fragments cascading down to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: crumbling pixel fragments with retro arcade blips. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a chiptune arcade track, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_scanline_sweep",
+              "name": "28. 扫描线",
+              "name_en": "28. Scanline Sweep",
+              "description": "动效转场：扫描线 / Scanline Sweep — a horizontal scanline sweeps down the frame like a CRT monitor, the outgoing scene being scanned out line by line while the incoming scene scans in",
+              "preview": "transition_scanline_sweep.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "故障科技转场",
+                "Scanline Sweep"
+              ],
+              "prompt": "A seamless Scanline Sweep transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A horizontal scanline sweeps down the frame like a crt monitor, the outgoing scene being scanned out line by line while the incoming scene scans in. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: CRT scanline buzz with electronic sweep. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a retro synthwave arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_data_stream",
+              "name": "29. 数据流",
+              "name_en": "29. Data Stream",
+              "description": "动效转场：数据流 / Data Stream — streams of glowing data characters cascade across the outgoing scene like digital rain, the data columns wiping the frame and forming the incoming scene",
+              "preview": "transition_data_stream.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "故障科技转场",
+                "Data Stream"
+              ],
+              "prompt": "A seamless Data Stream transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Streams of glowing data characters cascade across the outgoing scene like digital rain, the data columns wiping the frame and forming the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: rapid data stream blips with binary chatter. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an ambient techno code flow, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_hologram_fade",
+              "name": "30. 全息淡出",
+              "name_en": "30. Hologram Fade",
+              "description": "动效转场：全息淡出 / Hologram Fade — the outgoing scene shatters into holographic fragments that float in translucent layers, the fragments fading and recomposing as a hologram of the incoming scene",
+              "preview": "transition_hologram_fade.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "故障科技转场",
+                "Hologram Fade"
+              ],
+              "prompt": "A seamless Hologram Fade transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene shatters into holographic fragments that float in translucent layers, the fragments fading and recomposing as a hologram of the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: holographic shimmer with ethereal digital tone. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a sci-fi ambient synth pad, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_film",
+      "name": "动效转场·电影转场",
+      "name_en": "Film Transitions",
+      "description": "电影转场模板库：电影转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "film_all",
+          "name": "电影转场",
+          "name_en": "Film Transitions Collection",
+          "description": "电影转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_zoom_blur",
+              "name": "31. 变焦模糊",
+              "name_en": "31. Zoom Blur",
+              "description": "动效转场：变焦模糊 / Zoom Blur — the camera zooms rapidly into the outgoing scene with heavy radial motion blur, the blurred streak snapping into a sharp new composition of the incoming scene",
+              "preview": "transition_zoom_blur.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "电影转场",
+                "Zoom Blur"
+              ],
+              "prompt": "A seamless Zoom Blur transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The camera zooms rapidly into the outgoing scene with heavy radial motion blur, the blurred streak snapping into a sharp new composition of the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a fast zoom whoosh with lens rush. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a dramatic orchestral hit with low brass, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_stretch_warp",
+              "name": "32. 拉伸扭曲",
+              "name_en": "32. Stretch Warp",
+              "description": "动效转场：拉伸扭曲 / Stretch Warp — the outgoing scene stretches and warps across the frame like elastic, the distorted image snapping back into the incoming scene with a fluid rebound",
+              "preview": "transition_stretch_warp.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "电影转场",
+                "Stretch Warp"
+              ],
+              "prompt": "A seamless Stretch Warp transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene stretches and warps across the frame like elastic, the distorted image snapping back into the incoming scene with a fluid rebound. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: an elastic stretch with warping air distortion. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a tension string ostinato, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_roll_impact",
+              "name": "33. 翻滚冲击",
+              "name_en": "33. Roll Impact",
+              "description": "动效转场：翻滚冲击 / Roll Impact — the outgoing scene rolls away from the camera in a spinning motion, tumbling off-frame while the incoming scene rolls in from the opposite direction",
+              "preview": "transition_roll_impact.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "电影转场",
+                "Roll Impact"
+              ],
+              "prompt": "A seamless Roll Impact transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene rolls away from the camera in a spinning motion, tumbling off-frame while the incoming scene rolls in from the opposite direction. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a heavy rolling thud with impact rumble. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a driving rock percussion groove, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_film_burn",
+              "name": "34. 胶片灼烧",
+              "name_en": "34. Film Burn",
+              "description": "动效转场：胶片灼烧 / Film Burn — the film edge of the outgoing scene burns with a glowing orange flame, the celluloid curling and melting to reveal the incoming scene through the burn",
+              "preview": "transition_film_burn.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "电影转场",
+                "Film Burn"
+              ],
+              "prompt": "A seamless Film Burn transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The film edge of the outgoing scene burns with a glowing orange flame, the celluloid curling and melting to reveal the incoming scene through the burn. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: film grain crackle with a melting hiss and pop. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a vintage analog synth with tape warble, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_rack_focus",
+              "name": "35. 焦外过渡",
+              "name_en": "35. Rack Focus Transition",
+              "description": "动效转场：焦外过渡 / Rack Focus Transition — the camera focus racks out of the outgoing scene into a dreamy bokeh blur, then racks back into sharp focus on the incoming scene",
+              "preview": "transition_rack_focus.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "电影转场",
+                "Rack Focus Transition"
+              ],
+              "prompt": "A seamless Rack Focus Transition transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The camera focus racks out of the outgoing scene into a dreamy bokeh blur, then racks back into sharp focus on the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a smooth focus ring rotation with soft lens breath. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a contemplative piano with cello, synced to the rhythm of the transition for a polished editorial feel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transition_nature",
+      "name": "动效转场·自然艺术转场",
+      "name_en": "Nature & Art Transitions",
+      "description": "自然艺术转场模板库：自然艺术转场5种经典转场效果",
+      "icon": "transition",
+      "subcategories": [
+        {
+          "id": "nature_all",
+          "name": "自然艺术转场",
+          "name_en": "Nature & Art Transitions Collection",
+          "description": "自然艺术转场模板合集，共5个转场效果",
+          "templates": [
+            {
+              "id": "transition_ink_bleed",
+              "name": "36. 墨迹晕染",
+              "name_en": "36. Ink Bleed",
+              "description": "动效转场：墨迹晕染 / Ink Bleed — black ink blooms into the outgoing scene like a brush painting, the ink bleeding across the frame and dissolving into the incoming scene with ink-wash strokes",
+              "preview": "transition_ink_bleed.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "自然艺术转场",
+                "Ink Bleed"
+              ],
+              "prompt": "A seamless Ink Bleed transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Black ink blooms into the outgoing scene like a brush painting, the ink bleeding across the frame and dissolving into the incoming scene with ink-wash strokes. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: ink drops with wet brush strokes on paper. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a traditional guzheng melody with bamboo flute, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_water_ripple",
+              "name": "37. 水波涟漪",
+              "name_en": "37. Water Ripple",
+              "description": "动效转场：水波涟漪 / Water Ripple — ripples spread across the outgoing scene as if a stone dropped into water, the concentric waves distorting and washing the frame into the incoming scene",
+              "preview": "transition_water_ripple.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "自然艺术转场",
+                "Water Ripple"
+              ],
+              "prompt": "A seamless Water Ripple transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Ripples spread across the outgoing scene as if a stone dropped into water, the concentric waves distorting and washing the frame into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: gentle water ripples with a soft splash. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a serene pentatonic music box, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_smoke_curl",
+              "name": "38. 烟雾缭绕",
+              "name_en": "38. Smoke Curl",
+              "description": "动效转场：烟雾缭绕 / Smoke Curl — wispy smoke curls rise through the outgoing scene, the smoke thickening into a gray veil that thins out to reveal the incoming scene",
+              "preview": "transition_smoke_curl.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "自然艺术转场",
+                "Smoke Curl"
+              ],
+              "prompt": "A seamless Smoke Curl transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Wispy smoke curls rise through the outgoing scene, the smoke thickening into a gray veil that thins out to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft curling smoke with a quiet crackle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a mysterious ambient drone with flute, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_wind_petals",
+              "name": "39. 花瓣飞舞",
+              "name_en": "39. Wind Petals",
+              "description": "动效转场：花瓣飞舞 / Wind Petals — cherry blossom petals blow across the outgoing scene on a gentle wind, the petals swirling past the camera and clearing to reveal the incoming scene",
+              "preview": "transition_wind_petals.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "自然艺术转场",
+                "Wind Petals"
+              ],
+              "prompt": "A seamless Wind Petals transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Cherry blossom petals blow across the outgoing scene on a gentle wind, the petals swirling past the camera and clearing to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft petal rustle with a flowing breeze. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a gentle koto melody with strings, synced to the rhythm of the transition for a polished editorial feel."
+            },
+            {
+              "id": "transition_aurora_flow",
+              "name": "40. 极光流淌",
+              "name_en": "40. Aurora Flow",
+              "description": "动效转场：极光流淌 / Aurora Flow — an aurora of green and violet light flows across the night sky of the outgoing scene, the shimmering curtain of light sweeping into the incoming scene",
+              "preview": "transition_aurora_flow.png",
+              "generation_mode": "Text to Video (文生视频)",
+              "duration": 6,
+              "needs_image": false,
+              "needs_video": false,
+              "needs_audio": false,
+              "tags": [
+                "转场",
+                "动效",
+                "transition",
+                "自然艺术转场",
+                "Aurora Flow"
+              ],
+              "prompt": "A seamless Aurora Flow transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] An aurora of green and violet light flows across the night sky of the outgoing scene, the shimmering curtain of light sweeping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a shimmering aurora hum with cosmic whisper. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an ethereal ambient choir pad, synced to the rhythm of the transition for a polished editorial feel."
             }
           ]
         }
