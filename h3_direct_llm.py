@@ -241,6 +241,52 @@ def _generate_local(user_text, system_prompt, model_path=None):
     return raw  # cleaned by the caller (H3-strip for generation, merge-strip for merging)
 
 
+def _strata_healthy():
+    """Quick probe: is BSAI Strata up at 127.0.0.1:8080? (blocking socket)"""
+    import socket as _sk, http.client as _hc
+    try:
+        s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+        s.settimeout(1.0); s.setblocking(True)
+        s.connect(("127.0.0.1", 8080))
+        try:
+            conn = _hc.HTTPConnection("127.0.0.1", 8080, timeout=1.0)
+            conn.sock = s
+            conn.request("GET", "/v1/models", headers={"Accept": "application/json"})
+            return conn.getresponse().status == 200
+        finally:
+            s.close()
+    except Exception:
+        return False
+
+
+def _generate_strata(user_text, system_prompt, max_tokens=4096):
+    """Call local Strata (OpenAI-compatible) with no API key needed. Blocking socket."""
+    import json as _j, socket as _sk, http.client as _hc
+    body = _j.dumps({
+        "model": "qwen3.8-flash-next",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_text},
+        ],
+        "max_tokens": int(max_tokens),
+        "temperature": 0.6,
+        "top_p": 0.9,
+        "stream": False,
+    }).encode("utf-8")
+    s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+    s.settimeout(600); s.setblocking(True)
+    s.connect(("127.0.0.1", 8080))
+    try:
+        conn = _hc.HTTPConnection("127.0.0.1", 8080, timeout=600)
+        conn.sock = s
+        conn.request("POST", "/v1/chat/completions", body=body,
+                     headers={"Content-Type": "application/json", "Authorization": "Bearer strata"})
+        data = _j.loads(conn.getresponse().read().decode("utf-8"))
+    finally:
+        s.close()
+    return data["choices"][0]["message"]["content"]
+
+
 def _generate_api(user_text, cfg, system_prompt):
     import json
     import urllib.request
@@ -547,6 +593,17 @@ def merge_customization(prompt, customization):
         except Exception as e:
             error = "API: %s" % e
     if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
+        # BSAI Strata auto (preferred when running, zero ComfyUI VRAM)
+        if _strata_healthy():
+            try:
+                r = _clean(_generate_strata(user_msg, _H3_MERGE_SYSTEM_PROMPT, max_tokens=8192))
+                if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
+                    result = r
+                    error = None
+                elif r and _is_repetitive_garbage(r):
+                    error = "Strata output detected as repetitive garbage / Strata输出检测到重复垃圾内容"
+            except Exception as e:
+                error = "Strata: %s" % e
         # Local attempts: try the fast merge model (sulphur) first, then a
         # stronger one (e.g. gemma). Reject outputs that merely copy the template
         # or produce repetitive garbage (e.g. "hair ribbon, hair scrunchie, ..." loops).
@@ -610,4 +667,10 @@ def generate_h3_prompt(user_text):
                 return _strip_to_h3(_generate_local(text, _H3_SYSTEM_PROMPT))
             except Exception:
                 raise RuntimeError(f"Direct mode API failed ({e}) and local model unavailable.")
+    # BSAI Strata auto (preferred, zero VRAM for ComfyUI since Strata is a sidecar)
+    if _strata_healthy():
+        try:
+            return _strip_to_h3(_generate_strata(text, _H3_SYSTEM_PROMPT))
+        except Exception as e:
+            print(f"[BSAI H3] Strata call failed, falling back to local: {e}")
     return _strip_to_h3(_generate_local(text, _H3_SYSTEM_PROMPT))
