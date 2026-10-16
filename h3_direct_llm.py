@@ -93,25 +93,6 @@ _llms_lock = threading.Lock()
 _llm_error = None
 
 
-def _auto_install_llama():
-    """Background, best-effort install of llama-cpp-python (heavy wheel)."""
-    def _do():
-        try:
-            import subprocess
-            import sys
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", "--quiet",
-                 "--disable-pip-version-check", "llama-cpp-python>=0.3.0"],
-                timeout=1800,
-            )
-        except Exception:
-            pass
-    try:
-        threading.Thread(target=_do, daemon=True).start()
-    except Exception:
-        pass
-
-
 def _pick_model_path():
     env = os.environ.get("BSAI_H3_LLM_MODEL", "").strip()
     if env and os.path.isfile(env):
@@ -200,7 +181,7 @@ def _generate_local(user_text, system_prompt, model_path=None):
     if not model_path:
         raise RuntimeError(
             "No GGUF model found for direct mode. Set env BSAI_H3_LLM_MODEL or place a model "
-            "under ComfyUI/models/LLM or prompt_generator. / 未找到本地模型，请设置 BSAI_H3_LLM_MODEL。"
+            "under ComfyUI/models/LLM or prompt_generator. Set BSAI_H3_LLM_MODEL to point to a local GGUF model."
         )
     llm = _llms.get(model_path)
     if llm is None:
@@ -213,9 +194,8 @@ def _generate_local(user_text, system_prompt, model_path=None):
                     _llm_error = f"llama_cpp not installed: {e}"
                     _auto_install_llama()  # background install; tell the user to retry
                     raise RuntimeError(
-                        "llama_cpp not installed — auto-install started in background, "
-                        "please retry in a moment. / llama_cpp 未安装，已自动开始后台安装，"
-                        "请稍候重试。也可手动执行：pip install llama-cpp-python"
+                        "llama_cpp is not installed. Install it once via the node's "
+                        "install.py (or: pip install llama-cpp-python), then restart ComfyUI."
                     )
                 gpu_layers = int(os.environ.get("BSAI_H3_LLM_GPU_LAYERS", "-1"))
                 llm = Llama(

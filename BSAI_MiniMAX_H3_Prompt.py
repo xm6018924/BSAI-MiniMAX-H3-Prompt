@@ -793,7 +793,7 @@ def _bsai_strip_mtp_layer(model_path):
 def _bsai_parse_style_option(style_str):
     """Parse a bilingual style option string.
 
-    Format: "English Name (中文名 | description)" or "English Name (中文名)"
+    Format: "English Name" or "English Name"
     Returns: (english_name, chinese_name, description)
     """
     m = re.match(r'(.+?)\s*\(([^|)]+)(?:\s*\|\s*([^)]+))?\)', style_str)
@@ -1078,9 +1078,9 @@ class _BSAI_QwenStorage:
                 print(f"[BSAI H3 ModelLoader] 检测到 MTP 层，使用去 MTP 版本: {os.path.basename(no_mtp_path)}")
                 model_path = no_mtp_path
 
-        mmproj = config.get("mmproj", "None (无)")
+        mmproj = config.get("mmproj", "None")
         mmproj_path = None
-        if mmproj and mmproj not in ("None (无)", "None", "无", ""):
+        if mmproj and mmproj not in ("None", "None", "无", ""):
             mmproj_path = os.path.join(folder_paths.models_dir, "LLM", mmproj)
             if not os.path.exists(mmproj_path):
                 raise FileNotFoundError(f"mmproj file not found: {mmproj_path}")
@@ -1116,7 +1116,7 @@ class _BSAI_QwenStorage:
         if not mmproj_use_gpu:
             print("[BSAI H3 ModelLoader] mmproj/CLIP 模型将在 CPU 上加载（显存不足）")
         if mmproj_path:
-            if family in ("Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)"):
+            if family in ("Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL"):
                 if Qwen35ChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Qwen35ChatHandler，请更新 llama-cpp-python。"
@@ -1136,7 +1136,7 @@ class _BSAI_QwenStorage:
                         use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
-            elif family == "Qwen3-VL (通义千问3-VL)":
+            elif family == "Qwen3-VL":
                 if Qwen3VLChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Qwen3VLChatHandler，请更新 llama-cpp-python。"
@@ -1156,7 +1156,7 @@ class _BSAI_QwenStorage:
                         use_gpu=mmproj_use_gpu,
                         **qwen_vl_image_token_kwargs,
                     )
-            elif family == "Gemma4 (谷歌宝石4)":
+            elif family == "Gemma4":
                 if Gemma4ChatHandler is None:
                     raise RuntimeError(
                         "当前 llama-cpp-python 不支持 Gemma4ChatHandler，请更新 llama-cpp-python到0.3.36+。"
@@ -1259,7 +1259,7 @@ class BSAI_H3_ModelLoader:
             if "mmproj" not in f.lower()
             and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
         ]
-        mmproj_list = ["None (无)"] + [
+        mmproj_list = ["None"] + [
             f
             for f in all_files
             if "mmproj" in f.lower()
@@ -1272,23 +1272,23 @@ class BSAI_H3_ModelLoader:
         return {
             "required": {
                 "model_family": (
-                    ["Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"],
-                    {"default": "Qwen3.8-VL (通义千问3.8-VL)", "tooltip": "Model family / 模型系列"},
+                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
+                    {"default": "Qwen3.8-VL", "tooltip": "Model family"},
                 ),
                 "model_file": (
                     model_list,
-                    {"tooltip": "Main model file (.gguf recommended) in ComfyUI/models/LLM/ / 主模型文件"},
+                    {"tooltip": "Main model file (.gguf recommended) in ComfyUI/models/LLM/"},
                 ),
                 "mmproj": (
                     mmproj_list,
-                    {"default": "None (无)", "tooltip": "Multimodal mmproj file; 'None' for text-only / 视觉投影文件"},
+                    {"default": "None", "tooltip": "Multimodal mmproj file; 'None' for text-only"},
                 ),
-                "enable_thinking": ("BOOLEAN", {"default": False, "tooltip": "Enable thinking/reasoning mode / 启用思考模式"}),
+                "enable_thinking": ("BOOLEAN", {"default": False, "tooltip": "Enable thinking/reasoning mode"}),
                 "context_length": (
                     "INT",
-                    {"default": 16384, "min": 1024, "max": 327680, "step": 256, "tooltip": "Context length, recommend 16384+ / 上下文长度，建议16384以上"},
+                    {"default": 16384, "min": 1024, "max": 327680, "step": 256, "tooltip": "Context length, recommend 16384+"},
                 ),
-                "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=all on GPU. Auto-reduces if VRAM insufficient / GPU层数，-1为全部上GPU"}),
+                "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=all on GPU. Auto-reduces if VRAM insufficient"}),
             }
         }
 
@@ -1302,8 +1302,8 @@ class BSAI_H3_ModelLoader:
         if model_file.startswith("(Place models"):
             raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
 
-        if model_family in ("Qwen3-VL (通义千问3-VL)", "Qwen3.5-VL (通义千问3.5-VL)", "Qwen3.6-VL (通义千问3.6-VL)", "Qwen3.8-VL (通义千问3.8-VL)", "Gemma4 (谷歌宝石4)"):
-            if mmproj == "None (无)":
+        if model_family in ("Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"):
+            if mmproj == "None":
                 print(
                     f"[BSAI H3 ModelLoader] {model_family} loaded without mmproj. "
                     "Local node will run in text-only safe mode; media ports are "
@@ -1328,203 +1328,203 @@ class BSAI_H3_ModelLoader:
 # ============================================================
 
 _BSAI_DIRECTOR_STYLES = [
-    "Official SKILL (官方SKILL模式)",
-    "System Recommended (系统推荐)",
-    "Alfred Hitchcock (希区柯克 | 悬念大师)",
-    "Wong Kar-wai (王家卫)",
-    "Orson Welles (奥逊·威尔斯)",
-    "Ingmar Bergman (英格玛·伯格曼 | 哲学电影大师)",
-    "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
-    "Akira Kurosawa (黑泽明 | 东方电影标杆)",
-    "Sergei Eisenstein (谢尔盖·爱森斯坦 | 蒙太奇)",
-    "Steven Spielberg (史蒂文·斯皮尔伯格)",
-    "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
-    "Martin Scorsese (马丁·斯科塞斯)",
-    "Stanley Kubrick (斯坦利·库布里克)",
-    "Billy Wilder (比利·怀尔德)",
-    "Ang Lee (李安)",
-    "Zhang Yimou (张艺谋)",
-    "Satoshi Kon (今敏 | 动画电影大师)",
-    "Takeshi Kitano (北野武)",
-    "Christopher Nolan (克里斯托弗·诺兰)",
-    "Quentin Tarantino (昆汀·塔伦蒂诺)",
-    "James Cameron (詹姆斯·卡梅隆)",
-    "Alfonso Cuaron (阿方索·卡隆)",
-    "David Lynch (大卫·林奇)",
-    "Wes Anderson (韦斯·安德森)",
-    "Denis Villeneuve (丹尼斯·维伦纽瓦)",
-    "Bong Joon-ho (奉俊昊)",
-    "Hayao Miyazaki (宫崎骏)",
-    "Makoto Shinkai (新海诚)",
-    "Park Chan-wook (朴赞郁)",
-    "Fritz Lang (弗里茨·朗)",
-    "Jean-Luc Godard (让-吕克·戈达尔)",
-    "Andrei Tarkovsky (安德烈·塔可夫斯基)",
-    "Michelangelo Antonioni (米开朗基罗·安东尼奥尼)",
-    "Robert Bresson (罗伯特·布列松)",
-    "Yasujirō Ozu (小津安二郎)",
-    "John Woo (吴宇森)",
-    "Ann Hui (许鞍华)",
-    "Jia Zhangke (贾樟柯)",
-    "Bi Gan (毕赣)",
+    "Official SKILL",
+    "System Recommended",
+    "Alfred Hitchcock",
+    "Wong Kar-wai",
+    "Orson Welles",
+    "Ingmar Bergman",
+    "Federico Fellini",
+    "Akira Kurosawa",
+    "Sergei Eisenstein",
+    "Steven Spielberg",
+    "Francis Ford Coppola",
+    "Martin Scorsese",
+    "Stanley Kubrick",
+    "Billy Wilder",
+    "Ang Lee",
+    "Zhang Yimou",
+    "Satoshi Kon",
+    "Takeshi Kitano",
+    "Christopher Nolan",
+    "Quentin Tarantino",
+    "James Cameron",
+    "Alfonso Cuaron",
+    "David Lynch",
+    "Wes Anderson",
+    "Denis Villeneuve",
+    "Bong Joon-ho",
+    "Hayao Miyazaki",
+    "Makoto Shinkai",
+    "Park Chan-wook",
+    "Fritz Lang",
+    "Jean-Luc Godard",
+    "Andrei Tarkovsky",
+    "Michelangelo Antonioni",
+    "Robert Bresson",
+    "Yasujirō Ozu",
+    "John Woo",
+    "Ann Hui",
+    "Jia Zhangke",
+    "Bi Gan",
 ]
 
 _BSAI_CINEMATOGRAPHY_STYLES = [
-    "Official SKILL (官方SKILL模式)",
-    "System Recommended (系统推荐)",
-    "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
-    "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
-    "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
-    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
-    "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
-    "Greig Fraser (格雷格·弗莱瑟 | 粗粝物理质感)",
-    "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
-    "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
-    "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
-    "Sven Nykvist (斯文·尼奎斯特 | 极简自然光)",
-    "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-    "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
-    "Peter Pau (鲍德熹 | 唯美写意逆光)",
-    "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
-    "Conrad Hall (康拉德·霍尔 | 纹理阴影)",
-    "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-    "Dariusz Wolski (达里乌什·沃尔斯基 | 暗黑哥特光泽)",
-    "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
-    "Claudio Miranda (克劳迪奥·米兰达 | 冷调数字洁净)",
-    "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
+    "Official SKILL",
+    "System Recommended",
+    "Gregg Toland",
+    "Gordon Willis",
+    "Freddie Young",
+    "Roger Deakins",
+    "Emmanuel Lubezki",
+    "Greig Fraser",
+    "Janusz Kaminski",
+    "Hoyte van Hoytema",
+    "Vittorio Storaro",
+    "Sven Nykvist",
+    "Christopher Doyle",
+    "Mark Lee Ping-Bin",
+    "Peter Pau",
+    "Robby Müller",
+    "Conrad Hall",
+    "Robert Richardson",
+    "Dariusz Wolski",
+    "Matthew Libatique",
+    "Claudio Miranda",
+    "Lin Liang-Zhong",
 ]
 
 _BSAI_FILM_GENRES = [
-    "Official SKILL (官方SKILL模式)",
-    "System Recommended (系统推荐)",
-    "Realism (写实主义)",
-    "Neo-Realism (新现实主义)",
-    "Poetic Realism (诗意写实)",
-    "Expressionism (表现主义)",
-    "Magical Realism (魔幻现实主义)",
-    "Surrealism (超现实主义)",
-    "French New Wave (法国新浪潮)",
-    "Classical Hollywood (古典好莱坞)",
-    "Film Noir (黑色电影)",
-    "Vintage Film (胶片复古风)",
-    "Theatrical Drama (舞台化戏剧)",
-    "2D Hand-drawn Animation (二维手绘动画)",
-    "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)",
-    "Shinkai Animation (新海诚风格)",
-    "Satoshi Kon Animation (今敏风格)",
-    "3D CG Animation (三维CG动画)",
-    "Stop Motion (定格动画)",
-    "Ink Wash Animation (水墨国风动画)",
-    "Live Action (真人实拍)",
-    "Live Action + CG (真人CG混合)",
-    "Drama (剧情片)",
-    "Art-house Drama (文艺剧情片)",
-    "Mystery (悬疑片)",
-    "Crime (犯罪片)",
-    "Gangster (黑帮片)",
-    "Psychological Thriller (心理惊悚)",
-    "Horror (恐怖片)",
-    "Action (动作片)",
-    "Wuxia (武侠片)",
-    "Kung Fu (功夫片)",
-    "Adventure (冒险片)",
-    "Epic (史诗片)",
-    "Sci-Fi (科幻片)",
-    "Fantasy (奇幻片)",
-    "Superhero (超级英雄)",
-    "Romantic Comedy (浪漫喜剧)",
-    "Dark Comedy (黑色喜剧)",
-    "Slapstick Comedy (无厘头喜剧)",
-    "Absurdist Comedy (荒诞喜剧)",
-    "Romance (爱情片)",
-    "Urban Romance (都市爱情)",
-    "Road Movie (公路电影)",
-    "Western (西部片)",
-    "Musical (歌舞片)",
-    "War Film (战争片)",
-    "Historical Biopic (历史传记片)",
-    "Period Epic (古装史诗片)",
-    "Documentary (纪录片)",
-    "Mockumentary (伪纪录片)",
-    "Experimental (先锋实验)",
+    "Official SKILL",
+    "System Recommended",
+    "Realism",
+    "Neo-Realism",
+    "Poetic Realism",
+    "Expressionism",
+    "Magical Realism",
+    "Surrealism",
+    "French New Wave",
+    "Classical Hollywood",
+    "Film Noir",
+    "Vintage Film",
+    "Theatrical Drama",
+    "2D Hand-drawn Animation",
+    "Ghibli/Miyazaki Animation",
+    "Shinkai Animation",
+    "Satoshi Kon Animation",
+    "3D CG Animation",
+    "Stop Motion",
+    "Ink Wash Animation",
+    "Live Action",
+    "Live Action + CG",
+    "Drama",
+    "Art-house Drama",
+    "Mystery",
+    "Crime",
+    "Gangster",
+    "Psychological Thriller",
+    "Horror",
+    "Action",
+    "Wuxia",
+    "Kung Fu",
+    "Adventure",
+    "Epic",
+    "Sci-Fi",
+    "Fantasy",
+    "Superhero",
+    "Romantic Comedy",
+    "Dark Comedy",
+    "Slapstick Comedy",
+    "Absurdist Comedy",
+    "Romance",
+    "Urban Romance",
+    "Road Movie",
+    "Western",
+    "Musical",
+    "War Film",
+    "Historical Biopic",
+    "Period Epic",
+    "Documentary",
+    "Mockumentary",
+    "Experimental",
 ]
 
 _BSAI_CUT_STYLES = [
-    "Official SKILL (官方SKILL模式)",
-    "System Recommended (系统推荐)",
-    "One Shot (一镜到底)",
-    "2 Segments (2段)",
-    "3 Segments (3段)",
-    "4 Segments (4段)",
-    "5 Segments (5段)",
-    "6 Segments (6段)",
-    "7 Segments (7段)",
-    "8 Segments (8段)",
-    "9 Segments (9段)",
-    "10 Segments (10段)",
-    "11 Segments (11段)",
-    "12 Segments (12段)",
-    "13 Segments (13段)",
-    "14 Segments (14段)",
-    "15 Segments (15段)",
+    "Official SKILL",
+    "System Recommended",
+    "One Shot",
+    "2 Segments",
+    "3 Segments",
+    "4 Segments",
+    "5 Segments",
+    "6 Segments",
+    "7 Segments",
+    "8 Segments",
+    "9 Segments",
+    "10 Segments",
+    "11 Segments",
+    "12 Segments",
+    "13 Segments",
+    "14 Segments",
+    "15 Segments",
 ]
 
 _BSAI_SCORE_STYLES = [
-    "Official SKILL (官方SKILL模式)",
-    "System Recommended (系统推荐)",
-    "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
-    "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
-    "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
-    "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
-    "Danny Elfman (丹尼·艾夫曼 | 哥特怪诞)",
-    "Howard Shore (霍华德·肖 | 奇幻史诗主题)",
-    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
-    "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
-    "Vangelis (范吉利斯 | 合成器电子)",
-    "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
-    "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
-    "Tan Dun (谭盾 | 跨文化打击乐)",
-    "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
-    "Clint Mansell (克林特·曼塞尔 | 极简重复)",
-    "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
-    "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
-    "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
-    "Ludwig Goransson (路德维希·戈兰松 | 非洲未来主义打击乐)",
-    "Mica Levi (米卡·利维 | 不安不协和)",
-    "Johann Johannsson (约翰·约翰松 | 持续音极简)",
-    "Carter Burwell (卡特·伯威尔 | 民谣简约)",
-    "Gustavo Santaolalla (古斯塔沃·桑塔欧拉拉 | 独奏吉他)",
-    "A.R. Rahman (A.R.拉赫曼 | 宝莱坞融合)",
-    "Hildur Gudnadottir (希尔杜·古德纳多蒂尔 | 大提琴持续音暗黑)",
-    "Philip Glass (菲利普·格拉斯 | 极简重复模式)",
-    "Angelo Badalamenti (安吉洛·巴达拉门蒂 | 超现实梦幻爵士)",
-    "James Horner (詹姆斯·霍纳 | 凯尔特情感)",
-    "Alan Silvestri (艾伦·西尔维斯特里 | 冒险英雄)",
-    "Bear McCreary (贝尔·麦克里 | 太鼓打击民族风)",
-    "Max Steiner (马克斯·斯坦纳 | 古典好莱坞交响)",
-    "Jerry Goldsmith (杰瑞·戈德史密斯 | 多变前卫)",
-    "Dimitri Tiomkin (迪米特里·蒂奥姆金 | 美国边疆)",
-    "Elmer Bernstein (埃尔默·伯恩斯坦 | 爵士大乐队)",
-    "Maurice Jarre (莫里斯·贾尔 | 史诗合唱异域)",
-    "Kitaro (喜多郎 | 新世纪合成器)",
-    "Shirō Sagisu (鹭巢诗郎 | 动漫管弦摇滚融合)",
-    "Yuki Kajiura (梶浦由记 | 哥特合唱空灵)",
-    "Taku Iwasaki (岩崎琢 | 嘻哈管弦混合)",
-    "Hiroyuki Sawano (泽野弘之 | 史诗动漫摇滚)",
-    "Cho Young-wuk (赵英旭 | 韩国悲剧旋律)",
-    "Zhao Jiping (赵季平 | 中国传统电影配乐)",
+    "Official SKILL",
+    "System Recommended",
+    "John Williams",
+    "Hans Zimmer",
+    "Ennio Morricone",
+    "Bernard Herrmann",
+    "Danny Elfman",
+    "Howard Shore",
+    "Thomas Newman",
+    "Nino Rota",
+    "Vangelis",
+    "Ryuichi Sakamoto",
+    "Joe Hisaishi",
+    "Tan Dun",
+    "Shigeru Umebayashi",
+    "Clint Mansell",
+    "Trent Reznor & Atticus Ross",
+    "Alexandre Desplat",
+    "Michael Giacchino",
+    "Ludwig Goransson",
+    "Mica Levi",
+    "Johann Johannsson",
+    "Carter Burwell",
+    "Gustavo Santaolalla",
+    "A.R. Rahman",
+    "Hildur Gudnadottir",
+    "Philip Glass",
+    "Angelo Badalamenti",
+    "James Horner",
+    "Alan Silvestri",
+    "Bear McCreary",
+    "Max Steiner",
+    "Jerry Goldsmith",
+    "Dimitri Tiomkin",
+    "Elmer Bernstein",
+    "Maurice Jarre",
+    "Kitaro",
+    "Shirō Sagisu",
+    "Yuki Kajiura",
+    "Taku Iwasaki",
+    "Hiroyuki Sawano",
+    "Cho Young-wuk",
+    "Zhao Jiping",
 ]
 
 _BSAI_OUTPUT_LANGUAGES = [
-    "Chinese (中文)",
+    "Chinese",
     "English",
-    "Japanese (日本語)",
+    "Japanese",
     "Korean (한국어)",
     "French (Français)",
     "German (Deutsch)",
     "Spanish (Español)",
     "Russian (Русский)",
-    "Bilingual CN+EN (中英双语)",
+    "Bilingual CN+EN",
 ]
 
 
@@ -1538,268 +1538,268 @@ _BSAI_STYLE_AUTO_MAP = [
 
     # ── 武侠 / 功夫 ──
     (
-        "Wuxia (武侠片)", "Zhang Yimou (张艺谋)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Tan Dun (谭盾 | 跨文化打击乐)",
+        "Wuxia", "Zhang Yimou",
+        "Christopher Doyle",
+        "Tan Dun",
         ["武侠", "江湖", "侠客", "剑客", "剑术", "wuxia", "swordsman", "刀光剑影", "古代武林", "侠义"],
     ),
     (
-        "Kung Fu (功夫片)", "Akira Kurosawa (黑泽明 | 东方电影标杆)",
-        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
-        "Tan Dun (谭盾 | 跨文化打击乐)",
+        "Kung Fu", "Akira Kurosawa",
+        "Mark Lee Ping-Bin",
+        "Tan Dun",
         ["功夫", "kung fu", "武术", "武打", "少林", "拳法", "martial art"],
     ),
 
     # ── 科幻 ──
     (
-        "Sci-Fi (科幻片)", "Christopher Nolan (克里斯托弗·诺兰)",
-        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
-        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        "Sci-Fi", "Christopher Nolan",
+        "Hoyte van Hoytema",
+        "Hans Zimmer",
         ["科幻", "未来", "机器人", "宇宙", "星际", "太空", "飞船", "外星", "sci-fi", "futuristic",
          "cyberpunk", "赛博朋克", "人工智能", "时间旅行", "time travel", "火星", "银河"],
     ),
 
     # ── 奇幻 ──
     (
-        "Fantasy (奇幻片)", "Hayao Miyazaki (宫崎骏)",
-        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
-        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        "Fantasy", "Hayao Miyazaki",
+        "Emmanuel Lubezki",
+        "Joe Hisaishi",
         ["奇幻", "魔法", "精灵", "龙", "神话", "fantasy", "magic", "dragon", "elf", "mythical",
          "仙界", "魔王", "魔法师"],
     ),
 
     # ── 恐怖 ──
     (
-        "Horror (恐怖片)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
-        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
-        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        "Horror", "Alfred Hitchcock",
+        "Gordon Willis",
+        "Bernard Herrmann",
         ["恐怖", "惊悚", "鬼", "恶灵", "丧尸", "吸血鬼", "horror", "scary", "ghost", "haunted",
          "zombie", "vampire", "creepy", "灵异", "恶鬼"],
     ),
 
     # ── 悬疑 / 心理惊悚 ──
     (
-        "Psychological Thriller (心理惊悚)", "Alfred Hitchcock (希区柯克 | 悬念大师)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        "Psychological Thriller", "Alfred Hitchcock",
+        "Robert Richardson",
+        "Bernard Herrmann",
         ["悬疑", "推理", "侦探", "破案", "mystery", "thriller", "detective", "suspense",
          "investigation", "murder mystery", "心理惊悚"],
     ),
 
     # ── 犯罪 / 黑帮 / 黑色电影 ──
     (
-        "Crime (犯罪片)", "Martin Scorsese (马丁·斯科塞斯)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        "Crime", "Martin Scorsese",
+        "Robert Richardson",
+        "Clint Mansell",
         ["犯罪", "罪犯", "抢劫", "crime", "criminal", "heist", "robbery", "thief", "盗窃"],
     ),
     (
-        "Gangster (黑帮片)", "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
-        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
-        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        "Gangster", "Francis Ford Coppola",
+        "Gordon Willis",
+        "Nino Rota",
         ["黑帮", "黑社会", "帮派", "gangster", "mafia", "mob", "黑手党", "帮会"],
     ),
     (
-        "Film Noir (黑色电影)", "Orson Welles (奥逊·威尔斯)",
-        "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
-        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        "Film Noir", "Orson Welles",
+        "Gordon Willis",
+        "Bernard Herrmann",
         ["黑色电影", "noir", "neo-noir", "暗黑侦探", "hard-boiled"],
     ),
 
     # ── 动画 ──
     (
-        "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)", "Hayao Miyazaki (宫崎骏)",
-        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
-        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        "Ghibli/Miyazaki Animation", "Hayao Miyazaki",
+        "Emmanuel Lubezki",
+        "Joe Hisaishi",
         ["吉卜力", "宫崎骏", "ghibli", "miyazaki", "龙猫", "千与千寻", "哈尔的移动城堡"],
     ),
     (
-        "Shinkai Animation (新海诚风格)", "Makoto Shinkai (新海诚)",
-        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
-        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        "Shinkai Animation", "Makoto Shinkai",
+        "Claudio Miranda",
+        "Ryuichi Sakamoto",
         ["新海诚", "shinkai", "你的名字", "天气之子", "秒速五厘米"],
     ),
     (
-        "Satoshi Kon Animation (今敏风格)", "Satoshi Kon (今敏 | 动画电影大师)",
-        "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
-        "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+        "Satoshi Kon Animation", "Satoshi Kon",
+        "Matthew Libatique",
+        "Clint Mansell",
         ["今敏", "satoshi kon", "红辣椒", "未麻的部屋", "千年女优"],
     ),
     (
-        "Ink Wash Animation (水墨国风动画)", "Hayao Miyazaki (宫崎骏)",
-        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
-        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        "Ink Wash Animation", "Hayao Miyazaki",
+        "Mark Lee Ping-Bin",
+        "Joe Hisaishi",
         ["水墨", "国画", "ink wash", "chinese painting", "写意", "国风动画"],
     ),
     (
-        "2D Hand-drawn Animation (二维手绘动画)", "Hayao Miyazaki (宫崎骏)",
-        "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
-        "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+        "2D Hand-drawn Animation", "Hayao Miyazaki",
+        "Emmanuel Lubezki",
+        "Joe Hisaishi",
         ["动画", "手绘", "二维动画", "animation", "anime", "cartoon", "2d animation"],
     ),
     (
-        "3D CG Animation (三维CG动画)", "Hayao Miyazaki (宫崎骏)",
-        "Claudio Miranda (克劳迪奥·米兰塔 | 冷调数字洁净)",
-        "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+        "3D CG Animation", "Hayao Miyazaki",
+        "Claudio Miranda",
+        "Michael Giacchino",
         ["3d动画", "CG动画", "三维动画", "3d animation", "cgi", "pixar", "皮克斯"],
     ),
     (
-        "Stop Motion (定格动画)", "Wes Anderson (韦斯·安德森)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+        "Stop Motion", "Wes Anderson",
+        "Robert Richardson",
+        "Alexandre Desplat",
         ["定格动画", "stop motion", "粘土动画", "claymation"],
     ),
 
     # ── 爱情 ──
     (
-        "Romance (爱情片)", "Wong Kar-wai (王家卫)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        "Romance", "Wong Kar-wai",
+        "Christopher Doyle",
+        "Shigeru Umebayashi",
         ["爱情", "浪漫", "恋爱", "约会", "romance", "love story", "couple", "情侣", "暗恋", "告白"],
     ),
     (
-        "Urban Romance (都市爱情)", "Wong Kar-wai (王家卫)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        "Urban Romance", "Wong Kar-wai",
+        "Christopher Doyle",
+        "Shigeru Umebayashi",
         ["都市爱情", "城市恋爱", "urban romance", "city love", "office romance", "职场恋爱"],
     ),
     (
-        "Romantic Comedy (浪漫喜剧)", "Wong Kar-wai (王家卫)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        "Romantic Comedy", "Wong Kar-wai",
+        "Christopher Doyle",
+        "Ryuichi Sakamoto",
         ["浪漫喜剧", "romantic comedy", "rom-com"],
     ),
 
     # ── 喜剧 ──
     (
-        "Slapstick Comedy (无厘头喜剧)", "Wes Anderson (韦斯·安德森)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        "Slapstick Comedy", "Wes Anderson",
+        "Robert Richardson",
+        "Nino Rota",
         ["喜剧", "搞笑", "幽默", "comedy", "funny", "humor", "滑稽"],
     ),
 
     # ── 动作 ──
     (
-        "Action (动作片)", "James Cameron (詹姆斯·卡梅隆)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        "Action", "James Cameron",
+        "Robert Richardson",
+        "Hans Zimmer",
         ["动作", "战斗", "爆炸", "追逐", "action", "fight", "explosion", "chase", "battle", "动作片"],
     ),
 
     # ── 战争 ──
     (
-        "War Film (战争片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
-        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
-        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        "War Film", "Steven Spielberg",
+        "Janusz Kaminski",
+        "John Williams",
         ["战争", "战场", "士兵", "war", "battle", "soldier", "military", "军队", "前线"],
     ),
 
     # ── 历史 / 古装 ──
     (
-        "Historical Biopic (历史传记片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
-        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
-        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        "Historical Biopic", "Steven Spielberg",
+        "Janusz Kaminski",
+        "John Williams",
         ["传记", "历史人物", "biopic", "biography", "historical figure"],
     ),
     (
-        "Period Epic (古装史诗片)", "Zhang Yimou (张艺谋)",
-        "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
-        "Tan Dun (谭盾 | 跨文化打击乐)",
+        "Period Epic", "Zhang Yimou",
+        "Mark Lee Ping-Bin",
+        "Tan Dun",
         ["古装", "史诗", "朝代", "古代", "period epic", "dynasty", "empire", "宫廷", "皇帝", "王朝"],
     ),
 
     # ── 冒险 ──
     (
-        "Adventure (冒险片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
-        "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
-        "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+        "Adventure", "Steven Spielberg",
+        "Janusz Kaminski",
+        "John Williams",
         ["冒险", "探险", "adventure", "expedition", "quest", "treasure", "宝藏"],
     ),
 
     # ── 超级英雄 ──
     (
-        "Superhero (超级英雄)", "Christopher Nolan (克里斯托弗·诺兰)",
-        "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
-        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        "Superhero", "Christopher Nolan",
+        "Hoyte van Hoytema",
+        "Hans Zimmer",
         ["超级英雄", "superhero", "marvel", "dc", "超能力"],
     ),
 
     # ── 纪录片 ──
     (
-        "Documentary (纪录片)", "Jia Zhangke (贾樟柯)",
-        "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
-        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        "Documentary", "Jia Zhangke",
+        "Lin Liang-Zhong",
+        "Ryuichi Sakamoto",
         ["纪录", "真实", "documentary", "nature", "wildlife", "自然", "纪实"],
     ),
 
     # ── 文艺剧情 ──
     (
-        "Art-house Drama (文艺剧情片)", "Wong Kar-wai (王家卫)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+        "Art-house Drama", "Wong Kar-wai",
+        "Christopher Doyle",
+        "Shigeru Umebayashi",
         ["文艺", "艺术", "art-house", "art film", "诗意", "意识流", "散文电影"],
     ),
 
     # ── 超现实 / 魔幻现实 / 表现主义 ──
     (
-        "Surrealism (超现实主义)", "David Lynch (大卫·林奇)",
-        "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
-        "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+        "Surrealism", "David Lynch",
+        "Robby Müller",
+        "Trent Reznor & Atticus Ross",
         ["超现实", "surreal", "dream", "梦境", "潜意识", "超现实主义"],
     ),
     (
-        "Magical Realism (魔幻现实主义)", "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
-        "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
-        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        "Magical Realism", "Federico Fellini",
+        "Vittorio Storaro",
+        "Nino Rota",
         ["魔幻现实", "magical realism", "magic realism"],
     ),
     (
-        "Expressionism (表现主义)", "Fritz Lang (弗里茨·朗)",
-        "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
-        "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+        "Expressionism", "Fritz Lang",
+        "Gregg Toland",
+        "Bernard Herrmann",
         ["表现主义", "expressionism", "expressionist"],
     ),
 
     # ── 歌舞 / 公路 / 西部 / 史诗 ──
     (
-        "Musical (歌舞片)", "Wes Anderson (韦斯·安德森)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+        "Musical", "Wes Anderson",
+        "Robert Richardson",
+        "Nino Rota",
         ["歌舞", "音乐剧", "musical", "dance", "singing", "舞蹈", "演唱"],
     ),
     (
-        "Road Movie (公路电影)", "Ang Lee (李安)",
-        "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
-        "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+        "Road Movie", "Ang Lee",
+        "Christopher Doyle",
+        "Ryuichi Sakamoto",
         ["公路", "road movie", "road trip", "旅行", "journey"],
     ),
     (
-        "Western (西部片)", "Quentin Tarantino (昆汀·塔伦蒂诺)",
-        "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
-        "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+        "Western", "Quentin Tarantino",
+        "Robert Richardson",
+        "Ennio Morricone",
         ["西部", "牛仔", "western", "cowboy", "荒野"],
     ),
     (
-        "Epic (史诗片)", "James Cameron (詹姆斯·卡梅隆)",
-        "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
-        "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+        "Epic", "James Cameron",
+        "Freddie Young",
+        "Hans Zimmer",
         ["史诗", "epic", "宏大", "grand", "spectacle"],
     ),
 
     # ── 剧情（默认兜底） ──
     (
-        "Drama (剧情片)", "Steven Spielberg (史蒂文·斯皮尔伯格)",
-        "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
-        "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+        "Drama", "Steven Spielberg",
+        "Roger Deakins",
+        "Thomas Newman",
         ["剧情", "drama", "story", "storytelling"],
     ),
 ]
 
 _BSAI_DEFAULT_STYLE = (
-    "Drama (剧情片)",
-    "Steven Spielberg (史蒂文·斯皮尔伯格)",
-    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
-    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+    "Drama",
+    "Steven Spielberg",
+    "Roger Deakins",
+    "Thomas Newman",
 )
 
 
@@ -1807,7 +1807,7 @@ def _bsai_auto_detect_styles(prompt_text, director_style, cinematography_style,
                              film_genre, score_style):
     """Auto-detect creative styles based on prompt content keywords.
 
-    Replaces "System Recommended (系统推荐)" values with keyword-matched styles.
+    Replaces "System Recommended" values with keyword-matched styles.
     Manually selected styles are preserved unchanged.
     Returns (director_style, cinematography_style, film_genre, score_style).
     """
@@ -1826,16 +1826,16 @@ def _bsai_auto_detect_styles(prompt_text, director_style, cinematography_style,
             _detected_score = composer
             break
 
-    if director_style == "System Recommended (系统推荐)":
+    if director_style == "System Recommended":
         director_style = _detected_dir
         print(f"[BSAI H3] Auto-detected director_style: {director_style}")
-    if cinematography_style == "System Recommended (系统推荐)":
+    if cinematography_style == "System Recommended":
         cinematography_style = _detected_cin
         print(f"[BSAI H3] Auto-detected cinematography_style: {cinematography_style}")
-    if film_genre == "System Recommended (系统推荐)":
+    if film_genre == "System Recommended":
         film_genre = _detected_genre
         print(f"[BSAI H3] Auto-detected film_genre: {film_genre}")
-    if score_style == "System Recommended (系统推荐)":
+    if score_style == "System Recommended":
         score_style = _detected_score
         print(f"[BSAI H3] Auto-detected score_style: {score_style}")
 
@@ -1846,11 +1846,11 @@ def _bsai_auto_detect_generation_mode(prompt_text, image_count, video_count, aud
     """Auto-detect the H3 generation mode based on connected inputs and prompt content.
 
     Returns one of:
-      "Text to Video (文生视频)"       — T2VA: no media
-      "Image to Video (图生视频)"       — I2VA: 1 image as first frame
-      "First+Last Frame (首尾帧)"      — FL2VA: 2 images as first + last frame
-      "Last Frame (尾帧)"              — L2VA: 1 image as last frame (when prompt says so)
-      "Multimodal Fusion (多模态融合)"  — Ref2VA: images + video/audio, or 3+ images
+      "Text to Video"       — T2VA: no media
+      "Image to Video"       — I2VA: 1 image as first frame
+      "First+Last Frame"      — FL2VA: 2 images as first + last frame
+      "Last Frame"              — L2VA: 1 image as last frame (when prompt says so)
+      "Multimodal Fusion"  — Ref2VA: images + video/audio, or 3+ images
     """
     text_lower = prompt_text.lower()
 
@@ -1862,29 +1862,29 @@ def _bsai_auto_detect_generation_mode(prompt_text, image_count, video_count, aud
                  "opening and ending", "from start to end", "two keyframe"]
 
     if image_count == 0 and video_count == 0 and audio_count == 0:
-        return "Text to Video (文生视频)"
+        return "Text to Video"
 
     if video_count > 0 or audio_count > 0:
         # Video/audio present → Ref2VA (multimodal fusion)
-        return "Multimodal Fusion (多模态融合)"
+        return "Multimodal Fusion"
 
     # ── Only images ──
     if image_count >= 3:
-        return "Multimodal Fusion (多模态融合)"
+        return "Multimodal Fusion"
 
     if image_count == 2:
         if any(kw in text_lower for kw in _l2va_kw) and not any(kw in text_lower for kw in _fl2va_kw):
             # User mentions last frame with 2 images but not "first+last"
             # Could be first frame + last frame reference → still FL2VA
             pass
-        return "First+Last Frame (首尾帧)"
+        return "First+Last Frame"
 
     if image_count == 1:
         if any(kw in text_lower for kw in _l2va_kw):
-            return "Last Frame (尾帧)"
-        return "Image to Video (图生视频)"
+            return "Last Frame"
+        return "Image to Video"
 
-    return "Text to Video (文生视频)"
+    return "Text to Video"
 
 
 def _bsai_auto_detect_duration(prompt_text, generation_mode):
@@ -1928,7 +1928,7 @@ def _bsai_get_language_instruction(output_language):
     Dialogue, lyrics, and visible text always stay in their original language per H3 spec.
     """
     _lang_map = {
-        "Chinese (中文)": (
+        "Chinese": (
             "CHINESE",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in Chinese. Use Chinese shot labels: [镜头1]【0-3秒】. "
@@ -1942,7 +1942,7 @@ def _bsai_get_language_instruction(output_language):
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the English version — do NOT output a Chinese version."
         ),
-        "Japanese (日本語)": (
+        "Japanese": (
             "JAPANESE",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in Japanese. Use Japanese shot labels: [ショット1]【0-3秒】. "
@@ -1984,15 +1984,15 @@ def _bsai_get_language_instruction(output_language):
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the Russian version."
         ),
-        "Bilingual CN+EN (中英双语)": (
+        "Bilingual CN+EN": (
             "BILINGUAL",
-            "Output BOTH a Chinese version and an English version, separated by a divider line (---中文版本--- / ---English Version---). "
+            "Output BOTH a Chinese version and an English version, separated by a divider line. "
             "Chinese version uses [镜头1]【0-3秒】labels; English version uses [Shot 1] [0-3s] labels. "
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language in both versions. "
             "Field names stay in English in both versions."
         ),
     }
-    return _lang_map.get(output_language, _lang_map["Chinese (中文)"])
+    return _lang_map.get(output_language, _lang_map["Chinese"])
 
 
 # ============================================================
@@ -2038,7 +2038,7 @@ Image alignment instructions (must be the first line, followed by one blank line
 
 ## 3. Writing the Multimodal Description
 
-### 3.1 Shot + Time-Range Segmentation (镜头 + 时间段分段)
+### 3.1 Shot + Time-Range Segmentation
 The `integrated_multimodal_description` field MUST be segmented by shots with cut times, following the official H3 Prompt Writing Guide, while also preserving the original time-range format:
 
 **Format:**
@@ -2070,10 +2070,10 @@ integrated_multimodal_description: [镜头1]【0-3.5秒】实拍，电影感，�
 At the beginning of `[Shot 1]`, state the overall style: Cinematic, Live-action, 2D-animated, 3D CG, Claymation, Watercolor, Vintage film, etc. For keyframe tasks, derive the style from the reference image; for T2VA, select it from the user's text.
 
 **CRITICAL — Creative Style Integration**: When the user message includes [Director Style], [Cinematography Style], [Film Genre], or [Score Style] tags, you MUST explicitly incorporate these styles into the output:
-1. In the opening of `integrated_multimodal_description`, state the director's name and their signature visual techniques (e.g., "in the style of Wong Kar-wai (王家卫), with step-printing, saturated colors, and melancholic urban atmosphere").
-2. Describe the cinematographer's lighting and camera approach explicitly (e.g., "cinematography inspired by Christopher Doyle (杜可风), handheld camera with neon-drenched high-contrast lighting and soft focus").
+1. In the opening of `integrated_multimodal_description`, state the director's name and their signature visual techniques (e.g., "in the style of Wong Kar-wai, with step-printing, saturated colors, and melancholic urban atmosphere").
+2. Describe the cinematographer's lighting and camera approach explicitly (e.g., "cinematography inspired by Christopher Doyle, handheld camera with neon-drenched high-contrast lighting and soft focus").
 3. Reference the film genre's visual conventions in the description (e.g., "art-house drama aesthetic with contemplative pacing").
-4. In `non_diegetic_music`, explicitly describe the music using the selected composer's signature style (e.g., "in the style of Joe Hisaishi (久石让), with tender piano melodies and lush string arrangements").
+4. In `non_diegetic_music`, explicitly describe the music using the selected composer's signature style (e.g., "in the style of Joe Hisaishi, with tender piano melodies and lush string arrangements").
 
 Do NOT silently apply styles — the style names and their characteristic techniques MUST be explicitly visible in the output text.
 
@@ -2232,9 +2232,9 @@ non_diegetic_music: Soft orchestral strings with gentle woodwind accents, buildi
 
 **WITH [Director Style] Wong Kar-wai, [Cinematography Style] Christopher Doyle, [Film Genre] Wuxia, [Score Style] Tan Dun:**
 ```
-integrated_multimodal_description: [Shot 1] [0-3.5s] In the style of Wong Kar-wai (王家卫), with step-printing and saturated colors, a wide shot frames a young woman walking into a cherry blossom courtyard. Cinematography by Christopher Doyle (杜可风): handheld camera with neon-drenched high-contrast lighting and soft focus. Wuxia (武侠) genre aesthetic with silk costumes and sweeping landscapes. The camera pushes in with small amplitude. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance, Doyle's signature humid atmosphere and朦胧 light. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion, Wong Kar-wai's melancholic urban longing permeating the frame.
+integrated_multimodal_description: [Shot 1] [0-3.5s] In the style of Wong Kar-wai, with step-printing and saturated colors, a wide shot frames a young woman walking into a cherry blossom courtyard. Cinematography by Christopher Doyle: handheld camera with neon-drenched high-contrast lighting and soft focus. Wuxia genre aesthetic with silk costumes and sweeping landscapes. The camera pushes in with small amplitude. [Shot 2] At 00:03.500 [3.5-8s], the camera cuts to a medium shot as she draws her sword and begins her stance, Doyle's signature humid atmosphere and朦胧 light. [Shot 3] At 00:08.000 [8-12s], the shot cuts to a close-up as the sword flashes in slow motion, Wong Kar-wai's melancholic urban longing permeating the frame.
 overall_soundscape: ...
-non_diegetic_music: In the style of Tan Dun (谭盾), with Chinese percussion, cello solos, and cross-cultural timbres building tension during the sword draw.
+non_diegetic_music: In the style of Tan Dun, with Chinese percussion, cello solos, and cross-cultural timbres building tension during the sword draw.
 ```
 
 **CRITICAL**: The style names (director, cinematographer, genre, composer) and their signature techniques MUST appear explicitly in the output text. Do NOT apply styles silently — the user must be able to see which styles were used by reading the output.
@@ -2264,15 +2264,15 @@ H3 now supports weighted prompt embeddings in the `integrated_multimodal_descrip
 **Rules:**
 1. Only apply weights to keywords listed in the `[Weighted Keywords]` tag. Use the exact weight value specified.
 2. Apply weight syntax to the keyword's FIRST occurrence in each shot where it appears in `integrated_multimodal_description`. Do not repeat weights on every mention — once per shot is sufficient.
-3. Place the weight syntax around the descriptive keyword, not around entire sentences. For example: `(美丽的女子:1.2)在街道上` or `(a beautiful woman:1.2) walking on the street`.
+3. Place the weight syntax around the descriptive keyword, not around entire sentences. For example: `在街道上` or `(a beautiful woman:1.2) walking on the street`.
 4. If the user's original prompt already contains weight syntax like `(keyword:1.5)`, preserve it as-is.
 5. Do NOT apply weight syntax to dialogue (`<d>` tags), visible text (double quotes), or field names.
-6. Weight syntax works in both Chinese and English versions. For Chinese keywords use Chinese: `(美女:1.5)`; for English use English: `(beautiful woman:1.5)`.
+6. Weight syntax works in both Chinese and English versions. For Chinese keywords use Chinese: ``; for English use English: `(beautiful woman:1.5)`.
 7. If no `[Weighted Keywords]` tag is present, do not add any weight syntax — output normally.
 
 **Example with weights:**
 Input: `[Weighted Keywords] 美女:1.2, 拉着小提琴:1.5`
-Output: `integrated_multimodal_description: [Shot 1] [0-3s] (美女:1.2)在欧洲小镇的街道上，(拉着小提琴:1.5)，唱着歌...`"""
+Output: `integrated_multimodal_description: [Shot 1] [0-3s]在欧洲小镇的街道上，，唱着歌...`"""
 
 
 _H3_SYSTEM_PROMPT_LOCAL = """You are a MiniMax H3 prompt optimizer. Rewrite the user request into an H3-ready audiovisual video prompt.
@@ -2344,31 +2344,31 @@ class BSAI_MiniMAX_H3_Prompt:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
+                        "tooltip": "User's original prompt to be optimized",
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
                     "INT",
-                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s"},
                 ),
                 "output_language": (
                     _BSAI_OUTPUT_LANGUAGES,
-                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
+                    {"default": "Chinese", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec"},
                 ),
                 "no_bgm": (
                     "BOOLEAN",
-                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A'"},
                 ),
                 "extra_requirements": (
                     "STRING",
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "Optional: extra style preferences / 补充要求",
+                        "tooltip": "Optional: extra style preferences",
                     },
                 ),
                 "weighted_keywords": (
@@ -2376,31 +2376,31 @@ class BSAI_MiniMAX_H3_Prompt:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight. Use ((keyword)) for layered weights. Empty = no weights",
                     },
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
-                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length / 最大生成token"}),
-                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature / 温度"}),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Auto-limited to context length"}),
+                "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01, "tooltip": "LLM sampling temperature"}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "top_k": ("INT", {"default": 20, "min": 0, "max": 200, "step": 1}),
                 "repeat_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "step": 0.01}),
@@ -2409,23 +2409,23 @@ class BSAI_MiniMAX_H3_Prompt:
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
             },
             "optional": {
-                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
-                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
-                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
-                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
-                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
-                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
-                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
-                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
-                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
-                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
-                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
-                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
-                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
-                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
-                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
-                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
-                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted)"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted)"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted)"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted)"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3"}),
             }
         }
 
@@ -2512,7 +2512,7 @@ Requires BSAI H3 Model Loader node.
         _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
         _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
 
-        if generation_mode == "System Recommended (系统推荐)":
+        if generation_mode == "System Recommended":
             generation_mode = _bsai_auto_detect_generation_mode(
                 prompt_text_input, _img_count, _vid_count, _aud_count)
             print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
@@ -2522,7 +2522,7 @@ Requires BSAI H3 Model Loader node.
             video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
             print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
 
-        if cut_style == "System Recommended (系统推荐)":
+        if cut_style == "System Recommended":
             if video_duration <= 5:
                 _num_seg = 1
             elif video_duration <= 8:
@@ -2532,7 +2532,7 @@ Requires BSAI H3 Model Loader node.
             if len(prompt_text_input) > 500:
                 _num_seg = min(6, _num_seg + 1)
             if _num_seg <= 1:
-                cut_style = "One Shot (一镜到底)"
+                cut_style = "One Shot"
             else:
                 cut_style = f"{_num_seg} Segments ({_num_seg}段)"
             print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
@@ -2543,11 +2543,11 @@ Requires BSAI H3 Model Loader node.
                                      film_genre, score_style)
 
         mode_hints = {
-            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
-            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
-            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
-            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
+            "Text to Video": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
         }
 
         bgm_instruction = (
@@ -2570,20 +2570,20 @@ Requires BSAI H3 Model Loader node.
 
         # ── Creative style parameters ──
         selected_styles = []
-        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if director_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
             selected_styles.append(f"Director: {director_style}")
-        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if cinematography_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
             selected_styles.append(f"Cinematography: {cinematography_style}")
-        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if film_genre not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
             selected_styles.append(f"Genre: {film_genre}")
-        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if cut_style not in ("One Shot", "System Recommended", "Official SKILL"):
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
-        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if score_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
             selected_styles.append(f"Score: {score_style}")
         if selected_styles:
@@ -2682,7 +2682,7 @@ Requires BSAI H3 Model Loader node.
         if ref_parts:
             user_message_parts.extend(ref_parts)
             # Switch to multimodal mode hint
-            if generation_mode == "Text to Video (文生视频)":
+            if generation_mode == "Text to Video":
                 user_message_parts.append(
                     "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
@@ -2878,52 +2878,52 @@ class BSAI_H3_RemoteAPI:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "User's original prompt to be optimized / 用户原始提示词",
+                        "tooltip": "User's original prompt to be optimized",
                     },
                 ),
                 "api_base_url": (
                     "STRING",
                     {
                         "default": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-                        "tooltip": "OpenAI-compatible API base URL / API地址",
+                        "tooltip": "OpenAI-compatible API base URL",
                     },
                 ),
                 "api_key": (
                     "STRING",
                     {
                         "default": "",
-                        "tooltip": "API key for authentication / API密钥",
+                        "tooltip": "API key for authentication",
                     },
                 ),
                 "model_name": (
                     "STRING",
                     {
                         "default": "qwen-plus",
-                        "tooltip": "Model name (e.g. gpt-4o, qwen-plus, qwen-max) / 模型名称",
+                        "tooltip": "Model name (e.g. gpt-4o, qwen-plus, qwen-max)",
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended (系统推荐)", "Text to Video (文生视频)", "Image to Video (图生视频)", "First+Last Frame (首尾帧)", "Last Frame (尾帧)", "Multimodal Fusion (多模态融合)"],
-                    {"default": "System Recommended (系统推荐)", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs / 生成模式，系统推荐根据输入自动判断"},
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
                     "INT",
-                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s / 0=系统推荐自动判断，H3支持4-15秒"},
+                    {"default": 0, "min": 0, "max": 15, "step": 1, "tooltip": "0=System Recommended auto-detect; H3 supports 4-15s"},
                 ),
                 "output_language": (
                     _BSAI_OUTPUT_LANGUAGES,
-                    {"default": "Chinese (中文)", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec / 输出描述语言，台词歌词按H3规范保留原语言"},
+                    {"default": "Chinese", "tooltip": "Output description language. Dialogue/lyrics stay in original language per H3 spec"},
                 ),
                 "no_bgm": (
                     "BOOLEAN",
-                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A' / 不需要背景音乐"},
+                    {"default": False, "tooltip": "If checked, adds 'non_diegetic_music: N/A'"},
                 ),
                 "extra_requirements": (
                     "STRING",
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "Optional: extra style preferences / 补充要求",
+                        "tooltip": "Optional: extra style preferences",
                     },
                 ),
                 "weighted_keywords": (
@@ -2931,52 +2931,52 @@ class BSAI_H3_RemoteAPI:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight (e.g. 美女:1.5, 小提琴:1.2). Use ((keyword)) for layered weights. Empty = no weights / H3加权提示词嵌入，格式：关键词:权重值，留空则不加权",
+                        "tooltip": "H3 weighted prompt embeddings (PR #15697). Format: keyword:weight. Use ((keyword)) for layered weights. Empty = no weights",
                     },
                 ),
                 "director_style": (
                     _BSAI_DIRECTOR_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "cinematography_style": (
                     _BSAI_CINEMATOGRAPHY_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "film_genre": (
                     _BSAI_FILM_GENRES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
                 "cut_style": (
                     _BSAI_CUT_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词和时长自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-determines based on prompt and duration"},
                 ),
                 "score_style": (
                     _BSAI_SCORE_STYLES,
-                    {"default": "Official SKILL (官方SKILL模式)", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content / 官方SKILL模式：纯按官方SKILL输出，不推荐预设；系统推荐根据提示词自动判断"},
+                    {"default": "Official SKILL", "tooltip": "Official SKILL: strict H3 SKILL output, no presets. System Recommended auto-detects based on prompt content"},
                 ),
-                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens / 最大生成token"}),
+                "max_tokens": ("INT", {"default": 4096, "min": 256, "max": 65536, "step": 1, "tooltip": "Max generation tokens"}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 2.0, "step": 0.01}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "step": 1}),
             },
             "optional": {
-                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1 / 参考图片1"}),
-                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2 / 参考图片2"}),
-                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3 / 参考图片3"}),
-                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4 / 参考图片4"}),
-                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5 / 参考图片5"}),
-                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6 / 参考图片6"}),
-                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7 / 参考图片7"}),
-                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8 / 参考图片8"}),
-                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9 / 参考图片9"}),
-                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10 / 参考图片10"}),
-                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted) / 参考视频1"}),
-                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted) / 参考视频2"}),
-                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted) / 参考视频3"}),
-                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted) / 参考视频4"}),
-                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1 / 参考音频1"}),
-                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2 / 参考音频2"}),
-                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3 / 参考音频3"}),
+                "image_1": ("IMAGE", {"tooltip": "Optional: reference image 1"}),
+                "image_2": ("IMAGE", {"tooltip": "Optional: reference image 2"}),
+                "image_3": ("IMAGE", {"tooltip": "Optional: reference image 3"}),
+                "image_4": ("IMAGE", {"tooltip": "Optional: reference image 4"}),
+                "image_5": ("IMAGE", {"tooltip": "Optional: reference image 5"}),
+                "image_6": ("IMAGE", {"tooltip": "Optional: reference image 6"}),
+                "image_7": ("IMAGE", {"tooltip": "Optional: reference image 7"}),
+                "image_8": ("IMAGE", {"tooltip": "Optional: reference image 8"}),
+                "image_9": ("IMAGE", {"tooltip": "Optional: reference image 9"}),
+                "image_10": ("IMAGE", {"tooltip": "Optional: reference image 10"}),
+                "video_1": ("IMAGE", {"tooltip": "Optional: reference video 1 (key frames extracted)"}),
+                "video_2": ("IMAGE", {"tooltip": "Optional: reference video 2 (key frames extracted)"}),
+                "video_3": ("IMAGE", {"tooltip": "Optional: reference video 3 (key frames extracted)"}),
+                "video_4": ("IMAGE", {"tooltip": "Optional: reference video 4 (key frames extracted)"}),
+                "audio_1": ("AUDIO", {"tooltip": "Optional: reference audio 1"}),
+                "audio_2": ("AUDIO", {"tooltip": "Optional: reference audio 2"}),
+                "audio_3": ("AUDIO", {"tooltip": "Optional: reference audio 3"}),
             }
         }
 
@@ -3048,7 +3048,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         _vid_count = sum(1 for vid in [video_1, video_2, video_3, video_4] if vid is not None)
         _aud_count = sum(1 for aud in [audio_1, audio_2, audio_3] if aud is not None)
 
-        if generation_mode == "System Recommended (系统推荐)":
+        if generation_mode == "System Recommended":
             generation_mode = _bsai_auto_detect_generation_mode(
                 prompt_text_input, _img_count, _vid_count, _aud_count)
             print(f"[BSAI H3] Auto-detected generation_mode: {generation_mode}")
@@ -3058,7 +3058,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             video_duration = _bsai_auto_detect_duration(prompt_text_input, generation_mode)
             print(f"[BSAI H3] Auto-detected video_duration: {video_duration}s")
 
-        if cut_style == "System Recommended (系统推荐)":
+        if cut_style == "System Recommended":
             if video_duration <= 5:
                 _num_seg = 1
             elif video_duration <= 8:
@@ -3068,7 +3068,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             if len(prompt_text_input) > 500:
                 _num_seg = min(6, _num_seg + 1)
             if _num_seg <= 1:
-                cut_style = "One Shot (一镜到底)"
+                cut_style = "One Shot"
             else:
                 cut_style = f"{_num_seg} Segments ({_num_seg}段)"
             print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
@@ -3079,11 +3079,11 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
                                      film_genre, score_style)
 
         mode_hints = {
-            "Text to Video (文生视频)": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
-            "Image to Video (图生视频)": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
-            "First+Last Frame (首尾帧)": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
-            "Last Frame (尾帧)": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
-            "Multimodal Fusion (多模态融合)": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
+            "Text to Video": "Current mode: Text to Video (T2VA, no reference materials). Ensure the prompt contains detailed subject appearance, scene details, action descriptions, and style. Skip the [Reference Description] section.",
+            "Image to Video": "Current mode: Image to Video (I2VA). The user will upload 1 image as the first frame. The first line of the output MUST be: 'For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.' Then establish style, subjects, composition from the image before describing the next action.",
+            "First+Last Frame": "Current mode: First+Last Frame (FL2VA). The user will upload 2 images: Picture 1 as the opening frame and Picture 2 as the ending frame. The first line of the output MUST be: 'How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.' FL2VA generally favors a single shot so the model can interpolate continuously. Describe the motion path connecting the two frames.",
+            "Last Frame": "Current mode: Last Frame (L2VA). The user will upload 1 image as the final frame. The first line of the output MUST be: 'How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.' Infer a plausible earlier state and describe how the scene gradually approaches and lands on the reference image at the end.",
+            "Multimodal Fusion": "Current mode: Multimodal Fusion / Ref2VA. The user may upload character images, action videos, scene images, audio references, etc. Write clear labels and usage for each material (e.g., image_1 -> character reference, video_1 -> action reference, audio_1 -> voice/music reference, etc.). Use <Subject N>, <Picture N>, <Video N>, <Audio N> labels consistently.",
         }
 
         bgm_instruction = (
@@ -3106,20 +3106,20 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         # ── Creative style parameters ──
         selected_styles = []
-        if director_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if director_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Director Style] {director_style} — You MUST explicitly mention this director's name and their signature visual techniques in the opening of integrated_multimodal_description.")
             selected_styles.append(f"Director: {director_style}")
-        if cinematography_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if cinematography_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Cinematography Style] {cinematography_style} — You MUST explicitly describe this cinematographer's lighting, lens, and camera style in the visual description.")
             selected_styles.append(f"Cinematography: {cinematography_style}")
-        if film_genre not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if film_genre not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Film Genre] {film_genre} — You MUST reference this genre's visual conventions and aesthetic tone in the scene description.")
             selected_styles.append(f"Genre: {film_genre}")
-        if cut_style not in ("One Shot (一镜到底)", "System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if cut_style not in ("One Shot", "System Recommended", "Official SKILL"):
             num_match = re.search(r'(\d+)', cut_style)
             num_segments = int(num_match.group(1)) if num_match else 2
             user_message_parts.append(f"[Segmentation] Divide the video into exactly {num_segments} shots. Each shot should represent a distinct camera cut with its own shot type, content, and camera movement. Use the combined format '[Shot 1] [0-3s] ... [Shot 2] At MM:SS.mmm [3-8s], the camera cuts to...'. Do NOT add an 'At MM:SS.mmm' cut timestamp to [Shot 1], but every shot must include a continuous time range.")
-        if score_style not in ("System Recommended (系统推荐)", "Official SKILL (官方SKILL模式)"):
+        if score_style not in ("System Recommended", "Official SKILL"):
             user_message_parts.append(f"[Score Style] {score_style} — You MUST explicitly mention this composer's name and their signature musical style in the non_diegetic_music field.")
             selected_styles.append(f"Score: {score_style}")
         if selected_styles:
@@ -3211,7 +3211,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
 
         if ref_parts:
             user_message_parts.extend(ref_parts)
-            if generation_mode == "Text to Video (文生视频)":
+            if generation_mode == "Text to Video":
                 user_message_parts.append(
                     "[Note] Media inputs detected. Please optimize using 'Image to Video' or 'Multimodal Fusion' mode."
                 )
@@ -3270,7 +3270,13 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             "Authorization": f"Bearer {api_key.strip()}",
         }
 
-        # ── Make API call ──
+        # ── Make API call (SSRF guard on user-supplied base URL) ──
+        if not _is_safe_api_url(api_base_url):
+            raise RuntimeError(
+                "api_base_url rejected: only http/https URLs whose host resolves to a public "
+                "address are allowed (loopback/private/link-local targets are blocked to "
+                "prevent SSRF)."
+            )
         url = api_base_url.strip().rstrip("/") + "/chat/completions"
         print(f"[BSAI H3 RemoteAPI] Calling: {url} | model: {model_name}")
 
@@ -3314,6 +3320,50 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             film_genre, score_style,
         )
         return (text,)
+
+
+def _is_safe_api_url(url):
+    """SSRF guard for api_base_url: only http/https, and the target host must
+    not resolve to a loopback/private/link-local/reserved address.
+
+    The widget is a user-supplied URL that the server would fetch, so without a
+    host check a malicious workflow could use ComfyUI as a proxy to probe the
+    local network. Public OpenAI-compatible endpoints (DashScope etc.) resolve
+    to public IPs and pass; loopback/private targets are rejected.
+    """
+    from urllib.parse import urlparse
+    import ipaddress
+    import socket
+    try:
+        p = urlparse(url.strip())
+        if p.scheme not in ("http", "https"):
+            return False
+        host = (p.hostname or "").strip().strip("[]")
+        if not host:
+            return False
+        try:
+            ip = ipaddress.ip_address(host)
+        except ValueError:
+            ip = None
+        if ip is not None:
+            bad = (ip.is_loopback or ip.is_private or ip.is_link_local
+                   or ip.is_reserved or ip.is_multicast or ip.is_unspecified)
+            return not bad
+        try:
+            infos = socket.getaddrinfo(host, None)
+        except Exception:
+            return False
+        for info in infos:
+            try:
+                a = ipaddress.ip_address(info[4][0])
+            except ValueError:
+                continue
+            if (a.is_loopback or a.is_private or a.is_link_local
+                    or a.is_reserved or a.is_multicast or a.is_unspecified):
+                return False
+        return True
+    except Exception:
+        return False
 
 
 # ============================================================

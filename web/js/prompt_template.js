@@ -393,14 +393,14 @@ function buildTemplateUI(node) {
     const searchInput = document.createElement("input");
     searchInput.className = "bsai-tpl-search-input";
     searchInput.type = "text";
-    searchInput.placeholder = "搜索模板 / Search templates...";
+    searchInput.placeholder = "Search templates...";
     const searchClr = document.createElement("span");
     searchClr.className = "bsai-tpl-search-clr";
     searchClr.textContent = "✕";
     const voiceBtn = document.createElement("span");
     voiceBtn.className = "bsai-tpl-voice-btn";
-    voiceBtn.textContent = "🎤 语音 / Voice";
-    voiceBtn.title = "语音输入指令（覆盖模板动作）/ Voice input command (overrides template action)";
+    voiceBtn.textContent = "🎤 Voice";
+    voiceBtn.title = "Voice input command (overrides template action)";
     voiceBtn.onclick = function() { openVoiceModal(node); };
     // ── Manual narration prompt (旁白) + official H3 SKILL 3-part output ──
     // 放置在「搜索模板 / 语音栏」上方：输入旁白 → 一键生成官方SKILL三段式提示词 → 直接输出给下游
@@ -408,10 +408,10 @@ function buildTemplateUI(node) {
     narrDiv.className = "bsai-tpl-narr";
     const narrLbl = document.createElement("div");
     narrLbl.className = "bsai-tpl-narr-lbl";
-    narrLbl.textContent = "手动提示词（旁白）/ Manual Prompt (Narration):";
+    narrLbl.textContent = "Manual Prompt (Narration):";
     const narrTa = document.createElement("textarea");
     narrTa.className = "bsai-tpl-narr-ta";
-    narrTa.placeholder = "在此输入旁白台词，如：清晨的阳光洒进老茶馆，老人缓缓讲述五十年前的故事… / Type the voice-over narration here...";
+    narrTa.placeholder = "Type the voice-over narration here...";
     // 旁白输入即同步到 narration widget（后端 get_template 注入画面旁白）
     narrTa.addEventListener("input", function() {
         if (setWidgetText(node, "narration", narrTa.value)) {
@@ -422,8 +422,8 @@ function buildTemplateUI(node) {
     const skillBtn = document.createElement("button");
     skillBtn.type = "button";
     skillBtn.className = "bsai-tpl-skill-btn";
-    skillBtn.textContent = "⚡ H3官方SKILL 3段式输出 / H3 SKILL 3-Part Output";
-    skillBtn.title = "将旁白包装为 MiniMax H3 官方 SKILL 标准三段式提示词（integrated_multimodal_description / overall_soundscape / non_diegetic_music），并直接输出给下游节点";
+    skillBtn.textContent = "⚡ H3 SKILL 3-Part Output";
+    skillBtn.title = "Wrap the narration into the MiniMax H3 official SKILL 3-part prompt (integrated_multimodal_description / overall_soundscape / non_diegetic_music) and output it directly";
     function _skillLocalBuild(n) {
         const q = String.fromCharCode(0x201c) + n + String.fromCharCode(0x201d);
         return "MiniMax H3 film generation — voice-over narration driven scene （旁白叙事驱动的电影镜头）\n\n" +
@@ -442,10 +442,10 @@ function buildTemplateUI(node) {
     }
     skillBtn.onclick = function() {
         const n = narrTa.value.trim();
-        if (!n) { setStatus("请先输入旁白 / Enter narration first", ""); return; }
+        if (!n) { setStatus("Enter narration first", ""); return; }
         const old = skillBtn.textContent;
         skillBtn.disabled = true;
-        skillBtn.textContent = "⏳ 生成中… / Generating…";
+        skillBtn.textContent = "⏳ Generating…";
         fetch("/bsai_h3/skill_three", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -454,11 +454,11 @@ function buildTemplateUI(node) {
         .then(function(j) {
             const out = (j && j.ok && j.prompt) ? j.prompt : _skillLocalBuild(n);
             setCustomizationText(node, out);
-            setStatus("✅ 已生成 H3 官方SKILL三段式提示词，已填入补充修改 / 3-part prompt filled into customization", "ok");
+            setStatus("✅ H3 official SKILL 3-part prompt generated and filled into customization", "ok");
         }).catch(function() {
             const out = _skillLocalBuild(n);
             setCustomizationText(node, out);
-            setStatus("⚠️ 网络错误，已用本地三段式模板填入补充修改 / fallback: local 3-part filled into customization", "");
+            setStatus("⚠️ Network error; filled a local 3-part template into customization", "");
         }).then(function() {
             skillBtn.disabled = false;
             skillBtn.textContent = old;
@@ -487,10 +487,10 @@ function buildTemplateUI(node) {
     catRow.className = "bsai-tpl-dd-row";
     const catLbl = document.createElement("span");
     catLbl.className = "bsai-tpl-dd-lbl";
-    catLbl.textContent = "分类 / Category";
+    catLbl.textContent = "Category";
     const catSel = document.createElement("select");
     catSel.className = "bsai-tpl-dd";
-    catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+    catSel.innerHTML = '<option value="">— Select —</option>';
     catRow.appendChild(catLbl);
     catRow.appendChild(catSel);
     left.appendChild(catRow);
@@ -500,10 +500,10 @@ function buildTemplateUI(node) {
     subRow.className = "bsai-tpl-dd-row";
     const subLbl = document.createElement("span");
     subLbl.className = "bsai-tpl-dd-lbl";
-    subLbl.textContent = "子类 / Subcategory";
+    subLbl.textContent = "Subcategory";
     const subSel = document.createElement("select");
     subSel.className = "bsai-tpl-dd";
-    subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+    subSel.innerHTML = '<option value="">— Select —</option>';
     subSel.disabled = true;
     subRow.appendChild(subLbl);
     subRow.appendChild(subSel);
@@ -517,7 +517,7 @@ function buildTemplateUI(node) {
     cntSpan.textContent = "";
     const clrBtn = document.createElement("span");
     clrBtn.className = "bsai-tpl-clr";
-    clrBtn.textContent = "✕ 清除 / Clear";
+    clrBtn.textContent = "✕ Clear";
     clrBtn.style.display = "none";
     bar.appendChild(cntSpan);
     bar.appendChild(clrBtn);
@@ -526,20 +526,20 @@ function buildTemplateUI(node) {
     // Selection stack bar (multi-select)
     const selBar = document.createElement("div");
     selBar.className = "bsai-tpl-sel";
-    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">点击模板单选 / Click a template to select (single-select)</div>';
+    selBar.innerHTML = '<div class="bsai-tpl-sel-empty">Click a template to select (single-select)</div>';
     left.appendChild(selBar);
 
     // Mode switch: Single (default) / Multi-Stack
     const modeRow = document.createElement("label");
     modeRow.className = "bsai-tpl-mode";
-    modeRow.title = "默认单选：点击模板即选中并预览。开启后为多选叠加：点击多个模板合并为一个提示词 / Default single-select. Enable to stack multiple templates into one prompt.";
+    modeRow.title = "Default single-select: click a template to select and preview. Enable to stack multiple templates into one prompt.";
     const modeCb = document.createElement("input");
     modeCb.type = "checkbox";
     const modeTxt = document.createElement("span");
-    modeTxt.textContent = "多选叠加 / Multi-Stack";
+    modeTxt.textContent = "Multi-Stack";
     const modeTag = document.createElement("span");
     modeTag.className = "mode-tag off";
-    modeTag.textContent = "OFF · 单选";
+    modeTag.textContent = "OFF · Single";
     modeRow.appendChild(modeCb);
     modeRow.appendChild(modeTxt);
     modeRow.appendChild(modeTag);
@@ -548,7 +548,7 @@ function buildTemplateUI(node) {
     // Template list
     const listDiv = document.createElement("div");
     listDiv.className = "bsai-tpl-list";
-    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+    listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a category first</div>';
     left.appendChild(listDiv);
 
     // Right panel - preview
@@ -556,7 +556,7 @@ function buildTemplateUI(node) {
     right.className = "bsai-tpl-right";
     const prevBox = document.createElement("div");
     prevBox.className = "bsai-tpl-prev-box";
-    prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+    prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">Preview after selection</div>';
     right.appendChild(prevBox);
     const prevNm = document.createElement("div");
     prevNm.className = "bsai-tpl-prev-nm";
@@ -577,14 +577,14 @@ function buildTemplateUI(node) {
     custDiv.className = "bsai-tpl-cust";
     const custLbl = document.createElement("div");
     custLbl.className = "bsai-tpl-cust-lbl";
-    custLbl.textContent = "补充修改 / Customization (Optional):";
+    custLbl.textContent = "Customization (Optional):";
     const custTa = document.createElement("textarea");
     custTa.className = "bsai-tpl-cust-ta";
-    custTa.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+    custTa.placeholder = "Add custom modifications here, e.g. change character, scene...";
     const custBtn = document.createElement("button");
     custBtn.type = "button";
     custBtn.className = "bsai-tpl-cust-btn";
-    custBtn.textContent = "确认修改 / Apply";
+    custBtn.textContent = "Apply";
     custBtn.title = "将补充修改真正融合进模板，并在下方输出提示词预览中查看最终结果 / Merge the customization into the template and preview the final result below";
     // v-pv: per-template guidance banner (纯文字PV·无图生成 asks the user to type
     // PV copy / script / ad lines here, then 确认修改 merges it into the template).
@@ -986,7 +986,7 @@ function buildTemplateUI(node) {
                     catSel.onchange();
                     subSel.onchange();
                 } else {
-                    listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+                    listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a category first</div>';
                     cntSpan.textContent = "";
                     clrBtn.style.display = "none";
                 }
@@ -1014,7 +1014,7 @@ function buildTemplateUI(node) {
             node._bsaiSearchMode = false;
         }
         const catId = catSel.value;
-        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.innerHTML = '<option value="">— Select —</option>';
         subSel.disabled = true;
         listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择子类 / Select a subcategory</div>';
         cntSpan.textContent = "";
@@ -1055,9 +1055,9 @@ function buildTemplateUI(node) {
 
     clrBtn.onclick = function() {
         catSel.value = "";
-        subSel.innerHTML = '<option value="">— 选择子类 / Select —</option>';
+        subSel.innerHTML = '<option value="">— Select —</option>';
         subSel.disabled = true;
-        listDiv.innerHTML = '<div class="bsai-tpl-empty">请先选择分类 / Select a category first</div>';
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a category first</div>';
         cntSpan.textContent = "";
         clrBtn.style.display = "none";
         clearSelection(node);
@@ -1067,7 +1067,7 @@ function buildTemplateUI(node) {
     // ── Load data ──
     loadTemplateData().then(function(data) {
         if (!data) return;
-        catSel.innerHTML = '<option value="">— 选择分类 / Select —</option>';
+        catSel.innerHTML = '<option value="">— Select —</option>';
         (data.categories || []).forEach(function(cat) {
             const opt = document.createElement("option");
             opt.value = cat.id;
@@ -1338,7 +1338,7 @@ function clearSelection(node) {
 
 function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
     if (!tpl) {
-        if (prevBox) prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">选择模板后显示预览<br>Preview after selection</div>';
+        if (prevBox) prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">Preview after selection</div>';
         if (prevNm) prevNm.textContent = "";
         if (prevMd) prevMd.textContent = "";
         if (prevDur) prevDur.textContent = "";

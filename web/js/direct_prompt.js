@@ -83,18 +83,18 @@ function buildDirectUI(node) {
     // Title
     const title = document.createElement("div");
     title.className = "bsai-direct-title";
-    title.textContent = "⚡ 直通模式 / Direct Mode";
+    title.textContent = "⚡ Direct Mode";
     container.appendChild(title);
 
     const sub = document.createElement("div");
     sub.className = "bsai-direct-sub";
-    sub.textContent = "直接输出 H3 提示词到下游 / Output H3 prompt directly to downstream nodes";
+    sub.textContent = "Output the H3 prompt directly to downstream nodes";
     container.appendChild(sub);
 
     // Main textarea
     const ta = document.createElement("textarea");
     ta.className = "bsai-direct-ta";
-    ta.placeholder = "在此输入或粘贴完整的 H3 提示词...\nEnter or paste your complete H3 prompt here...";
+    ta.placeholder = "Enter or paste your complete H3 prompt here...";
     ta.value = promptW ? (promptW.value || "") : "";
     ta.addEventListener("input", function() {
         setWidgetText(node, "prompt", ta.value);
@@ -107,11 +107,11 @@ function buildDirectUI(node) {
     const custRow = document.createElement("div");
     custRow.className = "bsai-direct-cust-row";
     const custLbl = document.createElement("label");
-    custLbl.textContent = "自定义修改 / Customize:";
+    custLbl.textContent = "Customize:";
     const custInput = document.createElement("input");
     custInput.className = "bsai-direct-cust-input";
     custInput.type = "text";
-    custInput.placeholder = "可选：自定义修改（如 加一点微笑、穿红色衣服 等）";
+    custInput.placeholder = "Optional: customization (e.g. add a smile, wear red clothes...)";
     custInput.value = custW ? (custW.value || "") : "";
     custInput.addEventListener("input", function() {
         setWidgetText(node, "user_customization", custInput.value);
@@ -129,8 +129,8 @@ function buildDirectUI(node) {
     // Voice button (reuse voice module from prompt_template.js if available)
     const voiceBtn = document.createElement("button");
     voiceBtn.className = "bsai-direct-btn";
-    voiceBtn.textContent = "🎤 语音输入";
-    voiceBtn.title = "麦克风语音输入（本地离线识别）";
+    voiceBtn.textContent = "🎤 Voice Input";
+    voiceBtn.title = "Microphone voice input (local offline recognition)";
     voiceBtn.onclick = function() {
         // The voice module is in prompt_template.js as global _voice
         // We open a simple voice dialog
@@ -141,12 +141,12 @@ function buildDirectUI(node) {
     // Expand to H3 button
     const expandBtn = document.createElement("button");
     expandBtn.className = "bsai-direct-btn secondary";
-    expandBtn.textContent = "✨ 扩写为 H3 三段式";
-    expandBtn.title = "用本地LLM将简短描述扩写为完整 H3 提示词";
+    expandBtn.textContent = "✨ Expand to H3 3-Part Prompt";
+    expandBtn.title = "Expand a short description into a full H3 prompt with the local LLM";
     expandBtn.onclick = function() {
         const text = ta.value.trim();
-        if (!text) { _setStatus("请先输入文字 / Please enter text first", "warn"); return; }
-        _setStatus("⏳ 正在扩写… / Expanding…", "");
+        if (!text) { _setStatus("Please enter text first", "warn"); return; }
+        _setStatus("⏳ Expanding…", "");
         expandBtn.disabled = true;
         fetch("/bsai_h3/skill_three", {
             method: "POST",
@@ -158,12 +158,12 @@ function buildDirectUI(node) {
             if (out) {
                 ta.value = out;
                 setWidgetText(node, "prompt", out);
-                _setStatus("✅ 已生成 H3 三段式提示词 / H3 3-part prompt generated", "ok");
+                _setStatus("✅ H3 3-part prompt generated", "ok");
             } else {
-                _setStatus("⚠️ 生成失败，请检查网络或LLM配置 / Generation failed", "warn");
+                _setStatus("⚠️ Generation failed, check network or LLM config", "warn");
             }
         }).catch(function() {
-            _setStatus("⚠️ 网络错误 / Network error", "warn");
+            _setStatus("⚠️ Network error", "warn");
         }).then(function() {
             expandBtn.disabled = false;
             if (node.graph) node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
@@ -174,13 +174,13 @@ function buildDirectUI(node) {
     // Clear button
     const clearBtn = document.createElement("button");
     clearBtn.className = "bsai-direct-btn secondary";
-    clearBtn.textContent = "🗑 清空";
+    clearBtn.textContent = "🗑 Clear";
     clearBtn.onclick = function() {
         ta.value = "";
         custInput.value = "";
         setWidgetText(node, "prompt", "");
         setWidgetText(node, "user_customization", "");
-        _setStatus("已清空 / Cleared", "");
+        _setStatus("Cleared", "");
         if (node.graph) node.graph.setDirtyCanvas && node.graph.setDirtyCanvas(true, true);
     };
     tools.appendChild(clearBtn);
@@ -190,7 +190,7 @@ function buildDirectUI(node) {
     // Status bar
     const status = document.createElement("div");
     status.className = "bsai-direct-status";
-    status.textContent = "就绪 / Ready";
+    status.textContent = "Ready";
     container.appendChild(status);
     node._bsaiDirectStatus = status;
 
@@ -223,7 +223,7 @@ function _openVoiceDialog(node, ta) {
         return;
     }
     // Fallback: simple alert
-    alert("语音输入功能需要模板节点的语音模块。\n请先在工作流中添加一个 BSAI H3 Prompt Template 节点以启用语音功能。\n\nVoice input requires the template node's voice module.\nAdd a BSAI H3 Prompt Template node to your workflow first to enable voice.");
+    alert("Voice input requires the template node's voice module.\nAdd a BSAI H3 Prompt Template node to your workflow first to enable voice.");
 }
 
 app.registerExtension({
@@ -271,7 +271,7 @@ app.registerExtension({
             const node = this;
             let out = "";
             if (message) {
-                out = message["prompt_output (提示词输出)"] ?? message.prompt_output ?? message.text ?? "";
+                out = message.prompt_output ?? message.text ?? "";
             }
             if (Array.isArray(out)) out = out.join("\n");
             if (out === null || out === undefined) out = "";
@@ -279,10 +279,10 @@ app.registerExtension({
             if (node._bsaiDirectStatus) {
                 if (out) {
                     const preview = out.length > 80 ? out.slice(0, 80) + "…" : out;
-                    node._bsaiDirectStatus.textContent = "✅ 已输出到下游 / Output: " + preview;
+                    node._bsaiDirectStatus.textContent = "✅ Output: " + preview;
                     node._bsaiDirectStatus.className = "bsai-direct-status ok";
                 } else {
-                    node._bsaiDirectStatus.textContent = "⚠️ 输出为空 / Output is empty";
+                    node._bsaiDirectStatus.textContent = "⚠️ Output is empty";
                     node._bsaiDirectStatus.className = "bsai-direct-status warn";
                 }
             }

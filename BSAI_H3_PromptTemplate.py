@@ -533,7 +533,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BSAI_H3_PromptTemplate": "BSAI H3 Prompt Template (提示词模板)",
+    "BSAI_H3_PromptTemplate": "BSAI H3 Prompt Template",
 }
 
 
@@ -554,31 +554,26 @@ _vosk_import_error = None
 
 
 def _ensure_vosk_deps():
-    """Best-effort auto-install: vosk module + the small CN model.
+    """Check vosk + the small CN model are available; never installs at runtime.
 
-    This is the runtime fallback for machines where install.py did not run
-    (no ComfyUI auto-exec, no network at startup, etc.). Never raises — the
-    caller re-checks and reports the real error if it still fails.
+    Dependencies are installed at startup by install.py (vosk module) and
+    scripts/download_vosk_model.py (model). Running pip install or model
+    downloads from inside an HTTP request handler is a security concern
+    (unexpected subprocesses triggered by a request), so the request path
+    only checks and reports clear guidance when something is missing.
     """
     import importlib.util
-    import subprocess
-    import sys
-    try:
-        if importlib.util.find_spec("vosk") is None:
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", "--quiet",
-                 "--disable-pip-version-check", "vosk"],
-                timeout=900,
-            )
-    except Exception:
-        pass
-    try:
-        if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
-            script = os.path.join(_THIS_DIR, "scripts", "download_vosk_model.py")
-            if os.path.isfile(script):
-                subprocess.check_call([sys.executable, script], timeout=1800)
-    except Exception:
-        pass
+    if importlib.util.find_spec("vosk") is None:
+        raise RuntimeError(
+            "vosk is not installed. Install it once via the node's install.py "
+            "(or: pip install vosk), then restart ComfyUI."
+        )
+    if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
+        raise RuntimeError(
+            "Vosk Chinese model not found under models/vosk-model-small-cn-0.22. "
+            "Download it once via scripts/download_vosk_model.py (or run install.py), "
+            "then restart ComfyUI."
+        )
 
 
 def _get_vosk_model():
@@ -591,26 +586,19 @@ def _get_vosk_model():
         try:
             import vosk
         except Exception as e:
-            # Auto-install vosk (best effort) then retry once.
+            # No request-time install: check gives clear guidance, never runs pip.
             _ensure_vosk_deps()
             try:
                 import vosk
             except Exception as e2:
                 _vosk_import_error = (
-                    f"vosk not installed and auto-install failed: {e2}. "
-                    "Run: pip install vosk / 请运行 pip install vosk"
+                    f"vosk is not installed or failed to import: {e2}. "
+                    "Run the node's install.py (or: pip install vosk) once, then restart ComfyUI."
                 )
                 raise RuntimeError(_vosk_import_error)
         if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
-            # Auto-download the CN model (best effort) then re-check.
+            # Model missing: clear guidance, no request-time download.
             _ensure_vosk_deps()
-        if not (os.path.isdir(_VOSK_MODEL_DIR) and os.listdir(_VOSK_MODEL_DIR)):
-            raise RuntimeError(
-                "Vosk Chinese model not found and auto-download failed. Run: "
-                "python scripts/download_vosk_model.py (or place "
-                "vosk-model-small-cn-0.22 under models/). / 未找到中文模型且自动下载失败，"
-                "请运行 scripts/download_vosk_model.py 下载。"
-            )
         _vosk_model = vosk.Model(_VOSK_MODEL_DIR)
         return _vosk_model
 
@@ -671,7 +659,7 @@ def _register_asr_route():
         try:
             data = await request.read()
             if not data:
-                return web.json_response({"ok": False, "error": "empty audio / 音频为空"})
+                return web.json_response({"ok": False, "error": "empty audio"})
             samples = _wav_to_16k_mono_int16(data)
             try:
                 model = _get_vosk_model()
@@ -694,9 +682,9 @@ def _register_asr_route():
             body = await request.json()
             text = (body.get("text") or "").strip()
             if not text:
-                return web.json_response({"ok": False, "error": "empty instruction / 指令为空"})
+                return web.json_response({"ok": False, "error": "empty instruction"})
         except Exception:
-            return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
+            return web.json_response({"ok": False, "error": "bad request"})
 
         def _run():
             import sys
@@ -722,9 +710,9 @@ def _register_asr_route():
             prompt = (body.get("prompt") or "").strip()
             customization = (body.get("customization") or "").strip()
             if not prompt or not customization:
-                return web.json_response({"ok": False, "error": "missing prompt/customization / 缺少提示词或修改"})
+                return web.json_response({"ok": False, "error": "missing prompt/customization"})
         except Exception:
-            return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
+            return web.json_response({"ok": False, "error": "bad request"})
 
         def _run():
             import sys
@@ -749,7 +737,7 @@ def _register_asr_route():
             body = await request.json()
             text = (body.get("text") or "").strip()
         except Exception:
-            return web.json_response({"ok": False, "error": "bad request / 请求格式错误"})
+            return web.json_response({"ok": False, "error": "bad request"})
         if not text:
             return web.json_response({"ok": False, "error": "empty narration / 旁白为空"})
         return web.json_response({"ok": True, "prompt": build_h3_skill_three_part(text)})
