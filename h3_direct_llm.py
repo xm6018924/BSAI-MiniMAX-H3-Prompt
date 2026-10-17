@@ -192,7 +192,6 @@ def _generate_local(user_text, system_prompt, model_path=None):
                     from llama_cpp import Llama
                 except Exception as e:
                     _llm_error = f"llama_cpp not installed: {e}"
-                    _auto_install_llama()  # background install; tell the user to retry
                     raise RuntimeError(
                         "llama_cpp is not installed. Install it once via the node's "
                         "install.py (or: pip install llama-cpp-python), then restart ComfyUI."
