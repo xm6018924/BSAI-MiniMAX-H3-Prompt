@@ -26,7 +26,7 @@ class BSAI_H3_DirectPrompt:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "H3 提示词直通输出 / Direct H3 prompt output\n输入完整的 H3 提示词，直接输出到下游 / Input a complete H3 prompt, output directly",
+                        "tooltip": "Direct H3 prompt output\nInput a complete H3 prompt and it is output directly to the downstream node",
                     },
                 ),
             },
@@ -36,7 +36,7 @@ class BSAI_H3_DirectPrompt:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "可选：自定义修改（本地LLM融合到提示词中）/ Optional: customization merged via local LLM",
+                        "tooltip": "Optional: customization merged into the prompt via the local LLM",
                     },
                 ),
                 "narration": (
@@ -44,7 +44,7 @@ class BSAI_H3_DirectPrompt:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "画面旁白台词 (可选) / Voice-over narration (optional)",
+                        "tooltip": "Voice-over narration line (optional)",
                     },
                 ),
             },
@@ -52,23 +52,23 @@ class BSAI_H3_DirectPrompt:
 
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "INT", "STRING")
     RETURN_NAMES = (
-        "prompt_output (提示词输出)",
-        "template_name (模板名称)",
-        "generation_mode (生成模式)",
-        "description (描述)",
-        "video_duration (视频时长)",
-        "preview_file (预览文件)",
+        "prompt_output",
+        "template_name",
+        "generation_mode",
+        "description",
+        "video_duration",
+        "preview_file",
     )
     FUNCTION = "process"
     CATEGORY = "BSAI"
     OUTPUT_NODE = True
     OUTPUT_IS_LIST = (False, False, False, False, False, False)
     DESCRIPTION = """
-BSAI H3 直通模式节点 / Direct Prompt Node
-独立于模板节点，互不干扰。
-- 纯文本直通输出
-- 支持语音输入（本地离线Vosk识别）
-- 支持本地LLM融合自定义修改
+BSAI H3 Direct Prompt Node
+Standalone direct-mode node, fully separated from the template node.
+- Plain-text passthrough output
+- Voice input support (local offline Vosk ASR)
+- Local LLM merges user customization into the prompt
 """
 
     @staticmethod
@@ -135,7 +135,7 @@ BSAI H3 直通模式节点 / Direct Prompt Node
         p = _inject_narration(p, narration)
         # ── 直通智能规则：动作参考 / 静音锁定（防止下游把动作指令当旁白）──
         p = self._apply_direct_smart_rules(p)
-        result = (p, "直通模式 | Direct Mode", "Direct / 直通", "Direct H3 prompt / 直通 H3 提示词", 0, "")
+        result = (p, "Direct Mode", "Direct", "Direct H3 prompt", 0, "")
         # 返回 ui + result：ui 部分会触发前端 executed 事件并显示在节点上，
         # result 部分作为真实下游数据（与普通 tuple 返回完全一致）。
         return {
@@ -149,5 +149,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BSAI_H3_DirectPrompt": "BSAI H3 Direct Prompt (直通模式)",
+    "BSAI_H3_DirectPrompt": "BSAI H3 Direct Prompt",
 }

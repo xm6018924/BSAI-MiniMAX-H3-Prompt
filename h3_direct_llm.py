@@ -517,7 +517,7 @@ def _inject_user_content(prompt, cust):
             sep = "" if p[at-1:at].isspace() else " "
             return p[:at] + "\n" + user_block + sep + p[at:]
         return p + "\n\n" + user_block
-    return p.rstrip() + "\n\n--- User Customization / 用户自定义 ---\n" + c
+    return p.rstrip() + "\n\n--- User Customization ---\n" + c
 
 
 def merge_customization(prompt, customization):
@@ -568,7 +568,7 @@ def merge_customization(prompt, customization):
             if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
                 result = r
             elif r and _is_repetitive_garbage(r):
-                error = "API output detected as repetitive garbage / API输出检测到重复垃圾内容"
+                error = "API output detected as repetitive garbage"
         except Exception as e:
             error = "API: %s" % e
     if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
@@ -580,7 +580,7 @@ def merge_customization(prompt, customization):
                     result = r
                     error = None
                 elif r and _is_repetitive_garbage(r):
-                    error = "Strata output detected as repetitive garbage / Strata输出检测到重复垃圾内容"
+                    error = "Strata output detected as repetitive garbage"
             except Exception as e:
                 error = "Strata: %s" % e
         # Local attempts: try the fast merge model (sulphur) first, then a
@@ -600,13 +600,13 @@ def merge_customization(prompt, customization):
                     error = None
                     break
                 elif r and _is_repetitive_garbage(r):
-                    error = "Local LLM (%s) output detected as repetitive garbage / 本地模型输出检测到重复垃圾内容" % os.path.basename(mp)
+                    error = "Local LLM (%s) output detected as repetitive garbage" % os.path.basename(mp)
             except Exception as e:
                 error = "Local LLM (%s): %s" % (os.path.basename(mp), e)
         if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
             if error is None:
                 error = ("models only copied the template without merging the edit "
-                         "(no rewrite produced, change too small) / 模型仅复制模板而未将修改融入字段（改动过小）")
+                         "(no rewrite produced, change too small)")
     # ── Content fidelity (deterministic bottom line) ──
     # Whatever the LLM did, the user's actual content MUST survive. If none of
     # the user's content fragments appear in the result (common when a
@@ -635,7 +635,7 @@ def generate_h3_prompt(user_text):
     """Generate a MiniMax-H3-compliant prompt from a short user instruction (Chinese OK)."""
     text = (user_text or "").strip()
     if not text:
-        raise ValueError("empty instruction / 指令为空")
+        raise ValueError("empty instruction")
     cfg = _api_config()
     if cfg:
         try:

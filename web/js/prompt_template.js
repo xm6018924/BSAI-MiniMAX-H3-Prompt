@@ -585,7 +585,7 @@ function buildTemplateUI(node) {
     custBtn.type = "button";
     custBtn.className = "bsai-tpl-cust-btn";
     custBtn.textContent = "Apply";
-    custBtn.title = "将补充修改真正融合进模板，并在下方输出提示词预览中查看最终结果 / Merge the customization into the template and preview the final result below";
+    custBtn.title = "Merge the customization into the template and preview the final result in the output preview below";
     // v-pv: per-template guidance banner (纯文字PV·无图生成 asks the user to type
     // PV copy / script / ad lines here, then 确认修改 merges it into the template).
     const pvHint = document.createElement("div");
@@ -603,18 +603,18 @@ function buildTemplateUI(node) {
     const outLbl = document.createElement("div");
     outLbl.className = "bsai-tpl-out-lbl";
     const outLblTxt = document.createElement("span");
-    outLblTxt.textContent = "输出提示词预览 / Output Preview (text sent to downstream):";
+    outLblTxt.textContent = "Output Preview (text sent to downstream):";
     const diffToggle = document.createElement("button");
     diffToggle.type = "button";
     diffToggle.className = "bsai-tpl-diff-toggle";
-    diffToggle.textContent = "📊 展开对比 ▼ / Show Diff";
-    diffToggle.title = "展开/收起「源模板 vs 修改后」对比窗口 / Toggle Source vs Merged diff view";
+    diffToggle.textContent = "📊 Show Diff";
+    diffToggle.title = "Toggle the source-template vs merged-result diff view";
     outLbl.appendChild(outLblTxt);
     outLbl.appendChild(diffToggle);
     const outTa = document.createElement("textarea");
     outTa.className = "bsai-tpl-out-ta";
     outTa.readOnly = true;
-    outTa.placeholder = "直通输出或语音生成的提示词将在此显示 / The H3 prompt output to downstream shows here";
+    outTa.placeholder = "The H3 prompt output to the downstream node shows here";
     // Diff panel: source template (left) vs merged result (right), line-level highlight
     const diffDiv = document.createElement("div");
     diffDiv.className = "bsai-tpl-diff";
@@ -622,11 +622,11 @@ function buildTemplateUI(node) {
     const diffHead = document.createElement("div");
     diffHead.className = "bsai-tpl-diff-head";
     const diffTitle = document.createElement("span");
-    diffTitle.textContent = "提示词对比 / Prompt Diff";
+    diffTitle.textContent = "Prompt Diff";
     const diffClose = document.createElement("button");
     diffClose.type = "button";
     diffClose.className = "bsai-tpl-diff-toggle";
-    diffClose.textContent = "× 收起 Close";
+    diffClose.textContent = "× Close";
     diffHead.appendChild(diffTitle);
     diffHead.appendChild(diffClose);
     const diffCols = document.createElement("div");
@@ -635,14 +635,14 @@ function buildTemplateUI(node) {
     colA.className = "bsai-tpl-diff-col";
     const hdrA = document.createElement("div");
     hdrA.className = "bsai-tpl-diff-hdr";
-    hdrA.textContent = "源模板提示词 / Source Template";
+    hdrA.textContent = "Source Template";
     const preA = document.createElement("pre");
     preA.className = "bsai-tpl-diff-pre";
     const colB = document.createElement("div");
     colB.className = "bsai-tpl-diff-col";
     const hdrB = document.createElement("div");
     hdrB.className = "bsai-tpl-diff-hdr";
-    hdrB.textContent = "修改后提示词 / Merged Result";
+    hdrB.textContent = "Merged Result";
     const preB = document.createElement("pre");
     preB.className = "bsai-tpl-diff-pre";
     colA.appendChild(hdrA);
@@ -653,7 +653,7 @@ function buildTemplateUI(node) {
     diffCols.appendChild(colB);
     const diffHint = document.createElement("div");
     diffHint.className = "bsai-tpl-diff-hint";
-    diffHint.textContent = "🟥 红 = 源中被删除 · 🟩 绿 = 修改后新增 · 其余为相同行 / Red = removed from source, Green = added in merged.";
+    diffHint.textContent = "🟥 Red = removed from the source · 🟩 Green = added in the merged result · other rows are unchanged.";
     diffDiv.appendChild(diffHead);
     diffDiv.appendChild(diffCols);
     diffDiv.appendChild(diffHint);
@@ -952,7 +952,7 @@ function buildTemplateUI(node) {
         var _hasCust = !!(_c && String(_c).trim());
         var _timer = null;
         if (_hasCust && _btn) {
-            _btn.textContent = "⏳ 修改中... / Applying...";
+            _btn.textContent = "⏳ Applying...";
             _btn.disabled = true;
             // Safety net: force-restore the button after 120s even if the request stalls
             _timer = setTimeout(function() {
@@ -1016,7 +1016,7 @@ function buildTemplateUI(node) {
         const catId = catSel.value;
         subSel.innerHTML = '<option value="">— Select —</option>';
         subSel.disabled = true;
-        listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择子类 / Select a subcategory</div>';
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a subcategory</div>';
         cntSpan.textContent = "";
         clrBtn.style.display = "none";
         updatePreview(null, prevBox, prevNm, prevMd, prevDur);
@@ -1041,7 +1041,7 @@ function buildTemplateUI(node) {
         const catId = catSel.value;
         const subId = subSel.value;
         if (!catId || !subId || !_tplData) {
-            listDiv.innerHTML = '<div class="bsai-tpl-empty">请选择分类和子类 / Select category & subcategory</div>';
+            listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a category and subcategory</div>';
             cntSpan.textContent = "";
             clrBtn.style.display = "none";
             return;
@@ -1085,11 +1085,11 @@ function buildTemplateUI(node) {
 // ── Render search results ──
 function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
     listDiv.innerHTML = "";
-    cntSpan.textContent = "搜索到 " + results.length + " 个模板 / " + results.length + " results";
+    cntSpan.textContent = results.length + " results";
     clrBtn.style.display = "";
 
     if (results.length === 0) {
-        listDiv.innerHTML = '<div class="bsai-tpl-empty">未找到匹配的模板 / No matching templates found</div>';
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">No matching templates found</div>';
         return;
     }
 
@@ -1137,7 +1137,7 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
             // Sync dropdowns to reflect the clicked template's category/subcategory
             node._bsaiCat.value = cat.id;
             // Populate subcategories for this category
-            node._bsaiSub.innerHTML = '<option value="">— 选择子类 —</option>';
+            node._bsaiSub.innerHTML = '<option value="">— Select subcategory —</option>';
             (cat.subcategories || []).forEach(function(s) {
                 const opt = document.createElement("option");
                 opt.value = s.id;
@@ -1157,11 +1157,11 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
 function renderTemplateList(node, sub, cat, listDiv) {
     const templates = sub.templates || [];
     listDiv.innerHTML = "";
-    node._bsaiCnt.textContent = "共 " + templates.length + " 个模板 / " + templates.length + " templates";
+    node._bsaiCnt.textContent = templates.length + " templates";
     node._bsaiClr.style.display = "";
 
     if (templates.length === 0) {
-        listDiv.innerHTML = '<div class="bsai-tpl-empty">该子类暂无模板 / No templates in this subcategory</div>';
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">No templates in this subcategory</div>';
         return;
     }
 
@@ -1213,7 +1213,7 @@ function syncModeUI(node) {
     if (node._bsaiModeCb) node._bsaiModeCb.checked = multi;
     if (node._bsaiModeTag) {
         node._bsaiModeTag.className = "mode-tag " + (multi ? "on" : "off");
-        node._bsaiModeTag.textContent = multi ? "ON · 多选叠加" : "OFF · 单选";
+        node._bsaiModeTag.textContent = multi ? "ON · Multi-Stack" : "OFF · Single";
     }
 }
 
@@ -1253,7 +1253,7 @@ function syncSelectionUI(node) {
     // Hidden widget value: labels joined by "|||"
     if (tplW) {
         if (sel.length === 0) {
-            tplW.value = "(None / 自定义 / Custom)";
+            tplW.value = "(None / Custom)";
         } else {
             tplW.value = sel.map(function(it) {
                 return it.cat.name + " > " + it.sub.name + " > " + it.tpl.name;
@@ -1268,8 +1268,8 @@ function syncSelectionUI(node) {
             const h = document.createElement("div");
             h.className = "bsai-tpl-sel-empty";
             h.textContent = node._bsaiMultiMode
-                ? "多选模式：点击模板叠加（第1个为主体）/ Multi: click to stack (1st = base)"
-                : "点击模板单选并预览 / Click a template to select & preview";
+                ? "Multi mode: click templates to stack (the first one is the base)"
+                : "Click a template to select & preview";
             selBar.appendChild(h);
         } else {
             sel.forEach(function(it, i) {
@@ -1283,7 +1283,7 @@ function syncSelectionUI(node) {
                 const x = document.createElement("span");
                 x.className = "x";
                 x.textContent = "×";
-                x.title = "移除 / Remove";
+                x.title = "Remove";
                 x.onclick = function(e) {
                     e.stopPropagation();
                     node._bsaiSelection.splice(i, 1);
@@ -1321,7 +1321,7 @@ function syncSelectionUI(node) {
             }).join("  +  ");
         }
         if (node._bsaiPrevMd && sel.length > 1) {
-            node._bsaiPrevMd.textContent = "多模板叠加 Multi-Stack (" + sel.length + ")";
+            node._bsaiPrevMd.textContent = "Multi-Stack (" + sel.length + ")";
         }
     }
 
@@ -1346,15 +1346,15 @@ function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
     }
     if (prevNm) prevNm.textContent = tpl.name + " | " + (tpl.name_en || "");
     if (prevMd) prevMd.textContent = tpl.generation_mode || "";
-    if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | 时长 | 需图片/Image: " + (tpl.needs_image ? "是/Yes" : "否/No");
+    if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | Needs image: " + (tpl.needs_image ? "Yes" : "No");
     if (prevBox) {
         if (tpl.preview) {
             prevBox.innerHTML = '<img class="bsai-tpl-prev-img" src="' + PREVIEW_BASE + tpl.preview + '" alt="preview">';
         } else {
             prevBox.innerHTML = '<div class="bsai-tpl-prev-ph">' +
                 '<div style="font-size:22px;margin-bottom:6px;">🎬</div>' +
-                '暂无预览动画<br>No preview available<br>' +
-                '<span style="font-size:9px;color:#555;">点击选择此模板 / Click to select</span></div>';
+                'No preview available<br>' +
+                '<span style="font-size:9px;color:#555;">Click to select this template</span></div>';
         }
     }
 }
@@ -1430,9 +1430,9 @@ function renderOutputPreview(node) {
         node._bsaiOutTa.value = base;
         return;
     }
-    var fallback = base + (base ? "\n\n" : "") + "--- User Customization / 用户自定义 ---\n" + cust.trim();
+    var fallback = base + (base ? "\n\n" : "") + "--- User Customization ---\n" + cust.trim();
     node._bsaiOutTa.value = fallback + (base
-        ? "\n\n💡 追加预览（未融合）。点击「确认修改 / Apply」按钮可让大模型把补充修改真正融入模板。 / Append preview (not merged). Click Apply to merge the customization into the template."
+        ? "\n\n💡 Append preview (not merged). Click the Apply button to let the LLM merge the customization into the template."
         : "");
 }
 
@@ -1451,8 +1451,8 @@ function setDiffOpen(node, open) {
     // Keep an explicit, always-visible 展开/收起 button (label follows state).
     if (node._bsaiDiffToggle) {
         node._bsaiDiffToggle.textContent = open
-            ? "📊 收起对比 ▲ / Hide Diff"
-            : "📊 展开对比 ▼ / Show Diff";
+            ? "📊 Hide Diff"
+            : "📊 Show Diff";
     }
     // Explicit content change: reset the height debounce lock so the node grows
     // immediately (no flicker / no stale clipping of the diff panel).
@@ -1518,13 +1518,13 @@ function syncCustomizationHint(node, sel) {
     var hint = (tpl && tpl.customization_hint) ? String(tpl.customization_hint) : "";
     var lbl = node._bsaiCustLbl, banner = node._bsaiPvHint, ta = node._bsaiCustTa;
     if (hint) {
-        if (lbl) lbl.textContent = "✍️ PV宣传文字 / 补充修改（纯文字PV 必填引导）:";
+        if (lbl) lbl.textContent = "✍️ PV promo copy / Customization (required for text-only PV):";
         if (banner) { banner.textContent = hint; banner.style.display = "block"; }
-        if (ta) ta.placeholder = "在此输入你的 PV 宣传文字 / 文稿 / 广告语…（写清主角长相/服装/年龄、场景、动作、镜头、要不要屏幕文字/写什么字；越具体画面越可控）";
+        if (ta) ta.placeholder = "Type your PV promo copy / script / ad lines here (describe the protagonist's looks/outfit/age, scene, action, camera, and any on-screen text; the more specific, the more controllable the frame)";
     } else {
-        if (lbl) lbl.textContent = "补充修改 / Customization (Optional):";
+        if (lbl) lbl.textContent = "Customization (Optional):";
         if (banner) { banner.textContent = ""; banner.style.display = "none"; }
-        if (ta) ta.placeholder = "在此添加对模板的修改描述，如更换角色、场景等 / Add custom modifications here, e.g. change character, scene...";
+        if (ta) ta.placeholder = "Add custom modifications to the template here, e.g. change character, scene...";
     }
 }
 
@@ -1540,7 +1540,7 @@ function applyCustomization(node, done) {
     else if (node._bsaiCustTa && node._bsaiCustTa.value) cust = node._bsaiCustTa.value;
     // 旁白并入 customization：点「确认修改 / Apply」时与模板一起融合，作为画面旁白输出
     if (narr) {
-        var narrLine = "画面旁白（VO narration）: “" + narr + "” —— 以上旁白为画面核心台词/画外音，画面、人物动作与镜头须与旁白同步呈现；旁白作为主音轨清晰可闻。";
+        var narrLine = "Visual VO narration: \"" + narr + "\" -- the above narration is the core spoken line / voice-over; the visuals, character actions and camera moves must sync with the narration; the narration is the primary audible track.";
         cust = cust ? cust + "\n" + narrLine : narrLine;
     }
     var parts = [];
@@ -1558,14 +1558,14 @@ function applyCustomization(node, done) {
             if (node._bsaiLastHSet !== undefined) node._bsaiLastHSet = 0;
             if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
             if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
-            node._bsaiOutTa.value = "⚠️ 纯文字PV模板需要你的宣传文字：请在“补充修改”输入框填写 PV 宣传文字 / 文稿 / 广告语，再点「确认修改」融合进提示词。\n" + _pv0.customization_hint;
+            node._bsaiOutTa.value = "⚠️ This text-only PV template needs your promo copy: type your PV promo text / script / ad lines in the Customization box, then click Apply to merge it into the prompt.\n" + _pv0.customization_hint;
             try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
         }
         renderOutputPreview(node); if (done) done(); return;
     }
     if (!base) { node._bsaiOutTa.value = cust.trim(); if (done) done(); return; }
     var seq = ++_mergeSeq;
-    var fallback = base + "\n\n--- User Customization / 用户自定义 ---\n" + cust.trim();
+    var fallback = base + "\n\n--- User Customization ---\n" + cust.trim();
     // Show the output area now (was hidden by default)
     if (node._bsaiOutDiv) node._bsaiOutDiv.style.display = "block";
     node._bsaiOutputVisible = true;
@@ -1576,7 +1576,7 @@ function applyCustomization(node, done) {
     // output area below can never compress or hide it; output area absorbs leftover.
     if (node._bsaiTopDiv) node._bsaiTopDiv.style.flex = "0 0 auto";
     if (node._bsaiOutDiv) node._bsaiOutDiv.style.flex = "1 1 auto";
-    node._bsaiOutTa.value = fallback + "\n\n⏳ 正在通过本地大模型将补充修改融合进模板… / Merging customization into the template via local LLM…";
+    node._bsaiOutTa.value = fallback + "\n\n⏳ Merging the customization into the template via the local LLM...";
     // Node height follows content automatically; trigger an immediate event-driven
     // recompute so the output panel appears fully (no stale +720 stretch).
     try { if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 60); } catch(e) {}
@@ -1589,7 +1589,7 @@ function applyCustomization(node, done) {
         if (j && j.ok && j.prompt && j.prompt.trim()) {
             if (j.prompt === base) {
                 // backend reported ok but nothing changed — surface it
-                var warn = fallback + "\n\n⚠️ 未检测到任何修改！融合结果与源模板完全一致。\n可能原因：① 显存不足（同时运行 H3 生成时本地大模型无法加载）② 未配置/未找到本地模型 ③ ComfyUI 未重启使新后端生效。\n建议：先停止生成再点确认修改；或设置环境变量 BSAI_H3_LLM_API_KEY 使用云端模型（零显存）。\n/ Not changed — merged equals source. " + ((j && j.error) || "");
+                var warn = fallback + "\n\n⚠️ No changes detected: the merged result is identical to the source template.\nPossible causes: (1) not enough VRAM (the local LLM cannot load while H3 generation is running), (2) no local model configured/found, (3) ComfyUI has not been restarted so the new backend is active.\nSuggestion: stop generation before clicking Apply, or set the BSAI_H3_LLM_API_KEY environment variable to use a cloud model (zero VRAM). " + ((j && j.error) || "");
                 node._bsaiOutTa.value = warn;
                 showDiff(node, base, warn);
             } else {
@@ -1597,14 +1597,14 @@ function applyCustomization(node, done) {
                 showDiff(node, base, j.prompt);
             }
         } else {
-            var fb = fallback + "\n\n⚠️ 融合失败：" + ((j && j.error) || "unknown") + "\n已退回追加 / Merge failed, appended instead.";
+            var fb = fallback + "\n\n⚠️ Merge failed: " + ((j && j.error) || "unknown") + "\nAppended instead.";
             node._bsaiOutTa.value = fb;
             showDiff(node, base, fb);
         }
         if (done) done();
     }).catch(function(e) {
         if (seq !== _mergeSeq) { if (done) done(); return; }
-        var fb = fallback + "\n\n⚠️ 融合失败：" + e + "\n已退回追加 / Merge failed, appended instead.";
+        var fb = fallback + "\n\n⚠️ Merge failed: " + e + "\nAppended instead.";
         node._bsaiOutTa.value = fb;
         showDiff(node, base, fb);
         if (done) done();
@@ -1620,14 +1620,14 @@ function openVoiceModal(node) {
     ov.className = "bsai-voice-overlay";
     ov.innerHTML =
         '<div class="bsai-voice-card">' +
-        '<div class="bsai-voice-title">🎤 语音输入 / Voice Input</div>' +
-        '<div class="bsai-voice-status">点击"开始录音"，说完后点击"停止并转写" / Click Start, speak, then Stop & Transcribe</div>' +
-        '<textarea class="bsai-voice-ta" placeholder="转写结果 / Transcription…"></textarea>' +
+        '<div class="bsai-voice-title">🎤 Voice Input</div>' +
+        '<div class="bsai-voice-status">Click Start, speak, then Stop & Transcribe</div>' +
+        '<textarea class="bsai-voice-ta" placeholder="Transcription..."></textarea>' +
         '<div class="bsai-voice-btns">' +
-        '  <button class="bsai-voice-btn primary" data-act="rec">● 开始录音 / Start</button>' +
-        '  <button class="bsai-voice-btn" data-act="stop" disabled>■ 停止并转写 / Stop & Transcribe</button>' +
-        '  <button class="bsai-voice-btn" data-act="cust" disabled>✎ 填入补充修改 / Set as customization</button>' +
-        '  <button class="bsai-voice-btn danger" data-act="close">✕ 关闭 / Close</button>' +
+        '  <button class="bsai-voice-btn primary" data-act="rec">● Start</button>' +
+        '  <button class="bsai-voice-btn" data-act="stop" disabled>■ Stop & Transcribe</button>' +
+        '  <button class="bsai-voice-btn" data-act="cust" disabled>✎ Set as customization</button>' +
+        '  <button class="bsai-voice-btn danger" data-act="close">✕ Close</button>' +
         '</div></div>';
     document.body.appendChild(ov);
     var status = ov.querySelector(".bsai-voice-status");
@@ -1659,10 +1659,10 @@ function openVoiceModal(node) {
     btnRec.onclick = function() {
         if (_voice.rec) return;
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            setStatus("此浏览器不支持麦克风录音 / Microphone not supported (needs HTTPS or localhost)", "");
+            setStatus("Microphone not supported (needs HTTPS or localhost)", "");
             return;
         }
-        setStatus("请求麦克风权限… / Requesting mic…");
+        setStatus("Requesting microphone access...");
         navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
             var AC = window.AudioContext || window.webkitAudioContext;
             _voice.ctx = new AC();
@@ -1681,9 +1681,9 @@ function openVoiceModal(node) {
             _voice.rec = true;
             btnRec.disabled = true;
             btnStop.disabled = false;
-            setStatus("● 正在录音… 请说话，说完点击「停止并转写」/ Recording… speak now", "rec");
+            setStatus("● Recording... speak now", "rec");
         }).catch(function(err) {
-            setStatus("无法访问麦克风：" + (err && err.name ? err.name : err) + " / Mic access denied", "");
+            setStatus("Microphone access denied: " + (err && err.name ? err.name : err), "");
         });
     };
 
@@ -1699,22 +1699,22 @@ function openVoiceModal(node) {
         btnRec.disabled = false;
         btnStop.disabled = true;
         if (all.length < 1600) {
-            setStatus("录音太短，请重试 / Recording too short", "");
+            setStatus("Recording too short, please retry", "");
             return;
         }
-        setStatus("正在转写… / Transcribing…");
+        setStatus("Transcribing...");
         var s16 = downsampleTo16k(all, _voice.rate);
         var wav = encodeWavPcm16(s16, 16000);
         fetch("/bsai_h3/asr", { method: "POST", body: wav }).then(function(r) { return r.json(); }).then(function(j) {
             if (j && j.ok) {
                 ta.value = j.text || "";
-                setStatus("转写完成 / Done", "ok");
+                setStatus("Done", "ok");
             } else {
-                setStatus("转写失败：" + ((j && j.error) || "unknown") + " / ASR failed", "");
+                setStatus("ASR failed: " + ((j && j.error) || "unknown"), "");
             }
             enableFill();
         }).catch(function(e) {
-            setStatus("网络错误 / Network error: " + e, "");
+            setStatus("Network error: " + e, "");
         });
     };
 

@@ -1119,7 +1119,7 @@ class _BSAI_QwenStorage:
             if family in ("Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL"):
                 if Qwen35ChatHandler is None:
                     raise RuntimeError(
-                        "当前 llama-cpp-python 不支持 Qwen35ChatHandler，请更新 llama-cpp-python。"
+                        "This llama-cpp-python build does not support Qwen35ChatHandler. Please upgrade llama-cpp-python."
                     )
                 try:
                     chat_handler = Qwen35ChatHandler(
@@ -1139,7 +1139,7 @@ class _BSAI_QwenStorage:
             elif family == "Qwen3-VL":
                 if Qwen3VLChatHandler is None:
                     raise RuntimeError(
-                        "当前 llama-cpp-python 不支持 Qwen3VLChatHandler，请更新 llama-cpp-python。"
+                        "This llama-cpp-python build does not support Qwen3VLChatHandler. Please upgrade llama-cpp-python."
                     )
                 try:
                     chat_handler = Qwen3VLChatHandler(
@@ -1159,7 +1159,7 @@ class _BSAI_QwenStorage:
             elif family == "Gemma4":
                 if Gemma4ChatHandler is None:
                     raise RuntimeError(
-                        "当前 llama-cpp-python 不支持 Gemma4ChatHandler，请更新 llama-cpp-python到0.3.36+。"
+                        "This llama-cpp-python build does not support Gemma4ChatHandler. Please upgrade llama-cpp-python to 0.3.36+."
                     )
                 try:
                     chat_handler = Gemma4ChatHandler(
@@ -1207,38 +1207,38 @@ class _BSAI_QwenStorage:
                         except Exception:
                             pass
                     raise RuntimeError(
-                        "模型加载失败：该 GGUF 文件包含 MTP/NextN 预测层（nextn_predict_layers），\n"
-                        "当前 llama-cpp-python 版本不支持此特性。\n\n"
-                        "解决方案：\n"
-                        "1. 已尝试自动生成去 MTP 版本，请检查同目录下是否有 -noMTP.gguf 文件\n"
-                        "2. 手动使用去 MTP 版本的 GGUF 文件\n"
-                        "3. 或使用不含 MTP 层的 Qwen3.5/3.6 模型作为替代\n"
-                        f"原始错误：{e}"
+                        "Model load failed: this GGUF file contains MTP/NextN prediction layers (nextn_predict_layers),\n"
+                        "which the current llama-cpp-python version does not support.\n\n"
+                        "Solutions:\n"
+                        "1. A stripped -noMTP.gguf was already auto-generated; check whether it exists in the same directory\n"
+                        "2. Manually use the -noMTP.gguf version of the file\n"
+                        "3. Or use a Qwen3.5/3.6 model that has no MTP layers\n"
+                        f"Original error: {e}"
                     )
                 raise RuntimeError(
-                    "模型加载失败：Failed to load model from file\n"
-                    "可能的原因：\n"
-                    "1. 模型文件损坏或格式不兼容\n"
-                    "2. llama-cpp-python 版本不支持该模型架构\n"
-                    "3. 模型文件路径错误\n"
-                    "建议：\n"
-                    "- 检查模型文件完整性\n"
-                    "- 更新 llama-cpp-python 到最新版本\n"
-                    "- 确保模型路径正确"
+                    "Model load failed: Failed to load model from file\n"
+                    "Possible causes:\n"
+                    "1. The model file is corrupted or the format is incompatible\n"
+                    "2. The llama-cpp-python version does not support this model architecture\n"
+                    "3. The model file path is wrong\n"
+                    "Suggestions:\n"
+                    "- Check the model file integrity\n"
+                    "- Update llama-cpp-python to the latest version\n"
+                    "- Make sure the model path is correct"
                 )
             if "Failed to create context with model" in str(e):
                 raise RuntimeError(
-                    "模型加载失败：Failed to create context with model\n"
-                    "可能的原因：\n"
-                    "1. 模型文件损坏或格式不兼容\n"
-                    "2. llama-cpp-python 版本不支持该模型\n"
-                    "3. 显存不足\n"
-                    "4. 模型文件路径错误\n"
-                    "建议：\n"
-                    "- 检查模型文件完整性\n"
-                    "- 更新 llama-cpp-python 到最新版本\n"
-                    "- 减少 GPU 层数或使用更小的模型\n"
-                    "- 确保模型路径正确"
+                    "Model load failed: Failed to create context with model\n"
+                    "Possible causes:\n"
+                    "1. The model file is corrupted or the format is incompatible\n"
+                    "2. The llama-cpp-python version does not support this model\n"
+                    "3. Insufficient VRAM\n"
+                    "4. The model file path is wrong\n"
+                    "Suggestions:\n"
+                    "- Check the model file integrity\n"
+                    "- Update llama-cpp-python to the latest version\n"
+                    "- Reduce GPU layers or use a smaller model\n"
+                    "- Make sure the model path is correct"
                 )
             raise
 
@@ -2534,7 +2534,7 @@ Requires BSAI H3 Model Loader node.
             if _num_seg <= 1:
                 cut_style = "One Shot"
             else:
-                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+                cut_style = f"{_num_seg} Segments"
             print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
 
         # ── Auto-resolve System Recommended creative styles ──
@@ -2737,10 +2737,10 @@ Requires BSAI H3 Model Loader node.
         remaining_ctx = n_ctx - est_prompt_tokens - 256
         if remaining_ctx < 256:
             raise RuntimeError(
-                "BSAI H3 本地模型上下文不足，已停止调用以避免后台闪退。\n"
-                f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
-                "请在 BSAI_H3_ModelLoader 中把 context_length 提高到 32768 或更高，"
-                "或减少参考图片/视频帧数量，或改用 BSAI_H3_RemoteAPI。"
+                "BSAI H3 local model context is too small; inference stopped to avoid a background crash.\n"
+                f"Current context_length (n_ctx)={n_ctx}, estimated input is ~{est_prompt_tokens} tokens.\n"
+                "Please raise context_length to 32768 or higher in BSAI_H3_ModelLoader,\n"
+                "or reduce the number of reference images/video frames, or use BSAI_H3_RemoteAPI instead."
             )
         safe_max_tokens = min(max_tokens_val, remaining_ctx)
         if safe_max_tokens < 512:
@@ -2807,9 +2807,9 @@ Requires BSAI H3 Model Loader node.
                 remaining_ctx = n_ctx - est_prompt_tokens - 256
                 if remaining_ctx < 256:
                     raise RuntimeError(
-                        "BSAI H3 本地模型重载后上下文仍不足，已停止调用以避免后台闪退。\n"
-                        f"当前 context_length(n_ctx)={n_ctx}，估算输入约 {est_prompt_tokens} tokens。\n"
-                        "请提高 context_length，减少媒体输入，或改用 BSAI_H3_RemoteAPI。"
+                        "BSAI H3 local model context is still too small after reload; inference stopped to avoid a background crash.\n"
+                        f"Current context_length (n_ctx)={n_ctx}, estimated input is ~{est_prompt_tokens} tokens.\n"
+                        "Please raise context_length, reduce media inputs, or use BSAI_H3_RemoteAPI instead."
                     )
                 safe_max_tokens = min(max_tokens_val, remaining_ctx)
                 params["max_tokens"] = safe_max_tokens
@@ -3070,7 +3070,7 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
             if _num_seg <= 1:
                 cut_style = "One Shot"
             else:
-                cut_style = f"{_num_seg} Segments ({_num_seg}段)"
+                cut_style = f"{_num_seg} Segments"
             print(f"[BSAI H3] Auto-detected cut_style: {cut_style}")
 
         # ── Auto-resolve System Recommended creative styles ──

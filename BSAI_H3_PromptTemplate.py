@@ -190,7 +190,7 @@ def _merge_custom(prompt, cust):
 
 
 def _append_custom(prompt, cust):
-    return (prompt.rstrip() + "\n\n--- User Customization / 用户自定义 ---\n" + cust.strip())
+    return (prompt.rstrip() + "\n\n--- User Customization ---\n" + cust.strip())
 
 
 # ── Scene reference (图3场景) dynamic clause ──
@@ -343,8 +343,8 @@ class BSAI_H3_PromptTemplate:
                 "template_select": (
                     "STRING",
                     {
-                        "default": "(None / 自定义 / Custom)",
-                        "tooltip": "Selected via visual template browser below / 通过下方可视化模板浏览器选择\nClick templates to stack (multi-select), separated by ||| / 点击模板叠加多选，以 ||| 分隔\nCombined into one H3 prompt / 合并输出为一个 H3 提示词",
+                        "default": "(None / Custom)",
+                        "tooltip": "Selected via the visual template browser below\nClick templates to stack them (multi-select), separated by |||\nCombined into one H3 prompt",
                     },
                 ),
                 "user_customization": (
@@ -352,7 +352,7 @@ class BSAI_H3_PromptTemplate:
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "Optional: append custom modifications to the selected template / 可选：在选中模板后追加自定义修改\nThis text will be appended to the prompt output / 此文本将追加到提示词输出中",
+                        "tooltip": "Optional: append custom modifications to the selected template\nThis text is appended to the prompt output",
                     },
                 ),
             },
@@ -360,26 +360,26 @@ class BSAI_H3_PromptTemplate:
                 "scene_image": (
                     "IMAGE",
                     {
-                        "tooltip": "图3场景参考图 (可选) / Scene reference image <Picture 3> (optional)\n提供时提示词按图3场景生成；不提供时按默认场景生成\nIf connected, the prompt uses the scene from <Picture 3>; otherwise it uses a neutral default scene.",
+                        "tooltip": "Scene reference image <Picture 3> (optional)\nIf connected, the prompt uses the scene from <Picture 3>; otherwise it uses a neutral default scene.",
                     },
                 ),
-                "ref_image_1": ("IMAGE", {"tooltip": "参考图1 <Picture 1> (可选) / Reference image 1\n角色/物体参考图，连接后提示词自动引用 <Picture 1>"}),
-                "ref_image_2": ("IMAGE", {"tooltip": "参考图2 <Picture 2> (可选) / Reference image 2\n第二个角色/物体参考图，连接后提示词自动引用 <Picture 2>，严禁与<Picture 1>角色重复"}),
-                "ref_image_3": ("IMAGE", {"tooltip": "参考图3 <Picture 3> (可选) / Reference image 3\n第三个角色/物体或场景参考图"}),
-                "ref_image_4": ("IMAGE", {"tooltip": "参考图4 <Picture 4> (可选) / Reference image 4"}),
-                "ref_image_5": ("IMAGE", {"tooltip": "参考图5 <Picture 5> (可选) / Reference image 5"}),
-                "ref_image_6": ("IMAGE", {"tooltip": "参考图6 <Picture 6> (可选) / Reference image 6"}),
-                "ref_image_7": ("IMAGE", {"tooltip": "参考图7 <Picture 7> (可选) / Reference image 7"}),
-                "ref_image_8": ("IMAGE", {"tooltip": "参考图8 <Picture 8> (可选) / Reference image 8"}),
-                "ref_image_9": ("IMAGE", {"tooltip": "参考图9 <Picture 9> (可选) / Reference image 9\n官方最多支持9张参考图"}),
-                "video_1": ("IMAGE", {"tooltip": "视频1 <Video 1> (可选) / Video reference 1\n输入视频后自动提取最后一帧作为起始画面，用于视频衍生类模板（如360度子弹时间）\n视频会同步直通输出到 video_1_out，可直接连接到下游节点的 video_1 输入"}),
-                "audio_1": ("AUDIO", {"tooltip": "音频1 <Audio 1> (可选) / Audio reference 1\n输入音频后直通输出到 audio_1_out，可直接连接到下游节点的 audio_1 输入"}),
+                "ref_image_1": ("IMAGE", {"tooltip": "Reference image 1 <Picture 1> (optional)\nCharacter/object reference; once connected the prompt automatically references <Picture 1>"}),
+                "ref_image_2": ("IMAGE", {"tooltip": "Reference image 2 <Picture 2> (optional)\nSecond character/object reference; once connected the prompt automatically references <Picture 2> and must not duplicate the character from <Picture 1>"}),
+                "ref_image_3": ("IMAGE", {"tooltip": "Reference image 3 <Picture 3> (optional)\nThird character/object or scene reference"}),
+                "ref_image_4": ("IMAGE", {"tooltip": "Reference image 4 <Picture 4> (optional)"}),
+                "ref_image_5": ("IMAGE", {"tooltip": "Reference image 5 <Picture 5> (optional)"}),
+                "ref_image_6": ("IMAGE", {"tooltip": "Reference image 6 <Picture 6> (optional)"}),
+                "ref_image_7": ("IMAGE", {"tooltip": "Reference image 7 <Picture 7> (optional)"}),
+                "ref_image_8": ("IMAGE", {"tooltip": "Reference image 8 <Picture 8> (optional)"}),
+                "ref_image_9": ("IMAGE", {"tooltip": "Reference image 9 <Picture 9> (optional)\nThe official API supports up to 9 reference images"}),
+                "video_1": ("IMAGE", {"tooltip": "Video reference 1 <Video 1> (optional)\nAfter a video is connected, its last frame is extracted as the starting frame for video-derived templates (e.g. 360 bullet time).\nThe video is also passed through to video_1_out so it can connect directly to a downstream node's video_1 input"}),
+                "audio_1": ("AUDIO", {"tooltip": "Audio reference 1 <Audio 1> (optional)\nAfter an audio clip is connected it is passed through to audio_1_out so it can connect directly to a downstream node's audio_1 input"}),
                 "narration": (
                     "STRING",
                     {
                         "default": "",
                         "multiline": True,
-                        "tooltip": "画面旁白台词 (可选) / Voice-over narration (optional)\n与所选提示词模板合并，作为画面旁白输出给下游 / Merged with the selected template and output as the visual narration",
+                        "tooltip": "Voice-over narration line (optional)\nMerged with the selected template and output to the downstream node as the visual narration",
                     },
                 ),
             },
@@ -387,35 +387,34 @@ class BSAI_H3_PromptTemplate:
 
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "INT", "STRING", "IMAGE", "IMAGE", "AUDIO")
     RETURN_NAMES = (
-        "prompt_output (提示词输出)",
-        "template_name (模板名称)",
-        "generation_mode (生成模式)",
-        "description (描述)",
-        "video_duration (视频时长)",
-        "preview_file (预览文件)",
-        "last_frame (视频最后一帧)",
-        "video_1_out (视频1直通)",
-        "audio_1_out (音频1直通)",
+        "prompt_output",
+        "template_name",
+        "generation_mode",
+        "description",
+        "video_duration",
+        "preview_file",
+        "last_frame",
+        "video_1_out",
+        "audio_1_out",
     )
     FUNCTION = "get_template"
     CATEGORY = "BSAI"
     OUTPUT_IS_LIST = (False, False, False, False, False, False, False, False, False)
     DESCRIPTION = """
-One-click H3 prompt template selector / 一键式 H3 提示词模板选择器
+One-click H3 prompt template selector
 
 Categorized templates: I2VA / T2VA / FL2VA / Ref2VA + Expression + Growth + Timelapse + Combat + Cinematic
-分类模板：图生视频 / 文生视频 / 首尾帧生成 / 多模态融合 + 人物表情 + 生长类 + 延时摄影 + 武打对打 + 电影运镜
 
-Features / 功能特点:
-- Visual template browser with search / 可视化模板浏览器，支持搜索
-- Cascading selection: Category > Subcategory > Template / 级联选择：分类 > 子类 > 模板
-- Multi-select stacking: combine 2+ templates (e.g. combat + camera move) into one H3 prompt / 多选叠加：组合 2+ 个模板（如武打+运镜）合并为一个 H3 提示词
-- GIF/WebP preview on the right panel / 右侧预览动画
-- Optional user customization textarea / 可选的补充修改文本框
-- 🎤 Voice input button: speak into the mic → offline local ASR (Vosk, vosk-model-small-cn-0.22) → fills user_customization / 语音输入按钮：麦克风说话 → 本地离线识别（Vosk 中文模型）→ 填入补充修改
-- Bilingual template names (中文 | English) / 模板名称中英双语对照
-- 46 expression & micro-expression templates / 46个表情与微表情模板
-- All new templates follow MiniMax H3 prompt SKILL rules / 新增模板严格遵循 MiniMax H3 提示词 SKILL 规则
+Features:
+- Visual template browser with search
+- Cascading selection: Category > Subcategory > Template
+- Multi-select stacking: combine 2+ templates (e.g. combat + camera move) into one H3 prompt
+- GIF/WebP preview on the right panel
+- Optional user customization textarea
+- Voice input button: speak into the mic -> offline local ASR (Vosk, vosk-model-small-cn-0.22) -> fills user_customization
+- Bilingual template names (Chinese | English)
+- 46 expression & micro-expression templates
+- All templates follow the MiniMax H3 prompt SKILL rules
 """
 
     def get_template(self, template_select, user_customization="", scene_image=None, narration="", ref_image_1=None, ref_image_2=None, ref_image_3=None, ref_image_4=None, ref_image_5=None, ref_image_6=None, ref_image_7=None, ref_image_8=None, ref_image_9=None, video_1=None, audio_1=None):
@@ -453,7 +452,7 @@ Features / 功能特点:
                 except Exception:
                     prompt = _append_custom(prompt, cust)
             prompt = _inject_narration(prompt, narration)
-            return (prompt, "Custom / 自定义", "System Recommended / 系统推荐", "Custom prompt / 自定义提示词", 0, "", last_frame, video_1, audio_1)
+            return (prompt, "Custom", "System Recommended", "Custom prompt", 0, "", last_frame, video_1, audio_1)
 
         # Merge all selected templates.
         prompt = _merge_template_prompts(tpls, "")
@@ -472,7 +471,7 @@ Features / 功能特点:
         if not connected_refs and scene_image is None and tpls and tpls[0].get("text_fallback_prompt"):
             fb = (tpls[0].get("text_fallback_prompt") or "").strip()
             if fb:
-                fb_mode = tpls[0].get("text_fallback_mode") or "Text to Video (文生视频)"
+                fb_mode = tpls[0].get("text_fallback_mode") or "Text to Video"
                 prompt = fb
                 if cust:
                     try:
@@ -512,12 +511,12 @@ Features / 功能特点:
         #    保证输出给下游的提示词必含强参考约束（模板自带锁定头则不重复加）──
         if connected_refs and not _has_ref_lock(prompt):
             prompt = _build_ref_decl(connected_refs, tpls) + prompt
-        mode = primary.get("generation_mode", "System Recommended / 系统推荐")
+        mode = primary.get("generation_mode", "System Recommended")
         if len(tpls) > 1:
-            mode = f"{mode} | 多模板叠加 Multi-Stack"
+            mode = f"{mode} | Multi-Stack"
         desc = primary.get("description", "")
         if len(tpls) > 1:
-            desc += " | 叠加 Overlay: " + " + ".join(t.get("name", "") for t in tpls[1:])
+            desc += " | Overlay: " + " + ".join(t.get("name", "") for t in tpls[1:])
         duration = int(primary.get("duration", 0))
         preview = primary.get("preview", "")
 
@@ -739,7 +738,7 @@ def _register_asr_route():
         except Exception:
             return web.json_response({"ok": False, "error": "bad request"})
         if not text:
-            return web.json_response({"ok": False, "error": "empty narration / 旁白为空"})
+            return web.json_response({"ok": False, "error": "empty narration"})
         return web.json_response({"ok": True, "prompt": build_h3_skill_three_part(text)})
 
     return server
