@@ -1026,7 +1026,7 @@ function buildTemplateUI(node) {
         (cat.subcategories || []).forEach(function(sub) {
             const opt = document.createElement("option");
             opt.value = sub.id;
-            opt.textContent = sub.name + " (" + sub.name_en + ")";
+            opt.textContent = sub.name_en + (sub.name ? " (" + sub.name + ")" : "");
             subSel.appendChild(opt);
         });
         subSel.disabled = false;
@@ -1071,7 +1071,7 @@ function buildTemplateUI(node) {
         (data.categories || []).forEach(function(cat) {
             const opt = document.createElement("option");
             opt.value = cat.id;
-            opt.textContent = (cat.icon || "📁") + " " + cat.name + " (" + cat.name_en + ")";
+            opt.textContent = (cat.icon || "📁") + " " + cat.name_en + (cat.name ? " (" + cat.name + ")" : "");
             catSel.appendChild(opt);
         });
         const tplW = findWidget(node, "template_select");
@@ -1106,13 +1106,13 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
 
         const nmDiv = document.createElement("div");
         nmDiv.className = "bsai-tpl-item-nm";
-        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        nmDiv.textContent = tpl.name_en + (tpl.name ? " | " + tpl.name : "");
         el.appendChild(nmDiv);
 
         // Show category path in search results
         const pathDiv = document.createElement("div");
         pathDiv.className = "bsai-tpl-search-result-path";
-        pathDiv.textContent = cat.name + " > " + sub.name + " | " + cat.name_en + " > " + sub.name_en;
+        pathDiv.textContent = cat.name_en + " > " + sub.name_en + (cat.name ? " | " + cat.name + " > " + sub.name : "");
         el.appendChild(pathDiv);
 
         const dsDiv = document.createElement("div");
@@ -1176,7 +1176,7 @@ function renderTemplateList(node, sub, cat, listDiv) {
 
         const nmDiv = document.createElement("div");
         nmDiv.className = "bsai-tpl-item-nm";
-        nmDiv.textContent = tpl.name + " | " + tpl.name_en;
+        nmDiv.textContent = tpl.name_en + (tpl.name ? " | " + tpl.name : "");
         item.appendChild(nmDiv);
 
         const dsDiv = document.createElement("div");
@@ -1279,7 +1279,7 @@ function syncSelectionUI(node) {
                 ord.className = "ord";
                 ord.textContent = (i + 1);
                 const nm = document.createElement("span");
-                nm.textContent = it.tpl.name + " | " + (it.tpl.name_en || "");
+                nm.textContent = it.tpl.name_en + (it.tpl.name ? " | " + it.tpl.name : "");
                 const x = document.createElement("span");
                 x.className = "x";
                 x.textContent = "×";
@@ -1317,7 +1317,7 @@ function syncSelectionUI(node) {
         updatePreview(primary, node._bsaiPrevBox, node._bsaiPrevNm, node._bsaiPrevMd, node._bsaiPrevDur);
         if (node._bsaiPrevNm) {
             node._bsaiPrevNm.textContent = sel.map(function(it) {
-                return it.tpl.name + " | " + (it.tpl.name_en || "");
+                return it.tpl.name_en + (it.tpl.name ? " | " + it.tpl.name : "");
             }).join("  +  ");
         }
         if (node._bsaiPrevMd && sel.length > 1) {
