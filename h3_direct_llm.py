@@ -238,11 +238,67 @@ def _strata_healthy():
         return False
 
 
-def _generate_strata(user_text, system_prompt, max_tokens=4096):
-    """Call local Strata (OpenAI-compatible) with no API key needed. Blocking socket."""
+def _ninfer_manager():
+    """Lazily load NInferManager from BSAI-LLM-Strata (or return None)."""
+    import importlib.util as _ilu, os as _os
+    _p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                       "..", "BSAI-LLM-Strata", "strata_manager.py")
+    if not _os.path.exists(_p):
+        return None
+    _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m.NInferManager
+
+
+def _ninfer_healthy():
+    """Quick probe: is our local NInfer server already up (dynamic port)?"""
+    _nm = _ninfer_manager()
+    if _nm is None:
+        return False
+    try:
+        return bool(_nm.health(timeout=1.0).get("ok"))
+    except Exception:
+        return False
+
+
+def _nemotron_manager():
+    """Lazily load NemotronManager from BSAI-LLM-Strata (or return None)."""
+    import importlib.util as _ilu, os as _os
+    _p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                       "..", "BSAI-LLM-Strata", "strata_manager.py")
+    if not _os.path.exists(_p):
+        return None
+    _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m.NemotronManager
+
+
+def _nemotron_healthy():
+    """Quick probe: is our local Nemotron (llama.cpp @8085) already up?"""
+    _nm = _nemotron_manager()
+    if _nm is None:
+        return False
+    try:
+        return bool(_nm.health(timeout=1.0).get("ok"))
+    except Exception:
+        return False
+
+
+def _generate_nemotron(user_text, system_prompt, max_tokens=4096):
+    """Call local Nemotron 3.5 Bolt (llama.cpp @8085 via NemotronManager)."""
     import json as _j, socket as _sk, http.client as _hc
+    from urllib.parse import urlparse as _up
+    _nm = _nemotron_manager()
+    if _nm is None:
+        raise RuntimeError("BSAI-LLM-Strata 插件缺失，无法调用 Nemotron")
+    ok, msg = _nm.ensure_running()
+    if not ok:
+        raise RuntimeError(f"Nemotron 启动失败: {msg}")
+    mids = _nm.models()
     body = _j.dumps({
-        "model": "qwen3.8-flash-next",
+        "model": mids[0] if mids else "Nemotron-3.5-Bolt-74B-A9B",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_text},
@@ -252,14 +308,53 @@ def _generate_strata(user_text, system_prompt, max_tokens=4096):
         "top_p": 0.9,
         "stream": False,
     }).encode("utf-8")
+    u = _up(_nm.base_url())
     s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
     s.settimeout(600); s.setblocking(True)
-    s.connect(("127.0.0.1", 8080))
+    s.connect((u.hostname, u.port or 80))
     try:
-        conn = _hc.HTTPConnection("127.0.0.1", 8080, timeout=600)
+        conn = _hc.HTTPConnection(u.hostname, u.port or 80, timeout=600)
         conn.sock = s
-        conn.request("POST", "/v1/chat/completions", body=body,
-                     headers={"Content-Type": "application/json", "Authorization": "Bearer strata"})
+        conn.request("POST", u.path + "/chat/completions", body=body,
+                     headers={"Content-Type": "application/json",
+                              "Authorization": "Bearer strata"})
+        data = _j.loads(conn.getresponse().read().decode("utf-8"))
+    finally:
+        s.close()
+    return data["choices"][0]["message"]["content"]
+
+
+def _generate_ninfer(user_text, system_prompt, max_tokens=4096):
+    """Call local NInfer (AI蛮子 ninfer engine, dynamic port via NInferManager)."""
+    import json as _j, socket as _sk, http.client as _hc
+    from urllib.parse import urlparse as _up
+    _nm = _ninfer_manager()
+    if _nm is None:
+        raise RuntimeError("BSAI-LLM-Strata 插件缺失，无法调用 NInfer")
+    ok, msg = _nm.ensure_running()
+    if not ok:
+        raise RuntimeError(f"NInfer 启动失败: {msg}")
+    mids = _nm.models()
+    body = _j.dumps({
+        "model": mids[0] if mids else "default",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_text},
+        ],
+        "max_tokens": int(max_tokens),
+        "temperature": 0.6,
+        "top_p": 0.9,
+        "stream": False,
+    }).encode("utf-8")
+    u = _up(_nm.base_url())
+    s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+    s.settimeout(600); s.setblocking(True)
+    s.connect((u.hostname, u.port or 80))
+    try:
+        conn = _hc.HTTPConnection(u.hostname, u.port or 80, timeout=600)
+        conn.sock = s
+        conn.request("POST", u.path + "/chat/completions", body=body,
+                     headers={"Content-Type": "application/json"})
         data = _j.loads(conn.getresponse().read().decode("utf-8"))
     finally:
         s.close()
@@ -583,6 +678,30 @@ def merge_customization(prompt, customization):
                     error = "Strata output detected as repetitive garbage"
             except Exception as e:
                 error = "Strata: %s" % e
+        # BSAI Nemotron auto (llama.cpp @8085, third preferred)
+        if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
+            if _nemotron_healthy():
+                try:
+                    r = _clean(_generate_nemotron(user_msg, _H3_MERGE_SYSTEM_PROMPT, max_tokens=8192))
+                    if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
+                        result = r
+                        error = None
+                    elif r and _is_repetitive_garbage(r):
+                        error = "Nemotron output detected as repetitive garbage"
+                except Exception as e:
+                    error = "Nemotron: %s" % e
+        # BSAI NInfer auto (second preferred: AI蛮子 ninfer engine, dynamic port)
+        if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
+            if _ninfer_healthy():
+                try:
+                    r = _clean(_generate_ninfer(user_msg, _H3_MERGE_SYSTEM_PROMPT, max_tokens=8192))
+                    if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
+                        result = r
+                        error = None
+                    elif r and _is_repetitive_garbage(r):
+                        error = "NInfer output detected as repetitive garbage"
+                except Exception as e:
+                    error = "NInfer: %s" % e
         # Local attempts: try the fast merge model (sulphur) first, then a
         # stronger one (e.g. gemma). Reject outputs that merely copy the template
         # or produce repetitive garbage (e.g. "hair ribbon, hair scrunchie, ..." loops).
@@ -652,4 +771,16 @@ def generate_h3_prompt(user_text):
             return _strip_to_h3(_generate_strata(text, _H3_SYSTEM_PROMPT))
         except Exception as e:
             print(f"[BSAI H3] Strata call failed, falling back to local: {e}")
+    # BSAI Nemotron auto (llama.cpp @8085)
+    if _nemotron_healthy():
+        try:
+            return _strip_to_h3(_generate_nemotron(text, _H3_SYSTEM_PROMPT))
+        except Exception as e:
+            print(f"[BSAI H3] Nemotron call failed, falling back to local: {e}")
+    # BSAI NInfer auto (second preferred: AI蛮子 ninfer engine, dynamic port)
+    if _ninfer_healthy():
+        try:
+            return _strip_to_h3(_generate_ninfer(text, _H3_SYSTEM_PROMPT))
+        except Exception as e:
+            print(f"[BSAI H3] NInfer call failed, falling back to local: {e}")
     return _strip_to_h3(_generate_local(text, _H3_SYSTEM_PROMPT))

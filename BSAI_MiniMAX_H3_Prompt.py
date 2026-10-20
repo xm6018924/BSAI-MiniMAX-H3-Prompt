@@ -1,4 +1,4 @@
-﻿"""
+"""
 BSAI MiniMax H3 Prompt Optimizer Node
 
 根据 MiniMax H3 模型使用手册，将用户手动输入的提示词优化为符合 H3 规范的完整提示词。
@@ -76,6 +76,22 @@ def _bsai_list_llm_files():
         return []
 
 
+def _bsai_h3_ninfer_models():
+    """NInfer 模型下拉：models/LLM 下所有 *.ninfer 相对路径。"""
+    try:
+        import importlib.util as _ilu
+        _p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "..", "BSAI-LLM-Strata", "strata_manager.py")
+        if not os.path.exists(_p):
+            return []
+        _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
+        _m = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_m)
+        return [rel for rel, _abs in _m.NInferManager.list_models()]
+    except Exception:
+        return []
+
+
 def _bsai_call_chat_completion(llm, messages, params):
     kwargs = dict(params or {})
     kwargs["messages"] = messages
@@ -125,6 +141,89 @@ def _bsai_reset_llm_state(llm):
         elif hasattr(llm, "n_tokens"):
             llm.n_tokens = 0
     except Exception:
+        pass
+
+
+# ============================================================
+# BSAI HTTP LLM backends (Strata / NInfer) — same Llama-mimicking
+# interface used by the local loader, routed to a local engine.
+# ============================================================
+class _BSAI_H3_HTTPBackend:
+    """Mimics the subset of Llama used by this plugin, routed to local
+    Strata (8080) or NInfer (dynamic free port) through BSAI-LLM-Strata."""
+
+    def __init__(self, engine="strata", n_ctx=16384, ninfer_model="(Auto — first model found)"):
+        self.engine = engine
+        self.n_ctx = n_ctx
+        self.ninfer_model = None if str(ninfer_model).startswith("(Auto") else str(ninfer_model)
+        self._mgr = None
+
+    def _manager(self):
+        if self._mgr is None:
+            import importlib.util as _ilu
+            _p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              "..", "BSAI-LLM-Strata", "strata_manager.py")
+            if not os.path.exists(_p):
+                raise RuntimeError("BSAI-LLM-Strata 插件缺失")
+            _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
+            _m = _ilu.module_from_spec(_spec)
+            _spec.loader.exec_module(_m)
+            if self.engine == "strata":
+                self._mgr = _m.StrataManager
+            elif self.engine == "nemotron":
+                self._mgr = _m.NemotronManager
+            else:
+                self._mgr = _m.NInferManager
+        return self._mgr
+
+    def create_chat_completion(self, messages=None, **kwargs):
+        import json as _json
+        import socket as _sk, http.client as _hc
+        from urllib.parse import urlparse as _up
+
+        mgr = self._manager()
+        if self.engine == "strata":
+            ok, msg = mgr.ensure_running()
+            base = "http://127.0.0.1:8080/v1"
+            model = "qwen3.8-flash-next"
+            headers = {"Content-Type": "application/json", "Authorization": "Bearer strata"}
+        elif self.engine == "nemotron":
+            ok, msg = mgr.ensure_running()
+            base = mgr.base_url()
+            mids = mgr.models()
+            model = mids[0] if mids else "Nemotron-3.5-Bolt-74B-A9B"
+            headers = {"Content-Type": "application/json", "Authorization": "Bearer strata"}
+        else:
+            ok, msg = mgr.ensure_running(model_path=self.ninfer_model)
+            base = mgr.base_url()
+            mids = mgr.models()
+            model = mids[0] if mids else "default"
+            headers = {"Content-Type": "application/json"}
+        if not ok:
+            raise ConnectionError(f"engine {self.engine} failed to start: {msg}")
+
+        payload = {
+            "model": model,
+            "messages": messages or [],
+            "max_tokens": kwargs.get("max_tokens", 4096),
+            "temperature": kwargs.get("temperature", 0.7),
+            "top_p": kwargs.get("top_p", 0.9),
+            "stream": False,
+        }
+        body = _json.dumps(payload).encode("utf-8")
+        u = _up(base)
+        s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+        s.settimeout(600); s.setblocking(True)
+        s.connect((u.hostname, u.port or 80))
+        try:
+            conn = _hc.HTTPConnection(u.hostname, u.port or 80, timeout=600)
+            conn.sock = s
+            conn.request("POST", u.path + "/chat/completions", body=body, headers=headers)
+            return _json.loads(conn.getresponse().read().decode("utf-8", "replace"))
+        finally:
+            s.close()
+
+    def close(self):
         pass
 
 
@@ -1259,7 +1358,7 @@ class BSAI_H3_ModelLoader:
             if "mmproj" not in f.lower()
             and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
         ]
-        mmproj_list = ["None"] + [
+        mmproj_list = ["None", "None (无)"] + [
             f
             for f in all_files
             if "mmproj" in f.lower()
@@ -1271,8 +1370,12 @@ class BSAI_H3_ModelLoader:
 
         return {
             "required": {
+                "backend": (["llama.cpp (local GGUF)", "BSAI Strata (Qwen3.8-Flash-Next @8080)", "BSAI Nemotron (llama.cpp @8085)", "BSAI NInfer (本地反推 @808x)"],
+                            {"default": "llama.cpp (local GGUF)",
+                             "tooltip": "Strata/NInfer backends skip GGUF loading and call the local HTTP engines (NInfer uses a dynamic free port)"}),
                 "model_family": (
-                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
+                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"]
+                    + _BSAI_MODEL_FAMILY_LEGACY,  # 尾部 5 项为旧版标签：兼容老工作流 JSON 保存值
                     {"default": "Qwen3.8-VL", "tooltip": "Model family"},
                 ),
                 "model_file": (
@@ -1289,6 +1392,9 @@ class BSAI_H3_ModelLoader:
                     {"default": 16384, "min": 1024, "max": 327680, "step": 256, "tooltip": "Context length, recommend 16384+"},
                 ),
                 "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 9999, "step": 1, "tooltip": "-1=all on GPU. Auto-reduces if VRAM insufficient"}),
+                "ninfer_model": (["(Auto — first model found)"] + _bsai_h3_ninfer_models(),
+                            {"default": "(Auto — first model found)",
+                             "tooltip": "NInfer backend only: which *.ninfer model to load (models/LLM). Changing it restarts the NInfer engine."}),
             }
         }
 
@@ -1296,9 +1402,19 @@ class BSAI_H3_ModelLoader:
     RETURN_NAMES = ("qwen_model",)
     FUNCTION = "load"
     CATEGORY = "BSAI"
-    DESCRIPTION = "Load a local GGUF LLM model for H3 prompt optimization."
+    DESCRIPTION = "Load a local GGUF LLM model, or route to BSAI Strata / NInfer HTTP engines for H3 prompt optimization."
 
-    def load(self, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers):
+    def load(self, backend, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers, ninfer_model="(Auto — first model found)"):
+        # 旧版中文/双语标签归一化：兼容老工作流 JSON 保存值
+        model_family = _bsai_norm_legacy(model_family)
+        mmproj = _bsai_norm_legacy(mmproj)
+        if str(backend).startswith("BSAI Strata"):
+            return (_BSAI_H3_HTTPBackend(engine="strata", n_ctx=int(context_length)),)
+        if str(backend).startswith("BSAI Nemotron"):
+            return (_BSAI_H3_HTTPBackend(engine="nemotron", n_ctx=int(context_length)),)
+        if str(backend).startswith("BSAI NInfer"):
+            return (_BSAI_H3_HTTPBackend(engine="ninfer", n_ctx=int(context_length), ninfer_model=ninfer_model),)
+
         if model_file.startswith("(Place models"):
             raise RuntimeError("No model files found. Place models in ComfyUI/models/LLM/ and restart.")
 
@@ -1367,6 +1483,46 @@ _BSAI_DIRECTOR_STYLES = [
     "Ann Hui",
     "Jia Zhangke",
     "Bi Gan",
+    # 后 39 项为旧版标签：兼容老工作流 JSON 保存值
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Alfred Hitchcock (希区柯克 | 悬念大师)",
+    "Wong Kar-wai (王家卫)",
+    "Orson Welles (奥逊·威尔斯)",
+    "Ingmar Bergman (英格玛·伯格曼 | 哲学电影大师)",
+    "Federico Fellini (费德里科·费里尼 | 魔幻现实主义)",
+    "Akira Kurosawa (黑泽明 | 东方电影标杆)",
+    "Sergei Eisenstein (谢尔盖·爱森斯坦 | 蒙太奇)",
+    "Steven Spielberg (史蒂文·斯皮尔伯格)",
+    "Francis Ford Coppola (弗朗西斯·福特·科波拉)",
+    "Martin Scorsese (马丁·斯科塞斯)",
+    "Stanley Kubrick (斯坦利·库布里克)",
+    "Billy Wilder (比利·怀尔德)",
+    "Ang Lee (李安)",
+    "Zhang Yimou (张艺谋)",
+    "Satoshi Kon (今敏 | 动画电影大师)",
+    "Takeshi Kitano (北野武)",
+    "Christopher Nolan (克里斯托弗·诺兰)",
+    "Quentin Tarantino (昆汀·塔伦蒂诺)",
+    "James Cameron (詹姆斯·卡梅隆)",
+    "Alfonso Cuaron (阿方索·卡隆)",
+    "David Lynch (大卫·林奇)",
+    "Wes Anderson (韦斯·安德森)",
+    "Denis Villeneuve (丹尼斯·维伦纽瓦)",
+    "Bong Joon-ho (奉俊昊)",
+    "Hayao Miyazaki (宫崎骏)",
+    "Makoto Shinkai (新海诚)",
+    "Park Chan-wook (朴赞郁)",
+    "Fritz Lang (弗里茨·朗)",
+    "Jean-Luc Godard (让-吕克·戈达尔)",
+    "Andrei Tarkovsky (安德烈·塔可夫斯基)",
+    "Michelangelo Antonioni (米开朗基罗·安东尼奥尼)",
+    "Robert Bresson (罗伯特·布列松)",
+    "Yasujirō Ozu (小津安二郎)",
+    "John Woo (吴宇森)",
+    "Ann Hui (许鞍华)",
+    "Jia Zhangke (贾樟柯)",
+    "Bi Gan (毕赣)",
 ]
 
 _BSAI_CINEMATOGRAPHY_STYLES = [
@@ -1392,6 +1548,29 @@ _BSAI_CINEMATOGRAPHY_STYLES = [
     "Matthew Libatique",
     "Claudio Miranda",
     "Lin Liang-Zhong",
+    # 后 22 项为旧版标签：兼容老工作流 JSON 保存值
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
+    "Gordon Willis (戈登·威利斯 | 黑暗王子低调照明)",
+    "Freddie Young (弗雷迪·扬 | 70mm宽银幕史诗)",
+    "Roger Deakins (罗杰·狄金斯 | 克制写实主义)",
+    "Emmanuel Lubezki (卢贝兹基 | 自然光长镜头)",
+    "Greig Fraser (格雷格·弗莱瑟 | 粗粝物理质感)",
+    "Janusz Kaminski (雅努什·卡明斯基 | 逆光光晕)",
+    "Hoyte van Hoytema (霍伊特·范·霍伊特玛 | IMAX胶片实拍)",
+    "Vittorio Storaro (斯托拉罗 | 色彩心理学用光写作)",
+    "Sven Nykvist (斯文·尼奎斯特 | 极简自然光)",
+    "Christopher Doyle (杜可风 | 都市情绪光影诗人)",
+    "Mark Lee Ping-Bin (李屏宾 | 东方诗意自然光)",
+    "Peter Pau (鲍德熹 | 唯美写意逆光)",
+    "Robby Müller (罗比·穆勒 | 霓虹粗粝质感)",
+    "Conrad Hall (康拉德·霍尔 | 纹理阴影)",
+    "Robert Richardson (罗伯特·理查德森 | 高对比顶光)",
+    "Dariusz Wolski (达里乌什·沃尔斯基 | 暗黑哥特光泽)",
+    "Matthew Libatique (马修·利巴提克 | 高对比颗粒感)",
+    "Claudio Miranda (克劳迪奥·米兰达 | 冷调数字洁净)",
+    "Lin Liang-Zhong (林良忠 | 乡土写实柔光)",
 ]
 
 _BSAI_FILM_GENRES = [
@@ -1447,6 +1626,59 @@ _BSAI_FILM_GENRES = [
     "Documentary",
     "Mockumentary",
     "Experimental",
+    # 后 52 项为旧版标签：兼容老工作流 JSON 保存值
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "Realism (写实主义)",
+    "Neo-Realism (新现实主义)",
+    "Poetic Realism (诗意写实)",
+    "Expressionism (表现主义)",
+    "Magical Realism (魔幻现实主义)",
+    "Surrealism (超现实主义)",
+    "French New Wave (法国新浪潮)",
+    "Classical Hollywood (古典好莱坞)",
+    "Film Noir (黑色电影)",
+    "Vintage Film (胶片复古风)",
+    "Theatrical Drama (舞台化戏剧)",
+    "2D Hand-drawn Animation (二维手绘动画)",
+    "Ghibli/Miyazaki Animation (吉卜力/宫崎骏风格)",
+    "Shinkai Animation (新海诚风格)",
+    "Satoshi Kon Animation (今敏风格)",
+    "3D CG Animation (三维CG动画)",
+    "Stop Motion (定格动画)",
+    "Ink Wash Animation (水墨国风动画)",
+    "Live Action (真人实拍)",
+    "Live Action + CG (真人CG混合)",
+    "Drama (剧情片)",
+    "Art-house Drama (文艺剧情片)",
+    "Mystery (悬疑片)",
+    "Crime (犯罪片)",
+    "Gangster (黑帮片)",
+    "Psychological Thriller (心理惊悚)",
+    "Horror (恐怖片)",
+    "Action (动作片)",
+    "Wuxia (武侠片)",
+    "Kung Fu (功夫片)",
+    "Adventure (冒险片)",
+    "Epic (史诗片)",
+    "Sci-Fi (科幻片)",
+    "Fantasy (奇幻片)",
+    "Superhero (超级英雄)",
+    "Romantic Comedy (浪漫喜剧)",
+    "Dark Comedy (黑色喜剧)",
+    "Slapstick Comedy (无厘头喜剧)",
+    "Absurdist Comedy (荒诞喜剧)",
+    "Romance (爱情片)",
+    "Urban Romance (都市爱情)",
+    "Road Movie (公路电影)",
+    "Western (西部片)",
+    "Musical (歌舞片)",
+    "War Film (战争片)",
+    "Historical Biopic (历史传记片)",
+    "Period Epic (古装史诗片)",
+    "Documentary (纪录片)",
+    "Mockumentary (伪纪录片)",
+    "Experimental (先锋实验)",
 ]
 
 _BSAI_CUT_STYLES = [
@@ -1467,6 +1699,24 @@ _BSAI_CUT_STYLES = [
     "13 Segments",
     "14 Segments",
     "15 Segments",
+    # 后 17 项为旧版标签：兼容老工作流 JSON 保存值
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "One Shot (一镜到底)",
+    "2 Segments (2段)",
+    "3 Segments (3段)",
+    "4 Segments (4段)",
+    "5 Segments (5段)",
+    "6 Segments (6段)",
+    "7 Segments (7段)",
+    "8 Segments (8段)",
+    "9 Segments (9段)",
+    "10 Segments (10段)",
+    "11 Segments (11段)",
+    "12 Segments (12段)",
+    "13 Segments (13段)",
+    "14 Segments (14段)",
+    "15 Segments (15段)",
 ]
 
 _BSAI_SCORE_STYLES = [
@@ -1513,6 +1763,50 @@ _BSAI_SCORE_STYLES = [
     "Hiroyuki Sawano",
     "Cho Young-wuk",
     "Zhao Jiping",
+    # 后 43 项为旧版标签：兼容老工作流 JSON 保存值
+    "Official SKILL (官方SKILL模式)",
+    "System Recommended (系统推荐)",
+    "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
+    "Hans Zimmer (汉斯·季默 | 电子管弦混合)",
+    "Ennio Morricone (埃尼奥·莫里康内 | 意大利西部 haunting旋律)",
+    "Bernard Herrmann (伯纳德·赫尔曼 | 弦乐悬疑)",
+    "Danny Elfman (丹尼·艾夫曼 | 哥特怪诞)",
+    "Howard Shore (霍华德·肖 | 奇幻史诗主题)",
+    "Thomas Newman (托马斯·纽曼 | 氛围极简主义)",
+    "Nino Rota (尼诺·罗塔 | 意大利旋律古典)",
+    "Vangelis (范吉利斯 | 合成器电子)",
+    "Ryuichi Sakamoto (坂本龙一 | 东西方融合)",
+    "Joe Hisaishi (久石让 | 旋律钢琴与弦乐)",
+    "Tan Dun (谭盾 | 跨文化打击乐)",
+    "Shigeru Umebayashi (梅林茂 | 忧郁沉郁)",
+    "Clint Mansell (克林特·曼塞尔 | 极简重复)",
+    "Trent Reznor & Atticus Ross (特伦特·雷泽诺与阿提克斯·罗斯 | 工业电子)",
+    "Alexandre Desplat (亚历山大·德斯普拉 | 优雅管弦)",
+    "Michael Giacchino (迈克尔·吉亚奇诺 | 情感旋律)",
+    "Ludwig Goransson (路德维希·戈兰松 | 非洲未来主义打击乐)",
+    "Mica Levi (米卡·利维 | 不安不协和)",
+    "Johann Johannsson (约翰·约翰松 | 持续音极简)",
+    "Carter Burwell (卡特·伯威尔 | 民谣简约)",
+    "Gustavo Santaolalla (古斯塔沃·桑塔欧拉拉 | 独奏吉他)",
+    "A.R. Rahman (A.R.拉赫曼 | 宝莱坞融合)",
+    "Hildur Gudnadottir (希尔杜·古德纳多蒂尔 | 大提琴持续音暗黑)",
+    "Philip Glass (菲利普·格拉斯 | 极简重复模式)",
+    "Angelo Badalamenti (安吉洛·巴达拉门蒂 | 超现实梦幻爵士)",
+    "James Horner (詹姆斯·霍纳 | 凯尔特情感)",
+    "Alan Silvestri (艾伦·西尔维斯特里 | 冒险英雄)",
+    "Bear McCreary (贝尔·麦克里 | 太鼓打击民族风)",
+    "Max Steiner (马克斯·斯坦纳 | 古典好莱坞交响)",
+    "Jerry Goldsmith (杰瑞·戈德史密斯 | 多变前卫)",
+    "Dimitri Tiomkin (迪米特里·蒂奥姆金 | 美国边疆)",
+    "Elmer Bernstein (埃尔默·伯恩斯坦 | 爵士大乐队)",
+    "Maurice Jarre (莫里斯·贾尔 | 史诗合唱异域)",
+    "Kitaro (喜多郎 | 新世纪合成器)",
+    "Shirō Sagisu (鹭巢诗郎 | 动漫管弦摇滚融合)",
+    "Yuki Kajiura (梶浦由记 | 哥特合唱空灵)",
+    "Taku Iwasaki (岩崎琢 | 嘻哈管弦混合)",
+    "Hiroyuki Sawano (泽野弘之 | 史诗动漫摇滚)",
+    "Cho Young-wuk (赵英旭 | 韩国悲剧旋律)",
+    "Zhao Jiping (赵季平 | 中国传统电影配乐)",
 ]
 
 _BSAI_OUTPUT_LANGUAGES = [
@@ -1525,7 +1819,74 @@ _BSAI_OUTPUT_LANGUAGES = [
     "Spanish (Español)",
     "Russian (Русский)",
     "Bilingual CN+EN",
+    # 后 3 项为旧版标签：兼容老工作流 JSON 保存值
+    "Chinese (中文)",
+    "Japanese (日本語)",
+    "Bilingual CN+EN (中英双语)",
 ]
+
+# ── 旧版中文/双语标签 → 当前英文标签（兼容老工作流 JSON 保存值）──
+# 后 6 项 generation_mode 旧版标签（ appended 进各节点 generation_mode 选项列表）
+_BSAI_GENERATION_MODES_LEGACY = [
+    "System Recommended (系统推荐)",
+    "Text to Video (文生视频)",
+    "Image to Video (图生视频)",
+    "First+Last Frame (首尾帧)",
+    "Last Frame (尾帧)",
+    "Multimodal Fusion (多模态融合)",
+]
+# 后 5 项 model_family 旧版标签（appended 进 BSAI_H3_ModelLoader.model_family 选项列表）
+_BSAI_MODEL_FAMILY_LEGACY = [
+    "Qwen3-VL (通义千问3-VL)",
+    "Qwen3.5-VL (通义千问3.5-VL)",
+    "Qwen3.6-VL (通义千问3.6-VL)",
+    "Qwen3.8-VL (通义千问3.8-VL)",
+    "Gemma4 (谷歌宝石4)",
+]
+# 无法用前缀规则覆盖的旧版标签（mmproj 空占位等）
+_BSAI_LEGACY_EXTRA_MAP = {
+    "None (无)": "None",
+}
+
+
+def _bsai_build_legacy_alias_map(current_list, legacy_list):
+    """旧标签均为「现标签 + ' (中文说明)'」形式，按最长前缀规则建立 旧→现 映射。"""
+    m = {}
+    for old in legacy_list:
+        best = None
+        for cur in current_list:
+            if old.startswith(cur) and old[len(cur):].startswith(" ("):
+                if best is None or len(cur) > len(best):
+                    best = cur
+        if best is not None:
+            m[old] = best
+    return m
+
+
+_BSAI_LEGACY_LABEL_MAP = dict(_BSAI_LEGACY_EXTRA_MAP)
+for _legacy_list in (
+    _BSAI_DIRECTOR_STYLES,
+    _BSAI_CINEMATOGRAPHY_STYLES,
+    _BSAI_FILM_GENRES,
+    _BSAI_CUT_STYLES,
+    _BSAI_SCORE_STYLES,
+    _BSAI_OUTPUT_LANGUAGES,
+    _BSAI_GENERATION_MODES_LEGACY,
+    _BSAI_MODEL_FAMILY_LEGACY,
+):
+    _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(_legacy_list, _legacy_list))
+# generation_mode / model_family 的现标签不在其旧版列表里，单独与旧版列表配对
+_BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
+    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+    _BSAI_GENERATION_MODES_LEGACY))
+_BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
+    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
+    _BSAI_MODEL_FAMILY_LEGACY))
+
+
+def _bsai_norm_legacy(value):
+    """老工作流 JSON 保存的旧版中文/双语标签 → 当前英文标签；未知值原样返回。"""
+    return _BSAI_LEGACY_LABEL_MAP.get(value, value)
 
 
 # ============================================================
@@ -2348,7 +2709,8 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"]
+                    + _BSAI_GENERATION_MODES_LEGACY,  # 尾部 6 项为旧版标签：兼容老工作流 JSON 保存值
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
@@ -2480,6 +2842,15 @@ Requires BSAI H3 Model Loader node.
         audio_2=None,
         audio_3=None,
     ):
+        # 旧版中文/双语标签归一化：兼容老工作流 JSON 保存值
+        generation_mode = _bsai_norm_legacy(generation_mode)
+        output_language = _bsai_norm_legacy(output_language)
+        director_style = _bsai_norm_legacy(director_style)
+        cinematography_style = _bsai_norm_legacy(cinematography_style)
+        film_genre = _bsai_norm_legacy(film_genre)
+        cut_style = _bsai_norm_legacy(cut_style)
+        score_style = _bsai_norm_legacy(score_style)
+
         llm = qwen_model
 
         # ── Auto-recovery: if model was unloaded (e.g. by BSAI_H3_UnloadModel
@@ -2903,7 +3274,8 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"]
+                    + _BSAI_GENERATION_MODES_LEGACY,  # 尾部 6 项为旧版标签：兼容老工作流 JSON 保存值
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
@@ -3029,6 +3401,15 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         audio_2=None,
         audio_3=None,
     ):
+        # 旧版中文/双语标签归一化：兼容老工作流 JSON 保存值
+        generation_mode = _bsai_norm_legacy(generation_mode)
+        output_language = _bsai_norm_legacy(output_language)
+        director_style = _bsai_norm_legacy(director_style)
+        cinematography_style = _bsai_norm_legacy(cinematography_style)
+        film_genre = _bsai_norm_legacy(film_genre)
+        cut_style = _bsai_norm_legacy(cut_style)
+        score_style = _bsai_norm_legacy(score_style)
+
         if requests is None:
             raise RuntimeError(
                 "The 'requests' library is not installed. Please install it: pip install requests"
