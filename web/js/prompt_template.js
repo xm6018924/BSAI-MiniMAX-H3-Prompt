@@ -1141,7 +1141,7 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
             (cat.subcategories || []).forEach(function(s) {
                 const opt = document.createElement("option");
                 opt.value = s.id;
-                opt.textContent = s.name + " (" + s.name_en + ")";
+                opt.textContent = s.name_en + (s.name ? " (" + s.name + ")" : "");
                 if (s.id === sub.id) opt.selected = true;
                 node._bsaiSub.appendChild(opt);
             });
