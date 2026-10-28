@@ -1893,7 +1893,8 @@ def _bsai_norm_legacy(value):
 # normalised by _bsai_norm_legacy at runtime.
 import re as _re_cn_filter
 for _lst_name in ("_BSAI_DIRECTOR_STYLES", "_BSAI_CINEMATOGRAPHY_STYLES",
-                  "_BSAI_FILM_GENRES", "_BSAI_CUT_STYLES", "_BSAI_SCORE_STYLES"):
+                  "_BSAI_FILM_GENRES", "_BSAI_CUT_STYLES", "_BSAI_SCORE_STYLES",
+                  "_BSAI_OUTPUT_LANGUAGES"):
     _orig = globals().get(_lst_name, [])
     globals()[_lst_name] = [x for x in _orig if not _re_cn_filter.search(r'[\u4e00-\u9fff]', str(x))]
 del _lst_name, _orig, _re_cn_filter
