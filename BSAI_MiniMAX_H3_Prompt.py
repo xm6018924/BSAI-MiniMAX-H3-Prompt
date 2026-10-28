@@ -1370,12 +1370,11 @@ class BSAI_H3_ModelLoader:
 
         return {
             "required": {
-                "backend": (["llama.cpp (local GGUF)", "BSAI Strata (Qwen3.8-Flash-Next @8080)", "BSAI Nemotron (llama.cpp @8085)", "BSAI NInfer (本地反推 @808x)"],
+                "backend": (["llama.cpp (local GGUF)", "BSAI Strata (Qwen3.8-Flash-Next @8080)", "BSAI Nemotron (llama.cpp @8085)", "BSAI NInfer (local reverse @808x)"],
                             {"default": "llama.cpp (local GGUF)",
                              "tooltip": "Strata/NInfer backends skip GGUF loading and call the local HTTP engines (NInfer uses a dynamic free port)"}),
                 "model_family": (
-                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"]
-                    + _BSAI_MODEL_FAMILY_LEGACY,  # 尾部 5 项为旧版标签：兼容老工作流 JSON 保存值
+                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
                     {"default": "Qwen3.8-VL", "tooltip": "Model family"},
                 ),
                 "model_file": (
@@ -1887,6 +1886,17 @@ _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
 def _bsai_norm_legacy(value):
     """老工作流 JSON 保存的旧版中文/双语标签 → 当前英文标签；未知值原样返回。"""
     return _BSAI_LEGACY_LABEL_MAP.get(value, value)
+
+
+# Drop Chinese-bilingual legacy entries from dropdown lists now that the
+# alias map above is built.  Old workflow values are still accepted and
+# normalised by _bsai_norm_legacy at runtime.
+import re as _re_cn_filter
+for _lst_name in ("_BSAI_DIRECTOR_STYLES", "_BSAI_CINEMATOGRAPHY_STYLES",
+                  "_BSAI_FILM_GENRES", "_BSAI_CUT_STYLES", "_BSAI_SCORE_STYLES"):
+    _orig = globals().get(_lst_name, [])
+    globals()[_lst_name] = [x for x in _orig if not _re_cn_filter.search(r'[\u4e00-\u9fff]', str(x))]
+del _lst_name, _orig, _re_cn_filter
 
 
 # ============================================================
@@ -2709,8 +2719,7 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"]
-                    + _BSAI_GENERATION_MODES_LEGACY,  # 尾部 6 项为旧版标签：兼容老工作流 JSON 保存值
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
@@ -3274,8 +3283,7 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"]
-                    + _BSAI_GENERATION_MODES_LEGACY,  # 尾部 6 项为旧版标签：兼容老工作流 JSON 保存值
+                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
