@@ -1358,7 +1358,7 @@ class BSAI_H3_ModelLoader:
             if "mmproj" not in f.lower()
             and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
         ]
-        mmproj_list = ["None", "None (无)"] + [
+        mmproj_list = ["None"] + [
             f
             for f in all_files
             if "mmproj" in f.lower()
@@ -1402,6 +1402,12 @@ class BSAI_H3_ModelLoader:
     FUNCTION = "load"
     CATEGORY = "BSAI"
     DESCRIPTION = "Load a local GGUF LLM model, or route to BSAI Strata / NInfer HTTP engines for H3 prompt optimization."
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, **kwargs):
+        # Let legacy bilingual labels saved by old workflow JSONs pass combo
+        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
+        return True
 
     def load(self, backend, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers, ninfer_model="(Auto — first model found)"):
         # 旧版中文/双语标签归一化：兼容老工作流 JSON 保存值
@@ -1482,7 +1488,11 @@ _BSAI_DIRECTOR_STYLES = [
     "Ann Hui",
     "Jia Zhangke",
     "Bi Gan",
-    # 后 39 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels saved in old workflow JSONs. Kept out of the dropdown;
+# accepted via VALIDATE_INPUTS and mapped to the plain labels by _bsai_norm_legacy.
+_BSAI_DIRECTOR_STYLES_LEGACY = [
     "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Alfred Hitchcock (希区柯克 | 悬念大师)",
@@ -1547,7 +1557,10 @@ _BSAI_CINEMATOGRAPHY_STYLES = [
     "Matthew Libatique",
     "Claudio Miranda",
     "Lin Liang-Zhong",
-    # 后 22 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
+_BSAI_CINEMATOGRAPHY_STYLES_LEGACY = [
     "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Gregg Toland (格雷格·托兰德 | 深焦摄影)",
@@ -1625,7 +1638,10 @@ _BSAI_FILM_GENRES = [
     "Documentary",
     "Mockumentary",
     "Experimental",
-    # 后 52 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
+_BSAI_FILM_GENRES_LEGACY = [
     "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "Realism (写实主义)",
@@ -1698,7 +1714,10 @@ _BSAI_CUT_STYLES = [
     "13 Segments",
     "14 Segments",
     "15 Segments",
-    # 后 17 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
+_BSAI_CUT_STYLES_LEGACY = [
     "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "One Shot (一镜到底)",
@@ -1762,7 +1781,10 @@ _BSAI_SCORE_STYLES = [
     "Hiroyuki Sawano",
     "Cho Young-wuk",
     "Zhao Jiping",
-    # 后 43 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
+_BSAI_SCORE_STYLES_LEGACY = [
     "Official SKILL (官方SKILL模式)",
     "System Recommended (系统推荐)",
     "John Williams (约翰·威廉姆斯 | 史诗管弦主导动机)",
@@ -1818,7 +1840,10 @@ _BSAI_OUTPUT_LANGUAGES = [
     "Spanish (Español)",
     "Russian (Русский)",
     "Bilingual CN+EN",
-    # 后 3 项为旧版标签：兼容老工作流 JSON 保存值
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
+_BSAI_OUTPUT_LANGUAGES_LEGACY = [
     "Chinese (中文)",
     "Japanese (日本語)",
     "Bilingual CN+EN (中英双语)",
@@ -1863,17 +1888,15 @@ def _bsai_build_legacy_alias_map(current_list, legacy_list):
 
 
 _BSAI_LEGACY_LABEL_MAP = dict(_BSAI_LEGACY_EXTRA_MAP)
-for _legacy_list in (
-    _BSAI_DIRECTOR_STYLES,
-    _BSAI_CINEMATOGRAPHY_STYLES,
-    _BSAI_FILM_GENRES,
-    _BSAI_CUT_STYLES,
-    _BSAI_SCORE_STYLES,
-    _BSAI_OUTPUT_LANGUAGES,
-    _BSAI_GENERATION_MODES_LEGACY,
-    _BSAI_MODEL_FAMILY_LEGACY,
+for _cur_list, _legacy_list in (
+    (_BSAI_DIRECTOR_STYLES, _BSAI_DIRECTOR_STYLES_LEGACY),
+    (_BSAI_CINEMATOGRAPHY_STYLES, _BSAI_CINEMATOGRAPHY_STYLES_LEGACY),
+    (_BSAI_FILM_GENRES, _BSAI_FILM_GENRES_LEGACY),
+    (_BSAI_CUT_STYLES, _BSAI_CUT_STYLES_LEGACY),
+    (_BSAI_SCORE_STYLES, _BSAI_SCORE_STYLES_LEGACY),
+    (_BSAI_OUTPUT_LANGUAGES, _BSAI_OUTPUT_LANGUAGES_LEGACY),
 ):
-    _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(_legacy_list, _legacy_list))
+    _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(_cur_list, _legacy_list))
 # generation_mode / model_family 的现标签不在其旧版列表里，单独与旧版列表配对
 _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
     ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
@@ -1886,18 +1909,6 @@ _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
 def _bsai_norm_legacy(value):
     """老工作流 JSON 保存的旧版中文/双语标签 → 当前英文标签；未知值原样返回。"""
     return _BSAI_LEGACY_LABEL_MAP.get(value, value)
-
-
-# Drop Chinese-bilingual legacy entries from dropdown lists now that the
-# alias map above is built.  Old workflow values are still accepted and
-# normalised by _bsai_norm_legacy at runtime.
-import re as _re_cn_filter
-for _lst_name in ("_BSAI_DIRECTOR_STYLES", "_BSAI_CINEMATOGRAPHY_STYLES",
-                  "_BSAI_FILM_GENRES", "_BSAI_CUT_STYLES", "_BSAI_SCORE_STYLES",
-                  "_BSAI_OUTPUT_LANGUAGES"):
-    _orig = globals().get(_lst_name, [])
-    globals()[_lst_name] = [x for x in _orig if not _re_cn_filter.search(r'[\u4e00-\u9fff]', str(x))]
-del _lst_name, _orig, _re_cn_filter
 
 
 # ============================================================
@@ -2805,6 +2816,13 @@ class BSAI_MiniMAX_H3_Prompt:
     RETURN_NAMES = ("prompt_output",)
     FUNCTION = "optimize_prompt"
     CATEGORY = "BSAI"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, **kwargs):
+        # Let legacy bilingual labels saved by old workflow JSONs pass combo
+        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
+        return True
+
     DESCRIPTION = """
 Optimize user prompts into H3-compliant structured prompts.
 H3 formula: Reference Description + Core Creative + Scene Process.
@@ -3365,6 +3383,13 @@ class BSAI_H3_RemoteAPI:
     RETURN_NAMES = ("prompt_output",)
     FUNCTION = "optimize_prompt_remote"
     CATEGORY = "BSAI"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, **kwargs):
+        # Let legacy bilingual labels saved by old workflow JSONs pass combo
+        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
+        return True
+
     DESCRIPTION = """
 Call a remote LLM API (OpenAI/DashScope compatible) to optimize prompts into H3-compliant structured prompts.
 No local model loading required - saves VRAM for video generation.
