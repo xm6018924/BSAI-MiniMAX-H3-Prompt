@@ -1346,27 +1346,40 @@ class _BSAI_QwenStorage:
 # 模型加载节点
 # ============================================================
 
+_BSAI_MAIN_MODEL_EXTS = (".gguf", ".safetensors", ".bin", ".pth", ".pt")
+_BSAI_MMPROJ_EXTS = (".gguf", ".safetensors", ".bin")
+
+
+def _bsai_loader_model_files():
+    """Scanned main-model file names (never mmproj), for the model_file combo."""
+    model_list = [
+        f
+        for f in _bsai_list_llm_files()
+        if "mmproj" not in f.lower()
+        and os.path.splitext(f)[1].lower() in _BSAI_MAIN_MODEL_EXTS
+    ]
+    if not model_list:
+        model_list = ["(Place models in models/LLM)"]
+    return model_list
+
+
+def _bsai_loader_mmproj_files():
+    """Scanned mmproj file names, 'None' first, for the mmproj combo."""
+    return ["None"] + [
+        f
+        for f in _bsai_list_llm_files()
+        if "mmproj" in f.lower()
+        and os.path.splitext(f)[1].lower() in _BSAI_MMPROJ_EXTS
+    ]
+
+
 class BSAI_H3_ModelLoader:
     """Load a local GGUF LLM model for H3 prompt optimization."""
 
     @classmethod
     def INPUT_TYPES(s):
-        all_files = _bsai_list_llm_files()
-        model_list = [
-            f
-            for f in all_files
-            if "mmproj" not in f.lower()
-            and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin", ".pth", ".pt"]
-        ]
-        mmproj_list = ["None"] + [
-            f
-            for f in all_files
-            if "mmproj" in f.lower()
-            and os.path.splitext(f)[1].lower() in [".gguf", ".safetensors", ".bin"]
-        ]
-
-        if not model_list:
-            model_list = ["(Place models in models/LLM)"]
+        model_list = _bsai_loader_model_files()
+        mmproj_list = _bsai_loader_mmproj_files()
 
         return {
             "required": {
@@ -1374,7 +1387,7 @@ class BSAI_H3_ModelLoader:
                             {"default": "llama.cpp (local GGUF)",
                              "tooltip": "Strata/NInfer backends skip GGUF loading and call the local HTTP engines (NInfer uses a dynamic free port)"}),
                 "model_family": (
-                    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
+                    _BSAI_MODEL_FAMILY,
                     {"default": "Qwen3.8-VL", "tooltip": "Model family"},
                 ),
                 "model_file": (
@@ -1404,10 +1417,18 @@ class BSAI_H3_ModelLoader:
     DESCRIPTION = "Load a local GGUF LLM model, or route to BSAI Strata / NInfer HTTP engines for H3 prompt optimization."
 
     @classmethod
-    def VALIDATE_INPUTS(cls, **kwargs):
-        # Let legacy bilingual labels saved by old workflow JSONs pass combo
-        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
-        return True
+    def VALIDATE_INPUTS(cls, model_family=None, mmproj=None):
+        # 只有 model_family / mmproj 的选项列表改成了纯英文，需要额外放行旧版
+        # 双语标签（_bsai_norm_legacy 在 load() 里归一化）。model_file /
+        # ninfer_model 保持 ComfyUI 内置的 list 校验：文件名填错必须报错。
+        ret = _bsai_validate_selects(model_family=model_family)
+        if ret is not True:
+            return ret
+        if mmproj is None or mmproj in _BSAI_SELECT_ACCEPTED["mmproj"]:
+            return True
+        if mmproj in _bsai_loader_mmproj_files():
+            return True
+        return "Invalid mmproj: %r" % (mmproj,)
 
     def load(self, backend, model_family, model_file, mmproj, enable_thinking, context_length, gpu_layers, ninfer_model="(Auto — first model found)"):
         # 旧版中文/双语标签归一化：兼容老工作流 JSON 保存值
@@ -1834,19 +1855,26 @@ _BSAI_OUTPUT_LANGUAGES = [
     "Chinese",
     "English",
     "Japanese",
+    "Korean",
+    "French",
+    "German",
+    "Spanish",
+    "Russian",
+    "Bilingual CN+EN",
+]
+
+# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note). The
+# native-language suffixes used to be offered in the list above; they belong
+# here instead, where the alias map turns them back into the plain English name.
+_BSAI_OUTPUT_LANGUAGES_LEGACY = [
+    "Chinese (中文)",
+    "Japanese (日本語)",
+    "Bilingual CN+EN (中英双语)",
     "Korean (한국어)",
     "French (Français)",
     "German (Deutsch)",
     "Spanish (Español)",
     "Russian (Русский)",
-    "Bilingual CN+EN",
-]
-
-# Legacy bilingual labels (see _BSAI_DIRECTOR_STYLES_LEGACY note).
-_BSAI_OUTPUT_LANGUAGES_LEGACY = [
-    "Chinese (中文)",
-    "Japanese (日本語)",
-    "Bilingual CN+EN (中英双语)",
 ]
 
 # ── 旧版中文/双语标签 → 当前英文标签（兼容老工作流 JSON 保存值）──
@@ -1871,6 +1899,23 @@ _BSAI_MODEL_FAMILY_LEGACY = [
 _BSAI_LEGACY_EXTRA_MAP = {
     "None (无)": "None",
 }
+
+# 当前（纯英文）下拉选项。留给 INPUT_TYPES 与校验共用，避免两处各写一份。
+_BSAI_GENERATION_MODES = [
+    "System Recommended",
+    "Text to Video",
+    "Image to Video",
+    "First+Last Frame",
+    "Last Frame",
+    "Multimodal Fusion",
+]
+_BSAI_MODEL_FAMILY = [
+    "Qwen3-VL",
+    "Qwen3.5-VL",
+    "Qwen3.6-VL",
+    "Qwen3.8-VL",
+    "Gemma4",
+]
 
 
 def _bsai_build_legacy_alias_map(current_list, legacy_list):
@@ -1899,16 +1944,49 @@ for _cur_list, _legacy_list in (
     _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(_cur_list, _legacy_list))
 # generation_mode / model_family 的现标签不在其旧版列表里，单独与旧版列表配对
 _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
-    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
-    _BSAI_GENERATION_MODES_LEGACY))
+    _BSAI_GENERATION_MODES, _BSAI_GENERATION_MODES_LEGACY))
 _BSAI_LEGACY_LABEL_MAP.update(_bsai_build_legacy_alias_map(
-    ["Qwen3-VL", "Qwen3.5-VL", "Qwen3.6-VL", "Qwen3.8-VL", "Gemma4"],
-    _BSAI_MODEL_FAMILY_LEGACY))
+    _BSAI_MODEL_FAMILY, _BSAI_MODEL_FAMILY_LEGACY))
 
 
 def _bsai_norm_legacy(value):
     """老工作流 JSON 保存的旧版中文/双语标签 → 当前英文标签；未知值原样返回。"""
     return _BSAI_LEGACY_LABEL_MAP.get(value, value)
+
+
+# ── 下拉选项校验 ────────────────────────────────────────────────
+# 只有「选项列表被改成纯英文」的那几个输入会出现在下面这张表里。把输入名
+# 逐个写进 VALIDATE_INPUTS 的签名，ComfyUI 才只对它们跳过内置的 list 校验；
+# 一旦签名写成 **kwargs，内置校验会对整个节点全部输入失效——包括 model_file
+# / mmproj / ninfer_model 这些模型文件名列表，那样填错文件名也不会报错。
+_BSAI_SELECT_OPTIONS = {
+    "generation_mode": _BSAI_GENERATION_MODES,
+    "output_language": _BSAI_OUTPUT_LANGUAGES,
+    "director_style": _BSAI_DIRECTOR_STYLES,
+    "cinematography_style": _BSAI_CINEMATOGRAPHY_STYLES,
+    "film_genre": _BSAI_FILM_GENRES,
+    "cut_style": _BSAI_CUT_STYLES,
+    "score_style": _BSAI_SCORE_STYLES,
+    "model_family": _BSAI_MODEL_FAMILY,
+    "mmproj": ("None",),
+}
+
+# name -> 该输入的当前选项 + 会归一化到这些选项的旧版标签
+_BSAI_SELECT_ACCEPTED = {
+    _name: tuple(_opts) + tuple(
+        _old for _old, _new in _BSAI_LEGACY_LABEL_MAP.items() if _new in _opts
+    )
+    for _name, _opts in _BSAI_SELECT_OPTIONS.items()
+}
+
+
+def _bsai_validate_selects(**values):
+    """仅放行「当前选项」或「能归一化成当前选项的旧版标签」，其余交给节点报错。"""
+    for name, value in values.items():
+        if value is None or value in _BSAI_SELECT_ACCEPTED.get(name, ()):
+            continue
+        return "Invalid %s: %r" % (name, value)
+    return True
 
 
 # ============================================================
@@ -2731,7 +2809,7 @@ class BSAI_MiniMAX_H3_Prompt:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    _BSAI_GENERATION_MODES,
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
@@ -2818,10 +2896,28 @@ class BSAI_MiniMAX_H3_Prompt:
     CATEGORY = "BSAI"
 
     @classmethod
-    def VALIDATE_INPUTS(cls, **kwargs):
-        # Let legacy bilingual labels saved by old workflow JSONs pass combo
-        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
-        return True
+    def VALIDATE_INPUTS(
+        cls,
+        generation_mode=None,
+        output_language=None,
+        director_style=None,
+        cinematography_style=None,
+        film_genre=None,
+        cut_style=None,
+        score_style=None,
+    ):
+        # 只有这 7 个输入的选项列表改成了纯英文，需要额外放行旧版双语标签
+        # （_bsai_norm_legacy 在 optimize_prompt* 里归一化）。其余输入继续走
+        # ComfyUI 内置校验——写成 **kwargs 会让整个节点的 list 校验全部失效。
+        return _bsai_validate_selects(
+            generation_mode=generation_mode,
+            output_language=output_language,
+            director_style=director_style,
+            cinematography_style=cinematography_style,
+            film_genre=film_genre,
+            cut_style=cut_style,
+            score_style=score_style,
+        )
 
     DESCRIPTION = """
 Optimize user prompts into H3-compliant structured prompts.
@@ -3302,7 +3398,7 @@ class BSAI_H3_RemoteAPI:
                     },
                 ),
                 "generation_mode": (
-                    ["System Recommended", "Text to Video", "Image to Video", "First+Last Frame", "Last Frame", "Multimodal Fusion"],
+                    _BSAI_GENERATION_MODES,
                     {"default": "System Recommended", "tooltip": "System Recommended auto-detects: T2VA/I2VA/FL2VA/L2VA/Ref2VA based on connected inputs"},
                 ),
                 "video_duration": (
@@ -3385,10 +3481,28 @@ class BSAI_H3_RemoteAPI:
     CATEGORY = "BSAI"
 
     @classmethod
-    def VALIDATE_INPUTS(cls, **kwargs):
-        # Let legacy bilingual labels saved by old workflow JSONs pass combo
-        # validation; _bsai_norm_legacy() maps them to current labels at runtime.
-        return True
+    def VALIDATE_INPUTS(
+        cls,
+        generation_mode=None,
+        output_language=None,
+        director_style=None,
+        cinematography_style=None,
+        film_genre=None,
+        cut_style=None,
+        score_style=None,
+    ):
+        # 只有这 7 个输入的选项列表改成了纯英文，需要额外放行旧版双语标签
+        # （_bsai_norm_legacy 在 optimize_prompt* 里归一化）。其余输入继续走
+        # ComfyUI 内置校验——写成 **kwargs 会让整个节点的 list 校验全部失效。
+        return _bsai_validate_selects(
+            generation_mode=generation_mode,
+            output_language=output_language,
+            director_style=director_style,
+            cinematography_style=cinematography_style,
+            film_genre=film_genre,
+            cut_style=cut_style,
+            score_style=score_style,
+        )
 
     DESCRIPTION = """
 Call a remote LLM API (OpenAI/DashScope compatible) to optimize prompts into H3-compliant structured prompts.

@@ -4052,7 +4052,7 @@
             {
               "id": "combat_wushu_dash",
               "name": "国风招式武打·突进近身 | Wushu Dash & Close-In",
-              "name_en": "Wushu Moves - Dash & Close-In (突进近身)",
+              "name_en": "Wushu Moves - Dash & Close-In",
               "description": "国风招式武打·突进近身：招式链——极影瞬步突进→低身滑步近袭→灵跃贴身快打→侧闪绕身换位→后撤蓄势反扑，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
               "preview": "combat_wushu_dash.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4074,7 +4074,7 @@
             {
               "id": "combat_wushu_aerial",
               "name": "国风招式武打·空中连击 | Wushu Aerial Combo",
-              "name_en": "Wushu Moves - Aerial Combo (空中连击)",
+              "name_en": "Wushu Moves - Aerial Combo",
               "description": "国风招式武打·空中连击：招式链——凌空飞踢压制→腾空旋身斩击→空中滞空连击→俯冲下压突袭，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
               "preview": "combat_wushu_aerial.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4096,7 +4096,7 @@
             {
               "id": "combat_wushu_ground",
               "name": "国风招式武打·震地重击 | Wushu Ground Smash",
-              "name_en": "Wushu Moves - Ground Smash (震地重击)",
+              "name_en": "Wushu Moves - Ground Smash",
               "description": "国风招式武打·震地重击：招式链——横扫腿击破阵→落地震地重击→蓄力重拳冲击→霸体冲身破防，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
               "preview": "combat_wushu_ground.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4118,7 +4118,7 @@
             {
               "id": "combat_wushu_counter",
               "name": "国风招式武打·格挡反制 | Wushu Guard & Counter",
-              "name_en": "Wushu Moves - Guard & Counter (格挡反制)",
+              "name_en": "Wushu Moves - Guard & Counter",
               "description": "国风招式武打·格挡反制：招式链——反手格挡防御→抬手震气击退→借力打力反击→后撤诱敌反扑，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
               "preview": "combat_wushu_counter.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4833,7 +4833,7 @@
             {
               "id": "combat_style_shaolin",
               "name": "武打风格·邵氏经典武侠 | Fight Style - Shaolin Classic",
-              "name_en": "Fight Style - Shaolin Classic (邵氏经典武侠)",
+              "name_en": "Fight Style - Shaolin Classic",
               "description": "武打风格·邵氏经典武侠：中式室内（武馆/酒馆/大院）或竹林山野、练功服长衫、硬桥硬马顿挫分明、复古胶片颗粒暖调。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
               "preview": "combat_style_shaolin.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4853,7 +4853,7 @@
             {
               "id": "combat_style_ink",
               "name": "武打风格·水墨写意武侠 | Fight Style - Ink-Wash Wuxia",
-              "name_en": "Fight Style - Ink-Wash Wuxia (水墨写意武侠)",
+              "name_en": "Fight Style - Ink-Wash Wuxia",
               "description": "武打风格·水墨写意武侠：水墨山水（竹林/山水/雨夜）、留白构图、衣袂翻飞、气劲炸裂成墨迹波纹。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
               "preview": "combat_style_ink.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4873,7 +4873,7 @@
             {
               "id": "combat_style_cyber",
               "name": "武打风格·赛博霓虹格斗 | Fight Style - Cyber Neon",
-              "name_en": "Fight Style - Cyber Neon (赛博霓虹格斗)",
+              "name_en": "Fight Style - Cyber Neon",
               "description": "武打风格·赛博霓虹格斗：霓虹街巷/天台/地下拳场、冷蓝紫+霓虹粉光效、能量光轨随招式迸发、金属玻璃反光。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
               "preview": "combat_style_cyber.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4893,7 +4893,7 @@
             {
               "id": "combat_style_doc",
               "name": "武打风格·写实纪录片格斗 | Fight Style - Doc Realism",
-              "name_en": "Fight Style - Doc Realism (写实纪录片格斗)",
+              "name_en": "Fight Style - Doc Realism",
               "description": "武打风格·写实纪录片格斗：现代拳馆/八角笼/街头、手持跟拍轻微晃动、汗水灰尘真实飞溅、肌肉发力清晰。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
               "preview": "combat_style_doc.webp",
               "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5922,7 +5922,7 @@
             {
               "id": "cam_flythrough_fpv",
               "name": "镜头穿梭·FPV极速俯冲 | Flythrough - FPV Dive",
-              "name_en": "Camera Flythrough - FPV Dive (FPV极速俯冲)",
+              "name_en": "Camera Flythrough - FPV Dive",
               "description": "镜头穿梭·FPV极速俯冲：从高空/远景极速俯冲，穿过云层/晨雾/拱门/门窗/人群；前景元素快速掠过带运动模糊，史诗级空间感。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
               "preview": "cam_flythrough_fpv.webp",
               "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -5943,7 +5943,7 @@
             {
               "id": "cam_flythrough_pass",
               "name": "镜头穿梭·穿越物体 | Flythrough - Pass-Through",
-              "name_en": "Camera Flythrough - Pass-Through (穿越物体)",
+              "name_en": "Camera Flythrough - Pass-Through",
               "description": "镜头穿梭·穿越物体：镜头直接穿过一个物体或表面——门、窗、隧道、罐体、水幕、纸张、玻璃，穿模瞬间自然无缝，露出另一侧空间。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
               "preview": "cam_flythrough_pass.webp",
               "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -5964,7 +5964,7 @@
             {
               "id": "cam_flythrough_journey",
               "name": "镜头穿梭·场景旅程 | Flythrough - Scene Journey",
-              "name_en": "Camera Flythrough - Scene Journey (场景旅程)",
+              "name_en": "Camera Flythrough - Scene Journey",
               "description": "镜头穿梭·场景旅程：镜头连续飞行穿过多个场景无缝衔接——由远及近、室外到室内、天空到地面，场景沿飞行渐进变化，仍是单一连续镜头。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
               "preview": "cam_flythrough_journey.webp",
               "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -5985,7 +5985,7 @@
             {
               "id": "cam_flythrough_follow",
               "name": "镜头穿梭·跟拍穿梭 | Flythrough - Subject Follow",
-              "name_en": "Camera Flythrough - Subject Follow (跟拍穿梭)",
+              "name_en": "Camera Flythrough - Subject Follow",
               "description": "镜头穿梭·跟拍穿梭：锁定主体（图1中的主体），镜头与主体一起在世界中穿梭——主体始终突出，前景快速掠过，关键节点变速。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
               "preview": "cam_flythrough_follow.webp",
               "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",

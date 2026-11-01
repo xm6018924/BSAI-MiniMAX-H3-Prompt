@@ -2391,7 +2391,8 @@
        ],
        "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 = the REAL PERSON — the ONLY source for the real person's appearance (face / body / hair / clothes / identity), copied EXACTLY, standing full-body in the scene.\n<Picture 2>@图2 = the HOLOGRAM PERSON — the person in <Picture 2>@图2 (face / body / pose / clothes) becomes the holographic projection: same appearance, rendered as LIGHT.\n<Picture 3>@图3 (optional) = the SCENE — IF provided, the whole environment / lighting / atmosphere come from it EXACTLY; if not, a default dark-tech space that makes the hologram clearly visible.\n【参考层级·绝对强制】图1是真人：真人外貌（脸/身体/发型/衣着/身份）唯一来自图1，完全照抄、以全身形态立于场景；图2是全息人物：图2中的人（脸/身体/姿态/衣着）变成全息投影——外观一致、但以光的形式呈现；图3（可选）为场景：提供时场景/环境/光影/氛围严格来自图3，未提供时默认使用能让全息体清晰可见的暗色科技空间。\n\n[HOLOGRAM VISUAL / 全息视觉铁律 — LIGHT, NOT SOLID]:\nThe hologram person is made of LIGHT, not matter: semi-transparent (the background is visible THROUGH the body), softly glowing, cyan / blue-white light particles, fine holographic scan lines, subtle flicker and digital shimmer, a light beam projecting upward from the floor beneath it, tiny spark particles drifting around the silhouette. NEVER render it as a solid / opaque person standing in the frame; never a ghost / spirit / zombie; never a duplicate real body. Its translucency stays constant (about 30%-60% see-through) so it reads unmistakably as a hologram in EVERY frame.\n【全息视觉铁律·光是光，不是实体】全息人物由光构成、绝非物质：半透明（可透过其身体看见背景）、柔和发光、青蓝/蓝白光粒子、细密全息扫描线、轻微闪烁与数字微光、底部地面向上投射的光柱、轮廓周围飘散细小微光粒子。绝不渲染成实体/不透明的人站在画面里；绝不是鬼魂/灵体/僵尸；绝不是另一个真人身体。透明度全程恒定（约30%-60%半透明），每一帧都一眼可辨是全息投影。\n\n[IDENTITY LOCK / 身份锁定铁律 — NO SWAPPING]:\n<Picture 1>@图1 is the REAL person — solid, opaque, real skin and material — in EVERY frame; <Picture 2>@图2 is the HOLOGRAM — translucent light body — in EVERY frame. The two NEVER swap roles, NEVER transform into each other, NEVER blur together: the real person NEVER becomes a hologram, the hologram NEVER becomes solid or real-looking. What is real stays real; what is light stays light — for the whole video.\n【身份锁定铁律·绝不互换】图1在每一帧都是真人——实体、不透明、真实皮肤与材质；图2在每一帧都是全息影像——半透明光体。两者绝不互换身份、绝不互相转化、绝不混淆：真人绝不会变成全息，全息绝不会变成实体或真实质感。实体的始终实体，光的始终是光——贯穿整段视频。\nTWO-ENTITY RULE — the frame contains EXACTLY two subjects and NOTHING else: the real person (<Picture 1>@图1) and the single hologram (<Picture 2>@图2). STRICTLY FORBIDDEN: any third person, robot, mechanical guard, android, statue, mannequin, AR avatar or any extra humanoid figure — even if such things exist in the reference images, they are DROPPED and never generated; any second hologram, clone, duplicate projection or afterimage; any human silhouette / ghost figure / shadowy figure in the background. Only these two characters exist on screen.\n【双主体规则】画面中只存在两个主体、别无他物：真人（图1）与唯一的全息影像（图2）。严格禁止：任何第三人、机器人、机械守卫、仿生人、雕像、人台、AR角色或任何额外人形实体——即使参考图中存在这类物体也一律丢弃、绝不生成；禁止出现第二个全息体、分身、复制体或残影；禁止背景中出现任何人形剪影/虚影/影子人物。画面上只允许这两个角色存在。\n\n[INTERACTION PHYSICS / 互动物理铁律]:\nThe real person (<Picture 1>@图1) and the hologram (<Picture 2>@图2) interact within the scene: eye contact, conversation, gestures, reaching out toward each other, the hologram responding with its own motions. BUT the hologram has NO physical body: the real person's hand may pass THROUGH it or hover NEAR it (light ripples / particles scatter at the contact point); the hologram never exerts real physical force on the real person. Default = light-only interaction; a solid touch is ONLY allowed if the user explicitly requests it.\n【互动物理铁律】真人（图1）与全息人物（图2）在场景中互动：对视、对话、手势、互相伸手靠近，全息人物以自己的动作回应。但全息体没有实体：真人的手可穿过它或在它表面悬停（接触点泛起光纹/粒子散开）；全息人物不对真人施加真实物理力。默认只做光交互；只有用户明确要求时才允许实体接触。\n[INTERACTION MODE / 互动模式 — LOCKED]:\nThis template is Mode D — Walk-Through 穿越 (LOCKED): the real person walks through the hologram; the light body splits and shimmers around them, particles scatter, then the hologram reforms behind the real person. ONLY this mode is used; never switch to another mode.\n【互动模式·锁定】本模板固定为 D 穿越模式：真人迈步穿过全息体，光体在真人身体周围分裂闪烁、粒子散开，真人完全穿过后光体在身后重新聚合复原。只用本模式，绝不切换为其他模式。\nINSTRUCTION ≠ DIALOGUE — the text inside this template is GENERATION INSTRUCTION only, NEVER dialogue: never read it aloud as spoken lines, never display it as subtitles, never treat it as the characters' conversation. If the user did NOT input any dialogue content, the two interact in SILENCE (no speech, no dialogue, no voice-over) — eye contact and gestures only. Dialogue appears ONLY when the user explicitly writes the dialogue content.\n【指令≠台词】模板内的文字只是生成指令，绝不是对话内容：绝不把它当作台词朗读出来，绝不当字幕显示，绝不当作角色的对话。用户没有输入任何对话内容时，两人以无声方式互动（不说话、无对白、无旁白），只以眼神与手势交流；只有用户明确输入了对话内容，才以该内容为台词。\n[BACKGROUND / 场景规则 — PRIORITY CHAIN]:\nPriority 1: IF <Picture 3>@图3 provided → scene ENTIRELY from <Picture 3>@图3, LOCKED for ALL frames, rock-steady.\nPriority 2: no <Picture 3>@图3 → default scene: a dark / dim modern space (or night city) where the glowing hologram is clearly visible; static and stable throughout.\n【背景规则·优先级链】优先1：提供图3→场景完全来自图3并全程锁定、纹丝不动。优先2：无图3→默认使用暗调/现代空间（或夜色城市）场景，让发光全息体清晰可见；全程静止稳定。\n\nintegrated_multimodal_description:\n[Shot 1] [0-12s] Live-action, cinematic, single continuous shot, no cuts. In the scene (per the background priority chain), the hologram person (<Picture 2>@图2 appearance, semi-transparent glowing light, scan lines, subtle flicker) stands still; the real person (<Picture 1>@图1 appearance) walks calmly TOWARD it and THROUGH it — the light body splits and shimmers around the real person, particles scatter and bend, then the hologram reforms behind them, intact. The real person stays REAL (solid, opaque) and the hologram stays a HOLOGRAM (translucent light) in EVERY frame — never swapping, never transforming. No speech, no dialogue, no subtitles. The hologram stays a hologram in EVERY frame. Scene LOCKED for all frames. Steady neutral medium shot; slow cinematic pace.\n【镜头1】[0-12s] 实拍，电影感，单一连续镜头，无剪辑。场景中（按背景优先级链），全息人物（图2外观，半透明发光、扫描线、轻微闪烁）静立；真人（图1外观）平静地向它走去并从中穿过——光体在真人身体周围分裂闪烁、粒子散开并弯折，真人完全穿过后光体在身后重新聚合复原、完整无损。真人每一帧始终是实体真人、全息人物每一帧始终是全息光体，绝不互换绝不转化；全程无台词、无对白、无字幕。全息体每一帧都保持全息质感。场景全程锁定。镜头平稳中性（中景），缓慢电影化节奏。\n\noverall_soundscape:\nAmbient of the scene plus a soft holographic hum / electronic shimmer, with a brief rise and particle-like crackle as the real person passes through; NO speech, NO dialogue, NO voice-over by default — only ambient sound and the holographic hum. 场景环境声叠加轻柔全息嗡鸣/电子微光音，真人穿过瞬间有短暂增强与粒子般细响；默认无说话、无对白、无旁白——只保留环境声与全息嗡鸣。\n\nnon_diegetic_music:\nA subtle futuristic ambient score, kept low, swelling gently with the interaction. 轻量未来感氛围配乐，音量压低，随互动缓缓起伏。"
       }
-     ]
+     ],
+     "name_en": "Real Person + Hologram"
     },
     {
      "id": "apocalypse_overgrowth",
@@ -2425,7 +2426,8 @@
        ],
        "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]:\n<Picture 1>@图1 = the USER'S ANY IMAGE — the SOLE starting point: its subject, composition, camera angle and lighting are copied EXACTLY at the beginning and remain the structural anchor of the whole video. It can be ANY photo/image — a street, building, room, vehicle, landscape, product, person scene, whatever it shows decays and gets overgrown.\n<Picture 2>@图2 (optional) = OVERGROWTH STYLE reference — IF provided, the plant species, decay level and color grading of the final wasteland follow <Picture 2>; if not, a default dense overgrowth style (tall grass, thick vines, moss) is used.\n<Picture 3>@图3 (optional) = extra scene reference — additional environment detail, weak reference only.\n【参考层级·绝对强制】图1是用户的任意图片——唯一的渐变起点：其主体/构图/机位/光线在开头完全照抄，并作为整段视频的结构锚点。可以是任何图片——街道、建筑、室内、车辆、风景、产品、人物场景，画面中的一切都会衰败并被野草吞噬。图2（可选）为荒芜风格参考：提供时，最终荒野的植被种类/衰败程度/色调遵循图2；未提供时使用默认的茂密野草丛生风格（高草、粗藤、苔藓）。图3（可选）为额外场景参考：弱参考，只补充环境细节。\n\n[MORPH BRIDGE / 渐变桥梁铁律 — ONE CONTINUOUS MORPH]:\nThe whole video is ONE continuous, seamless morph from <Picture 1>@图1's original look to a full post-apocalyptic overgrown wasteland — no cuts, no hard transitions, no teleport, no sudden jumps. The camera path of the source image is continued; the composition and the subject's silhouette stay anchored and readable throughout.\nTime axis (12s): [0-4s] the original image stays almost unchanged, only the first decay signals appear (a crack in the asphalt / a few green shoots / slightly faded colors); [4-8s] overgrowth spreads: weeds push through the ground, vines climb and cover surfaces, moss and lichen spread, paint peels, rust blooms — the original scene visibly decays IN PLACE; [8-12s] total wasteland: dense wild grass and creepers swallow the scene, the original subject is recognizable only by its silhouette and position, the world becomes a wild overgrown ruin. The morph rate is smooth and continuous — every intermediate frame is a natural in-between state.\n【渐变桥梁铁律·单一连续变形】整段视频是从图1原貌到彻底末日荒芜野草丛生的单一连续无缝渐变——无剪辑、无硬切、无瞬移、无突跳。延续源图片的镜头路径；构图与主体轮廓全程锚定、始终可辨。\n时间轴（12s）：[0-4s] 原图几乎不变，只出现最初的衰败信号（路面一道裂缝/几点新绿/颜色微微褪去）；[4-8s] 野草蔓延：杂草顶裂地面、藤蔓攀爬覆盖表面、苔藓与地衣扩散、油漆剥落、锈迹蔓延——原场景原地可见地衰败；[8-12s] 彻底荒芜：茂密野草与藤蔓吞没场景，原图主体仅凭轮廓与位置仍可辨认，世界成为野草丛生的荒芜废墟。渐变速率平滑连续——每一个中间帧都是自然的过渡态。\n\n[APOCALYPSE VISUAL / 末日视觉铁律]:\nWild tall grass cracking through the ground, thick vines and creepers climbing and covering walls / roofs / vehicles, moss and lichen spreading over every surface, vines hanging like curtains from broken windows and ledges, paint peeling, concrete crumbling, metal rusting, scattered debris and dust, thin fog and atmospheric haze, sunrays breaking through clouds (soft diffused light), colors fading to desaturated yellow-brown / grey-green wasteland tones. Atmosphere: desolate, silent, nature reclaims civilization — time has passed long after humans.\n【末日视觉铁律】野草疯长顶裂地面，粗壮藤蔓攀爬覆盖墙壁/屋顶/车辆，苔藓与地衣蔓延至每个表面，藤蔓自破碎窗沿垂下如帘，油漆剥落、混凝土碎裂、金属锈蚀，遍地碎砾与尘土，薄雾与大气霾，阳光穿透云层（柔和漫射光），色调褪为低饱和黄褐/灰绿荒芜色。氛围：荒凉、寂静、自然吞噬文明——人类消失已久的时间感。\n\n[FINAL STATE / 终点锁定]:\nBy the final frame the transformation is COMPLETE: the scene is a fully overgrown post-apocalyptic wasteland; the original subject is reduced to a silhouette buried in dense vegetation and decay. Do NOT stop halfway; do NOT reverse / recover; do NOT show any living humans or clean surviving areas.\n【终点锁定】最后一帧渐变必须完成：画面成为完全野草丛生的末日荒芜景象；原图主体被茂密植被与衰败吞没、只剩轮廓。不得半途而止；不得逆向恢复；不得出现任何活人或完好/未衰败的区域。\n\nintegrated_multimodal_description:\n[Shot 1] [0-12s] Live-action, cinematic, ONE continuous shot continuing the camera path of the source image (steady / slow push-in), no cuts. Opening: the frame looks EXACTLY like <Picture 1>@图1. Then the overgrowth morph unfolds along the time axis: first decay signals → vegetation spreads and the scene decays in place → dense wild grass and creepers swallow everything. The original subject's silhouette and position stay anchored and recognizable. The final frame is a complete post-apocalyptic overgrown wasteland. No humans, no dialogue, no subtitles.\n【镜头1】[0-12s] 实拍，电影感，单一连续镜头（延续源图机位：平稳或极缓推近），无剪辑。开场：画面与图1完全一致。随后沿时间轴展开荒芜渐变：最初衰败信号→植被蔓延、场景原地衰败→茂密野草与藤蔓吞没一切。原图主体轮廓与位置始终锚定可辨。最后一帧是完全的末日荒芜野草丛生景象。无人、无对白、无字幕。\n\noverall_soundscape:\nWind over the overgrowth, dry grass rustling, faint creaks of crumbling structures, distant bird calls; NO speech, NO dialogue, NO voice-over by default.\n荒原风声、干草沙沙、建筑崩塌的细微吱呀、远处鸟鸣；默认无说话、无对白、无旁白。\n\nnon_diegetic_music:\nA low, desolate ambient score with a slow swell as the wasteland takes over; subtle, restrained.\n低沉荒凉氛围配乐，随荒芜吞噬渐强；克制、压低。"
       }
-     ]
+     ],
+     "name_en": "Post-Apocalyptic Overgrowth"
     }
    ]
   },
@@ -4050,7 +4052,7 @@
       {
        "id": "combat_wushu_dash",
        "name": "国风招式武打·突进近身 | Wushu Dash & Close-In",
-       "name_en": "Wushu Moves - Dash & Close-In (突进近身)",
+       "name_en": "Wushu Moves - Dash & Close-In",
        "description": "国风招式武打·突进近身：招式链——极影瞬步突进→低身滑步近袭→灵跃贴身快打→侧闪绕身换位→后撤蓄势反扑，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
        "preview": "combat_wushu_dash.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4072,7 +4074,7 @@
       {
        "id": "combat_wushu_aerial",
        "name": "国风招式武打·空中连击 | Wushu Aerial Combo",
-       "name_en": "Wushu Moves - Aerial Combo (空中连击)",
+       "name_en": "Wushu Moves - Aerial Combo",
        "description": "国风招式武打·空中连击：招式链——凌空飞踢压制→腾空旋身斩击→空中滞空连击→俯冲下压突袭，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
        "preview": "combat_wushu_aerial.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4094,7 +4096,7 @@
       {
        "id": "combat_wushu_ground",
        "name": "国风招式武打·震地重击 | Wushu Ground Smash",
-       "name_en": "Wushu Moves - Ground Smash (震地重击)",
+       "name_en": "Wushu Moves - Ground Smash",
        "description": "国风招式武打·震地重击：招式链——横扫腿击破阵→落地震地重击→蓄力重拳冲击→霸体冲身破防，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
        "preview": "combat_wushu_ground.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4116,7 +4118,7 @@
       {
        "id": "combat_wushu_counter",
        "name": "国风招式武打·格挡反制 | Wushu Guard & Counter",
-       "name_en": "Wushu Moves - Guard & Counter (格挡反制)",
+       "name_en": "Wushu Moves - Guard & Counter",
        "description": "国风招式武打·格挡反制：招式链——反手格挡防御→抬手震气击退→借力打力反击→后撤诱敌反扑，具体招式术语驱动、命中反馈真实、身体失衡诚实。图1+图2对打双方，图3可选场景。",
        "preview": "combat_wushu_counter.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4831,7 +4833,7 @@
       {
        "id": "combat_style_shaolin",
        "name": "武打风格·邵氏经典武侠 | Fight Style - Shaolin Classic",
-       "name_en": "Fight Style - Shaolin Classic (邵氏经典武侠)",
+       "name_en": "Fight Style - Shaolin Classic",
        "description": "武打风格·邵氏经典武侠：中式室内（武馆/酒馆/大院）或竹林山野、练功服长衫、硬桥硬马顿挫分明、复古胶片颗粒暖调。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
        "preview": "combat_style_shaolin.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4851,7 +4853,7 @@
       {
        "id": "combat_style_ink",
        "name": "武打风格·水墨写意武侠 | Fight Style - Ink-Wash Wuxia",
-       "name_en": "Fight Style - Ink-Wash Wuxia (水墨写意武侠)",
+       "name_en": "Fight Style - Ink-Wash Wuxia",
        "description": "武打风格·水墨写意武侠：水墨山水（竹林/山水/雨夜）、留白构图、衣袂翻飞、气劲炸裂成墨迹波纹。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
        "preview": "combat_style_ink.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4871,7 +4873,7 @@
       {
        "id": "combat_style_cyber",
        "name": "武打风格·赛博霓虹格斗 | Fight Style - Cyber Neon",
-       "name_en": "Fight Style - Cyber Neon (赛博霓虹格斗)",
+       "name_en": "Fight Style - Cyber Neon",
        "description": "武打风格·赛博霓虹格斗：霓虹街巷/天台/地下拳场、冷蓝紫+霓虹粉光效、能量光轨随招式迸发、金属玻璃反光。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
        "preview": "combat_style_cyber.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -4891,7 +4893,7 @@
       {
        "id": "combat_style_doc",
        "name": "武打风格·写实纪录片格斗 | Fight Style - Doc Realism",
-       "name_en": "Fight Style - Doc Realism (写实纪录片格斗)",
+       "name_en": "Fight Style - Doc Realism",
        "description": "武打风格·写实纪录片格斗：现代拳馆/八角笼/街头、手持跟拍轻微晃动、汗水灰尘真实飞溅、肌肉发力清晰。同样的招式，以该风格呈现。图1+图2对打双方，图3可选场景。",
        "preview": "combat_style_doc.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5767,7 +5769,7 @@
       {
        "id": "bili_w4_01",
        "name": "招式1",
-       "name_en": "Wave 4 招式 1",
+       "name_en": "Wave 4 Move 1",
        "description": "B站动作提示词第4波·双人对战：招式1。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_01.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5787,7 +5789,7 @@
       {
        "id": "bili_w4_02",
        "name": "招式2",
-       "name_en": "Wave 4 招式 2",
+       "name_en": "Wave 4 Move 2",
        "description": "B站动作提示词第4波·双人对战：招式2。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_02.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5807,7 +5809,7 @@
       {
        "id": "bili_w4_03",
        "name": "招式3",
-       "name_en": "Wave 4 招式 3",
+       "name_en": "Wave 4 Move 3",
        "description": "B站动作提示词第4波·双人对战：招式3。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_03.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5827,7 +5829,7 @@
       {
        "id": "bili_w4_04",
        "name": "招式4",
-       "name_en": "Wave 4 招式 4",
+       "name_en": "Wave 4 Move 4",
        "description": "B站动作提示词第4波·双人对战：招式4。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_04.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5847,7 +5849,7 @@
       {
        "id": "bili_w4_05",
        "name": "招式5",
-       "name_en": "Wave 4 招式 5",
+       "name_en": "Wave 4 Move 5",
        "description": "B站动作提示词第4波·双人对战：招式5。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_05.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5867,7 +5869,7 @@
       {
        "id": "bili_w4_06",
        "name": "招式6",
-       "name_en": "Wave 4 招式 6",
+       "name_en": "Wave 4 Move 6",
        "description": "B站动作提示词第4波·双人对战：招式6。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_06.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5887,7 +5889,7 @@
       {
        "id": "bili_w4_07",
        "name": "招式7",
-       "name_en": "Wave 4 招式 7",
+       "name_en": "Wave 4 Move 7",
        "description": "B站动作提示词第4波·双人对战：招式7。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_07.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5907,7 +5909,7 @@
       {
        "id": "bili_w4_08",
        "name": "招式8",
-       "name_en": "Wave 4 招式 8",
+       "name_en": "Wave 4 Move 8",
        "description": "B站动作提示词第4波·双人对战：招式8。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_08.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5927,7 +5929,7 @@
       {
        "id": "bili_w4_09",
        "name": "招式9",
-       "name_en": "Wave 4 招式 9",
+       "name_en": "Wave 4 Move 9",
        "description": "B站动作提示词第4波·双人对战：招式9。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_09.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5947,7 +5949,7 @@
       {
        "id": "bili_w4_10",
        "name": "招式10",
-       "name_en": "Wave 4 招式 10",
+       "name_en": "Wave 4 Move 10",
        "description": "B站动作提示词第4波·双人对战：招式10。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_10.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5967,7 +5969,7 @@
       {
        "id": "bili_w4_11",
        "name": "招式11",
-       "name_en": "Wave 4 招式 11",
+       "name_en": "Wave 4 Move 11",
        "description": "B站动作提示词第4波·双人对战：招式11。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_11.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -5987,7 +5989,7 @@
       {
        "id": "bili_w4_12",
        "name": "招式12",
-       "name_en": "Wave 4 招式 12",
+       "name_en": "Wave 4 Move 12",
        "description": "B站动作提示词第4波·双人对战：招式12。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_12.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6007,7 +6009,7 @@
       {
        "id": "bili_w4_13",
        "name": "招式13",
-       "name_en": "Wave 4 招式 13",
+       "name_en": "Wave 4 Move 13",
        "description": "B站动作提示词第4波·双人对战：招式13。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_13.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6027,7 +6029,7 @@
       {
        "id": "bili_w4_14",
        "name": "招式14",
-       "name_en": "Wave 4 招式 14",
+       "name_en": "Wave 4 Move 14",
        "description": "B站动作提示词第4波·双人对战：招式14。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_14.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6047,7 +6049,7 @@
       {
        "id": "bili_w4_15",
        "name": "招式15",
-       "name_en": "Wave 4 招式 15",
+       "name_en": "Wave 4 Move 15",
        "description": "B站动作提示词第4波·双人对战：招式15。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_15.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6067,7 +6069,7 @@
       {
        "id": "bili_w4_16",
        "name": "招式16",
-       "name_en": "Wave 4 招式 16",
+       "name_en": "Wave 4 Move 16",
        "description": "B站动作提示词第4波·双人对战：招式16。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_16.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6087,7 +6089,7 @@
       {
        "id": "bili_w4_17",
        "name": "招式17",
-       "name_en": "Wave 4 招式 17",
+       "name_en": "Wave 4 Move 17",
        "description": "B站动作提示词第4波·双人对战：招式17。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_17.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6107,7 +6109,7 @@
       {
        "id": "bili_w4_18",
        "name": "招式18",
-       "name_en": "Wave 4 招式 18",
+       "name_en": "Wave 4 Move 18",
        "description": "B站动作提示词第4波·双人对战：招式18。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_18.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6127,7 +6129,7 @@
       {
        "id": "bili_w4_19",
        "name": "招式19",
-       "name_en": "Wave 4 招式 19",
+       "name_en": "Wave 4 Move 19",
        "description": "B站动作提示词第4波·双人对战：招式19。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_19.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6147,7 +6149,7 @@
       {
        "id": "bili_w4_20",
        "name": "招式20",
-       "name_en": "Wave 4 招式 20",
+       "name_en": "Wave 4 Move 20",
        "description": "B站动作提示词第4波·双人对战：招式20。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_20.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6167,7 +6169,7 @@
       {
        "id": "bili_w4_21",
        "name": "招式21",
-       "name_en": "Wave 4 招式 21",
+       "name_en": "Wave 4 Move 21",
        "description": "B站动作提示词第4波·双人对战：招式21。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_21.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6187,7 +6189,7 @@
       {
        "id": "bili_w4_22",
        "name": "招式22",
-       "name_en": "Wave 4 招式 22",
+       "name_en": "Wave 4 Move 22",
        "description": "B站动作提示词第4波·双人对战：招式22。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_22.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6207,7 +6209,7 @@
       {
        "id": "bili_w4_23",
        "name": "招式23",
-       "name_en": "Wave 4 招式 23",
+       "name_en": "Wave 4 Move 23",
        "description": "B站动作提示词第4波·双人对战：招式23。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w4_23.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6235,7 +6237,7 @@
       {
        "id": "bili_w5_05",
        "name": "招式5",
-       "name_en": "Wave 5 招式 5",
+       "name_en": "Wave 5 Move 5",
        "description": "B站动作提示词第5波·双人对战：招式5。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_05.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6255,7 +6257,7 @@
       {
        "id": "bili_w5_06",
        "name": "招式6",
-       "name_en": "Wave 5 招式 6",
+       "name_en": "Wave 5 Move 6",
        "description": "B站动作提示词第5波·双人对战：招式6。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_06.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6275,7 +6277,7 @@
       {
        "id": "bili_w5_07",
        "name": "招式7",
-       "name_en": "Wave 5 招式 7",
+       "name_en": "Wave 5 Move 7",
        "description": "B站动作提示词第5波·双人对战：招式7。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_07.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6295,7 +6297,7 @@
       {
        "id": "bili_w5_08",
        "name": "招式8",
-       "name_en": "Wave 5 招式 8",
+       "name_en": "Wave 5 Move 8",
        "description": "B站动作提示词第5波·双人对战：招式8。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_08.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6315,7 +6317,7 @@
       {
        "id": "bili_w5_09",
        "name": "招式9",
-       "name_en": "Wave 5 招式 9",
+       "name_en": "Wave 5 Move 9",
        "description": "B站动作提示词第5波·双人对战：招式9。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_09.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6335,7 +6337,7 @@
       {
        "id": "bili_w5_10",
        "name": "招式10",
-       "name_en": "Wave 5 招式 10",
+       "name_en": "Wave 5 Move 10",
        "description": "B站动作提示词第5波·双人对战：招式10。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_10.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6355,7 +6357,7 @@
       {
        "id": "bili_w5_11",
        "name": "招式11",
-       "name_en": "Wave 5 招式 11",
+       "name_en": "Wave 5 Move 11",
        "description": "B站动作提示词第5波·双人对战：招式11。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_11.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6375,7 +6377,7 @@
       {
        "id": "bili_w5_12",
        "name": "招式12",
-       "name_en": "Wave 5 招式 12",
+       "name_en": "Wave 5 Move 12",
        "description": "B站动作提示词第5波·双人对战：招式12。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_12.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6395,7 +6397,7 @@
       {
        "id": "bili_w5_13",
        "name": "招式13",
-       "name_en": "Wave 5 招式 13",
+       "name_en": "Wave 5 Move 13",
        "description": "B站动作提示词第5波·双人对战：招式13。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_13.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6415,7 +6417,7 @@
       {
        "id": "bili_w5_14",
        "name": "招式14",
-       "name_en": "Wave 5 招式 14",
+       "name_en": "Wave 5 Move 14",
        "description": "B站动作提示词第5波·双人对战：招式14。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w5_14.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6443,7 +6445,7 @@
       {
        "id": "bili_w6_01",
        "name": "杀招1",
-       "name_en": "Wave 6 杀招 1",
+       "name_en": "Wave 6 Finisher 1",
        "description": "B站动作提示词第6波·双人对战：杀招1。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_01.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6463,7 +6465,7 @@
       {
        "id": "bili_w6_02",
        "name": "杀招2",
-       "name_en": "Wave 6 杀招 2",
+       "name_en": "Wave 6 Finisher 2",
        "description": "B站动作提示词第6波·双人对战：杀招2。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_02.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6483,7 +6485,7 @@
       {
        "id": "bili_w6_03",
        "name": "杀招3",
-       "name_en": "Wave 6 杀招 3",
+       "name_en": "Wave 6 Finisher 3",
        "description": "B站动作提示词第6波·双人对战：杀招3。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_03.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6503,7 +6505,7 @@
       {
        "id": "bili_w6_04",
        "name": "杀招4",
-       "name_en": "Wave 6 杀招 4",
+       "name_en": "Wave 6 Finisher 4",
        "description": "B站动作提示词第6波·双人对战：杀招4。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_04.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6523,7 +6525,7 @@
       {
        "id": "bili_w6_05",
        "name": "杀招5",
-       "name_en": "Wave 6 杀招 5",
+       "name_en": "Wave 6 Finisher 5",
        "description": "B站动作提示词第6波·双人对战：杀招5。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_05.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6543,7 +6545,7 @@
       {
        "id": "bili_w6_06",
        "name": "杀招6",
-       "name_en": "Wave 6 杀招 6",
+       "name_en": "Wave 6 Finisher 6",
        "description": "B站动作提示词第6波·双人对战：杀招6。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_06.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6563,7 +6565,7 @@
       {
        "id": "bili_w6_07",
        "name": "杀招7",
-       "name_en": "Wave 6 杀招 7",
+       "name_en": "Wave 6 Finisher 7",
        "description": "B站动作提示词第6波·双人对战：杀招7。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_07.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6583,7 +6585,7 @@
       {
        "id": "bili_w6_08",
        "name": "杀招8",
-       "name_en": "Wave 6 杀招 8",
+       "name_en": "Wave 6 Finisher 8",
        "description": "B站动作提示词第6波·双人对战：杀招8。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_08.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6603,7 +6605,7 @@
       {
        "id": "bili_w6_09",
        "name": "杀招9",
-       "name_en": "Wave 6 杀招 9",
+       "name_en": "Wave 6 Finisher 9",
        "description": "B站动作提示词第6波·双人对战：杀招9。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_09.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6623,7 +6625,7 @@
       {
        "id": "bili_w6_10",
        "name": "杀招10",
-       "name_en": "Wave 6 杀招 10",
+       "name_en": "Wave 6 Finisher 10",
        "description": "B站动作提示词第6波·双人对战：杀招10。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_10.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6643,7 +6645,7 @@
       {
        "id": "bili_w6_11",
        "name": "杀招11",
-       "name_en": "Wave 6 杀招 11",
+       "name_en": "Wave 6 Finisher 11",
        "description": "B站动作提示词第6波·双人对战：杀招11。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_11.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6663,7 +6665,7 @@
       {
        "id": "bili_w6_12",
        "name": "杀招12",
-       "name_en": "Wave 6 杀招 12",
+       "name_en": "Wave 6 Finisher 12",
        "description": "B站动作提示词第6波·双人对战：杀招12。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_12.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6683,7 +6685,7 @@
       {
        "id": "bili_w6_13",
        "name": "杀招13",
-       "name_en": "Wave 6 杀招 13",
+       "name_en": "Wave 6 Finisher 13",
        "description": "B站动作提示词第6波·双人对战：杀招13。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_13.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6703,7 +6705,7 @@
       {
        "id": "bili_w6_14",
        "name": "杀招14",
-       "name_en": "Wave 6 杀招 14",
+       "name_en": "Wave 6 Finisher 14",
        "description": "B站动作提示词第6波·双人对战：杀招14。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_14.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6723,7 +6725,7 @@
       {
        "id": "bili_w6_15",
        "name": "杀招15",
-       "name_en": "Wave 6 杀招 15",
+       "name_en": "Wave 6 Finisher 15",
        "description": "B站动作提示词第6波·双人对战：杀招15。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_15.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6743,7 +6745,7 @@
       {
        "id": "bili_w6_16",
        "name": "杀招16",
-       "name_en": "Wave 6 杀招 16",
+       "name_en": "Wave 6 Finisher 16",
        "description": "B站动作提示词第6波·双人对战：杀招16。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_16.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6763,7 +6765,7 @@
       {
        "id": "bili_w6_17",
        "name": "杀招17",
-       "name_en": "Wave 6 杀招 17",
+       "name_en": "Wave 6 Finisher 17",
        "description": "B站动作提示词第6波·双人对战：杀招17。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_17.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6783,7 +6785,7 @@
       {
        "id": "bili_w6_18",
        "name": "杀招18",
-       "name_en": "Wave 6 杀招 18",
+       "name_en": "Wave 6 Finisher 18",
        "description": "B站动作提示词第6波·双人对战：杀招18。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_18.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6803,7 +6805,7 @@
       {
        "id": "bili_w6_19",
        "name": "杀招19",
-       "name_en": "Wave 6 杀招 19",
+       "name_en": "Wave 6 Finisher 19",
        "description": "B站动作提示词第6波·双人对战：杀招19。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_19.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6823,7 +6825,7 @@
       {
        "id": "bili_w6_20",
        "name": "杀招20",
-       "name_en": "Wave 6 杀招 20",
+       "name_en": "Wave 6 Finisher 20",
        "description": "B站动作提示词第6波·双人对战：杀招20。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_20.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6843,7 +6845,7 @@
       {
        "id": "bili_w6_21",
        "name": "杀招21",
-       "name_en": "Wave 6 杀招 21",
+       "name_en": "Wave 6 Finisher 21",
        "description": "B站动作提示词第6波·双人对战：杀招21。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_21.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6863,7 +6865,7 @@
       {
        "id": "bili_w6_22",
        "name": "杀招22",
-       "name_en": "Wave 6 杀招 22",
+       "name_en": "Wave 6 Finisher 22",
        "description": "B站动作提示词第6波·双人对战：杀招22。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w6_22.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6891,7 +6893,7 @@
       {
        "id": "bili_w7_01",
        "name": "招式1",
-       "name_en": "Wave 7 招式 1",
+       "name_en": "Wave 7 Move 1",
        "description": "B站动作提示词第7波·双人对战：招式1。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_01.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6911,7 +6913,7 @@
       {
        "id": "bili_w7_02",
        "name": "招式2",
-       "name_en": "Wave 7 招式 2",
+       "name_en": "Wave 7 Move 2",
        "description": "B站动作提示词第7波·双人对战：招式2。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_02.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6931,7 +6933,7 @@
       {
        "id": "bili_w7_03",
        "name": "招式3",
-       "name_en": "Wave 7 招式 3",
+       "name_en": "Wave 7 Move 3",
        "description": "B站动作提示词第7波·双人对战：招式3。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_03.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6951,7 +6953,7 @@
       {
        "id": "bili_w7_04",
        "name": "招式4",
-       "name_en": "Wave 7 招式 4",
+       "name_en": "Wave 7 Move 4",
        "description": "B站动作提示词第7波·双人对战：招式4。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_04.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6971,7 +6973,7 @@
       {
        "id": "bili_w7_05",
        "name": "招式5",
-       "name_en": "Wave 7 招式 5",
+       "name_en": "Wave 7 Move 5",
        "description": "B站动作提示词第7波·双人对战：招式5。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_05.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -6991,7 +6993,7 @@
       {
        "id": "bili_w7_06",
        "name": "招式6",
-       "name_en": "Wave 7 招式 6",
+       "name_en": "Wave 7 Move 6",
        "description": "B站动作提示词第7波·双人对战：招式6。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_06.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7011,7 +7013,7 @@
       {
        "id": "bili_w7_07",
        "name": "招式7",
-       "name_en": "Wave 7 招式 7",
+       "name_en": "Wave 7 Move 7",
        "description": "B站动作提示词第7波·双人对战：招式7。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_07.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7031,7 +7033,7 @@
       {
        "id": "bili_w7_08",
        "name": "招式8",
-       "name_en": "Wave 7 招式 8",
+       "name_en": "Wave 7 Move 8",
        "description": "B站动作提示词第7波·双人对战：招式8。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_08.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7051,7 +7053,7 @@
       {
        "id": "bili_w7_09",
        "name": "招式9",
-       "name_en": "Wave 7 招式 9",
+       "name_en": "Wave 7 Move 9",
        "description": "B站动作提示词第7波·双人对战：招式9。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_09.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7071,7 +7073,7 @@
       {
        "id": "bili_w7_10",
        "name": "招式10",
-       "name_en": "Wave 7 招式 10",
+       "name_en": "Wave 7 Move 10",
        "description": "B站动作提示词第7波·双人对战：招式10。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_10.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7091,7 +7093,7 @@
       {
        "id": "bili_w7_11",
        "name": "招式11",
-       "name_en": "Wave 7 招式 11",
+       "name_en": "Wave 7 Move 11",
        "description": "B站动作提示词第7波·双人对战：招式11。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_11.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7111,7 +7113,7 @@
       {
        "id": "bili_w7_12",
        "name": "招式12",
-       "name_en": "Wave 7 招式 12",
+       "name_en": "Wave 7 Move 12",
        "description": "B站动作提示词第7波·双人对战：招式12。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_12.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7131,7 +7133,7 @@
       {
        "id": "bili_w7_13",
        "name": "招式13",
-       "name_en": "Wave 7 招式 13",
+       "name_en": "Wave 7 Move 13",
        "description": "B站动作提示词第7波·双人对战：招式13。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_13.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7151,7 +7153,7 @@
       {
        "id": "bili_w7_14",
        "name": "招式14",
-       "name_en": "Wave 7 招式 14",
+       "name_en": "Wave 7 Move 14",
        "description": "B站动作提示词第7波·双人对战：招式14。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_14.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7171,7 +7173,7 @@
       {
        "id": "bili_w7_15",
        "name": "招式15",
-       "name_en": "Wave 7 招式 15",
+       "name_en": "Wave 7 Move 15",
        "description": "B站动作提示词第7波·双人对战：招式15。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_15.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7191,7 +7193,7 @@
       {
        "id": "bili_w7_16",
        "name": "招式16",
-       "name_en": "Wave 7 招式 16",
+       "name_en": "Wave 7 Move 16",
        "description": "B站动作提示词第7波·双人对战：招式16。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_16.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7211,7 +7213,7 @@
       {
        "id": "bili_w7_17",
        "name": "招式17",
-       "name_en": "Wave 7 招式 17",
+       "name_en": "Wave 7 Move 17",
        "description": "B站动作提示词第7波·双人对战：招式17。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_17.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7231,7 +7233,7 @@
       {
        "id": "bili_w7_18",
        "name": "招式18",
-       "name_en": "Wave 7 招式 18",
+       "name_en": "Wave 7 Move 18",
        "description": "B站动作提示词第7波·双人对战：招式18。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_18.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7251,7 +7253,7 @@
       {
        "id": "bili_w7_19",
        "name": "招式19",
-       "name_en": "Wave 7 招式 19",
+       "name_en": "Wave 7 Move 19",
        "description": "B站动作提示词第7波·双人对战：招式19。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_19.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7271,7 +7273,7 @@
       {
        "id": "bili_w7_20",
        "name": "招式20",
-       "name_en": "Wave 7 招式 20",
+       "name_en": "Wave 7 Move 20",
        "description": "B站动作提示词第7波·双人对战：招式20。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_20.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7291,7 +7293,7 @@
       {
        "id": "bili_w7_21",
        "name": "招式21",
-       "name_en": "Wave 7 招式 21",
+       "name_en": "Wave 7 Move 21",
        "description": "B站动作提示词第7波·双人对战：招式21。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_21.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7311,7 +7313,7 @@
       {
        "id": "bili_w7_22",
        "name": "招式22",
-       "name_en": "Wave 7 招式 22",
+       "name_en": "Wave 7 Move 22",
        "description": "B站动作提示词第7波·双人对战：招式22。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w7_22.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7339,7 +7341,7 @@
       {
        "id": "bili_w8_01",
        "name": "招式1",
-       "name_en": "Wave 8 招式 1",
+       "name_en": "Wave 8 Move 1",
        "description": "B站动作提示词第8波·双人对战：招式1。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_01.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7359,7 +7361,7 @@
       {
        "id": "bili_w8_02",
        "name": "招式2",
-       "name_en": "Wave 8 招式 2",
+       "name_en": "Wave 8 Move 2",
        "description": "B站动作提示词第8波·双人对战：招式2。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_02.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7379,7 +7381,7 @@
       {
        "id": "bili_w8_03",
        "name": "招式3",
-       "name_en": "Wave 8 招式 3",
+       "name_en": "Wave 8 Move 3",
        "description": "B站动作提示词第8波·双人对战：招式3。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_03.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7399,7 +7401,7 @@
       {
        "id": "bili_w8_04",
        "name": "招式4",
-       "name_en": "Wave 8 招式 4",
+       "name_en": "Wave 8 Move 4",
        "description": "B站动作提示词第8波·双人对战：招式4。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_04.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7419,7 +7421,7 @@
       {
        "id": "bili_w8_05",
        "name": "招式5",
-       "name_en": "Wave 8 招式 5",
+       "name_en": "Wave 8 Move 5",
        "description": "B站动作提示词第8波·双人对战：招式5。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_05.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7439,7 +7441,7 @@
       {
        "id": "bili_w8_06",
        "name": "招式6",
-       "name_en": "Wave 8 招式 6",
+       "name_en": "Wave 8 Move 6",
        "description": "B站动作提示词第8波·双人对战：招式6。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_06.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7459,7 +7461,7 @@
       {
        "id": "bili_w8_07",
        "name": "招式7",
-       "name_en": "Wave 8 招式 7",
+       "name_en": "Wave 8 Move 7",
        "description": "B站动作提示词第8波·双人对战：招式7。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_07.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7479,7 +7481,7 @@
       {
        "id": "bili_w8_08",
        "name": "招式8",
-       "name_en": "Wave 8 招式 8",
+       "name_en": "Wave 8 Move 8",
        "description": "B站动作提示词第8波·双人对战：招式8。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_08.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7499,7 +7501,7 @@
       {
        "id": "bili_w8_09",
        "name": "招式9",
-       "name_en": "Wave 8 招式 9",
+       "name_en": "Wave 8 Move 9",
        "description": "B站动作提示词第8波·双人对战：招式9。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_09.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7519,7 +7521,7 @@
       {
        "id": "bili_w8_10",
        "name": "招式10",
-       "name_en": "Wave 8 招式 10",
+       "name_en": "Wave 8 Move 10",
        "description": "B站动作提示词第8波·双人对战：招式10。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_10.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7539,7 +7541,7 @@
       {
        "id": "bili_w8_11",
        "name": "招式11",
-       "name_en": "Wave 8 招式 11",
+       "name_en": "Wave 8 Move 11",
        "description": "B站动作提示词第8波·双人对战：招式11。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_11.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7559,7 +7561,7 @@
       {
        "id": "bili_w8_12",
        "name": "招式12",
-       "name_en": "Wave 8 招式 12",
+       "name_en": "Wave 8 Move 12",
        "description": "B站动作提示词第8波·双人对战：招式12。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_12.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7579,7 +7581,7 @@
       {
        "id": "bili_w8_13",
        "name": "招式13",
-       "name_en": "Wave 8 招式 13",
+       "name_en": "Wave 8 Move 13",
        "description": "B站动作提示词第8波·双人对战：招式13。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_13.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7599,7 +7601,7 @@
       {
        "id": "bili_w8_14",
        "name": "招式14",
-       "name_en": "Wave 8 招式 14",
+       "name_en": "Wave 8 Move 14",
        "description": "B站动作提示词第8波·双人对战：招式14。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_14.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7619,7 +7621,7 @@
       {
        "id": "bili_w8_15",
        "name": "招式15",
-       "name_en": "Wave 8 招式 15",
+       "name_en": "Wave 8 Move 15",
        "description": "B站动作提示词第8波·双人对战：招式15。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_15.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7639,7 +7641,7 @@
       {
        "id": "bili_w8_16",
        "name": "招式16",
-       "name_en": "Wave 8 招式 16",
+       "name_en": "Wave 8 Move 16",
        "description": "B站动作提示词第8波·双人对战：招式16。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_16.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7659,7 +7661,7 @@
       {
        "id": "bili_w8_17",
        "name": "招式17",
-       "name_en": "Wave 8 招式 17",
+       "name_en": "Wave 8 Move 17",
        "description": "B站动作提示词第8波·双人对战：招式17。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_17.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7679,7 +7681,7 @@
       {
        "id": "bili_w8_18",
        "name": "招式18",
-       "name_en": "Wave 8 招式 18",
+       "name_en": "Wave 8 Move 18",
        "description": "B站动作提示词第8波·双人对战：招式18。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_18.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7699,7 +7701,7 @@
       {
        "id": "bili_w8_19",
        "name": "招式19",
-       "name_en": "Wave 8 招式 19",
+       "name_en": "Wave 8 Move 19",
        "description": "B站动作提示词第8波·双人对战：招式19。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_19.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7719,7 +7721,7 @@
       {
        "id": "bili_w8_20",
        "name": "招式20",
-       "name_en": "Wave 8 招式 20",
+       "name_en": "Wave 8 Move 20",
        "description": "B站动作提示词第8波·双人对战：招式20。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_20.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7739,7 +7741,7 @@
       {
        "id": "bili_w8_21",
        "name": "招式21",
-       "name_en": "Wave 8 招式 21",
+       "name_en": "Wave 8 Move 21",
        "description": "B站动作提示词第8波·双人对战：招式21。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_21.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7759,7 +7761,7 @@
       {
        "id": "bili_w8_22",
        "name": "招式22",
-       "name_en": "Wave 8 招式 22",
+       "name_en": "Wave 8 Move 22",
        "description": "B站动作提示词第8波·双人对战：招式22。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_22.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7779,7 +7781,7 @@
       {
        "id": "bili_w8_23",
        "name": "招式23",
-       "name_en": "Wave 8 招式 23",
+       "name_en": "Wave 8 Move 23",
        "description": "B站动作提示词第8波·双人对战：招式23。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_23.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7799,7 +7801,7 @@
       {
        "id": "bili_w8_24",
        "name": "招式24",
-       "name_en": "Wave 8 招式 24",
+       "name_en": "Wave 8 Move 24",
        "description": "B站动作提示词第8波·双人对战：招式24。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_24.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7819,7 +7821,7 @@
       {
        "id": "bili_w8_25",
        "name": "招式25",
-       "name_en": "Wave 8 招式 25",
+       "name_en": "Wave 8 Move 25",
        "description": "B站动作提示词第8波·双人对战：招式25。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_25.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -7839,7 +7841,7 @@
       {
        "id": "bili_w8_26",
        "name": "招式26",
-       "name_en": "Wave 8 招式 26",
+       "name_en": "Wave 8 Move 26",
        "description": "B站动作提示词第8波·双人对战：招式26。图1+图2对打双方，图3可选场景，未提供时自动生成对战场景。",
        "preview": "bili_w8_26.webp",
        "generation_mode": "Image to Video (图生视频)【图1+图2对打双方+图3可选场景】",
@@ -8868,7 +8870,7 @@
       {
        "id": "cam_flythrough_fpv",
        "name": "镜头穿梭·FPV极速俯冲 | Flythrough - FPV Dive",
-       "name_en": "Camera Flythrough - FPV Dive (FPV极速俯冲)",
+       "name_en": "Camera Flythrough - FPV Dive",
        "description": "镜头穿梭·FPV极速俯冲：从高空/远景极速俯冲，穿过云层/晨雾/拱门/门窗/人群；前景元素快速掠过带运动模糊，史诗级空间感。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
        "preview": "cam_flythrough_fpv.webp",
        "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -8889,7 +8891,7 @@
       {
        "id": "cam_flythrough_pass",
        "name": "镜头穿梭·穿越物体 | Flythrough - Pass-Through",
-       "name_en": "Camera Flythrough - Pass-Through (穿越物体)",
+       "name_en": "Camera Flythrough - Pass-Through",
        "description": "镜头穿梭·穿越物体：镜头直接穿过一个物体或表面——门、窗、隧道、罐体、水幕、纸张、玻璃，穿模瞬间自然无缝，露出另一侧空间。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
        "preview": "cam_flythrough_pass.webp",
        "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -8910,7 +8912,7 @@
       {
        "id": "cam_flythrough_journey",
        "name": "镜头穿梭·场景旅程 | Flythrough - Scene Journey",
-       "name_en": "Camera Flythrough - Scene Journey (场景旅程)",
+       "name_en": "Camera Flythrough - Scene Journey",
        "description": "镜头穿梭·场景旅程：镜头连续飞行穿过多个场景无缝衔接——由远及近、室外到室内、天空到地面，场景沿飞行渐进变化，仍是单一连续镜头。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
        "preview": "cam_flythrough_journey.webp",
        "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -8931,7 +8933,7 @@
       {
        "id": "cam_flythrough_follow",
        "name": "镜头穿梭·跟拍穿梭 | Flythrough - Subject Follow",
-       "name_en": "Camera Flythrough - Subject Follow (跟拍穿梭)",
+       "name_en": "Camera Flythrough - Subject Follow",
        "description": "镜头穿梭·跟拍穿梭：锁定主体（图1中的主体），镜头与主体一起在世界中穿梭——主体始终突出，前景快速掠过，关键节点变速。一镜到底单镜头，前景快速掠过带运动模糊，关键节点变速，视差强化空间感。图1起点+图2可选终点+图3可选场景。",
        "preview": "cam_flythrough_follow.webp",
        "generation_mode": "Image to Video (图生视频)【图1起点+图2可选终点场景+图3可选场景参考】",
@@ -11982,7 +11984,8 @@
        "need_images": true,
        "text_fallback_prompt": "",
        "text_fallback_mode": "off",
-       "preview": "multi_ref_magic_wardrobe.webp"
+       "preview": "multi_ref_magic_wardrobe.webp",
+       "name_en": "Multi-ref Magic Wardrobe"
       },
       {
        "id": "mirror_wardrobe_swap",
@@ -11994,7 +11997,8 @@
        "need_images": true,
        "text_fallback_prompt": "",
        "text_fallback_mode": "off",
-       "preview": "mirror_wardrobe_swap.webp"
+       "preview": "mirror_wardrobe_swap.webp",
+       "name_en": "Mirror Wardrobe Swap"
       },
       {
        "id": "mirror_wardrobe_picker",
@@ -12006,13 +12010,16 @@
        "need_images": true,
        "text_fallback_prompt": "",
        "text_fallback_mode": "off",
-       "preview": "mirror_wardrobe_picker.webp"
+       "preview": "mirror_wardrobe_picker.webp",
+       "name_en": "Mirror Wardrobe Picker"
       }
      ],
-     "id": "wardrobe_change_variants"
+     "id": "wardrobe_change_variants",
+     "name_en": "Wardrobe Variants"
     }
    ],
-   "id": "wardrobe_change"
+   "id": "wardrobe_change",
+   "name_en": "Wardrobe Change"
   },
   {
    "id": "xray_scan",
@@ -15897,7 +15904,8 @@
      "name_en": "Video Web Prompts",
      "description": "精选网络爆款视频灵感模板"
     }
-   ]
+   ],
+   "name_en": "Web Inspiration"
   },
   {
    "id": "festival_greeting_video",

@@ -14,6 +14,21 @@ import { app } from "../../../scripts/app.js";
 const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
 const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
 
+// Template metadata in templates/prompt_templates.json is authored in Chinese,
+// so the browser renders the English fields. `name` stays in the data for
+// identity (data-name / lookup) but is never displayed: every entry carries a
+// normalized ASCII name_en, which is what the card title and the preview header
+// show. Description and tags have no English version yet, so they fall back to
+// the original text — blanking them would strip the only hint a card gives.
+// Adding description_en / tags_en later takes over with no code change.
+function tplDisplay(tpl) {
+    return {
+        name: tpl.name_en || "",
+        desc: tpl.description_en || tpl.description || "",
+        tags: (tpl.tags_en && tpl.tags_en.length ? tpl.tags_en : tpl.tags) || [],
+    };
+}
+
 // ── CSS ──
 const STYLE_ID = "bsai-h3-tpl-css";
 if (!document.getElementById(STYLE_ID)) {
@@ -1104,9 +1119,10 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
             el.classList.add("sel");
         }
 
+        const disp = tplDisplay(tpl);
         const nmDiv = document.createElement("div");
         nmDiv.className = "bsai-tpl-item-nm";
-        nmDiv.textContent = tpl.name_en;
+        nmDiv.textContent = disp.name;
         el.appendChild(nmDiv);
 
         // Show category path in search results
@@ -1115,15 +1131,17 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
         pathDiv.textContent = cat.name_en + " > " + sub.name_en;
         el.appendChild(pathDiv);
 
-        const dsDiv = document.createElement("div");
-        dsDiv.className = "bsai-tpl-item-ds";
-        dsDiv.textContent = tpl.description || "";
-        el.appendChild(dsDiv);
+        if (disp.desc) {
+            const dsDiv = document.createElement("div");
+            dsDiv.className = "bsai-tpl-item-ds";
+            dsDiv.textContent = disp.desc;
+            el.appendChild(dsDiv);
+        }
 
-        if (tpl.tags && tpl.tags.length) {
+        if (disp.tags.length) {
             const tagsDiv = document.createElement("div");
             tagsDiv.className = "bsai-tpl-tags";
-            tpl.tags.slice(0, 6).forEach(function(tag) {
+            disp.tags.slice(0, 6).forEach(function(tag) {
                 const tagSpan = document.createElement("span");
                 tagSpan.className = "bsai-tpl-tag";
                 tagSpan.textContent = tag;
@@ -1174,20 +1192,23 @@ function renderTemplateList(node, sub, cat, listDiv) {
             item.classList.add("sel");
         }
 
+        const disp = tplDisplay(tpl);
         const nmDiv = document.createElement("div");
         nmDiv.className = "bsai-tpl-item-nm";
-        nmDiv.textContent = tpl.name_en;
+        nmDiv.textContent = disp.name;
         item.appendChild(nmDiv);
 
-        const dsDiv = document.createElement("div");
-        dsDiv.className = "bsai-tpl-item-ds";
-        dsDiv.textContent = tpl.description || "";
-        item.appendChild(dsDiv);
+        if (disp.desc) {
+            const dsDiv = document.createElement("div");
+            dsDiv.className = "bsai-tpl-item-ds";
+            dsDiv.textContent = disp.desc;
+            item.appendChild(dsDiv);
+        }
 
-        if (tpl.tags && tpl.tags.length) {
+        if (disp.tags.length) {
             const tagsDiv = document.createElement("div");
             tagsDiv.className = "bsai-tpl-tags";
-            tpl.tags.slice(0, 6).forEach(function(tag) {
+            disp.tags.slice(0, 6).forEach(function(tag) {
                 const tagSpan = document.createElement("span");
                 tagSpan.className = "bsai-tpl-tag";
                 tagSpan.textContent = tag;
@@ -1344,7 +1365,7 @@ function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
         if (prevDur) prevDur.textContent = "";
         return;
     }
-    if (prevNm) prevNm.textContent = tpl.name + " | " + (tpl.name_en || "");
+    if (prevNm) prevNm.textContent = tplDisplay(tpl).name;
     if (prevMd) prevMd.textContent = tpl.generation_mode || "";
     if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | Needs image: " + (tpl.needs_image ? "Yes" : "No");
     if (prevBox) {
