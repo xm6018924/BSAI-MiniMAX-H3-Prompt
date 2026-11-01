@@ -2388,6 +2388,9 @@ def _bsai_get_language_instruction(output_language):
     Controls which language the LLM uses for description text.
     Dialogue, lyrics, and visible text always stay in their original language per H3 spec.
     """
+    # Accept a legacy label saved by an older workflow ("Korean (한국어)") as
+    # well as the current English one, so the table below only needs ASCII keys.
+    output_language = _bsai_norm_legacy(output_language)
     _lang_map = {
         "Chinese": (
             "CHINESE",
@@ -2410,35 +2413,35 @@ def _bsai_get_language_instruction(output_language):
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the Japanese version."
         ),
-        "Korean (한국어)": (
+        "Korean": (
             "KOREAN",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in Korean. Use Korean shot labels: [샷 1]【0-3초】. "
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the Korean version."
         ),
-        "French (Français)": (
+        "French": (
             "FRENCH",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in French. Use French shot labels: [Plan 1] [0-3s]. "
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the French version."
         ),
-        "German (Deutsch)": (
+        "German": (
             "GERMAN",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in German. Use German shot labels: [Einstellung 1] [0-3s]. "
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the German version."
         ),
-        "Spanish (Español)": (
+        "Spanish": (
             "SPANISH",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in Spanish. Use Spanish shot labels: [Plano 1] [0-3s]. "
             "Dialogue/lyrics inside <d> tags and visible on-screen text in quotes remain in their ORIGINAL language. "
             "Field names stay in English. Output ONLY the Spanish version."
         ),
-        "Russian (Русский)": (
+        "Russian": (
             "RUSSIAN",
             "Write ALL description text (integrated_multimodal_description, overall_soundscape, non_diegetic_music) "
             "in Russian. Use Russian shot labels: [Кадр 1] [0-3с]. "
