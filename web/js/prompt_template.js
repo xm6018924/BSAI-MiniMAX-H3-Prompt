@@ -14,14 +14,11 @@ import { app } from "../../../scripts/app.js";
 const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
 const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
 
-// Template metadata in templates/prompt_templates.json is authored in Chinese,
-// so the browser renders the English fields and nothing else. `name` stays in
-// the data for identity (data-name / lookup) but is never displayed: every entry
-// carries a normalized ASCII name_en, which is what the card title and the
-// preview header show. description_en / tags_en are not filled in yet, so those
-// rows are simply omitted instead of falling back to the Chinese text -- a card
-// shows its English name, and gains a description and tag chips as soon as the
-// English data lands.
+// Template metadata is authored in Chinese, so the browser renders the English
+// fields and nothing else. `name` stays in the data for identity (data-name /
+// lookup) but is never displayed: every entry carries a normalized ASCII
+// name_en, description_en and tags_en, which is what the card title, the
+// description line and the tag chips show.
 function tplDisplay(tpl) {
     return {
         name: tpl.name_en || "",
@@ -110,7 +107,10 @@ if (!document.getElementById(STYLE_ID)) {
     background: #2a4a6a; border-left: 3px solid #3f789e;
 }
 .bsai-tpl-item-nm { font-size: 12px; color: #cde; font-weight: 600; }
-.bsai-tpl-item-ds { font-size: 10px; color: #777; margin-top: 2px; line-height: 1.3; }
+.bsai-tpl-item-ds {
+    font-size: 10px; color: #777; margin-top: 2px; line-height: 1.3;
+    white-space: pre-line; max-height: 5.2em; overflow: hidden;
+}
 .bsai-tpl-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
 .bsai-tpl-tag {
     font-size: 9px; background: #2a2a2a; color: #668;
@@ -371,9 +371,9 @@ function searchTemplates(keyword) {
         (cat.subcategories || []).forEach(function(sub) {
             (sub.templates || []).forEach(function(tpl) {
                 const haystack = [
-                    tpl.name, tpl.name_en, tpl.description,
+                    tpl.name, tpl.name_en, tpl.description, tpl.description_en,
                     cat.name, cat.name_en, sub.name, sub.name_en,
-                    (tpl.tags || []).join(" "),
+                    (tpl.tags || []).join(" "), (tpl.tags_en || []).join(" "),
                 ].join(" ").toLowerCase();
                 if (haystack.indexOf(kw) >= 0) {
                     results.push({ cat: cat, sub: sub, tpl: tpl });

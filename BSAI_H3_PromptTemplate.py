@@ -158,9 +158,9 @@ def _merge_template_prompts(tpls, ext=""):
             sound += f"\n(Adjust ambient sound and effects to match the overridden action “{ext}”)"
     for t in tpls[1:]:
         sec = _split_prompt(t.get("prompt", ""))
-        label = f"{t.get('name','')} | {t.get('name_en','')}"
+        label = t.get('name_en') or t.get('name', '')
         if sec["desc"]:
-            desc += f"\n\n# Overlay 叠加模板: {label}\n{sec['desc']}"
+            desc += f"\n\n# Overlay template: {label}\n{sec['desc']}"
         if not _is_na(sec["sound"]):
             if _is_na(sound):
                 sound = sec["sound"]
@@ -483,8 +483,9 @@ Features:
                     except Exception:
                         prompt = _append_custom(prompt, cust)
                 prompt = _inject_narration(prompt, narration)
-                name_label = f"{tpls[0].get('name','')} | {tpls[0].get('name_en','')}" if tpls[0].get("name_en") else tpls[0].get("name", "")
-                return (prompt, name_label, fb_mode, tpls[0].get("description", ""), int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""), last_frame, video_1, audio_1)
+                name_label = tpls[0].get("name_en") or tpls[0].get("name", "")
+                desc_label = tpls[0].get("description_en") or tpls[0].get("description", "")
+                return (prompt, name_label, fb_mode, desc_label, int(tpls[0].get("duration", 0)), tpls[0].get("preview", ""), last_frame, video_1, audio_1)
         if cust:
             # Apply the customization INSIDE the merged prompt via the local LLM;
             # fall back to a plain append when no LLM is available.
@@ -498,11 +499,8 @@ Features:
                 prompt = _append_custom(prompt, cust)
 
         primary = tpls[0]
-        # Bilingual merged name list: "贴身缠斗 | Close Grappling + 环绕镜头 | Orbit (Arc Shot)"
-        name_label = " + ".join(
-            f"{t.get('name','')} | {t.get('name_en','')}" if t.get("name_en") else t.get("name", "")
-            for t in tpls
-        )
+        # English-only merged name list: "Close Grappling + Orbit (Arc Shot)"
+        name_label = " + ".join(t.get("name_en") or t.get("name", "") for t in tpls)
         # ── Scene reference (图3场景): if scene_image connected → use <Picture 3> scene wording ──
         prompt = _apply_scene_placeholder(prompt, scene_image is not None)
         # ── 画面旁白：与模板合并，作为画面旁白输出给下游 ──
@@ -514,9 +512,9 @@ Features:
         mode = primary.get("generation_mode", "System Recommended")
         if len(tpls) > 1:
             mode = f"{mode} | Multi-Stack"
-        desc = primary.get("description", "")
+        desc = primary.get("description_en") or primary.get("description", "")
         if len(tpls) > 1:
-            desc += " | Overlay: " + " + ".join(t.get("name", "") for t in tpls[1:])
+            desc += " | Overlay: " + " + ".join(t.get("name_en") or t.get("name", "") for t in tpls[1:])
         duration = int(primary.get("duration", 0))
         preview = primary.get("preview", "")
 
