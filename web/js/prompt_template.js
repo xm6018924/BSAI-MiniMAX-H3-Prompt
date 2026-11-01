@@ -15,17 +15,18 @@ const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
 const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
 
 // Template metadata in templates/prompt_templates.json is authored in Chinese,
-// so the browser renders the English fields. `name` stays in the data for
-// identity (data-name / lookup) but is never displayed: every entry carries a
-// normalized ASCII name_en, which is what the card title and the preview header
-// show. Description and tags have no English version yet, so they fall back to
-// the original text — blanking them would strip the only hint a card gives.
-// Adding description_en / tags_en later takes over with no code change.
+// so the browser renders the English fields and nothing else. `name` stays in
+// the data for identity (data-name / lookup) but is never displayed: every entry
+// carries a normalized ASCII name_en, which is what the card title and the
+// preview header show. description_en / tags_en are not filled in yet, so those
+// rows are simply omitted instead of falling back to the Chinese text -- a card
+// shows its English name, and gains a description and tag chips as soon as the
+// English data lands.
 function tplDisplay(tpl) {
     return {
         name: tpl.name_en || "",
-        desc: tpl.description_en || tpl.description || "",
-        tags: (tpl.tags_en && tpl.tags_en.length ? tpl.tags_en : tpl.tags) || [],
+        desc: tpl.description_en || "",
+        tags: tpl.tags_en || [],
     };
 }
 
