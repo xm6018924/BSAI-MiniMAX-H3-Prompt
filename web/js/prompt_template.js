@@ -12,7 +12,15 @@
 import { app } from "../../../scripts/app.js";
 
 const PREVIEW_BASE = "/extensions/BSAI-MiniMAX-H3-Prompt/previews/";
-const DATA_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_data.json";
+
+// Templates are fetched in layers instead of one 3.2 MB blob: the index (the
+// category tree, ~29 KB) is enough to draw the panel, a category file is pulled
+// when its subcategory is selected, and the flat search rows are pulled once in
+// the background. tools/split_templates.py generates all three from
+// templates_data.json; keep them in sync by re-running it.
+const INDEX_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_index.json";
+const CAT_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates/";
+const SEARCH_URL = "/extensions/BSAI-MiniMAX-H3-Prompt/templates_search.json";
 
 // Template metadata is authored in Chinese, so the browser renders the English
 // fields and nothing else. `name` stays in the data for identity (data-name /
@@ -306,22 +314,120 @@ if (!document.getElementById(STYLE_ID)) {
     document.head.appendChild(st);
 }
 
-// ── Template data cache ──
-let _tplData = null;
+// ── Template data (layered cache) ──
+//
+// _tplIndex mirrors templates_index.json. When a category file arrives its
+// templates are grafted onto the matching subcategory objects in the index, so
+// every downstream consumer keeps working with the same shape it always had
+// (`_tplIndex.categories[i].subcategories[j].templates`) and simply has to make
+// sure the category has been loaded first.
+let _tplIndex = null;
+const _tplCatCache = Object.create(null);   // catId -> promise of category payload
+const _tplCatLoaded = Object.create(null);  // catId -> true once grafted
+let _tplSearchIndex = null;                 // {fields, rows}
+let _tplSearchPending = null;
 
-async function loadTemplateData() {
-    if (_tplData) return _tplData;
+// cache-bust: force a fresh fetch so newly-added previews show without hard-refresh
+function _bust(url) {
+    return url + (url.indexOf("?") >= 0 ? "&" : "?") + "v=" + Date.now();
+}
+
+async function loadTemplateIndex() {
+    if (_tplIndex) return _tplIndex;
     try {
-        // cache-bust: force fresh fetch so newly-added previews show without hard-refresh
-        const resp = await fetch(DATA_URL + "?v=" + Date.now(), {cache: "no-store"});
+        const resp = await fetch(_bust(INDEX_URL), {cache: "no-store"});
         if (resp.ok) {
-            _tplData = await resp.json();
-            return _tplData;
+            _tplIndex = await resp.json();
+            return _tplIndex;
         }
+        console.warn("[BSAI H3 Template] index HTTP", resp.status);
     } catch (e) {
-        console.warn("[BSAI H3 Template] Failed to load template data:", e);
+        console.warn("[BSAI H3 Template] Failed to load template index:", e);
     }
     return null;
+}
+
+function findCategory(catId) {
+    if (!_tplIndex) return null;
+    return _tplIndex.categories.find(function(c) { return c.id === catId; }) || null;
+}
+
+function isCategoryLoaded(catId) {
+    return !!_tplCatLoaded[catId];
+}
+
+// Fetch one category and graft its templates onto the index tree. Concurrent
+// callers share the same promise, so opening a subcategory right after a search
+// result hint does not download the file twice.
+function loadCategory(catId) {
+    if (!catId) return Promise.resolve(null);
+    if (_tplCatLoaded[catId]) return Promise.resolve(findCategory(catId));
+    if (_tplCatCache[catId]) return _tplCatCache[catId];
+
+    const p = (async function() {
+        await loadTemplateIndex();
+        const cat = findCategory(catId);
+        if (!cat) {
+            console.warn("[BSAI H3 Template] unknown category:", catId);
+            return null;
+        }
+        try {
+            const resp = await fetch(_bust(CAT_URL + encodeURIComponent(catId) + ".json"),
+                                     {cache: "no-store"});
+            if (!resp.ok) {
+                console.warn("[BSAI H3 Template] category HTTP", resp.status, catId);
+                return null;
+            }
+            const payload = await resp.json();
+            const byId = Object.create(null);
+            (payload.subcategories || []).forEach(function(s) { byId[s.id] = s.templates || []; });
+            (cat.subcategories || []).forEach(function(sub) {
+                sub.templates = byId[sub.id] || [];
+            });
+            _tplCatLoaded[catId] = true;
+            return cat;
+        } catch (e) {
+            console.warn("[BSAI H3 Template] Failed to load category", catId, e);
+            return null;
+        } finally {
+            delete _tplCatCache[catId];
+        }
+    })();
+
+    _tplCatCache[catId] = p;
+    return p;
+}
+
+async function loadSearchIndex() {
+    if (_tplSearchIndex) return _tplSearchIndex;
+    if (_tplSearchPending) return _tplSearchPending;
+    _tplSearchPending = (async function() {
+        try {
+            const resp = await fetch(_bust(SEARCH_URL), {cache: "no-store"});
+            if (resp.ok) {
+                _tplSearchIndex = await resp.json();
+                return _tplSearchIndex;
+            }
+            console.warn("[BSAI H3 Template] search index HTTP", resp.status);
+        } catch (e) {
+            console.warn("[BSAI H3 Template] Failed to load search index:", e);
+        }
+        return null;
+    })();
+    try {
+        return await _tplSearchPending;
+    } finally {
+        _tplSearchPending = null;
+    }
+}
+
+// Pull the search rows in the background once the panel is interactive, so the
+// first keystroke does not wait for 350 KB. Failures are silent by design: the
+// search handler retries (and reports) on demand.
+function prefetchSearchIndex() {
+    if (_tplSearchIndex || _tplSearchPending) return;
+    const idle = window.requestIdleCallback || function(fn) { return setTimeout(fn, 1200); };
+    idle(function() { loadSearchIndex(); });
 }
 
 function findWidget(node, name) {
@@ -362,26 +468,62 @@ function hideWidget(node, name) {
 }
 
 // ── Search across all templates ──
-function searchTemplates(keyword) {
-    if (!_tplData) return [];
+//
+// Matching runs over templates_search.json, a flat projection of every template
+// (names, descriptions, tags in both languages, plus its category path) without
+// the prompt bodies. That keeps a global search working while the prompt text
+// stays in the per-category files, fetched only when the user picks a result.
+async function searchTemplates(keyword) {
     const kw = keyword.toLowerCase().trim();
     if (!kw) return [];
+    const data = await loadSearchIndex();
+    const index = await loadTemplateIndex();
+    if (!data || !data.rows || !index) return [];
+
+    const F = {};
+    (data.fields || []).forEach(function(k, i) { F[k] = i; });
+
     const results = [];
-    (_tplData.categories || []).forEach(function(cat) {
-        (cat.subcategories || []).forEach(function(sub) {
-            (sub.templates || []).forEach(function(tpl) {
-                const haystack = [
-                    tpl.name, tpl.name_en, tpl.description, tpl.description_en,
-                    cat.name, cat.name_en, sub.name, sub.name_en,
-                    (tpl.tags || []).join(" "), (tpl.tags_en || []).join(" "),
-                ].join(" ").toLowerCase();
-                if (haystack.indexOf(kw) >= 0) {
-                    results.push({ cat: cat, sub: sub, tpl: tpl });
-                }
-            });
+    data.rows.forEach(function(row) {
+        const haystack = [
+            row[F.name], row[F.name_en], row[F.desc], row[F.desc_en],
+            row[F.cat_zh], row[F.cat_en], row[F.sub_zh], row[F.sub_en],
+            (row[F.tags] || []).join(" "), (row[F.tags_en] || []).join(" "),
+        ].join(" ").toLowerCase();
+        if (haystack.indexOf(kw) < 0) return;
+        const cat = findCategory(row[F.cat]);
+        if (!cat) return;
+        const sub = (cat.subcategories || []).find(function(s) { return s.id === row[F.sub]; });
+        if (!sub) return;
+        results.push({
+            cat: cat,
+            sub: sub,
+            // Stub with everything a result card shows. The prompt body is not
+            // here on purpose -- hydrateTemplate() fills it in on click.
+            tpl: {
+                id: row[F.id],
+                name: row[F.name],
+                name_en: row[F.name_en],
+                description: row[F.desc],
+                description_en: row[F.desc_en],
+                tags: row[F.tags] || [],
+                tags_en: row[F.tags_en] || [],
+                _stub: true,
+            },
         });
     });
     return results;
+}
+
+// Swap a search stub for the full record (prompt body included) by loading its
+// category. Returns null when the category file is unavailable.
+async function hydrateTemplate(cat, sub, tpl) {
+    if (tpl && !tpl._stub) return tpl;
+    const loaded = await loadCategory(cat.id);
+    if (!loaded) return null;
+    const s = (loaded.subcategories || []).find(function(x) { return x.id === sub.id; });
+    if (!s) return null;
+    return (s.templates || []).find(function(t) { return t.id === tpl.id; }) || null;
 }
 
 // ── Build UI ──
@@ -704,6 +846,7 @@ function buildTemplateUI(node) {
     node._bsaiDiffOpen = false;
     node._bsaiSearchInput = searchInput;
     node._bsaiSearchClr = searchClr;
+    node._bsaiSearchToken = 0;   // bumped per search so a slow fetch cannot overwrite newer results
     node._bsaiTopDiv = topDiv;
     node._bsaiSelBar = selBar;
     node._bsaiSelection = [];
@@ -1008,10 +1151,22 @@ function buildTemplateUI(node) {
                 }
                 return;
             }
-            // Enter search mode
+            // Enter search mode. Matching happens against the flat search rows,
+            // which are fetched on first use (and preloaded in the background).
             node._bsaiSearchMode = true;
-            const results = searchTemplates(kw);
-            renderSearchResults(node, results, listDiv, cntSpan, clrBtn);
+            const token = ++node._bsaiSearchToken;
+            listDiv.innerHTML = '<div class="bsai-tpl-empty">Searching…</div>';
+            cntSpan.textContent = "";
+            searchTemplates(kw).then(function(results) {
+                // A newer keystroke or a dropdown change may have won the race.
+                if (token !== node._bsaiSearchToken || !node._bsaiSearchMode) return;
+                if (searchInput.value.trim() !== kw) return;
+                if (!results.length && !_tplSearchIndex) {
+                    listDiv.innerHTML = '<div class="bsai-tpl-empty">Search data failed to load — check the browser console</div>';
+                    return;
+                }
+                renderSearchResults(node, results, listDiv, cntSpan, clrBtn);
+            });
         }, 200);
     });
 
@@ -1036,9 +1191,11 @@ function buildTemplateUI(node) {
         cntSpan.textContent = "";
         clrBtn.style.display = "none";
         updatePreview(null, prevBox, prevNm, prevMd, prevDur);
-        if (!catId || !_tplData) return;
-        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        if (!catId || !_tplIndex) return;
+        const cat = findCategory(catId);
         if (!cat) return;
+        // Subcategory names come from the index, so the second dropdown fills in
+        // without downloading the category's templates yet.
         (cat.subcategories || []).forEach(function(sub) {
             const opt = document.createElement("option");
             opt.value = sub.id;
@@ -1056,17 +1213,30 @@ function buildTemplateUI(node) {
         }
         const catId = catSel.value;
         const subId = subSel.value;
-        if (!catId || !subId || !_tplData) {
+        if (!catId || !subId) {
             listDiv.innerHTML = '<div class="bsai-tpl-empty">Select a category and subcategory</div>';
             cntSpan.textContent = "";
             clrBtn.style.display = "none";
             return;
         }
-        const cat = _tplData.categories.find(function(c) { return c.id === catId; });
+        const cat = findCategory(catId);
         if (!cat) return;
-        const sub = cat.subcategories.find(function(s) { return s.id === subId; });
+        const sub = (cat.subcategories || []).find(function(s) { return s.id === subId; });
         if (!sub) return;
-        renderTemplateList(node, sub, cat, listDiv);
+
+        // Templates for this category may not be here yet: fetch once, then draw.
+        if (isCategoryLoaded(catId)) {
+            renderTemplateList(node, sub, cat, listDiv);
+            return;
+        }
+        listDiv.innerHTML = '<div class="bsai-tpl-empty">Loading templates…</div>';
+        cntSpan.textContent = "";
+        const want = catId + "/" + subId;
+        loadCategory(catId).then(function() {
+            // The user may have switched away while the file was in flight.
+            if (catSel.value + "/" + subSel.value !== want) return;
+            renderTemplateList(node, sub, cat, listDiv);
+        });
     };
 
     clrBtn.onclick = function() {
@@ -1081,7 +1251,9 @@ function buildTemplateUI(node) {
     };
 
     // ── Load data ──
-    loadTemplateData().then(function(data) {
+    // Only the index (category tree, ~29 KB) is needed to draw the panel. The
+    // per-category template files and the search rows arrive on demand.
+    loadTemplateIndex().then(function(data) {
         if (!data) return;
         catSel.innerHTML = '<option value="">— Select —</option>';
         (data.categories || []).forEach(function(cat) {
@@ -1095,6 +1267,7 @@ function buildTemplateUI(node) {
             restoreSelection(node, tplW.value);
         }
         if (node._bsaiRefreshSize) setTimeout(node._bsaiRefreshSize, 120);
+        prefetchSearchIndex();
     });
 }
 
@@ -1151,20 +1324,30 @@ function renderSearchResults(node, results, listDiv, cntSpan, clrBtn) {
             el.appendChild(tagsDiv);
         }
 
+        // Warm the category file while the pointer is over the row so the click
+        // below usually resolves from cache. The click still awaits it: hovering
+        // is not guaranteed (touch / keyboard activation).
+        el.onmouseenter = function() { loadCategory(cat.id); };
         el.onclick = function() {
-            toggleSelection(node, cat, sub, tpl);
-            // Sync dropdowns to reflect the clicked template's category/subcategory
-            node._bsaiCat.value = cat.id;
-            // Populate subcategories for this category
-            node._bsaiSub.innerHTML = '<option value="">— Select subcategory —</option>';
-            (cat.subcategories || []).forEach(function(s) {
-                const opt = document.createElement("option");
-                opt.value = s.id;
-                opt.textContent = s.name_en;
-                if (s.id === sub.id) opt.selected = true;
-                node._bsaiSub.appendChild(opt);
+            hydrateTemplate(cat, sub, tpl).then(function(full) {
+                if (!full) {
+                    console.warn("[BSAI H3 Template] could not load template:", tpl.id);
+                    return;
+                }
+                toggleSelection(node, cat, sub, full);
+                // Sync dropdowns to reflect the clicked template's category/subcategory
+                node._bsaiCat.value = cat.id;
+                // Populate subcategories for this category
+                node._bsaiSub.innerHTML = '<option value="">— Select subcategory —</option>';
+                (cat.subcategories || []).forEach(function(s) {
+                    const opt = document.createElement("option");
+                    opt.value = s.id;
+                    opt.textContent = s.name_en;
+                    if (s.id === sub.id) opt.selected = true;
+                    node._bsaiSub.appendChild(opt);
+                });
+                node._bsaiSub.disabled = false;
             });
-            node._bsaiSub.disabled = false;
         };
 
         listDiv.appendChild(el);
@@ -1787,27 +1970,55 @@ function encodeWavPcm16(samples, sampleRate) {
     return new Blob([buffer], { type: "audio/wav" });
 }
 
-function restoreSelection(node, savedValue) {
-    if (!_tplData) return;
+// Re-select the templates recorded in the hidden `template_select` widget when a
+// workflow is loaded. Only the index is available at that point, so the
+// categories that the labels point at are fetched first, then the templates are
+// looked up in the grafted tree.
+async function restoreSelection(node, savedValue) {
+    const data = await loadTemplateIndex();
+    if (!data) return;
     node._bsaiSelection = [];
     const labels = (savedValue || "").split("|||").map(function(s) { return s.trim(); }).filter(function(s) { return s; });
     // Multi-mode is auto-enabled when the saved value contains stacked labels
     const multi = labels.length > 1;
     node._bsaiMultiMode = multi;
     syncModeUI(node);
-    let first = null;
+
+    // syncSelectionUI() writes "cat.name_en > sub.name_en > tpl.name_en", but
+    // workflows saved by earlier builds stored the Chinese names. Match on id,
+    // English name or Chinese name so both resolve.
+    function pick(list, want) {
+        if (!list) return null;
+        return list.find(function(x) { return x.id === want; })
+            || list.find(function(x) { return x.name_en === want; })
+            || list.find(function(x) { return x.name === want; })
+            || null;
+    }
+
+    const wanted = [];
     labels.forEach(function(label) {
         const parts = label.split(" > ");
         if (parts.length !== 3) return;
-        const catName = parts[0], subName = parts[1], tplName = parts[2];
-        const cat = _tplData.categories.find(function(c) { return c.name === catName; });
+        const cat = pick(data.categories, parts[0].trim());
         if (!cat) return;
-        const sub = cat.subcategories.find(function(s) { return s.name === subName; });
+        const sub = pick(cat.subcategories, parts[1].trim());
         if (!sub) return;
-        const tpl = sub.templates.find(function(t) { return t.name === tplName; });
+        wanted.push({ cat: cat, sub: sub, tplName: parts[2].trim() });
+    });
+    if (!wanted.length) return;
+
+    const catIds = [];
+    wanted.forEach(function(w) {
+        if (catIds.indexOf(w.cat.id) < 0) catIds.push(w.cat.id);
+    });
+    await Promise.all(catIds.map(function(id) { return loadCategory(id); }));
+
+    let first = null;
+    wanted.forEach(function(w) {
+        const tpl = pick(w.sub.templates, w.tplName);
         if (!tpl) return;
-        node._bsaiSelection.push({ cat: cat, sub: sub, tpl: tpl });
-        if (!first) first = { cat: cat, sub: sub, tpl: tpl };
+        node._bsaiSelection.push({ cat: w.cat, sub: w.sub, tpl: tpl });
+        if (!first) first = { cat: w.cat, sub: w.sub, tpl: tpl };
     });
     // Point the dropdowns at the primary (first) selected template
     if (first) {
@@ -1862,8 +2073,8 @@ app.registerExtension({
                 setTimeout(function() {
                     const tplW = findWidget(node, "template_select");
                     if (tplW && tplW.value && !tplW.value.startsWith("(")) {
-                        loadTemplateData().then(function() {
-                            restoreSelection(node, tplW.value);
+                        loadTemplateIndex().then(function() {
+                            return restoreSelection(node, tplW.value);
                         });
                     }
                     const custW = findWidget(node, "user_customization");

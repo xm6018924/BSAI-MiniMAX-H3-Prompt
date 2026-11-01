@@ -1,0 +1,197 @@
+{
+ "id": "character_transform",
+ "subcategories": [
+  {
+   "id": "awaken_morph",
+   "templates": [
+    {
+     "id": "starforged_armor_awakening",
+     "name": "星灵铠甲觉醒",
+     "name_en": "Starforged armor awakening",
+     "description": "图1主角单图：情绪特写→掌心发光媒介/身上徽记触发变身→甲片逐块从光点凝聚嵌合到全身→定格拔剑。可走星座/元素光效主题。",
+     "description_en": "Single image of the Img1 lead: emotional close-up -> a glowing medium in the palm or an emblem on the body triggers the transformation -> armour plates condense from points of light and lock onto the body one by one -> freeze on drawing the sword. Can follow a constellation or elemental effects theme.",
+     "preview": "starforged_armor_awakening.webp",
+     "generation_mode": "Image to Video (图生视频)【单图首帧】",
+     "duration": 10,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "铠甲觉醒",
+      "变身",
+      "星灵",
+      "形变",
+      "特效",
+      "单图首帧"
+     ],
+     "tags_en": [
+      "armour awakening",
+      "transformation",
+      "starlight",
+      "shapeshifting",
+      "effects",
+      "single-image first frame"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1>@图1 is the ONLY character reference in this prompt and MUST be strictly followed — the character's exact face, hairstyle, body proportions and identity must be preserved EXACTLY throughout the entire video; the armor is newly grown onto the body as part of the transformation, but the facial features never change. NEVER alter the identity of the character. 中文复述：本提示词中 <Picture 1>@图1 是主角本人（面部、发型、体型、身份严格保持，铠甲是新生长出来的变身过程，但五官始终不变，严禁把脸换成别的人）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the main character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must remain unchanged for the whole video. A glowing medium held in the palm / a glowing emblem on the body is the sole trigger — no other device or prop is named.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, dark cosmic backdrop with faint drifting starlight. Close-up of the character's face from <Picture 1>@图1, eyes showing rising emotion. 【ACTION】The character raises the hand: a tiny luminous point ignites on the glowing medium in the palm (or the emblem on the body flares up), pulsing brighter and spilling stardust; the light erupts outward and countless light points stream toward the body, condensing piece by piece into armor plates — shoulder pauldrons first, then chest plate, arm guards, waist and greaves, each plate snapping into place with a crisp metallic latch and a shower of sparks; finally the character lifts the newly materialized blade and freezes mid-draw, starlight crackling across the armor.【/ACTION】 The face, hairstyle and body proportions stay exactly as <Picture 1>@图1 the whole time; armor grows on the body but never reshapes the face; clean VFX, no distortion, no extra limbs.\n\noverall_soundscape: Low cosmic hum, rising crystalline energy whoosh, crisp metallic latches as each armor plate snaps on, final blade-ring at the freeze frame.\n\nnon_diegetic_music: Epic heroic orchestral build, swelling strings and brass climax on the draw-and-freeze, echoing with a starlight shimmer."
+    },
+    {
+     "id": "pet_human_anthro",
+     "name": "宠物↔人（拟人走秀）",
+     "name_en": "Pet to human anthro",
+     "description": "图1宠物（猫/柴犬等）+图2拟人形象：宠物逐渐直立、长出人形、保留原物种的毛色/耳/尾特征，走T台步。",
+     "description_en": "Img1 pet (cat, shiba and so on) + Img2 anthropomorphic form: the pet gradually stands upright, grows a humanoid body and keeps the fur colour, ears and tail of the original species, then walks a runway strut.",
+     "preview": "pet_human_anthro.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1宠物+图2拟人形态】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "宠物拟人",
+      "形变",
+      "走秀",
+      "双图参考",
+      "物种特征",
+      "变身"
+     ],
+     "tags_en": [
+      "pet to human",
+      "shapeshifting",
+      "runway",
+      "two-image reference",
+      "species features",
+      "transformation"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the starting animal — its fur color, eyes, breed features and all species details must be preserved EXACTLY and carried over through the whole transformation. <Picture 2>@图2 is the target anthro humanoid — its body proportions, outfit and facial features must come EXACTLY from <Picture 2>@图2, while still keeping the species-recognition features (ears, tail, fur-tone accents) inherited from <Picture 1>@图1. NEVER blend one <Picture N>'s material onto the other incorrectly. 中文复述：本提示词中 <Picture 1>@图1 是起始宠物（毛色、五官、品种特征严格来自该图），<Picture 2>@图2 是目标拟人形态（体型比例、服装、五官完全来自该图，且保留 <Picture 1>@图1 的物种识别特征：耳朵、尾巴、毛色点缀，严禁自行设计替换）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the starting pet. At the end of the transformation, the figure must fully match the anthro form from <Picture 2>@图2 while retaining the species features of <Picture 1>@图1. STRICT REFERENCE COMPLIANCE: never lose the fur color, ears and tail; never redesign the outfit or face.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic fashion runway, soft key light from above, clean glossy floor. Medium shot begins on the pet from <Picture 1>@图1. 【ACTION】The pet slowly rises on hind legs, its body elongating into a humanoid figure in one continuous, fluid morph — fur retracts into skin but the same-colored ears stay up on the head and the fluffy tail remains; the outfit from <Picture 2>@图2 materializes onto the newly formed body, cut and color identical to <Picture 2>@图2; once the anthro form is complete, the figure turns and strides confidently down the catwalk in a model's runway walk.【/ACTION】 Fur color, ear shape and tail match <Picture 1>@图1; body proportions, outfit and facial features match <Picture 2>@图2; seamless morph, no distortion, no extra limbs.\n\noverall_soundscape: Soft runway floor taps, a light magical shimmer during the morph, faint crowd murmur.\n\nnon_diegetic_music: Upbeat playful fashion-show beat with warm synth plucks, confident and bouncy on the runway walk."
+    },
+    {
+     "id": "text_age_swap",
+     "name": "文字指令换人/换龄",
+     "name_en": "Text-driven age swap",
+     "description": "纯文生：画面中一个人随时间轴平滑变为婴儿→童年→老年版本，同一人不同年龄段，面部骨相连贯变化。",
+     "description_en": "Pure text-to-video: a person in frame smoothly becomes their infant, childhood and elderly versions along the timeline, the same person at different ages with facial bone structure changing continuously.",
+     "preview": "text_age_swap.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "年龄变化",
+      "纯文生",
+      "形变",
+      "同一人",
+      "时间轴",
+      "面部连贯"
+     ],
+     "tags_en": [
+      "age change",
+      "text only",
+      "shapeshifting",
+      "same person",
+      "timeline",
+      "facial continuity"
+     ],
+     "prompt": "[DEFAULT CONFIGURATION / 默认配置声明]: This is a text-to-video prompt with NO reference image. The default subject is a young East Asian woman in her early twenties, long straight black hair, balanced slim build, natural everyday outfit, neutral plain studio background. The entire age-change sequence must keep her the SAME recognizable person — face, bone structure and identity flow continuously through every age stage; no different person is introduced. 中文复述：本提示词无参考图，默认主角为一位二十出头的东亚年轻女性，黑长直长发、匀称身材、日常便服、中性纯色棚拍背景；全片为同一人不同年龄段的连贯变化，面部骨相连贯，严禁中途换人。\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, soft even studio light, plain neutral backdrop. Fixed medium shot of the subject standing center frame. 【ACTION】The video runs one continuous time-lapse of the SAME person's aging in a single frame: starting as the young adult woman, her features smoothly de-age — face rounding, eyes large, shrinking down into a chubby baby, then a toddler, then a school-age child; the flow reverses and she ages forward through youth, middle age, until the final moments show a graceful elderly version of the same face, wrinkles and silver hair arriving gradually; at every transition the underlying bone structure and identity stay recognizably hers.【/ACTION】 One single recognizable identity across all age stages; coherent facial continuity, seamless morph, no distortion, no extra limbs.\n\noverall_soundscape: Quiet room tone, faint soft air whoosh marking each age-stage transition, gentle breath.\n\nnon_diegetic_music: Tender ambient piano solo, slow reflective tempo, swelling softly as the years pass, ending warm and resolved."
+    }
+   ]
+  },
+  {
+   "id": "role_swap",
+   "templates": [
+    {
+     "id": "mirror_dual_swap",
+     "name": "镜像/分屏双角色互换",
+     "name_en": "Mirror split dual swap",
+     "description": "图1角色A+图2角色B：镜面（或左右分屏）两侧各站一人，涟漪闪过，两侧身份/服装/体型互换，严格来自各自参考图。",
+     "description_en": "Img1 character A + Img2 character B: one stands on each side of a mirror (or a split screen), a ripple passes and the identities, outfits and body types swap sides, strictly from their respective references.",
+     "preview": "mirror_dual_swap.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1角色A+图2角色B】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "双角色",
+      "镜像互换",
+      "分屏",
+      "换角",
+      "双图参考",
+      "锁脸"
+     ],
+     "tags_en": [
+      "two characters",
+      "mirror swap",
+      "split screen",
+      "character swap",
+      "two-image reference",
+      "face lock"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is Character A — face, hairstyle, body proportions, outfit and identity must be preserved EXACTLY. <Picture 2>@图2 is Character B — face, hairstyle, body proportions, outfit and identity must be preserved EXACTLY. After the swap, each side must strictly equal the OTHER reference's face, outfit and body, never the same side's original; DO NOT mix identities across sides wrongly. 中文复述：本提示词中 <Picture 1>@图1 是角色A（面部/发型/体型/服装/身份严格保持），<Picture 2>@图2 是角色B（面部/发型/体型/服装/身份严格保持）；互换之后左侧严格变成 <Picture 2>@图2 的样子、右侧严格变成 <Picture 1>@图1 的样子，严禁串改、严禁把两人特征混到一张脸上。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the left-side character A and <Picture 2>@图2 as the right-side character B. STRICT REFERENCE COMPLIANCE: left side begins exactly as <Picture 1>@图1, right side begins exactly as <Picture 2>@图2; after the ripple the left side must equal <Picture 2>@图2 and the right side must equal <Picture 1>@图1.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic symmetrical composition, a vertical mirror (or a clean left-right split) down the center, soft dramatic side light. Two figures stand facing each other — the left figure from <Picture 1>@图1, the right figure from <Picture 2>@图2. 【ACTION】A luminous ripple of light sweeps across the mirror surface; for one beat both figures are washed in the flash; as the light fades, the left figure has taken on the exact face, hairstyle, body and outfit of <Picture 2>@图2, while the right figure has taken on the exact face, hairstyle, body and outfit of <Picture 1>@图1; each side pauses and looks down at its swapped hands, then holds still.【/ACTION】 Left side post-swap strictly equals <Picture 2>@图2; right side post-swap strictly equals <Picture 1>@图1; no blended faces, no distorted proportions, no extra limbs.\n\noverall_soundscape: Deep glass-like resonant hum, a soft water ripple whoosh on the flash, quiet settle at the end.\n\nnon_diegetic_music: Mysterious cinematic pulse, shimmering synth swell on the ripple, resolving into a quiet mysterious chord."
+    },
+    {
+     "id": "frame_level_char_replace",
+     "name": "多参考帧级角色替换",
+     "name_en": "Frame-level character replacement",
+     "description": "图1新角色+图2同场景同姿态首尾帧：把画面里的人整体换成图1这个角色，动作与场景保持与首尾帧一致，新角色的脸/发型/体型严格来自图1。",
+     "description_en": "Img1 new character + Img2 first and last frames of the same scene and pose: the person in the shot is replaced wholesale by the Img1 character, the action and scene staying consistent with the first and last frames, with the new character's face, hair and build strictly from Img1.",
+     "preview": "frame_level_char_replace.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1新角色+图2目标场景/姿态】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "帧级换角",
+      "换脸",
+      "锁脸",
+      "双图参考",
+      "场景锁定",
+      "动作复用"
+     ],
+     "tags_en": [
+      "frame-accurate swap",
+      "face swap",
+      "face lock",
+      "two-image reference",
+      "scene lock",
+      "action reuse"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the NEW character to be inserted — face, hairstyle, body proportions and outfit must come EXACTLY from <Picture 1>@图1. <Picture 2>@图2 is the target scene and pose — the composition, camera framing, body action, environment and lighting must come EXACTLY from <Picture 2>@图2, DO NOT invent a new scene. The person inside <Picture 2>@图2 is entirely replaced by the character from <Picture 1>@图1, while the action and scene stay unchanged. 中文复述：本提示词中 <Picture 1>@图1 是要替换进去的新角色（面部/发型/体型/服装严格来自该图），<Picture 2>@图2 是目标场景与姿态（构图/机位/动作/环境/灯光完全来自该图，严禁另造场景）；把 <Picture 2>@图2 画面里原来的人整体换成 <Picture 1>@图1 这个角色，但动作与场景保持不变。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 2>@图2 (from [Shot 1]) is fully referenced as the scene, camera framing and pose, while the figure in it is the character from <Picture 1>@图1. At the end of the target video, the figure still matches <Picture 1>@图1 and the framing/action still matches <Picture 2>@图2. STRICT REFERENCE COMPLIANCE: face, hairstyle, body and outfit of the inserted figure must equal <Picture 1>@图1; composition, action and environment must equal <Picture 2>@图2.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic shot matching <Picture 2>@图2's exact composition, framing and environment. The frame begins with the composition of <Picture 2>@图2. 【ACTION】A soft flash of light passes over the figure; the original person in the scene is replaced in one beat by the character from <Picture 1>@图1 — same face, same hairstyle, same body proportions, same outfit — yet the camera framing, the character's pose and motion, and the whole environment continue exactly as in <Picture 2>@图2, carrying through the original action without interruption.【/ACTION】 Inserted character strictly equals <Picture 1>@图1; scene, framing and action strictly equal <Picture 2>@图2; clean replacement, no distortion, no extra limbs.\n\noverall_soundscape: Natural ambient sound of the scene from <Picture 2>@图2, a brief soft flash whoosh at the replacement, then continuous scene tone.\n\nnon_diegetic_music: Subtle cinematic underlay, gentle pulse that hides the replacement cut, resolving naturally with the scene's mood."
+    },
+    {
+     "id": "subject_scene_freestyle",
+     "name": "主体参照跨场景换衣",
+     "name_en": "Lock-face cross-scene outfit swaps",
+     "description": "图1主体人脸单图：锁死这张脸，文字指示任意切场景换衣服，无物理转场，靠溶解/闪光切换，人脸全程不变。",
+     "description_en": "Single image of the Img1 subject's face: that face is locked in place while the text instruction swaps scenes and outfits freely, with no physical transition, only dissolves and flashes, and the face unchanged throughout.",
+     "preview": "subject_scene_freestyle.webp",
+     "generation_mode": "Image to Video (图生视频)【单图首帧】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "锁脸",
+      "跨场景",
+      "换装",
+      "单图首帧",
+      "溶解切换",
+      "身份保持"
+     ],
+     "tags_en": [
+      "face lock",
+      "cross-scene",
+      "outfit change",
+      "single-image first frame",
+      "dissolve cut",
+      "identity preserved"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: <Picture 1>@图1 is the ONLY reference and MUST be strictly followed — the subject's exact face and identity must be locked and preserved EXACTLY across every scene and every outfit; the outfit and the background may change freely according to the description, but the face never changes. NEVER swap, alter or redesign the face. 中文复述：本提示词中 <Picture 1>@图1 是主体本人（面部/身份严格锁死、全程保持，服装与场景可按描述自由变化，严禁换脸、严禁把五官改成人）。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the subject. STRICT REFERENCE COMPLIANCE: the subject's exact face and identity must remain identical across all cuts; only clothing and background change.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, fluid multi-cut sequence. Medium close-up of the subject from <Picture 1>@图1. 【ACTION】Without any physical walk or transition, a quick dissolve / soft flash cuts the subject across several different scenes and outfits in a row — e.g. from a city street in casual wear, dissolving into a coffee shop in a knit sweater, dissolving again into a night rooftop in a formal dress; each cut is only a brief light wash, and the subject simply poses or turns naturally in the new setting.【/ACTION】 The face, identity and expression consistency stay exactly as <Picture 1>@图1 throughout all cuts; only outfit and background change; seamless dissolves, no distorted face, no extra limbs.\n\noverall_soundscape: A continuous airy shimmer bridge between scenes, faint ambient hint of each new environment, no hard cut sound.\n\nnon_diegetic_music: Stylish, light pop groove with a soft sparkle on each dissolve, breezy and confident throughout.",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] <Picture 1>@图1, <Picture 2>@图2, <Picture 3>@图3 are the ONLY source of truth — copy EXACTLY, no redesign. 图1@图1、图2@图2、图3@图3为唯一参考，必须严格照抄，禁止自行设计。 <Picture 1>@图1=face/identity 图1@图1=人物面部 <Picture 2>@图2=EXACT outfit (color/pattern/style/fabric) 图2@图2=服装照抄 <Picture 3>@图3=EXACT scene (background/lighting/environment) 图3@图3=场景照抄\n[DEFAULT CONFIGURATION / 默认配置声明]: This is a text-to-video fallback with NO reference image. The default subject is a young East Asian woman in <Picture 1>@图1's early twenties, long straight black hair, balanced slim build, in default urban everyday wear. <Picture 1>@图1's face and identity are locked for the whole video; only outfit and background change across cuts. 中文复述：无参考图时，默认主角为一位二十出头的东亚年轻女性、黑长直长发、匀称身材、默认都市日常服装；全程锁死同一张脸，只换服装与场景。\n\nintegrated_multimodal_description: [参考映射: 人物=<Picture 1>@图1, 换装后服装=<Picture 2>@图2, 场景=<Picture 3>@图3]  [Shot 1] [0-8s] Cinematic, fluid multi-cut sequence. Medium close-up of the default young woman. 【ACTION】Without any physical walk or transition, a quick dissolve / soft flash cuts <Picture 1>@图1's across several different scenes and outfits in a row — from a city street in casual wear, dissolving into a coffee shop in a knit sweater, dissolving again into a night rooftop in a formal dress; each cut is only a brief light wash, and <Picture 1>@图1 simply poses or turns naturally in the new setting.【/ACTION】 The face and identity stay exactly the same throughout all cuts; only outfit and background change; seamless dissolves, no distorted face, no extra limbs.\n\noverall_soundscape: A continuous airy shimmer bridge between scenes, faint ambient hint of each new environment, no hard cut sound.\n\nnon_diegetic_music: Stylish, light pop groove with a soft sparkle on each dissolve, breezy and confident throughout.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认人物+默认都市服装】"
+    }
+   ]
+  }
+ ]
+}

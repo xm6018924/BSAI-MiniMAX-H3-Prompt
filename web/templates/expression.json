@@ -1,0 +1,1292 @@
+{
+ "id": "expression",
+ "subcategories": [
+  {
+   "id": "basic_expr",
+   "templates": [
+    {
+     "id": "expr_smile",
+     "name": "微笑",
+     "name_en": "Smile",
+     "description": "自然温柔的微笑，嘴角微微上扬",
+     "description_en": "A natural, gentle smile with the corners of the mouth slightly raised",
+     "preview": "expr_smile.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微笑",
+      "表情",
+      "基础",
+      "温柔"
+     ],
+     "tags_en": [
+      "smile",
+      "expression",
+      "basic",
+      "gentle"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing from the reference image.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，不切镜，不换景别。保持原图特写构图。\n- 0.0–1.0s: 人物面部保持初始表情，目光平静注视前方。\n- 1.0–2.0s: 嘴角缓慢轻微上扬，眼角出现细微笑纹，肌肉自然放松。\n- 2.0–3.5s: 微笑完全形成，嘴唇微张约2毫米，下眼睑轻收，颧骨肌肉自然上提，眼神变得柔和。\n- 3.5–5.0s: 微笑维持，自然呼吸，头部轻微前倾不到半秒。\n- 5.0–6.0s: 笑意渐渐回落，嘴角缓慢恢复中性位置，目光保持温和。\n\noverall_soundscape: 室内安静环境声，轻微呼吸声，衣物极轻微摩擦声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_laugh",
+     "name": "大笑",
+     "name_en": "Laugh",
+     "description": "开心的大笑，身体微颤，眼睛弯成月牙",
+     "description_en": "A joyful laugh, body shaking slightly, eyes curved into crescents",
+     "preview": "expr_laugh.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "大笑",
+      "表情",
+      "基础",
+      "开心"
+     ],
+     "tags_en": [
+      "laughter",
+      "expression",
+      "basic",
+      "happy"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.8s: 面部中性，听到什么后嘴角先动。\n- 0.8–1.5s: 嘴角快速上扬，眼睛开始眯起，鼻翼扩张，第一声笑从喉咙漏出。\n- 1.5–3.0s: 大笑完全爆发，嘴张开可见牙齿，眼睛弯成月牙形，面颊上提，肩膀随笑声短促颤动，呼吸断续。\n- 3.0–4.5s: 笑声渐弱但嘴角仍高，眼角湿润，间歇性轻笑，肩膀放松。\n- 4.5–6.0s: 笑声收住，嘴角缓慢回落，深吸一口气，眼睛重新睁开，面部带笑后余韵。\n\noverall_soundscape: 自然笑声，呼吸声，衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_cry",
+     "name": "哭泣",
+     "name_en": "Cry",
+     "description": "泪水涌出的哭泣，嘴唇颤抖",
+     "description_en": "Crying with tears welling up, lips trembling",
+     "preview": "expr_cry.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "哭泣",
+      "哭",
+      "表情",
+      "基础",
+      "悲伤"
+     ],
+     "tags_en": [
+      "crying",
+      "cry",
+      "expression",
+      "basic",
+      "sadness"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。嘴角全程不上扬，不出现微笑、苦笑或礼貌笑。\n- 0.0–1.0s: 面部保持初始状态，眼眶开始微微泛红，嘴唇轻微发颤。\n- 1.0–2.0s: 眨眼频率加快，下眼睑绷紧，鼻翼轻微扩张，喉结滚动一次，呼吸变浅。\n- 2.0–3.5s: 眼眶泪水涌出，沿面颊滑下，嘴唇颤抖，下颌收紧，短促吸气后发出压抑的哭声。眉头内聚但不夸张。\n- 3.5–5.0s: 持续流泪，声音断续，肩膀微颤，手想抬起又放下，鼻息加重。\n- 5.0–6.0s: 哭声渐弱，深呼吸，眼泪减少但眼眶仍红，嘴角下垂，面部呈现哭后疲惫。\n\noverall_soundscape: 压抑的哭声，断续呼吸声，泪水滴落声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_anger",
+     "name": "愤怒",
+     "name_en": "Anger",
+     "description": "怒火中烧的表情，眉头紧锁，眼神变硬",
+     "description_en": "A furious expression, brow locked tight, gaze hardening",
+     "preview": "expr_anger.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "愤怒",
+      "怒",
+      "表情",
+      "基础"
+     ],
+     "tags_en": [
+      "anger",
+      "rage",
+      "expression",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。嘴角全程不上扬。\n- 0.0–1.0s: 面部中性，目光直视前方，呼吸平稳。\n- 1.0–2.0s: 眉头开始内聚，眉心出现竖纹，下颌轻微咬紧，鼻翼短促扩张一次。\n- 2.0–3.5s: 愤怒完全形成，眉头紧锁，眼神变硬并微微收窄，嘴唇压成直线，面颊肌肉收紧，呼吸加重变深，脖颈青筋隐约可见。\n- 3.5–5.0s: 怒意维持，胸腔起伏加大，拳头在身侧攥紧又松开，目光锐利不回避。\n- 5.0–6.0s: 怒意缓慢回落，眉心仍留有竖纹，嘴唇从直线微微松开，深吸一口气，眼神保持警觉。\n\noverall_soundscape: 加重的呼吸声，牙齿短暂咬合声，衣物紧绷摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_surprise",
+     "name": "惊讶",
+     "name_en": "Surprise",
+     "description": "瞳孔微放的惊讶表情，嘴巴微张",
+     "description_en": "A surprised expression with pupils slightly dilated and the mouth a little open",
+     "preview": "expr_surprise.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "惊讶",
+      "表情",
+      "基础",
+      "震惊"
+     ],
+     "tags_en": [
+      "surprise",
+      "expression",
+      "basic",
+      "shock"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.5s: 面部中性，目光平视。\n- 0.5–1.0s: 眉毛快速上抬，眼睛瞬间睁大，瞳孔微放，嘴唇微张约3毫米，吸气卡住不到半秒。\n- 1.0–2.5s: 惊讶完全形成，嘴张大约5毫米，眉毛高位维持，眼睛圆睁，面颊轻微上提，身体微微后缩但头部不动。\n- 2.5–3.5s: 惊讶开始回落，眉毛缓慢下降，嘴唇缓慢闭合，眨眼一次，呼吸恢复。\n- 3.5–5.0s: 面部恢复中性但带惊讶余韵，眼神略带困惑，嘴唇微动似要说话但未开口。\n\noverall_soundscape: 短促吸气声，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_fear",
+     "name": "恐惧",
+     "name_en": "Fear",
+     "description": "从不安到恐惧的表情变化，瞳孔收缩",
+     "description_en": "Expression shifting from unease to fear, pupils contracting",
+     "preview": "expr_fear.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "恐惧",
+      "害怕",
+      "表情",
+      "基础"
+     ],
+     "tags_en": [
+      "fear",
+      "afraid",
+      "expression",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。嘴角全程不上扬。\n- 0.0–1.0s: 面部中性，目光开始搜索前方，呼吸浅而快。\n- 1.0–2.0s: 瞳孔收缩，眼白增多，眉毛上挑但眉心下压，嘴唇发白并微微收紧，脖子后侧肌肉绷紧。\n- 2.0–3.5s: 恐惧加深，眼睛圆睁不眨，鼻翼扩张，嘴角下拉，下颌微颤，呼吸几乎停止，肩膀上提。\n- 3.5–5.0s: 恐惧维持，身体微微后缩，手无意识抬起护住胸前，目光锁定不移动。\n- 5.0–6.0s: 恐惧缓慢回落，眼睑颤抖，嘴唇松开，短促呼气，瞳孔缓慢恢复，面部残留惊恐余韵。\n\noverall_soundscape: 浅而快的呼吸声，吞咽声，衣物轻微摩擦声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_joy",
+     "name": "欣喜",
+     "name_en": "Joy",
+     "description": "抑制不住的欣喜，眼神发亮",
+     "description_en": "Uncontrollable delight, eyes brightening",
+     "preview": "expr_joy.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "欣喜",
+      "喜悦",
+      "表情",
+      "基础",
+      "开心"
+     ],
+     "tags_en": [
+      "delight",
+      "joy",
+      "expression",
+      "basic",
+      "happy"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–1.0s: 面部中性，目光平视，嘴角平直。\n- 1.0–2.0s: 眼睛先亮，瞳孔微微放大，嘴角开始不受控上扬，面颊轻微上提，呼吸加快。\n- 2.0–3.5s: 欣喜完全爆发，嘴角大幅上扬露出牙齿，眼睛弯成弧形，面颊饱满上提，眉毛上扬，身体微微前倾，笑声从鼻间漏出。\n- 3.5–5.0s: 笑容维持，眼神明亮，不断轻笑，肩膀微颤，呼吸断续但愉悦。\n- 5.0–6.0s: 笑意回落但嘴角仍高，深吸气，眼睛重新睁开，面部保留喜悦余温。\n\noverall_soundscape: 轻笑声，加快的呼吸声，衣物摩擦声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_disgust",
+     "name": "厌恶",
+     "name_en": "Disgust",
+     "description": "鼻子皱起、嘴角下撇的厌恶表情",
+     "description_en": "A disgusted expression with a wrinkled nose and downturned mouth corners",
+     "preview": "expr_disgust.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "厌恶",
+      "嫌弃",
+      "表情",
+      "基础"
+     ],
+     "tags_en": [
+      "disgust",
+      "aversion",
+      "expression",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.8s: 面部中性，目光前方。\n- 0.8–1.5s: 鼻子开始皱起，上唇上抬露出一点牙齿，眉头轻微下压，眼睑收窄。\n- 1.5–3.0s: 厌恶完全形成，鼻子明显皱褶，嘴角一侧下撇，下颌微推向前，眼睛微微眯起，头微微后仰。\n- 3.0–4.0s: 厌恶维持，面颊上提挤压眼角，呼吸从鼻间短促出气，像排斥气味。\n- 4.0–5.0s: 厌恶缓慢回落，鼻子展开，嘴角恢复，但眼神仍带嫌恶，面部微绷。\n\noverall_soundscape: 短促鼻息声，轻微衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_maniac_laugh",
+     "name": "狂笑",
+     "name_en": "Maniacal Laugh",
+     "description": "失控的狂笑，身体后仰，笑声尖锐断续",
+     "description_en": "Uncontrolled manic laughter, body leaning back, sharp broken laughter",
+     "preview": "expr_maniac_laugh.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "狂笑",
+      "大笑",
+      "失控",
+      "疯狂",
+      "基础"
+     ],
+     "tags_en": [
+      "manic laughter",
+      "laughter",
+      "loss of control",
+      "madness",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写至半身构图。\n- 0.0–0.5s: 面部中性，嘴角微微一动，像听到什么荒谬的事。\n- 0.5–1.5s: 笑声猛然爆发，嘴大张，头后仰，眼睛眯成缝或睁大失焦，面颊剧烈上提，肩膀向后颤动，笑声尖锐而不连续。\n- 1.5–3.0s: 狂笑持续，身体前仰后合，呼吸断续到几乎窒息，手捂住肚子或撑住旁边，眼泪笑出，鼻音和喉音混在一起。\n- 3.0–4.5s: 笑声渐弱但停不下来，间歇性爆发，嘴角维持高位，面部肌肉抽搐，眼睛湿润，肩膀仍在颤动。\n- 4.5–6.0s: 笑声终于收住，深吸气回复，嘴角仍高，眼角湿润，面部带着狂笑后的余韵和疲惫，呼吸粗重。\n\noverall_soundscape: 尖锐断续的狂笑声，粗重的呼吸声，身体颤动引起的衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_wail",
+     "name": "大哭",
+     "name_en": "Wailing",
+     "description": "嚎啕大哭，嘴大张，涕泗横流，身体前倾颤抖",
+     "description_en": "Wailing loudly, mouth wide open, tears and snot streaming, body leaning forward and shaking",
+     "preview": "expr_wail.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "大哭",
+      "嚎啕",
+      "哭",
+      "崩溃",
+      "基础"
+     ],
+     "tags_en": [
+      "sobbing",
+      "wailing",
+      "cry",
+      "breakdown",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写至半身构图。\n- 0.0–1.0s: 面部紧绷，眼眶已红，嘴唇压平后颤抖，呼吸急促变浅，肩膀开始下沉。\n- 1.0–2.5s: 嚎啕爆发，嘴大张发出哭声，眉头剧烈内聚，眼眶泪水涌出沿面颊滑下，鼻涕涌出，面部肌肉完全扭曲，身体前倾颤抖，手抬起又不知道放哪。\n- 2.5–4.0s: 持续嚎哭，呼吸断续到窒息再吸气再哭，声音嘶哑，肩膀剧烈颤动，头部前后摇晃，眼泪不断，面部通红。\n- 4.0–5.5s: 哭声渐弱但抽泣不断，嘴唇颤抖，深吸气又被哭声打断，面部肌肉松弛但泪痕未干，身体慢慢缩起来。\n- 5.5–7.0s: 哭声变成低泣，呼吸深而断续，眼眶仍红，嘴角下垂，面部呈现嚎哭后的彻底疲惫和空，鼻翼扩张吸气。\n\noverall_soundscape: 嚎哭声，断续窒息的呼吸，鼻息声，泪水滴落声，衣物剧烈摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_rage",
+     "name": "暴怒",
+     "name_en": "Rage",
+     "description": "暴怒失控，青筋暴起，拳头攥紧，呼吸粗重如兽",
+     "description_en": "Rage out of control, veins bulging, fists clenched, breathing heavy as a beast's",
+     "preview": "expr_rage.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "暴怒",
+      "大怒",
+      "怒",
+      "失控",
+      "基础"
+     ],
+     "tags_en": [
+      "fury",
+      "great anger",
+      "rage",
+      "loss of control",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写至半身构图。\n- 0.0–0.8s: 面部已有怒意，眉头紧锁，嘴唇压成直线，呼吸加重，拳头在身侧攥紧。\n- 0.8–2.0s: 暴怒爆发，眉心竖纹加深，眼睛圆睁收窄并充血，鼻翼剧烈扩张，嘴唇从直线变成微张露出牙齿，面颊肌肉绷到极限，脖颈青筋暴起，胸腔剧烈起伏，拳头攥到指节发白。\n- 2.0–3.5s: 怒意到顶，身体微微前倾，下颌咬紧又松开，呼吸从鼻间粗重出气像兽，手想挥又强行压住，目光锐利锁定不回避。\n- 3.5–5.0s: 暴怒维持但开始受控，眉头仍锁但竖纹变浅，嘴唇重新压紧，呼吸从粗重变深变慢，拳头慢慢松开但手指仍弯曲。\n- 5.0–6.0s: 怒意被压成冷，面部肌肉从绷紧变成僵硬，目光从锐利变成冰冷，深吸一口气，嘴角不上扬，一切像暴风雨后的死寂。\n\noverall_soundscape: 粗重的呼吸声，牙齿咬合声，拳头攥紧的关节声，衣物紧绷摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_contempt",
+     "name": "轻蔑",
+     "name_en": "Contempt",
+     "description": "一侧嘴角上扬带冷意，眼神俯视",
+     "description_en": "One corner of the mouth raised with a cold edge, looking down at the other person",
+     "preview": "expr_contempt.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "轻蔑",
+      "鄙视",
+      "蔑视",
+      "冷",
+      "基础"
+     ],
+     "tags_en": [
+      "contempt",
+      "disdain",
+      "scorn",
+      "cold",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.8s: 面部中性，目光平视前方。\n- 0.8–1.5s: 一侧嘴角缓慢上扬，另一侧不动，嘴角不对称，眼尾微微收窄，下巴微微抬高，目光从平视变成俯视。\n- 1.5–3.0s: 轻蔑完全形成，一侧嘴角上挑带冷意不是笑，眼睛微微眯起，下颌微推向前，鼻翼轻动一次像闻到什么不值一提的东西，头微微后仰。\n- 3.0–4.0s: 轻蔑维持，面颊一侧上提，眼尾纹路是绷紧不是笑纹，呼吸从鼻间短促出气一声，目光从俯视偏向一侧再拉回。\n- 4.0–5.0s: 轻蔑缓慢回落，嘴角从上挑恢复但眼神仍带冷意，面部微绷，头恢复平视但目光仍高人一等。\n\noverall_soundscape: 短促鼻息声一声，轻微衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_confusion",
+     "name": "困惑",
+     "name_en": "Confusion",
+     "description": "眉头微蹙，眼神搜索，嘴唇微动似要问",
+     "description_en": "Brow slightly furrowed, eyes searching, lips moving as if about to ask",
+     "preview": "expr_confusion.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "困惑",
+      "迷茫",
+      "不解",
+      "疑惑",
+      "基础"
+     ],
+     "tags_en": [
+      "confusion",
+      "lost",
+      "uncomprehending",
+      "puzzled",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。嘴角不上扬。\n- 0.0–0.8s: 面部中性，目光平视，听到什么后表情不变。\n- 0.8–1.5s: 眉头开始微蹙，眉心出现浅纹，眼睛微微睁大但不圆睁，瞳孔微微移动像在处理信息，嘴唇微张约2毫米。\n- 1.5–3.0s: 困惑完全形成，眉头内聚但不锁死，目光从平视偏向一侧搜索又拉回，嘴角一侧微微动了一下像要说什么又没说，头微微偏向一侧，眨眼频率降低。\n- 3.0–4.0s: 困惑维持，嘴唇微动又闭合，吞咽一次，眉毛从内聚变成单侧上抬半毫米，眼神带疑问，呼吸浅。\n- 4.0–5.0s: 困惑缓慢回落但未消解，眉头从微蹙到展开但眉心仍有浅纹，嘴唇闭合，目光比开始时更搜索，面部带着未理解的疑问。\n\noverall_soundscape: 吞咽声，浅呼吸声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_shy",
+     "name": "害羞",
+     "name_en": "Shy",
+     "description": "脸颊微红，目光躲闪，嘴角忍不住上扬又压住",
+     "description_en": "Cheeks slightly flushed, gaze darting away, a smile fighting to surface",
+     "preview": "expr_shy.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "害羞",
+      "羞涩",
+      "脸红",
+      "躲闪",
+      "基础"
+     ],
+     "tags_en": [
+      "shy",
+      "bashful",
+      "blushing",
+      "darting glance",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.8s: 面部中性，听到什么后脸颊开始微微泛红，目光从对视偏向一侧。\n- 0.8–1.5s: 脸颊红意加深，嘴角忍不住微微上扬又立刻压住，目光躲闪偏向一侧又快速拉回，睫毛快速颤动，头微微低下半寸。\n- 1.5–3.0s: 害羞完全形成，面颊明显泛红，耳朵也红，嘴角反复想上扬又压住，最终嘴角微微翘起忍不住，眼睛不敢直视偏向下方又偷偷抬眼看，手无意识整理头发或衣角。\n- 3.0–4.0s: 害羞维持，笑容终于藏不住嘴角维持微翘，面颊饱满上提，眨眼频率加快，呼吸变浅带笑意，头偏向一侧但眼睛偷看。\n- 4.0–5.0s: 害羞缓慢回落，脸红渐淡但仍有，嘴角从微翘恢复但带笑意余韵，目光终于敢对视又立刻偏向一侧，面部带着害羞后的甜。\n\noverall_soundscape: 浅而带笑意的呼吸声，衣物轻微摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_disappointment",
+     "name": "失望",
+     "name_en": "Disappointment",
+     "description": "笑容缓慢消失，目光从期待变空，嘴角下垂",
+     "description_en": "The smile slowly fading, the gaze going from hopeful to empty, mouth corners drooping",
+     "preview": "expr_disappointment.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "失望",
+      "落空",
+      "笑意消失",
+      "基础"
+     ],
+     "tags_en": [
+      "disappointment",
+      "letdown",
+      "smile fading",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角最终不上扬。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–1.0s: 面带期待微笑，目光前方，呼吸平稳，嘴角上扬。\n- 1.0–2.0s: 笑容开始变慢，嘴角上扬幅度不再增加，眼睛从期待开始失焦，眉心浅蹙后展开，呼吸漏拍。\n- 2.0–3.0s: 笑容开始消退，嘴角缓慢回落，一侧先掉另一侧还撑着，眼神从期待变空，下眼睑绷紧，喉结轻滚一次。\n- 3.0–4.0s: 笑容彻底消失，嘴角从微翘变成平直再变成微微下垂，眼睛不再有光，目光失焦偏向一侧，面颊肌肉松弛，呼吸变深变沉。\n- 4.0–5.0s: 失望锁定，嘴角不上扬也不明显下垂但平直得空，眼神比开始时暗了太多，眉毛从上扬恢复到中性但眉心有浅纹，深吸一口气。\n- 5.0–6.0s: 面部呈现失望后的冷和空，嘴角平直，目光从偏向一侧慢慢拉回但不再有期待，呼吸平稳但沉，一切像什么被拿走了。\n\noverall_soundscape: 从平稳到变沉的呼吸声，吞咽声，衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "expr_smug",
+     "name": "得意",
+     "name_en": "Smug",
+     "description": "嘴角一侧上扬带得意，眼神斜睨，下巴微抬",
+     "description_en": "One corner of the mouth raised with smugness, a sidelong glance, chin slightly lifted",
+     "preview": "expr_smug.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "得意",
+      "自满",
+      "得意洋洋",
+      "基础"
+     ],
+     "tags_en": [
+      "smug",
+      "self-satisfied",
+      "pleased with oneself",
+      "basic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing.\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，保持特写构图。\n- 0.0–0.8s: 面部中性，听到什么好消息后嘴角先动。\n- 0.8–1.5s: 一侧嘴角缓慢上扬，另一侧不动，嘴角不对称带得意，下巴微微抬高，目光从平视变成斜睨，眼尾微微收窄带笑意但不笑出来。\n- 1.5–3.0s: 得意完全形成，嘴角一侧上挑到高位，面颊一侧上提，眼睛微微眯起带光，下巴抬高，头微微后仰，目光斜睨俯视，呼吸从鼻间出气一声带哼意。\n- 3.0–4.0s: 得意维持，嘴角一侧保持高位，另一侧也微微上扬但不对称仍在，手可能抱臂或轻敲桌面，眼神带着\"我就知道\"的自信。\n- 4.0–5.0s: 得意缓慢回落，嘴角从高位回落但仍带弧度，眼神从斜睨恢复但仍有自满，面部带着得意余韵，呼吸平稳。\n\noverall_soundscape: 从鼻间出气一声带哼意，轻微衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    }
+   ]
+  },
+  {
+   "id": "micro_expr",
+   "templates": [
+    {
+     "id": "mexpr_hold_tears",
+     "name": "忍住不哭",
+     "name_en": "Holding back tears",
+     "description": "强忍泪水，嘴唇颤抖，眼眶湿润但不让泪落下",
+     "description_en": "Holding back tears, lips trembling, eyes wet but refusing to let a tear fall",
+     "preview": "mexpr_hold_tears.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "忍哭",
+      "克制",
+      "悲伤",
+      "内伤"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "holding back tears",
+      "restraint",
+      "sadness",
+      "silent hurt"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬，不出现微笑、苦笑或礼貌笑。不流泪，不切镜，不转场，不改变脸型、发型、服装、背景。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，不切镜，不换景别，不转场。保持原图特写构图，只允许面部、眼神、呼吸、头颈和必要的轻微身体微动。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部保持初始基线，目光直视前方，呼吸平稳，唇线平直。\n- 1.0–1.7s: 眨眼晚半拍，眼眶开始泛红，下眼睑绷紧，喉结轻滚一次，呼吸变浅。\n- 1.7–2.6s: 眉心浅蹙后展开，嘴唇轻微发颤，鼻翼扩张一次，吸气被憋住不到半秒，胸口不动。\n- 2.6–3.5s: 吞咽出现，眼神短暂失焦后强行拉回，下颌一侧轻轻绷住，嘴角不上扬也不明显下垂，气从鼻间漏出。\n- 3.5–4.6s: 眼眶湿润但泪水不落下，眼睑轻颤，嘴唇压住，下颌收紧，呼吸破碎，肩膀晚半拍微微下沉。\n- 4.6–6.0s: 深吸气重建，眼睑颤抖后恢复，唇线维持平直，面部回到表面平静但内里空了的状态，目光比开始时更远。\n\noverall_soundscape: 浅而碎的呼吸声，吞咽声，极轻的鼻息声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_smile_nothing",
+     "name": "笑着说没事",
+     "name_en": "Smiling through pain",
+     "description": "嘴上笑着说没事，眼里却没有笑意",
+     "description_en": "Saying it is fine with a smile while the eyes carry no smile at all",
+     "preview": "mexpr_smile_nothing.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "强颜欢笑",
+      "笑",
+      "掩饰",
+      "悲伤"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "forced smile",
+      "smile",
+      "covering up",
+      "sadness"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场，不改变脸型、发型、服装、背景。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底，不切镜，不换景别。保持原图特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，有人开口问什么，嘴角开始努力上扬。\n- 1.0–2.0s: 嘴角上扬但眼睛不跟，笑容只到嘴角不到眼角，眼眶微微泛红，面颊肌肉上提但眼周不动，说\"没事\"。\n- 2.0–3.0s: 笑容维持过久，嘴角慢慢掉，一侧先失败，眼尾出现细微纹路不是笑纹而是绷紧，喉结滚动一次。\n- 3.0–4.0s: 嘴角重新撑起笑容但更用力，眼睛却比之前更空，呼吸漏拍，笑容像面具而非表情。\n- 4.0–5.0s: 笑容终于维持不住，嘴角缓慢回落，眼睑发重，眨眼延迟，目光落空。\n- 5.0–6.0s: 面部恢复中性但比开始时更空，嘴角平直，眼睛湿润但泪水不落，笑容的残迹只剩在嘴角肌肉的疲劳里。\n\noverall_soundscape: 轻声说\"没事\"的声音，断续呼吸，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_polite_anger",
+     "name": "礼貌忍怒",
+     "name_en": "Polite suppressed anger",
+     "description": "表面礼貌微笑，下颌咬紧，怒意在眼里",
+     "description_en": "A polite surface smile with the jaw clenched and anger in the eyes",
+     "preview": "mexpr_polite_anger.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "忍怒",
+      "礼貌",
+      "愤怒",
+      "克制"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "suppressed anger",
+      "polite",
+      "anger",
+      "restraint"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场，不改变脸型、发型、服装、背景。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持原图特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部礼貌微笑，目光对视，呼吸平稳，表面完全得体。\n- 1.0–1.8s: 下颌开始向侧方绷紧，嘴角的笑维持但变硬，鼻翼短促扩张一次，眉心出现极浅竖纹后立刻被压平，额头完全不动。\n- 1.8–2.8s: 眼神变硬但笑容不动，嘴唇从笑变成一条略带弧度的线，呼吸从鼻间短促出气，手指在身侧微握又松开。\n- 2.8–4.0s: 一侧眉尾塌下但嘴角补笑，喉结滚动，回答变短，声音变轻一个度，目光从对视微微偏向一侧再拉回。\n- 4.0–5.0s: 笑容维持但完全是面具，眼尾纹路绷紧而非笑纹，下颌锁住，肩膀先绷住，胸腔起伏被控制。\n- 5.0–6.0s: 缓慢松开下颌，嘴角从硬笑回到平直，深吸一口气，眼神比开始时更冷但面部恢复得体。\n\noverall_soundscape: 受控的呼吸声，衣物轻微紧绷声，短促的鼻息声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_feign_calm",
+     "name": "装作镇定",
+     "name_en": "Feigning composure",
+     "description": "内心慌张但表面强装镇定，手指微动",
+     "description_en": "Panicking inside while forcing composure, fingers fidgeting",
+     "preview": "mexpr_feign_calm.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "装镇定",
+      "恐惧",
+      "掩饰",
+      "紧张"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "feigning composure",
+      "fear",
+      "covering up",
+      "nervous"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬，不出现微笑。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持原图特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部平静，目光对视，表面完全镇定，呼吸均匀。\n- 1.0–1.8s: 眨眼频率从正常变快又强行压回，喉结轻滚，手在画面外微动，呼吸加快但脸不动。\n- 1.8–2.6s: 视线先靠近对方头部不动，眼尾先退半拍，额头完全不动但眼睑泄露紧张，单侧眼睑收窄后主动放松。\n- 2.6–3.5s: 拇指摩擦指腹但手在画面下方，眼神扫过画面一侧出口又回到对方脸，快速礼貌微笑消失，吞咽出现。\n- 3.5–4.6s: 呼吸漏拍，肩膀先绷又压下，回答晚半拍先眨眼再开口，声音变轻，嘴唇微张又闭合。\n- 4.6–6.0s: 深吸气，重新组织表情，目光重新聚焦，面部恢复表面镇定但呼吸比开始时更深更慢，手停下微动。\n\noverall_soundscape: 加快又压回的呼吸声，吞咽声，衣物轻微摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_jealous_smile",
+     "name": "嫉妒藏笑",
+     "name_en": "Jealousy behind smile",
+     "description": "听到亲密称呼后笑容变硬，视线粘住对方",
+     "description_en": "The smile stiffens on hearing an intimate nickname, the gaze fixed on the other person",
+     "preview": "mexpr_jealous_smile.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "嫉妒",
+      "笑",
+      "酸意",
+      "克制"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "jealousy",
+      "smile",
+      "bitterness",
+      "restraint"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持原图特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部自然微笑，目光前方，听到什么后笑容不变。\n- 1.0–2.0s: 视线突然粘住画面外某人，笑容维持但笑容延迟了半拍，嘴角一侧先掉，眼尾纹路从笑纹变成绷紧，鼻翼轻动一次。\n- 2.0–3.0s: 笑容重新撑起但更用力，眼睛不跟笑，视线过度跟随某人，手碰杯时用力，酸意藏在玩笑般的笑声里但笑声变空。\n- 3.0–4.0s: 笑容变硬，笑容维持过久不自然，眉心浅蹙后展开，呼吸漏拍，保护欲泄露——身体微转向某人。\n- 4.0–5.0s: 嫉妒后羞耻，笑容终于维持不住，嘴角缓慢回落，视线从粘住转为回避，喉结滚动，手指压杯沿又松开。\n- 5.0–6.0s: 重新组织表情，嘴角勉强维持中性，眼神比开始时更冷更远，手放下杯子，呼吸恢复但更深。\n\noverall_soundscape: 杯子轻碰声，断续呼吸，吞咽声，环境人声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_breakdown_cared",
+     "name": "被关心后破防",
+     "name_en": "Breakdown when comforted",
+     "description": "一直强撑，被人温柔关心后防线崩溃",
+     "description_en": "Holding on the whole time until gentle concern breaks the defence down",
+     "preview": "mexpr_breakdown_cared.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "破防",
+      "崩溃",
+      "被关心",
+      "悲伤"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "guard broken",
+      "breakdown",
+      "being cared for",
+      "sadness"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬直到破防瞬间。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持原图特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部强装平静，目光回避对视，呼吸浅而稳，嘴唇压成直线，肩颈微微绷紧，一切都在\"我没事\"的面具下。\n- 1.5–2.5s: 听到温柔的话，喉结先动，吞咽出现，眼眶开始泛红，嘴角颤了一下，呼吸漏拍，拳头在身侧微微松开。\n- 2.5–3.5s: 眼睛第一次抬起来看对方，目光短暂失焦，嘴唇微张想说什么又停住，鼻翼扩张，吸气卡住不到半秒。\n- 3.5–5.0s: 防线崩溃，眼眶泪水涌出但不出声，嘴唇颤抖，下颌收紧，肩膀突然松下来，一只手抬起又不知道放哪，呼吸破碎变成压抑的抽泣。\n- 5.0–6.0s: 持续无声流泪，面部肌肉松弛，表情从强撑变成彻底的脆弱，头微微低下，眼泪沿面颊滑下。\n- 6.0–7.0s: 深吸气，眼泪减少但眼眶仍红，嘴角不上扬，面部呈现崩溃后的空和疲惫，目光重新对视但比开始时柔软太多。\n\noverall_soundscape: 压抑的抽泣声，破碎呼吸，吞咽声，泪水声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_words_halt",
+     "name": "欲言又止",
+     "name_en": "Hesitation to speak",
+     "description": "想说什么但说不出口，嘴唇微张又闭合",
+     "description_en": "Wanting to say something but unable to, the lips parting and closing again",
+     "preview": "mexpr_words_halt.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "欲言又止",
+      "犹豫",
+      "克制"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "words held back",
+      "hesitation",
+      "restraint"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角不上扬，不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–0.8s: 面部中性，目光与对方对视，呼吸平稳。\n- 0.8–1.5s: 嘴唇微张约2毫米，喉结轻滚，想开口，眉心浅蹙，手微微抬起不到半寸。\n- 1.5–2.5s: 嘴唇重新闭合，手缩回改成整理衣角，视线从对视偏向一侧又拉回，吞咽出现，吸气被憋住。\n- 2.5–3.5s: 嘴唇再次微张，声音从喉咙漏出但不成词，嘴角一侧微微动了一下又压住，眼眶微微泛红，呼吸漏拍。\n- 3.5–5.0s: 嘴唇最终闭合，嘴角不上扬也不下垂，嘴唇压平，深吸一口气，目光比开始时更远，手放下衣角，面部恢复中性但带着未说出口的重量。\n\noverall_soundscape: 断续呼吸，吞咽声，衣物轻微摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_tired_smile",
+     "name": "疲惫微笑",
+     "name_en": "Exhausted smile",
+     "description": "强打精神的微笑，眼睛里没有光",
+     "description_en": "A forced smile that puts on a brave face, with no light in the eyes",
+     "preview": "mexpr_tired_smile.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "疲惫",
+      "笑",
+      "强撑",
+      "累"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "exhaustion",
+      "smile",
+      "holding on",
+      "tired"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部强打精神，嘴角撑起微笑但眼睑发重，眨眼延迟，目光短暂失焦后强行拉回。\n- 1.0–2.0s: 笑容维持但动作越来越小，面颊上提的力度减弱，嘴角上扬但眼睛不跟，呼吸很沉，肩膀微微下沉。\n- 2.0–3.0s: 笑容开始碎掉，一侧嘴角先落，另一侧还撑着，眼神空但不瞪，嘴唇微张呼吸从嘴间漏出。\n- 3.0–4.0s: 重新组织笑容但更勉强，嘴角上扬的幅度变小，眼睛完全跟不上，面部肌肉像在执行指令而非自然表达。\n- 4.0–5.0s: 笑容终于维持不住，嘴角缓慢回落到中性，眼睑更重，呼吸更深更慢，肩膀彻底放松。\n- 5.0–6.0s: 面部呈现疲惫后的空，嘴角平直不上扬，眼神空洞但不再强撑，呼吸很轻，面部肌肉松弛。\n\noverall_soundscape: 深沉的呼吸声，衣物摩擦声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_gaze_realization",
+     "name": "突然明白",
+     "name_en": "Sudden realization",
+     "description": "反应晚半拍后突然理解某事，表情从空白到变化",
+     "description_en": "A half-beat late reaction, then sudden understanding, the face shifting from blank to changed",
+     "preview": "mexpr_gaze_realization.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "明白",
+      "理解",
+      "惊讶",
+      "反应"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "realisation",
+      "understanding",
+      "surprise",
+      "reaction"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，听到什么后表情不变，目光平视，信息尚未处理。\n- 1.0–2.0s: 反应晚半拍，瞳孔般停顿，眨眼一次，嘴唇微张，眉毛极轻上抬半毫米，信息慢慢落下。\n- 2.0–3.0s: 突然明白，眼睛短暂睁大约1毫米后恢复，嘴角微微动了一下，视线快速看向某处证据再拉回，喉结滚动，呼吸漏拍。\n- 3.0–4.0s: 重新组织表情，面部从空白变成有所理解，眉心浅蹙，嘴角压平，目光变得锐利，呼吸加深。\n- 4.0–5.0s: 表情变化加速，嘴唇微张想说什么又闭住，眼神从理解变成某种更深的情绪（根据场景：失望、愤怒、释然等），鼻翼扩张一次。\n- 5.0–6.0s: 面部锁定在新的情绪状态，比开始时更沉更远，嘴角不上扬，目光定住，深吸气，手微微收紧。\n\noverall_soundscape: 吞咽声，断续呼吸，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_awkward_smile",
+     "name": "尴尬微笑",
+     "name_en": "Awkward smile",
+     "description": "说错话或被揭穿后的尴尬补救笑容，笑容僵硬不自然",
+     "description_en": "An awkward recovery smile after a slip of the tongue or being exposed, stiff and unnatural",
+     "preview": "mexpr_awkward_smile.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "尴尬",
+      "笑",
+      "补救",
+      "社交"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "awkwardness",
+      "smile",
+      "recovery",
+      "social"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–0.8s: 面部中性，说错话或被揭穿后表情微微僵住半拍，嘴角还没动。\n- 0.8–1.5s: 尴尬笑容开始补救，嘴角快速上扬但太用力太晚，笑容不对称，一侧嘴角先动另一侧跟不上，眼睛完全没笑意，面颊肌肉勉强上提。\n- 1.5–2.5s: 笑容维持但完全像面具，眼尾纹路是绷紧不是笑纹，目光躲闪偏向一侧又拉回，喉结滚动一次，手无意识摸后颈或整理衣角，呼吸漏拍。\n- 2.5–3.5s: 笑容开始维持不住，嘴角慢慢掉又强行撑起，笑容反复修补，鼻翼轻动，眼神从躲闪变成求助般快速扫过对方表情。\n- 3.5–5.0s: 笑容终于从尴尬变成疲惫，嘴角缓慢回落到中性，面部带着尴尬后的微绷和红意，目光比开始时更小心，深吸一口气，一切像想翻篇。\n\noverall_soundscape: 断续呼吸，吞咽声，衣物轻微摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_forgiven_break",
+     "name": "被原谅时崩溃",
+     "name_en": "Breakdown when forgiven",
+     "description": "一直愧疚强撑，被对方原谅后防线反而崩溃",
+     "description_en": "Guilt carried silently until forgiveness arrives, at which point the defence collapses instead",
+     "preview": "mexpr_forgiven_break.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "被原谅",
+      "崩溃",
+      "愧疚",
+      "破防"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "forgiven",
+      "breakdown",
+      "guilt",
+      "guard broken"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬直到崩溃瞬间。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部强装镇定但眼底有愧，目光不敢直视对方，嘴唇压平，下颌微收，肩颈绷紧，呼吸浅而稳，一切在\"我不配被原谅\"的面具下。\n- 1.5–2.5s: 听到原谅的话，喉结先动，吞咽出现，眼眶开始泛红，嘴角颤了一下，呼吸漏拍，拳头在身侧微微松开，目光迟疑地抬起来。\n- 2.5–3.5s: 目光第一次抬起来看对方，短暂对视后失焦，嘴唇微张想说什么又停住，鼻翼扩张，吸气卡住不到半秒，比惩罚更难承受的是原谅。\n- 3.5–5.0s: 防线崩溃，眼眶泪水涌出但不出声，嘴唇颤抖，下颌收紧，肩膀突然松下来，一只手抬起捂住嘴又放下，呼吸破碎变成压抑的抽泣，愧疚在原谅面前彻底碎了。\n- 5.0–6.0s: 持续无声流泪，面部肌肉松弛，表情从强撑变成彻底的脆弱和感恩，头微微低下，眼泪沿面颊滑下。\n- 6.0–7.0s: 深吸气，眼泪减少但眼眶仍红，嘴角不上扬但微微松开，面部呈现崩溃后的空和感激，目光重新对视但比开始时柔软太多。\n\noverall_soundscape: 压抑的抽泣声，破碎呼吸，吞咽声，泪水声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_disbelieve_joy",
+     "name": "不敢相信的笑",
+     "name_en": "Disbelieving joy",
+     "description": "听到好消息不敢相信，笑意反复出现又压住",
+     "description_en": "Disbelief at good news, a smile surfacing again and again only to be pushed back down",
+     "preview": "mexpr_disbelieve_joy.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "不敢相信",
+      "喜",
+      "笑",
+      "犹豫"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "disbelief",
+      "joy",
+      "smile",
+      "hesitation"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，听到好消息后表情不变，信息尚未处理，目光平视。\n- 1.0–2.0s: 反应晚半拍，嘴角不受控微微动了一下又立刻压住，瞳孔般停顿，眨眼一次，眉毛极轻上抬半毫米，不敢相信先于喜悦出现。\n- 2.0–3.0s: 笑意想出来又不敢，嘴角反复上扬又压住，眼睛开始有光但还在确认，视线快速看向某处证据再拉回，喉结滚动，呼吸加快。\n- 3.0–4.0s: 笑意终于压不住，嘴角缓慢上扬但笑容还在犹豫，眼睛比嘴角先笑，面颊开始上提，呼吸从浅变深，肩膀晚半拍放松。\n- 4.0–5.0s: 笑容完全形成但还带着不敢相信，嘴角上扬但眼睛湿润，面部像\"真的吗\"的问句，不断轻笑，肩膀微颤。\n- 5.0–6.0s: 笑容维持但逐渐从不敢相信变成确认后的喜悦，眼睛完全跟上笑，面部从犹豫变成彻底的笑，深吸气，比开始时亮太多。\n\noverall_soundscape: 加快的呼吸声，轻笑声，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "mexpr_smile_vanish",
+     "name": "笑容消失",
+     "name_en": "Smile vanishing",
+     "description": "笑容缓慢从脸上消失，从笑到空的过程",
+     "description_en": "The smile slowly draining from the face, the process from smiling to blank",
+     "preview": "mexpr_smile_vanish.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 5,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "微表情",
+      "笑容消失",
+      "消退",
+      "空",
+      "变化"
+     ],
+     "tags_en": [
+      "micro-expression",
+      "smile gone",
+      "fading",
+      "empty",
+      "change"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–0.8s: 面带笑容，嘴角上扬，眼睛有笑意，面部自然。\n- 0.8–1.5s: 笑容开始变慢，嘴角上扬幅度不再增加，眼睛从笑意开始变空，面颊肌肉维持但力度减弱，呼吸从带笑变浅。\n- 1.5–2.5s: 笑容开始消退，嘴角缓慢回落，一侧先掉另一侧还撑着，眼尾纹路从笑纹变成绷紧，喉结滚动一次，眼神从笑变空。\n- 2.5–3.5s: 笑容彻底消失，嘴角从微翘变成平直，面颊肌肉松弛，眼睛完全不再有笑意，目光失焦，呼吸变深变沉，面部像灯灭了。\n- 3.5–5.0s: 面部锁定在笑容消失后的空，嘴角平直不上扬，眼神比开始时空了太多，面部肌肉松弛但不放松，呼吸平稳但沉，一切像什么被拿走了。\n\noverall_soundscape: 从带笑到变沉的呼吸声，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    }
+   ]
+  },
+  {
+   "id": "emotion_transition",
+   "templates": [
+    {
+     "id": "etrans_smile_to_cry",
+     "name": "笑转哭",
+     "name_en": "Smile to cry",
+     "description": "从笑容到泪水的转变，笑容碎裂后崩溃",
+     "description_en": "The turn from smiling to tears, the smile shattering before the breakdown",
+     "preview": "etrans_smile_to_cry.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "笑转哭",
+      "崩溃",
+      "微表情"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "smile to tears",
+      "breakdown",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面带自然微笑，目光前方，呼吸平稳。\n- 1.0–2.0s: 笑容维持但笑容延迟，一侧嘴角先掉，眼尾纹路从笑纹变成绷紧，喉结滚动，呼吸漏拍。\n- 2.0–3.0s: 笑容开始碎掉，嘴角慢慢掉，眼眶泛红，下眼睑绷紧，嘴唇从弧度变成直线，鼻翼扩张。\n- 3.0–4.5s: 笑容彻底碎裂，嘴角下拉，眼泪涌出沿面颊滑下，嘴唇颤抖，下颌收紧，呼吸破碎变成压抑的哭声，眉头内聚。\n- 4.5–5.5s: 持续流泪，面部肌肉松弛，笑容完全消失，肩膀微颤，手抬起又不知道放哪。\n- 5.5–7.0s: 哭声渐弱，深吸气，眼泪减少但眼眶仍红，嘴角下垂，面部呈现崩溃后的空和疲惫。\n\noverall_soundscape: 从轻笑到压抑哭声的转变，破碎呼吸，泪水声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_anger_to_silence",
+     "name": "怒转沉默",
+     "name_en": "Anger to silence",
+     "description": "从愤怒到沉默的转变，怒意被压成冷",
+     "description_en": "The turn from anger to silence, fury compressed into coldness",
+     "preview": "etrans_anger_to_silence.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "怒转沉默",
+      "冷",
+      "克制"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "anger to silence",
+      "cold",
+      "restraint"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 愤怒表情，眉头紧锁，眼神变硬并收窄，嘴唇压成直线，面颊肌肉收紧，呼吸加重，脖颈绷紧。\n- 1.5–3.0s: 怒意开始被压下，眉头缓慢展开但竖纹仍在，嘴唇从直线微微松开，呼吸从加重变成受控的深吸，下颌从咬紧到一侧绷住。\n- 3.0–4.5s: 怒意转成沉默，面部肌肉松弛但不是放松，眼神从锐利变成冷，目光从直视变成偏向一侧，喉结滚动一次，声音消失。\n- 4.5–6.0s: 沉默加深，面部几乎不动但不是平静，呼吸很轻很深，嘴角平直，眉毛恢复但眉心仍有残余竖纹，手从攥拳松开但手指不伸直。\n- 6.0–7.0s: 面部锁定在冷的状态，目光从侧面重新对视但比开始时更冷更远，嘴角不上扬，深吸气，一切像什么都没发生但空气完全变了。\n\noverall_soundscape: 从加重呼吸到受控深呼吸再到几乎无声的转变，吞咽声，衣物摩擦声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_numb_to_warm",
+     "name": "麻木回温",
+     "name_en": "Numbness to warmth",
+     "description": "从情感麻木到慢慢回温的过程",
+     "description_en": "The process of thawing from emotional numbness back to warmth",
+     "preview": "etrans_numb_to_warm.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "麻木回温",
+      "希望",
+      "释然"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "thawing from numbness",
+      "hope",
+      "relief"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部麻木，表情缺席，眨眼变慢，目光看着但没看见，嘴唇平直，呼吸很轻，面部肌肉完全松弛但不放松。\n- 1.5–3.0s: 听见什么，反应延迟，瞳孔般停顿后眼神重新聚焦，喉结滚动一次，呼吸迟到地深了一口，嘴唇微动。\n- 3.0–4.5s: 眼睛先亮，瞳孔微微放大，眼眶微微泛红但不是悲伤，嘴角一侧极轻上扬不到1毫米又停住，面颊肌肉微微激活。\n- 4.5–6.0s: 笑意慢慢回来，嘴角缓慢上扬，眼睛开始有光，呼吸从浅变深变稳，肩膀晚半拍放松，手微微松开。\n- 6.0–7.0s: 微笑形成但很小很轻，眼睛湿润但不是哭，面部从空变成有温度，呼吸平稳，头微微前倾。\n- 7.0–8.0s: 微笑维持，目光柔和，面部呈现从麻木回温后的安静和感恩，嘴角微微上扬但不过分，眼睛比开始时亮太多。\n\noverall_soundscape: 从几乎无声到呼吸加深再到平稳的转变，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_shock_to_grief",
+     "name": "惊转哀",
+     "name_en": "Shock to grief",
+     "description": "从震惊到悲伤的过渡，坏消息的延迟反应",
+     "description_en": "The transition from shock to grief, a delayed reaction to bad news",
+     "preview": "etrans_shock_to_grief.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "惊转哀",
+      "坏消息",
+      "延迟反应"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "shock to grief",
+      "bad news",
+      "delayed reaction"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬，不出现微笑。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，听到什么，表情不变，信息尚未处理，目光平视。\n- 1.0–2.0s: 反应晚半拍，瞳孔般停顿，眉毛快速上抬半秒，嘴唇微张，呼吸卡住，身体先僵住。\n- 2.0–3.5s: 震惊维持，眼睛圆睁但不眨，面部完全不动像冻结，嘴张着，手停在半空，呼吸几乎停止。\n- 3.5–5.0s: 信息落下，震惊开始转化，眉毛从上抬变成内聚，眼眶开始泛红，嘴唇从微张变成颤抖，下颌一侧绷紧，鼻翼扩张。\n- 5.0–6.5s: 悲哀涌出，眼泪不立刻流但眼眶全红，嘴唇压成直线又松开，喉结滚动，呼吸破碎，肩膀突然松下来像撑不住了。\n- 6.5–8.0s: 悲哀锁定，眼泪开始沿面颊滑下但不发声，嘴角下垂，面部呈现坏消息落下后的空和沉，目光完全失焦。\n\noverall_soundscape: 从呼吸停止到破碎呼吸的转变，吞咽声，泪水声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_shame_to_anger",
+     "name": "羞耻转怒",
+     "name_en": "Shame to anger",
+     "description": "从羞耻到愤怒的转变，被揭穿后羞耻转为攻击性",
+     "description_en": "The turn from shame to anger, shame turning aggressive after being exposed",
+     "preview": "etrans_shame_to_anger.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "羞耻",
+      "转怒",
+      "攻击",
+      "被揭穿"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "shame",
+      "turning to anger",
+      "aggression",
+      "exposed"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部被揭穿后的羞耻，面颊泛红，目光躲闪偏向一侧，嘴唇压平，下颌微收，肩颈绷紧，呼吸浅而碎。\n- 1.5–3.0s: 羞耻开始转化，面颊红意未退但眼神开始变硬，目光从躲闪偏向一侧慢慢拉回并锁定，下颌从微收变成咬紧，嘴唇从压平变成微抿，鼻翼扩张一次。\n- 3.0–4.5s: 怒意上升覆盖羞耻，眉心竖纹出现，眼神从躲闪变成锐利对视，面颊肌肉从松弛变成绷紧，嘴角从平直变成一侧微微下撇带冷意，呼吸从浅碎变深变重。\n- 4.5–6.0s: 愤怒完全覆盖羞耻但底色仍在，面颊仍红但是怒红不是羞红，眉头紧锁，眼神变硬并收窄，嘴唇压成直线，下颌咬紧，声音从喉咙漏出但不连续，手指攥紧。\n- 6.0–7.0s: 愤怒锁定，面部呈现羞耻转怒后的攻击性冷，目光锐利不回避，嘴角不上扬，面颊红意渐退但留下冷，深吸一口气，一切像\"你说完了？\"的沉默。\n\noverall_soundscape: 从浅碎到深重的呼吸变化，吞咽声，牙齿短暂咬合声，衣物紧绷摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_happy_tears",
+     "name": "想哭的开心",
+     "name_en": "Happy tears",
+     "description": "开心到想哭，笑容和泪水同时出现",
+     "description_en": "So happy it brings tears, a smile and tears appearing at the same time",
+     "preview": "etrans_happy_tears.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "喜极而泣",
+      "开心",
+      "哭",
+      "复杂"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "tears of joy",
+      "happy",
+      "cry",
+      "complex"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，听到什么好消息后嘴角先动，嘴角不受控微微上扬。\n- 1.0–2.0s: 笑容形成但眼眶同时开始泛红，嘴角上扬但眼睛湿润，面颊上提但下眼睑绷紧，喜悦和悲伤在脸上同时出现，呼吸加快带笑意又带哽咽。\n- 2.0–3.5s: 笑容和泪水同时爆发，嘴角大幅上扬露出牙齿，但眼泪沿面颊滑下，笑声和哭声混在一起，肩膀颤动，面部表情在笑和哭之间快速切换。\n- 3.5–5.0s: 笑容维持但泪水不断，嘴角仍高但眼泪不停，面部肌肉在笑和哭之间找到一种奇异的平衡，呼吸断续到窒息再吸气，手抬起擦泪又笑出声。\n- 5.0–6.0s: 笑容渐弱但泪水仍流，嘴角从高位回落但带笑意余韵，眼眶仍红，面部呈现喜极而泣后的彻底释放和柔软。\n- 6.0–7.0s: 深吸气，眼泪减少但眼眶仍红，嘴角微微上扬带温柔的笑，面部比开始时亮太多也软太多，呼吸平稳但深，一切像终于等到了。\n\noverall_soundscape: 笑声和哭声混合，断续呼吸，泪水声，衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "etrans_disgust_to_sneer",
+     "name": "厌恶转冷笑",
+     "name_en": "Disgust to sneer",
+     "description": "从皱眉厌恶到一侧嘴角上扬的冷笑，轻蔑逐渐覆盖嫌恶",
+     "description_en": "From a frown of disgust to a one-sided cold smirk, contempt gradually covering revulsion",
+     "preview": "etrans_disgust_to_sneer.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "情绪过渡",
+      "厌恶",
+      "冷笑",
+      "轻蔑",
+      "嘲讽"
+     ],
+     "tags_en": [
+      "emotional transition",
+      "disgust",
+      "cold smirk",
+      "contempt",
+      "mockery"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部厌恶，鼻子皱起，上唇上抬，嘴角一侧下撇，眉头下压，眼睛眯起，呼吸从鼻间短促出气。\n- 1.0–2.0s: 厌恶开始转化，鼻子慢慢展开但嘴角一侧从下撇变成平直，眉头从下压变成单侧上抬，目光从眯起变成斜睨，下巴微微抬高。\n- 2.0–3.5s: 冷笑开始形成，一侧嘴角缓慢上扬带冷意，另一侧不动，嘴角不对称，眼尾收窄带嘲讽，下颌微推向前，头微微后仰，呼吸从鼻间出气一声带哼意。\n- 3.5–5.0s: 冷笑完全形成覆盖厌恶，一侧嘴角上挑到高位，眼睛微微眯起带冷光，面颊一侧上提，下巴抬高，目光斜睨俯视，面部从排斥变成不屑。\n- 5.0–6.0s: 冷笑维持，嘴角一侧保持高位，眼神带着\"就这？\"的轻蔑，面部微绷，呼吸平稳，一切像对方不值一提。\n\noverall_soundscape: 从鼻间短促出气到哼一声，轻微衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    }
+   ]
+  },
+  {
+   "id": "social_mask",
+   "templates": [
+    {
+     "id": "smask_polite_long",
+     "name": "礼貌微笑过久",
+     "name_en": "Polite smile held too long",
+     "description": "社交场合微笑维持太久，笑容逐渐变硬变空",
+     "description_en": "A social smile held too long, gradually stiffening and hollowing out",
+     "preview": "smask_polite_long.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "社交面具",
+      "微笑",
+      "礼貌",
+      "过久",
+      "面具"
+     ],
+     "tags_en": [
+      "social mask",
+      "smile",
+      "polite",
+      "too long",
+      "mask"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面带自然礼貌微笑，目光对视，呼吸平稳，得体的社交表情。\n- 1.0–2.0s: 笑容维持，但开始变硬，面颊肌肉上提的力度不减但眼周不动，笑容只到嘴角不到眼睛。\n- 2.0–3.0s: 笑容维持过久，嘴角上扬幅度不变但肌肉开始疲劳，一侧嘴角微微颤了一下，眼尾纹路是绷紧不是笑纹。\n- 3.0–4.0s: 笑容变空，嘴角还在上扬位置但已经没有笑意，眼神开始失焦，眨眼延迟，呼吸从平稳变浅。\n- 4.0–5.0s: 笑容终于碎掉，嘴角慢慢掉，来不及补上又勉强撑起，笑容像反复修补的面具，喉结滚动一次。\n- 5.0–6.0s: 笑容回落到中性，嘴角平直，眼神比开始时空太多，面部呈现社交疲态，深吸一口气，一切结束。\n\noverall_soundscape: 社交环境人声，断续呼吸，吞咽声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "smask_congrats",
+     "name": "表面祝贺",
+     "name_en": "Surface congratulation",
+     "description": "内心酸涩但表面祝贺对方，笑容是撑出来的",
+     "description_en": "Bitter inside but congratulating the other person with a smile that is held up by force",
+     "preview": "smask_congrats.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "社交面具",
+      "祝贺",
+      "酸涩",
+      "嫉妒",
+      "克制"
+     ],
+     "tags_en": [
+      "social mask",
+      "congratulation",
+      "bitter",
+      "jealousy",
+      "restraint"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部中性，听到好消息，嘴角开始努力上扬，笑容延迟半拍才到。\n- 1.0–2.0s: 笑容撑起但眼睛不跟，嘴说\"恭喜\"但眼眶微微泛红，面颊上提但不自然，笑容像挤出来的。\n- 2.0–3.0s: 视线粘住对方一瞬又移开，笑容维持但变硬，鼻翼轻动一次，喉结滚动，手碰杯用力。\n- 3.0–4.0s: 笑容继续维持，一侧嘴角微微掉了一下又撑起，眼神从对方偏向一侧，呼吸漏拍，声音变轻。\n- 4.0–5.0s: 笑容终于从撑变成维持不住，嘴角缓慢回落，眼神空了，嘴唇微动想再说点什么又停住。\n- 5.0–6.0s: 嘴角回到中性，面部呈现祝贺后的空，眼神比开始时更远更深，深吸气，手放下杯子。\n\noverall_soundscape: 杯子轻碰声，说\"恭喜\"的声音，断续呼吸，社交环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "smask_public_hold",
+     "name": "公开场合忍哭",
+     "name_en": "Holding tears in public",
+     "description": "在人前强忍泪水，转头瞬间才让一滴泪落下",
+     "description_en": "Holding back tears in public, letting a single tear fall only at the instant of turning away",
+     "preview": "smask_public_hold.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "社交面具",
+      "忍哭",
+      "公开",
+      "克制",
+      "人前"
+     ],
+     "tags_en": [
+      "social mask",
+      "holding back tears",
+      "in public",
+      "restraint",
+      "in front of others"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部强装平静，在人前保持得体，目光对视，呼吸受控，嘴唇压成直线。\n- 1.5–2.5s: 眨眼频率加快又强行压回，眼眶泛红，下眼睑绷紧，喉结滚动，鼻翼扩张，胸口不动，气从鼻间漏出。\n- 2.5–3.5s: 眼眶湿润但泪水不落，嘴唇微颤又压住，下颌一侧绷紧，头微微偏向一侧又拉回，手指在身侧攥紧又松开。\n- 3.5–5.0s: 视线终于从对视偏向一侧，头微微转开半寸，一滴泪从眼角滑出沿面颊滑下，嘴唇咬住内唇，呼吸破碎但不发声。\n- 5.0–6.0s: 快速用手背擦掉泪痕，头转回来，嘴角强行维持中性，眼眶仍红，眨眼吞回剩余泪水。\n- 6.0–7.0s: 面部恢复得体的平静但比开始时更绷，目光重新对视但更远，呼吸加深，一切像什么都没发生。\n\noverall_soundscape: 受控呼吸，吞咽声，极轻的鼻息声，社交环境人声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "smask_exposed_smile",
+     "name": "被揭穿后微笑",
+     "name_en": "Smile when exposed",
+     "description": "秘密或心事被看穿后，用笑容补救但笑容比哭还空",
+     "description_en": "After a secret is seen through, patching it with a smile that is emptier than crying",
+     "preview": "smask_exposed_smile.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "社交面具",
+      "被揭穿",
+      "笑",
+      "掩饰",
+      "补救"
+     ],
+     "tags_en": [
+      "social mask",
+      "exposed",
+      "smile",
+      "covering up",
+      "recovery"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部强装自然，听到对方说穿什么后表情微微僵住半拍，嘴角还没动，目光从对视偏向一侧。\n- 1.0–2.0s: 笑容快速补救，嘴角上扬但太用力太晚，笑容不对称，眼睛完全没笑意，面颊勉强上提但眼周不动，笑容只到嘴角不到眼睛。\n- 2.0–3.0s: 笑容维持但像面具，眼尾纹路是绷紧不是笑纹，目光从躲闪变成求助般扫过对方表情又拉回，喉结滚动一次，手无意识碰杯或整理衣角。\n- 3.0–4.0s: 笑容开始维持不住，嘴角慢慢掉又强行撑起，一侧嘴角先失败又补上，笑容反复修补，鼻翼轻动，呼吸漏拍，眼神从躲闪变成空。\n- 4.0–5.0s: 笑容终于从修补变成放弃，嘴角缓慢回落，面部带着被揭穿后的微绷和红意，目光比开始时更小心更空，深吸一口气想翻篇但翻不过去。\n- 5.0–6.0s: 面部恢复中性但比开始时空了太多，嘴角平直，眼神带着被看穿后的疲惫和一丝脆弱，呼吸变深变沉，一切像\"你看到了\"的沉默。\n\noverall_soundscape: 断续呼吸，吞咽声，杯子或衣物轻微摩擦声，社交环境人声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "smask_pretend_relaxed",
+     "name": "假装轻松",
+     "name_en": "Pretending to be relaxed",
+     "description": "内心紧张但表面装作云淡风轻，小动作泄露真实状态",
+     "description_en": "Nervous inside while acting completely at ease, small gestures betraying the true state",
+     "preview": "smask_pretend_relaxed.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "社交面具",
+      "假装",
+      "轻松",
+      "紧张",
+      "掩饰"
+     ],
+     "tags_en": [
+      "social mask",
+      "pretending",
+      "relaxed",
+      "nervous",
+      "covering up"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部强装云淡风轻，嘴角微微上扬带随意感，目光对视，呼吸表面平稳，一切在\"没什么大不了\"的面具下。\n- 1.0–2.0s: 随意维持但微动作泄露，眨眼频率从正常变快又强行压回，手指无意识轻敲桌面或整理袖口，呼吸表面平稳但胸口不动。\n- 2.0–3.0s: 随意开始有缝，嘴角上扬但笑容延迟了半拍，一侧嘴角微微颤了一下又撑起，目光从对视偏向一侧又拉回，喉结轻滚一次，肩膀绷住但表面放松。\n- 3.0–4.0s: 随意维持越来越费力，笑容维持但变硬，面颊上提的力度不减但眼周不动，拇指摩擦指腹，回答变短，声音变轻一个度。\n- 4.0–5.0s: 笑容终于从随意变成维持，嘴角缓慢回落到中性，眼神从对视偏向一侧，呼吸漏拍，肩膀先绷又压下，手停下小动作。\n- 5.0–6.0s: 面部恢复中性但比开始时绷了太多，嘴角平直，目光重新对视但比开始时远，深吸气，一切像\"我说了没事\"的沉默。\n\noverall_soundscape: 表面平稳但偶尔漏拍的呼吸声，手指轻敲声，吞咽声，社交环境人声。\n\nnon_diegetic_music: N/A"
+    }
+   ]
+  },
+  {
+   "id": "breaking_point",
+   "templates": [
+    {
+     "id": "bp_smile_fail",
+     "name": "微笑维持失败",
+     "name_en": "Smile maintenance failure",
+     "description": "拼命维持笑容但最终崩溃，笑容碎裂",
+     "description_en": "Fighting to keep the smile until it finally collapses and shatters",
+     "preview": "bp_smile_fail.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "崩溃",
+      "笑",
+      "失败",
+      "高张力",
+      "微表情"
+     ],
+     "tags_en": [
+      "breakdown",
+      "smile",
+      "failure",
+      "high tension",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面带笑容，但笑容是撑出来的，嘴角上扬但眼周不动，面颊肌肉紧张，呼吸浅。\n- 1.0–2.0s: 笑容继续维持，嘴角颤抖了一下又撑起，一侧嘴角先失败又补上，鼻翼扩张，喉结滚动。\n- 2.0–3.0s: 笑容开始碎裂，嘴角慢慢掉又强行拉回，眼睛开始泛红，下眼睑绷紧，呼吸漏拍，手找不到位置。\n- 3.0–4.5s: 笑容彻底碎裂，嘴角下拉，嘴唇颤抖，眼眶泪水涌出，下颌收紧，肩膀突然松，呼吸破碎变成压抑的抽泣，笑容的残迹只在嘴角肌肉的痉挛里。\n- 4.5–5.5s: 持续无声流泪，面部肌肉松弛，嘴微张，头微微低下，手抬起又不知道放哪，呼吸断续。\n- 5.5–7.0s: 深吸气，眼泪减少但眼眶仍红，嘴角下垂，面部呈现崩溃后的彻底空，目光完全失焦。\n\noverall_soundscape: 从浅呼吸到破碎抽泣的转变，泪水声，衣物摩擦声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "bp_breath_break",
+     "name": "呼吸断裂",
+     "name_en": "Breath fracture",
+     "description": "呼吸在情绪压力下断裂，猛然闭眼后重新睁开时情绪已变",
+     "description_en": "Breath breaking under emotional pressure, then the eyes snapping shut and reopening with the emotion already changed",
+     "preview": "bp_breath_break.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "崩溃",
+      "呼吸",
+      "断裂",
+      "高张力",
+      "微表情"
+     ],
+     "tags_en": [
+      "breakdown",
+      "breathing",
+      "breaking",
+      "high tension",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面部强撑平静，呼吸受控但变浅，眼眶开始泛红，嘴唇压平，下颌微收，肩膀绷紧。\n- 1.0–2.0s: 呼吸开始破碎，吸气卡住不到半秒，胸口不动，气从鼻间漏出，眼睑轻颤，喉结滚动，手指攥紧又松开。\n- 2.0–3.0s: 呼吸断裂点，猛然闭眼不到半秒，眼皮颤抖，嘴唇微张吸一口气又卡住，面颊肌肉痉挛了一下，肩膀晚半拍下沉。\n- 3.0–4.0s: 眼睛重新睁开，情绪状态已变——眼底全红了，目光比之前更空更远，嘴唇从平直变成微颤，下颌一侧绷住，呼吸变成深的断续。\n- 4.0–5.0s: 情绪在面部停留而不释放，眼眶湿润但泪不落，嘴角不上扬也不明显下垂，唇线压住，面部呈现高控制下的即将崩溃。\n- 5.0–6.0s: 深吸气，眼睑恢复，面部回到表面平静但已彻底不同，呼吸更深更慢，目光锁定远处不动。\n\noverall_soundscape: 浅到破碎到深断续的呼吸变化，吞咽声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "bp_delayed_tears",
+     "name": "眼泪延迟",
+     "name_en": "Delayed tears",
+     "description": "情绪已经到达但眼泪延迟落下，延迟后的崩溃",
+     "description_en": "The emotion has already peaked while the tears arrive late, the breakdown after the delay",
+     "preview": "bp_delayed_tears.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "崩溃",
+      "眼泪",
+      "延迟",
+      "高张力",
+      "微表情"
+     ],
+     "tags_en": [
+      "breakdown",
+      "tears",
+      "delay",
+      "high tension",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing. 嘴角全程不上扬。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部强撑，眼眶已红但泪水不落，嘴唇压平，下颌收紧，呼吸受控但浅，一切在\"我还撑得住\"的状态。\n- 1.5–3.0s: 情绪加重，眼眶更红，下眼睑绷到极限，喉结反复滚动，鼻翼扩张，吸气被反复憋住，手指压住某物又松开，眼泪就是不落。\n- 3.0–4.5s: 延迟到达极限，眼睑轻颤，嘴角一侧微微抽动，呼吸完全破碎，肩膀晚半拍下沉，眼眶泪水到边缘但仍然不落，面部像被情绪撑到极限的容器。\n- 4.5–6.0s: 崩溃点，眼泪终于涌出，不是一滴而是瞬间溢出，沿双颊滑下，嘴唇颤抖张开，下颌从收紧变成彻底松，压抑的哭声从喉咙漏出。\n- 6.0–7.0s: 持续流泪不出声，面部肌肉完全松弛，头微微低下，手不知道放哪，呼吸断续，眼泪不断。\n- 7.0–8.0s: 深吸气，眼泪减少但眼眶仍红，嘴角下垂，面部呈现延迟崩溃后的彻底空和疲惫，目光完全失焦。\n\noverall_soundscape: 从受控到破碎到压抑哭声的转变，泪水声，吞咽声，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "bp_hollow_laugh",
+     "name": "笑声变空",
+     "name_en": "Hollow laughter",
+     "description": "笑声从真笑变成完全空洞，笑还在但人已经不在了",
+     "description_en": "Laughter shifting from genuine to utterly hollow, the laugh still there but the person gone",
+     "preview": "bp_hollow_laugh.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 7,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "崩溃",
+      "笑",
+      "空",
+      "高张力",
+      "微表情"
+     ],
+     "tags_en": [
+      "breakdown",
+      "smile",
+      "empty",
+      "high tension",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.0s: 面带笑容，笑声自然，嘴角上扬，眼睛有笑意，面部完全正常。\n- 1.0–2.0s: 笑声维持但开始变慢，嘴角上扬幅度不变但眼睛开始失焦，面颊上提但眼周不动，笑声从自然变成机械，呼吸从带笑变浅。\n- 2.0–3.0s: 笑声变空，嘴角还在上扬位置但已经没有笑意，眼睛完全跟不上，面部肌肉在执行笑的指令而非自然表达，笑声从喉咙漏出但不在拍子上，像重复播放的录音。\n- 3.0–4.5s: 笑声从空变成碎裂，嘴角一侧先掉另一侧还撑着，笑声断续不成调，眼眶开始泛红但嘴角还维持弧度，呼吸漏拍，手不知道放哪，笑声和面部表情完全脱节。\n- 4.5–5.5s: 笑声终于停住但嘴角还挂着弧度，面部像笑容凝固后的面具，眼睛湿润但目光完全失焦，呼吸很浅很碎，肩膀慢慢下沉。\n- 5.5–7.0s: 嘴角从凝固的弧度缓慢回落，面部呈现笑声变空后的彻底寂静，眼眶仍红，嘴角平直，呼吸深而断续，一切像笑还在但人已经不在了。\n\noverall_soundscape: 从自然笑声到机械笑声到断续碎裂到寂静的转变，破碎呼吸，室内环境声。\n\nnon_diegetic_music: N/A"
+    },
+    {
+     "id": "bp_long_silence",
+     "name": "沉默太久",
+     "name_en": "Silence too long",
+     "description": "在应该回应的场合沉默过久，沉默本身成为崩溃",
+     "description_en": "Silence held too long in a moment that called for a response, the silence itself becoming the breakdown",
+     "preview": "bp_long_silence.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "崩溃",
+      "沉默",
+      "太久",
+      "高张力",
+      "微表情"
+     ],
+     "tags_en": [
+      "breakdown",
+      "silence",
+      "dragging on",
+      "high tension",
+      "micro-expression"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact facial identity, hairstyle, and clothing。嘴角全程不上扬。不切镜，不转场。\n\nintegrated_multimodal_description:  全程单镜头，一镜到底。保持特写构图。以下时间段均发生在同一个连续特写镜头内：\n- 0.0–1.5s: 面部中性，对方说完话后表情不变，应该回应但没有，目光平视，呼吸平稳，沉默开始。\n- 1.5–3.0s: 沉默加深，面部完全不动但不是平静，眨眼变慢，嘴唇微张想说什么又闭合，喉结轻滚，呼吸从平稳变浅变碎，手指在身侧微微动了一下。\n- 3.0–4.5s: 沉默太久开始变成信号，面部仍不动但眼眶开始泛红，下眼睑绷紧，下颌一侧绷住，呼吸漏拍，对方在等但说不出口，沉默本身比任何话都重。\n- 4.5–6.0s: 沉默到了极限，面部像被情绪冻住，嘴唇微颤又压住，鼻翼扩张，吸气被憋住不到半秒，眼睑轻颤，手指攥紧又松开，沉默在脸上变成了可见的重量。\n- 6.0–7.0s: 沉默开始碎裂，猛然闭眼不到半秒，眼皮颤抖，深吸一口气又卡住，面颊肌肉痉挛了一下，肩膀晚半拍下沉，沉默从冻住变成即将崩溃。\n- 7.0–8.0s: 眼睛重新睁开，情绪状态已变——眼底全红了，目光比之前更空更远，嘴唇从平直变成微颤，面部呈现沉默太久后的彻底碎裂和空，一切在\"说不出口\"的重量下塌了。\n\noverall_soundscape: 从平稳到浅碎到几乎无声到深断续的呼吸变化，吞咽声，室内安静环境声。\n\nnon_diegetic_music: N/A"
+    }
+   ]
+  }
+ ]
+}

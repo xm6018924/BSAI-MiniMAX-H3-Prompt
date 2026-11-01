@@ -1,0 +1,245 @@
+{
+ "id": "wardrobe_transition",
+ "subcategories": [
+  {
+   "id": "cut_change",
+   "templates": [
+    {
+     "id": "beatsync_outfit_swap",
+     "name": "首尾帧丝滑卡点换装",
+     "name_en": "Beat-sync outfit swap",
+     "description": "图1穿服装A+图2穿服装B（同一张脸、同一构图）：跟着节拍点服装A→B渐变卡点切换，面部始终不变。generation_mode=First+Last Frame (首尾帧)【图3可选场景】。",
+     "description_en": "Img1 wearing outfit A + Img2 wearing outfit B (same face, same composition): the outfit switches from A to B on the beat, a hard cut on the musical hit, the face never changing. generation_mode=First+Last Frame [Img3 optionally sets the scene].",
+     "preview": "beatsync_outfit_swap.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "卡点",
+      "换装",
+      "首尾帧",
+      "硬切",
+      "节拍",
+      "同脸",
+      "穿搭"
+     ],
+     "tags_en": [
+      "on the beat",
+      "outfit change",
+      "first and last frame",
+      "hard cut",
+      "beat",
+      "same face",
+      "outfit styling"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, standing pose and camera framing, together with outfit A worn at the start, must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face, hairstyle, identity, pose and framing, now wearing outfit B: the garment's cut, color, pattern and fabric texture must come EXACTLY from <Picture 2>@图2. The face and identity must remain IDENTICAL across the whole clip; ONLY the outfit changes on the beat. NEVER render outfit A onto the last frame, NEVER render outfit B onto the first frame, NEVER mix one <Picture N>'s clothing onto another frame. 中文复述：本提示词中 <Picture 1>@图1 为首帧参考（同一人物的面部/发型/体型/身份/站立姿势/镜头构图，以及开场服装A必须在第0秒严格保持），<Picture 2>@图2 为尾帧参考（同一张脸、同一身份、同一姿势与构图，仅换装为服装B；其版型/颜色/花纹/材质必须完全来自 <Picture 2>@图2）；全程人脸与身份不得改变，仅服装随节拍点切换，严禁把两帧的服装互相串用。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The outfit snap is a HARD CUT on the beat — the old outfit and new outfit NEVER coexist, NEVER overlap, NEVER fade into each other.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。换装为节拍点上的硬切——旧衣与新衣绝不共存、绝不叠加。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing and outfit A from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the very same face, hairstyle and pose, now wearing outfit B, preserved EXACTLY at the end. STRICT REFERENCE COMPLIANCE: the character's facial identity must never change between the two pictures; only the garment swaps.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, locked-off medium-full shot, identical framing for the entire clip, soft clean studio light. 【ACTION】The character stands frozen in the exact pose of <Picture 1>@图1, wearing outfit A. On each musical downbeat a sharp on-beat transition fires — the garment snaps hard from outfit A to outfit B in a single punchy cut perfectly synced to the rhythm; between beats the body, face, hairstyle, pose and camera stay completely still, only the clothing flash-swaps On each beat the character's body reacts micro-physically: a subtle shoulder pop, a micro head nod, fingers tap — tiny natural rhythmic body responses, NOT a frozen statue.. This beat-sync snap repeats a few times, landing solidly on outfit B, and the final freeze holds exactly on <Picture 2>@图2.【/ACTION】 The face, identity, hairstyle, body proportions and camera framing remain unchanged throughout; the outfit swaps are clean hard cuts on the beat with no morphing blur, no distorted fabric, no extra limbs.\n\noverall_soundscape: A tight percussive click on every downbeat as the outfit snaps, a faint fabric flutter between beats, minimal clean room tone.\n\n\n[SCENE REFERENCE / 场景参考]: If <Picture 3>@图3 is connected, the ENTIRE video takes place in the EXACT environment shown in <Picture 3>@图3 — same background, same lighting, same color tone, same atmosphere. Do NOT use a studio/neutral background when <Picture 3>@图3 is connected. Background = <Picture 3>@图3 from first frame to last frame. 如连接了图3@图3，整个视频在图3@图3的环境中进行，严禁使用纯色/影棚背景。\n\nnon_diegetic_music: Punchy electronic dance track with a strong kick and crisp beat drops, each outfit snap landing exactly on the downbeat, ending on a confident hit.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, standing pose and camera framing, together with outfit A worn at the start, must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face, hairstyle, identity, pose and framing, now wearing outfit B: the garment's cut, color, pattern and fabric texture must come EXACTLY from <Picture 2>@图2. The face and identity must remain IDENTICAL across the whole clip; ONLY the outfit changes on the beat. NEVER render outfit A onto the last frame, NEVER render outfit B onto the first frame, NEVER mix one <Picture N>'s clothing onto another frame. 中文复述：本提示词中 <Picture 1>@图1 为首帧参考（同一人物的面部/发型/体型/身份/站立姿势/镜头构图，以及开场服装A必须在第0秒严格保持），<Picture 2>@图2 为尾帧参考（同一张脸、同一身份、同一姿势与构图，仅换装为服装B；其版型/颜色/花纹/材质必须完全来自 <Picture 2>@图2）；全程人脸与身份不得改变，仅服装随节拍点切换，严禁把两帧的服装互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing and outfit A from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the very same face, hairstyle and pose, now wearing outfit B, preserved EXACTLY at the end. STRICT REFERENCE COMPLIANCE: the character's facial identity must never change between the two pictures; only the garment swaps.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, locked-off medium-full shot, identical framing for the entire clip, soft clean studio light. 【ACTION】The character stands frozen in the exact pose of <Picture 1>@图1, wearing outfit A. On each musical downbeat a sharp on-beat transition fires — the garment snaps hard from outfit A to outfit B in a single punchy cut perfectly synced to the rhythm; between beats the body, face",
+     "text_fallback_mode": "reference"
+    },
+    {
+     "id": "handscreen_fit_tryon",
+     "name": "虚拟试衣硬切换装",
+     "name_en": "Virtual try-on hard cut",
+     "description": "图1人物+图2服装平铺图：人物抬手用手掌/平持物遮向镜头，遮挡瞬间硬切，移开手后同一姿势同一张脸，身上衣服已换成图2那套（版型/颜色/花纹/材质完全来自图2）。",
+     "description_en": "Img1 character + Img2 flat-lay outfit: the character raises a hand and covers the lens with a palm or a flat object, a hard cut at the moment of occlusion, and when the hand moves away it is the same pose and the same face but the clothing is now the Img2 set (cut, colour, pattern and material all from Img2).",
+     "preview": "handscreen_fit_tryon.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1人物+图2服装+图3场景可选】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "虚拟试衣",
+      "遮挡转场",
+      "硬切",
+      "换装",
+      "多图参考",
+      "手掌遮镜"
+     ],
+     "tags_en": [
+      "virtual fitting",
+      "occlusion transition",
+      "hard cut",
+      "outfit change",
+      "multi-image reference",
+      "palm over lens"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout, and the character's starting pose must match <Picture 1>@图1. <Picture 2>@图2 is the OUTFIT reference — the target garment's cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>@图2; after the cut the character wears THIS outfit and no other. <Picture 3>@图3 is the optional SCENE reference — if a scene image is provided, the environment (background, architecture, props, lighting, color tone and atmosphere) must come EXACTLY from <Picture 3>@图3, DO NOT generate a new background; if not provided, keep the environment from <Picture 1>@图1. NEVER mix the garment of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，起始姿势与该图一致），<Picture 2>@图2 是服装参考（版型/颜色/花纹/材质细节完全来自该图，遮挡后人物穿上的就是这套服装），<Picture 3>@图3 为可选场景参考（背景/建筑/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用服装。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The outfit swap is a HARD CUT hidden behind the hand/palm coverage — the old outfit and new outfit NEVER coexist, NEVER overlap, NEVER fade into each other.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。换装为手掌遮挡画面后的硬切——旧衣与新衣绝不共存、绝不叠加。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 2>@图2 is fully referenced as the outfit worn after the transition: the garment must match <Picture 2>@图2's exact cut, color, pattern and fabric texture — no substitution, no redesign. The environment comes from <Picture 3>@图3 when provided, otherwise from <Picture 1>@图1.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic medium shot, clean scene. 【ACTION】The character from <Picture 1>@图1 raises one hand (or a flat handheld object held flush against the lens) and brings it forward toward the camera; the palm / flat object slides across and fully fills the entire frame, completely covering the view. As the hand rises, the character reacts naturally: shoulder lifts with the arm, head tilts toward the hand, the body shifts weight slightly — natural reaching physics. At the exact instant the coverage is complete, a hard cut fires — the hand pulls away, and in the very same pose, with the very same face and hairstyle, the character is already wearing the outfit from <Picture 2>@图2: its cut, color, pattern and fabric texture identical to <Picture 2>@图2. The character settles and gives a small showcase tilt so the new garment reads clearly.【/ACTION】 The face, identity, hairstyle and body proportions remain unchanged before and after the cut; the pose is continuous across the cut; clean single hard cut, no morph, no distorted fabric, no extra limbs.\n\noverall_soundscape: A quick fabric swish as the arm moves, a soft whoosh exactly on the hidden cut, gentle room tone.\n\nnon_diegetic_music: Stylish, upbeat pop-funk groove with a slick brass stab landing on the hard cut.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout, and the character's starting pose must match <Picture 1>@图1. <Picture 2>@图2 is the OUTFIT reference — the target garment's cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>@图2; after the cut the character wears THIS outfit and no other. <Picture 3>@图3 is the optional SCENE reference — if a scene image is provided, the environment (background, architecture, props, lighting, color tone and atmosphere) must come EXACTLY from <Picture 3>@图3, DO NOT generate a new background; if not provided, keep the environment from <Picture 1>@图1. NEVER mix the garment of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，起始姿势与该图一致），<Picture 2>@图2 是服装参考（版型/颜色/花纹/材质细节完全来自该图，遮挡后人物穿上的就是这套服装），<Picture 3>@图3 为可选场景参考（背景/建筑/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用服装。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire video — no alteration, replacement or redesign. <Picture 2>@图2 is fully referenced as the outfit worn after the transition: the garment must match <Picture 2>@图2's exact cut, color, pattern and fabric texture — no substitution, no redesign. The environment comes from <Picture 3>@图3 when provided, otherwise from <Picture 1>@图1.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic medium shot, clean scene. 【ACTION】The character from <Picture 1>@图1 raises one hand (or a flat handheld object held flush against the lens) and brings it forward toward the camera; the palm / flat object slides across and fully fills the entire frame, completely covering t",
+     "text_fallback_mode": "reference"
+    },
+    {
+     "id": "action_anchor_snap_swap",
+     "name": "动作锚点瞬移换装",
+     "name_en": "Action-anchor snap change",
+     "description": "纯文生：人物抬手/擦汗/拨头发的动作做到一半，衣服+背景瞬间切换成另一套造型与场景，动作连贯不中断。",
+     "description_en": "Pure text-to-video: halfway through a gesture - raising a hand, wiping sweat, pushing back hair - the outfit and background switch instantly to another look and scene while the action continues unbroken.",
+     "preview": "action_anchor_snap_swap.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动作锚点",
+      "瞬移换装",
+      "文生视频",
+      "硬切",
+      "变装",
+      "丝滑动作"
+     ],
+     "tags_en": [
+      "action anchor",
+      "instant change",
+      "text to video",
+      "hard cut",
+      "costume change",
+      "silky motion"
+     ],
+     "prompt": "[ABSOLUTE REFERENCE LOCK / 参考图绝对锁死 - TOP PRIORITY]:\nThis is a WARDROBE CHANGE, NOT a face change. Only clothes change. Face stays.\n\n<Picture 1>@图1 = THE FACE. Face identical to the main person in <Picture 1>@图1. No face change.\n<Picture 2>@图2 = THE OUTFIT. Wear the EXACT outfit from <Picture 2>@图2. Same color, same pattern, same style. No added designs.\n<Picture 3>@图3 = THE SCENE (if provided). If <Picture 3>@图3 is connected, the video takes place in <Picture 3>@图3's exact environment. If no <Picture 3>@图3, preserve <Picture 1>@图1's background.\n\n图1@图1=脸：换衣服不换脸。\n图2@图2=衣服：照抄图2@图2。\n图3@图3=场景（可选）：有图3@图3就用图3@图3环境，没图3@图3就沿用图1@图1背景。\n\nintegrated_multimodal_description:\n[Shot 1] [0-6s] Live-action, cinematic medium shot. 【ACTION】The character from <Picture 1>@图1 raises one hand mid-gesture — brushing hair away from face / wiping at brow — with the arm moving through its motion. <Picture 1>@图1 stands in the environment from <Picture 3>@图3. Face = <Picture 1>@图1. Background = <Picture 3>@图3.\n\nAs the hand moves through the gesture, <Picture 1>@图1 reacts naturally: shoulder follows the arm, head tilts with the motion, body sways subtly — natural body physics, not a frozen pose.\n\nExactly at the halfway point of that gesture, in a single clean snap with the motion never interrupted, <Picture 1>@图1's outfit and the background flash-change: the original outfit swaps to the EXACT outfit from <Picture 2>@图2 and the room shifts to match <Picture 3>@图3's refined setting. <Picture 1>@图1's arm keeps traveling along the very same motion and lands naturally, as if nothing paused.\n\n★ ANTI-GHOSTING RULE / 严禁重影规则 (CRITICAL):\nThe outfit change is a HARD CUT at the gesture midpoint. NO dissolve, NO cross-fade, NO morphing, NO double exposure, NO ghosting. The old outfit is 100% gone and the new outfit from <Picture 2>@图2 is 100% present. Each frame has EXACTLY ONE outfit. 严禁在任何帧中同时出现两套服装的重影。\n\nFace = <Picture 1>@图1 throughout. Outfit after swap = <Picture 2>@图2 exactly. Background = <Picture 3>@图3 throughout.\n\noverall_soundscape: A soft swish of fabric mid-gesture, a subtle flash whoosh exactly on the snap, ambient sound from <Picture 3>@图3 environment.\n\nnon_diegetic_music: Light, minimal background music. Do NOT let music overpower the sound effects.",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] <Picture 1>@图1, <Picture 2>@图2, <Picture 3>@图3 are the ONLY source of truth — copy EXACTLY, no redesign. 图1@图1、图2@图2、图3@图3为唯一参考，必须严格照抄，禁止自行设计。 <Picture 1>@图1=face/identity 图1@图1=人物面部 <Picture 2>@图2=EXACT outfit (color/pattern/style/fabric) 图2@图2=服装照抄 <Picture 3>@图3=EXACT scene (background/lighting/environment) 图3@图3=场景照抄\n[STRICT DEFAULT CONFIG / 默认配置声明]: No reference images are connected for this wardrobe template — the video runs in TEXT-TO-VIDEO mode with the built-in default character and default styling. DEFAULT CHARACTER: a young woman in <Picture 1>@图1's mid-20s, delicate facial features, long black hair, slender well-proportioned figure. DEFAULT STARTING OUTFIT: a relaxed everyday casual look — a simple soft top and tailored trousers. DEFAULT TRANSFORMED OUTFIT: a polished going-out look — a fitted dress with clean tailoring and refined fabric. 未连接任何参考图，本模板以文生视频模式运行并使用内置默认配置：默认人物=年轻女性（黑色长发、五官精致、身材匀称），开场默认造型=休闲日常穿搭，瞬移后默认造型=精致出街造型。默认人物的面部/发型/体型/身份全程保持一致，仅服装与背景随动作切换。\n\nintegrated_multimodal_description: [参考映射: 人物=<Picture 1>@图1, 换装后服装=<Picture 2>@图2, 场景=<Picture 3>@图3]  [Shot 1] [0-6s] Live-action, cinematic medium shot in a neutral soft-lit indoor space. 【ACTION】The default character raises one hand mid-gesture — brushing hair away from <Picture 1>@图1's face / wiping at <Picture 1>@图1's brow — with the arm moving through its motion. Exactly at the halfway point of that gesture, in a single clean snap with the motion never interrupted, <Picture 1>@图1's outfit and the background flash-change: the casual look swaps to the polished going-out dress and the room shifts to a refined setting. <Picture 1>@图1's arm keeps traveling along the very same motion and lands naturally, as if nothing paused.【/ACTION】 The face, hairstyle and body proportions remain identical before and after the snap; the gesture is continuous and unbroken; clean hard cut, no distorted fabric, no extra limbs.\n\noverall_soundscape: A soft swish of fabric mid-gesture, a subtle flash whoosh exactly on the snap, light ambient room tone.\n\nnon_diegetic_music: Modern upbeat pop beat with a tight snare hit landing exactly on the outfit snap.",
+     "text_fallback_mode": "reference"
+    }
+   ]
+  },
+  {
+   "id": "continuous_flow",
+   "templates": [
+    {
+     "id": "turn_push_wardrobe",
+     "name": "转身推镜无缝换装",
+     "name_en": "Turn + push-in seamless swap",
+     "description": "首尾帧2张：人物转身+镜头推近，转身遮挡的瞬间完成服装/发型/场景切换，首尾帧严格落在参考图。",
+     "description_en": "Two frames, first and last: the character turns and the camera pushes in, the outfit, hairstyle and scene all switching at the instant the turn occludes the frame, with the first and last frames landing exactly on the reference images.",
+     "preview": "turn_push_wardrobe.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转身",
+      "推镜",
+      "无缝换装",
+      "首尾帧",
+      "丝滑",
+      "转场"
+     ],
+     "tags_en": [
+      "turn",
+      "push in",
+      "seamless change",
+      "first and last frame",
+      "silky",
+      "transition"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, pose, framing, starting outfit and starting scene must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face and identity, now with the changed hairstyle, outfit and scene after the turn, preserved EXACTLY at the end. The character's facial identity must stay identical across the whole clip; the change happens during the turn's back-facing occlusion. NEVER mix <Picture 1>@图1's outfit/scene onto the last frame, or <Picture 2>@图2's onto the first frame. 中文复述：本提示词中 <Picture 1>@图1 为转身前首帧参考（人物面部/发型/体型/身份/姿势/构图/开场服装与场景在第0秒严格保持），<Picture 2>@图2 为转身后尾帧参考（同一张脸、同一身份，但换装/换发型/换场景后完全以 <Picture 2>@图2 为准）；人脸与身份全程不变，变化仅发生在转身背对镜头的遮挡瞬间，严禁首尾帧服装与场景互相串用。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The outfit swap is a HARD CUT hidden behind the back-facing turn occlusion — NOT a dissolve, NOT a cross-fade, NOT a morph. The old outfit is 100% gone and the new outfit is 100% present the instant the character turns back to face the camera. The two outfits NEVER coexist, NEVER overlap, NEVER fade into each other.\n- During the swap the character's back filling the frame provides full visual occlusion — the swap happens BEHIND the back, invisible to the viewer. When the turn completes, the new look is already fully in place. Clean hard cut, no morphing blur, no distorted fabric, no extra limbs.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。换装为转身背对镜头遮挡后的硬切——旧衣100%消失、新衣100%出现，两者绝不共存、绝不叠加、绝不交叉淡化。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing, outfit and scene from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the same face now in the changed styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic, smooth camera move. 【ACTION】The clip begins exactly as <Picture 1>@图1. The character begins to turn their body away from camera while the camera slowly pushes in. As the character turns fully away, their back fills the frame and fully occludes the front of the body — in that one beat of total occlusion, the outfit, hairstyle and entire scene HARD-CUT swap: the old garment is instantly replaced behind the back-facing occlusion, NOT a dissolve, NOT a morph. The character reacts with natural turning momentum: arms swing with the turn, hair whips across, feet pivot, the body leans slightly into the turn — natural physics, not a frozen mannequin. When the character turns back to face the lens, the new look is already fully in place. The character keeps turning, the camera continues to push in, and as they turn back toward the lens the new look is already in place; the motion carries through until the final frame lands exactly on <Picture 2>@图2.【/ACTION】 The face and identity remain the same person throughout; the push-in and turn are smooth and continuous; the swap is a clean hard cut behind the back occlusion, no jump cut, no ghosting, no double exposure, no distorted limbs, no duplicated figure.\n\noverall_soundscape: A soft fabric swish of the spin, a gentle wind lift during the occlusion, ambient room tone that shifts subtly to match the new scene.\n\n\n[SCENE REFERENCE / 场景参考]: If <Picture 3>@图3 is connected, the post-turn scene must match <Picture 3>@图3 EXACTLY — same background, same architecture, same furniture, same lighting. The pre-turn scene is from <Picture 1>@图1. After the turn occlusion, the new scene = <Picture 3>@图3. 如连接了图3@图3，转身后的场景必须完全匹配图3@图3。\n\nnon_diegetic_music: Dreamy uplifting synth-pop that swells as the camera pushes in, resolving on a warm clean chord.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, body proportions, identity, pose, framing, starting outfit and starting scene must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face and identity, now with the changed hairstyle, outfit and scene after the turn, preserved EXACTLY at the end. The character's facial identity must stay identical across the whole clip; the change happens during the turn's back-facing occlusion. NEVER mix <Picture 1>@图1's outfit/scene onto the last frame, or <Picture 2>@图2's onto the first frame. 中文复述：本提示词中 <Picture 1>@图1 为转身前首帧参考（人物面部/发型/体型/身份/姿势/构图/开场服装与场景在第0秒严格保持），<Picture 2>@图2 为转身后尾帧参考（同一张脸、同一身份，但换装/换发型/换场景后完全以 <Picture 2>@图2 为准）；人脸与身份全程不变，变化仅发生在转身背对镜头的遮挡瞬间，严禁首尾帧服装与场景互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the character, pose, framing, outfit and scene from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the same face now in the changed styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic, smooth camera move. 【ACTION】The clip begins exactly as <Picture 1>@图1. The character begins to turn their body away from camera while the camera slowly pushes in. As the character turns fully away, their back fills the frame and the rear of their body fully occludes the face — in that one beat of total occlusion, the outfit, hairstyle and entire scene morph seamlessly: the old garment and background dissolve into the new styling and environment. The character keeps turning, the camera continues to push in, and as they turn back toward the lens the new look is already in place; the motion carries t",
+     "text_fallback_mode": "reference"
+    },
+    {
+     "id": "handwipe_screen_transition",
+     "name": "手掌擦镜转场",
+     "name_en": "Hand-wipe screen transition",
+     "description": "图1擦镜前造型+图2擦镜后造型：一只手掌从镜头前擦过，手掌划过的区域像擦玻璃一样把画面替换成下一造型，首末帧严格对应两张参考。",
+     "description_en": "Img1 look before the wipe + Img2 look after it: a palm wipes across the lens and the area it passes over is replaced as if cleaning glass, the frame changing into the next look, with the first and last frames matching the two references exactly.",
+     "preview": "handwipe_screen_transition.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "手掌擦镜",
+      "转场",
+      "无缝换装",
+      "首尾帧",
+      "玻璃擦除",
+      "丝滑"
+     ],
+     "tags_en": [
+      "palm wipe",
+      "transition",
+      "seamless change",
+      "first and last frame",
+      "glass wipe",
+      "silky"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, identity, pose, framing, outfit and pre-wipe styling must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face and identity in the post-wipe styling, preserved EXACTLY at the end. The palm wipe sweeps across the lens and the swept region replaces the image like glass being wiped clean; the face/identity never changes. NEVER mix <Picture 1>@图1's styling onto the last frame or <Picture 2>@图2's onto the first. 中文复述：本提示词中 <Picture 1>@图1 为擦镜前首帧参考（人物面部/发型/身份/姿势/构图/服装在第0秒严格保持），<Picture 2>@图2 为擦镜后尾帧参考（同一张脸、同一身份，仅造型/服装/背景切换后完全以 <Picture 2>@图2 为准）；手掌划过镜头，划过区域如擦玻璃般把画面替换为下一造型，人脸与身份全程不变，严禁首尾帧造型互相串用。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The wipe is a CLEAN REPLACEMENT EDGE — the palm-wiped region is instantly 100% the new look, the un-wiped region is 100% the old look. There is NO cross-fade zone, NO overlap zone where both outfits are semi-transparent. The wipe edge is a sharp boundary, not a blend.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。擦镜边缘为干净替换边界——划过区域100%新造型，未划过区域100%旧造型，无交叉淡化过渡区。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — all visual elements from <Picture 1>@图1 preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the same face in the post-wipe styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic, fixed framing. 【ACTION】The clip begins exactly as <Picture 1>@图1. One hand enters from the side, palm flat and facing the lens, and wipes across the screen from left to right like a squeegee cleaning glass. The region the palm has passed over instantly becomes 100% the post-wipe styling from <Picture 2>@图2 — outfit, hairstyle and background are hard-cut replaced at the wipe edge; the un-wiped region still shows 100% <Picture 1>@图1. There is NO cross-fade zone — the wipe edge is a sharp replacement boundary. When the palm sweeps fully off the frame, the whole image has become the post-wipe look, and the final frame lands exactly on <Picture 2>@图2.【/ACTION】 The face and identity remain the same person; the wipe edge is a smooth continuous sharp replacement boundary — no cross-fade, no ghosting, no double exposure, no distorted limbs, no duplicated figure.\n\noverall_soundscape: A soft palm-glide whoosh across the lens, a faint glass-cleaning shimmer, subtle ambient tone.\n\n\n[SCENE REFERENCE / 场景参考]: If <Picture 3>@图3 is connected, the post-wipe background must match <Picture 3>@图3 EXACTLY — same environment, same lighting, same atmosphere. After the palm wipe completes, the scene = <Picture 3>@图3. 如连接了图3@图3，擦镜后的背景必须完全匹配图3@图3。\n\nnon_diegetic_music: Sleek, stylish R&B-pop with a glossy pad that blooms as the wipe completes.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the FIRST-FRAME reference — the character's exact face, hairstyle, identity, pose, framing, outfit and pre-wipe styling must be preserved EXACTLY at 0.00 seconds. <Picture 2>@图2 is the LAST-FRAME reference — the very SAME face and identity in the post-wipe styling, preserved EXACTLY at the end. The palm wipe sweeps across the lens and the swept region replaces the image like glass being wiped clean; the face/identity never changes. NEVER mix <Picture 1>@图1's styling onto the last frame or <Picture 2>@图2's onto the first. 中文复述：本提示词中 <Picture 1>@图1 为擦镜前首帧参考（人物面部/发型/身份/姿势/构图/服装在第0秒严格保持），<Picture 2>@图2 为擦镜后尾帧参考（同一张脸、同一身份，仅造型/服装/背景切换后完全以 <Picture 2>@图2 为准）；手掌划过镜头，划过区域如擦玻璃般把画面替换为下一造型，人脸与身份全程不变，严禁首尾帧造型互相串用。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — all visual elements from <Picture 1>@图1 preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the same face in the post-wipe styling, preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Live-action, cinematic, fixed framing. 【ACTION】The clip begins exactly as <Picture 1>@图1. One hand enters from the side, palm flat and facing the lens, and wipes across the screen from left to right like a squeegee cleaning glass. The region the palm has passed over instantly clears and reveals the post-wipe styling from <Picture 2>@图2 — outfit, hairstyle and background underneath transforming as the wipe edge advances; the un-wiped region still shows <Picture 1>@图1. When the palm sweeps fully off the frame, the whole image has become the post-wipe look, and the final frame lands exactly on <Picture 2>@图2.【/ACTION】 The face and identity remain the same person; the wipe edge is smooth and continuous, no hard cut, no distorted limbs, no dup",
+     "text_fallback_mode": "reference"
+    },
+    {
+     "id": "era_travel_wardrobe",
+     "name": "时代穿越换装",
+     "name_en": "Era-travel wardrobe",
+     "description": "图1现代装人物+图2目标古典服装+图3古建筑背景：人物站在古建筑前，风吹衣角、时钟倒转特效，现代西装/连衣裙溶解为图2那套汉服/和服/中世纪礼服，场景完全来自图3。",
+     "description_en": "Img1 character in modern dress + Img2 target period costume + Img3 historic architecture: the character stands in front of the old building, the hem of the garment lifts in the wind, a clock runs backwards and the modern suit or dress dissolves into the hanfu, kimono or mediaeval gown from Img2, the scene coming entirely from Img3.",
+     "preview": "era_travel_wardrobe.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1人物+图2服装+图3场景】",
+     "duration": 10,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "时代穿越",
+      "古装",
+      "换装",
+      "古风",
+      "多图参考",
+      "溶解",
+      "穿越"
+     ],
+     "tags_en": [
+      "era travel",
+      "period costume",
+      "outfit change",
+      "gufeng",
+      "multi-image reference",
+      "dissolve",
+      "fly-through"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout; the character starts in modern clothing. <Picture 2>@图2 is the TARGET OUTFIT reference — the historical garment (hanfu / kimono / medieval gown) its cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>@图2; after the transition the character wears THIS outfit and no other. <Picture 3>@图3 is the SCENE reference — the ancient architecture, background, props, lighting, color tone and atmosphere must come EXACTLY from <Picture 3>@图3, DO NOT generate a new background. NEVER mix one <Picture N>'s material onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，开场为现代装束），<Picture 2>@图2 是目标古典服装参考（版型/颜色/花纹/材质细节完全来自该图，穿越后人物穿上的就是这套汉服/和服/中世纪礼服），<Picture 3>@图3 是场景参考（古建筑/背景/道具/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用素材。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The outfit swap is a HARD CUT hidden behind the swirling wind-and-particle veil — NOT a dissolve, NOT a cross-fade, NOT a morph. The old outfit is 100% gone and the new outfit is 100% present the instant the veil clears. The two outfits NEVER coexist, NEVER overlap, NEVER fade into each other.\n- During the swap the swirling light particles, drifting petals/leaves and rising wind provide full visual coverage of the body — the swap happens BEHIND this natural veil, invisible to the viewer. When the veil settles, the new outfit is already fully formed. Clean hard cut, no morphing blur, no distorted fabric, no extra limbs.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。换装为风与粒子遮挡后的硬切——旧衣100%消失、新衣100%出现，两者绝不共存、绝不叠加、绝不交叉淡化。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout — no alteration, replacement or redesign. <Picture 2>@图2 is fully referenced as the target historical outfit: the garment must match <Picture 2>@图2's exact cut, color, pattern and fabric texture — no substitution, no redesign. <Picture 3>@图3 is fully referenced as the scene: architecture, background, lighting and atmosphere EXACTLY as the scene reference.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic medium-full shot inside the ancient architecture from <Picture 3>@图3. 【ACTION】The character from <Picture 1>@图1 stands in the scene in their modern suit / modern dress. A breeze rises and lifts the hem and hair; behind them a clock-rewind / time-flow effect spins backward — swirling light particles and drifting petals or leaves that BRIEFLY VEIL the entire body. The character reacts to the rising wind: clothes flap and billow, hair blows across the face, the body braces slightly forward against the gust, hands instinctively rise to shield the face from blowing debris — a natural physical response to sudden wind. Behind this wind-and-particle veil, the outfit HARD-CUT swaps to the historical garment from <Picture 2>@图2 — the modern fabric does NOT dissolve, does NOT cross-fade, it is instantly replaced behind the veil. When the wind settles and particles clear, the historical garment is already fully formed — its cut, color, pattern and fabric texture identical to <Picture 2>@图2. By the end the full hanfu / kimono / medieval gown is settled on the body, the character turns gently to present it, and the environment remains the ancient architecture from <Picture 3>@图3.【/ACTION】 The face, identity, hairstyle base and body proportions remain unchanged; the dissolve is continuous and elegant, clean effects, no distorted fabric, no extra limbs.\n\noverall_soundscape: A rising wind and drifting chimes, a low time-rewind hum during the dissolve, soft fabric rustle as the historical garment settles, ambient tone of the ancient courtyard.\n\nnon_diegetic_music: Cinematic East-Asian orchestral score with bamboo flute and strings, swelling as the dissolve completes, resolving on a resonant traditional chord.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY throughout; the character starts in modern clothing. <Picture 2>@图2 is the TARGET OUTFIT reference — the historical garment (hanfu / kimono / medieval gown) its cut, color, pattern, fabric texture and every detail must come EXACTLY from <Picture 2>@图2; after the transition the character wears THIS outfit and no other. <Picture 3>@图3 is the SCENE reference — the ancient architecture, background, props, lighting, color tone and atmosphere must come EXACTLY from <Picture 3>@图3, DO NOT generate a new background. NEVER mix one <Picture N>'s material onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，开场为现代装束），<Picture 2>@图2 是目标古典服装参考（版型/颜色/花纹/材质细节完全来自该图，穿越后人物穿上的就是这套汉服/和服/中世纪礼服），<Picture 3>@图3 是场景参考（古建筑/背景/道具/灯光/色调/氛围完全来自该图，不得另造新背景）；严禁跨图串用素材。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout — no alteration, replacement or redesign. <Picture 2>@图2 is fully referenced as the target historical outfit: the garment must match <Picture 2>@图2's exact cut, color, pattern and fabric texture — no substitution, no redesign. <Picture 3>@图3 is fully referenced as the scene: architecture, background, lighting and atmosphere EXACTLY as the scene reference.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic medium-full shot inside the ancient architecture from <Picture 3>@图3. 【ACTION】The character from <Picture 1>@图1 stands in the scene in their modern suit / modern dress. A breeze rises and lifts the hem and hair; behind them a clock-rewind / time-flow effect spins backward — swirling light particles and drifti",
+     "text_fallback_mode": "reference"
+    },
+    {
+     "id": "four_seasons_outfit_timelapse",
+     "name": "四季/日转夜换装延时",
+     "name_en": "Four-seasons outfit timelapse",
+     "description": "图1人物+图2~5四张季节造型参考：同一人同一站立姿势，背景与服装随春樱→夏海→秋枫→冬雪连续溶解切换，四次季节之间平滑过渡，人脸始终一致。",
+     "description_en": "Img1 character + Img2-5 four seasonal look references: the same person in the same standing pose, the background and outfit dissolving continuously through spring cherry blossom, summer sea, autumn maple and winter snow, with smooth transitions between the four seasons and a consistent face throughout.",
+     "preview": "four_seasons_outfit_timelapse.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合)",
+     "duration": 10,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "四季",
+      "延时",
+      "换装",
+      "日转夜",
+      "多模态",
+      "同款不同装",
+      "季节"
+     ],
+     "tags_en": [
+      "four seasons",
+      "time-lapse",
+      "outfit change",
+      "day to night",
+      "multimodal",
+      "same person, new outfit",
+      "seasons"
+     ],
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY across the whole timelapse; the character holds the SAME standing pose throughout. <Picture 2>@图2 is the SPRING styling — the spring outfit's cut, color, pattern, fabric texture and the spring color tone / cherry-blossom atmosphere must come EXACTLY from <Picture 2>@图2. <Picture 3>@图3 is the SUMMER styling — the summer outfit and the summer sea / bright-sun tone must come EXACTLY from <Picture 3>@图3. <Picture 4>@图4 is the AUTUMN styling — the autumn outfit and the autumn maple / warm tone must come EXACTLY from <Picture 4>@图4. <Picture 5>@图5 is the WINTER styling — the winter outfit and the winter snow / cold tone must come EXACTLY from <Picture 5>@图5. The four seasonal looks appear strictly in spring → summer → autumn → winter order; each season's clothing and tone come ONLY from its own <Picture N>. NEVER mix one season's outfit onto another season. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，全程保持同一站立姿势），<Picture 2>@图2 为春、<Picture 3>@图3 为夏、<Picture 4>@图4 为秋、<Picture 5>@图5 为冬——每季的服装版型/颜色/花纹/材质与季节色调必须完全来自对应参考图，严格按春→夏→秋→冬顺序出现；人脸与身份全程一致，严禁把某一季的服装串到另一季。\n\n\n[ANTI-GHOSTING / 防重影铁律 - ABSOLUTE CRITICAL]:\n- The character is ONE single, solid, fully opaque, physically continuous body at ALL times throughout the entire timelapse.\n- ABSOLUTELY NO double exposure, NO ghosting, NO afterimage, NO echo, NO semi-transparent body, NO split-body, NO layered duplicates.\n- The seasonal cross-dissolves affect the BACKGROUND and OUTFIT ENVIRONMENT ONLY — the person herself stays ONE solid, fully opaque figure. The old outfit and new outfit NEVER coexist as two overlapping translucent layers; each seasonal transition is a clean replacement where the old is 100% gone before the new appears.\n- 严禁重影/残影/分身/叠影/半透明人体/多重曝光。季节过渡仅影响背景与服装环境，人物本身始终为单一不透明实体；旧衣与新衣绝不同时半透明叠加。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire timelapse — no alteration, replacement or redesign. Each seasonal outfit must match its own <Picture N>'s exact cut, color, pattern, fabric texture and tone — no substitution, no redesign.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic fixed medium-full shot, same framing the whole time. 【ACTION】The character stands in the exact pose of <Picture 1>@图1. In the first quarter the scene and clothing are the SPRING look from <Picture 2>@图2 — cherry blossoms and soft pink tone — which continuously dissolves into the SUMMER look from <Picture 3>@图3 — bright sunlight and sea-blue tone. That in turn dissolves into the AUTUMN look from <Picture 4>@图4 — falling maple leaves and warm amber tone, and finally into the WINTER look from <Picture 5>@图5 — falling snow and cool pale tone. Each seasonal transition is a smooth organic replacement of both background and outfit, four in total, with a natural rhythm from blossom to summer heat to autumn foliage to winter snow. The character's body reacts naturally to each seasonal shift: a light shiver in winter cold, relaxed posture in summer warmth, clothes fluttering in spring breeze, hair lifting in autumn wind. The character's body stays ONE solid, fully opaque figure throughout; the seasonal outfits replace each other cleanly — old outfit 100% gone before new appears, NO cross-fade, NO ghosting.【/ACTION】 The face, identity, hairstyle, body proportions and standing pose remain identical across all four seasons; the transitions are clean seasonal replacements — the person stays ONE solid opaque figure at all times, no ghosting, no double exposure, no distorted fabric, no extra limbs.\n\noverall_soundscape: A light seasonal ambience that flows from spring birdsong to summer breeze, autumn leaf rustle and finally soft falling snow, continuous undercurrent.\n\nnon_diegetic_music: A gentle piano-and-strings piece that cycles through spring-to-winter moods, warm and tender, resolving softly on the final winter note.",
+     "text_fallback_prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is the CHARACTER reference — face, hairstyle, body proportions and identity must be preserved EXACTLY across the whole timelapse; the character holds the SAME standing pose throughout. <Picture 2>@图2 is the SPRING styling — the spring outfit's cut, color, pattern, fabric texture and the spring color tone / cherry-blossom atmosphere must come EXACTLY from <Picture 2>@图2. <Picture 3>@图3 is the SUMMER styling — the summer outfit and the summer sea / bright-sun tone must come EXACTLY from <Picture 3>@图3. <Picture 4>@图4 is the AUTUMN styling — the autumn outfit and the autumn maple / warm tone must come EXACTLY from <Picture 4>@图4. <Picture 5>@图5 is the WINTER styling — the winter outfit and the winter snow / cold tone must come EXACTLY from <Picture 5>@图5. The four seasonal looks appear strictly in spring → summer → autumn → winter order; each season's clothing and tone come ONLY from its own <Picture N>. NEVER mix one season's outfit onto another season. 中文复述：本提示词中 <Picture 1>@图1 是人物参考（面部/发型/体型/身份严格保持，全程保持同一站立姿势），<Picture 2>@图2 为春、<Picture 3>@图3 为夏、<Picture 4>@图4 为秋、<Picture 5>@图5 为冬——每季的服装版型/颜色/花纹/材质与季节色调必须完全来自对应参考图，严格按春→夏→秋→冬顺序出现；人脸与身份全程一致，严禁把某一季的服装串到另一季。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the character. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions must be preserved EXACTLY throughout the entire timelapse — no alteration, replacement or redesign. Each seasonal outfit must match its own <Picture N>'s exact cut, color, pattern, fabric texture and tone — no substitution, no redesign.\n\nintegrated_multimodal_description:  [Shot 1] [0-10s] Live-action, cinematic fixed medium-full shot, same framing the whole time. 【ACTION】The character stands in the exact pose of <Picture 1>@图1. In the first quarter the scene and clothing are",
+     "text_fallback_mode": "reference"
+    }
+   ]
+  }
+ ]
+}

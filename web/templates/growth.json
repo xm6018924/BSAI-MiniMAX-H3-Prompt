@@ -1,0 +1,417 @@
+{
+ "id": "growth",
+ "subcategories": [
+  {
+   "id": "plant_growth",
+   "templates": [
+    {
+     "id": "seed_to_bloom",
+     "name": "种子破土开花",
+     "name_en": "Seed Sprouting to Full Bloom",
+     "description": "一颗种子在土壤中破土、发芽、抽茎、含苞、绽放为花朵的完整生长",
+     "description_en": "The complete growth of a seed: breaking the soil, sprouting, shooting up, budding and blooming into a flower",
+     "preview": "seed_to_bloom.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "植物",
+      "生长",
+      "开花",
+      "延时",
+      "自然"
+     ],
+     "tags_en": [
+      "plant",
+      "growth",
+      "blooming",
+      "time-lapse",
+      "nature"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic macro time-lapse, fixed camera at a low angle close to dark, moist soil. A single brown seed rests on the soil surface at frame center. The seed coat cracks, a pale root tip pushes downward into the soil, and a tender pale-green shoot emerges upward, splitting open as two rounded cotyledon leaves unfold. The camera is static; the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a slightly wider angle. The stem lengthens and thickens rapidly, true leaves grow out and spread toward the light, and the plant rises through the center of the frame. Tiny water droplets glisten on the leaves. [Shot 3] At 00:08.000, the shot cuts to a medium close-up of the stem tip. A green bud swells, petals gradually unfurl from the tip outward, and the flower opens fully, revealing bright layered petals and a yellow center. The plant sways gently as if in a light breeze, and the camera pushes in with small amplitude at slow speed toward the fully opened bloom.\n\noverall_soundscape: Soft soil shifting, the delicate rustle of leaves unfurling, a faint breeze, and a single low drone of ambient nature.\n\nnon_diegetic_music: A gentle piano arpeggio at a slow tempo with soft sustained strings that gradually swell as the flower opens, then fade to a quiet resolution."
+    },
+    {
+     "id": "vine_climbing",
+     "name": "藤蔓缠绕生长",
+     "name_en": "Vine Climbing Growth",
+     "description": "藤蔓沿石墙或花架蜿蜒缠绕向上攀爬的延时生长",
+     "description_en": "Time-lapse of a vine winding and climbing up a stone wall or a trellis",
+     "preview": "vine_climbing.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "植物",
+      "藤蔓",
+      "攀爬",
+      "生长",
+      "延时"
+     ],
+     "tags_en": [
+      "plant",
+      "vine",
+      "climbing",
+      "growth",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed medium-wide shot of a garden trellis in soft daylight. A thin green vine at the base begins to extend upward, its tip curling and searching in small circles. The camera is static; the frame never moves. [Shot 2] At 00:03.000, the shot cuts to a closer framing following the vine tip. The vine grows steadily upward, tendrils wrapping around the trellis posts and stone edges, small heart-shaped leaves sprouting along the stem in rapid succession, each leaf unfolding as it emerges. [Shot 3] At 00:07.000, the shot cuts to a medium shot of the upper trellis. The vine reaches the top and spreads sideways, covering the trellis with dense green foliage, a few small flowers budding and opening among the leaves. Soft daylight rakes across the leaves, and the camera tilts up slowly as the vine completes its climb.\n\noverall_soundscape: Gentle wind through leaves, the soft rasp of tendrils brushing stone, distant birdsong, and a quiet natural ambience.\n\nnon_diegetic_music: A light acoustic guitar pattern at a moderate tempo with soft woodwind accompaniment, warm and organic, ending on a calm held note."
+    },
+    {
+     "id": "mushroom_growth",
+     "name": "蘑菇破土生长",
+     "name_en": "Mushrooms Emerging from Soil",
+     "description": "森林地面上一丛蘑菇破土而出、菌盖撑开的微距延时",
+     "description_en": "Macro time-lapse of a cluster of mushrooms pushing through the forest floor and opening their caps",
+     "preview": "mushroom_growth.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "植物",
+      "蘑菇",
+      "真菌",
+      "生长",
+      "微距"
+     ],
+     "tags_en": [
+      "plant",
+      "mushroom",
+      "fungus",
+      "growth",
+      "macro"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic macro time-lapse, a low fixed camera close to a forest floor. The soil surface shows a faint crack in the center; the camera is static, the frame never moves. [Shot 2] At 00:02.000, the shot cuts to a tighter macro angle. Small white mushroom caps push up through the soil and leaf litter, their stems elongating as the caps rise, lifting fallen leaves aside. The caps swell and round out, gills visible beneath the edges. [Shot 3] At 00:05.000, the shot cuts to a wider low angle. A cluster of mushrooms stands fully grown at different heights, their caps unfurling like small umbrellas, morning dew beading on the caps. A single ray of light falls on the tallest mushroom, and the camera pushes in slowly with small amplitude.\n\noverall_soundscape: The soft crackle of soil and leaves parting, a faint damp forest ambience, dripping water, and a low rustle of wind in the canopy.\n\nnon_diegetic_music: A sparse, gentle piano motif at a slow tempo with soft ambient pads, quiet and earthy, fading to near silence at the end."
+    },
+    {
+     "id": "tree_four_seasons",
+     "name": "大树四季生长",
+     "name_en": "Tree Growing Through the Seasons",
+     "description": "一株树苗长成参天大树，并经历春夏秋冬四季轮回",
+     "description_en": "A sapling grows into a towering tree and passes through spring, summer, autumn and winter",
+     "preview": "tree_four_seasons.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 15,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "植物",
+      "树木",
+      "四季",
+      "生长",
+      "延时"
+     ],
+     "tags_en": [
+      "plant",
+      "tree",
+      "four seasons",
+      "growth",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide shot of an open meadow under a large sky. A small sapling with a few leaves stands at frame center; the camera is static, the frame never moves. The sapling grows taller and thicker in fast motion, branches spreading outward as the seasons cycle. [Shot 2] At 00:04.000, the shot cuts to a medium-wide angle. Spring arrives: the tree bursts into fresh green leaves, pink blossom clusters bloom and fall. The camera remains still. Summer follows as the canopy thickens into deep green. [Shot 3] At 00:08.000, the shot cuts to a wider view. Autumn colors wash over the leaves from green to gold to red, and the leaves drift down in spirals; then winter comes, bare branches gather frost and snow, and the ground turns white. [Shot 4] At 00:12.000, the shot cuts to a full wide shot. The mature tree stands in a fresh spring once more, covered in new green leaves, clouds racing across the sky behind it, and the camera slowly pulls out with small amplitude at slow speed to reveal the whole tree against the landscape.\n\noverall_soundscape: Wind in changing seasons, rustling leaves, drifting snow, birdsong in spring, and a continuous low ambient drone.\n\nnon_diegetic_music: A lyrical string-and-piano theme at a slow tempo that changes texture with each season, ending on a warm, resolved chord."
+    }
+   ]
+  },
+  {
+   "id": "animal_growth",
+   "templates": [
+    {
+     "id": "caterpillar_to_butterfly",
+     "name": "破茧成蝶",
+     "name_en": "Caterpillar to Butterfly",
+     "description": "毛毛虫结茧、化蛹、破茧而出展翅成蝶的完整蜕变",
+     "description_en": "Complete metamorphosis: a caterpillar spins a cocoon, pupates, emerges and spreads its wings as a butterfly",
+     "preview": "caterpillar_to_butterfly.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动物",
+      "蝴蝶",
+      "蜕变",
+      "破茧",
+      "自然"
+     ],
+     "tags_en": [
+      "animal",
+      "butterfly",
+      "transformation",
+      "cocoon",
+      "nature"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic macro time-lapse, a fixed close-up of a green leaf on a sunlit branch. A striped caterpillar crawls across the leaf, then hangs upside down and spins a silken thread around itself, gradually forming a smooth chrysalis. The camera is static; the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a tighter macro angle on the chrysalis. The chrysalis darkens and begins to crack along its back; the crack widens slowly as a damp, crumpled head and antennae push out. [Shot 3] At 00:07.000, the shot cuts to a side close-up. A butterfly emerges, clinging to the empty shell, its soft wet wings slowly unfurling and straightening, wing patterns and colors deepening as they dry. [Shot 4] At 00:10.000, the shot cuts to a wider angle. The butterfly spreads its fully dried wings wide, then lifts off the branch and flutters away into warm backlit forest air, and the camera tracks it briefly before holding on the empty chrysalis.\n\noverall_soundscape: Gentle breeze, the faint rasp of silk and cracking shell, soft wing beats as the butterfly flies away, and warm forest ambience.\n\nnon_diegetic_music: A delicate harp and flute melody at a slow tempo, airy and bright, swelling gently as the butterfly takes flight and resolving softly."
+    },
+    {
+     "id": "tadpole_to_frog",
+     "name": "蝌蚪变青蛙",
+     "name_en": "Tadpole to Frog",
+     "description": "蝌蚪在水塘中长腿、蜕尾、变态为青蛙并跃上陆地",
+     "description_en": "A tadpole grows legs in a pond, sheds its tail, turns into a frog and hops onto land",
+     "preview": "tadpole_to_frog.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动物",
+      "青蛙",
+      "蝌蚪",
+      "蜕变",
+      "两栖"
+     ],
+     "tags_en": [
+      "animal",
+      "frog",
+      "tadpole",
+      "transformation",
+      "amphibian"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed underwater medium shot in a clear shallow pond. A cluster of dark tadpoles with small tails swims among green water plants near the surface; the camera is static, the frame never moves. The tadpoles grow slowly, hind legs budding and lengthening behind their bodies. [Shot 2] At 00:04.000, the shot cuts to a closer underwater angle. The tadpoles develop front legs, their tails slowly shrink and are absorbed into their bodies, and their bodies change from round to a sleeker frog shape. [Shot 3] At 00:08.000, the shot cuts to a low angle at the water surface. Young frogs climb onto a lily pad and a muddy bank at the pond edge, their skin darkening to green-brown with spots, and one frog takes a first short hop. [Shot 4] At 00:10.500, the shot cuts to a wider shot of the bank. The frog leaps from the bank onto a stone and then out of frame into tall grass, leaving ripples on the water, and the camera holds on the quiet pond.\n\noverall_soundscape: Underwater bubbling, water ripples and splashes, soft croaks, and a calm pond ambience with distant birds.\n\nnon_diegetic_music: A light, playful woodwind and pizzicato strings piece at a moderate tempo, gentle and bouncy, ending with a soft chord."
+    },
+    {
+     "id": "hatchling_to_bird",
+     "name": "破壳雏鸟成长",
+     "name_en": "Hatchling to Adult Bird",
+     "description": "鸟蛋破壳、雏鸟进食、羽毛长全后展翅离巢",
+     "description_en": "An egg cracks open, the chick feeds and fledges, then spreads its wings and leaves the nest",
+     "preview": "hatchling_to_bird.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动物",
+      "鸟类",
+      "破壳",
+      "成长",
+      "自然"
+     ],
+     "tags_en": [
+      "animal",
+      "bird",
+      "hatching",
+      "growing up",
+      "nature"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed close-up of a small nest of twigs and moss holding three pale blue eggs, in a tree at golden morning light. A small crack appears on one egg and slowly widens; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a slightly wider angle. A wet chick breaks the shell open, tumbles out, and huddles in the nest as its siblings hatch, all three gaping for food; a parent bird briefly lands to feed them. The chicks grow quickly, grey down replacing with small feathers. [Shot 3] At 00:08.000, the shot cuts to a medium close-up. The young birds are fully feathered and flutter their wings on the nest rim, testing balance, wings beating fast. [Shot 4] At 00:10.500, the shot cuts to a wide shot of the branch and sky. One by one the young birds leap from the nest and glide clumsily out of frame into the open sky, and the camera holds on the empty nest swaying gently.\n\noverall_soundscape: Soft tapping and cracking of shells, high-pitched cheeping, rapid wing beats, and a bright morning forest ambience.\n\nnon_diegetic_music: A cheerful flute and light strings melody at a moderate tempo, bright and hopeful, ending as the birds fly off."
+    },
+    {
+     "id": "puppy_growing",
+     "name": "幼犬成长",
+     "name_en": "Puppy Growing Up",
+     "description": "一只幼犬从出生到长大成犬的成长延时，同一视角",
+     "description_en": "Growth time-lapse of a puppy from birth to adult dog, from a fixed viewpoint",
+     "preview": "puppy_growing.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动物",
+      "狗狗",
+      "幼犬",
+      "成长",
+      "延时"
+     ],
+     "tags_en": [
+      "animal",
+      "dog",
+      "puppy",
+      "growing up",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed medium shot of a cozy wooden-floored room corner with a soft blanket. A tiny newborn puppy with closed eyes lies curled on the blanket; the camera is static, the frame never moves. The puppy wriggles and slowly opens its eyes, ears beginning to lift. [Shot 2] At 00:03.000, the shot cuts to the same framing slightly wider. The puppy grows through fast motion, learning to stand on wobbly legs, taking clumsy first steps, its paws and body enlarging, short fur thickening. [Shot 3] At 00:06.000, the shot cuts to a medium-wide shot. The now larger puppy runs playfully in a circle on the floor, tail wagging, tongue out, before sitting and looking up at the camera with bright eyes. [Shot 4] At 00:08.500, the shot cuts to a close-up of the grown dog's face. It tilts its head, blinks once, and gives a happy open-mouth pant, soft window light on its fur, and the camera pushes in very slightly.\n\noverall_soundscape: Soft whimpers, the patter of paws on wood, gentle panting, a tail thumping, and a warm indoor room tone.\n\nnon_diegetic_music: A warm, simple ukulele and light percussion track at a moderate tempo, cheerful and cozy, ending with a gentle strum."
+    }
+   ]
+  },
+  {
+   "id": "human_growth",
+   "templates": [
+    {
+     "id": "baby_to_adult",
+     "name": "婴儿到成人",
+     "name_en": "Baby to Adult One-Shot",
+     "description": "同一个婴儿在连续镜头中成长为青年，五官特征全程保持",
+     "description_en": "The same baby grows into a young adult in one continuous shot, with facial features preserved throughout",
+     "preview": "baby_to_adult.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 15,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "人物",
+      "成长",
+      "年龄",
+      "一镜到底",
+      "延时"
+     ],
+     "tags_en": [
+      "people",
+      "growing up",
+      "age",
+      "one take",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Photorealistic, front-facing portrait, a static medium close-up. A newborn baby lies against a plain, warm, neutral background, eyes gently opening. The camera is static; the frame never moves. The person grows seamlessly and continuously in one take: becoming a chubby toddler with the same face shape, then a school-age child, then a teenager, then a young adult, the same face shape and soft expression preserved at every age, the overall look developing naturally over time. [Shot 2] At 00:08.000, the shot cuts to the same framing. The person is now fully grown, gentle smile, the plain neutral background unchanged, soft even light, slow seamless aging transition, front-facing portrait framing throughout. [Shot 3] At 00:12.000, the shot cuts to a very slight close-up on the face. The person blinks slowly, smiles warmly at the camera, hair brushed by an unseen breeze, then the frame holds on the calm expression as the video ends.\n\noverall_soundscape: A quiet, warm indoor tone with a very faint breeze, soft fabric movement, and gentle breathing.\n\nnon_diegetic_music: A tender piano and soft strings piece at a slow tempo, warm and nostalgic, ending on a sustained gentle note."
+    },
+    {
+     "id": "aging_portrait",
+     "name": "容颜老去",
+     "name_en": "Aging Portrait",
+     "description": "同一张正面肖像从青春到暮年逐渐老去，皱纹白发浮现",
+     "description_en": "The same frontal portrait ages from youth to old age, wrinkles and white hair gradually appearing",
+     "preview": "aging_portrait.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "人物",
+      "变老",
+      "肖像",
+      "岁月",
+      "延时"
+     ],
+     "tags_en": [
+      "people",
+      "ageing",
+      "portrait",
+      "passing years",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Photorealistic, front-facing portrait, a static close-up of a person in their 20s with smooth skin, neutral studio lighting, plain grey background. The camera is static; the frame never moves. The face ages in slow seamless morph: skin texture gradually coarsens, fine lines deepen around the eyes and mouth, hair begins to grey at the temples. [Shot 2] At 00:04.000, the shot cuts to the same framing. The person is now middle-aged: deeper wrinkles, greying hair, slightly softened jawline, the same eyes and nose structure clearly preserved. [Shot 3] At 00:08.000, the shot cuts to the same framing. The person is now elderly: silver-white hair, pronounced wrinkles, gentle weathered skin, the same warm eyes and recognizable features still intact. The person blinks slowly and gives a soft, serene smile. [Shot 4] At 00:11.000, the shot cuts to a very slight close-up on the face and holds; the person looks steadily at the camera, breathing softly, and the frame freezes on the face as the video ends.\n\noverall_soundscape: A calm, quiet studio room tone with a faint low hum and soft breathing throughout.\n\nnon_diegetic_music: A sparse solo cello line at a slow tempo with soft piano chords, melancholic yet serene, resolving gently at the end."
+    },
+    {
+     "id": "life_journey",
+     "name": "一生旅程",
+     "name_en": "Life Journey Timeline",
+     "description": "一个人从婴儿到暮年的一生在连续横移镜头中展开",
+     "description_en": "One person's life from infancy to old age unfolds across a continuous lateral tracking shot",
+     "preview": "life_journey.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 15,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "人物",
+      "一生",
+      "人生",
+      "横移",
+      "叙事"
+     ],
+     "tags_en": [
+      "people",
+      "lifetime",
+      "life",
+      "lateral move",
+      "narrative"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic, photorealistic, a continuous lateral tracking shot at a steady pace across a 15-second timeline. The camera glides smoothly from left to right with zero cuts as one person travels through every stage of life while the surrounding world seamlessly evolves in real time. The sequence begins on a newborn cradled in a parent's arms under soft light. [Shot 2] At 00:04.000, the shot transitions as the camera keeps moving right: the child grows into a toddler running through an open outdoor space, then a school-age child walking along a quiet street, the surroundings subtly changing with time. [Shot 3] At 00:08.000, the shot continues: the person is a young adult walking through an everyday urban area, then a middle-aged figure walking through the same area as the light turns golden, buildings and trees around them aging and changing with time. [Shot 4] At 00:12.000, the shot completes: the elderly person walks slowly toward a bench under a tree as dusk falls, sits down, and looks toward the camera with a peaceful smile, and the camera gently slows and holds on their face.\n\noverall_soundscape: Shifting environmental ambience from nursery sounds to birdsong, city traffic, wind, and evening crickets, with steady footsteps throughout.\n\nnon_diegetic_music: A lyrical orchestral theme that evolves with each life stage, warm strings and piano, ending in a quiet, resolved cadence."
+    },
+    {
+     "id": "character_metamorphosis",
+     "name": "形象蜕变",
+     "name_en": "Character Metamorphosis",
+     "description": "同一人物从青涩到成熟、从旧我到新我的蜕变",
+     "description_en": "The same person transforms from inexperienced to mature, from an old self to a new one",
+     "preview": "character_metamorphosis.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "人物",
+      "蜕变",
+      "成长",
+      "气质",
+      "转变"
+     ],
+     "tags_en": [
+      "people",
+      "transformation",
+      "growing up",
+      "temperament",
+      "shift"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic portrait, a medium shot of a shy, casually dressed young person standing against a plain wall in muted light. The person looks down, then slowly lifts their head toward the camera; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same framing. Time-lapse change sweeps over them: their look becomes neatly groomed, casual attire is replaced by formal attire, posture straightens, shoulders pull back, and the expression shifts from hesitant to calm and confident. [Shot 3] At 00:06.000, the shot cuts to a closer medium shot. The person is now a poised professional in formal wear, standing in soft warm light, a subtle confident smile on their face, eyes steady. [Shot 4] At 00:08.500, the shot cuts to a close-up of their face. The person turns slightly, adjusts their cuff, and looks directly into the camera with a composed, self-assured gaze, and the camera holds as the video ends.\n\noverall_soundscape: Quiet indoor room tone, soft fabric rustle as clothes change, a faint heartbeat-like pulse, and steady breathing.\n\nnon_diegetic_music: A modern cinematic track that builds from sparse piano to fuller strings and soft percussion as the transformation unfolds, ending on a confident resolved chord."
+    }
+   ]
+  },
+  {
+   "id": "object_growth",
+   "templates": [
+    {
+     "id": "crystal_growth",
+     "name": "水晶簇生长",
+     "name_en": "Crystal Cluster Growth",
+     "description": "岩洞中水晶簇从微小晶芽快速生长成巨大晶体的延时",
+     "description_en": "Time-lapse of crystal clusters in a cavern growing rapidly from tiny buds into huge crystals",
+     "preview": "crystal_growth.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "晶体",
+      "矿物",
+      "生长",
+      "岩洞",
+      "延时"
+     ],
+     "tags_en": [
+      "crystal",
+      "mineral",
+      "growth",
+      "cavern",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic macro time-lapse inside a dark cave, a fixed close-up of a rocky wall pocket. Tiny glassy crystal nubs begin to appear on the rock surface; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to a tighter angle. The crystals lengthen and thicken rapidly in fast motion, faceted prisms pushing outward at different angles, catching faint blue cave light and sparkling. [Shot 3] At 00:06.000, the shot cuts to a medium close-up. A dense cluster of large translucent crystals fills the pocket, their sharp tips glinting, a thin film of water shimmering over their surfaces. [Shot 4] At 00:08.500, the shot cuts to a wider low angle. The full crystal cluster gleams in a shaft of pale light from above, and the camera pushes in slowly with small amplitude.\n\noverall_soundscape: A resonant cavern ambience, faint crystalline chimes as the crystals form, and a low echoing drip of water.\n\nnon_diegetic_music: A minimalist ambient track with shimmering high bell tones and deep sustained pads, mysterious and crystalline, fading quietly."
+    },
+    {
+     "id": "city_expansion",
+     "name": "城市扩张生长",
+     "name_en": "City Expansion from Empty Land",
+     "description": "一片空地快速生长出完整现代城市的延时航拍",
+     "description_en": "Aerial time-lapse of an empty lot rapidly growing into a complete modern city",
+     "preview": "city_expansion.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 15,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "城市",
+      "建筑",
+      "扩张",
+      "航拍",
+      "延时"
+     ],
+     "tags_en": [
+      "city",
+      "architecture",
+      "expansion",
+      "aerial",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic aerial time-lapse, a high fixed vantage point above an empty flat parcel of land bordered by farmland and a river; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to the same aerial framing. Road grids appear first, then foundations and building skeletons rise rapidly, cranes moving in fast motion, streets filling with tiny vehicles. [Shot 3] At 00:08.000, the shot cuts to a slightly lower aerial angle. Towering glass buildings complete, parks and plazas fill in with trees, and the district becomes a dense modern city center. [Shot 4] At 00:12.000, the shot cuts to a wide aerial view at dusk. The completed city lights turn on building by building, traffic light trails stream along the roads, and the camera slowly pulls out and rises to reveal the whole glowing district against the darkening landscape.\n\noverall_soundscape: Distant construction clatter and cranes, faint traffic rumble, wind over the city, and a low urban ambience.\n\nnon_diegetic_music: A modern orchestral build with steady percussion and rising strings, optimistic and expansive, ending in a bright full chord."
+    }
+   ]
+  }
+ ]
+}

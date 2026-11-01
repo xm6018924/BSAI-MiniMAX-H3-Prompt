@@ -1,0 +1,150 @@
+{
+ "id": "transition_glitch",
+ "subcategories": [
+  {
+   "id": "glitch_all",
+   "templates": [
+    {
+     "id": "transition_glitch_digital",
+     "name": "26. 数字故障",
+     "name_en": "26. Glitch Digital",
+     "description": "动效转场：数字故障 / Glitch Digital — the outgoing scene glitches into horizontal displacement bands, RGB color channels splitting apart in digital corruption before snapping into the incoming scene",
+     "description_en": "Glitch Digital - the outgoing scene glitches into horizontal displacement bands, RGB color channels splitting apart in digital corruption before snapping into the incoming scene",
+     "preview": "transition_glitch_digital.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "故障科技转场",
+      "Glitch Digital"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "glitch tech transition",
+      "Glitch Digital"
+     ],
+     "prompt": "A seamless Glitch Digital transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene glitches into horizontal displacement bands, rgb color channels splitting apart in digital corruption before snapping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: digital glitch stutters with electronic zaps. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a glitchy techno beat with data drops, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_pixel_break",
+     "name": "27. 像素破碎",
+     "name_en": "27. Pixel Break",
+     "description": "动效转场：像素破碎 / Pixel Break — the outgoing scene pixelates into chunky blocks that crumble and fall away, pixel fragments cascading down to reveal the incoming scene",
+     "description_en": "Pixel Break - the outgoing scene pixelates into chunky blocks that crumble and fall away, pixel fragments cascading down to reveal the incoming scene",
+     "preview": "transition_pixel_break.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "故障科技转场",
+      "Pixel Break"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "glitch tech transition",
+      "Pixel Break"
+     ],
+     "prompt": "A seamless Pixel Break transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene pixelates into chunky blocks that crumble and fall away, pixel fragments cascading down to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: crumbling pixel fragments with retro arcade blips. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a chiptune arcade track, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_scanline_sweep",
+     "name": "28. 扫描线",
+     "name_en": "28. Scanline Sweep",
+     "description": "动效转场：扫描线 / Scanline Sweep — a horizontal scanline sweeps down the frame like a CRT monitor, the outgoing scene being scanned out line by line while the incoming scene scans in",
+     "description_en": "Scanline Sweep - a horizontal scanline sweeps down the frame like a CRT monitor, the outgoing scene being scanned out line by line while the incoming scene scans in",
+     "preview": "transition_scanline_sweep.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "故障科技转场",
+      "Scanline Sweep"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "glitch tech transition",
+      "Scanline Sweep"
+     ],
+     "prompt": "A seamless Scanline Sweep transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A horizontal scanline sweeps down the frame like a crt monitor, the outgoing scene being scanned out line by line while the incoming scene scans in. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: CRT scanline buzz with electronic sweep. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a retro synthwave arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_data_stream",
+     "name": "29. 数据流",
+     "name_en": "29. Data Stream",
+     "description": "动效转场：数据流 / Data Stream — streams of glowing data characters cascade across the outgoing scene like digital rain, the data columns wiping the frame and forming the incoming scene",
+     "description_en": "Data Stream - streams of glowing data characters cascade across the outgoing scene like digital rain, the data columns wiping the frame and forming the incoming scene",
+     "preview": "transition_data_stream.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "故障科技转场",
+      "Data Stream"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "glitch tech transition",
+      "Data Stream"
+     ],
+     "prompt": "A seamless Data Stream transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Streams of glowing data characters cascade across the outgoing scene like digital rain, the data columns wiping the frame and forming the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: rapid data stream blips with binary chatter. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an ambient techno code flow, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_hologram_fade",
+     "name": "30. 全息淡出",
+     "name_en": "30. Hologram Fade",
+     "description": "动效转场：全息淡出 / Hologram Fade — the outgoing scene shatters into holographic fragments that float in translucent layers, the fragments fading and recomposing as a hologram of the incoming scene",
+     "description_en": "Hologram Fade - the outgoing scene shatters into holographic fragments that float in translucent layers, the fragments fading and recomposing as a hologram of the incoming scene",
+     "preview": "transition_hologram_fade.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "故障科技转场",
+      "Hologram Fade"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "glitch tech transition",
+      "Hologram Fade"
+     ],
+     "prompt": "A seamless Hologram Fade transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene shatters into holographic fragments that float in translucent layers, the fragments fading and recomposing as a hologram of the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: holographic shimmer with ethereal digital tone. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a sci-fi ambient synth pad, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

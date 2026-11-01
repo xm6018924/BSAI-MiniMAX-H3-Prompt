@@ -1,0 +1,1259 @@
+{
+ "id": "style_transfer",
+ "subcategories": [
+  {
+   "id": "painting",
+   "templates": [
+    {
+     "id": "st_watercolor",
+     "name": "水彩画",
+     "name_en": "Watercolor",
+     "description": "透明水彩的柔和晕染与纸张肌理",
+     "description_en": "Soft washes and paper texture of transparent watercolour",
+     "preview": "st_watercolor.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "水彩",
+      "绘画",
+      "晕染",
+      "柔和",
+      "透明"
+     ],
+     "tags_en": [
+      "watercolour",
+      "painting",
+      "wash",
+      "soft",
+      "transparent"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为水彩风格：画面转为透明水彩画：色彩清透柔和、边缘自然晕染，笔触湿润、白色纸纹隐约可见，明暗以淡彩过渡，画面轻盈通透，充满水彩的灵动与诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为水彩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水彩风格下自然流畅地展现【/ACTION】。整段画面统一呈现水彩风格，艺术质感一致。\n\noverall_soundscape: 轻柔的环境声，纸张与水的细腻质感，安静清新\n\nnon_diegetic_music: 轻柔舒缓的钢琴曲，清新淡雅，水彩般的灵动"
+    },
+    {
+     "id": "st_oilclassic",
+     "name": "古典油画",
+     "name_en": "Renaissance Oil Painting",
+     "description": "文艺复兴古典油画的厚涂与光影",
+     "description_en": "The impasto and light of a Renaissance oil painting",
+     "preview": "st_oilclassic.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "油画",
+      "古典",
+      "文艺复兴",
+      "厚涂",
+      "光影"
+     ],
+     "tags_en": [
+      "oil painting",
+      "classical",
+      "Renaissance",
+      "impasto",
+      "light and shadow"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为古典油画风格：画面转为文艺复兴古典油画：浓郁的油彩厚涂质感、可见的笔触肌理，色彩浑厚饱和，明暗对比强烈而细腻，如古典大师之作。保留原图的主体结构、构图与比例，仅画面表现手法转为古典油画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在古典油画风格下自然流畅地展现【/ACTION】。整段画面统一呈现古典油画风格，艺术质感一致。\n\noverall_soundscape: 庄重典雅的环境声，油画展厅氛围，沉稳大气\n\nnon_diegetic_music: 庄重古典的管弦乐，典雅恢弘，古典油画气质"
+    },
+    {
+     "id": "st_impressionist",
+     "name": "印象派",
+     "name_en": "Impressionism",
+     "description": "印象派的松散笔触与光色流动",
+     "description_en": "The loose brushwork and shifting light of Impressionism",
+     "preview": "st_impressionist.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "印象派",
+      "油画",
+      "光色",
+      "笔触",
+      "朦胧"
+     ],
+     "tags_en": [
+      "Impressionist",
+      "oil painting",
+      "light and colour",
+      "brushwork",
+      "hazy"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为印象派风格：画面转为印象派绘画：松散的短促笔触、色彩点染交织，强调光线与色彩的变化，边缘朦胧柔和，画面充满光影的流动感与鲜活的生命力。保留原图的主体结构、构图与比例，仅画面表现手法转为印象派风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在印象派风格下自然流畅地展现【/ACTION】。整段画面统一呈现印象派风格，艺术质感一致。\n\noverall_soundscape: 轻盈的环境声，光影流动感，活泼生动\n\nnon_diegetic_music: 轻快灵动的配乐，节奏明快，光色跃动"
+    },
+    {
+     "id": "st_inkwash",
+     "name": "水墨画",
+     "name_en": "Ink Wash Painting",
+     "description": "中国传统水墨的墨色浓淡与留白",
+     "description_en": "The ink density and negative space of traditional Chinese ink painting",
+     "preview": "st_inkwash.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "水墨",
+      "国画",
+      "墨色",
+      "留白",
+      "意境"
+     ],
+     "tags_en": [
+      "ink wash",
+      "Chinese painting",
+      "ink tone",
+      "negative space",
+      "mood"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为水墨风格：画面转为中国传统水墨画：墨色浓淡干湿变化丰富，线条流畅有力，大量留白营造意境，色彩以墨色与淡彩为主，画面清雅空灵，充满东方诗韵。保留原图的主体结构、构图与比例，仅画面表现手法转为水墨风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水墨风格下自然流畅地展现【/ACTION】。整段画面统一呈现水墨风格，艺术质感一致。\n\noverall_soundscape: 静谧的环境声，宣纸与水墨的意境，空灵悠远\n\nnon_diegetic_music: 悠扬的古筝与箫笛，清雅空灵，东方意境"
+    },
+    {
+     "id": "st_sketch",
+     "name": "铅笔素描",
+     "name_en": "Pencil Sketch",
+     "description": "细腻的铅笔素描线条与明暗",
+     "description_en": "The fine line and shading of a detailed pencil drawing",
+     "preview": "st_sketch.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "素描",
+      "铅笔",
+      "线条",
+      "明暗",
+      "黑白"
+     ],
+     "tags_en": [
+      "sketch",
+      "pencil",
+      "line",
+      "shading",
+      "black and white"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为铅笔素描风格：画面转为细腻的铅笔素描：以黑白灰明暗关系塑造体积，铅笔线条清晰可见，排线自然，边缘利落，呈现手绘素描的专注与质感。保留原图的主体结构、构图与比例，仅画面表现手法转为铅笔素描风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在铅笔素描风格下自然流畅地展现【/ACTION】。整段画面统一呈现铅笔素描风格，艺术质感一致。\n\noverall_soundscape: 轻微的环境声，铅笔划纸的质感，安静专注\n\nnon_diegetic_music: 简洁静谧的配乐，克制内敛，素描般的纯粹"
+    },
+    {
+     "id": "st_pointillism",
+     "name": "点彩画",
+     "name_en": "Pointillism",
+     "description": "点彩派的细密色点技法",
+     "description_en": "The dense dots of Pointillism",
+     "preview": "st_pointillism.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "点彩",
+      "色点",
+      "印象派",
+      "细密",
+      "光感"
+     ],
+     "tags_en": [
+      "Pointillism",
+      "dots",
+      "Impressionist",
+      "fine",
+      "luminosity"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为点彩风格：画面转为点彩派绘画：画面由无数细密的纯色小点构成，色彩在高频点阵中交融，远看自然成形、近看颗粒分明，充满光学的趣味与斑斓的光感。保留原图的主体结构、构图与比例，仅画面表现手法转为点彩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在点彩风格下自然流畅地展现【/ACTION】。整段画面统一呈现点彩风格，艺术质感一致。\n\noverall_soundscape: 细碎轻盈的环境声，点彩的颗粒感，明快生动\n\nnon_diegetic_music: 轻快跳跃的配乐，节奏细碎，斑斓明快"
+    },
+    {
+     "id": "st_gouache",
+     "name": "水粉画",
+     "name_en": "Gouache",
+     "description": "不透明水粉的厚实明快色彩",
+     "description_en": "The thick, bright colour of opaque gouache",
+     "preview": "st_gouache.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "水粉",
+      "不透明",
+      "厚实",
+      "明快",
+      "绘画"
+     ],
+     "tags_en": [
+      "gouache",
+      "opaque",
+      "solid",
+      "bright and crisp",
+      "painting"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为水粉风格：画面转为不透明水粉画：色彩厚实明快、覆盖力强，笔触清晰可见，明暗关系明确，画面干净利落，充满水粉画的明朗与朝气。保留原图的主体结构、构图与比例，仅画面表现手法转为水粉风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在水粉风格下自然流畅地展现【/ACTION】。整段画面统一呈现水粉风格，艺术质感一致。\n\noverall_soundscape: 明快利落的环境声，色彩感强烈，清爽生动\n\nnon_diegetic_music: 明快活泼的配乐，节奏清爽，明朗朝气"
+    },
+    {
+     "id": "st_impasto",
+     "name": "厚涂油画",
+     "name_en": "Impasto Oil",
+     "description": "厚重肌理堆叠的厚涂油画",
+     "description_en": "Impasto oil painting with heavy layered texture",
+     "preview": "st_impasto.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "厚涂",
+      "油画",
+      "肌理",
+      "堆叠",
+      "粗犷"
+     ],
+     "tags_en": [
+      "impasto",
+      "oil painting",
+      "texture",
+      "layered",
+      "rough"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为厚涂油画风格：画面转为厚涂油画：颜料厚重堆叠、肌理粗犷立体，笔触明显有力，色彩浓郁饱满，光影在厚涂表面形成丰富层次，充满表现力与力量感。保留原图的主体结构、构图与比例，仅画面表现手法转为厚涂油画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在厚涂油画风格下自然流畅地展现【/ACTION】。整段画面统一呈现厚涂油画风格，艺术质感一致。\n\noverall_soundscape: 厚重饱满的环境声，油画颜料质感，粗犷有力\n\nnon_diegetic_music: 浑厚有力的配乐，节奏厚重，表现力强"
+    }
+   ]
+  },
+  {
+   "id": "traditional",
+   "templates": [
+    {
+     "id": "st_ukiyoe",
+     "name": "浮世绘",
+     "name_en": "Ukiyo-e",
+     "description": "日本浮世绘的平涂线条与木版韵味",
+     "description_en": "The flat colour, line work and woodblock feel of Japanese ukiyo-e",
+     "preview": "st_ukiyoe.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "浮世绘",
+      "日本",
+      "木版",
+      "平涂",
+      "传统"
+     ],
+     "tags_en": [
+      "ukiyo-e",
+      "Japanese",
+      "woodblock",
+      "flat colour",
+      "traditional"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为浮世绘风格：画面转为日本浮世绘版画：清晰有力的墨线勾勒、大面积平涂的鲜亮色彩、图案化的装饰纹样，纸张颗粒与木版印刷质感，充满江户时代的风情。保留原图的主体结构、构图与比例，仅画面表现手法转为浮世绘风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在浮世绘风格下自然流畅地展现【/ACTION】。整段画面统一呈现浮世绘风格，艺术质感一致。\n\noverall_soundscape: 传统典雅的环境声，木版印刷韵味，古典风情\n\nnon_diegetic_music: 古朴传统的配乐，三味线与太鼓，江户风情"
+    },
+    {
+     "id": "st_gongbi",
+     "name": "中国工笔画",
+     "name_en": "Chinese Gongbi",
+     "description": "工笔细描与淡彩设色的东方雅致",
+     "description_en": "The Eastern elegance of fine gongbi line work and light colour washes",
+     "preview": "st_gongbi.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "工笔",
+      "国画",
+      "细描",
+      "淡彩",
+      "雅致"
+     ],
+     "tags_en": [
+      "gongbi",
+      "Chinese painting",
+      "fine line",
+      "light colour",
+      "elegant"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为中国工笔风格：画面转为中国工笔画：线条精细工整、色彩淡雅设色，层层渲染、质感细腻，画面典雅精致，充满传统东方绘画的含蓄与考究。保留原图的主体结构、构图与比例，仅画面表现手法转为中国工笔风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在中国工笔风格下自然流畅地展现【/ACTION】。整段画面统一呈现中国工笔风格，艺术质感一致。\n\noverall_soundscape: 雅致静谧的环境声，绢本质感，含蓄清雅\n\nnon_diegetic_music: 雅致悠扬的古琴与琵琶，清雅含蓄，东方雅致"
+    },
+    {
+     "id": "st_woodcut",
+     "name": "木刻版画",
+     "name_en": "Woodcut Print",
+     "description": "木刻版画的粗犷刻痕与黑白",
+     "description_en": "The rough cuts and black-and-white of a woodcut print",
+     "preview": "st_woodcut.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "木刻",
+      "版画",
+      "刻痕",
+      "黑白",
+      "粗犷"
+     ],
+     "tags_en": [
+      "woodcut",
+      "printmaking",
+      "carved marks",
+      "black and white",
+      "rough"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为木刻版画风格：画面转为木刻版画：粗犷有力的刻痕线条、鲜明的黑白对比、纸张的印刷纹理，造型概括而有张力，充满版画艺术的质朴与力量。保留原图的主体结构、构图与比例，仅画面表现手法转为木刻版画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在木刻版画风格下自然流畅地展现【/ACTION】。整段画面统一呈现木刻版画风格，艺术质感一致。\n\noverall_soundscape: 质朴的环境声，木刻刀痕质感，粗犷有力\n\nnon_diegetic_music: 质朴有力的配乐，节奏分明，版画张力"
+    },
+    {
+     "id": "st_papercut",
+     "name": "剪纸艺术",
+     "name_en": "Paper Cut Art",
+     "description": "民间剪纸的镂空与平面装饰",
+     "description_en": "The cut-outs and flat decoration of folk paper-cutting",
+     "preview": "st_papercut.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "剪纸",
+      "镂空",
+      "民间",
+      "平面",
+      "装饰"
+     ],
+     "tags_en": [
+      "paper-cutting",
+      "cut-out",
+      "folk",
+      "flat",
+      "decorative"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为剪纸风格：画面转为民间剪纸艺术：平面化的造型、镂空与实体的对比、鲜艳的大色块与装饰纹样，边缘如剪纸般利落，充满民间艺术的喜庆与巧思。保留原图的主体结构、构图与比例，仅画面表现手法转为剪纸风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在剪纸风格下自然流畅地展现【/ACTION】。整段画面统一呈现剪纸风格，艺术质感一致。\n\noverall_soundscape: 轻快喜庆的环境声，剪纸质感，民间气息\n\nnon_diegetic_music: 喜庆明快的民间配乐，热闹活泼，剪纸风情"
+    },
+    {
+     "id": "st_stainedglass",
+     "name": "彩色玻璃",
+     "name_en": "Stained Glass",
+     "description": "教堂彩色玻璃的光影透亮",
+     "description_en": "The luminous light through stained church glass",
+     "preview": "st_stainedglass.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "彩色玻璃",
+      "教堂",
+      "透光",
+      "镶嵌",
+      "光感"
+     ],
+     "tags_en": [
+      "stained glass",
+      "church",
+      "translucent",
+      "inlay",
+      "luminosity"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为彩色玻璃风格：画面转为教堂彩色玻璃镶嵌画：画面由大小色块的玻璃片镶嵌而成，深色铅条勾勒轮廓，光线透过玻璃形成明亮通透的彩色辉光，庄严而绚丽。保留原图的主体结构、构图与比例，仅画面表现手法转为彩色玻璃风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在彩色玻璃风格下自然流畅地展现【/ACTION】。整段画面统一呈现彩色玻璃风格，艺术质感一致。\n\noverall_soundscape: 庄严空灵的环境声，教堂光影氛围，神圣通透\n\nnon_diegetic_music: 庄严神圣的管风琴与合唱，空灵圣洁，光透绚丽"
+    },
+    {
+     "id": "st_artnouveau",
+     "name": "新艺术运动",
+     "name_en": "Art Nouveau",
+     "description": "新艺术运动的流畅曲线与装饰",
+     "description_en": "The flowing curves and ornament of Art Nouveau",
+     "preview": "st_artnouveau.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "新艺术",
+      "曲线",
+      "装饰",
+      "花卉",
+      "优雅"
+     ],
+     "tags_en": [
+      "Art Nouveau",
+      "curves",
+      "decorative",
+      "floral",
+      "elegant"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为新艺术运动风格：画面转为新艺术运动风格：流畅蜿蜒的植物藤蔓曲线、精致优雅的装饰纹样、柔和的自然色彩，线条如藤蔓般生长蔓延，充满装饰艺术的优雅。保留原图的主体结构、构图与比例，仅画面表现手法转为新艺术运动风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在新艺术运动风格下自然流畅地展现【/ACTION】。整段画面统一呈现新艺术运动风格，艺术质感一致。\n\noverall_soundscape: 优雅舒缓的环境声，自然曲线感，精致雅致\n\nnon_diegetic_music: 优雅浪漫的配乐，旋律流畅，新艺术风情"
+    },
+    {
+     "id": "st_cubism",
+     "name": "立体主义",
+     "name_en": "Cubism",
+     "description": "立体主义的多重视角几何解构",
+     "description_en": "The multiple viewpoints and geometric deconstruction of Cubism",
+     "preview": "st_cubism.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "立体主义",
+      "几何",
+      "解构",
+      "多视角",
+      "现代"
+     ],
+     "tags_en": [
+      "Cubism",
+      "geometric",
+      "deconstruction",
+      "multiple views",
+      "modern"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为立体主义风格：画面转为立体主义绘画：形体被分解为几何块面，从多个视角同时呈现，线条分明、色彩克制而协调，画面充满现代艺术的理性与张力。保留原图的主体结构、构图与比例，仅画面表现手法转为立体主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在立体主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现立体主义风格，艺术质感一致。\n\noverall_soundscape: 现代感的环境声，几何节奏，理性冷峻\n\nnon_diegetic_music: 现代简约的配乐，节奏几何化，立体主义气息"
+    },
+    {
+     "id": "st_popart",
+     "name": "波普艺术",
+     "name_en": "Pop Art",
+     "description": "波普的鲜艳平涂与网点",
+     "description_en": "The bright flat colour and halftone dots of Pop Art",
+     "preview": "st_popart.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "波普",
+      "鲜艳",
+      "平涂",
+      "网点",
+      "现代"
+     ],
+     "tags_en": [
+      "Pop Art",
+      "vivid",
+      "flat colour",
+      "halftone",
+      "modern"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为波普风格：画面转为波普艺术：大胆鲜艳的平涂色块、粗重清晰的黑色轮廓、半色调网点肌理，画面明快抢眼、带有强烈的流行与广告意味。保留原图的主体结构、构图与比例，仅画面表现手法转为波普风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在波普风格下自然流畅地展现【/ACTION】。整段画面统一呈现波普风格，艺术质感一致。\n\noverall_soundscape: 明快响亮的环境声，流行色彩感，抢眼热烈\n\nnon_diegetic_music: 明快热烈的流行配乐，节奏强劲，波普气息"
+    }
+   ]
+  },
+  {
+   "id": "anime",
+   "templates": [
+    {
+     "id": "st_anime",
+     "name": "日式动漫",
+     "name_en": "Anime",
+     "description": "经典日式动漫的赛璐珞上色与线条",
+     "description_en": "The cel shading and line work of classic Japanese animation",
+     "preview": "st_anime.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动漫",
+      "日式",
+      "赛璐珞",
+      "上色",
+      "动画"
+     ],
+     "tags_en": [
+      "anime",
+      "Japanese style",
+      "cel",
+      "coloring",
+      "animation"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为日式动漫风格：画面转为经典日式动漫：清晰的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区，色彩鲜艳而统一，充满日本动画的经典质感。保留原图的主体结构、构图与比例，仅画面表现手法转为日式动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在日式动漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现日式动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的环境声，动画质感，活泼清新\n\nnon_diegetic_music: 轻快活泼的日系配乐，节奏明快，动漫气息"
+    },
+    {
+     "id": "st_anime90",
+     "name": "90年代动漫",
+     "name_en": "90s Anime",
+     "description": "90年代复古动漫的胶片质感",
+     "description_en": "The film texture of 1990s retro anime",
+     "preview": "st_anime90.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "动漫",
+      "90年代",
+      "复古",
+      "胶片",
+      "怀旧"
+     ],
+     "tags_en": [
+      "anime",
+      "1990s",
+      "retro",
+      "film",
+      "nostalgic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为90年代动漫风格：画面转为90年代复古动漫：略带颗粒的胶片质感、柔和偏暖的色彩、传统的赛璐珞上色与手绘线条，充满旧时代动画的怀旧温度。保留原图的主体结构、构图与比例，仅画面表现手法转为90年代动漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在90年代动漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现90年代动漫风格，艺术质感一致。\n\noverall_soundscape: 怀旧的环境声，旧动画质感，温暖怀旧\n\nnon_diegetic_music: 怀旧复古的合成器配乐，90年代感，温暖怀念"
+    },
+    {
+     "id": "st_ghibli",
+     "name": "吉卜力风格",
+     "name_en": "Studio Ghibli",
+     "description": "吉卜力式的柔和田园治愈画风",
+     "description_en": "A soft, pastoral, healing Ghibli-style look",
+     "preview": "st_ghibli.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "吉卜力",
+      "宫崎骏",
+      "治愈",
+      "柔和",
+      "田园"
+     ],
+     "tags_en": [
+      "Ghibli",
+      "Miyazaki",
+      "healing",
+      "soft",
+      "pastoral"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为吉卜力风格：画面转为吉卜力式动画：柔和温暖的淡雅色彩、细腻丰富的自然笔触、圆润可爱的造型、通透的空气感与治愈的田园气息，充满宫崎骏式的温柔与想象。保留原图的主体结构、构图与比例，仅画面表现手法转为吉卜力风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在吉卜力风格下自然流畅地展现【/ACTION】。整段画面统一呈现吉卜力风格，艺术质感一致。\n\noverall_soundscape: 温暖治愈的环境声，自然气息，柔和温馨\n\nnon_diegetic_music: 温暖治愈的配乐，旋律温柔，田园诗意"
+    },
+    {
+     "id": "st_shinkai",
+     "name": "新海诚风格",
+     "name_en": "Makoto Shinkai",
+     "description": "新海诚式的高光通透唯美画面",
+     "description_en": "The luminous, translucent beauty of a Makoto Shinkai look",
+     "preview": "st_shinkai.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "新海诚",
+      "唯美",
+      "通透",
+      "高光",
+      "光影"
+     ],
+     "tags_en": [
+      "Makoto Shinkai",
+      "beautiful",
+      "clear",
+      "highlight",
+      "light and shadow"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为新海诚风格：画面转为新海诚式动画：极致通透的光影、明亮发光的天空与高光、细腻丰富的色彩层次、精致的细节刻画，画面唯美梦幻，充满空灵的诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为新海诚风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在新海诚风格下自然流畅地展现【/ACTION】。整段画面统一呈现新海诚风格，艺术质感一致。\n\noverall_soundscape: 通透空灵的环境声，光影流动感，唯美细腻\n\nnon_diegetic_music: 空灵唯美的配乐，旋律悠扬，诗意通透"
+    },
+    {
+     "id": "st_manhua",
+     "name": "国漫风格",
+     "name_en": "Chinese Manhua",
+     "description": "现代国漫的精致线稿与国风色彩",
+     "description_en": "Refined line work and Chinese-style colour of modern donghua",
+     "preview": "st_manhua.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "国漫",
+      "国风",
+      "精致",
+      "线稿",
+      "动画"
+     ],
+     "tags_en": [
+      "donghua",
+      "Chinese aesthetic",
+      "delicate",
+      "line art",
+      "animation"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为国漫风格：画面转为现代国漫风格：精致流畅的线稿、考究的国风色彩与配饰细节、柔和的光影渲染，融合传统美学与现代动画的精致质感。保留原图的主体结构、构图与比例，仅画面表现手法转为国漫风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在国漫风格下自然流畅地展现【/ACTION】。整段画面统一呈现国漫风格，艺术质感一致。\n\noverall_soundscape: 精致的环境声，国风韵味，细腻雅致\n\nnon_diegetic_music: 国风悠扬的配乐，融合古韵与现代，精致大气"
+    },
+    {
+     "id": "st_comic",
+     "name": "美式漫画",
+     "name_en": "Western Comic",
+     "description": "美式漫画的粗线描边与网点",
+     "description_en": "The heavy outlines and halftone dots of American comics",
+     "preview": "st_comic.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "美漫",
+      "漫画",
+      "描边",
+      "网点",
+      "美式"
+     ],
+     "tags_en": [
+      "American comic",
+      "comic",
+      "outline",
+      "halftone",
+      "American"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为美式漫画风格：画面转为美式漫画：粗重有力的黑色描边、鲜明的高饱和平涂色彩、夸张的造型与动态、半色调网点肌理，充满美式漫画的冲击力与表现力。保留原图的主体结构、构图与比例，仅画面表现手法转为美式漫画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在美式漫画风格下自然流畅地展现【/ACTION】。整段画面统一呈现美式漫画风格，艺术质感一致。\n\noverall_soundscape: 有力明快的环境声，漫画质感，冲击力强\n\nnon_diegetic_music: 动感有力的配乐，节奏强劲，美漫张力"
+    },
+    {
+     "id": "st_childrenbook",
+     "name": "童书插画",
+     "name_en": "Children's Book Illustration",
+     "description": "温暖可爱的童书水彩插画",
+     "description_en": "Warm, cute watercolour illustration for children's books",
+     "preview": "st_childrenbook.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "童书",
+      "插画",
+      "可爱",
+      "水彩",
+      "温暖"
+     ],
+     "tags_en": [
+      "children's book",
+      "illustration",
+      "cute",
+      "watercolour",
+      "warm"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为童书插画风格：画面转为温暖可爱的童书插画：柔和的水彩与蜡笔质感、圆润可爱的造型、明快的色彩、细腻的纸张纹理，充满童真与治愈的温暖。保留原图的主体结构、构图与比例，仅画面表现手法转为童书插画风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在童书插画风格下自然流畅地展现【/ACTION】。整段画面统一呈现童书插画风格，艺术质感一致。\n\noverall_soundscape: 温柔可爱的环境声，童书质感，温暖治愈\n\nnon_diegetic_music: 轻快可爱的配乐，旋律童真，温暖俏皮"
+    },
+    {
+     "id": "st_conceptart",
+     "name": "概念艺术",
+     "name_en": "Concept Art",
+     "description": "影视概念设定的绘画质感",
+     "description_en": "The painterly quality of film concept design",
+     "preview": "st_conceptart.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "概念艺术",
+      "设定",
+      "绘画",
+      "大气",
+      "电影感"
+     ],
+     "tags_en": [
+      "concept art",
+      "design",
+      "painting",
+      "atmosphere",
+      "cinematic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为概念艺术风格：画面转为影视概念艺术：大气磅礴的构图、戏剧性的光影、细腻的笔触与纹理、电影感的色彩氛围，充满艺术设定的想象空间与质感。保留原图的主体结构、构图与比例，仅画面表现手法转为概念艺术风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在概念艺术风格下自然流畅地展现【/ACTION】。整段画面统一呈现概念艺术风格，艺术质感一致。\n\noverall_soundscape: 大气磅礴的环境声，概念设定氛围，恢弘深远\n\nnon_diegetic_music: 宏大电影感的配乐，气势恢弘，概念艺术气质"
+    }
+   ]
+  },
+  {
+   "id": "digital3d",
+   "templates": [
+    {
+     "id": "st_pixar",
+     "name": "皮克斯3D",
+     "name_en": "Pixar 3D Render",
+     "description": "皮克斯风格的3D渲染质感",
+     "description_en": "A Pixar-style 3D render finish",
+     "preview": "st_pixar.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "皮克斯",
+      "3D",
+      "渲染",
+      "动画",
+      "可爱"
+     ],
+     "tags_en": [
+      "Pixar",
+      "3D",
+      "render",
+      "animation",
+      "cute"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为皮克斯3D风格：画面转为皮克斯风格3D渲染：圆润饱满的立体造型、柔和细腻的材质、温暖明亮的全局光照、丰富的细节与生动的表情，充满顶级动画电影的精致。保留原图的主体结构、构图与比例，仅画面表现手法转为皮克斯3D风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在皮克斯3D风格下自然流畅地展现【/ACTION】。整段画面统一呈现皮克斯3D风格，艺术质感一致。\n\noverall_soundscape: 温暖细腻的环境声，3D渲染质感，精致生动\n\nnon_diegetic_music: 温暖动人的动画配乐，旋律亲切，皮克斯气质"
+    },
+    {
+     "id": "st_lowpoly",
+     "name": "低多边形",
+     "name_en": "Low Poly",
+     "description": "低多边形几何面的现代简约",
+     "description_en": "The clean modern minimalism of low-poly geometry",
+     "preview": "st_lowpoly.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "低多边形",
+      "几何",
+      "简约",
+      "3D",
+      "现代"
+     ],
+     "tags_en": [
+      "low poly",
+      "geometric",
+      "minimal",
+      "3D",
+      "modern"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为低多边形风格：画面转为低多边形3D：形体由清晰的几何多边形面构成，平面着色、棱角分明，色彩明快简洁，充满现代极简与游戏艺术的趣味。保留原图的主体结构、构图与比例，仅画面表现手法转为低多边形风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在低多边形风格下自然流畅地展现【/ACTION】。整段画面统一呈现低多边形风格，艺术质感一致。\n\noverall_soundscape: 轻快简约的环境声，几何质感，现代利落\n\nnon_diegetic_music: 轻快简约的电子配乐，节奏几何，现代极简"
+    },
+    {
+     "id": "st_pixel",
+     "name": "像素艺术",
+     "name_en": "Pixel Art",
+     "description": "复古16位像素游戏风格",
+     "description_en": "Retro 16-bit pixel game style",
+     "preview": "st_pixel.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "像素",
+      "16位",
+      "复古游戏",
+      "马赛克",
+      "怀旧"
+     ],
+     "tags_en": [
+      "pixel",
+      "16-bit",
+      "retro game",
+      "mosaic",
+      "nostalgic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为像素风格：画面转为16位像素艺术：画面由可见的像素方块构成，色彩鲜明而克制、边缘整齐、充满复古电子游戏的怀旧质感。保留原图的主体结构、构图与比例，仅画面表现手法转为像素风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在像素风格下自然流畅地展现【/ACTION】。整段画面统一呈现像素风格，艺术质感一致。\n\noverall_soundscape: 复古的环境声，电子游戏质感，怀旧有趣\n\nnon_diegetic_music: 8bit复古电子配乐，芯片音色，游戏怀旧"
+    },
+    {
+     "id": "st_cyberpunk",
+     "name": "赛博朋克",
+     "name_en": "Cyberpunk",
+     "description": "赛博朋克的霓虹与未来科技",
+     "description_en": "Cyberpunk neon and future technology",
+     "preview": "st_cyberpunk.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "赛博朋克",
+      "霓虹",
+      "未来",
+      "科技",
+      "夜"
+     ],
+     "tags_en": [
+      "cyberpunk",
+      "neon",
+      "future",
+      "technology",
+      "night"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为赛博朋克风格：画面转为赛博朋克风格：浓烈的霓虹光效（品红、青色、电光蓝）、潮湿反光的表面、高科技与颓废并存的未来都市氛围、数字故障般的细节，充满未来科幻张力。保留原图的主体结构、构图与比例，仅画面表现手法转为赛博朋克风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在赛博朋克风格下自然流畅地展现【/ACTION】。整段画面统一呈现赛博朋克风格，艺术质感一致。\n\noverall_soundscape: 电子的环境声，霓虹电流与科技噪音，未来感强\n\nnon_diegetic_music: 合成器为主的电子配乐，节奏强烈，赛博未来感"
+    },
+    {
+     "id": "st_vaporwave",
+     "name": "蒸汽波",
+     "name_en": "Vaporwave",
+     "description": "蒸汽波的迷幻复古与故障美学",
+     "description_en": "Vaporwave psychedelic retro and glitch aesthetics",
+     "preview": "st_vaporwave.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "蒸汽波",
+      "迷幻",
+      "复古",
+      "故障",
+      "霓虹"
+     ],
+     "tags_en": [
+      "vaporwave",
+      "psychedelic",
+      "retro",
+      "glitch",
+      "neon"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为蒸汽波风格：画面转为蒸汽波风格：柔和的粉紫青色霓虹渐变、复古的网格与雕塑元素、轻微的扫描线与故障美学、梦幻迷离的复古未来感。保留原图的主体结构、构图与比例，仅画面表现手法转为蒸汽波风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在蒸汽波风格下自然流畅地展现【/ACTION】。整段画面统一呈现蒸汽波风格，艺术质感一致。\n\noverall_soundscape: 迷幻的环境声，复古电子质感，梦幻缥缈\n\nnon_diegetic_music: 慵懒迷幻的复古电子乐，缓拍，蒸汽波氛围"
+    },
+    {
+     "id": "st_flat",
+     "name": "扁平设计",
+     "name_en": "Flat Design",
+     "description": "现代扁平化的简洁色块",
+     "description_en": "Clean modern flat design with simple colour blocks",
+     "preview": "st_flat.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "扁平",
+      "极简",
+      "色块",
+      "现代",
+      "设计"
+     ],
+     "tags_en": [
+      "flat design",
+      "minimal",
+      "colour blocks",
+      "modern",
+      "design"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为扁平设计风格：画面转为现代扁平设计：去除立体与纹理，以大块平涂色块与简洁几何造型呈现，色彩明快协调、构图精简，充满现代平面设计的秩序与简洁。保留原图的主体结构、构图与比例，仅画面表现手法转为扁平设计风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在扁平设计风格下自然流畅地展现【/ACTION】。整段画面统一呈现扁平设计风格，艺术质感一致。\n\noverall_soundscape: 简洁利落的环境声，平面质感，现代秩序\n\nnon_diegetic_music: 简洁现代的电子配乐，节奏干净，扁平设计感"
+    },
+    {
+     "id": "st_clay",
+     "name": "粘土定格",
+     "name_en": "Claymation",
+     "description": "粘土动画的柔软手工质感",
+     "description_en": "The soft handmade texture of claymation",
+     "preview": "st_clay.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "粘土",
+      "定格",
+      "手工",
+      "柔软",
+      "可爱"
+     ],
+     "tags_en": [
+      "clay",
+      "freeze",
+      "handmade",
+      "soft",
+      "cute"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为粘土定格风格：画面转为粘土定格动画：柔软可塑的粘土材质、可见的手工捏制痕迹与指纹、圆润的造型、质朴明快的色彩，充满手工动画的温暖与童趣。保留原图的主体结构、构图与比例，仅画面表现手法转为粘土定格风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在粘土定格风格下自然流畅地展现【/ACTION】。整段画面统一呈现粘土定格风格，艺术质感一致。\n\noverall_soundscape: 温暖的环境声，粘土质感，手工童趣\n\nnon_diegetic_music: 轻快俏皮的配乐，节奏活泼，粘土动画趣味"
+    },
+    {
+     "id": "st_origami",
+     "name": "折纸艺术",
+     "name_en": "Paper Origami",
+     "description": "折纸的棱面与纸张光影",
+     "description_en": "The facets and paper light of origami",
+     "preview": "st_origami.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "折纸",
+      "纸张",
+      "棱面",
+      "手工",
+      "艺术"
+     ],
+     "tags_en": [
+      "origami",
+      "paper",
+      "facets",
+      "handmade",
+      "art"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为折纸风格：画面转为折纸艺术：形体由纸的折叠棱面构成，纸的纹理与折痕清晰可见，光线在棱面上形成细腻的明暗，色彩以纸色为主，充满手工折纸的精致与趣味。保留原图的主体结构、构图与比例，仅画面表现手法转为折纸风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在折纸风格下自然流畅地展现【/ACTION】。整段画面统一呈现折纸风格，艺术质感一致。\n\noverall_soundscape: 轻巧的环境声，纸张折叠质感，安静精致\n\nnon_diegetic_music: 轻巧灵动的配乐，旋律精致，折纸趣味"
+    }
+   ]
+  },
+  {
+   "id": "style_photo_craft",
+   "templates": [
+    {
+     "id": "st_doubleexp",
+     "name": "双重曝光",
+     "name_en": "Double Exposure",
+     "description": "双重曝光的梦幻叠影",
+     "description_en": "Dreamy double-exposure overlays",
+     "preview": "st_doubleexp.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "双重曝光",
+      "叠影",
+      "梦幻",
+      "超现实",
+      "摄影"
+     ],
+     "tags_en": [
+      "double exposure",
+      "overlay",
+      "dreamlike",
+      "surreal",
+      "photography"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为双重曝光风格：画面转为双重曝光摄影：主体与另一景物以半透明方式叠合，层次交融、影影绰绰，色彩柔和渗透，充满梦幻与超现实的摄影艺术感。保留原图的主体结构、构图与比例，仅画面表现手法转为双重曝光风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在双重曝光风格下自然流畅地展现【/ACTION】。整段画面统一呈现双重曝光风格，艺术质感一致。\n\noverall_soundscape: 虚幻的环境声，叠影氛围，缥缈梦幻\n\nnon_diegetic_music: 梦幻空灵的配乐，缥缈悠远，超现实感"
+    },
+    {
+     "id": "st_longexp",
+     "name": "长曝光",
+     "name_en": "Long Exposure",
+     "description": "长曝光的流动光轨",
+     "description_en": "The flowing light trails of a long exposure",
+     "preview": "st_longexp.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "长曝光",
+      "光轨",
+      "流动",
+      "时间",
+      "诗意"
+     ],
+     "tags_en": [
+      "long exposure",
+      "light trails",
+      "flowing",
+      "time",
+      "poetic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为长曝光风格：画面转为长曝光摄影：运动元素化为柔滑的光轨与丝滑拖影，静止主体保持清晰，色彩清淡柔和，充满时间流动的诗意。保留原图的主体结构、构图与比例，仅画面表现手法转为长曝光风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在长曝光风格下自然流畅地展现【/ACTION】。整段画面统一呈现长曝光风格，艺术质感一致。\n\noverall_soundscape: 悠长的环境声，时间流动感，静谧深远\n\nnon_diegetic_music: 悠远绵长的氛围音乐，空灵诗意，时间感浓"
+    },
+    {
+     "id": "st_tiltshift",
+     "name": "移轴微缩",
+     "name_en": "Tilt-Shift",
+     "description": "移轴镜头的微缩世界",
+     "description_en": "The miniature world of a tilt-shift lens",
+     "preview": "st_tiltshift.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "移轴",
+      "微缩",
+      "玩具",
+      "景深",
+      "趣味"
+     ],
+     "tags_en": [
+      "tilt-shift",
+      "miniature",
+      "toy",
+      "depth of field",
+      "playful"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为移轴微缩风格：画面转为移轴微缩摄影：景深极浅、上下两端柔和虚化，整体呈微缩模型感，色彩鲜明通透，画面精致有趣，如精致的玩具世界。保留原图的主体结构、构图与比例，仅画面表现手法转为移轴微缩风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在移轴微缩风格下自然流畅地展现【/ACTION】。整段画面统一呈现移轴微缩风格，艺术质感一致。\n\noverall_soundscape: 轻微趣味的环境声，微缩细节感，俏皮生动\n\nnon_diegetic_music: 轻快俏皮的配乐，节奏活泼，趣味盎然"
+    },
+    {
+     "id": "st_polaroid",
+     "name": "拍立得",
+     "name_en": "Polaroid",
+     "description": "拍立得的怀旧即时成像",
+     "description_en": "Nostalgic Polaroid instant imaging",
+     "preview": "st_polaroid.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "拍立得",
+      "即时成像",
+      "怀旧",
+      "复古",
+      "随性"
+     ],
+     "tags_en": [
+      "Polaroid",
+      "instant film",
+      "nostalgic",
+      "retro",
+      "casual"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为拍立得风格：画面转为拍立得即时成像：色彩微褪、对比柔和、高光泛白、四周带柔和框影，画面怀旧随性，充满即时成像的生活质感。保留原图的主体结构、构图与比例，仅画面表现手法转为拍立得风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在拍立得风格下自然流畅地展现【/ACTION】。整段画面统一呈现拍立得风格，艺术质感一致。\n\noverall_soundscape: 怀旧的环境声，即时成像氛围，随性温暖\n\nnon_diegetic_music: 轻快怀旧的配乐，随性惬意，复古生活感"
+    },
+    {
+     "id": "st_infrared",
+     "name": "红外摄影",
+     "name_en": "Infrared",
+     "description": "红外摄影的银白发光",
+     "description_en": "The glowing silver-white of infrared photography",
+     "preview": "st_infrared.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "红外",
+      "发光",
+      "银白",
+      "超现实",
+      "梦幻"
+     ],
+     "tags_en": [
+      "infrared",
+      "glowing",
+      "silver white",
+      "surreal",
+      "dreamlike"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为红外风格：画面转为红外摄影：植被与高光呈明亮银白色发光，天空与阴影深灰近黑，画面梦幻奇异、脱离现实，充满超自然的静谧。保留原图的主体结构、构图与比例，仅画面表现手法转为红外风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在红外风格下自然流畅地展现【/ACTION】。整段画面统一呈现红外风格，艺术质感一致。\n\noverall_soundscape: 空灵的环境声，静谧奇异，脱离现实\n\nnon_diegetic_music: 空灵神秘的氛围音乐，梦幻悠远，超现实感"
+    },
+    {
+     "id": "st_bw",
+     "name": "黑白摄影",
+     "name_en": "Black & White Photography",
+     "description": "经典黑白摄影的纯粹光影",
+     "description_en": "The pure light and shadow of classic black-and-white photography",
+     "preview": "st_bw.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "黑白",
+      "摄影",
+      "光影",
+      "经典",
+      "纯粹"
+     ],
+     "tags_en": [
+      "black and white",
+      "photography",
+      "light and shadow",
+      "classic",
+      "pure"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为黑白摄影风格：画面转为经典黑白摄影：去除全部色彩，以黑白灰阶塑造光影与质感，对比与层次细腻丰富，画面纯粹而有力量，充满摄影艺术的经典质感。保留原图的主体结构、构图与比例，仅画面表现手法转为黑白摄影风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在黑白摄影风格下自然流畅地展现【/ACTION】。整段画面统一呈现黑白摄影风格，艺术质感一致。\n\noverall_soundscape: 纯粹的环境声，黑白光影氛围，安静有力\n\nnon_diegetic_music: 简洁克制的配乐，旋律沉静，黑白摄影气质"
+    },
+    {
+     "id": "st_surreal",
+     "name": "超现实主义",
+     "name_en": "Surrealism",
+     "description": "超现实的梦境与悖论",
+     "description_en": "Surreal dreams and paradoxes",
+     "preview": "st_surreal.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "超现实",
+      "梦境",
+      "悖论",
+      "奇幻",
+      "想象"
+     ],
+     "tags_en": [
+      "surreal",
+      "dream",
+      "paradox",
+      "fantasy",
+      "imagination"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为超现实主义风格：画面转为超现实主义艺术：梦境般的奇异组合、违背常理的透视与比例、细腻真实的质感与荒诞的意象并存，充满想象力与哲思。保留原图的主体结构、构图与比例，仅画面表现手法转为超现实主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在超现实主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现超现实主义风格，艺术质感一致。\n\noverall_soundscape: 奇幻的环境声，梦境氛围，荒诞迷离\n\nnon_diegetic_music: 奇幻迷离的配乐，旋律诡谲，超现实氛围"
+    },
+    {
+     "id": "st_minimal",
+     "name": "极简主义",
+     "name_en": "Minimalism",
+     "description": "极简主义的大面积留白",
+     "description_en": "Minimalism with generous negative space",
+     "preview": "st_minimal.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "极简",
+      "留白",
+      "简约",
+      "克制",
+      "现代"
+     ],
+     "tags_en": [
+      "minimal",
+      "negative space",
+      "minimal",
+      "restraint",
+      "modern"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, structure, composition and motion of the reference image — only the visual art style is converted.\n\nintegrated_multimodal_description:  [镜头1]【0-3秒】画面由输入图像平滑转化为极简主义风格：画面转为极简主义艺术：极度简化的造型、大面积留白与负空间、克制的色彩与线条，画面安静纯粹，充满现代极简的秩序与禅意。保留原图的主体结构、构图与比例，仅画面表现手法转为极简主义风格。[镜头2]【3-6秒】主体动作延续：【ACTION】保持输入图像中主体的运动状态，在极简主义风格下自然流畅地展现【/ACTION】。整段画面统一呈现极简主义风格，艺术质感一致。\n\noverall_soundscape: 安静纯净的环境声，留白感强，静谧克制\n\nnon_diegetic_music: 极简舒缓的配乐，音符稀疏，留白禅意"
+    }
+   ]
+  },
+  {
+   "id": "real_anime_cross",
+   "templates": [
+    {
+     "id": "st_anime_to_real_i2v",
+     "name": "动漫转真人（单图I2V）",
+     "name_en": "Anime to Real (Single Image I2V)",
+     "description": "单张动漫图片直接转化为真人写实视频，同一个人逐步真人化并自然动起来。【图生视频I2V模式，上传一张动漫图即可】。注：I2V模式会保持首帧风格，动漫转真人效果取决于原图风格化程度，建议先用风格较写实的动漫图测试。",
+     "description_en": "A single anime image converted directly into a photorealistic live-action video, the same person gradually becoming real and moving naturally. [I2V image-to-video mode, just upload one anime image] Note: I2V keeps the style of the first frame, so the anime-to-real result depends on how stylized the source is; test with a more realistic anime image first.",
+     "preview": "st_anime_to_real_i2v.webp",
+     "generation_mode": "Image to Video (图生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "风格迁移",
+      "动漫转真人",
+      "写实化",
+      "photorealistic"
+     ],
+     "tags_en": [
+      "style transfer",
+      "anime to real",
+      "photoreal conversion",
+      "photorealistic"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced — the first frame is the EXACT anime-style image from <Picture 1>@图1.\n\nCRITICAL FINAL-STATE REQUIREMENT — PHOTOREALITY IS THE DESTINATION:\nThe video MUST end as a fully photorealistic live-action human being with ZERO anime residue. By the final frame there must be NO cel-shading, NO hard ink outlines, NO flat high-saturation paint colors, NO cartoon-proportioned eyes or oversized head, NO plastic-smooth skin, NO comic-style white highlight streaks. Every pixel must read as genuine photographic footage of a real person shot by a real camera in a real environment. The character's identity, hair color, eye color, outfit, pose, and composition remain EXACTLY as in <Picture 1>@图1 — only the rendering style becomes 100% photorealistic.\n\nOUTFIT ANCHOR — ABSOLUTE (non-negotiable):\nThe character's clothing must be a PIXEL-FOR-PIXEL copy of <Picture 1>@图1's actual outfit — same garments, same colors, same fabric patterns, same accessories, same layering, same silhouette, same overall look. Copy the outfit exactly as it appears in <Picture 1>@图1.\nSTRICTLY FORBIDDEN: do NOT dress the character in any school uniform, sailor suit, pleated skirt, blazer, white dress shirt, necktie, gym uniform, cardigan, or any student-outfit / academy trope — UNLESS <Picture 1>@图1 itself actually shows such an outfit. If <Picture 1>@图1 does not show a school uniform, the character MUST wear exactly <Picture 1>@图1's real clothing and nothing else.\n\nintegrated_multimodal_description:  [Shot 1] [0-4s] The frame begins with the EXACT anime-style image from <Picture 1>@图1. A seamless photorealistic transformation spreads from the edges inward toward the center, converting the anime rendering into genuine photographic realism while preserving the character's identity, hair color, eye color, outfit, pose, and composition exactly. Skin converts from flat anime coloring to real human skin: visible pore texture, fine vellus hair, natural skin grain, subsurface light scattering, and a healthy lifelike blood flush under natural lighting — never plastic-smooth or cel-shaded. The eyes convert to real human eyes: a detailed iris with natural radial fibers, realistic sclera with faint blood vessels, natural eyelashes with individual lash lines, a subtle upper-lid fold and a small tear-duct highlight — while the eye color and expression stay exactly as in <Picture 1>@图1. The nose gains a real bone-and-cartilage structure with natural shadows under the bridge and at the tip. The lips gain fine lip texture, natural blood color and a faint moist highlight. The hair converts from a stylized mass to real hair: individual strands, natural root-to-tip color variation, flyaway baby hairs and soft real-world sheen — with hair color and style staying exactly as in <Picture 1>@图1. Clothing converts to real fabric with visible weave, natural wrinkles and physical drape under gravity; the outfit stays exactly as in <Picture 1>@图1. The background converts from flat anime art to a real environment with genuine depth, atmospheric perspective and physically correct lighting, matching <Picture 1>@图1's layout. [Shot 2] [4-8s] The character is now a completely real, living human being moving naturally inside the real environment from <Picture 1>@图1. Hair sways softly in a light breeze with strands separating realistically. The character blinks with real eyelids and lashes, makes a slight head turn, and breathes calmly — the chest rising and falling beneath the clothing from <Picture 1>@图1. Skin shows natural micro-movements, visible pores and dynamic light shifts across skin, hair and fabric. The final frame is indistinguishable from a photograph or a live-action film still: shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens at f/1.4, natural color grading, filmic grain, 8K quality.\n\noverall_soundscape: A soft whoosh during the style transition, then natural ambient sounds — gentle wind, subtle fabric rustle, quiet environmental atmosphere.\n\nnon_diegetic_music: A warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of a character stepping into reality."
+    },
+    {
+     "name": "动漫转真人",
+     "name_en": "Anime to Hyperrealistic",
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nCRITICAL — THIS IS NOT A TRANSITION. This is a style conversion + face replacement, NOT a morph from <Picture 1>@图1 to <Picture 2>@图2. The outfit, scene, pose, hairstyle, hair color, accessories, body proportions, and composition from <Picture 1>@图1 must remain IDENTICAL from the first frame to the last frame. Only two things change: (1) the art style converts from anime to photorealistic, and (2) the face is replaced with the EXACT real human face from <Picture 2>@图2 — the final face must be indistinguishable from <Picture 2>@图2's face, with identical eye shape, eye size, eye spacing, nose bridge height, nose tip shape, lip thickness, lip contour, jawline angle, cheekbone structure, skin texture, skin tone, eyebrow shape, and all facial proportions. Nothing else changes.\n\nREFERENCE RULES (absolute, non-negotiable):\n- <Picture 1>@图1 (anime source): provides EVERYTHING visible — outfit design and colors, scene and background, props, body pose, hand position, camera angle, composition, hairstyle shape and length, hair color, accessories, body proportions, and environmental details. All of these must remain EXACTLY the same throughout the entire video, from first frame to last frame. Do not substitute, replace, alter, or invent any of these elements.\nOUTFIT ANCHOR — ABSOLUTE (non-negotiable):\nThe character's clothing must be a PIXEL-FOR-PIXEL copy of <Picture 1>@图1's actual outfit — same garments, same colors, same fabric patterns, same accessories, same layering, same silhouette, same overall look. Copy the outfit exactly as it appears in <Picture 1>@图1.\nSTRICTLY FORBIDDEN: do NOT dress the character in any school uniform, sailor suit, pleated skirt, blazer, white dress shirt, necktie, gym uniform, cardigan, or any student-outfit / academy trope — UNLESS <Picture 1>@图1 itself actually shows such an outfit. If <Picture 1>@图1 does not show a school uniform, the character MUST wear exactly <Picture 1>@图1's real clothing and nothing else.\n\nFACE ANCHOR — ABSOLUTE (non-negotiable):\nThe character's face must be a pixel-perfect, biometric copy of <Picture 2>@图2's face — the SAME person, unmistakably identical. Match <Picture 2>@图2 exactly in: eye shape, eye size, eye spacing, eyebrow shape and thickness, nose bridge height and width, nose tip shape, nostril size, lip thickness and contour, cupid's bow, mouth width, jawline angle and width, chin shape and length, cheekbone structure, ear shape and position, face width and length proportions, skin texture, skin tone, pore detail, and every facial landmark. The face must be recognizable as <Picture 2>@图2's face at ANY angle, ANY frame, ANY expression. If the final video's face does not look exactly like the person in <Picture 2>@图2, the result is a FAILURE. The face is the ONE element that MUST come from <Picture 2>@图2 — copy it with absolute precision.\n\n- <Picture 2>@图2 (real face donor): provides ONLY the facial features, and those features must be copied EXACTLY — eye shape and size, eye spacing and position, nose bridge height and width, nose tip shape, nostril size, lip thickness and contour, cupid's bow shape, jawline angle and width, chin shape, cheekbone structure, skin texture and tone, pore detail, eyebrow shape and thickness, ear shape and position, and all facial bone structure and proportions. The final face must be a precise copy of <Picture 2>@图2's face — same person, same features, same proportions. <Picture 2>@图2's outfit, scene, background, hairstyle, hair color, accessories, body proportions, pose, and composition are ABSOLUTELY FORBIDDEN and must never appear in any frame.\n- The result at EVERY frame is: the anime character from <Picture 1>@图1 (same outfit, same scene, same pose, same hair, same accessories, same composition) rendered in photorealistic live-action style, with the EXACT real face from <Picture 2>@图2. It is NOT the person from <Picture 2>@图2 wearing different clothes — it is the character from <Picture 1>@图1 with <Picture 2>@图2's exact face.\n\nintegrated_multimodal_description:\n[Shot 1] [0-1s] The video opens with the EXACT anime-style image from <Picture 1>@图1 — same character, same outfit and accessories, same scene and background, same pose and camera angle, same hairstyle and hair color, same composition. The first frame matches <Picture 1>@图1 precisely. The frame is fully anime at this point. The outfit, scene, pose, and hair from <Picture 1>@图1 are already established and will remain unchanged throughout. The face is currently anime-style, and will gradually transform into the exact real face from <Picture 2>@图2.\n\n[Shot 2] [1-4s] A gradual, seamless photorealistic transformation unfolds from the edges of the frame inward toward the center — this is a STYLE conversion only, the outfit/scene/pose/hair from <Picture 1>@图1 do NOT change, only their rendering style becomes realistic. At 1-2s, the outermost edges (background corners, hair tips, clothing hems, prop edges) begin to gain real-world texture, natural lighting, and physical material properties — the background from <Picture 1>@图1 becomes a real environment, the clothing from <Picture 1>@图1 gains real fabric texture, the hair from <Picture 1>@图1 gains individual strands — while the center remains fully anime. At 2-3s, realistic texturing spreads inward through the midground — the scene and background from <Picture 1>@图1 gain real depth and atmospheric perspective, the clothing from <Picture 1>@图1 gains proper physical folds and material drape, the hair from <Picture 1>@图1 gains natural sheen while keeping the EXACT color and style from <Picture 1>@图1. The outfit, scene, pose, and hair all remain exactly as in <Picture 1>@图1 — only their texture becomes realistic. The face is now in a half-anime half-real hybrid state, and is actively morphing toward the exact facial features of <Picture 2>@图2 — the eyes are shrinking from anime proportions toward <Picture 2>@图2's exact eye shape and size, the nose is forming into <Picture 2>@图2's exact nose bridge and tip, the lips are becoming <Picture 2>@图2's exact lip thickness and contour, the jawline is shifting toward <Picture 2>@图2's exact jaw angle, the skin is taking on <Picture 2>@图2's exact skin tone and texture. At 3-4s, the transformation completes at the center — the face is now the EXACT real human face from <Picture 2>@图2, with identical eye shape, eye size, eye spacing, nose structure, lip contour, jawline, cheekbones, skin texture, skin tone, and all facial proportions — the face is indistinguishable from <Picture 2>@图2's face. The expression, gaze direction, and head angle match <Picture 1>@图1 exactly, but the facial features are precisely those of <Picture 2>@图2. Throughout this entire shot, the outfit, scene, pose, composition, hairstyle, hair color, and accessories from <Picture 1>@图1 remain completely unchanged — only the rendering style becomes photorealistic and only the face is replaced with <Picture 2>@图2's exact face. Nothing from <Picture 2>@图2's outfit, scene, or hair appears.\n\n[Shot 3] [4-8s] The fully photorealistic character moves naturally within the EXACT scene from <Picture 1>@图1. The face remains the EXACT face from <Picture 2>@图2 — same eye shape, same nose, same lips, same jawline, same skin, same person. The outfit remains exactly the outfit from <Picture 1>@图1, the scene remains exactly the scene from <Picture 1>@图1, the pose remains based on <Picture 1>@图1, the hair remains the exact color and style from <Picture 1>@图1. Hair sways softly. The character blinks naturally — the blinking eyes are <Picture 2>@图2's exact eyes — and makes a slight head turn. The chest rises and falls with calm breathing beneath the clothing from <Picture 1>@图1. Realistic light shifts across the skin (which is <Picture 2>@图2's exact skin tone and texture), hair, and clothing materials. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality. The final frame still has the SAME outfit, scene, pose, hairstyle, and hair color as <Picture 1>@图1 — and the face is the EXACT face from <Picture 2>@图2, indistinguishable from <Picture 2>@图2's face, only the style is photorealistic.\n\noverall_soundscape:\nA soft whoosh during the style transition, then natural ambient sounds matching the environment from <Picture 1>@图1.\n\nnon_diegetic_music:\nA warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of an anime character stepping into reality.",
+     "generation_mode": "Reference to Video (参考生视频)【必须双图】",
+     "description": "将动漫/插画角色转换为超写实真人照片，保留构图与角色特征，极致真实皮肤纹理与自然人体比例。\n\n【重要：本模板必须使用「参考生视频 (Reference to Video)」模式，上传两张图】\n  • Picture 1 = 动漫图（提供内容、构图、姿势、服装布局）\n  • Picture 2 = 真人图（提供脸部身份、皮肤纹理、真人风格基准）\n\n【使用说明 — 三种生成模式】\n\n▎模式1：文生视频 (Text to Video)\n• 无需上传图片，纯靠文字描述生成真人视频\n• 在\"补充修改\"中描述角色外貌、服装、场景和动作\n• 效果：角色外观由文字决定，不是从特定动漫图转换\n\n▎模式2：图生视频 (Image to Video) ⚠️ 不推荐用于完全转真人\n• 上传动漫图片作为第一帧\n• 效果有限！I2V会强烈保持第一帧的动漫风格，很难完全转为真人\n• 仅用于让动漫图轻微动起来，不建议用于完全的动漫转真人\n\n▎模式3：参考生视频 (Reference to Video) ✅ 【推荐】真正实现动漫转真人\n• 上传两张参考图：\n  - Picture 1 = 动漫图（内容/构图/姿势/服装参考）\n  - Picture 2 = 真人图（脸部身份/皮肤纹理/风格基准）\n• 效果：最好！以动漫图内容为骨架，注入真人图脸部和写实风格\n• 技巧：真人参考图尽量选择与动漫角色性别、年龄、发型相近的真人照片\n\n【参数建议】\n• 时长：3-6秒（短时长风格转换更稳定）\n• 超分放大时请关闭人脸修复（face_restore=Off），避免逐帧修复导致鬼影闪烁",
+     "description_en": "Convert an anime or illustration character into a hyperreal photo of a real person, keeping the composition and character features, with extremely realistic skin texture and natural human proportions. \n\n[IMPORTANT: this template must use Reference to Video mode with two images uploaded] \n- Picture 1 = the anime image (supplies content, composition, pose, outfit layout) \n- Picture 2 = the real-person image (supplies facial identity, skin texture, the live-action style baseline) \n\n[HOW TO USE - three generation modes] \n\nMode 1: Text to Video \n- No images needed, the live-action video is generated purely from the text description \n- Describe the character's looks, outfit, scene and action under Additional edits \n- Result: the look is decided by the text, not converted from a specific anime image \n\nMode 2: Image to Video - NOT recommended for a full anime-to-real conversion \n- Upload the anime image as the first frame \n- Limited result: I2V holds the anime style of the first frame strongly and struggles to fully convert to live action \n- Only use it to make an anime image move slightly, not for a full anime-to-real conversion \n\nMode 3: Reference to Video - RECOMMENDED, the real way to do anime-to-real \n- Upload two reference images: \n- Picture 1 = the anime image (content, composition, pose, outfit) \n- Picture 2 = the real-person image (facial identity, skin texture, style baseline) \n- Result: best. The anime content provides the structure, the real photo injects its face and photorealistic style \n- Tip: pick a real photo whose gender, age and hairstyle are close to the anime character \n\n[SUGGESTED SETTINGS] \n- Duration: 3-6 seconds (shorter clips convert style more stably) \n- Turn face restore off (face_restore=Off) when upscaling, otherwise frame-by-frame repair causes ghosting and flicker",
+     "duration": 6,
+     "preview": "st_anime_to_real.webp",
+     "id": "st_anime_to_real",
+     "tags": [
+      "风格迁移",
+      "动漫转真人",
+      "写实化",
+      "双图参考"
+     ],
+     "tags_en": [
+      "style transfer",
+      "anime to real",
+      "photoreal conversion",
+      "two-image reference"
+     ],
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false
+    },
+    {
+     "name": "真人转动漫",
+     "name_en": "Real to Anime",
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced. Preserve the exact subject identity, facial features, face shape, eye shape, jawline, skin tone, bone structure, hairstyle, hair color, age impression, overall气质, composition, pose and outfit of the reference photo — only the visual art style is converted from realistic photography to high-quality anime illustration.\n\nintegrated_multimodal_description: [镜头1]【0-2秒】画面以输入的真人照片的完全写实风格开场——真实的皮肤纹理、自然的毛孔与细微瑕疵、真实的毛发细节与每根发丝、真实的服装织物质感与物理褶皱、自然的光影过渡与浅景深，完全是真人摄影的质感，没有任何动漫风格的痕迹。人物保持输入图像中的姿势和表情，仅有自然的呼吸胸口起伏和轻微的眨眼。[镜头2]【2-5秒】从画面边缘开始，逐步向中心扩散式地转化为高质量动漫风格——这不是突兀的切换，而是平滑的渐变溶解过程，没有硬边界，没有突然跳跃。2-3秒：画面最外层（背景角落、发梢、服装边缘）开始出现动漫风格的干净线条和平涂色块，中心区域仍保持真人写实。3-4秒：动漫风格向中间区域扩散——背景转为动漫风格的简洁色块和光影分区，服装转为动漫风格的简化色块与清晰褶皱线，头发转为动漫风格的色块与高光线条。脸部处于半真人半动漫的混合过渡状态——眼睛逐渐变大变亮，出现动漫风格的高光和瞳孔细节，皮肤逐渐变得光滑干净，面部轮廓线逐渐清晰。4-5秒：动漫风格扩散到画面中心，脸部完成动漫化——眼睛完全转为大而明亮的动漫眼睛，皮肤完全转为动漫风格的光滑质感，整体呈现高质量动漫插画质感。整个过渡是连续有机的风格溶解，如同真人慢慢走进二次元世界。[镜头3]【5-8秒】画面完全转化为高质量动漫风格，主体自然动作：保持输入图像中主体的运动状态，在高质量动漫风格下自然流畅地展现，头发与衣物随动作产生动漫风格的动态线条与色块变化。整体为高质量日式动漫插画质感：干净流畅的墨线轮廓、明快的赛璐珞平涂上色、鲜明的光影分区、鲜艳而统一的色彩、大而明亮的动漫眼睛、清晰的高光与瞳孔细节。整段画面统一呈现高质量动漫风格，艺术质感一致。\n\noverall_soundscape: 明快的动画环境声，清新的氛围\n\nnon_diegetic_music: 轻快活泼的日系动漫配乐，节奏明快，充满青春气息",
+     "generation_mode": "Reference to Video (参考生视频)【必须双图】",
+     "description": "将真人照片转换为高质量通用动漫风格，保留人物面部特征与身份，经典赛璐珞上色与清晰墨线",
+     "description_en": "Convert a real-person photo into a high-quality general anime style, keeping the face and identity, with classic cel shading and clean ink lines",
+     "duration": 6,
+     "preview": "st_real_to_anime.webp",
+     "id": "st_real_to_anime",
+     "tags": [
+      "风格迁移",
+      "真人转动漫",
+      "动漫化",
+      "双图参考"
+     ],
+     "tags_en": [
+      "style transfer",
+      "real person to anime",
+      "anime conversion",
+      "two-image reference"
+     ],
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false
+    },
+    {
+     "name": "动漫转真人（I2V首帧模式）",
+     "name_en": "Anime to Live-Action (I2V First Frame)",
+     "prompt": "[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is FULLY and EXACTLY referenced as the opening first frame — the first frame of the video must be pixel-identical in composition, pose, outfit, scene, hairstyle, hair color, accessories, and color to <Picture 1>@图1. The video starts as the exact anime image from <Picture 1>@图1 and gradually transforms into photorealistic live-action while PRESERVING every element from <Picture 1>@图1: the exact outfit, hairstyle, hair color, scene, background, props, body pose, hand position, camera angle, and composition. Only the art style changes from anime to realistic, and the face is replaced with the real human facial features described below. Nothing from any other source may substitute for the clothing, scene, or hair from <Picture 1>@图1.\n\nFACIAL REFERENCE — describe your real-person reference photo in detail here (the more specific, the more accurate the face):\n[在此详细填写真人参考图的脸部特征。建议包含：\n- 年龄/性别/种族（如：25岁东亚女性）\n- 脸型（如：鹅蛋脸/瓜子脸/方脸/圆脸）\n- 眼睛（颜色/大小/形状/双眼皮/睫毛，如：棕色大眼睛，自然双眼皮，长睫毛）\n- 鼻子（鼻梁高低/鼻尖形状/鼻翼宽度，如：高鼻梁，鼻尖微翘）\n- 嘴唇（厚度/唇色/唇形，如：薄唇，自然粉色，唇峰明显）\n- 皮肤（肤色/质感/瑕疵，如：白皙细腻，无明显瑕疵）\n- 眉毛（形状/颜色/浓度，如：自然弧度黑色眉毛，中等浓度）\n- 其他特征（如：酒窝/虎牙/痣/耳朵形状）\n示例：25岁东亚女性，鹅蛋脸，棕色大眼睛自然双眼皮长睫毛，高鼻梁鼻尖微翘，薄唇自然粉色，皮肤白皙细腻，黑色自然弧度眉毛，左耳有小耳钉。]\n\nintegrated_multimodal_description: [Shot 1] [0-1s] The video opens with the EXACT anime-style image from <Picture 1>@图1 — pixel-identical composition, pose, outfit, scene, hairstyle, hair color, accessories, and colors. The character, clothing, background, props, and camera angle all match <Picture 1>@图1 precisely. The frame is fully anime at this point, with no realistic elements yet.\n\n[Shot 2] [1-4s] A gradual, seamless photorealistic transformation unfolds from the edges of the frame inward toward the center — not an abrupt switch, but a smooth dissolve-like morph with no hard boundaries. At 1-2s, the outermost edges (background corners, hair tips, clothing hems, prop edges) begin to gain real-world texture, natural lighting, and physical material properties while the center remains fully anime. At 2-3s, realistic texturing spreads inward through the midground — the scene and background gain real depth and atmospheric perspective matching <Picture 1>@图1's exact layout, the clothing gains real fabric/material texture and proper physical folds matching <Picture 1>@图1's exact outfit, the hair gains individual strands and natural sheen while keeping the EXACT color, length, and style from <Picture 1>@图1, accessories gain real material properties matching <Picture 1>@图1. The face remains in a half-anime half-real hybrid state during this transition — eye size gradually reduces from anime proportions toward natural human proportions matching the facial reference above, skin gradually gains subtle pores and texture while keeping the skin tone from the facial reference above. At 3-4s, the transformation completes at the center — the face fully transitions to the real human features from the facial reference above (eye shape and size, nose structure, lip contour, jawline, skin texture and tone), while the expression, gaze direction, and head angle match <Picture 1>@图1 exactly. Throughout the entire transformation, the clothing, scene, pose, composition, hairstyle, hair color, and accessories all remain exactly as in <Picture 1>@图1.\n\n[Shot 3] [4-8s] The fully photorealistic character moves naturally within the exact scene from <Picture 1>@图1. Hair (matching <Picture 1>@图1's color and style) sways softly in a light breeze. The character blinks naturally and makes a slight head turn while preserving <Picture 1>@图1's overall pose. The chest rises and falls with calm breathing beneath the clothing from <Picture 1>@图1. Realistic light shifts across the skin, hair, and clothing materials from <Picture 1>@图1. The camera slowly pushes in slightly. The overall look is cinematic live-action realism — shallow depth of field, soft bokeh, professional portrait lighting, shot on an 85mm prime lens, natural color grading, 8K quality. The outfit, scene, pose, hair, and accessories all remain exactly as in <Picture 1>@图1; only the face is from the facial reference above.\n\noverall_soundscape:\nA soft whoosh during the style transition, then natural ambient sounds matching the environment from <Picture 1>@图1 — gentle wind, subtle fabric rustle, appropriate environmental atmosphere.\n\nnon_diegetic_music:\nA warm cinematic score that builds from soft piano during the transformation into lush strings, conveying the quiet wonder of an anime character stepping into reality.",
+     "generation_mode": "Image to Video (图生视频)【单图首帧】",
+     "description": "将动漫/插画角色转换为超写实真人，首帧严格来自动漫图，服装/场景/发色/姿势完全保留，仅风格真人化+脸部替换为描述的真人特征。\n\n【使用方法 — 必须配合 v1.5 工作流】\n1. 加载 v1.5 工作流（不是v1.4！v1.5已断开last_frame避免转场）\n2. 模式选择「图生视频 (Image to Video)」\n3. 图1上传动漫图（作为首帧，提供服装/场景/姿势/发色）\n4. 图2上传真人图（仅用于参考，v1.5已断开图2到模型的连接）\n5. 在提示词的 FACIAL REFERENCE 区域，把 [在此详细填写...] 替换为真人图的脸部特征描述（越详细越好）\n6. 运行\n\n【为什么不用双图参考生视频】\nReferenceToVideo 模式本质是两张图之间的转场融合，会导致最终变成真人图的服装/场景/发型（已验证失败）。I2V首帧模式只有动漫图作为起点，从根本上避免转场问题。\n\n【为什么脸部用文字描述而不是图片】\nI2V模式只接受一张首帧图。真人图不连接模型，仅作为用户参考，脸部特征通过文字描述注入。这样模型不会被真人图的服装/场景干扰。",
+     "description_en": "Convert an anime or illustration character into a hyperreal real person: the first frame comes strictly from the anime image, keeping the outfit, scene, hair colour and pose exactly, with only the style made photorealistic and the face replaced by the described real features. \n\n[HOW TO USE - must be used with the v1.5 workflow] \n1. Load the v1.5 workflow (not v1.4: v1.5 disconnects last_frame to avoid a transition) \n2. Set the mode to Image to Video \n3. Upload the anime image as Img1 (the first frame, supplying outfit, scene, pose and hair colour) \n4. Upload the real-person image as Img2 (reference only; v1.5 has already disconnected Img2 from the model) \n5. In the FACIAL REFERENCE section of the prompt, replace [describe here in detail...] with a description of the face in the real photo (the more detail the better) \n6. Run \n\n[WHY NOT TWO-IMAGE REFERENCE TO VIDEO] \nReference to Video is essentially a transition between two images, so the result ends up wearing the real photo's outfit, scene and hairstyle (verified to fail). The I2V first-frame mode uses only the anime image as the starting point, which structurally avoids that problem. \n\n[WHY DESCRIBE THE FACE IN WORDS INSTEAD OF AN IMAGE] \nI2V accepts only one first-frame image. The real photo is not connected to the model and serves only as a reference for you, with the facial features injected through the text description, so the model is never disturbed by that photo's outfit or scene.",
+     "duration": 8,
+     "preview": "st_anime_to_real_firstframe.webp",
+     "id": "st_anime_to_real_firstframe",
+     "tags": [
+      "风格迁移",
+      "动漫转真人",
+      "写实化",
+      "首帧模式"
+     ],
+     "tags_en": [
+      "style transfer",
+      "anime to real",
+      "photoreal conversion",
+      "first-frame mode"
+     ],
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false
+    }
+   ]
+  }
+ ]
+}

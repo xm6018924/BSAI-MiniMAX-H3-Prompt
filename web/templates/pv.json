@@ -1,0 +1,277 @@
+{
+ "id": "pv",
+ "subcategories": [
+  {
+   "id": "pv_basic",
+   "templates": [
+    {
+     "id": "pv_single_person",
+     "name": "单图人物PV·基础版",
+     "name_en": "Single-image Character PV (Basic)",
+     "description": "单图人物PV·基础版｜操作：①图1=人物参考（必选，脸/发型/服装全部保真，可作参考不锁首帧，也可强制首帧）；②选视觉设定/时长（推荐10-15秒）；③文字默认无字，要文字就在模板文字框写（自动放顶部/片尾，不挡脸）；④生成提示词→生成PV。建议先低分辨率0.2测试，OK后再提高。",
+     "description_en": "Single-image character PV, basic version | How to use: (1) Img1 = the character reference (required; face, hair and outfit preserved, usable as a reference without locking the first frame, or forced as the first frame); (2) choose the visual setting and duration (10-15 seconds recommended); (3) no text by default - to add text, type it in the template's text box (placed at the top or on the end card so it never covers the face); (4) generate the prompt, then generate the PV. Test at low resolution (0.2) first, then raise it.",
+     "preview": "pv_single_person.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 12,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "人物",
+      "宣传",
+      "短视频",
+      "快剪",
+      "文字可控"
+     ],
+     "tags_en": [
+      "PV",
+      "people",
+      "promo",
+      "short video",
+      "fast cut",
+      "controllable text"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is the person from <Picture 1>@图1 — face, hair, body, outfit and styling come EXACTLY from <Picture 1>@图1.\nsummary:\n  Create a 12-second character promotional video (PV) starring <Subject 1>. Fast, punchy rhythm with 4 quick cuts. The video showcases the character's presence and attitude. Reference image is a style/identity reference, NOT a locked first frame — composition and motion are free, only identity stays locked.\nretention_analysis:\n  <Subject 1> (All shots): fully_preserved — face, hair, body, outfit identical to <Picture 1>@图1, no matter the new pose, angle, or motion.\n  Composition & background: free_creation — a new stylish environment of the user's choosing.\ndetailed_description:\n  [Shot 1] At 00:00.000, a wide establishing shot. <Subject 1> stands centered, strong pose, camera slowly pushes in. Dynamic rim lighting, shallow depth of field.\n  [Shot 2] At 00:03.000, cut to a medium shot from a low angle. <Subject 1> walks toward camera with confident stride. Slight camera tilt for energy.\n  [Shot 3] At 00:06.500, cut to a close-up: <Subject 1> looks into the lens, subtle expression shift. Cinematic bokeh background.\n  [Shot 4] At 00:09.500, cut to a full-body hero pose. Freeze-frame energy, then a slow pull-back. Final frame holds on <Subject 1> centered.\noverall_soundscape: Sharp clothing movement, footsteps on polished floor, airy room tone.\nnon_diegetic_music: Modern pop-hybrid PV track — driving four-on-the-floor beat, bright synth stabs, confident and energetic.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认人物+默认场景】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT CHARACTER: a stylish young woman, delicate facial features, long black hair, well-proportioned figure, wearing an elegant black high-fashion outfit. DEFAULT SCENE: a dark studio with dramatic spotlight and cinematic haze. DEFAULT TEXT: none (pure visual cut).\n\nintegrated_multimodal_description: [Shot 1][0-3s] Wide establishing shot, the character stands centered under a spotlight, camera slowly pushes in, strong pose. [Shot 2][3-6s] Medium low-angle shot, she walks toward camera with confident stride, slight camera tilt. [Shot 3][6-9s] Close-up, she looks into the lens, subtle expression shift, cinematic bokeh. [Shot 4][9-12s] Full-body hero pose, slow pull-back, final frame holds on her centered. Text: none. Fast PV rhythm, sharp cuts, premium fashion grade.\n\noverall_soundscape: Sharp clothing movement, footsteps on polished floor, airy room tone.\nnon_diegetic_music: Modern pop-hybrid PV track — driving four-on-the-floor beat, bright synth stabs, confident and energetic."
+    },
+    {
+     "id": "pv_text_only",
+     "name": "纯文字PV·无图生成",
+     "name_en": "Text-only PV (No Image)",
+     "description": "纯文字PV·无图生成｜操作：①不传图，在文字框写清主角（长相/服装/年龄）、场景、动作、镜头、要不要文字/写什么字；②选文生视频模式；③生成提示词→生成PV。描述越具体画面越可控。",
+     "description_en": "Text-only PV, no image needed | How to use: (1) upload nothing; in the text box describe the lead (looks, outfit, age), the scene, the action, the camera and whether you want text and what it should say; (2) choose text-to-video mode; (3) generate the prompt, then generate the PV. The more specific the description, the more controllable the result.",
+     "customization_hint": "✍️ 纯文字PV·无需参考图：请在上方“补充修改”输入框填写你的 PV 宣传文字 / 文稿 / 广告语（写清主角长相、服装、年龄、场景、动作、镜头，以及要不要屏幕文字/写什么字），点击「确认修改」后自动与模板融合成完整 H3 提示词，输出给下游文生视频节点。描述越具体，画面越可控。",
+     "preview": "pv_text_only.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "纯文字",
+      "文生视频",
+      "宣传",
+      "无图"
+     ],
+     "tags_en": [
+      "PV",
+      "text only",
+      "text to video",
+      "promo",
+      "no image"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsummary:\n  Create a 10-second text-driven PV with NO input image. Everything — hero, setting, wardrobe, motion, camera, and on-screen text — is generated purely from this written description. Use the user's description as the sole creative brief; if the user described a specific hero (name, look, outfit), preserve it consistently across all shots.\ndetailed_description:\n  [Shot 1] At 00:00.000, an establishing shot matching the user's described scene. Dynamic lighting, strong composition, cinematic color grade.\n  [Shot 2] At 00:02.500, cut to the hero in action as described — motion, gesture, or interaction with the environment. Medium shot, fluid camera move.\n  [Shot 3] At 00:05.500, cut to a close-up detail — face, hands, or object per the user's description. Shallow depth of field, premium look.\n  [Shot 4] At 00:08.000, cut to a final hero shot that resolves the story beat, ending on a clean, memorable frame (optionally with the end-card text overlay per TEXT OVERLAY CONTROL).\noverall_soundscape: Ambient atmosphere matching the scene; subtle motion whoosh on cuts.\nnon_diegetic_music: Punchy, modern PV soundtrack with a clear beat drop timed to the strongest cut."
+    },
+    {
+     "id": "pv_single_product",
+     "name": "单图产品PV·宣传展示",
+     "name_en": "Single-image Product PV",
+     "description": "单图产品PV·宣传展示｜操作：①图1=产品图（必选，形状/颜色/logo/标签文字全部保真）；②默认产品为绝对主体，4镜头（揭幕→特写→场景→品牌收尾）；③品牌名/卖点写进文字框，自动做片尾卡；④先低分辨率0.2测试再提高。",
+     "description_en": "Single-image product PV, promo showcase | How to use: (1) Img1 = the product image (required; shape, colour, logo and label text all preserved); (2) the product is the absolute subject by default, in four shots (reveal, close-up, scene, brand end card); (3) put the brand name and selling points in the text box and an end card is built automatically; (4) test at low resolution (0.2) first, then raise it.",
+     "preview": "pv_single_product.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 10,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "产品",
+      "广告",
+      "展示",
+      "特写",
+      "品牌"
+     ],
+     "tags_en": [
+      "PV",
+      "product",
+      "advertising",
+      "showcase",
+      "close-up",
+      "brand"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is the product from <Picture 1>@图1 — its EXACT shape, color, material, logo, labels, packaging and every visible detail must be preserved in every shot.\nsummary:\n  Create a 10-second product promotional video (PV). <Picture 1>@图1 is the hero product; the video is a premium product showcase — hero reveal, detail macro, lifestyle cut, and a final brand-hold frame. The product IS the star; any background, props, or surfaces are supporting elements only.\nretention_analysis:\n  <Subject 1> (All shots): fully_preserved — identical shape, color, finish, logo, and label text at all times; NO redesign, NO logo distortion, NO label swapping.\n  Background & props: free_creation — premium minimal sets that flatter the product.\ndetailed_description:\n  [Shot 1] At 00:00.000, a hero reveal: the product emerges from darkness into a spotlight beam, slowly rotating. Clean premium background.\n  [Shot 2] At 00:03.000, cut to a macro detail shot — surface texture, logo engraving, or label. Extreme close-up, shallow depth of field.\n  [Shot 3] At 00:05.500, cut to a lifestyle shot — the product in an elegant context (table, light, motion). Gentle camera orbit or dolly.\n  [Shot 4] At 00:08.000, cut back to a hero product shot on a pedestal, slow push-in, ending on a clean brand-hold frame (end-card text per TEXT OVERLAY CONTROL).\noverall_soundscape: Soft whoosh on transitions, subtle glass/metal foley for product moves, gentle room tone.\nnon_diegetic_music: Sleek minimal electronic track — crisp percussion, warm pads, premium and understated.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认产品+默认场景】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT PRODUCT: an elegant premium perfume bottle with golden liquid, crystal-cut cap and gold ring, minimal label. DEFAULT SCENE: black studio with a single spotlight. DEFAULT TEXT: end-card brand name only if the user provides one; otherwise no text.\n\nintegrated_multimodal_description: [Shot 1][0-2.5s] Hero reveal: the product emerges from darkness into a spotlight beam, slowly rotating. [Shot 2][2.5-5s] Macro detail shot of surface texture and cap, extreme close-up, shallow depth of field. [Shot 3][5-7.5s] Lifestyle shot: the product on an elegant reflective surface, gentle camera orbit. [Shot 4][7.5-10s] Product hero shot on a pedestal, slow push-in, ending on a clean brand-hold frame. Text: none unless user provides brand text (then show it on the final end card only).\n\noverall_soundscape: Soft whooshes on transitions, subtle glass foley, gentle room tone.\nnon_diegetic_music: Sleek minimal electronic track — crisp percussion, warm pads, premium and understated."
+    }
+   ]
+  },
+  {
+   "id": "pv_multishot",
+   "templates": [
+    {
+     "id": "pv_person_product",
+     "name": "人物+产品广告PV·双参考",
+     "name_en": "Model + Product Ad PV (Dual Reference)",
+     "description": "人物+产品广告PV·双参考｜操作：①图1=模特/人物，图2=产品（香水/美妆/数码等）；②默认『模特+产品互动』；想以产品为主或以模特为主，在文字框写明优先级；③产品瓶身/标签原有文字强制保留；④片尾可加品牌文字；⑤先0.2测试，OK再提清。",
+     "description_en": "Character plus product ad PV, two references | How to use: (1) Img1 = the model or character, Img2 = the product (perfume, cosmetics, gadgets and so on); (2) the default is the model interacting with the product; if you want the product or the model to dominate, state the priority in the text box; (3) any text already on the bottle or label is forcibly preserved; (4) brand text can be added at the end; (5) test at 0.2 first, then raise the resolution.",
+     "preview": "pv_person_product.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 12,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "广告",
+      "模特",
+      "产品",
+      "香水",
+      "双参考",
+      "品牌"
+     ],
+     "tags_en": [
+      "PV",
+      "advertising",
+      "model",
+      "product",
+      "perfume",
+      "two references",
+      "brand"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is the person/model from <Picture 1>@图1 — identity, face, hair, body and outfit come EXACTLY from <Picture 1>@图1.\n  <Subject 2> is the product from <Picture 2>@图2 — EXACT shape, color, bottle, cap, label and any printed text on the product must be preserved; text printed ON the product stays readable and unchanged.\nsummary:\n  Create a 12-second product advertisement PV combining a model and a hero product. DEFAULT hierarchy: the model and the product share the frame in an aspirational interaction (model presents / holds / uses the product). If the user changes the priority (model-only or product-only), follow the user. On-screen text is directed per TEXT OVERLAY CONTROL (commonly an end card with the product/brand name).\nretention_analysis:\n  <Subject 1> (All shots): fully_preserved — face, hair, body, outfit identical to <Picture 1>@图1.\n  <Subject 2> (All shots): fully_preserved — shape, color, label and printed text identical to <Picture 2>@图2; the bottle label must stay legible in every close shot.\ndetailed_description:\n  [Shot 1] At 00:00.000, a wide establishing shot: <Subject 1> holds <Subject 2> elegantly, warm premium lighting, soft gradient background.\n  [Shot 2] At 00:03.500, cut to a medium shot: <Subject 1> brings <Subject 2> into view, gentle motion, camera drifts in.\n  [Shot 3] At 00:06.500, cut to a macro of <Subject 2> in the model's hand — label fully readable, shimmering highlights, shallow depth of field.\n  [Shot 4] At 00:09.000, cut to a beauty shot: <Subject 1> and <Subject 2> together, product prominent, cinematic haze. Final frame holds as an end card (text per TEXT OVERLAY CONTROL).\noverall_soundscape: Elegant room tone, fabric whisper, a soft chime when the product appears.\nnon_diegetic_music: Sophisticated commercial track — warm strings, light percussion, aspirational and refined.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认模特+默认产品】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT MODEL: an elegant female model with long dark hair in a chic black outfit. DEFAULT PRODUCT: an elegant premium perfume bottle with golden liquid, crystal-cut cap and gold ring, minimal label. DEFAULT HIERARCHY: model and product share the frame in an aspirational interaction. DEFAULT TEXT: end-card brand name only if the user provides one; otherwise no text.\n\nintegrated_multimodal_description: [Shot 1][0-3s] Wide establishing shot: the model holds the perfume bottle elegantly, warm premium lighting, soft gradient background. [Shot 2][3-6s] Medium shot: she brings the bottle into view, gentle motion, camera drifts in. [Shot 3][6-9s] Macro of the bottle in her hand, label fully readable, shimmering highlights. [Shot 4][9-12s] Beauty shot: model and bottle together, product prominent, cinematic haze, final frame holds as an end card. Text: none unless user provides brand text (end card only).\n\noverall_soundscape: Elegant room tone, fabric whisper, a soft chime when the product appears.\nnon_diegetic_music: Sophisticated commercial track — warm strings, light percussion, aspirational and refined."
+    },
+    {
+     "id": "pv_two_persons",
+     "name": "双人物同框PV·双参考",
+     "name_en": "Two-Character PV (Dual Reference)",
+     "description": "双人物同框PV·双参考｜操作：①图1=人物A，图2=人物B（两张都必选，身份严格保真）；②默认镜头：开场双人同框→A单人→B单人→双人收尾；③互动方式（对视/打斗/舞蹈/对话）写进文字框；④文字可无/自定义。",
+     "description_en": "Two characters in one frame PV, two references | How to use: (1) Img1 = character A, Img2 = character B (both required, identities strictly preserved); (2) the default shot plan opens with both in frame, then A alone, B alone, and closes on both; (3) put the interaction (eye contact, fight, dance, conversation) in the text box; (4) text can be omitted or customised.",
+     "preview": "pv_two_persons.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 12,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "双人",
+      "同框",
+      "人物",
+      "宣传",
+      "双参考"
+     ],
+     "tags_en": [
+      "PV",
+      "two people",
+      "shared frame",
+      "people",
+      "promo",
+      "two references"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is Person A from <Picture 1>@图1 — EXACT face, hair, body, outfit.\n  <Subject 2> is Person B from <Picture 2>@图2 — EXACT face, hair, body, outfit.\nsummary:\n  Create a 12-second dual-character PV in which <Subject 1> and <Subject 2> appear — together and/or in alternating cuts — with a dynamic, story-forward rhythm. Both characters keep their exact identities. Their interaction (confrontation, partnership, dance, dialogue scene) follows the user's brief.\nretention_analysis:\n  <Subject 1>: fully_preserved in every shot.\n  <Subject 2>: fully_preserved in every shot.\n  When both share one frame, both must be rendered with their own exact identity — no face/outfit swapping, no merging.\ndetailed_description:\n  [Shot 1] At 00:00.000, establishing two-shot: <Subject 1> and <Subject 2> in the same frame, wide shot, strong composition, dynamic lighting.\n  [Shot 2] At 00:03.500, cut to <Subject 1> solo — medium shot, confident action or gesture.\n  [Shot 3] At 00:06.500, cut to <Subject 2> solo — matching medium shot, mirrored energy.\n  [Shot 4] At 00:09.000, cut back to the two-shot — interaction beat, closer framing, ending on a memorable locked frame (text per TEXT OVERLAY CONTROL).\noverall_soundscape: Energetic room tone, footsteps, fabric movement, sharp cut whooshes.\nnon_diegetic_music: Punchy duo-anthem PV track — driving beat, bold bass, confident and collaborative.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认双人+默认场景】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT PERSON A: a stylish man in a black suit with white shirt. DEFAULT PERSON B: an elegant woman in a black sequined dress. DEFAULT SCENE: dark grey gradient studio with cinematic lighting. DEFAULT TEXT: none.\n\nintegrated_multimodal_description: [Shot 1][0-3s] Establishing two-shot: both characters in the same frame, wide shot, strong composition. [Shot 2][3-6s] Cut to Person A solo, medium shot, confident gesture. [Shot 3][6-9s] Cut to Person B solo, matching medium shot, mirrored energy. [Shot 4][9-12s] Back to the two-shot, closer framing, interaction beat, ending on a memorable locked frame. Text: none.\n\noverall_soundscape: Energetic room tone, footsteps, fabric movement, sharp cut whooshes.\nnon_diegetic_music: Punchy duo-anthem PV track — driving beat, bold bass, confident and collaborative."
+    },
+    {
+     "id": "pv_director_storyboard",
+     "name": "导演分镜PV·多镜头序列",
+     "name_en": "Director Storyboard PV (Multi-shot Sequence)",
+     "description": "导演分镜PV·多镜头序列｜操作：①图1=主角（人物/角色/产品），可选图2=场景氛围、图3=次要主体；②在文字框写清构想（要表达什么、节奏、情绪走向）；③标题/片尾文字写进文字框，导演级控制；④生成提示词→生成PV；想改镜头或主体优先级，改文字框再生成。",
+     "description_en": "Director's storyboard PV, multi-shot sequence | How to use: (1) Img1 = the lead (character, role or product), optionally Img2 = scene atmosphere and Img3 = a secondary subject; (2) write your concept in the text box (what it should express, the rhythm, the emotional arc); (3) put the title and end-card text in the text box for director-level control; (4) generate the prompt, then generate the PV; to change a shot or the subject priority, edit the text box and regenerate.",
+     "preview": "pv_director_storyboard.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 15,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "分镜",
+      "导演",
+      "多镜头",
+      "序列",
+      "标题",
+      "片尾"
+     ],
+     "tags_en": [
+      "PV",
+      "storyboard",
+      "director",
+      "multi-shot",
+      "sequence",
+      "title",
+      "end card"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is the primary subject from <Picture 1>@图1 — EXACT identity/design (person, character, or product per user's set).\n  <Picture 2>@图2 (if connected) is the scene/atmosphere reference — its lighting, color grade, and environment mood are transferred.\n  <Picture 3>@图3 (if connected) is a secondary subject — product, partner, or prop, preserved EXACTLY.\nsummary:\n  Create a 15-second director-style storyboard PV with a full shot sequence (opening hook → development → climax → resolution). Multi-shot editing with clean transitions, directed camera language per shot, and on-screen text as a designed element (title, subtitle, end card) per TEXT OVERLAY CONTROL. Rhythm accelerates toward the climax.\nretention_analysis:\n  <Subject 1>: fully_preserved across all shots.\n  <Picture 2>@图2: attribute_transfer — mood, light, color.\n  <Picture 3>@图3: fully_preserved — shape, color, details, logo.\ndetailed_description:\n  [Shot 1 · Hook] At 00:00.000, an attention-grabbing opening — dramatic angle, high contrast, subject enters frame fast. Title text (if any) slams in per TEXT OVERLAY CONTROL.\n  [Shot 2 · Setup] At 00:03.500, medium shot establishing the subject in the scene, camera arcs around at medium speed.\n  [Shot 3 · Development] At 00:07.000, action/detail beat — subject in motion or product macro; push-in or tracking move; energy rises.\n  [Shot 4 · Climax] At 00:10.500, the strongest visual — hero pose, bold lighting, optional slow-motion feel; brief cutaway accents.\n  [Shot 5 · Resolution] At 00:13.000, resolve to a clean hold frame; end-card text (logo/name/slogan) appears per TEXT OVERLAY CONTROL and holds to the end.\noverall_soundscape: Layered cuts with whooshes, accent impacts on beat points, ambient bed.\nnon_diegetic_music: Cinematic PV score — building tension, beat drop at the climax, triumphant resolution.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认主体+5镜头分镜】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT SUBJECT: a stylish young woman in a black high-fashion outfit. DEFAULT SCENE: a dark cinematic studio with volumetric light beams. DEFAULT TEXT: no text unless the user provides title / end-card copy; then show title at 0-1s top area and end card at the final hold.\n\nintegrated_multimodal_description: [Shot 1 · Hook][0-3.5s] Dramatic angle, high contrast, subject enters frame fast; title text (if any) slams in. [Shot 2 · Setup][3.5-7s] Medium shot, camera arcs around the subject. [Shot 3 · Development][7-10.5s] Action beat, subject in motion, push-in, energy rises. [Shot 4 · Climax][10.5-13s] Hero pose, bold lighting, brief slow-motion feel. [Shot 5 · Resolution][13-15s] Clean hold frame; end-card text (if any) appears and holds to the end. Fast PV rhythm accelerating to the climax.\n\noverall_soundscape: Layered cuts with whooshes, accent impacts on beat points, ambient bed.\nnon_diegetic_music: Cinematic PV score — building tension, beat drop at the climax, triumphant resolution."
+    },
+    {
+     "id": "pv_first_last",
+     "name": "首尾帧PV·强控首尾",
+     "name_en": "First+Last Frame PV (Locked Ends)",
+     "description": "首尾帧PV·强控首尾｜操作：①图1=首帧（必选，一帧一样强控），图2=尾帧（可选，一帧一样）；②中间自动平滑运镜过渡；③首帧已有印刷文字（海报/标签）会保留；④建议画面比例与首帧一致（如首帧竖版选竖版）。",
+     "description_en": "First-and-last-frame PV, strict control | How to use: (1) Img1 = the first frame (required, matched exactly); Img2 = the last frame (optional, matched exactly); (2) the camera move between them is interpolated smoothly; (3) printed text already in the first frame (poster, label) is preserved; (4) keep the aspect ratio the same as the first frame (choose vertical for a vertical first frame).",
+     "preview": "pv_first_last.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 10,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "首尾帧",
+      "强控",
+      "转场",
+      "海报",
+      "封面"
+     ],
+     "tags_en": [
+      "PV",
+      "first and last frame",
+      "strict control",
+      "transition",
+      "poster",
+      "cover"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Picture 1>@图1 is the LOCKED FIRST FRAME — the very first frame of the video must be pixel-identical in composition and content to <Picture 1>@图1 (subject, pose, framing, background).\n  <Picture 2>@图2 (if connected) is the LOCKED LAST FRAME — the final frame must match <Picture 2>@图2 exactly.\nsummary:\n  Create a 10-second PV whose first frame is EXACTLY <Picture 1>@图1 and whose final frame is EXACTLY <Picture 2>@图2 (when provided). Between them, the shot evolves with smooth, cinematic motion — camera move, subject motion, or a transition — while keeping the subject consistent. On-screen text follows TEXT OVERLAY CONTROL; when the first frame already contains printed text (poster/label), preserve it.\nretention_analysis:\n  <Picture 1>@图1: first frame locked — identical subject, pose, framing.\n  <Picture 2>@图2: last frame locked — identical subject, pose, framing.\n  In-between frames: morph — a continuous, physically-plausible motion path between the two locked frames.\ndetailed_description:\n  [Frame A] At 00:00.000, the frame is EXACTLY <Picture 1>@图1 — no deviation.\n  [Transition] At 00:02.000-00:08.000, the camera/subject moves fluidly — e.g. push-in with a slow orbit, or subject turns/walks through the space — toward the final composition.\n  [Frame B] At 00:10.000, the frame lands EXACTLY on <Picture 2>@图2's composition and holds; end-card text per TEXT OVERLAY CONTROL (optional).\noverall_soundscape: Smooth motion whoosh, ambient bed matching the scene, gentle impact at the final lock.\nnon_diegetic_music: Minimal evolving track — sustained pads, subtle pulse, elegant and focused.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认首尾帧+过渡】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT FIRST FRAME: a young woman standing centered in a cinematic city-night scene, static hero pose. DEFAULT LAST FRAME: the same woman in a dynamic stride pose, same location. DEFAULT TEXT: none (pure visual transition).\n\nintegrated_multimodal_description: [Frame A][0s] The first frame is a static hero pose of the woman centered in a cinematic city-night scene. [Transition][2-8s] The camera pushes in with a slow orbit while she steps forward and transitions into a dynamic stride pose; motion stays smooth and physically plausible. [Frame B][10s] The frame lands on the dynamic stride pose and holds. Text: none.\n\noverall_soundscape: Smooth motion whoosh, ambient city night bed, gentle impact at the final lock.\nnon_diegetic_music: Minimal evolving track — sustained pads, subtle pulse, elegant and focused."
+    }
+   ]
+  },
+  {
+   "id": "pv_style",
+   "templates": [
+    {
+     "id": "pv_fashion_cut",
+     "name": "时尚TVC快剪PV·品牌节奏",
+     "name_en": "Fashion TVC Fast-Cut PV",
+     "description": "时尚TVC快剪PV·品牌节奏｜操作：①图1=模特（必选），可选图2=产品；②默认6刀剪辑（近景→细节→全身→产品特写→脸部→品牌帧），1.5-2秒一切；③品牌标题写进文字框，自动做片尾大字；④默认高级色调，节奏与鼓点同步。",
+     "description_en": "Fashion TVC fast-cut PV, brand rhythm | How to use: (1) Img1 = the model (required), optionally Img2 = the product; (2) the default is six cuts (medium, detail, full body, product close-up, face, brand frame) at 1.5-2 seconds each; (3) put the brand title in the text box and the end-card type is built automatically; (4) a premium grade is applied by default and the cuts sync to the beat.",
+     "preview": "pv_fashion_cut.webp",
+     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "duration": 12,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "PV",
+      "时尚",
+      "TVC",
+      "快剪",
+      "品牌",
+      "标题"
+     ],
+     "tags_en": [
+      "PV",
+      "fashion",
+      "TVC",
+      "fast cut",
+      "brand",
+      "title"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\n[TEXT OVERLAY CONTROL / PV文字叠层控制 — 导演级自由]: This is a PV (promotional video), so text on screen is a DIRECTED element, NOT a default. Follow these rules in order of priority: (1) If the user wants NO text, render the entire video with ZERO characters, logos, subtitles, captions, or burned-in text — a pure visual cut. (2) If custom text is given, place it EXACTLY where stated (top / center / bottom / end card), in the stated language and style, with clean typography, and keep the text fully readable and stable for the duration it appears. (3) Text must NEVER cover the hero subject's face or the product's key details; it sits in reserved areas (top third, bottom third, or a dedicated end card). (4) On-screen text must be spelled EXACTLY as written — no extra letters, no omissions, no transliteration changes. 【PV文字叠层控制·导演级自由】这是宣传片(PV)，画面文字是导演指令元素而非默认项，按优先级执行：① 不要文字时，全片零字符、零水印、零字幕——纯画面剪辑；② 给了自定义文字时，必须按指定位置（顶部/居中/底部/片尾卡）、指定语言与字体风格呈现，字迹清晰、稳定不飘；③ 文字严禁遮挡主体人物的脸或产品关键细节，只能放在预留区（画面上三分之一、下三分之一或独立片尾卡）；④ 屏幕文字必须与所写逐字一致——不多字、不少字、不转写变形。\n\nsubject_definitions:\n  <Subject 1> is the person/model from <Picture 1>@图1 — EXACT face, hair, body, outfit.\n  <Picture 2>@图2 (if connected) is the hero product — EXACT design, color, logo.\nsummary:\n  Create a 12-second fashion/TVC-style PV with FAST editing — quick cuts every ~1.5-2 seconds, stylish camera moves (whip pan, snap zoom, dolly), high-end color grade, and a bold title treatment per TEXT OVERLAY CONTROL. The subject carries the attitude; the product (if any) punctuates the cut.\nretention_analysis:\n  <Subject 1>: fully_preserved in every cut.\n  <Picture 2>@图2: fully_preserved — product details intact in every appearance.\n  Grade & mood: stylized_fashion — high contrast, rich blacks, premium gloss.\ndetailed_description:\n  [Cut 1] At 00:00.000, hard cut to <Subject 1> — tight medium shot, dramatic single-source lighting, bold pose.\n  [Cut 2] At 00:02.000, whip-pan to a detail — fabric, jewelry, or the product <Picture 2>@图2. Snap zoom energy.\n  [Cut 3] At 00:04.000, cut to a full-body stride shot, camera tracking low and fast; garment/logo motion emphasized.\n  [Cut 4] At 00:06.000, insert product beauty shot — macro, floating feel, sparkle accents (per TEXT OVERLAY CONTROL if brand text appears).\n  [Cut 5] At 00:08.000, back to <Subject 1> hero close-up, then a fast punch-in.\n  [Cut 6] At 00:10.000, final brand frame — subject + product lockup, bold end-card title per TEXT OVERLAY CONTROL, holds to 12s.\noverall_soundscape: Rapid whooshes, camera snap sounds on every cut, sharp fashion foley.\nnon_diegetic_music: Fashion-TVC beat — heavy 4/4 kick, crisp hi-hats, bass drop synchronized with the cuts.",
+     "text_fallback_mode": "Text to Video (文生视频)【默认模特+快剪】",
+     "text_fallback_prompt": "[STRICT REFERENCE / 参考图强制] 未连接任何参考图，本模板启用内置默认配置并转为文生视频模式。所有内容由文字描述决定，禁止虚构文字与描述冲突的细节。\n\n[DEFAULT CONFIG / 默认配置]: DEFAULT MODEL: a stylish young woman with bold fashion outfit (bright jacket, contrasting top, boots). DEFAULT SCENE: neon-lit city street at night. DEFAULT TEXT: no text unless the user provides a brand title; then show it as a bold end-card.\n\nintegrated_multimodal_description: [Cut 1][0-2s] Tight medium shot, dramatic single-source lighting, bold pose. [Cut 2][2-4s] Whip-pan to a detail (fabric / jewelry), snap zoom energy. [Cut 3][4-6s] Full-body stride shot, camera tracking low and fast. [Cut 4][6-8s] Insert product beauty shot (if any), macro, floating feel. [Cut 5][8-10s] Hero close-up, fast punch-in. [Cut 6][10-12s] Final brand frame, bold end-card title (if user provided brand text), holds to the end. Fast cuts every ~2 seconds, neon color, motion blur accents.\n\noverall_soundscape: Rapid whooshes, camera snap sounds on every cut, sharp fashion foley.\nnon_diegetic_music: Fashion-TVC beat — heavy 4/4 kick, crisp hi-hats, bass drop synchronized with the cuts."
+    }
+   ]
+  }
+ ]
+}

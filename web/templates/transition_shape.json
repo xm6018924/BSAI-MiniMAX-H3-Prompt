@@ -1,0 +1,150 @@
+{
+ "id": "transition_shape",
+ "subcategories": [
+  {
+   "id": "shape_all",
+   "templates": [
+    {
+     "id": "transition_hexagon_grid",
+     "name": "16. 六边形矩阵",
+     "name_en": "16. Hexagon Grid",
+     "description": "动效转场：六边形矩阵 / Hexagon Grid — the outgoing scene fragments into a grid of hexagons that peel apart in a honeycomb pattern, each hexagon rotating away to expose the incoming scene beneath",
+     "description_en": "Hexagon Grid - the outgoing scene fragments into a grid of hexagons that peel apart in a honeycomb pattern, each hexagon rotating away to expose the incoming scene beneath",
+     "preview": "transition_hexagon_grid.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "形状转场",
+      "Hexagon Grid"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "shape transition",
+      "Hexagon Grid"
+     ],
+     "prompt": "A seamless Hexagon Grid transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene fragments into a grid of hexagons that peel apart in a honeycomb pattern, each hexagon rotating away to expose the incoming scene beneath. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a mechanical honeycomb snap with rotating tile clicks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a rhythmic minimal techno beat, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_circle_reveal",
+     "name": "17. 圆形显现",
+     "name_en": "17. Circle Reveal",
+     "description": "动效转场：圆形显现 / Circle Reveal — a perfect circle expands from the center of the outgoing scene like a mask, the circular window sliding open to reveal the incoming scene inside",
+     "description_en": "Circle Reveal - a perfect circle expands from the center of the outgoing scene like a mask, the circular window sliding open to reveal the incoming scene inside",
+     "preview": "transition_circle_reveal.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "形状转场",
+      "Circle Reveal"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "shape transition",
+      "Circle Reveal"
+     ],
+     "prompt": "A seamless Circle Reveal transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A perfect circle expands from the center of the outgoing scene like a mask, the circular window sliding open to reveal the incoming scene inside. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a smooth expanding circle whoosh with soft impact. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a modern cinematic pulse with string layer, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_block_slide",
+     "name": "18. 方块滑动",
+     "name_en": "18. Block Slide",
+     "description": "动效转场：方块滑动 / Block Slide — the outgoing scene splits into rectangular blocks that slide apart in staggered directions, the gaps revealing the incoming scene sliding into place",
+     "description_en": "Block Slide - the outgoing scene splits into rectangular blocks that slide apart in staggered directions, the gaps revealing the incoming scene sliding into place",
+     "preview": "transition_block_slide.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "形状转场",
+      "Block Slide"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "shape transition",
+      "Block Slide"
+     ],
+     "prompt": "A seamless Block Slide transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene splits into rectangular blocks that slide apart in staggered directions, the gaps revealing the incoming scene sliding into place. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: staggered sliding block thuds with mechanical glide. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an energetic IDM beat with glitch percussion, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_triangle_slice",
+     "name": "19. 三角切片",
+     "name_en": "19. Triangle Slice",
+     "description": "动效转场：三角切片 / Triangle Slice — diagonal triangular slices peel from the outgoing scene like paper cuts, each triangle swinging away to reveal the incoming scene through the angular gaps",
+     "description_en": "Triangle Slice - diagonal triangular slices peel from the outgoing scene like paper cuts, each triangle swinging away to reveal the incoming scene through the angular gaps",
+     "preview": "transition_triangle_slice.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "形状转场",
+      "Triangle Slice"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "shape transition",
+      "Triangle Slice"
+     ],
+     "prompt": "A seamless Triangle Slice transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Diagonal triangular slices peel from the outgoing scene like paper cuts, each triangle swinging away to reveal the incoming scene through the angular gaps. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: sharp paper-cut slices with crisp tearing sound. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a sharp percussive build with cymbal swells, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_mosaic_tiles",
+     "name": "20. 马赛克拼图",
+     "name_en": "20. Mosaic Tiles",
+     "description": "动效转场：马赛克拼图 / Mosaic Tiles — the outgoing scene dissolves into a mosaic of small square tiles that scatter outward, the tiles rearranging and reassembling into the incoming scene",
+     "description_en": "Mosaic Tiles - the outgoing scene dissolves into a mosaic of small square tiles that scatter outward, the tiles rearranging and reassembling into the incoming scene",
+     "preview": "transition_mosaic_tiles.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "形状转场",
+      "Mosaic Tiles"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "shape transition",
+      "Mosaic Tiles"
+     ],
+     "prompt": "A seamless Mosaic Tiles transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene dissolves into a mosaic of small square tiles that scatter outward, the tiles rearranging and reassembling into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a scattered tile shuffle with crisp square clicks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful glitch-hop beat, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

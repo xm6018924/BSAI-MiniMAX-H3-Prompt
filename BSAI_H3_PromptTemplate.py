@@ -42,16 +42,75 @@ def _get_template_data():
     return _TEMPLATE_CACHE
 
 
+def _template_label(cat, sub, tpl, english=False):
+    """Path label of a template in the UI's language.
+
+    The template browser writes the label into the hidden `template_select`
+    widget, and it writes it in English (that is all the panel displays). Older
+    workflow JSONs carry the Chinese label instead, so both spellings have to
+    resolve to the same template.
+    """
+    suffix = "_en" if english else ""
+    return " > ".join(
+        str(x.get("name" + suffix) or x.get("name") or "")
+        for x in (cat, sub, tpl)
+    )
+
+
+def _norm_part(text):
+    """Drop a legacy " | English" suffix so bilingual and plain labels compare equal."""
+    s = str(text or "")
+    cut = s.find(" | ")
+    if cut > 0:
+        s = s[:cut]
+    return s.strip()
+
+
+def _norm_label(label):
+    return " > ".join(_norm_part(p) for p in str(label or "").split(" > "))
+
+
 def _find_template(label):
+    """Resolve a "category > subcategory > template" label to its template.
+
+    Passes, cheapest first:
+      1. the full English path  -- what the browser writes today
+      2. the full Chinese path  -- what pre-i18n workflow JSONs stored
+      3. either path with the legacy " | English" suffix stripped, because the
+         two shipped datasets spell the Chinese names differently
+      4. the template name alone, but only when exactly one template carries it,
+         which keeps an old workflow selectable after a path was renamed
+    """
     if not label or label.startswith("("):
         return None
     data = _get_template_data()
+
+    entries = []
     for cat in data.get("categories", []):
         for sub in cat.get("subcategories", []):
             for tpl in sub.get("templates", []):
-                full = f"{cat['name']} > {sub['name']} > {tpl['name']}"
-                if full == label:
-                    return tpl
+                entries.append((tpl,
+                                _template_label(cat, sub, tpl, True),
+                                _template_label(cat, sub, tpl)))
+
+    for tpl, en, zh in entries:
+        if en == label:
+            return tpl
+    for tpl, en, zh in entries:
+        if zh == label:
+            return tpl
+
+    want = _norm_label(label)
+    for tpl, en, zh in entries:
+        if _norm_label(en) == want or _norm_label(zh) == want:
+            return tpl
+
+    # A workflow could also carry the bare template name (no category path).
+    if " > " not in label:
+        for key in ("name_en", "name"):
+            hits = [tpl for tpl, en, zh in entries if _norm_part(tpl.get(key)) == want]
+            if len(hits) == 1:
+                return hits[0]
     return None
 
 

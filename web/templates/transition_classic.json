@@ -1,0 +1,150 @@
+{
+ "id": "transition_classic",
+ "subcategories": [
+  {
+   "id": "classic_all",
+   "templates": [
+    {
+     "id": "transition_fade_to_black",
+     "name": "1. 淡入淡出",
+     "name_en": "1. Fade to Black",
+     "description": "动效转场：淡入淡出 / Fade to Black — the outgoing scene gradually darkens to pure black, then the incoming scene fades up from black",
+     "description_en": "Fade to Black - the outgoing scene gradually darkens to pure black, then the incoming scene fades up from black",
+     "preview": "transition_fade_to_black.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "经典转场",
+      "Fade to Black"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "classic transitions",
+      "Fade to Black"
+     ],
+     "prompt": "A seamless Fade to Black transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene gradually darkens to pure black, then the incoming scene fades up from black. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft rising ambient tone as darkness swallows the frame, gentle breath-like fade. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a minimal ambient pad that swells and recedes, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_cross_dissolve",
+     "name": "2. 交叉溶解",
+     "name_en": "2. Cross Dissolve",
+     "description": "动效转场：交叉溶解 / Cross Dissolve — the outgoing scene slowly dissolves while the incoming scene emerges beneath, both frames overlapping in a soft ghosted blend",
+     "description_en": "Cross Dissolve - the outgoing scene slowly dissolves while the incoming scene emerges beneath, both frames overlapping in a soft ghosted blend",
+     "preview": "transition_cross_dissolve.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "经典转场",
+      "Cross Dissolve"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "classic transitions",
+      "Cross Dissolve"
+     ],
+     "prompt": "A seamless Cross Dissolve transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene slowly dissolves while the incoming scene emerges beneath, both frames overlapping in a soft ghosted blend. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: layered whoosh with a soft shimmer, two textures gently overlapping. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a smooth cinematic string pad, slow and emotional, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_dip_to_white",
+     "name": "3. 白闪过渡",
+     "name_en": "3. Dip to White",
+     "description": "动效转场：白闪过渡 / Dip to White — the frame flashes to pure white like a camera flash, then the incoming scene materializes out of the blinding white light",
+     "description_en": "Dip to White - the frame flashes to pure white like a camera flash, then the incoming scene materializes out of the blinding white light",
+     "preview": "transition_dip_to_white.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "经典转场",
+      "Dip to White"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "classic transitions",
+      "Dip to White"
+     ],
+     "prompt": "A seamless Dip to White transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The frame flashes to pure white like a camera flash, then the incoming scene materializes out of the blinding white light. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a sharp blinding flash burst followed by a quiet ringing fade. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a bright optimistic glockenspiel motif, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_soft_wipe",
+     "name": "4. 柔焦擦拭",
+     "name_en": "4. Soft Wipe",
+     "description": "动效转场：柔焦擦拭 / Soft Wipe — a lens-blur edge sweeps across the frame from left to right, the outgoing scene dissolving into soft bokeh while the incoming scene sharpens into focus",
+     "description_en": "Soft Wipe - a lens-blur edge sweeps across the frame from left to right, the outgoing scene dissolving into soft bokeh while the incoming scene sharpens into focus",
+     "preview": "transition_soft_wipe.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "经典转场",
+      "Soft Wipe"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "classic transitions",
+      "Soft Wipe"
+     ],
+     "prompt": "A seamless Soft Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A lens-blur edge sweeps across the frame from left to right, the outgoing scene dissolving into soft bokeh while the incoming scene sharpens into focus. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a silky sweeping whoosh with soft lens breath. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a warm ambient acoustic guitar arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_iris_wipe",
+     "name": "5. 圆形光圈",
+     "name_en": "5. Iris Wipe",
+     "description": "动效转场：圆形光圈 / Iris Wipe — a circular iris opens from the center of the outgoing scene, expanding like a camera aperture to reveal the incoming scene inside the growing circle",
+     "description_en": "Iris Wipe - a circular iris opens from the center of the outgoing scene, expanding like a camera aperture to reveal the incoming scene inside the growing circle",
+     "preview": "transition_iris_wipe.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "经典转场",
+      "Iris Wipe"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "classic transitions",
+      "Iris Wipe"
+     ],
+     "prompt": "A seamless Iris Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A circular iris opens from the center of the outgoing scene, expanding like a camera aperture to reveal the incoming scene inside the growing circle. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a mechanical aperture click and a smooth expanding whoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful pizzicato string pattern, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

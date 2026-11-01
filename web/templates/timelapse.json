@@ -1,0 +1,473 @@
+{
+ "id": "timelapse",
+ "subcategories": [
+  {
+   "id": "arch_timelapse",
+   "templates": [
+    {
+     "id": "skyscraper_construction",
+     "name": "摩天楼拔地而起",
+     "name_en": "Skyscraper Construction",
+     "description": "一座摩天大楼从基坑到封顶的完整施工延时",
+     "description_en": "Complete construction time-lapse of a skyscraper, from excavation to topping out",
+     "preview": "skyscraper_construction.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "建筑",
+      "施工",
+      "摩天楼",
+      "城市",
+      "延时"
+     ],
+     "tags_en": [
+      "architecture",
+      "construction",
+      "skyscraper",
+      "city",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic aerial time-lapse, a high-angle view of a deep excavation pit in a dense downtown district. Yellow tower cranes swing steel beams into place rhythmically against a backdrop of existing glass skyscrapers; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to the same aerial angle. The building skeleton rises rapidly floor by floor, concrete cores and steel frames growing upward, cranes climbing alongside, workers and machinery moving in fast motion. The sunlight cycle shifts from dawn to golden hour to deep blue twilight. [Shot 3] At 00:08.000, the shot cuts to a closer diagonal angle. The tower tops out and glass curtain walls are installed section by section, the facade becoming a reflective skin of windows. [Shot 4] At 00:11.000, the shot cuts to a low upward angle. The completed skyscraper stands against a twilight sky, windows lighting up from lower to upper floors, and the camera executes a slow, stabilized push-in toward the central structure.\n\noverall_soundscape: Distant crane machinery, rhythmic steel clangs, wind around the tower, and a low urban construction ambience.\n\nnon_diegetic_music: A modern epic orchestral track with steady percussion and brass, building to a triumphant peak as the tower completes, then resolving."
+    },
+    {
+     "id": "city_day_night",
+     "name": "城市昼夜交替",
+     "name_en": "City Day-Night Transition",
+     "description": "同一城市天际线从清晨到夜晚的光影变换延时",
+     "description_en": "Time-lapse of the same city skyline shifting in light from dawn to night",
+     "preview": "city_day_night.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "城市",
+      "昼夜",
+      "天空",
+      "延时",
+      "天际线"
+     ],
+     "tags_en": [
+      "city",
+      "day and night",
+      "sky",
+      "time-lapse",
+      "skyline"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide shot of a modern city skyline with tall skyscrapers, pre-dawn blue hour. The sky brightens as the sun rises behind the towers; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same framing. Bright daylight floods the scene, clouds race across the sky, shadows sweep across the buildings as the sun arcs overhead. [Shot 3] At 00:06.000, the shot cuts to the same framing. Golden hour sunset washes the towers in warm orange light, then the light fades into deep blue twilight. [Shot 4] At 00:08.000, the shot cuts to the same framing at night. Windows light up one by one across the skyline, neon and street lights glow, and light trails from moving traffic streak along the streets below; the camera slowly pushes in with very small amplitude.\n\noverall_soundscape: A low urban hum, distant traffic, wind over the towers, and a gradual shift from birdsong at dawn to city night ambience.\n\nnon_diegetic_music: A smooth ambient electronic track with soft pads and gentle pulse, evolving in warmth through the day cycle, ending on a calm night chord."
+    },
+    {
+     "id": "interior_renovation",
+     "name": "室内装修延时",
+     "name_en": "Interior Renovation Timelapse",
+     "description": "一间毛坯房从空壳到精装完成的全过程延时",
+     "description_en": "Full time-lapse of a bare-shell apartment being finished and furnished",
+     "preview": "interior_renovation.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "室内",
+      "装修",
+      "改造",
+      "空间",
+      "延时"
+     ],
+     "tags_en": [
+      "interior",
+      "renovation",
+      "makeover",
+      "space",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide shot of an empty concrete room with bare walls, a window at the far end, and daylight entering; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same framing. Scaffolding appears, workers move in fast motion, drywall partitions rise, plumbing and electrical conduits are installed, and plaster coats the walls. [Shot 3] At 00:06.000, the shot cuts to the same framing. Flooring is laid, walls are painted, cabinetry and light fixtures are mounted, and furniture is moved in piece by piece, the room filling with a warm interior. [Shot 4] At 00:08.500, the shot cuts to a slightly lower angle. The finished room is complete with soft furnishings, warm lamps glowing, and a view of dusk through the window; the camera pushes in slowly with small amplitude toward the lit interior.\n\noverall_soundscape: Rapid construction noises, hammering, sawing, footsteps, and a gradual transition to a quiet, cozy indoor room tone.\n\nnon_diegetic_music: A light acoustic track with gentle guitar and soft percussion, upbeat and satisfying, ending on a warm settled note."
+    },
+    {
+     "id": "bridge_completion",
+     "name": "跨海大桥合龙",
+     "name_en": "Bridge Construction Completion",
+     "description": "跨海大桥从桥墩到桥面合龙的宏伟施工延时",
+     "description_en": "Majestic construction time-lapse of a sea-crossing bridge, from piers to deck closure",
+     "preview": "bridge_completion.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "建筑",
+      "桥梁",
+      "跨海",
+      "施工",
+      "延时"
+     ],
+     "tags_en": [
+      "architecture",
+      "bridge",
+      "sea crossing",
+      "construction",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic aerial time-lapse, a wide view of a sea strait with massive bridge piers rising from the water in a long row; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a closer aerial angle along the piers. Tower cranes and gantries lift massive steel girder segments into place, the deck extending section by section across the water, ships passing beneath. [Shot 3] At 00:08.000, the shot cuts to a low side angle near the gap. The final deck segments are lifted and fitted, the two ends meeting in a precise closure at the center of the span. [Shot 4] At 00:11.000, the shot cuts to a wide aerial view at sunset. The completed bridge spans the strait, cables taut and lights switching on along the deck as dusk falls, and the camera slowly pulls back to reveal the full scale.\n\noverall_soundscape: Heavy machinery, metallic clangs, wind over open water, lapping waves, and a low distant hum of the structure.\n\nnon_diegetic_music: A grand orchestral piece with brass and strings, steady and monumental, swelling as the bridge completes and resolving majestically."
+    }
+   ]
+  },
+  {
+   "id": "product_timelapse",
+   "templates": [
+    {
+     "id": "exploded_view_assembly",
+     "name": "产品爆炸图组装",
+     "name_en": "Exploded-View Product Assembly",
+     "description": "一件产品从爆炸分解状态逐层合拢组装成完整成品",
+     "description_en": "A product assembles from an exploded view, layer by layer, into the finished item",
+     "preview": "exploded_view_assembly.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "产品",
+      "爆炸图",
+      "组装",
+      "机械",
+      "延时"
+     ],
+     "tags_en": [
+      "product",
+      "exploded view",
+      "assembly",
+      "mechanical",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] 3D product visualization, a fixed medium shot on a clean white studio background with soft directional shadows. A modern wireless speaker hangs in exploded-view: its outer casing, grille, driver, circuit board, and base plate are separated along their axes, floating in space. The camera is static; the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same framing. The inner circuit board moves inward and seats onto the base, then the driver lowers into the chassis, each part gliding along its axis in sequence. [Shot 3] At 00:06.000, the shot cuts to a slightly tighter angle. The grille and outer casing close over the internal parts, the shell snapping shut with a satisfying fit, seams aligning perfectly. [Shot 4] At 00:08.500, the shot cuts to a three-quarter angle. The fully assembled speaker rotates slowly 180 degrees on a turntable, every surface clean and sharp, and the camera pushes in slightly to showcase the finished product.\n\noverall_soundscape: Soft mechanical clicks as parts seat together, a faint whir of the turntable, and a quiet clean studio tone.\n\nnon_diegetic_music: A modern minimal electronic track with crisp synth pulses and light percussion, precise and premium, ending on a clean resolved note."
+    },
+    {
+     "id": "printer_3d_printing",
+     "name": "3D打印成形",
+     "name_en": "3D Printing Process",
+     "description": "3D打印机逐层打印出一件立体物品的全过程延时",
+     "description_en": "Time-lapse of a 3D printer building a three-dimensional object layer by layer",
+     "preview": "printer_3d_printing.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "3D打印",
+      "制造",
+      "科技",
+      "产品",
+      "延时"
+     ],
+     "tags_en": [
+      "3D printing",
+      "manufacturing",
+      "technology",
+      "product",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic macro, a fixed medium close-up of a 3D printer nozzle above an empty build plate in a softly lit workshop; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to a side angle through the printer frame. The nozzle moves back and forth rapidly, laying down fine layers of material that stack upward, the object taking shape layer by layer, thin filament lines visible on the surface. [Shot 3] At 00:06.000, the shot cuts to a closer angle on the growing object. A detailed geometric sculpture emerges, its layers smoothing as the print nears completion, the nozzle making a final pass. [Shot 4] At 00:08.500, the shot cuts to a medium shot. The print head lifts away and the completed object stands on the build plate; the plate lowers and the object is revealed fully formed, and the camera arcs slowly around it.\n\noverall_soundscape: The rhythmic whir and click of the printer head, a soft electric hum, and a quiet workshop room tone.\n\nnon_diegetic_music: A minimalist electronic track with repeating arpeggios and soft beats, methodical and precise, ending with a clean final chord."
+    },
+    {
+     "id": "smartwatch_assembly",
+     "name": "智能手表组装",
+     "name_en": "Smartwatch Assembly Line",
+     "description": "智能手表的精密零件逐一组装成整机的工业延时",
+     "description_en": "Industrial time-lapse of precision smart-watch parts being assembled one by one into a complete unit",
+     "preview": "smartwatch_assembly.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "产品",
+      "手表",
+      "组装",
+      "精密",
+      "工业"
+     ],
+     "tags_en": [
+      "product",
+      "watch",
+      "assembly",
+      "precision",
+      "industrial"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic industrial visualization, a fixed close-up on a clean assembly surface under bright even light. The internal components of a smartwatch — screen module, battery, main board, sensors, and case — lie arranged and separated; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a tighter macro angle. The main board is placed into the case, the battery seats beside it, flex cables connect, and the sensor array clicks into position, each micro-part guided by robotic precision. [Shot 3] At 00:08.000, the shot cuts to a medium close-up. The display module presses down onto the case and seals seamlessly, the crown and button insert into the side. [Shot 4] At 00:10.500, the shot cuts to a three-quarter angle. The finished smartwatch lies on the surface, screen briefly lighting up with a glowing watch face before dimming, and the camera pushes in slowly.\n\noverall_soundscape: Delicate mechanical clicks, soft servo whirs, a faint electronic chime as the screen lights up, and a clean lab room tone.\n\nnon_diegetic_music: A refined electronic track with soft plucks and gentle percussion, sleek and modern, ending on a subtle ambient note."
+    },
+    {
+     "id": "block_building",
+     "name": "积木拼搭延时",
+     "name_en": "Building Blocks Construction",
+     "description": "彩色积木从零散零件到搭建成完整模型的全过程",
+     "description_en": "Colored building blocks go from scattered pieces to a completed model",
+     "preview": "block_building.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "积木",
+      "玩具",
+      "拼搭",
+      "色彩",
+      "延时"
+     ],
+     "tags_en": [
+      "building blocks",
+      "toy",
+      "assembling",
+      "colour",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic stop-motion-style time-lapse, a fixed wide shot of a clean white table with scattered colorful building blocks; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to a slightly lower angle. Blocks lift and snap together by themselves in fast motion, forming a sturdy base platform, walls rising brick by brick. [Shot 3] At 00:06.000, the shot cuts to a closer angle. Windows, a roof, and a small tower are added, the colorful model taking on the shape of a tiny house with a garden of green blocks. [Shot 4] At 00:08.500, the shot cuts to a medium-wide shot. The completed block house stands on the table in bright natural light, and the camera arcs slowly around it before settling on the front view.\n\noverall_soundscape: Sharp plastic clicks as blocks snap together, a soft thump as layers settle, and a bright playful room tone.\n\nnon_diegetic_music: A cheerful plucky melody with light xylophone and percussion, playful and upbeat, ending on a happy resolved note."
+    }
+   ]
+  },
+  {
+   "id": "traffic_timelapse",
+   "templates": [
+    {
+     "id": "highway_light_trails",
+     "name": "高速车流光轨",
+     "name_en": "Highway Light Trails",
+     "description": "夜间高速公路上车流拉出红白光轨的延时",
+     "description_en": "Time-lapse of traffic drawing red and white light trails along a highway at night",
+     "preview": "highway_light_trails.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "交通",
+      "车流",
+      "光轨",
+      "高速",
+      "夜景"
+     ],
+     "tags_en": [
+      "traffic",
+      "traffic flow",
+      "light trails",
+      "highway",
+      "night"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a high elevated fixed angle above a multi-lane highway curving through a city at night; the camera is static, the frame never moves. Streams of cars move in both directions, their headlights and taillights stretching into continuous red and white light trails. [Shot 2] At 00:03.000, the shot cuts to a slightly lower elevated angle. Traffic thickens and the light trails become longer and brighter, curving along the highway like ribbons of light, cars blinking past in streaks. [Shot 3] At 00:06.000, the shot cuts to a closer high angle near an interchange. Multiple streams of light trails merge and split across stacked ramps, creating a glowing network against the dark city. [Shot 4] At 00:08.500, the shot cuts to a wide aerial view. The full highway network glows with moving light trails under the night sky, and the camera slowly pulls out to reveal the scale.\n\noverall_soundscape: A low continuous rush of traffic, distant engine hum, wind over the elevated viewpoint, and a subtle city night ambience.\n\nnon_diegetic_music: A smooth electronic ambient track with slow bass pulse and soft pads, sleek and nocturnal, ending on a lingering synth note."
+    },
+    {
+     "id": "interchange_traffic",
+     "name": "立交桥车流",
+     "name_en": "Interchange Traffic Flow",
+     "description": "高空俯视复杂立交桥上川流不息的车流延时",
+     "description_en": "Time-lapse of endless traffic on a complex interchange, seen from high above",
+     "preview": "interchange_traffic.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "交通",
+      "立交桥",
+      "车流",
+      "航拍",
+      "延时"
+     ],
+     "tags_en": [
+      "traffic",
+      "interchange",
+      "traffic flow",
+      "aerial",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic aerial time-lapse, a high vertical top-down view of a complex multi-level interchange with curving ramps and overpasses; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same top-down framing. Vehicles stream continuously along every ramp and road, tiny cars in dense lines, merging and diverging through the loops in fast motion. [Shot 3] At 00:06.000, the shot cuts to a slightly tilted aerial angle. The sun lowers and long shadows stretch across the interchange, traffic remaining steady, headlights beginning to switch on. [Shot 4] At 00:08.500, the shot cuts to the top-down view at dusk. The interchange lights up, headlight and taillight trails forming bright ribbons that trace every curve, and the camera slowly zooms in on the central hub.\n\noverall_soundscape: A low continuous traffic drone, tire hum, wind over the elevated structure, and a faint distant city noise.\n\nnon_diegetic_music: A minimalist electronic piece with a steady pulse and airy pads, flowing and precise, ending on a calm sustained note."
+    },
+    {
+     "id": "subway_station",
+     "name": "地铁站人流",
+     "name_en": "Subway Station Passenger Flow",
+     "description": "地铁站内密集人流如潮水般流动的延时",
+     "description_en": "Time-lapse of dense crowds flowing like a tide through a subway station",
+     "preview": "subway_station.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "交通",
+      "地铁",
+      "人流",
+      "城市",
+      "延时"
+     ],
+     "tags_en": [
+      "traffic",
+      "subway",
+      "crowd flow",
+      "city",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide shot from a high corner of a modern subway station hall, escalators and platforms visible below; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to a similar wide angle. Crowds of commuters flow through the hall like currents, streams moving in opposite directions, trains arriving and doors opening to release and swallow passengers in fast motion. [Shot 3] At 00:06.000, the shot cuts to a closer elevated angle above an escalator bank. A dense continuous stream of people ascends and descends, the flow never stopping, their movements blurred by speed. [Shot 4] At 00:08.500, the shot cuts to a wide shot of the platform edge. A train glides in, the crowd surges and parts, doors close, and the train departs leaving the platform briefly emptier; the camera holds as another train approaches.\n\noverall_soundscape: Station announcements in the distance, train rumble and brakes, doors chime, a constant murmur of footsteps and voices.\n\nnon_diegetic_music: A driving modern electronic track with a steady pulse and light percussion, energetic and urban, ending on a clean cutoff."
+    },
+    {
+     "id": "port_shipping",
+     "name": "港口货轮进出",
+     "name_en": "Port Shipping Movement",
+     "description": "集装箱港口货轮装卸、进出港的繁忙延时",
+     "description_en": "Busy time-lapse of container ships loading, unloading and moving in and out of the port",
+     "preview": "port_shipping.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "交通",
+      "港口",
+      "货轮",
+      "物流",
+      "延时"
+     ],
+     "tags_en": [
+      "traffic",
+      "port",
+      "freighter",
+      "logistics",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic aerial time-lapse, a high view of a busy container port with massive gantry cranes lining the docks and large cargo ships berthed alongside; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to a closer aerial angle over the yard. Gantry cranes move along the quay in fast motion, hoisting and stacking colorful containers in neat rows, trucks shuttling between stacks. [Shot 3] At 00:08.000, the shot cuts to a side aerial angle at the waterline. A large container ship slowly departs its berth, tugs guiding it out into the channel, while another ship is towed in to take its place. [Shot 4] At 00:11.000, the shot cuts to a wide view at sunset. The port glows with work lights as the cranes keep moving, ships silhouetted on the water, and the camera slowly pulls back.\n\noverall_soundscape: Deep ship horns, gantry crane machinery, container clangs, water lapping at hulls, and a low busy port ambience.\n\nnon_diegetic_music: A steady industrial orchestral track with rhythmic percussion and brass, purposeful and vast, ending on a resolved low chord."
+    }
+   ]
+  },
+  {
+   "id": "nature_timelapse",
+   "templates": [
+    {
+     "id": "sea_of_clouds",
+     "name": "云海翻涌",
+     "name_en": "Rolling Sea of Clouds",
+     "description": "山巅云海如海浪般翻涌流动的延时",
+     "description_en": "Time-lapse of a sea of clouds churning like waves at a mountain summit",
+     "preview": "sea_of_clouds.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "云海",
+      "山峰",
+      "延时",
+      "壮阔"
+     ],
+     "tags_en": [
+      "nature",
+      "sea of clouds",
+      "peaks",
+      "time-lapse",
+      "grandeur"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide vantage point on a high mountain summit above a vast sea of clouds filling the valleys below; the camera is static, the frame never moves. Dawn light tints the cloud tops pink and gold. [Shot 2] At 00:03.000, the shot cuts to the same framing. The cloud sea undulates and rolls like ocean waves, slow currents pouring over ridges and spilling down gaps between peaks. [Shot 3] At 00:06.000, the shot cuts to a slightly wider angle. Sunlight breaks through, casting god rays through the drifting clouds, the cloud surface shifting between bright and shadowed bands. [Shot 4] At 00:08.500, the shot cuts to a close shot of a rocky summit ridge. Wispy cloud fingers stream past the rocks in fast motion, then thin out to reveal the valley far below; the camera slowly pans across the ridgeline.\n\noverall_soundscape: High-altitude wind, a distant roar of moving cloud, faint birdsong, and the thin quiet of the summit.\n\nnon_diegetic_music: A serene orchestral piece with slow string swells and soft piano, vast and calm, building gently then fading to silence."
+    },
+    {
+     "id": "star_trails",
+     "name": "星轨流转",
+     "name_en": "Star Trails Rotation",
+     "description": "夜空繁星围绕北极星画出的同心圆星轨延时",
+     "description_en": "Star-trail time-lapse of the night sky circling Polaris in concentric rings",
+     "preview": "star_trails.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "星空",
+      "星轨",
+      "银河",
+      "延时"
+     ],
+     "tags_en": [
+      "nature",
+      "starry sky",
+      "star trails",
+      "milky way",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic astrophotography time-lapse, a fixed wide angle of a dark, open landscape with a lone silhouetted tree against a sky full of bright stars; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to the same framing. The stars slowly begin to streak, tracing short arcs across the sky as the Earth's rotation becomes visible. [Shot 3] At 00:08.000, the shot cuts to the same framing. The star trails lengthen into clear concentric circles around the celestial pole, the Milky Way band crossing the sky, a single shooting star streaks by. [Shot 4] At 00:11.000, the shot cuts to a low angle toward the sky. The full circular star trails wheel slowly above the dark horizon, cool blue starlight on the ground, and the camera holds as the trails continue to turn.\n\noverall_soundscape: Utter desert stillness, a faint high wind, distant crickets, and the profound quiet of a remote night.\n\nnon_diegetic_music: A sparse ambient track with deep sustained pads and slow bell tones, vast and meditative, ending in a long fade."
+    },
+    {
+     "id": "tidal_flow",
+     "name": "潮汐涨落",
+     "name_en": "Tidal Rise and Fall",
+     "description": "海岸边潮水涨落、礁石隐现的昼夜循环延时",
+     "description_en": "Day-to-night cycle time-lapse of tides rising and falling over coastal rocks",
+     "preview": "tidal_flow.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "海洋",
+      "潮汐",
+      "海岸",
+      "延时"
+     ],
+     "tags_en": [
+      "nature",
+      "ocean",
+      "tide",
+      "coast",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed medium-wide shot of a rocky shoreline with a small tidal pool, calm low tide exposing wet rocks and seaweed; the camera is static, the frame never moves. [Shot 2] At 00:03.000, the shot cuts to the same framing. The tide rises, water creeping up over the rocks, waves lapping higher and higher, submerging the tidal pool. [Shot 3] At 00:06.000, the shot cuts to a slightly wider angle. The sea reaches its high tide mark, foam swirling around the rocks, then slowly begins to retreat, rocks reappearing and draining. [Shot 4] At 00:08.500, the shot cuts to a closer angle on the exposed rocks. The tide pool reforms as water recedes, small crabs scuttling, the wet rocks gleaming under a fading sunset sky; the camera pushes in very slightly.\n\noverall_soundscape: Rhythmic waves advancing and retreating, foam hissing on rock, seabirds calling, and a steady ocean ambience.\n\nnon_diegetic_music: A gentle ambient track with soft piano and ocean-like synth textures, calm and cyclical, resolving into quiet."
+    },
+    {
+     "id": "aurora_dance",
+     "name": "极光舞动",
+     "name_en": "Dancing Aurora",
+     "description": "夜空中绿色紫色极光如绸带般舞动的延时",
+     "description_en": "Time-lapse of green and purple auroras dancing like silk ribbons in the night sky",
+     "preview": "aurora_dance.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "极光",
+      "极地",
+      "夜空",
+      "延时"
+     ],
+     "tags_en": [
+      "nature",
+      "aurora",
+      "polar",
+      "night sky",
+      "time-lapse"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] Cinematic time-lapse, a fixed wide angle over a snow-covered landscape with a frozen lake in the foreground, a dark clear sky above; the camera is static, the frame never moves. [Shot 2] At 00:04.000, the shot cuts to the same framing. A faint green glow appears on the horizon and slowly rises into broad vertical curtains of green and violet light, shimmering and pulsing. [Shot 3] At 00:08.000, the shot cuts to a slightly higher angle. The aurora curtains dance and ripple across the sky, folding and unfolding like fabric, their reflections shimmering on the frozen lake below. [Shot 4] At 00:11.000, the shot cuts to a wide shot including a small snow-covered cabin with a warm yellow light in its window for scale. The aurora continues to undulate above, stars sharp behind the bands, and the camera slowly pans across the scene.\n\noverall_soundscape: Arctic silence, a faint high wind, soft crunch of snow, and the quiet hum of the frozen night.\n\nnon_diegetic_music: An ethereal orchestral piece with airy strings and soft choir-like pads, slow and luminous, ending in a gentle fade."
+    }
+   ]
+  }
+ ]
+}

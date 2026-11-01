@@ -1,0 +1,150 @@
+{
+ "id": "transition_particle",
+ "subcategories": [
+  {
+   "id": "particle_all",
+   "templates": [
+    {
+     "id": "transition_particle_dissolve",
+     "name": "11. 粒子消散",
+     "name_en": "11. Particle Dissolve",
+     "description": "动效转场：粒子消散 / Particle Dissolve — the outgoing scene breaks apart into thousands of tiny glowing particles that drift and dissolve, the particles regrouping to form the incoming scene",
+     "description_en": "Particle Dissolve - the outgoing scene breaks apart into thousands of tiny glowing particles that drift and dissolve, the particles regrouping to form the incoming scene",
+     "preview": "transition_particle_dissolve.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "粒子转场",
+      "Particle Dissolve"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "particle transition",
+      "Particle Dissolve"
+     ],
+     "prompt": "A seamless Particle Dissolve transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene breaks apart into thousands of tiny glowing particles that drift and dissolve, the particles regrouping to form the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a soft crackling swarm of particles, gentle spatial drift. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a delicate electronic music box melody, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_dust_motes",
+     "name": "12. 尘埃升腾",
+     "name_en": "12. Dust Motes",
+     "description": "动效转场：尘埃升腾 / Dust Motes — golden dust motes rise from the outgoing scene, swirling upward and gradually carrying the frame into the incoming scene as the dust settles",
+     "description_en": "Dust Motes - golden dust motes rise from the outgoing scene, swirling upward and gradually carrying the frame into the incoming scene as the dust settles",
+     "preview": "transition_dust_motes.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "粒子转场",
+      "Dust Motes"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "particle transition",
+      "Dust Motes"
+     ],
+     "prompt": "A seamless Dust Motes transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Golden dust motes rise from the outgoing scene, swirling upward and gradually carrying the frame into the incoming scene as the dust settles. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: airy floating dust with a warm subtle breeze. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a gentle piano piece with soft reverb, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_ember_sparks",
+     "name": "13. 火星迸溅",
+     "name_en": "13. Ember Sparks",
+     "description": "动效转场：火星迸溅 / Ember Sparks — orange ember sparks burst from the edges of the outgoing scene, crackling and flying toward the camera, the sparks coalescing into the incoming scene",
+     "description_en": "Ember Sparks - orange ember sparks burst from the edges of the outgoing scene, crackling and flying toward the camera, the sparks coalescing into the incoming scene",
+     "preview": "transition_ember_sparks.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "粒子转场",
+      "Ember Sparks"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "particle transition",
+      "Ember Sparks"
+     ],
+     "prompt": "A seamless Ember Sparks transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Orange ember sparks burst from the edges of the outgoing scene, crackling and flying toward the camera, the sparks coalescing into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: sharp crackling ember pops with rising heat shimmer. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a tense percussion build with a fire crackle rhythm, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_confetti_burst",
+     "name": "14. 彩纸爆发",
+     "name_en": "14. Confetti Burst",
+     "description": "动效转场：彩纸爆发 / Confetti Burst — colorful confetti bursts into the frame in a joyful explosion, the paper pieces tumbling across the outgoing scene and settling into the incoming scene",
+     "description_en": "Confetti Burst - colorful confetti bursts into the frame in a joyful explosion, the paper pieces tumbling across the outgoing scene and settling into the incoming scene",
+     "preview": "transition_confetti_burst.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "粒子转场",
+      "Confetti Burst"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "particle transition",
+      "Confetti Burst"
+     ],
+     "prompt": "A seamless Confetti Burst transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Colorful confetti bursts into the frame in a joyful explosion, the paper pieces tumbling across the outgoing scene and settling into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a festive paper burst with cheerful tumbling rustle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an upbeat celebration brass fanfare, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_snow_flurry",
+     "name": "15. 雪花纷飞",
+     "name_en": "15. Snow Flurry",
+     "description": "动效转场：雪花纷飞 / Snow Flurry — falling snowflakes drift across the outgoing scene, the flurry thickening until it blurs into a white veil that clears to reveal the incoming scene",
+     "description_en": "Snow Flurry - falling snowflakes drift across the outgoing scene, the flurry thickening until it blurs into a white veil that clears to reveal the incoming scene",
+     "preview": "transition_snow_flurry.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "粒子转场",
+      "Snow Flurry"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "particle transition",
+      "Snow Flurry"
+     ],
+     "prompt": "A seamless Snow Flurry transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Falling snowflakes drift across the outgoing scene, the flurry thickening until it blurs into a white veil that clears to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft snow swish with a quiet winter wind. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a serene music box waltz, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

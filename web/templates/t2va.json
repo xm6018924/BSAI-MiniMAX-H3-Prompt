@@ -1,0 +1,594 @@
+{
+ "id": "t2va",
+ "subcategories": [
+  {
+   "id": "cinematic",
+   "templates": [
+    {
+     "id": "rain_cyberpunk",
+     "name": "赛博朋克雨夜街道",
+     "name_en": "Cyberpunk rainy street",
+     "description": "霓虹灯雨夜城市街道，赛博朋克氛围",
+     "description_en": "Neon-lit city street on a rainy night, cyberpunk atmosphere",
+     "preview": "rain_cyberpunk.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "赛博朋克",
+      "雨夜",
+      "霓虹",
+      "城市",
+      "电影感"
+     ],
+     "tags_en": [
+      "cyberpunk",
+      "rainy night",
+      "neon",
+      "city",
+      "cinematic"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Cinematic, photorealistic. A wide establishing shot of a rain-soaked cyberpunk city street at night. Towering buildings covered in holographic advertisements and neon signs in Japanese and Chinese characters. Heavy rain falls, creating reflections on the wet asphalt. Steam rises from street grates. A person walks away from camera down the center of the street. The camera slowly tracks forward at eye level. Neon colors — cyan, magenta, and electric blue — reflect off every wet surface. Shallow depth of field. [Shot 2] At 00:04.000 [4-7s] Cut to a low-angle medium shot. The person passes under a massive holographic advertisement that flickers and glitches. Rain drops are visible individually in the neon backlight. The camera tilts up slightly to reveal more of the towering cityscape. [Shot 3] At 00:07.000 [7-10s] A flying drone with red indicator lights passes overhead, its searchlight sweeping the street. The person turns a corner into a narrower alley, blue neon light spilling from a doorway. The camera holds on the empty rain-soaked street as the figure disappears.\n\noverall_soundscape: Heavy rain on pavement and metal surfaces, distant thunder, low hum of neon transformers, flying drone buzz, splashing footsteps, and ambient city electronics.\n\nnon_diegetic_music: A dark synthwave track with heavy bass, industrial percussion, and atmospheric synth pads, evoking a dystopian noir atmosphere. Slow tempo with building tension."
+    },
+    {
+     "id": "epic_battle",
+     "name": "古战场史诗冲锋",
+     "name_en": "Epic ancient battle charge",
+     "description": "古代战场千军万马冲锋的史诗级场景",
+     "description_en": "Epic scene of thousands of soldiers charging across an ancient battlefield",
+     "preview": "epic_battle.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "史诗",
+      "战争",
+      "冲锋",
+      "古代",
+      "电影感"
+     ],
+     "tags_en": [
+      "epic",
+      "war",
+      "charge",
+      "ancient",
+      "cinematic"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Cinematic, photorealistic, epic scale. A vast ancient battlefield at dawn. Thousands of armored soldiers stand in formation across a misty plain. Banners flutter in the cold morning wind. The camera is positioned low behind the front rank, looking forward across the field. Dawn light breaks through clouds on the horizon. The camera slowly cranes up to reveal the massive scale of both armies. [Shot 2] At 00:04.000 [4-8s] A war horn sounds. The front line begins to march forward, then breaks into a run. The camera tracks alongside the charging soldiers at ground level. Dust kicks up from thousands of feet. Armor and weapons clatter. Individual soldiers' faces show determination and fear. The camera shakes slightly with the impact of the charge. [Shot 3] At 00:08.000 [8-12s] The two armies collide. The camera rises to a high vantage point showing the chaos of battle. Individual combatants clash with swords and shields. Smoke and dust fill the air. The camera slowly pulls back to reveal the full scale of the engagement. Dramatic backlight from the rising sun silhouettes the fighters.\n\noverall_soundscape: War horns, thunderous marching, armor clashing, battle cries, horses neighing, swords striking shields, and the roar of thousands of voices.\n\nnon_diegetic_music: An epic orchestral track with massive taiko drums, brass section, and choir, building from tension to full crescendo during the charge."
+    },
+    {
+     "id": "suspense_noir",
+     "name": "黑色悬疑审讯室",
+     "name_en": "Film noir interrogation",
+     "description": "黑色电影风格的审讯室悬疑场景",
+     "description_en": "Film-noir style interrogation room, suspense scene",
+     "preview": "suspense_noir.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "黑色电影",
+      "悬疑",
+      "审讯",
+      "低调照明"
+     ],
+     "tags_en": [
+      "film noir",
+      "suspense",
+      "interrogation",
+      "low-key lighting"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Film noir, high-contrast black-and-white. A stark interrogation room with a single overhead lamp casting a harsh pool of light on a metal table. A person sits in the chair, face half in shadow. The camera is positioned at a low angle from across the table. The only light source is the hanging lamp. Cigarette smoke drifts through the light beam. [Shot 2] At 00:04.000 [4-7s] Close-up on the person's face. They lean forward into the light. Their eyes are weary but sharp. A bead of sweat traces down the temple. The camera slowly pushes in. They speak quietly, a short defensive line (the exact words can be set by the user): (S1) says: [Chinese] 我已经说了三遍了。那天晚上我不在场。 [Shot 3] At 00:07.000 [7-10s] Cut to an over-the-shoulder shot from the person's perspective, looking at an empty chair across the table — the interrogator is unseen, only a voice. A hand slams the table. The unseen interrogator (S2) says in an off-screen voiceover, a short pressure line (the exact words can be set by the user): [Chinese] 再想想。你还有最后一次机会。 The lamp swings slightly from the impact, making shadows shift dramatically.\n\noverall_soundscape: Dripping water echoing in a large room, chair creaking, table slam, cigarette burning, and heavy breathing.\n\nnon_diegetic_music: A sparse, tense jazz track with slow muted trumpet, brushed snare drum, and walking bass. Minimalist and moody with long pauses."
+    },
+    {
+     "id": "hell_grind_5stage",
+     "name": "AI电影级5阶段提示词（HELL GRIND方法论）",
+     "name_en": "AI Film 5-Stage Prompt (HELL GRIND Method)",
+     "description": "基于全球首部AI长片《HELL GRIND》开源方法论，5阶段结构化提示词：真实IMAX相机+Panavision镜头、不完美战损质感、手持呼吸运镜、留空结尾。支持角色+对手+场景三张参考图。",
+     "description_en": "Built on the open-source methodology of the world's first AI feature film \"HELL GRIND\": a 5-stage structured prompt with a real IMAX camera and Panavision lenses, imperfect battle-worn texture, handheld breathing camera work and an open ending. Supports three reference images: character, opponent and scene.",
+     "preview": "hell_grind_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "HELL GRIND",
+      "5阶段",
+      "IMAX",
+      "Panavision",
+      "暗黑",
+      "cinematic",
+      "战损"
+     ],
+     "tags_en": [
+      "film",
+      "HELL GRIND",
+      "5 stages",
+      "IMAX",
+      "Panavision",
+      "dark",
+      "cinematic",
+      "battle-worn"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the opponent. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】gritty hard sci-fi noir | dark fantasy underworld | battle-damage aesthetic | rain-soaked concrete | post-apocalyptic live-action | cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> stands in the center of <Picture 3>@图3's environment, clothing showing visible wear: frayed cuffs, scuffed boots, faint bloodstains on the collar. Skin retains minor imperfections — pores, faint scars, five-o'clock shadow. <Subject 2> approaches from the background, silhouette distinct from <Subject 1>: different build, different wardrobe, different facial structure. The environment around them shows lived-in decay: peeling paint, cracked tiles, flickering fluorescent light overhead, water pooling on the floor reflecting the harsh light.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (35mm focal, f/4 aperture). Low-saturation teal-and-orange color grade, heavy film grain (35mm stock), volumetric fog catching the overhead light. Subsurface scattering on skin, rough specular on wet surfaces. No over-smoothing, no plastic skin — every imperfection preserved. Chiaroscuro lighting: single harsh key light from above, deep shadows swallowing the background, rim light separating both figures from the darkness.\n\n【STAGE 4 — CAMERA RULES】Handheld shot — extremely subtle, breath-like camera float throughout, as if held by a human operator with slightly unsteady hands. Slow dolly-in toward <Subject 1> as the scene progresses, shallow depth of field (f/4) keeping <Subject 1> sharp while <Subject 2> and the background soften into bokeh. No rapid cuts, no shaky-cam excess — the movement is organic and restrained.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] Establishing: <Subject 1> stands motionless in the puddle-lit room, chest rising and falling with heavy breathing. Water drips from the ceiling somewhere off-screen, each drop sending a ripple across the floor. <Subject 2>'s silhouette emerges from the dark corridor in the background, footsteps slow and deliberate.\n[2-4s] Tension: <Subject 1>'s eyes flick toward <Subject 2>, jaw tightening. A bead of sweat traces down <Subject 1>'s temple, catching the fluorescent light. <Subject 2> stops ten feet away, shoulders squared. Neither speaks. The fluorescent light above buzzes and flickers once, casting both figures into brief silhouette.\n[4-6s] Confrontation: <Subject 2> takes one step forward, boot splashing in a puddle. <Subject 1> shifts weight to the back foot, hands rising slowly into a guarded stance. The camera's breath-like float becomes slightly more pronounced, mirroring the rising tension. A distant metal clang echoes through the empty space.\n[6-8s] Empty ending: No dialogue. No explosion. No blinding light. Just the two figures frozen in their stances, rain beginning to fall through a broken skylight, each drop catching the harsh overhead light as it falls. The camera holds on the wide shot, neither figure moving, as the sound of dripping water fades into silence.\n\noverall_soundscape: Production audio only. Heavy, measured breathing from <Subject 1> in the foreground. Slow, deliberate footsteps of <Subject 2> on wet concrete. The constant low hum of a flickering fluorescent tube. Distant water dripping from a broken pipe, each drop echoing in the empty space. A single far-off metal clang somewhere in the building's depths. No music, no score — the silence between sounds is as important as the sounds themselves.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every breath, every footstep, every drip carries weight in the silence."
+    },
+    {
+     "id": "cyberpunk_chase_5stage",
+     "name": "赛博朋克雨夜追逐（5阶段）",
+     "name_en": "Cyberpunk Rainy Night Chase (5-Stage)",
+     "description": "5阶段结构化提示词：霓虹雨夜都市追逐，真实IMAX相机+Panavision镜头，不完美战损质感，手持跟拍运镜，留空结尾。支持主角+对手+场景三张参考图。",
+     "description_en": "5-stage structured prompt: neon rainy-night urban chase, real IMAX camera and Panavision lenses, imperfect battle-worn texture, handheld follow camera, open ending. Supports three reference images: lead, opponent and scene.",
+     "preview": "cyberpunk_chase_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手/伙伴+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "5阶段",
+      "赛博朋克",
+      "追逐",
+      "IMAX",
+      "雨夜",
+      "霓虹"
+     ],
+     "tags_en": [
+      "film",
+      "5 stages",
+      "cyberpunk",
+      "chase",
+      "IMAX",
+      "rainy night",
+      "neon"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the secondary character. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】neon cyberpunk noir | rainy megacity | high-speed chase | battle-damage aesthetic | holographic signage | live-action cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> sprints through the rain-soaked streets of <Picture 3>@图3's neon city, clothing soaked and torn: jacket frayed at the cuffs, shirt clinging to a wounded side, boots splashing through puddles that reflect holographic ads. Skin retains minor imperfections — pores, a cut above the eyebrow bleeding faintly, rain streaming down the face. <Subject 2> pursues from behind, silhouette distinct from <Subject 1>: different build, different coat, different facial structure, augmented eyes glowing faintly. The environment around them shows lived-in decay: peeling neon signs, cracked wet pavement, steam rising from manholes, holographic advertisements flickering overhead.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (35mm focal, f/2.8 aperture). High-saturation magenta-and-cyan neon color grade, heavy 35mm film grain, volumetric fog catching the neon light and rain. Subsurface scattering on wet skin, rough specular on wet surfaces and puddle reflections. No over-smoothing — every rain droplet, every scar preserved. Neon chiaroscuro: harsh key light from overhead signs, deep shadows swallowing the alleyways, rim light separating both figures from the neon darkness.\n\n【STAGE 4 — CAMERA RULES】Handheld tracking shot — dynamic but controlled, following <Subject 1> from behind at shoulder height as they run. The camera shakes subtly with each footstep, breath-like float between strides. Slow rack focus between <Subject 1> in the foreground and <Subject 2> gaining in the background. Shallow depth of field (f/2.8) keeping <Subject 1> sharp while neon signs and pursuer soften into bokeh. No rapid cuts — one continuous chase, the camera organic and urgent.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] <Subject 1> bursts from a dark alley into the neon-lit street, rain immediately plastering hair to the forehead. A holographic ad for a defunct corporation flickers overhead. <Subject 1> glances back once — eyes wide, breathing ragged — then pushes forward harder. <Subject 2>'s silhouette appears at the alley mouth, augmented eyes catching the neon.\n[2-4s] <Subject 1> weaves through abandoned street stalls, knocking over a stack of rusted cans that clatter across the wet pavement. Rain intensifies, each drop catching the neon light as it falls. <Subject 2> closes the distance, boots splashing in the puddles left by <Subject 1>. A neon sign above shorts out with a crackle, casting both figures into brief darkness then strobing pink.\n[4-6s] <Subject 1> skids around a corner, one hand slapping against a wet brick wall to maintain balance. The camera follows the turn, tilting slightly with the momentum. <Subject 2> rounds the corner seconds later, now close enough that <Subject 1> can hear their breathing. A distant siren wails somewhere in the city depths.\n[6-8s] Empty ending: No dialogue. No explosion. No dramatic tackle. Just <Subject 1> running down an endless neon street, rain pouring, <Subject 2> ten feet behind and closing. The camera holds on the wide shot, both figures small against the towering holographic city, as the sound of rain and footsteps fades into the neon hum.\n\noverall_soundscape: Production audio only. Heavy, gasping breathing from <Subject 1> in the foreground. Rapid splashing footsteps on wet concrete, both runners' strides overlapping. The constant hiss of rain hitting pavement and metal. Distant neon sign electrical buzz and crackle. A far-off siren wailing somewhere in the city. No music, no score — the urgency of the chase IS the soundtrack, every breath and footstep carrying weight in the rain.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every breath, every splash, every raindrop carries weight in the neon silence."
+    },
+    {
+     "id": "epic_war_5stage",
+     "name": "史诗战争冲锋（5阶段）",
+     "name_en": "Epic War Charge (5-Stage)",
+     "description": "5阶段结构化提示词：古战场史诗冲锋，真实IMAX相机+Panavision镜头，尘土飞扬质感，低位仰拍运镜，留空结尾。支持主角+对手+战场三张参考图。",
+     "description_en": "5-stage structured prompt: epic charge on an ancient battlefield, real IMAX camera and Panavision lenses, dust-filled texture, low-angle upward camera, open ending. Supports three reference images: lead, opponent and battlefield.",
+     "preview": "epic_war_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手/伙伴+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "5阶段",
+      "史诗",
+      "战争",
+      "冲锋",
+      "IMAX",
+      "战场"
+     ],
+     "tags_en": [
+      "film",
+      "5 stages",
+      "epic",
+      "war",
+      "charge",
+      "IMAX",
+      "battlefield"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the secondary character. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】gritty historical epic | ancient battlefield | mass infantry charge | dust-and-blood aesthetic | war-torn landscape | live-action cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> stands at the front line of <Picture 3>@图3's ancient battlefield, armor dented and scorched: shield splintered at the edge, sword nicked from a hundred clashes, cloak torn and caked with mud and dried blood. Skin retains minor imperfections — pores, a gash on the cheek crusted with blood, dust and sweat mixing on the forehead. <Subject 2> commands the opposing line, silhouette distinct from <Subject 1>: different armor style, different helmet, different build, standing atop a rise surveying the field. The environment around them shows total war: churned mud, scattered weapons and broken shields, smoke rising from burning siege engines, arrows darkening the sky, dust and ash hanging in the air.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (24mm wide focal, f/4 aperture). Desaturated earth-tone color grade — ochre, rust, and ash — heavy 65mm film grain, volumetric dust and smoke catching the harsh sunlight. Subsurface scattering on sweat-slick skin, rough specular on dented metal and wet mud. No over-smoothing — every scar, every dent, every fleck of mud preserved. Harsh daylight chiaroscuro: bright overhead sun casting long shadows, dust clouds diffusing the light into a hazy glow, rim light separating both armies from the smoky horizon.\n\n【STAGE 4 — CAMERA RULES】Low-angle tracking shot — camera positioned at knee height, pushing forward through the mud as the charge begins. The camera shakes with each impact of boots on the ground, dust and debris kicking up around the lens. Slow dolly-in toward <Subject 1> as they raise their sword and roar, shallow-to-deep focus shifting from the individual soldier to the mass of charging infantry behind. Wide lens (24mm) exaggerating the scale of the battlefield, figures small against the vast sky. No rapid cuts — one continuous push into the charge, the camera visceral and ground-level.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] <Subject 1> plants their shield in the mud, sword raised high, and lets out a wordless war cry. Behind them, thousands of soldiers surge forward, shields locking into a jagged wall. Dust and mud explode upward as boots hit the ground in unison. Arrows begin to arc overhead, darkening the pale sky.\n[2-4s] The two lines collide with a thunderous impact — shields splintering, swords ringing, men grunting and falling. <Subject 1> clashes with an enemy soldier, shield absorbing the blow, sword countering in a fluid arc. Blood sprays across the mud. <Subject 2> watches from the rise, expression unreadable, then draws their own blade and begins descending toward the fray.\n[4-6s] <Subject 1> fights through the press, armor now scored with fresh gashes, breathing hard but relentless. A burning siege engine collapses nearby, sending a shower of sparks and embers across the battlefield. The camera pushes past <Subject 1>, revealing the vast chaos of the engagement — hundreds of figures locked in combat, smoke and dust swirling, flags falling and rising. <Subject 2> enters the frame from the right, cutting through <Subject 1>'s lines with practiced efficiency.\n[6-8s] Empty ending: No dramatic duel. No victory cry. No decisive moment. Just the endless churn of battle, <Subject 1> and <Subject 2> slowly converging through the chaos, neither aware of the other yet. The camera pulls back slowly, revealing the full scale of the battlefield — two armies grinding against each other, smoke rising to meet the clouds. The sound of clashing steel and dying men fades into the wind.\n\noverall_soundscape: Production audio only. The thunderous impact of two shield walls colliding. The constant ring of steel on steel, shields splintering, men grunting and crying out. Arrows whistling through the air, thudding into shields and flesh. The roar of thousands of voices rising and falling in waves. Distant siege engines creaking and crashing. Wind howling across the open battlefield. No music, no score — the chaos of war IS the soundtrack, every clash and cry carrying weight in the dust.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every clash, every cry, every gust of wind carries weight in the silence of war."
+    },
+    {
+     "id": "romantic_dialogue_5stage",
+     "name": "文艺情感对话（5阶段）",
+     "name_en": "Romantic Emotional Dialogue (5-Stage)",
+     "description": "5阶段结构化提示词：文艺情感对话场景，真实IMAX相机+Panavision镜头，柔光温暖质感，双人过肩运镜，留空结尾。支持主角+对手/爱人+场景三张参考图。",
+     "description_en": "5-stage structured prompt: intimate emotional dialogue scene, real IMAX camera and Panavision lenses, soft warm texture, over-the-shoulder two-shot camera, open ending. Supports three reference images: lead, opponent or lover, and scene.",
+     "preview": "romantic_dialogue_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手/伙伴+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "5阶段",
+      "文艺",
+      "情感",
+      "对话",
+      "IMAX",
+      "温暖"
+     ],
+     "tags_en": [
+      "film",
+      "5 stages",
+      "art-house",
+      "emotion",
+      "dialogue",
+      "IMAX",
+      "warm"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the secondary character. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】intimate romantic drama | golden hour | quiet emotional exchange | soft natural aesthetic | tender vulnerability | live-action cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> sits across from <Subject 2> in <Picture 3>@图3's warm, intimate space — a sunlit café, a quiet rooftop at sunset, or a cozy living room — clothing soft and personal: a well-worn sweater, a linen shirt slightly unbuttoned at the collar, sleeves rolled to the elbows. Skin retains minor imperfections — pores, faint freckles across the nose, a small scar on the jaw, the subtle flush of emotion on the cheeks. <Subject 2> sits opposite, silhouette distinct from <Subject 1>: different style, different features, different energy, leaning forward slightly with attentive eyes. The environment around them is warm and lived-in: soft golden light streaming through windows, dust motes floating in the sunbeams, a half-finished cup of coffee steaming gently, books and personal objects scattered naturally, the space feeling like a real place where people actually live.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (50mm focal, f/1.8 aperture). Warm golden-hour color grade — amber, honey, and soft cream — light 35mm film grain, volumetric light rays catching dust motes in the air. Subsurface scattering on skin giving a soft, luminous quality, gentle specular highlights on hair and eyes. No over-smoothing — every freckle, every fine line, every subtle expression preserved. Soft chiaroscuro: warm key light from the window side, gentle fill from reflected ambient light, soft shadows that wrap around faces rather than cutting hard, rim light separating both figures from the warm background glow.\n\n【STAGE 4 — CAMERA RULES】Over-the-shoulder two-shot — alternating between <Subject 1>'s shoulder looking at <Subject 2>, and <Subject 2>'s shoulder looking at <Subject 1>. The camera moves slowly, almost imperceptibly, a gentle breath-like float as if the operator is also holding their breath. Very shallow depth of field (f/1.8) keeping the speaking character's eyes sharp while the foreground shoulder and background soften into creamy bokeh. Slow rack focus between the two characters as they exchange lines. No rapid cuts — the camera lingers, giving each beat of emotion room to breathe, the movement organic and tender.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] <Subject 1> looks down at their hands, fingers slowly tracing the rim of the coffee cup, then looks up at <Subject 2> with a soft, uncertain smile. Golden light catches the side of their face, illuminating one eye while the other falls into gentle shadow. <Subject 2> waits patiently, leaning forward slightly, hands folded on the table, eyes warm and attentive.\n[2-4s] <Subject 1> speaks softly — lips moving with quiet words, a small laugh escaping halfway through, shoulders relaxing as the tension lifts. <Subject 2> listens, nodding slowly, then responds with a gentle smile of their own, reaching out slowly to rest a hand on <Subject 1>'s. Their fingers touch — tentative at first, then intertwining naturally.\n[4-6s] The two sit in comfortable silence, hands joined on the table, looking at each other without speaking. <Subject 1>'s eyes glisten slightly, a single tear forming but not falling. <Subject 2> squeezes <Subject 1>'s hand gently, thumb brushing across the knuckles. Outside the window, the sun dips lower, the golden light deepening to amber. Dust motes drift slowly through the sunbeams between them.\n[6-8s] Empty ending: No dramatic kiss. No declaration of love. No emotional climax. Just the two of them sitting in the golden light, hands joined, looking at each other in comfortable silence. The camera holds on the wide two-shot, both figures small in the warm, intimate space, as the sound of distant city traffic and a gently ticking clock fades into the golden hour stillness.\n\noverall_soundscape: Production audio only. Soft, measured breathing from both characters, synchronized and calm. The gentle clink of a coffee cup being set down. Fingers brushing against each other on the table — a soft, almost inaudible touch. Distant city traffic humming far below, a dog barking somewhere in the neighborhood. A clock ticking softly on the wall. No music, no score — the quiet intimacy of the moment IS the soundtrack, every breath and every touch carrying weight in the golden silence.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every breath, every touch, every distant sound carries weight in the quiet intimacy of the golden hour."
+    },
+    {
+     "id": "horror_escape_5stage",
+     "name": "恐怖惊悚逃生（5阶段）",
+     "name_en": "Horror Thriller Escape (5-Stage)",
+     "description": "5阶段结构化提示词：恐怖惊悚逃生场景，真实IMAX相机+Panavision镜头，黑暗压抑质感，手持晃动运镜，留空结尾。支持主角+怪物/对手+场景三张参考图。",
+     "description_en": "5-stage structured prompt: horror escape scene, real IMAX camera and Panavision lenses, dark oppressive texture, shaky handheld camera, open ending. Supports three reference images: lead, monster or opponent, and scene.",
+     "preview": "horror_escape_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手/伙伴+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "5阶段",
+      "恐怖",
+      "惊悚",
+      "逃生",
+      "IMAX",
+      "黑暗"
+     ],
+     "tags_en": [
+      "film",
+      "5 stages",
+      "horror",
+      "thriller",
+      "escape",
+      "IMAX",
+      "darkness"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the secondary character. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】claustrophobic horror | dark decaying space | desperate escape | dread-and-decay aesthetic | unseen threat | live-action cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> moves through <Picture 3>@图3's dark, decaying space — an abandoned hospital, a rotting mansion, or a derelict subway tunnel — clothing torn and filthy: shirt ripped at the shoulder, pants stained with dirt and something darker, shoes scuffed and caked in grime. Skin retains minor imperfections — pores, a cut on the forehead still bleeding, eyes wide and bloodshot from fear, sweat and grime mixing on the face. <Subject 2> is the unseen threat — a figure glimpsed only in shadows, silhouette distinct and wrong: too tall, too thin, movements unnatural, appearing and disappearing in the corners of frames. The environment around them is total decay: peeling wallpaper revealing moldy plaster, broken furniture scattered across the floor, flickering fluorescent tubes buzzing overhead, water dripping from the ceiling into dark puddles, dust and cobwebs hanging thick in the stale air, the space feeling wrong, as if it doesn't want them to leave.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (28mm wide focal, f/2.8 aperture). Desaturated, sickly color grade — pale greens, dirty browns, and deep blacks — heavy 16mm film grain, volumetric dust catching the flickering fluorescent light. Subsurface scattering on pale, fear-drained skin, dull specular on wet surfaces and decaying walls. No over-smoothing — every blemish, every drop of sweat, every shadow preserved. Flickering chiaroscuro: harsh strobing light from dying fluorescent tubes, deep impenetrable shadows that seem to move, faint rim light barely separating <Subject 1> from the darkness, the monster visible only as a darker shape within the dark.\n\n【STAGE 4 — CAMERA RULES】Handheld POV-adjacent shot — camera positioned just behind <Subject 1>'s shoulder, moving with them as they navigate the dark space. The camera shakes with each hurried step, breath-like heaving as <Subject 1> pauses to listen. Quick, nervous pans toward sounds in the darkness, then snapping back to the path ahead. Shallow depth of field (f/2.8) keeping <Subject 1>'s immediate surroundings sharp while the darkness ahead and behind dissolves into nothing. Occasional rack focus toward a sound in the dark, revealing nothing, then back to <Subject 1>'s terrified face. No steady shots — the camera is nervous, breathing, alive with dread.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] <Subject 1> presses their back against a decaying wall, breathing hard, one hand clamped over their mouth to muffle the sound. A fluorescent tube above flickers and buzzes, casting strobing light across the empty hallway. <Subject 1> glances left, then right — eyes wide, searching the darkness. Somewhere far off, a door creaks open slowly, then slams shut with a thunderous echo.\n[2-4s] <Subject 1> moves quickly down the hallway, boots splashing in dark puddles, one hand trailing along the peeling wallpaper for guidance. A door to their left rattles violently — something throwing itself against it from the other side. <Subject 1> flinches, presses harder against the opposite wall, then pushes forward faster. The fluorescent tube above explodes in a shower of sparks, plunging the hallway into total darkness for three heartbeats before emergency lighting flickers on, casting everything in sickly red.\n[4-6s] <Subject 1> rounds a corner and skids to a halt — at the far end of the hallway, <Subject 2> stands motionless, a too-tall silhouette in the red emergency light, head tilted at an unnatural angle. <Subject 1> backs away slowly, then turns and runs. Behind them, <Subject 2> begins to move — not walking, but gliding, limbs moving in wrong, disjointed ways. The camera follows <Subject 1> in a desperate tracking shot, bouncing and shaking with each panicked stride.\n[6-8s] Empty ending: No escape. No rescue. No confrontation. Just <Subject 1> running down an endless, decaying hallway, red emergency light strobing, <Subject 2> gliding silently behind, getting closer with each frame. The camera holds on the shot from behind <Subject 1>, the hallway stretching endlessly into darkness, as the sound of <Subject 1>'s ragged breathing and the wet, dragging sounds of <Subject 2>'s pursuit fade into the buzzing of dying lights.\n\noverall_soundscape: Production audio only. Ragged, panicked breathing from <Subject 1>, muffled by a hand clamped over the mouth. Hurried footsteps splashing in dark puddles, echoing in the empty hallway. The constant buzz and flicker of dying fluorescent tubes. Distant doors creaking and slamming. Something rattling violently against a door from the other side. The wet, dragging sounds of <Subject 2>'s pursuit — not footsteps, but something worse. No music, no score — the dread of the chase IS the soundtrack, every breath and every distant sound carrying weight in the darkness.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every breath, every creak, every dragging sound carries weight in the oppressive silence of the dark."
+    },
+    {
+     "id": "sci_fi_space_5stage",
+     "name": "科幻太空漫步（5阶段）",
+     "name_en": "Sci-Fi Space Walk (5-Stage)",
+     "description": "5阶段结构化提示词：科幻太空漫步场景，真实IMAX相机+Panavision镜头，冷冽太空质感，缓慢漂浮运镜，留空结尾。支持宇航员+对手/伙伴+太空场景三张参考图。",
+     "description_en": "5-stage structured prompt: sci-fi spacewalk scene, real IMAX camera and Panavision lenses, cold space texture, slow drifting camera, open ending. Supports three reference images: astronaut, opponent or partner, and space scene.",
+     "preview": "sci_fi_space_5stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图1主角+图2对手/伙伴+图3场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "电影",
+      "5阶段",
+      "科幻",
+      "太空",
+      "漫步",
+      "IMAX",
+      "冷冽"
+     ],
+     "tags_en": [
+      "film",
+      "5 stages",
+      "sci-fi",
+      "space",
+      "floating",
+      "IMAX",
+      "cold"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the protagonist. Preserve the exact facial identity, hairstyle, and clothing of <Subject 1> from the reference image. <Picture 2>@图2 (from [Shot 2]) is fully referenced as the secondary character. <Subject 2> must have a completely different face, hairstyle, clothing, and body type from <Subject 1> — never duplicate the protagonist's appearance. <Picture 3>@图3 (from [Shot 3]) is referenced as the scene environment.\n\nintegrated_multimodal_description:\n【STAGE 1 — CORE THEME】hard sci-fi spacewalk | orbital station | silent vacuum | cold-steel aesthetic | vast emptiness | live-action cinematic realism\n\n【STAGE 2 — CHARACTER & SCENE】<Subject 1> floats outside <Picture 3>@图3's orbital space station, spacesuit worn and functional: suit scuffed and marked with repair patches, helmet visor slightly scratched, gloves showing wear from countless EVAs, tether cable trailing behind and snaking back to the airlock. Skin visible through the visor retains minor imperfections — pores, a faint stubble, eyes focused and professional, a small scar on the cheek illuminated by Earth's glow. <Subject 2> floats nearby, suit distinct from <Subject 1>: different color markings, different mission patch, different build, moving with practiced efficiency as they work on a station component. The environment around them is the vastness of space: the curved blue horizon of Earth filling the lower frame, clouds swirling in white patterns, the blackness of space absolute and infinite, stars sharp and unmoving, the station's metal panels catching the harsh sunlight, solar arrays stretching out like wings, the silence of vacuum absolute.\n\n【STAGE 3 — ATMOSPHERE & QUALITY】Simulated IMAX film camera + Panavision C-series lens (35mm focal, f/4 aperture). Cold, precise color grade — deep space black, Earth's vivid blue, and the warm gold of sunlight on metal — light 35mm film grain, the vacuum of space giving everything a crisp, hyper-detailed quality. Subsurface scattering on skin visible through the visor, sharp specular highlights on metal surfaces and the curved helmet. No over-smoothing — every scratch on the visor, every patch on the suit, every star preserved. Harsh chiaroscuro: direct unfiltered sunlight creating brilliant highlights and deep, absolute shadows, Earth's reflected glow providing soft blue fill light, the blackness of space offering no ambient bounce, rim light separating both astronauts from the infinite dark.\n\n【STAGE 4 — CAMERA RULES】Slow floating tracking shot — camera drifting alongside <Subject 1> in zero gravity, moving with the same slow, deliberate pace. The camera has a gentle, orbital float, as if it too is untethered, slowly rotating around <Subject 1> to reveal Earth behind them. Medium depth of field (f/4) keeping <Subject 1> sharp while the station structure and Earth's curve soften slightly. Slow, deliberate rack focus between <Subject 1>'s visor reflection and <Subject 2> working in the background. No rapid movement — the camera moves with the slow, graceful inevitability of orbit, the movement weightless and serene.\n\n【STAGE 5 — STORYBOARD】\n[0-2s] <Subject 1> drifts slowly away from the airlock, tether cable trailing behind, one hand reaching out to steady themselves against a station handrail. Earth fills the background — blue oceans, white clouds, the thin glowing line of the atmosphere. <Subject 1>'s visor reflects the curve of the planet, eyes visible behind the glass, calm and focused. Somewhere, the station's metal creaks softly, transmitted through the gloves and suit.\n[2-4s] <Subject 1> reaches a damaged station panel, pulling out a tool from their suit pouch and beginning to work — hands moving with practiced, efficient motions inside the bulky gloves. <Subject 2> floats into frame from the right, carrying a replacement component, nodding toward <Subject 1> in silent communication. The two work together in the vacuum, passing tools and parts with slow, careful movements, their tether cables crossing and recrossing in the sunlight.\n[4-6s] <Subject 1> pauses, looking up from their work. Earth rotates slowly below — a storm system visible as a vast swirling white pattern, city lights beginning to twinkle on the night side. <Subject 1> reaches up, touching the visor briefly, as if absorbing the view. <Subject 2> also pauses, both astronauts floating in silence, looking at the planet. The sun dips behind Earth's curve, casting both figures into sudden, beautiful darkness, illuminated only by the blue glow of the atmosphere.\n[6-8s] Empty ending: No dramatic crisis. No system failure. No rescue mission. Just the two astronauts floating in the blue glow of Earth's atmosphere, looking down at the planet, the station's metal panels glowing faintly in the reflected light. The camera holds on the wide shot — two tiny figures against the vastness of space and the curve of the Earth — as the sound of breathing inside the helmets and the faint creak of metal fades into the absolute silence of vacuum.\n\noverall_soundscape: Production audio only. Steady, calm breathing inside <Subject 1>'s helmet, amplified by the enclosed space. The faint hiss of the suit's life support system. Tools clicking and clanking as they're passed between gloves, transmitted through the suit's contact microphones. The low, resonant creak of the station's metal structure expanding and contracting in the sunlight. Faint radio static between the two astronauts, occasional soft clicks of communication. No music, no score — the silence of space IS the soundtrack, every breath and every metallic creak carrying weight in the vacuum.\n\nnon_diegetic_music: None. No score. Production audio only. The emptiness of the sound design IS the score — every breath, every creak, every faint radio static carries weight in the absolute silence of space."
+    }
+   ]
+  },
+  {
+   "id": "dance",
+   "templates": [
+    {
+     "id": "street_dance",
+     "name": "街舞独舞表演",
+     "name_en": "Street dance solo",
+     "description": "街舞舞者在城市背景下的独舞表演",
+     "description_en": "A street dancer performing a solo against a city backdrop",
+     "preview": "street_dance.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "街舞",
+      "舞蹈",
+      "城市",
+      "活力"
+     ],
+     "tags_en": [
+      "street dance",
+      "dance",
+      "city",
+      "energetic"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Live-action, dynamic. A dancer stands in an open urban plaza with graffiti walls. The camera is at a low angle, medium-wide shot. The dancer begins with a toprock — rhythmic stepping and arm movements establishing groove. A portable speaker on the ground provides the beat. Afternoon light creates long shadows. [Shot 2] At 00:04.000 [4-7s] The dancer transitions into power moves — a continuous windmill spin on the concrete. The camera orbits around the dancer at ground level. Dust kicks up from the spinning motion. The dancer's clothing ripples with the movement. [Shot 3] At 00:07.000 [7-10s] The dancer freezes in a dramatic final pose — a one-handed stand, body in an impossible-looking angle. The camera slowly pushes in on the frozen pose. The dancer holds perfectly still, breathing visibly. A few spectators' silhouettes are visible in the background.\n\noverall_soundscape: Rhythmic hand claps and foot taps on concrete, clothing rustle, heavy breathing, distant traffic, and ambient urban sounds.\n\nnon_diegetic_music: A heavy hip-hop beat with deep bass, crisp snare, and vinyl crackle. Moderate tempo with a head-nodding groove."
+    },
+    {
+     "id": "ballet_stage",
+     "name": "芭蕾独舞舞台",
+     "name_en": "Ballet solo on stage",
+     "description": "芭蕾舞者在剧院舞台上的优雅独舞",
+     "description_en": "An elegant ballet soloist on a theatre stage",
+     "preview": "ballet_stage.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "芭蕾",
+      "舞蹈",
+      "舞台",
+      "优雅"
+     ],
+     "tags_en": [
+      "ballet",
+      "dance",
+      "stage",
+      "elegant"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Cinematic, theatrical. A grand opera house stage with ornate golden proscenium. A ballet dancer stands center stage in fifth position. A single spotlight illuminates her from above. The camera is at orchestra level, medium shot. The stage floor is black and reflective. The dancer begins with a slow, controlled développé — extending one leg forward with perfect poise. [Shot 2] At 00:04.000 [4-8s] The dancer transitions into a series of pirouettes — spinning en pointe with arms held in first position. The camera slowly orbits around the dancer. The costume flares with the rotation. Each revolution is precise and controlled. After four turns, the dancer stops in a perfect arabesque — one leg extended behind, arms reaching forward. [Shot 3] At 00:08.000 [8-12s] The dancer begins a grand jeté — leaping across the stage with legs split in mid-air. The camera tracks laterally, following the trajectory. The dancer lands softly and flows into a final reverence — a bow to the audience. The spotlight follows throughout. The empty theater seats are visible in the dark background.\n\noverall_soundscape: Pointe shoes on stage floor — the distinctive tip-tap of toe shoes, fabric rustle, and the acoustic ambience of a large theater.\n\nnon_diegetic_music: A classical orchestral piece in the style of Tchaikovsky — sweeping strings, delicate woodwinds, with a building crescendo during the grand jeté."
+    },
+    {
+     "id": "ai_party_bounce",
+     "name": "AI派对弹跳舞",
+     "name_en": "AI Party Bounce dance",
+     "description": "充满活力的派对弹跳舞蹈，双臂V字形高举",
+     "description_en": "Energetic party bounce dance with both arms raised in a V shape",
+     "preview": "ai_party_bounce.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "舞蹈",
+      "派对",
+      "弹跳",
+      "活力"
+     ],
+     "tags_en": [
+      "dance",
+      "party",
+      "bounce",
+      "energetic"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-8s] Live-action, energetic. A person performs the \"Party Bounce\" dance choreography in a vibrant party setting with colorful LED lights and a DJ booth in the background. The dancer jumps energetically with arms in a V-shape above their head, landing on the beat and bouncing back up immediately. The movement is rhythmic, repetitive, and infectious. The camera is at a medium-wide shot, slightly low angle, with a subtle handheld shake that matches the energy. Strobe lights and laser beams sweep across the dance floor. Other dancers are visible in the background, blurred. The dancer's clothing and hair move dynamically with the jumps. The overall mood is euphoric and high-energy.\n\noverall_soundscape: Pulsing bass, cheering crowd, clothing rustle, footsteps on dance floor, and ambient party sounds.\n\nnon_diegetic_music: An upbeat electronic dance track with heavy four-on-the-floor kick, bright synth lead, and build-up effects. 128 BPM with euphoric drops."
+    }
+   ]
+  },
+  {
+   "id": "nature",
+   "templates": [
+    {
+     "id": "mountain_sunrise",
+     "name": "山顶日出延时摄影",
+     "name_en": "Mountain sunrise timelapse",
+     "description": "云海翻涌的山顶日出延时摄影效果",
+     "description_en": "Time-lapse sunrise from a mountain top above a churning sea of clouds",
+     "preview": "mountain_sunrise.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "日出",
+      "延时",
+      "山",
+      "云海"
+     ],
+     "tags_en": [
+      "nature",
+      "sunrise",
+      "time-lapse",
+      "mountain",
+      "sea of clouds"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-10s] Cinematic, photorealistic timelapse. A high mountain summit at dawn. Below, a vast sea of clouds fills the valleys. The camera is fixed at a wide-angle vantage point. The sky transitions from deep indigo to purple to warm orange as the sun rises behind distant peaks. Light rays break through the clouds, creating god rays. The cloud sea undulates and shifts like ocean waves. As the sun clears the horizon, golden light floods the scene, illuminating the mountain's rocky face. The camera slowly pushes in with very small amplitude. Frost on nearby rocks sparkles as it catches the first light. The entire sequence conveys the passage of approximately 30 minutes in 10 seconds of video.\n\noverall_soundscape: High-altitude wind, distant bird calls, and the subtle natural ambience of a mountain dawn.\n\nnon_diegetic_music: A serene orchestral track with slow string swells, gentle piano, and soft brass, building to a warm crescendo as the sun clears the horizon."
+    },
+    {
+     "id": "ocean_waves",
+     "name": "海岸海浪拍岸",
+     "name_en": "Coastal ocean waves",
+     "description": "海浪拍打礁石海岸的宁静画面",
+     "description_en": "A calm scene of waves breaking against a rocky coast",
+     "preview": "ocean_waves.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "海洋",
+      "海浪",
+      "海岸"
+     ],
+     "tags_en": [
+      "nature",
+      "ocean",
+      "waves",
+      "coast"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, photorealistic. A rugged coastline at golden hour. Large ocean waves roll in from the horizon, cresting and crashing against dark rock formations. White foam explodes on impact and rushes up the shore. The camera is positioned at a medium-wide angle, slightly elevated. Sea spray catches the warm backlight, creating a misty glow. The horizon glows orange-pink. Seagulls wheel in the distance. The rhythm of the waves is hypnotic — each wave slightly different in size and shape. Wet rocks glisten with reflected light. The camera holds steady, letting the natural power of the ocean be the focus. Long exposure effect on the water creates smooth, silky textures in the receding surf.\n\noverall_soundscape: Rhythmic ocean waves crashing and retreating, sea spray, distant seagulls, and coastal wind.\n\nnon_diegetic_music: A gentle ambient track with soft piano notes and oceanic synth textures, peaceful and meditative."
+    },
+    {
+     "id": "season_change",
+     "name": "四季变换延时",
+     "name_en": "Four seasons timelapse",
+     "description": "同一场景经历春夏秋冬四季变换的延时效果",
+     "description_en": "Time-lapse of the same scene passing through all four seasons",
+     "preview": "season_change.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 12,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "自然",
+      "四季",
+      "延时",
+      "变换"
+     ],
+     "tags_en": [
+      "nature",
+      "four seasons",
+      "time-lapse",
+      "morphing"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-12s] Cinematic timelapse. A single tree in a grassy field undergoes all four seasons in rapid succession. [0-3s] Spring: bare branches bud with fresh green leaves, grass turns vibrant green, cherry blossoms bloom around the base, light is soft and fresh. [3-6s] Summer: the tree is in full leaf, deep green canopy, grass is tall and lush, warm golden light, butterflies and dragonflies flit through the frame. [6-9s] Autumn: leaves turn from green to gold, orange, and red, then begin to fall — swirling in the wind, grass browns and dries, light becomes amber and low. [9-12s] Winter: the tree is bare, snow falls and accumulates on branches and ground, the scene is monochrome white and grey, cold blue light. The transitions between seasons are smooth — one morphs into the next with visible changes spreading across the frame. The camera is fixed throughout.\n\noverall_soundscape: Wind sounds that change character with each season — gentle spring breeze, warm summer gust, autumn leaf-rustle wind, and cold winter howl. Bird songs in spring and summer, silence in winter.\n\nnon_diegetic_music: A contemplative piano piece that shifts in key and mood with each season — light and hopeful in spring, warm and full in summer, melancholic in autumn, and sparse and crystalline in winter."
+    }
+   ]
+  },
+  {
+   "id": "fantasy",
+   "templates": [
+    {
+     "id": "space_walk",
+     "name": "太空行走",
+     "name_en": "Space walk",
+     "description": "宇航员在太空中行走的壮丽场景",
+     "description_en": "A magnificent scene of an astronaut walking in space",
+     "preview": "space_walk.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "太空",
+      "宇航员",
+      "科幻",
+      "壮丽"
+     ],
+     "tags_en": [
+      "space",
+      "astronaut",
+      "sci-fi",
+      "magnificent"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Cinematic, photorealistic. An astronaut in a white EVA suit floats outside a space station with Earth visible below. The curvature of the Earth fills the lower third of the frame — blue oceans, white cloud formations, and the glowing edge of the atmosphere. The camera is positioned at a three-quarter angle, medium shot of the astronaut. The astronaut begins a slow forward motion, using handholds on the station exterior. Sunlight creates extreme contrast — the lit side of the suit is blindingly bright, the shadow side is pure black. Stars fill the vacuum of space. [Shot 2] At 00:04.000 [4-7s] The astronaut reaches the end of the handhold rail and pushes off gently, floating free. The camera slowly orbits around the astronaut. Earth rotates slowly in the background. The astronaut's tether cable drifts behind. [Shot 3] At 00:07.000 [7-10s] The astronaut looks toward camera — the reflective gold visor shows a reflection of the camera and Earth behind it. The camera slowly pulls back, revealing the vast scale of the station and the smallness of the human figure against the planet.\n\noverall_soundscape: Complete silence of space — no sound transmission. Only the internal sounds of the suit: breathing, radio static, suit air circulation, and occasional suit joint movements.\n\nnon_diegetic_music: A space ambient track with ethereal synth pads, slow strings, and subtle electronic pulses. Vast, contemplative, and otherworldly."
+    },
+    {
+     "id": "magic_forest",
+     "name": "魔法森林奇遇",
+     "name_en": "Enchanted forest",
+     "description": "发光的魔法森林，充满奇幻生物和粒子效果",
+     "description_en": "A glowing enchanted forest full of fantastical creatures and particle effects",
+     "preview": "magic_forest.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "魔法",
+      "森林",
+      "奇幻",
+      "发光"
+     ],
+     "tags_en": [
+      "magic",
+      "forest",
+      "fantasy",
+      "glowing"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Fantasy, cinematic. A mystical forest at twilight. Massive ancient trees with glowing runes carved into their bark. Bioluminescent mushrooms dot the forest floor in blues and purples. Floating orbs of light drift between the trees like fireflies but larger and slower. The camera moves forward at a slow walking pace, tracking through the undergrowth. Mist hugs the ground. [Shot 2] At 00:04.000 [4-7s] A small creature — part fox, part light — darts across the path ahead, leaving a trail of sparkle. The camera follows the creature's path. The glowing flora pulses in response to the creature's passage. [Shot 3] At 00:07.000 [7-10s] The camera arrives at a small clearing with a pool of water that reflects the canopy of lights above. A large ancient stone archway stands at the far end, covered in moss and glowing symbols. The water's surface ripples on its own. The camera holds on this tableau. Particles of light rise from the pool and drift upward into the canopy.\n\noverall_soundscape: Ethereal chimes, distant crystalline sounds, soft wind through leaves, water dripping and rippling, and unidentifiable magical creature sounds.\n\nnon_diegetic_music: A fantasy orchestral track with harp, celesta, and soft choir, creating a dreamlike, otherworldly atmosphere. Slow, magical, and wondrous."
+    },
+    {
+     "id": "time_travel",
+     "name": "时间穿越隧道",
+     "name_en": "Time travel tunnel",
+     "description": "穿越时空隧道的超现实视觉效果",
+     "description_en": "A surreal visual of travelling through a time tunnel",
+     "preview": "time_travel.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "时间",
+      "穿越",
+      "超现实",
+      "科幻"
+     ],
+     "tags_en": [
+      "time",
+      "fly-through",
+      "surreal",
+      "sci-fi"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-8s] Surreal, cinematic. A person stands in a featureless white room. Behind them, a crack appears in the air — reality splits open, revealing a swirling tunnel of light, color, and temporal fragments. The camera is at a medium shot, facing the person. The person turns to look at the portal. Fragments of different time periods are visible in the tunnel walls — Roman columns, medieval castles, modern skyscrapers, future cityscapes — all distorted and flowing. The person steps backward into the portal. As they enter, their appearance shifts rapidly through different eras of clothing — toga, armor, suit, spacesuit — cycling faster and faster. The camera pushes forward into the portal after them. Light streaks past at extreme speed. Colors shift through the spectrum. The tunnel converges to a single bright point of light that fills the frame.\n\noverall_soundscape: A building wind sound, crystalline chimes, distorted echoes of different historical sounds (chariots, swords, trains, rockets), and a rising sonic whoosh that peaks at the moment of entry.\n\nnon_diegetic_music: An electronic track with pulsing arpeggios that accelerate throughout, building from ambient to intense, with a massive crescendo at the moment of portal entry."
+    }
+   ]
+  },
+  {
+   "id": "urban_life",
+   "templates": [
+    {
+     "id": "cafe_morning",
+     "name": "咖啡厅晨光",
+     "name_en": "Cafe morning light",
+     "description": "清晨咖啡厅内的温暖氛围",
+     "description_en": "Warm atmosphere inside a cafe in the early morning",
+     "preview": "cafe_morning.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 8,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "咖啡厅",
+      "清晨",
+      "生活",
+      "温暖"
+     ],
+     "tags_en": [
+      "cafe",
+      "early morning",
+      "everyday life",
+      "warm"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, warm. A cozy cafe interior in early morning. Soft golden light streams through large windows, casting long warm streaks across wooden tables and a tile floor. A barista works behind the counter, steam rising from an espresso machine. The camera is at a medium-wide angle, positioned at a customer's eye level. Dust motes float in the light beams. A few customers sit at tables — one reading a book, another working on a laptop, a third looking out the window. The camera slowly pushes in with small amplitude at slow speed. A cup of coffee on a table sends up gentle steam. The atmosphere is calm, intimate, and lived-in. Warm color palette with amber and cream tones.\n\noverall_soundscape: Espresso machine hissing, cups clinking, soft conversation murmur, page turning, keyboard tapping, ambient cafe music from a small speaker, and street sounds from outside.\n\nnon_diegetic_music: A gentle jazz track with acoustic guitar, soft brush drums, and warm double bass. Relaxed, morning-appropriate tempo."
+    },
+    {
+     "id": "subway_commute",
+     "name": "地铁通勤时光",
+     "name_en": "Subway commute",
+     "description": "地铁车厢内的城市通勤生活片段",
+     "description_en": "A slice of city commuter life inside a subway car",
+     "preview": "subway_commute.webp",
+     "generation_mode": "Text to Video (文生视频)【图3可选场景】",
+     "duration": 10,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "地铁",
+      "通勤",
+      "城市",
+      "生活"
+     ],
+     "tags_en": [
+      "subway",
+      "commute",
+      "city",
+      "everyday life"
+     ],
+     "prompt": "integrated_multimodal_description:  [Shot 1] [0-4s] Cinematic, urban. The interior of a subway car during evening commute. Fluorescent lights cast a slightly green-tinged glow. The car is half-full of passengers — one reading on a phone, one resting with eyes closed, one with headphones, one carrying a shopping bag. The camera is at a medium-wide angle from one end of the car. Through the window behind the passengers, tunnel lights streak past rhythmically. The train sways gently. [Shot 2] At 00:04.000 [4-7s] The camera slowly trucks left along the car, passing each passenger. Each person is briefly framed — their face, their posture, their small movements. One passenger scrolls a phone. Another's head nods slightly, almost asleep. Another's head bobs to music. [Shot 3] At 00:07.000 [7-10s] The train slows. The lights flicker briefly. A station platform appears outside the windows. One passenger looks up from a phone and stands, gathering a bag. The doors open with a pneumatic hiss. Cool platform air flows in. The camera holds on the open doorway as a few people exit and new passengers board.\n\noverall_soundscape: Train rumble on tracks, rhythmic tunnel light passing, air conditioning hum, phone notification sounds, doors opening pneumatic hiss, platform announcements, and footsteps boarding.\n\nnon_diegetic_music: A lo-fi hip-hop track with mellow piano, soft drums, and vinyl crackle. Nostalgic, contemplative, and urban."
+    }
+   ]
+  }
+ ]
+}

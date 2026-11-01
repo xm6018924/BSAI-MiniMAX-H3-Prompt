@@ -1,0 +1,322 @@
+{
+ "id": "festival_greeting_video",
+ "subcategories": [
+  {
+   "id": "video_cards",
+   "templates": [
+    {
+     "id": "h3_card_newyear_fireworks",
+     "name": "节日视频贺卡 · 新年金色烟花粒子",
+     "name_en": "Video Greeting - New Year Golden Fireworks",
+     "description": "新年视频贺卡：夜空金色烟花绽放、发光金字祝福、粒子汇聚，5 秒喜庆开场",
+     "description_en": "New Year video card: golden fireworks blooming in the night sky, glowing golden greeting text, particles gathering, a five-second festive opening",
+     "preview": "h3_card_newyear_fireworks.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic New Year video greeting card, 5 seconds. Deep navy night sky; elegant golden firework particles burst and bloom in slow motion, tracing glowing script typography \"Happy New Year\" / 新年快乐 across the frame; sparkling bokeh and drifting golden embers; soft light rays sweep in from the edges; smooth 3D camera push-in on the glowing title, luxurious and magical holiday atmosphere, 8K render quality.\n（新年视频贺卡：深蓝夜空，金色烟花粒子慢镜绽放，勾勒发光书法字祝福语，光斑与金屑飘落，镜头缓缓推近标题，奢华梦幻节日氛围。）\n\noverall_soundscape:\nDistant crackling fireworks bursts, soft whoosh of embers, gentle wind; celebratory but not harsh; master audio clear.\n（远处烟花绽放的噼啪声，金屑飘落的轻响与微风，喜庆而不刺耳，主音量清晰。）\n\nnon_diegetic_music:\nElegant orchestral holiday fanfare with soft strings and chimes, crescendo on the title reveal, fading out at the end, low volume under the soundscape.\n（优雅的节日管弦短曲，弦乐与风铃，标题出现时渐强，结尾渐弱，音量压低于音效之下。）"
+    },
+    {
+     "id": "h3_card_spring_lantern",
+     "name": "节日视频贺卡 · 春节红色灯笼",
+     "name_en": "Video Greeting - Spring Festival Red Lanterns",
+     "description": "春节视频贺卡：红灯笼升起、剪纸福字与烟花、国潮喜庆，5 秒新春祝福",
+     "description_en": "Spring Festival video card: red lanterns rising, paper-cut fu characters and fireworks, guochao festive style, a five-second New Year greeting",
+     "preview": "h3_card_spring_lantern.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Chinese New Year video greeting card, 5 seconds. A row of glowing red lanterns rises gently from the bottom, paper-cut patterns of the zodiac and \"福\" characters flash across in gold foil style; golden fireworks bloom behind; warm red and gold palette, silk texture, smooth camera pan revealing the festive title \"新年快乐\" with elegant calligraphy; 8K render quality.\n（春节视频贺卡：红灯笼缓缓升起，剪纸生肖与金色福字闪切，背后金色烟花绽放，暖红金色调，镜头平移揭示书法标题「新年快乐」。）\n\noverall_soundscape:\nFestive firecrackers in the distance, cheerful crowd ambience, gentle whoosh of lanterns rising; lively Lunar New Year atmosphere.\n（远处鞭炮声与欢乐人群氛围，灯笼升起的轻响，热闹的春节气氛。）\n\nnon_diegetic_music:\nJoyful Chinese festive orchestral music with gong and drum hits, bright and upbeat, ending on a warm sustained chord.\n（欢快的中式节日管弦乐，锣鼓点明快，结尾温暖长音。）"
+    },
+    {
+     "id": "h3_card_valentine_heart",
+     "name": "节日视频贺卡 · 情人节粒子爱心",
+     "name_en": "Video Greeting - Valentine Particle Heart",
+     "description": "情人节视频贺卡：金色/粉色粒子汇聚成爱心、玫瑰花绽放、浪漫光效，5 秒",
+     "description_en": "Valentine's video card: gold and pink particles gathering into a heart, roses blooming, romantic light effects, five seconds",
+     "preview": "h3_card_valentine_heart.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Valentine's Day video greeting card, 5 seconds. Thousands of soft pink and gold light particles swirl and converge into a glowing 3D heart in the center; red roses bloom around the heart in slow motion with dew sparkles; shimmering bokeh background; smooth camera orbit around the heart, romantic dreamy lighting; title \"Happy Valentine's Day\" fades in beneath; 8K render quality.\n（情人节视频贺卡：粉金色光粒子旋聚成发光3D爱心，周围玫瑰慢镜绽放，光斑背景，镜头环绕爱心，浪漫梦幻。）\n\noverall_soundscape:\nSoft heartbeat thump synced to the heart formation, gentle rose petal rustle, warm dreamy ambience; romantic and tender.\n（爱心汇聚同步的轻柔心跳声，玫瑰花瓣轻响，温暖梦幻氛围，浪漫柔情。）\n\nnon_diegetic_music:\nTender piano and string love theme, warm and delicate, subtle rise as the heart completes, gentle fade-out.\n（温柔的钢琴与弦乐爱情主题，细腻温暖，爱心完成时轻微渐强，结尾轻柔淡出。）"
+    },
+    {
+     "id": "h3_card_mothersday_flowers",
+     "name": "节日视频贺卡 · 母亲节花束绽放",
+     "name_en": "Video Greeting - Mother's Day Blooming Bouquet",
+     "description": "母亲节视频贺卡：康乃馨/牡丹花束慢镜绽放、蝴蝶光效、温情字幕，5 秒",
+     "description_en": "Mother's Day video card: a carnation and peony bouquet blooming in slow motion, butterfly light effects, warm subtitles, five seconds",
+     "preview": "h3_card_mothersday_flowers.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Mother's Day video greeting card, 5 seconds. A luxurious bouquet of carnations and peonies blooms in ultra slow motion, petals unfurl with light and dew drops sparkling; soft golden butterflies flutter around; warm cream and pink palette, soft studio lighting; elegant serif title \"Happy Mother's Day\" fades in; gentle 3D camera pull-back; 8K render quality.\n（母亲节视频贺卡：康乃馨与牡丹花束极致慢镜绽放，花瓣舒展带露珠闪光，金色蝴蝶环绕，奶油粉暖调，标题优雅淡入，镜头缓缓后拉。）\n\noverall_soundscape:\nGentle flower petal unfolding sounds, soft butterfly wing flutters, warm serene ambience with a hint of birdsong; tender and peaceful.\n（花瓣舒展的轻柔声响，蝴蝶振翅，温暖宁静的氛围点缀鸟鸣，柔和平和。）\n\nnon_diegetic_music:\nWarm acoustic piano with soft strings and music box chimes, heartfelt and gentle, like a lullaby for mom, fading out softly.\n（温暖的原声钢琴配轻柔弦乐与八音盒音，如献给妈妈的摇篮曲，轻柔淡出。）"
+    },
+    {
+     "id": "h3_card_childrensday_balloon",
+     "name": "节日视频贺卡 · 儿童节 3D 气球蛋糕",
+     "name_en": "Video Greeting - Children's Day 3D Balloons & Cake",
+     "description": "六一儿童节视频贺卡：3D 卡通气球升空、纸杯蛋糕、彩虹糖果、萌趣欢快，5 秒",
+     "description_en": "Children's Day video card: 3D cartoon balloons rising, cupcakes, rainbow candy, playful and cheerful, five seconds",
+     "preview": "h3_card_childrensday_balloon.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Children's Day video greeting card, 5 seconds. Cute 3D cartoon balloons in candy colors float up from the bottom, a giant cupcake with a smiling face spins in the center, rainbow arcs and stars twinkle; tiny cartoon animals wave; playful bounce motion, vibrant but soft candy lighting; rounded title \"Happy Children's Day\" pops in; 8K render quality.\n（儿童节视频贺卡：糖果色3D卡通气球升空，笑脸纸杯蛋糕居中旋转，彩虹星星闪烁，小动物挥手，弹跳运动，糖果色柔和光照，圆体标题弹出。）\n\noverall_soundscape:\nPlayful cartoon pop and chime sounds, balloon squeaks, cheerful laughter of children in the distance; light and fun.\n（俏皮的卡通音效与叮咚声，气球吱吱声，远处儿童欢笑声，轻松有趣。）\n\nnon_diegetic_music:\nBouncy cheerful children's theme with ukulele, glockenspiel and hand claps, upbeat and innocent, ends on a bright chord.\n（欢快的儿童主题乐，尤克里里、钟琴与拍手，明快纯真，明亮和弦收尾。）"
+    },
+    {
+     "id": "h3_card_midautumn_rabbit",
+     "name": "节日视频贺卡 · 中秋玉兔明月",
+     "name_en": "Video Greeting - Mid-Autumn Jade Rabbit & Moon",
+     "description": "中秋视频贺卡：水墨玉兔奔月、满月流云、桂花飘落、典雅团圆，6 秒",
+     "description_en": "Mid-Autumn video card: an ink-wash jade rabbit flying to the moon, the full moon and drifting clouds, osmanthus petals falling, an elegant reunion mood, six seconds",
+     "preview": "h3_card_midautumn_rabbit.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Mid-Autumn Festival video greeting card, 6 seconds. A full moon rises over ink-wash mountains, a white jade rabbit hops across clouds toward the moon; osmanthus petals drift down with golden light; Chinese ink and wash style with warm moon gold accents; elegant calligraphy title \"中秋快乐 · 月圆人团圆\" fades in with a red seal stamp; slow camera push-in; 8K render quality.\n（中秋视频贺卡：水墨山水间满月升起，玉兔踏云奔月，桂花金辉飘落，水墨质感配暖金月色，书法标题淡入带朱红印章，镜头缓慢推近。）\n\noverall_soundscape:\nSoft wind over mountains, gentle rabbit hop sounds, petals falling whisper; serene and poetic autumn night ambience.\n（山间轻风，玉兔轻跳声，花瓣飘落细语，宁静诗意的秋夜氛围。）\n\nnon_diegetic_music:\nElegant Chinese guzheng and flute piece, contemplative and warm, subtle crescendo on the title reveal, gentle fade-out.\n（典雅的古筝与笛曲，沉静温暖，标题出现时轻微渐强，轻柔淡出。）"
+    },
+    {
+     "id": "h3_card_nationalday_parade",
+     "name": "节日视频贺卡 · 国庆红旗礼花",
+     "name_en": "Video Greeting - National Day Flags & Salutes",
+     "description": "国庆视频贺卡：红旗飘扬、礼花绽放、华表剪影、庄重盛大，5 秒",
+     "description_en": "National Day video card: red flags flying, fireworks blooming, the silhouette of a huabiao pillar, solemn and grand, five seconds",
+     "preview": "h3_card_nationalday_parade.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic National Day video greeting card, 5 seconds. Red flags ripple proudly in the wind, grand fireworks salute bursts in red and gold over a skyline with the Huabiao column silhouette; doves fly across; majestic camera crane-up shot; red and gold patriotic palette; bold title \"盛世华诞 · Happy National Day\" with metallic sheen; 8K render quality.\n（国庆视频贺卡：红旗迎风飘扬，红金礼花在华表剪影上空盛大绽放，白鸽飞过，镜头庄重升起，红金主旋律配色，金属质感标题。）\n\noverall_soundscape:\nGrand firework salutes, flag flapping, cheering crowd in the distance, national anthem hint in ambient; majestic and uplifting.\n（盛大礼花声，旗帜飘动，远处群众欢呼，环境里隐约的庄严旋律，振奋人心。）\n\nnon_diegetic_music:\nMajestic orchestral anthem with brass and drums, dignified and inspiring, strong crescendo at the fireworks peak, triumphant ending.\n（庄严的管弦乐曲，铜管与鼓，礼花高潮时强烈渐强，凯旋式收尾。）"
+    },
+    {
+     "id": "h3_card_halloween_pumpkin",
+     "name": "节日视频贺卡 · 万圣节南瓜鬼屋",
+     "name_en": "Video Greeting - Halloween Pumpkin & Haunted House",
+     "description": "万圣节视频贺卡：南瓜灯亮起、蝙蝠飞过、诡异又俏皮的光效，5 秒",
+     "description_en": "Halloween video card: jack-o'-lanterns lighting up, bats flying past, eerie yet playful light effects, five seconds",
+     "preview": "h3_card_halloween_pumpkin.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Halloween video greeting card, 5 seconds. A carved jack-o'-lantern's face lights up with a warm orange glow, its smile flickers; bats fly across a full moon, silhouettes of ghosts drift; purple mist swirls; spooky yet playful lighting; title \"Happy Halloween\" in gothic letters with cobwebs; smooth camera dolly-in; 8K render quality.\n（万圣节视频贺卡：南瓜灯脸亮起橙光微笑闪烁，蝙蝠飞过圆月，幽灵剪影飘动，紫雾流转，诡异又俏皮，哥特字体标题配蛛网，镜头缓缓推进。）\n\noverall_soundscape:\nCreaking and whooshing wind, bat wing flaps, pumpkin flicker sounds, distant howls; spooky but playful.\n（吱呀作响的风声，蝙蝠振翅，南瓜灯火苗闪烁声，远处轻嚎，诡异而有趣。）\n\nnon_diegetic_music:\nPlayful-spooky music box waltz with eerie strings and a touch of organ, winking at the viewer, ends with a cute boo.\n（俏皮诡异的八音盒圆舞曲配怪诞弦乐与风琴，结尾一声俏皮的吓唬。）"
+    },
+    {
+     "id": "h3_card_christmas_open",
+     "name": "节日视频贺卡 · 圣诞 3D 贺卡翻开",
+     "name_en": "Video Greeting - Christmas 3D Pop-up Card",
+     "description": "圣诞视频贺卡：立体贺卡翻开弹出圣诞树雪屋、雪花飘落、麋鹿雪橇，6 秒",
+     "description_en": "Christmas video card: a pop-up card opening to reveal a Christmas tree and snow cabin, snow falling, reindeer and sleigh, six seconds",
+     "preview": "h3_card_christmas_open.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Christmas video greeting card, 6 seconds. A 3D pop-up greeting card opens with a satisfying motion, a paper-cut Christmas tree and snowy cabin pop out in layered depth; snowflakes fall, a reindeer sleigh flies across the starry sky; warm candlelight glow inside; classic red-green-gold palette; title \"Merry Christmas\" with gold foil sparkle; camera arcs around the card; 8K render quality.\n（圣诞视频贺卡：3D立体贺卡翻开，纸雕圣诞树与雪屋层层弹出，雪花飘落，麋鹿雪橇划过星空，内透烛光暖光，红绿金经典配色，金字标题闪烁，镜头环绕。）\n\noverall_soundscape:\nSatisfying card opening snap, soft snow falling, sleigh bells jingling in the distance, warm fire crackle; cozy festive.\n（贺卡翻开的清脆声响，雪花飘落，远处雪橇铃铛声，温暖炉火噼啪，温馨节日。）\n\nnon_diegetic_music:\nClassic Christmas carol arrangement with celesta, strings and sleigh bells, warm and joyful, gentle ending.\n（经典圣诞颂歌改编，钢片琴、弦乐与雪橇铃，温暖欢快，柔和收尾。）"
+    },
+    {
+     "id": "h3_card_birthday_gold",
+     "name": "节日视频贺卡 · 生日金色粒子蛋糕",
+     "name_en": "Video Greeting - Birthday Golden Particles & Cake",
+     "description": "生日视频贺卡：金色粒子汇聚蛋糕与蜡烛、彩带飘落、欢庆闪耀，5 秒",
+     "description_en": "Birthday video card: golden particles gathering into a cake with candles, confetti falling, festive sparkle, five seconds",
+     "preview": "h3_card_birthday_gold.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Birthday video greeting card, 5 seconds. Golden particles swirl and assemble into a 3D birthday cake with lit candles, confetti and ribbons burst around; sparkling bokeh, warm celebratory lighting; playful camera tilt around the cake; bold title \"Happy Birthday\" with golden glow; 8K render quality.\n（生日视频贺卡：金色粒子旋聚成3D生日蛋糕，蜡烛点亮，彩带亮片迸发，光斑闪耀，暖光喜庆，镜头环绕蛋糕，金色光晕标题。）\n\noverall_soundscape:\nParty popper bursts, confetti rustle, gentle candle flicker, cheerful crowd cheering \"Happy Birthday\"; festive and lively.\n（礼花筒迸发，彩带飘落，烛火摇曳，人群欢呼「生日快乐」，喜庆热闹。）\n\nnon_diegetic_music:\nUpbeat birthday party pop theme with brass stabs, hand claps and a bright piano riff, celebratory, ends with a cheerful flourish.\n（明快的生日派对流行乐，铜管强音、拍手与明亮钢琴，喜庆热闹，欢快收尾。）"
+    },
+    {
+     "id": "h3_card_wedding_ring",
+     "name": "节日视频贺卡 · 婚礼戒指光效",
+     "name_en": "Video Greeting - Wedding Ring Light",
+     "description": "婚礼祝福视频贺卡：钻石戒指光效旋转、花瓣飘落、双心光斑、唯美神圣，6 秒",
+     "description_en": "Wedding blessing video card: a diamond ring rotating in a glow, petals falling, twin-heart bokeh, beautiful and sacred, six seconds",
+     "preview": "h3_card_wedding_ring.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic wedding greeting video card, 6 seconds. A sparkling diamond ring rotates slowly in soft golden light, petals and light particles drift around; two glowing hearts form in the bokeh background; elegant white and gold palette, ethereal studio lighting; refined serif title \"Happy Wedding · 百年好合\" fades in with lace-like frame; slow camera orbit; 8K render quality.\n（婚礼祝福视频贺卡：钻石戒指在柔光中缓慢旋转，花瓣与光粒飘散，背景光斑中双心浮现，白金配色，空灵打光，精致衬线标题配蕾丝感边框淡入，镜头缓慢环绕。）\n\noverall_soundscape:\nGentle chime and crystal ring sounds, soft petal fall, distant celebratory bells; sacred and romantic.\n（轻柔的风铃与水晶叮咚，花瓣飘落，远处祝福钟声，神圣浪漫。）\n\nnon_diegetic_music:\nElegant wedding waltz with piano, strings and harp, heartfelt and pure, soft crescendo at the ring reveal, gentle fade-out.\n（优雅婚礼圆舞曲，钢琴、弦乐与竖琴，真挚纯净，戒指显现时轻柔渐强，柔和淡出。）"
+    },
+    {
+     "id": "h3_card_teachersday_flower",
+     "name": "节日视频贺卡 · 教师节手绘花束",
+     "name_en": "Video Greeting - Teachers' Day Hand-drawn Flowers",
+     "description": "教师节视频贺卡：手绘粉笔花束绽放、黑板光效、温暖感恩字幕，5 秒",
+     "description_en": "Teachers' Day video card: a hand-drawn chalk bouquet blooming, blackboard light effects, warm grateful subtitles, five seconds",
+     "preview": "h3_card_teachersday_flower.png",
+     "generation_mode": "用户自定义 / Video Greeting",
+     "duration": 5,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "节日",
+      "贺卡",
+      "视频",
+      "祝福"
+     ],
+     "tags_en": [
+      "festival",
+      "greeting card",
+      "video",
+      "blessing"
+     ],
+     "prompt": "integrated_multimodal_description:\nCinematic Teachers' Day video greeting card, 5 seconds. A hand-drawn chalk flower bouquet blooms on a green chalkboard, chalk dust sparkles as petals draw themselves; warm sunlight rays sweep across, books and an apple appear gently; hand-drawn crayon texture with warm amber lighting; handwritten title \"老师辛苦了 · Happy Teachers' Day\" appears stroke by stroke; gentle camera push-in; 8K render quality.\n（教师节视频贺卡：绿色黑板上手绘粉笔花束逐笔绽放，粉笔灰如星光闪烁，暖阳扫过，书本与苹果浮现，蜡笔手绘质感，手写标题逐笔显现，镜头轻推。）\n\noverall_soundscape:\nChalk drawing scratch sounds, soft chalk dust rustle, gentle classroom ambience with distant school bell; warm and nostalgic.\n（粉笔书写声，粉笔灰细响，教室氛围与远处上课铃声，温暖怀旧。）\n\nnon_diegetic_music:\nWarm acoustic guitar and soft piano melody, nostalgic and grateful, gentle build, warm ending chord.\n（温暖的原声吉他配柔和钢琴，怀旧感恩，舒缓推进，温暖和弦收尾。）"
+    }
+   ]
+  }
+ ]
+}

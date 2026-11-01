@@ -1,0 +1,150 @@
+{
+ "id": "transition_mg",
+ "subcategories": [
+  {
+   "id": "mg_all",
+   "templates": [
+    {
+     "id": "transition_liquid_blob",
+     "name": "21. 液体流动",
+     "name_en": "21. Liquid Blob",
+     "description": "动效转场：液体流动 / Liquid Blob — a glossy liquid blob stretches and morphs across the frame, the fluid shape swallowing the outgoing scene and reshaping into the incoming scene",
+     "description_en": "Liquid Blob - a glossy liquid blob stretches and morphs across the frame, the fluid shape swallowing the outgoing scene and reshaping into the incoming scene",
+     "preview": "transition_liquid_blob.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "MG动效转场",
+      "Liquid Blob"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "MG transition",
+      "Liquid Blob"
+     ],
+     "prompt": "A seamless Liquid Blob transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A glossy liquid blob stretches and morphs across the frame, the fluid shape swallowing the outgoing scene and reshaping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a gooey liquid squelch with bubbly plops. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a quirky cartoon bassoon melody, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_cartoon_zoom",
+     "name": "22. 卡通冲击",
+     "name_en": "22. Cartoon Zoom Burst",
+     "description": "动效转场：卡通冲击 / Cartoon Zoom Burst — the outgoing scene zoom-bursts with a cartoon impact, speed lines and a star flash stretching the frame before the incoming scene pops in",
+     "description_en": "Cartoon Zoom Burst - the outgoing scene zoom-bursts with a cartoon impact, speed lines and a star flash stretching the frame before the incoming scene pops in",
+     "preview": "transition_cartoon_zoom.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "MG动效转场",
+      "Cartoon Zoom Burst"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "MG transition",
+      "Cartoon Zoom Burst"
+     ],
+     "prompt": "A seamless Cartoon Zoom Burst transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene zoom-bursts with a cartoon impact, speed lines and a star flash stretching the frame before the incoming scene pops in. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a classic cartoon whoosh with a boing impact. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a playful bouncing kazoo theme, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_spiral_swirl",
+     "name": "23. 旋涡螺旋",
+     "name_en": "23. Spiral Swirl",
+     "description": "动效转场：旋涡螺旋 / Spiral Swirl — the outgoing scene spirals inward like water going down a drain, the swirling vortex twisting the frame and spinning out into the incoming scene",
+     "description_en": "Spiral Swirl - the outgoing scene spirals inward like water going down a drain, the swirling vortex twisting the frame and spinning out into the incoming scene",
+     "preview": "transition_spiral_swirl.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "MG动效转场",
+      "Spiral Swirl"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "MG transition",
+      "Spiral Swirl"
+     ],
+     "prompt": "A seamless Spiral Swirl transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene spirals inward like water going down a drain, the swirling vortex twisting the frame and spinning out into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a whirling vortex spin with dizzying swoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a hypnotic circling music box phrase, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_bounce_hop",
+     "name": "24. 弹跳过渡",
+     "name_en": "24. Bounce Hop",
+     "description": "动效转场：弹跳过渡 / Bounce Hop — the outgoing scene bounces off the screen with a squash-and-stretch hop, landing away as the incoming scene bounces in from the opposite side",
+     "description_en": "Bounce Hop - the outgoing scene bounces off the screen with a squash-and-stretch hop, landing away as the incoming scene bounces in from the opposite side",
+     "preview": "transition_bounce_hop.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "MG动效转场",
+      "Bounce Hop"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "MG transition",
+      "Bounce Hop"
+     ],
+     "prompt": "A seamless Bounce Hop transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene bounces off the screen with a squash-and-stretch hop, landing away as the incoming scene bounces in from the opposite side. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a springy bounce with rubbery squeaks. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an upbeat ukulele strum, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_ribbon_flow",
+     "name": "25. 彩带流动",
+     "name_en": "25. Ribbon Flow",
+     "description": "动效转场：彩带流动 / Ribbon Flow — colorful silk ribbons flow across the frame in flowing waves, the ribbons wrapping around the outgoing scene and unwinding to reveal the incoming scene",
+     "description_en": "Ribbon Flow - colorful silk ribbons flow across the frame in flowing waves, the ribbons wrapping around the outgoing scene and unwinding to reveal the incoming scene",
+     "preview": "transition_ribbon_flow.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "MG动效转场",
+      "Ribbon Flow"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "MG transition",
+      "Ribbon Flow"
+     ],
+     "prompt": "A seamless Ribbon Flow transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Colorful silk ribbons flow across the frame in flowing waves, the ribbons wrapping around the outgoing scene and unwinding to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: silky fabric swishes with flowing air. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a graceful violin melody with harp, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,111 @@
+{
+ "id": "fl2va",
+ "subcategories": [
+  {
+   "id": "transition",
+   "templates": [
+    {
+     "id": "day_to_night",
+     "name": "日转夜延时过渡",
+     "name_en": "Day to night transition",
+     "description": "同一场景从白天过渡到夜晚",
+     "description_en": "The same scene transitioning from day to night",
+     "preview": "day_to_night.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "过渡",
+      "日夜变换",
+      "延时"
+     ],
+     "tags_en": [
+      "transition",
+      "day to night",
+      "time-lapse"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the scene, character, lighting, and all visual elements from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the scene, character, lighting, and all visual elements from <Picture 2>@图2 must be preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic timelapse transition. The scene begins exactly as <Picture 1>@图1. Over 8 seconds, the scene smoothly transitions until the final frame exactly matches <Picture 2>@图2. The lighting, color temperature, and atmosphere shift progressively from the first frame's quality to the last frame's — shadows lengthen and rotate, the sky tone transitions from day to night, and any lights or luminous elements in the scene activate progressively as appropriate to the transition. Ambient details respond naturally to the time-of-day shift. The camera is fixed throughout. The transition feels like a compressed timelapse of several hours. Every element changes smoothly and continuously — no cuts, no jumps. The final frame exactly matches <Picture 2>@图2.\n\noverall_soundscape: Distant ambient sound that shifts character from daytime to nighttime — background activity fading, night insects or wind emerging as appropriate to the scene.\n\nnon_diegetic_music: A gentle ambient track that evolves from warm daytime acoustic tones to cooler, more mysterious electronic textures as night falls."
+    },
+    {
+     "id": "season_transition",
+     "name": "季节变换过渡",
+     "name_en": "Season transition",
+     "description": "同一场景从夏季过渡到冬季",
+     "description_en": "The same scene transitioning from summer to winter",
+     "preview": "season_transition.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "过渡",
+      "季节",
+      "变换"
+     ],
+     "tags_en": [
+      "transition",
+      "seasons",
+      "morphing"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the scene, character, lighting, and all visual elements from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the scene, character, lighting, and all visual elements from <Picture 2>@图2 must be preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic transition. The scene begins exactly as <Picture 1>@图1. Over 8 seconds, it smoothly transforms until the final frame exactly matches <Picture 2>@图2. Vegetation, color, weather, and light quality shift organically from the first frame's season to the last frame's — foliage changes color and falls, ground cover transforms, sky tone and light temperature adjust, and small details change appropriately to the seasonal shift. The transformation is continuous and organic, not a cut. The final frame exactly matches <Picture 2>@图2. The camera is fixed throughout.\n\noverall_soundscape: Wind that changes character from the first season to the second, ambient sounds shifting appropriately — bird songs fading or emerging, subtle environmental sounds matching the new season.\n\nnon_diegetic_music: A solo piano piece that modulates from a warm major key to a crystalline minor key, mirroring the seasonal shift."
+    }
+   ]
+  },
+  {
+   "id": "morphing",
+   "templates": [
+    {
+     "id": "face_morph",
+     "name": "面孔渐变变形",
+     "name_en": "Face morphing",
+     "description": "人物面孔A逐渐变形为人物面孔B",
+     "description_en": "Face A gradually morphing into face B",
+     "preview": "face_morph.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "变形",
+      "面孔",
+      "渐变"
+     ],
+     "tags_en": [
+      "transformation",
+      "face",
+      "morph"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the scene, character, lighting, and all visual elements from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the scene, character, lighting, and all visual elements from <Picture 2>@图2 must be preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Cinematic close-up. The face from <Picture 1>@图1 begins the frame. Over 6 seconds, the face smoothly and organically morphs into the face from <Picture 2>@图2. The transformation is gradual — bone structure shifts subtly, skin tone adjusts, hair changes color and length, eye color shifts. The morph is not a dissolve but a physical transformation — features reshape in real-time. The person's expression remains neutral throughout. The camera holds steady in a close-up portrait framing. Even lighting on a neutral background. The final frame exactly matches <Picture 2>@图2. The morph should feel uncanny and mesmerizing.\n\noverall_soundscape: A subtle ambient drone with faint whispering textures, creating an uncanny, dreamlike quality.\n\nnon_diegetic_music: An atmospheric electronic track with slow-evolving synth pads and subtle vocal textures, mysterious and otherworldly."
+    },
+    {
+     "id": "object_transform",
+     "name": "物品变形变换",
+     "name_en": "Object transformation",
+     "description": "物品A逐渐变形为物品B",
+     "description_en": "Object A gradually morphing into object B",
+     "preview": "object_transform.webp",
+     "generation_mode": "First+Last Frame (首尾帧)【图3可选场景】",
+     "duration": 6,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "变形",
+      "物品",
+      "变换"
+     ],
+     "tags_en": [
+      "transformation",
+      "object",
+      "morphing"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed — face, hairstyle, clothing, body proportions, accessories and weapon/prop must be preserved EXACTLY per its OWN <Picture N>. NEVER follow only one reference image while ignoring the others: every referenced <Picture N> must take effect. 本提示词中出现的每一个 <Picture N> 都是独立的参考图，必须逐一严格遵循其各自的面部、发型、服装、体型、配饰与道具，严禁只参考其中一张而忽略其他任何一张；所有被引用的参考图都必须完整生效。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the first frame — the scene, character, lighting, and all visual elements from <Picture 1>@图1 must be preserved EXACTLY at the start. At the end of the target video, <Picture 2>@图2 is fully referenced as the last frame — the scene, character, lighting, and all visual elements from <Picture 2>@图2 must be preserved EXACTLY at the end.\n\nintegrated_multimodal_description:  [Shot 1] [0-6s] Product/commercial style. The object from <Picture 1>@图1 sits centered on a clean, neutral background consistent with the reference. Over 6 seconds, it smoothly transforms into the object from <Picture 2>@图2. The transformation is physical and organic — material, shape, color, and size all shift continuously. Parts may dissolve and reform. The intermediate stages should look like plausible hybrid objects, not just a cross-fade. Professional studio lighting throughout. The camera holds steady at a three-quarter angle, medium shot. The final frame exactly matches <Picture 2>@图2.\n\noverall_soundscape: A subtle metallic shimmer and soft material sounds that shift character as the object transforms.\n\nnon_diegetic_music: A clean, modern electronic track with arpeggiated synth and light percussion, evoking a tech product launch atmosphere."
+    }
+   ]
+  }
+ ]
+}

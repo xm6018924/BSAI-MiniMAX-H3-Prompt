@@ -1,0 +1,165 @@
+{
+ "id": "material_morph",
+ "subcategories": [
+  {
+   "id": "statue_relief",
+   "templates": [
+    {
+     "id": "human_to_marble_statue",
+     "name": "真人→大理石雕像（美杜莎石化）",
+     "name_en": "Human to marble statue (Medusa petrification)",
+     "description": "图1真人+图2同姿态大理石雕像：眼部闪光→指尖皮肤开始石化→向全身蔓延→最终完全定格为图2那尊雕像",
+     "description_en": "Img1 real person + Img2 marble statue in the same pose: the eyes flash -> the skin on the fingertips begins to turn to stone -> it spreads across the body -> finally freezing completely into the statue from Img2",
+     "preview": "human_to_marble_statue.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1真人+图2目标雕像】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "石化",
+      "大理石",
+      "美杜莎",
+      "材质转化",
+      "雕像",
+      "多图参考"
+     ],
+     "tags_en": [
+      "petrification",
+      "marble",
+      "Medusa",
+      "material shift",
+      "statue",
+      "multi-image reference"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is fully referenced as the living human being (start frame) — face, hairstyle, body proportions and identity must be preserved EXACTLY until the petrification completes. <Picture 2>@图2 is fully referenced as the target marble statue (end frame) — material, pose, carved facial features and every sculpted detail must come EXACTLY from <Picture 2>@图2; the final frozen pose MUST match <Picture 2>@图2. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是真人起始形象，面部/发型/体型/身份严格保持，直到石化完成；<Picture 2>@图2 是目标大理石雕像，材质/姿态/五官雕刻细节完全来自图2@图2，最终定格必须与图2@图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the living human. STRICT REFERENCE COMPLIANCE: the character's exact facial identity, hairstyle and body proportions are preserved EXACTLY until petrification is complete; the final frozen statue must match <Picture 2>@图2 EXACTLY in material, pose and sculpted detail.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Live-action, cinematic. Slow dolly-in, low warm key light in a quiet museum hall, marble dust motes floating in the air. 【ACTION】At 0.00s the human from <Picture 1>@图1 stands centered, identity and hairstyle intact. At ~1.5s a faint golden gleam flashes in the eyes; at ~2.5s the fingertips turn pale grey and the skin hardens into cold veined marble, the stone creeping up the hands and wrists; at ~4.5s the petrification spreads past the arms and chest, fabric details freezing into carved marble folds, skin texture replaced by crystalline stone grain; at ~6s the creeping stone reaches the face and hair, features locking into carved marble; by ~8.0s the figure is fully frozen, the final statue's material, pose and carved features matching <Picture 2>@图2 EXACTLY.【/ACTION】 No distortion, no extra limbs, no morphing of unrelated objects; identity and pose consistent from <Picture 1>@图1 to <Picture 2>@图2.\n\noverall_soundscape: Deep resonant stone hum, faint cracking and grinding as skin hardens into marble, echoing gallery reverb, then total stone stillness.\n\nnon_diegetic_music: Solemn, mythological cinematic score with deep strings and a slowly swelling choir, ending on a heavy stone-strike hit."
+    },
+    {
+     "id": "statue_to_human_awaken",
+     "name": "大理石雕像活化（反向）",
+     "name_en": "Marble statue to living human (reverse)",
+     "description": "图1雕像+图2同姿态真人：雕像表面裂纹渗出金光→石雕剥落→血肉生长→完全活化成图2那个人",
+     "description_en": "Img1 statue + Img2 real person in the same pose: golden light seeps from cracks in the stone -> the shell flakes away -> flesh and blood grow -> it comes fully alive into the person from Img2",
+     "preview": "statue_to_human_awaken.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1雕像+图2目标真人】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "活化",
+      "雕像复活",
+      "石化反向",
+      "材质转化",
+      "电影感",
+      "多图参考"
+     ],
+     "tags_en": [
+      "coming alive",
+      "statue revival",
+      "reverse petrification",
+      "material shift",
+      "cinematic",
+      "multi-image reference"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is fully referenced as the marble statue (start frame) — material and pose must come EXACTLY from <Picture 1>@图1. <Picture 2>@图2 is fully referenced as the living human (end frame) — face, hairstyle, body proportions and identity must be preserved EXACTLY. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是起始大理石雕像，材质与姿态严格来自图1@图1；<Picture 2>@图2 是活化后真人，面部/发型/体型/身份严格保持。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the starting marble statue. STRICT REFERENCE COMPLIANCE: the statue's material and pose come EXACTLY from <Picture 1>@图1; at the end of the video the awakened human's face, hairstyle and identity match <Picture 2>@图2 EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, slow push-in on a marble statue in a dark hall, a single shaft of warm light from above. 【ACTION】At 0.00s the statue from <Picture 1>@图1 stands frozen, veined marble surface cold and still. At ~1.5s thin cracks spiderweb across the chest and face, golden light seeping from within; at ~3.0s the stone skin cracks and flakes outward, glowing veins running through the fissures; at ~4.5s marble chips slough away to reveal living warm flesh underneath, the carved folds unfreezing into real skin and hair; at ~6.5s the figure takes a soft breath, eyes opening, the body fully fleshed and alive; by ~8.0s it stands as the living human from <Picture 2>@图2, face, hairstyle and identity matching <Picture 2>@图2 EXACTLY.【/ACTION】 No distortion, no extra limbs; the transition is one continuous material change from <Picture 1>@图1 to <Picture 2>@图2.\n\noverall_soundscape: Deep stone groan and cracking, warm blood-flow whoosh as flesh returns, a soft relieved breath at the end, hall reverb.\n\nnon_diegetic_music: Ethereal awakening score, gentle piano and swelling strings, lifting into warmth as the figure comes alive."
+    },
+    {
+     "id": "bronze_relic_alive",
+     "name": "铜首文物活化",
+     "name_en": "Bronze relic comes alive",
+     "description": "图1青铜文物（如铜首）+图2场景线稿：铜像在博物馆展柜中金属表面流转金光，形体从器物活过来转为人形/兽形，青铜材质不变、形体动起来",
+     "description_en": "Img1 bronze relic (such as a bronze zodiac head) + Img2 scene line drawing: golden light flows over the metal as it sits in a museum case, the form comes alive and shifts from an object into a human or beast shape, the bronze material unchanged while the form begins to move",
+     "preview": "bronze_relic_alive.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1文物+图2场景线稿】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "文物活化",
+      "青铜",
+      "博物馆",
+      "材质转化",
+      "铜首",
+      "多图参考"
+     ],
+     "tags_en": [
+      "relic coming alive",
+      "bronze",
+      "museum",
+      "material shift",
+      "bronze head",
+      "multi-image reference"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is fully referenced as the bronze relic (e.g. a bronze head, start element) — verdigris patina, engraved patterns and sculpted shape must come EXACTLY from <Picture 1>@图1, and the bronze material is RETAINED throughout the awakening. <Picture 2>@图2 is fully referenced as the scene line art (environment) — the environment composition, display fixtures and layout must come EXACTLY from <Picture 2>@图2, with the line art colored into a real scene. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是青铜文物（如铜首），铜绿/纹饰/造型细节严格来自图1@图1，活化后仍保持青铜材质；<Picture 2>@图2 是场景线稿，环境构图与陈设来自图2@图2，线稿上色为实景。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the bronze relic sitting inside the museum display case; <Picture 2>@图2 is fully referenced as the scene environment, colored into a real space. STRICT REFERENCE COMPLIANCE: the relic's patina, engravings and shape come EXACTLY from <Picture 1>@图1; bronze material is never lost.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Cinematic museum night shot, dark hall with spotlights, glass display case, the environment composition exactly from <Picture 2>@图2. 【ACTION】At 0.00s the bronze relic from <Picture 1>@图1 sits motionless in the case, verdigris and engraved patterns faithful to <Picture 1>@图1. At ~1.5s molten golden light begins to flow across the bronze surface, rippling over the carved patterns; at ~3.0s the relic's form starts to move within the metal — joints shifting, the bronze body lifting and turning, the material staying solid cast bronze the whole time; at ~5.0s it reshapes from vessel form into a moving bronze humanoid/beast figure, engravings and patina still intact across its skin; by ~8.0s it stands alive inside the display case, still pure bronze, metal sheen flowing over every surface.【/ACTION】 No distortion, no extra limbs; bronze material and <Picture 1>@图1 details preserved at all times.\n\noverall_soundscape: Low resonant bronze hum, metallic sliding and clinking as the form moves, faint case-electronic hum, quiet museum air.\n\nnon_diegetic_music: Ancient-ritual cinematic score, deep taiko drums and low bronze bell tones, slow and solemn."
+    }
+   ]
+  },
+  {
+   "id": "object_alchemy",
+   "templates": [
+    {
+     "id": "human_to_chibi_figure",
+     "name": "真人→潮玩手办/黏土人",
+     "name_en": "Human to chibi PVC figure",
+     "description": "图1真人+图2手办/黏土人：真人站立中逐渐Q版化、比例缩小、皮肤变为PVC哑光质感、关节与涂装细节与图2手办一致，最终定格为那只手办摆上展架",
+     "description_en": "Img1 real person + Img2 figurine or nendoroid: the person gradually becomes chibi-style and shrinks in scale, the skin turning to matte PVC, with joints and paint details matching the figurine in Img2, finally freezing into that figurine being placed on a display rack",
+     "preview": "human_to_chibi_figure.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1真人+图2目标手办】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "手办化",
+      "Q版",
+      "潮玩",
+      "PVC",
+      "材质转化",
+      "多图参考"
+     ],
+     "tags_en": [
+      "figurine conversion",
+      "chibi",
+      "designer toy",
+      "PVC",
+      "material shift",
+      "multi-image reference"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is fully referenced as the living human (start) — the starting appearance must come EXACTLY from <Picture 1>@图1. <Picture 2>@图2 is fully referenced as the target chibi figure / nendoroid (end frame) — chibi proportions, paint job, base and sculpted details must come EXACTLY from <Picture 2>@图2; the final figure MUST match <Picture 2>@图2. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是真人起始形象，起始形象严格来自图1@图1；<Picture 2>@图2 是目标潮玩手办/黏土人，Q版比例/涂装/底座/造型细节完全来自图2@图2，最终定格必须与图2@图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the standing human. STRICT REFERENCE COMPLIANCE: the starting figure comes EXACTLY from <Picture 1>@图1; the final chibi figure's proportions, paint, base and details match <Picture 2>@图2 EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Bright clean product-shot lighting, soft studio backdrop, a display shelf and acrylic base in the background. 【ACTION】At 0.00s the human from <Picture 1>@图1 stands centered. At ~1.5s the body begins to shrink and chibi-ify, the head growing larger relative to a smaller body, real skin turning into smooth matte PVC; at ~3.5s the surface shifts fully to plastic, seams and painted joints appearing, clothes turning into crisp painted sculpted parts; at ~5.5s the figure settles into the exact pose, proportions, paint scheme and base of <Picture 2>@图2; by ~8.0s it sits perfectly on the shelf, every sculpted and painted detail matching <Picture 2>@图2 EXACTLY.【/ACTION】 No distortion, no extra parts; the morph is one smooth continuous material change from <Picture 1>@图1 to <Picture 2>@图2.\n\noverall_soundscape: Soft plastic click and air-release as the body shrinks, gentle shelf-setting thud, light studio room tone.\n\nnon_diegetic_music: Cute upbeat toy-shop jingle, bouncy xylophone and plucky bass, ending on a playful pop."
+    },
+    {
+     "id": "human_to_flame_beast",
+     "name": "人→火焰/岩浆生物",
+     "name_en": "Human to flame creature",
+     "description": "图1人物+图2火焰形态：人物行走中轮廓开始燃烧，皮肤边缘溶解为跃动火焰，衣物化为焰舌，最终完全成为图2那种火焰人形生物，火星四溅",
+     "description_en": "Img1 character + Img2 flame form: as the character walks their outline begins to burn, the edges of the skin dissolving into leaping flames, the clothing turning into tongues of fire, until they are fully the flame humanoid creature from Img2, with sparks flying",
+     "preview": "human_to_flame_beast.webp",
+     "generation_mode": "Reference to Video (参考生视频)【图1人物+图2火焰形态】",
+     "duration": 8,
+     "needs_image": true,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "火焰化",
+      "岩浆",
+      "火焰生物",
+      "材质转化",
+      "热血",
+      "多图参考"
+     ],
+     "tags_en": [
+      "flame conversion",
+      "lava",
+      "flame creature",
+      "material shift",
+      "hot-blooded",
+      "multi-image reference"
+     ],
+     "prompt": "[REFERENCE IMAGES ARE THE SOLE TRUTH / 参考图是唯一真相 — ABSOLUTE MANDATE]: The model MUST copy the reference images directly. Do NOT invent, improvise, guess, hallucinate, or 'improve' any face, hairstyle, outfit, color, pattern, fabric, body type, accessory, or prop that is not explicitly shown in the connected <Picture N> reference images. If the prompt text and a reference image disagree, the reference image WINS. The output character's face MUST look like the person in <Picture 1>@图1 — same eyes, nose, mouth, skin tone, eyebrow shape, hairline, hair color, hair texture, and facial proportions. The output outfit MUST look like the clothing in the outfit reference picture — same garment type, same sleeves, same hem length, same color, same pattern, same texture, same buttons/zippers/pockets, same collar, same waistline, same accessories. If the reference image shows a specific outfit, the video shows THAT exact outfit — not a different color, not a different pattern, not a different cut. If the reference image shows a specific hairstyle, the video shows THAT exact hairstyle — not a different length, not a different color, not a different style. 【参考图是唯一真相·绝对强制】模型必须直接复制参考图，严禁凭空想象、自行设计、猜测或美化任何未在<Picture N>参考图中明确展示的面部/发型/服装/颜色/花纹/面料/体型/配饰/道具。提示词文字与参考图冲突时，一律以参考图为准。输出人物的脸必须长得和<Picture 1>@图1里的人一模一样——同样的眼睛、鼻子、嘴巴、肤色、眉形、发际线、发色、发质、面部比例。输出服装必须和服装参考图里的衣服一模一样——同样的版型、袖长、裙摆、颜色、花纹、面料、纽扣/拉链/口袋、领口、腰线、配饰。参考图是什么服装，视频就必须是什么服装——严禁更改颜色、花纹或款式。参考图是黑色长发，视频就必须是黑色长发——不是短发、不是棕发、不是马尾。\n\n[STRICT MULTI-REFERENCE COMPLIANCE / 严格多参考声明]: EVERY <Picture N> referenced in this prompt is an independent reference and MUST be strictly followed. <Picture 1>@图1 is fully referenced as the person (start) — face, hairstyle and clothing must come EXACTLY from <Picture 1>@图1. <Picture 2>@图2 is fully referenced as the target flame creature (end frame) — flame color, silhouette and fire shape must come EXACTLY from <Picture 2>@图2; the final fiery form MUST match <Picture 2>@图2. NEVER mix the material of one <Picture N> onto another frame. 中文复述：本提示词中 <Picture 1>@图1 是起始人物，起始面部/发型/服装严格来自图1@图1；<Picture 2>@图2 是目标火焰形态，火焰颜色/轮廓/焰形完全来自图2@图2，最终形态必须与图2@图2一致。严禁把一张参考图的材质/造型渲染到别的画面，严禁自行设计替换。\n\nFor the target video, at 0.00 seconds into the target video, <Picture 1>@图1 (from [Shot 1]) is fully referenced as the walking person. STRICT REFERENCE COMPLIANCE: the starting face, hairstyle and outfit come EXACTLY from <Picture 1>@图1; the final flame creature's color, silhouette and fire shape match <Picture 2>@图2 EXACTLY.\n\nintegrated_multimodal_description:  [Shot 1] [0-8s] Dark smoky environment, backlit, glowing embers drifting, high-contrast firelight. 【ACTION】At 0.00s the person from <Picture 1>@图1 walks forward, face and outfit intact. At ~1.5s the outline begins to smolder, the edges of the shoulders and hairline flickering into living flame; at ~3.5s real skin dissolves outward into leaping tongues of fire, clothing turning into waving flame ribbons instead of fabric, sparks scattering with every step; at ~5.5s the body is entirely made of flickering fire, the human silhouette preserved inside the blaze; by ~8.0s it stands as the complete fire-humanoid creature from <Picture 2>@图2, flame color, outline and fire shape matching <Picture 2>@图2 EXACTLY, embers bursting outward.【/ACTION】 No distortion, no extra limbs; flame and ember effects are physical and cinematic.\n\noverall_soundscape: Roaring whoosh of igniting flames, crackling fire and snapping embers, low hot wind, sparks hissing.\n\nnon_diegetic_music: Intense epic orchestral build, driving taiko drums and rising brass, climaxing in a fire-hit."
+    }
+   ]
+  }
+ ]
+}

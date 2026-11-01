@@ -1,0 +1,150 @@
+{
+ "id": "transition_light",
+ "subcategories": [
+  {
+   "id": "light_all",
+   "templates": [
+    {
+     "id": "transition_light_leak",
+     "name": "6. 漏光转场",
+     "name_en": "6. Light Leak",
+     "description": "动效转场：漏光转场 / Light Leak — a warm film light leak blooms across the frame in orange and magenta, overexposing the outgoing scene until it dissolves into the incoming scene",
+     "description_en": "Light Leak - a warm film light leak blooms across the frame in orange and magenta, overexposing the outgoing scene until it dissolves into the incoming scene",
+     "preview": "transition_light_leak.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "光效转场",
+      "Light Leak"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "light transition",
+      "Light Leak"
+     ],
+     "prompt": "A seamless Light Leak transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A warm film light leak blooms across the frame in orange and magenta, overexposing the outgoing scene until it dissolves into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: analog film hiss with a warm glowing bloom, camera shutter click. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a nostalgic lo-fi synth melody, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_lens_flare",
+     "name": "7. 镜头光晕",
+     "name_en": "7. Lens Flare",
+     "description": "动效转场：镜头光晕 / Lens Flare — a bright lens flare streaks across the frame diagonally, the anamorphic light beam slicing the outgoing scene and revealing the incoming scene behind it",
+     "description_en": "Lens Flare - a bright lens flare streaks across the frame diagonally, the anamorphic light beam slicing the outgoing scene and revealing the incoming scene behind it",
+     "preview": "transition_lens_flare.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "光效转场",
+      "Lens Flare"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "light transition",
+      "Lens Flare"
+     ],
+     "prompt": "A seamless Lens Flare transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A bright lens flare streaks across the frame diagonally, the anamorphic light beam slicing the outgoing scene and revealing the incoming scene behind it. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a high-pitched optical ping with a streaking air whoosh. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an epic orchestral swell with choir, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_sweep_light",
+     "name": "8. 扫光转场",
+     "name_en": "8. Light Sweep",
+     "description": "动效转场：扫光转场 / Light Sweep — a blade of white light sweeps horizontally across the frame, temporarily washing out the outgoing scene and unveiling the incoming scene in its wake",
+     "description_en": "Light Sweep - a blade of white light sweeps horizontally across the frame, temporarily washing out the outgoing scene and unveiling the incoming scene in its wake",
+     "preview": "transition_sweep_light.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "光效转场",
+      "Light Sweep"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "light transition",
+      "Light Sweep"
+     ],
+     "prompt": "A seamless Light Sweep transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A blade of white light sweeps horizontally across the frame, temporarily washing out the outgoing scene and unveiling the incoming scene in its wake. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a crisp sweeping light whoosh with metallic resonance. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a driving electronic pulse beat, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_glow_wipe",
+     "name": "9. 辉光擦拭",
+     "name_en": "9. Glow Wipe",
+     "description": "动效转场：辉光擦拭 / Glow Wipe — a glowing band of neon energy sweeps across the frame, the bright edge burning through the outgoing scene while the incoming scene fades in behind the glow",
+     "description_en": "Glow Wipe - a glowing band of neon energy sweeps across the frame, the bright edge burning through the outgoing scene while the incoming scene fades in behind the glow",
+     "preview": "transition_glow_wipe.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "光效转场",
+      "Glow Wipe"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "light transition",
+      "Glow Wipe"
+     ],
+     "prompt": "A seamless Glow Wipe transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A glowing band of neon energy sweeps across the frame, the bright edge burning through the outgoing scene while the incoming scene fades in behind the glow. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a glowing hum with a sizzling neon edge, soft crackle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a futuristic synthwave arpeggio, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_neon_pulse",
+     "name": "10. 霓虹脉冲",
+     "name_en": "10. Neon Pulse",
+     "description": "动效转场：霓虹脉冲 / Neon Pulse — a neon light pulse radiates from the center of the frame in cyan and magenta rings, each ring expanding and washing over the outgoing scene to reveal the incoming scene",
+     "description_en": "Neon Pulse - a neon light pulse radiates from the center of the frame in cyan and magenta rings, each ring expanding and washing over the outgoing scene to reveal the incoming scene",
+     "preview": "transition_neon_pulse.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "光效转场",
+      "Neon Pulse"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "light transition",
+      "Neon Pulse"
+     ],
+     "prompt": "A seamless Neon Pulse transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] A neon light pulse radiates from the center of the frame in cyan and magenta rings, each ring expanding and washing over the outgoing scene to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: electric neon buzz with rhythmic pulse waves. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a cyberpunk synth bass pulse, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

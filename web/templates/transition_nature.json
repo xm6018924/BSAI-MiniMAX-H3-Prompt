@@ -1,0 +1,150 @@
+{
+ "id": "transition_nature",
+ "subcategories": [
+  {
+   "id": "nature_all",
+   "templates": [
+    {
+     "id": "transition_ink_bleed",
+     "name": "36. 墨迹晕染",
+     "name_en": "36. Ink Bleed",
+     "description": "动效转场：墨迹晕染 / Ink Bleed — black ink blooms into the outgoing scene like a brush painting, the ink bleeding across the frame and dissolving into the incoming scene with ink-wash strokes",
+     "description_en": "Ink Bleed - black ink blooms into the outgoing scene like a brush painting, the ink bleeding across the frame and dissolving into the incoming scene with ink-wash strokes",
+     "preview": "transition_ink_bleed.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "自然艺术转场",
+      "Ink Bleed"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "natural art transition",
+      "Ink Bleed"
+     ],
+     "prompt": "A seamless Ink Bleed transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Black ink blooms into the outgoing scene like a brush painting, the ink bleeding across the frame and dissolving into the incoming scene with ink-wash strokes. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: ink drops with wet brush strokes on paper. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a traditional guzheng melody with bamboo flute, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_water_ripple",
+     "name": "37. 水波涟漪",
+     "name_en": "37. Water Ripple",
+     "description": "动效转场：水波涟漪 / Water Ripple — ripples spread across the outgoing scene as if a stone dropped into water, the concentric waves distorting and washing the frame into the incoming scene",
+     "description_en": "Water Ripple - ripples spread across the outgoing scene as if a stone dropped into water, the concentric waves distorting and washing the frame into the incoming scene",
+     "preview": "transition_water_ripple.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "自然艺术转场",
+      "Water Ripple"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "natural art transition",
+      "Water Ripple"
+     ],
+     "prompt": "A seamless Water Ripple transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Ripples spread across the outgoing scene as if a stone dropped into water, the concentric waves distorting and washing the frame into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: gentle water ripples with a soft splash. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a serene pentatonic music box, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_smoke_curl",
+     "name": "38. 烟雾缭绕",
+     "name_en": "38. Smoke Curl",
+     "description": "动效转场：烟雾缭绕 / Smoke Curl — wispy smoke curls rise through the outgoing scene, the smoke thickening into a gray veil that thins out to reveal the incoming scene",
+     "description_en": "Smoke Curl - wispy smoke curls rise through the outgoing scene, the smoke thickening into a gray veil that thins out to reveal the incoming scene",
+     "preview": "transition_smoke_curl.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "自然艺术转场",
+      "Smoke Curl"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "natural art transition",
+      "Smoke Curl"
+     ],
+     "prompt": "A seamless Smoke Curl transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Wispy smoke curls rise through the outgoing scene, the smoke thickening into a gray veil that thins out to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft curling smoke with a quiet crackle. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a mysterious ambient drone with flute, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_wind_petals",
+     "name": "39. 花瓣飞舞",
+     "name_en": "39. Wind Petals",
+     "description": "动效转场：花瓣飞舞 / Wind Petals — cherry blossom petals blow across the outgoing scene on a gentle wind, the petals swirling past the camera and clearing to reveal the incoming scene",
+     "description_en": "Wind Petals - cherry blossom petals blow across the outgoing scene on a gentle wind, the petals swirling past the camera and clearing to reveal the incoming scene",
+     "preview": "transition_wind_petals.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "自然艺术转场",
+      "Wind Petals"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "natural art transition",
+      "Wind Petals"
+     ],
+     "prompt": "A seamless Wind Petals transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] Cherry blossom petals blow across the outgoing scene on a gentle wind, the petals swirling past the camera and clearing to reveal the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: soft petal rustle with a flowing breeze. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a gentle koto melody with strings, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_aurora_flow",
+     "name": "40. 极光流淌",
+     "name_en": "40. Aurora Flow",
+     "description": "动效转场：极光流淌 / Aurora Flow — an aurora of green and violet light flows across the night sky of the outgoing scene, the shimmering curtain of light sweeping into the incoming scene",
+     "description_en": "Aurora Flow - an aurora of green and violet light flows across the night sky of the outgoing scene, the shimmering curtain of light sweeping into the incoming scene",
+     "preview": "transition_aurora_flow.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "自然艺术转场",
+      "Aurora Flow"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "natural art transition",
+      "Aurora Flow"
+     ],
+     "prompt": "A seamless Aurora Flow transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] An aurora of green and violet light flows across the night sky of the outgoing scene, the shimmering curtain of light sweeping into the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a shimmering aurora hum with cosmic whisper. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: an ethereal ambient choir pad, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,150 @@
+{
+ "id": "transition_film",
+ "subcategories": [
+  {
+   "id": "film_all",
+   "templates": [
+    {
+     "id": "transition_zoom_blur",
+     "name": "31. 变焦模糊",
+     "name_en": "31. Zoom Blur",
+     "description": "动效转场：变焦模糊 / Zoom Blur — the camera zooms rapidly into the outgoing scene with heavy radial motion blur, the blurred streak snapping into a sharp new composition of the incoming scene",
+     "description_en": "Zoom Blur - the camera zooms rapidly into the outgoing scene with heavy radial motion blur, the blurred streak snapping into a sharp new composition of the incoming scene",
+     "preview": "transition_zoom_blur.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "电影转场",
+      "Zoom Blur"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "cinematic transition",
+      "Zoom Blur"
+     ],
+     "prompt": "A seamless Zoom Blur transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The camera zooms rapidly into the outgoing scene with heavy radial motion blur, the blurred streak snapping into a sharp new composition of the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a fast zoom whoosh with lens rush. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a dramatic orchestral hit with low brass, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_stretch_warp",
+     "name": "32. 拉伸扭曲",
+     "name_en": "32. Stretch Warp",
+     "description": "动效转场：拉伸扭曲 / Stretch Warp — the outgoing scene stretches and warps across the frame like elastic, the distorted image snapping back into the incoming scene with a fluid rebound",
+     "description_en": "Stretch Warp - the outgoing scene stretches and warps across the frame like elastic, the distorted image snapping back into the incoming scene with a fluid rebound",
+     "preview": "transition_stretch_warp.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "电影转场",
+      "Stretch Warp"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "cinematic transition",
+      "Stretch Warp"
+     ],
+     "prompt": "A seamless Stretch Warp transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene stretches and warps across the frame like elastic, the distorted image snapping back into the incoming scene with a fluid rebound. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: an elastic stretch with warping air distortion. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a tension string ostinato, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_roll_impact",
+     "name": "33. 翻滚冲击",
+     "name_en": "33. Roll Impact",
+     "description": "动效转场：翻滚冲击 / Roll Impact — the outgoing scene rolls away from the camera in a spinning motion, tumbling off-frame while the incoming scene rolls in from the opposite direction",
+     "description_en": "Roll Impact - the outgoing scene rolls away from the camera in a spinning motion, tumbling off-frame while the incoming scene rolls in from the opposite direction",
+     "preview": "transition_roll_impact.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "电影转场",
+      "Roll Impact"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "cinematic transition",
+      "Roll Impact"
+     ],
+     "prompt": "A seamless Roll Impact transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The outgoing scene rolls away from the camera in a spinning motion, tumbling off-frame while the incoming scene rolls in from the opposite direction. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a heavy rolling thud with impact rumble. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a driving rock percussion groove, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_film_burn",
+     "name": "34. 胶片灼烧",
+     "name_en": "34. Film Burn",
+     "description": "动效转场：胶片灼烧 / Film Burn — the film edge of the outgoing scene burns with a glowing orange flame, the celluloid curling and melting to reveal the incoming scene through the burn",
+     "description_en": "Film Burn - the film edge of the outgoing scene burns with a glowing orange flame, the celluloid curling and melting to reveal the incoming scene through the burn",
+     "preview": "transition_film_burn.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "电影转场",
+      "Film Burn"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "cinematic transition",
+      "Film Burn"
+     ],
+     "prompt": "A seamless Film Burn transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The film edge of the outgoing scene burns with a glowing orange flame, the celluloid curling and melting to reveal the incoming scene through the burn. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: film grain crackle with a melting hiss and pop. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a vintage analog synth with tape warble, synced to the rhythm of the transition for a polished editorial feel."
+    },
+    {
+     "id": "transition_rack_focus",
+     "name": "35. 焦外过渡",
+     "name_en": "35. Rack Focus Transition",
+     "description": "动效转场：焦外过渡 / Rack Focus Transition — the camera focus racks out of the outgoing scene into a dreamy bokeh blur, then racks back into sharp focus on the incoming scene",
+     "description_en": "Rack Focus Transition - the camera focus racks out of the outgoing scene into a dreamy bokeh blur, then racks back into sharp focus on the incoming scene",
+     "preview": "transition_rack_focus.png",
+     "generation_mode": "Text to Video (文生视频)",
+     "duration": 6,
+     "needs_image": false,
+     "needs_video": false,
+     "needs_audio": false,
+     "tags": [
+      "转场",
+      "动效",
+      "transition",
+      "电影转场",
+      "Rack Focus Transition"
+     ],
+     "tags_en": [
+      "transition",
+      "motion graphics",
+      "transition",
+      "cinematic transition",
+      "Rack Focus Transition"
+     ],
+     "prompt": "A seamless Rack Focus Transition transition effect between two scenes.\n\nintegrated_multimodal_description:\n[Shot 1] [0-3s] The first scene holds steady in a cinematic composition. The frame is stable, the lighting is balanced, and the subject is clearly visible, establishing the visual context that will be transformed by the transition.\n[Shot 2] [3-6s] The camera focus racks out of the outgoing scene into a dreamy bokeh blur, then racks back into sharp focus on the incoming scene. The transition executes with fluid, natural motion and cinematic quality. The camera movement and visual effect remain smooth and continuous, completing the handoff from the first scene to the second scene seamlessly.\n\noverall_soundscape: a smooth focus ring rotation with soft lens breath. No dialogue, no music in the soundscape layer.\n\nnon_diegetic_music: a contemplative piano with cello, synced to the rhythm of the transition for a polished editorial feel."
+    }
+   ]
+  }
+ ]
+}

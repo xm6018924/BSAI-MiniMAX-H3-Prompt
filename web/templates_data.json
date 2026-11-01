@@ -12025,7 +12025,7 @@
       "subcategories": [
         {
           "name": "换装变装类",
-          "name_en": "Wardrobe / Outfit Change",
+          "name_en": "Wardrobe Variants",
           "templates": [
             {
               "id": "magic_wardrobe_change",
