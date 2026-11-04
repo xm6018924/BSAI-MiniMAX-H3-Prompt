@@ -361,6 +361,82 @@ def _generate_ninfer(user_text, system_prompt, max_tokens=4096):
     return data["choices"][0]["message"]["content"]
 
 
+def _generate_strata(user_text, system_prompt, max_tokens=4096):
+    """Call local BSAI Strata (Qwen3.8-Flash-Next @127.0.0.1:8080) — shares the
+    one resident llama.cpp engine Strata already runs, so NO extra in-process
+    llama.cpp instance is loaded (zero extra VRAM for ComfyUI)."""
+    import json as _j, socket as _sk, http.client as _hc
+    # 1) make sure Strata is up (it auto-starts if the user ever double-clicked
+    #    BSAI_Strata服务.bat; here we just wait for it to be reachable)
+    try:
+        _sp = None
+        for _mod_name, _mod in list(__import__("sys").modules.items()):
+            if _mod_name.endswith("strata_manager") and hasattr(_mod, "StrataManager"):
+                _sp = _mod.StrataManager
+                break
+        if _sp is None:
+            import importlib.util as _ilu
+            _p = os.path.join(_THIS_DIR, "..", "BSAI-LLM-Strata", "strata_manager.py")
+            if os.path.exists(_p):
+                _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
+                _m = _ilu.module_from_spec(_spec)
+                _spec.loader.exec_module(_m)
+                _sp = _m.StrataManager
+        if _sp is not None:
+            _ok, _msg = _sp.ensure_running(quant_label="Auto (自动适配)")
+            if not _ok:
+                raise RuntimeError(f"Strata 启动失败: {_msg}")
+    except RuntimeError:
+        raise
+    except Exception as _e:
+        # StrataManager import failure is not fatal — maybe the server is already up
+        pass
+    # 2) resolve the model id Strata actually serves
+    _model = "qwen3.8-flash-next"
+    try:
+        _s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+        _s.settimeout(3.0); _s.setblocking(True)
+        _s.connect(("127.0.0.1", 8080))
+        try:
+            _conn = _hc.HTTPConnection("127.0.0.1", 8080, timeout=3.0)
+            _conn.sock = _s
+            _conn.request("GET", "/v1/models", headers={"Accept": "application/json"})
+            _md = _j.loads(_conn.getresponse().read().decode("utf-8"))
+            if _md.get("data"):
+                _model = _md["data"][0]["id"]
+        finally:
+            _s.close()
+    except Exception:
+        pass
+    # 3) chat completion (non-stream) — reasoning off for prompt work
+    body = _j.dumps({
+        "model": _model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_text},
+        ],
+        "max_tokens": int(max_tokens),
+        "temperature": 0.6,
+        "top_p": 0.9,
+        "stream": False,
+        "reasoning_effort": "none",
+    }).encode("utf-8")
+    s = _sk.socket(_sk.AF_INET, _sk.SOCK_STREAM)
+    s.settimeout(1200); s.setblocking(True)
+    s.connect(("127.0.0.1", 8080))
+    try:
+        conn = _hc.HTTPConnection("127.0.0.1", 8080, timeout=1200)
+        conn.sock = s
+        conn.request("POST", "/v1/chat/completions", body=body,
+                     headers={"Content-Type": "application/json",
+                              "Authorization": "Bearer strata"})
+        data = _j.loads(conn.getresponse().read().decode("utf-8"))
+    finally:
+        s.close()
+    msg = data["choices"][0]["message"]
+    return msg.get("content") or msg.get("reasoning_content") or ""
+
+
 def _generate_api(user_text, cfg, system_prompt):
     import json
     import urllib.request
@@ -702,26 +778,19 @@ def merge_customization(prompt, customization):
                         error = "NInfer output detected as repetitive garbage"
                 except Exception as e:
                     error = "NInfer: %s" % e
-        # Local attempts: try the fast merge model (sulphur) first, then a
-        # stronger one (e.g. gemma). Reject outputs that merely copy the template
-        # or produce repetitive garbage (e.g. "hair ribbon, hair scrunchie, ..." loops).
-        tried = []
-        for mp in (_pick_merge_model_path(), _pick_model_path()):
-            if not mp or mp in tried:
-                continue
-            tried.append(mp)
-            _free_llm_except(mp)
+        # BSAI: no extra in-process llama.cpp — reuse the resident Strata engine
+        # (same llama.cpp Strata already runs). One retry in case the first Strata
+        # attempt above lost the race while the engine was still warming up.
+        if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
             try:
-                r = _clean(_generate_local(
-                    user_msg, _H3_MERGE_SYSTEM_PROMPT, model_path=mp))
-                if r and r != p and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
+                r = _clean(_generate_strata(user_msg, _H3_MERGE_SYSTEM_PROMPT, max_tokens=8192))
+                if r and not _is_copy_append(p, r) and not _is_too_similar(p, r) and not _is_repetitive_garbage(r):
                     result = r
                     error = None
-                    break
                 elif r and _is_repetitive_garbage(r):
-                    error = "Local LLM (%s) output detected as repetitive garbage" % os.path.basename(mp)
+                    error = "Strata output detected as repetitive garbage"
             except Exception as e:
-                error = "Local LLM (%s): %s" % (os.path.basename(mp), e)
+                error = "Strata: %s" % e
         if result == p or _is_copy_append(p, result) or _is_too_similar(p, result) or _is_repetitive_garbage(result):
             if error is None:
                 error = ("models only copied the template without merging the edit "
