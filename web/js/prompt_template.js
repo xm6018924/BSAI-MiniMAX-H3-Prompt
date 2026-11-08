@@ -584,19 +584,19 @@ function buildTemplateUI(node) {
     skillBtn.title = "Wrap the narration into the MiniMax H3 official SKILL 3-part prompt (integrated_multimodal_description / overall_soundscape / non_diegetic_music) and output it directly";
     function _skillLocalBuild(n) {
         const q = String.fromCharCode(0x201c) + n + String.fromCharCode(0x201d);
-        return "MiniMax H3 film generation — voice-over narration driven scene （旁白叙事驱动的电影镜头）\n\n" +
+        return "MiniMax H3 film generation — voice-over narration driven scene\n\n" +
             "integrated_multimodal_description: \n" +
             "A cinematic scene driven by the following voice-over narration: " + q + ". " +
             "The visuals, character actions and camera moves follow the rhythm and emotion of the narration; " +
             "every shot stays consistent with the narrated story, and when the narration is spoken " +
-            "the character's mouth/actions sync with it. （以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）\n\n" +
+            "the character's mouth/actions sync with it.\n\n" +
             "overall_soundscape: \n" +
             "The voice-over narration " + q + " is the primary audio track and must remain clearly audible. " +
             "Subtle ambient sound and sound effects support the scene without masking the narration. " +
-            "（旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）\n\n" +
+            "\n\n" +
             "non_diegetic_music: \n" +
             "A background music score matching the emotional tone of the narration, kept at low volume " +
-            "so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）";
+            "so the voice-over stays clear.";
     }
     skillBtn.onclick = function() {
         const n = narrTa.value.trim();

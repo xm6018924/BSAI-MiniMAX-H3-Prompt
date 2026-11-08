@@ -99,13 +99,11 @@ Standalone direct-mode node, fully separated from the template node.
                     f"[ACTION REFERENCE / 动作参考] <Video {v}> is the ONLY motion source for the "
                     f"character from <Picture 1> — copy the motion EXACTLY frame by frame as described "
                     f"below; <Picture 1> is the ONLY appearance source — copy the face/appearance EXACTLY. "
-                    f"视频{v}为唯一动作参考，按下方描述逐帧照抄动作；图1为唯一外观参考，面部/外观照抄。"
                 )
             if has_silent:
                 parts.append(
-                    "[SILENT / 无配音无旁白] NO voice-over, NO narration, NO dialogue — the character "
+                    "[SILENT] NO voice-over, NO narration, NO dialogue — the character "
                     "is completely silent; overall_soundscape: ambient sounds ONLY; non_diegetic_music: N/A. "
-                    "全程无配音无旁白，角色不出声，仅环境声。"
                 )
             p = " ".join(parts) + "\n\n" + p
         return p

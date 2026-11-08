@@ -313,19 +313,18 @@ def _build_ref_decl(connected_refs, tpls):
     )
     parts = []
     parts.append(
-        f"[STRICT REFERENCE / 参考图强制] "
+        f"[STRICT REFERENCE] "
         f"<Picture {'>, <Picture '.join(str(x) for x in connected_refs)}> "
         f"are the ONLY source of truth — copy EXACTLY, no redesign. "
-        f"图{'、图'.join(str(x) for x in connected_refs)}为唯一参考，必须严格照抄，禁止自行设计。"
     )
     if 1 in connected_refs:
-        parts.append("<Picture 1>=face/identity 图1=人物面部")
+        parts.append("<Picture 1>=face/identity")
     if is_wardrobe and 2 in connected_refs:
-        parts.append("<Picture 2>=EXACT outfit (color/pattern/style/fabric) 图2=服装照抄")
+        parts.append("<Picture 2>=EXACT outfit (color/pattern/style/fabric)")
     if is_wardrobe and 3 in connected_refs:
-        parts.append("<Picture 3>=EXACT scene (background/lighting/environment) 图3=场景照抄")
+        parts.append("<Picture 3>=EXACT scene (background/lighting/environment)")
     elif 3 in connected_refs:
-        parts.append("<Picture 3>=scene 图3=场景")
+        parts.append("<Picture 3>=scene")
     return " ".join(parts) + "\n\n"
 
 
@@ -342,18 +341,18 @@ def _inject_narration(prompt, narration):
     marker = "integrated_multimodal_description:"
     if marker in prompt:
         inject = (
-            "\n\n# VO Narration / 画面旁白台词\n"
+            "\n\n# VO Narration\n"
             "Voice-over narration: \u201c%s\u201d. This is the primary line of the video \u2014 "
             "the visuals, character actions and camera moves must sync with the narration. "
-            "（以上为画面旁白台词，画面与动作须与旁白同步呈现。）" % n
+            % n
         )
         idx = prompt.find(marker)
         tail = prompt.find("overall_soundscape:", idx)
         if tail < 0:
             return prompt + inject
         return prompt[:tail] + inject + "\n\n" + prompt[tail:]
-    return (prompt.rstrip() + "\n\n--- VO Narration / 画面旁白 ---\n" +
-            "\u201c" + n + "\u201d\n（以上为画面旁白台词，画面与动作须与旁白同步呈现。）")
+    return (prompt.rstrip() + "\n\n--- VO Narration ---\n" +
+            "\u201c" + n + "\u201d")
 
 
 # ── Video last-frame extraction ──
