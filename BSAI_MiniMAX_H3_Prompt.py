@@ -3813,7 +3813,14 @@ Supports multimodal models (e.g. gpt-4o, qwen-vl-plus) for image analysis.
         print(f"[BSAI H3 RemoteAPI] Calling: {url} | model: {model_name}")
 
         try:
-            response = requests.post(url, json=payload, headers=headers, timeout=120)
+            # Redirects are refused: the local/private-address guard above checks
+            # the configured URL, and a 30x could walk the request to another host.
+            response = requests.post(url, json=payload, headers=headers, timeout=120,
+                                     allow_redirects=False)
+            if 300 <= response.status_code < 400:
+                raise RuntimeError(
+                    f"Remote API returned HTTP {response.status_code} redirect to "
+                    f"{response.headers.get('Location')!r}; redirects are not followed")
         except requests.exceptions.Timeout:
             raise RuntimeError(
                 f"API request timed out (120s). The service may be slow or unreachable.\n"
