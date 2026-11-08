@@ -292,10 +292,10 @@ def _generate_nemotron(user_text, system_prompt, max_tokens=4096):
     from urllib.parse import urlparse as _up
     _nm = _nemotron_manager()
     if _nm is None:
-        raise RuntimeError("BSAI-LLM-Strata 插件缺失，无法调用 Nemotron")
+        raise RuntimeError("BSAI-LLM-Strata plugin is missing, cannot call Nemotron")
     ok, msg = _nm.ensure_running()
     if not ok:
-        raise RuntimeError(f"Nemotron 启动失败: {msg}")
+        raise RuntimeError(f"Nemotron failed to start: {msg}")
     mids = _nm.models()
     body = _j.dumps({
         "model": mids[0] if mids else "Nemotron-3.5-Bolt-74B-A9B",
@@ -330,10 +330,10 @@ def _generate_ninfer(user_text, system_prompt, max_tokens=4096):
     from urllib.parse import urlparse as _up
     _nm = _ninfer_manager()
     if _nm is None:
-        raise RuntimeError("BSAI-LLM-Strata 插件缺失，无法调用 NInfer")
+        raise RuntimeError("BSAI-LLM-Strata plugin is missing, cannot call NInfer")
     ok, msg = _nm.ensure_running()
     if not ok:
-        raise RuntimeError(f"NInfer 启动失败: {msg}")
+        raise RuntimeError(f"NInfer failed to start: {msg}")
     mids = _nm.models()
     body = _j.dumps({
         "model": mids[0] if mids else "default",
@@ -385,7 +385,7 @@ def _generate_strata(user_text, system_prompt, max_tokens=4096):
         if _sp is not None:
             _ok, _msg = _sp.ensure_running(quant_label="Auto (自动适配)")
             if not _ok:
-                raise RuntimeError(f"Strata 启动失败: {_msg}")
+                raise RuntimeError(f"Strata failed to start: {_msg}")
     except RuntimeError:
         raise
     except Exception as _e:

@@ -164,7 +164,7 @@ class _BSAI_H3_HTTPBackend:
             _p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                               "..", "BSAI-LLM-Strata", "strata_manager.py")
             if not os.path.exists(_p):
-                raise RuntimeError("BSAI-LLM-Strata 插件缺失")
+                raise RuntimeError("BSAI-LLM-Strata plugin is missing")
             _spec = _ilu.spec_from_file_location("bsai_strata_manager", _p)
             _m = _ilu.module_from_spec(_spec)
             _spec.loader.exec_module(_m)
