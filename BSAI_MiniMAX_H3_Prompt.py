@@ -1106,15 +1106,12 @@ def _bsai_enforce_style_output(text, director_style, cinematography_style,
                 text = result
             else:
                 # No field found — prepend a style annotation header
+                # (English only: the prompt output must not carry Chinese labels)
                 header_parts = []
                 if vis_en_parts:
                     header_parts.append("[Creative Styles] " + ". ".join(vis_en_parts) + ".")
-                if vis_cn_parts:
-                    header_parts.append("【创意风格】" + "。".join(vis_cn_parts) + "。")
                 if score_en:
                     header_parts.append("[Score] " + score_en + ".")
-                if score_cn:
-                    header_parts.append("【配乐】" + score_cn + "。")
                 header = "\n".join(header_parts) + "\n\n"
                 text = header + text
 

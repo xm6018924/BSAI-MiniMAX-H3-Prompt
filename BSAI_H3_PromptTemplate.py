@@ -176,7 +176,7 @@ def _apply_action_override(desc, ext):
             desc = desc[:open_i] + block + desc[close_i + len(_ACTION_CLOSE):]
         return desc, True
     directive = (
-        f'[Action Override / 动作覆盖] IMPORTANT: The subject performs “{ext}” '
+        f'[Action Override] IMPORTANT: The subject performs “{ext}” '
         f'INSTEAD OF the motion/behavior described in the shots above. Keep all shot '
         f'framing, camera movement, environment, lighting, timing and subject identity '
         f'unchanged; only the action/behavior is replaced with: {ext}'

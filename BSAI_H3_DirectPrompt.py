@@ -96,7 +96,7 @@ Standalone direct-mode node, fully separated from the template node.
                 vids = _re.findall(r"参考视频\s*(\d+)|视频\s*(\d+)\s*[中里]的?人?物?", p)
                 v = next((x[0] or x[1] for x in vids if any(x)), "N")
                 parts.append(
-                    f"[ACTION REFERENCE / 动作参考] <Video {v}> is the ONLY motion source for the "
+                    f"[ACTION REFERENCE] <Video {v}> is the ONLY motion source for the "
                     f"character from <Picture 1> — copy the motion EXACTLY frame by frame as described "
                     f"below; <Picture 1> is the ONLY appearance source — copy the face/appearance EXACTLY. "
                 )
