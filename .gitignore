@@ -11,3 +11,6 @@ models/_vosk_model_small_cn.zip
 
 # local backup
 *.bak
+
+# tagged local backups (x.bak_water_splash etc.)
+*.bak_*
