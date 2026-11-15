@@ -567,7 +567,7 @@ Features:
         #    保证输出给下游的提示词必含强参考约束（模板自带锁定头则不重复加）──
         if connected_refs and not _has_ref_lock(prompt):
             prompt = _build_ref_decl(connected_refs, tpls) + prompt
-        mode = primary.get("generation_mode", "System Recommended")
+        mode = primary.get("generation_mode_en") or primary.get("generation_mode", "System Recommended")
         if len(tpls) > 1:
             mode = f"{mode} | Multi-Stack"
         desc = primary.get("description_en") or primary.get("description", "")
@@ -835,7 +835,6 @@ def build_h3_skill_three_part(narration):
         # ── 动作 / 视频参考驱动（用户“参考视频N做动作”场景）──
         header = (
             "MiniMax H3 film generation — action & motion-reference driven scene "
-            "（动作参考驱动场景）"
         )
         desc = (
             "integrated_multimodal_description: \n"
@@ -844,52 +843,47 @@ def build_h3_skill_three_part(narration):
             "<Video N> is the ONLY motion source — the character copies its motion EXACTLY "
             "frame by frame (head shaking left-right, then tilting up and down, etc.). "
             "The scene is ACTION-DRIVEN; it is NOT a narration-driven scene. "
-            "（以下为动作参考指令：图N外观严格照抄、视频N动作逐帧照抄；场景由动作驱动，"
-            "不是旁白驱动，禁止把动作指令当作旁白或台词。）"
             % n
         )
         sound = (
             "overall_soundscape: \n"
             "Only natural ambient sound matching the scene (room tone / subtle foley). "
-            "NO voice-over, NO narration, NO dialogue. （仅自然环境声，全程无配音无旁白。）"
+            "NO voice-over, NO narration, NO dialogue."
             if is_silent else
             "overall_soundscape: \n"
             "Natural ambient sound matching the motion scene; no speech unless explicitly "
-            "specified. （与动作场景匹配的环境声；未明确要求时不加入任何语音。）"
+            "specified."
         )
         music = (
-            "non_diegetic_music: N/A. （无配乐。）"
+            "non_diegetic_music: N/A."
             if is_silent else
             "non_diegetic_music: A subtle background music score matching the motion rhythm "
-            "and atmosphere, kept low. （贴合动作节奏与氛围的轻量配乐，音量压低。）"
+            "and atmosphere, kept low."
         )
     elif is_silent and not is_narr:
         # ── 静默无声场景 ──
         header = (
             "MiniMax H3 film generation — silent / no-voice scene "
-            "（静默无声场景）"
         )
         desc = (
             "integrated_multimodal_description: \n"
             "A cinematic scene based on the following silent instruction: \u201c%s\u201d. "
             "The character never speaks: no voice-over, no narration, no dialogue; "
             "only visible actions and ambient presence. "
-            "（根据以下静默指令生成场景：角色全程不说话，无配音、无旁白、无对话，仅动作与环境表现。）"
             % n
         )
         sound = (
             "overall_soundscape: \n"
             "Only subtle ambient sound (room tone / nature / city ambience); NO speech, "
-            "no voice-over, no narration. （仅轻微环境声，无任何语音。）"
+            "no voice-over, no narration."
         )
         music = (
-            "non_diegetic_music: N/A. （无配乐。）"
+            "non_diegetic_music: N/A."
         )
     else:
         # ── 经典旁白叙事驱动（默认，向后兼容）──
         header = (
             "MiniMax H3 film generation — voice-over narration driven scene "
-            "（旁白叙事驱动的电影镜头）"
         )
         desc = (
             "integrated_multimodal_description: \n"
@@ -897,20 +891,19 @@ def build_h3_skill_three_part(narration):
             "The visuals, character actions and camera moves follow the rhythm and emotion "
             "of the narration; every shot stays consistent with the narrated story, and "
             "when the narration is spoken the character\u2019s mouth/actions sync with it. "
-            "（以上旁白为视频核心台词/画外音，画面、人物动作与镜头必须与旁白内容同步呈现。）"
             % n
         )
         sound = (
             "overall_soundscape: \n"
             "The voice-over narration \u201c%s\u201d is the primary audio track and must remain "
             "clearly audible. Subtle ambient sound and sound effects support the scene "
-            "without masking the narration. （旁白作为主音轨清晰可闻，环境音效轻微衬托，不干扰旁白。）"
+            "without masking the narration."
             % n
         )
         music = (
             "non_diegetic_music: \n"
             "A background music score matching the emotional tone of the narration, kept "
-            "at low volume so the voice-over stays clear. （背景音乐贴合旁白情绪，音量压低以保证旁白清晰。）"
+            "at low volume so the voice-over stays clear."
         )
     return header + "\n\n" + desc + "\n\n" + sound + "\n\n" + music
 

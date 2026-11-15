@@ -671,7 +671,7 @@ def _inject_user_content(prompt, cust):
         return prompt
     p = prompt or ""
     user_block = (
-        "[USER TEXT / 用户指定文字 — 必须按原文逐字呈现，位置、内容与风格严格按用户要求执行]:\n"
+        "[USER TEXT — render verbatim; position, content and style must follow the user's requirement exactly]:\n"
         + c
     )
     if "[TEXT OVERLAY CONTROL" in p:

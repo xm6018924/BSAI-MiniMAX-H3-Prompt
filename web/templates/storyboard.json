@@ -12,7 +12,7 @@
      "description_en": "One-click video storyboard, digital presenter | How to use: (1) enter the script under Additional edits (required, verbatim); (2) state the presenter's use case (e-commerce sales, government or enterprise explainer, news broadcast, online class, cultural tourism guide and so on); (3) upload reference images if you have them (character, scene, product), otherwise describe the looks, outfit, age and scene in the text; (4) click Confirm edits and it is merged automatically into a six-segment Ref2VA storyboard prompt. Formal scenes get a locked-off camera automatically.",
      "customization_hint": "🎬 一键视频分镜·数字人口播：请在上方“补充修改”输入框填写：① 口播文案/脚本（必填，逐字保留标点）；② 数字人用途（电商带货/政企讲解/新闻播报/教育网课/文旅导游/真人IP复刻等）；③ 人物/场景/产品描述（有参考图直接上传图1/图2/图3，无图写清长相、服装、年龄、场景、道具）；④ 可选：视觉风格、画幅、总时长。点击「确认修改」后自动融合为完整 Ref2VA 分镜提示词，输出给下游多模态融合节点。",
      "preview": "storyboard_digital_human.webp",
-     "generation_mode": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
+     "generation_mode": "Multimodal Fusion (Ref2VA) [multi-image reference + custom scene]", "generation_mode_zh": "Multimodal Fusion (多模态融合 Ref2VA)【多图参考+自定义场景】",
      "duration": 15,
      "needs_image": true,
      "needs_video": false,

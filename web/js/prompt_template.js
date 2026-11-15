@@ -1550,7 +1550,7 @@ function updatePreview(tpl, prevBox, prevNm, prevMd, prevDur) {
         return;
     }
     if (prevNm) prevNm.textContent = tplDisplay(tpl).name;
-    if (prevMd) prevMd.textContent = tpl.generation_mode || "";
+    if (prevMd) prevMd.textContent = tpl.generation_mode_en || tpl.generation_mode || "";
     if (prevDur) prevDur.textContent = (tpl.duration || 0) + "s | Needs image: " + (tpl.needs_image ? "Yes" : "No");
     if (prevBox) {
         if (tpl.preview) {
